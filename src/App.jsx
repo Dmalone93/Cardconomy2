@@ -17,6 +17,8 @@ import Shop from './screens/Shop';
 import Verify from './screens/Verify';
 import AuthCard from './screens/AuthCard';
 import Onboarding from './screens/Onboarding';
+import Watchlist from './screens/Watchlist';
+import Account from './screens/Account';
 
 function Placeholder({ name }) {
   return <div style={{ padding: 24 }}><h2>{name}</h2><p>Coming soon...</p></div>;
@@ -31,8 +33,8 @@ function AppRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
           <Route path="/sell" element={<SellHub />} />
-          <Route path="/watch" element={<Placeholder name="Watching" />} />
-          <Route path="/profile" element={<Placeholder name="Profile" />} />
+          <Route path="/watch" element={<Watchlist />} />
+          <Route path="/profile" element={<Account />} />
           <Route path="/listing/:id" element={<Listing />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout/:id" element={<Checkout />} />
@@ -45,8 +47,8 @@ function AppRoutes() {
           <Route path="/verify" element={<Verify />} />
           <Route path="/authcard/:id?" element={<AuthCard />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/collection/:id" element={<Placeholder name="Collection" />} />
-          <Route path="/account/:section" element={<Placeholder name="Account" />} />
+          <Route path="/collection/:id" element={<Watchlist />} />
+          <Route path="/account/:section" element={<Account />} />
         </Route>
       </Routes>
       {!onboarded && <Onboarding />}
