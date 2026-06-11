@@ -8,6 +8,9 @@ Thumbs.db
 # dependencies (none required — static site)
 node_modules/
 
+# build output
+dist/
+
 # local scratch
 scraps/
 screenshots/
