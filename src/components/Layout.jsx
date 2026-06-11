@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { Box, Flex, Text, IconButton, Dialog, Button } from '@radix-ui/themes';
-import { Home, Search, Tag, Eye, User, Menu, ShoppingCart, X, ChevronLeft } from 'lucide-react';
+import { Box, Flex, Text, IconButton, Dialog, Button, Separator } from '@radix-ui/themes';
+import { Home, Search, Tag, Eye, User, Menu, ShoppingCart, X, ChevronLeft, Sun, Moon } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const TABS = [
@@ -15,7 +15,7 @@ const TABS = [
 export default function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cartCount, toast } = useApp();
+  const { cartCount, toast, appearance, setAppearance } = useApp();
   const [menuOpen, setMenuOpen] = React.useState(false);
 
   const isTabRoot = TABS.some(t => t.path === location.pathname);
@@ -82,6 +82,13 @@ export default function Layout() {
                 {item.label}
               </Button>
             ))}
+          </Flex>
+          <Separator my="3" />
+          <Flex align="center" justify="between" px="2">
+            <Text size="2">Dark mode</Text>
+            <IconButton variant="ghost" size="2" onClick={() => setAppearance(appearance === 'light' ? 'dark' : 'light')}>
+              {appearance === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+            </IconButton>
           </Flex>
           <Dialog.Close>
             <IconButton variant="ghost" style={{ position: 'absolute', top: 16, right: 16 }}><X size={18} /></IconButton>

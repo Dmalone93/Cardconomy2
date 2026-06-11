@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppProvider, useApp } from './context/AppContext';
+import { useApp } from './context/AppContext';
 import Layout from './components/Layout';
 import Home from './screens/Home';
 import Search from './screens/Search';
@@ -59,9 +59,7 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AppProvider>
-        <AppRoutes />
-      </AppProvider>
+      <AppRoutes />
     </BrowserRouter>
   );
 }

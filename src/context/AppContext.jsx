@@ -26,6 +26,7 @@ export function AppProvider({ children }) {
   const [prefs, setPrefs] = useState(() => loadJSON('cc_prefs', ALL_GAME_IDS));
   const [onboarded, setOnboarded] = useState(() => loadJSON('cc_onboarded', false));
   const [collections, setCollections] = useState(() => loadJSON('cc_collections', DEFAULT_COLLECTIONS));
+  const [appearance, setAppearance] = useState(() => loadJSON('cc_theme', 'light'));
   const [toast, setToast] = useState(null);
   const toastTimer = useRef(null);
 
@@ -38,6 +39,7 @@ export function AppProvider({ children }) {
   useEffect(() => { localStorage.setItem('cc_prefs', JSON.stringify(prefs)); }, [prefs]);
   useEffect(() => { localStorage.setItem('cc_onboarded', JSON.stringify(onboarded)); }, [onboarded]);
   useEffect(() => { localStorage.setItem('cc_collections', JSON.stringify(collections)); }, [collections]);
+  useEffect(() => { localStorage.setItem('cc_theme', JSON.stringify(appearance)); }, [appearance]);
 
   const showToast = useCallback((msg) => {
     clearTimeout(toastTimer.current);
@@ -111,8 +113,8 @@ export function AppProvider({ children }) {
   }, []);
 
   const value = {
-    watch, bids, cart, tier, acct, prefs, onboarded, collections, toast,
-    setWatch, setBids, setCart, setTier, setAcct, setPrefs, setOnboarded, setCollections,
+    watch, bids, cart, tier, acct, prefs, onboarded, collections, appearance, toast,
+    setWatch, setBids, setCart, setTier, setAcct, setPrefs, setOnboarded, setCollections, setAppearance,
     showToast, isWatched, toggleWatch, inPrefs, togglePref, allGamesSelected,
     isVerified, isBidding, placeBid, addToCart, removeFromCart, clearCart,
     ownedIds, addCollection, renameCollection, deleteCollection, addCardToCollection, removeCardFromCollection,
