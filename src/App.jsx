@@ -3,6 +3,7 @@ import { AppProvider } from './context/AppContext';
 import Layout from './components/Layout';
 import Home from './screens/Home';
 import Search from './screens/Search';
+import Listing from './screens/Listing';
 
 function Placeholder({ name }) {
   return <div style={{ padding: 24 }}><h2>{name}</h2><p>Coming soon...</p></div>;
@@ -19,7 +20,7 @@ export default function App() {
             <Route path="/sell" element={<Placeholder name="Sell Hub" />} />
             <Route path="/watch" element={<Placeholder name="Watching" />} />
             <Route path="/profile" element={<Placeholder name="Profile" />} />
-            <Route path="/listing/:id" element={<Placeholder name="Listing" />} />
+            <Route path="/listing/:id" element={<Listing />} />
             <Route path="/cart" element={<Placeholder name="Cart" />} />
             <Route path="/checkout/:id" element={<Placeholder name="Checkout" />} />
             <Route path="/sell/single" element={<Placeholder name="Sell Single" />} />
