@@ -1,142 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cardonomy</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #eef0f3;
-    --surface: #ffffff;
-    --surface-2: #f6f7f9;
-    --ink: #16181d;
-    --ink-2: #3a3d44;
-    --muted: #71757e;
-    --faint: #a4a8b0;
-    --line: #e7e8ec;
-    --line-2: #eef0f3;
-    --fill: #16181d;
-    --glass: rgba(255,255,255,0.9);
-    --ios-sb: #16181d;
-    --accent: oklch(0.52 0.2 264);
-    --accent-press: oklch(0.46 0.2 264);
-    --accent-wash: oklch(0.95 0.04 264);
-    --accent-ink: #ffffff;
-    --up: oklch(0.58 0.13 152);
-    --up-wash: oklch(0.95 0.05 152);
-    --down: oklch(0.6 0.19 24);
-    --gold: oklch(0.74 0.13 85);
-    --sans: 'Hanken Grotesk', -apple-system, system-ui, sans-serif;
-    --mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
-    /* Radix-style scales */
-    --radius-1: 5px; --radius-2: 8px; --radius-3: 11px; --radius-4: 14px; --radius-5: 18px;
-    --shadow-1: 0 1px 2px rgba(20,24,40,0.06), 0 1px 3px rgba(20,24,40,0.05);
-    --shadow-2: 0 2px 8px rgba(20,24,40,0.07), 0 4px 14px rgba(20,24,40,0.06);
-    --shadow-3: 0 8px 26px rgba(20,24,40,0.13);
-    --focus-ring: 0 0 0 3px color-mix(in oklch, var(--accent) 35%, transparent);
-  }
-  /* Radix-grade keyboard focus — visible only for keyboard users */
-  :focus { outline: none; }
-  button:focus-visible, a:focus-visible, input:focus-visible, [role="button"]:focus-visible, select:focus-visible {
-    outline: none; box-shadow: var(--focus-ring); border-radius: 8px;
-  }
-  button, [role="button"] { transition: transform 0.08s ease, filter 0.12s ease, box-shadow 0.12s ease; }
-  @media (hover: hover) { button:hover, [role="button"]:hover { filter: brightness(0.97); } }
-  button:active, [role="button"]:active { transform: scale(0.975); }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  html, body {
-    margin: 0; padding: 0; height: 100%;
-    background: #c9ccd2;
-    font-family: var(--sans);
-    color: var(--ink);
-    overflow: hidden;
-  }
-  #stage {
-    position: fixed; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background:
-      radial-gradient(120% 120% at 50% 0%, #d8dbe1 0%, #c2c5cc 60%, #b6b9c1 100%);
-  }
-  #device-scale { transform-origin: center center; }
-  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
-  input, textarea { font-family: inherit; }
-  ::-webkit-scrollbar { width: 0; height: 0; }
-  .noscroll { scrollbar-width: none; }
-  @keyframes ccFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  @keyframes ccSlideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-  @keyframes ccScrim { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes ccPushIn { from { transform: translateX(20px); } to { transform: none; } }
-  @keyframes ccMenuIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-  @keyframes ccPop { 0% { transform: scale(0.8); opacity: 0; } 60% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
-  @keyframes ccBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-  @keyframes ccTick { 0% { transform: translateY(4px); opacity: 0.4; } 100% { transform: none; opacity: 1; } }
-  @keyframes ccCardIn { from { transform: translate(-50%,-46%) rotate(4deg) scale(0.9); opacity: 0; } to { transform: translate(-50%,-50%) rotate(-3deg) scale(1); opacity: 1; } }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cardconomy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-<template id="__bundler_thumbnail" data-bg-color="#5b50e0">
-  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-    <rect width="1200" height="800" fill="#5b50e0"/>
-    <g transform="translate(467 253) scale(2.0)" fill="none">
-      <path d="M134.047 112.854L113.87 74.7287C113.365 73.774 112.182 73.4096 111.227 73.9149L52.7288 104.873C51.774 105.378 51.4096 106.562 51.9149 107.516L72.0912 145.641C72.5964 146.596 73.78 146.961 74.7348 146.455L133.233 115.497C134.188 114.992 134.552 113.808 134.047 112.854Z" fill="#ffffff"/>
-      <path d="M51.2594 54.1188L8.30231 50.2085C7.22656 50.1106 6.27511 50.9033 6.17719 51.979L0.177287 117.891C0.0793624 118.967 0.872047 119.918 1.9478 120.016L44.9048 123.927C45.9806 124.025 46.932 123.232 47.03 122.156L53.0299 56.2439C53.1278 55.1682 52.3351 54.2167 51.2594 54.1188Z" fill="#ffffff"/>
-      <path d="M117.389 49.8882L86.8878 80.3891C86.7098 80.5669 86.4208 80.5671 86.2429 80.3891L39.4433 33.5895C39.2654 33.4116 39.2655 33.1226 39.4433 32.9446L69.9442 2.44369C70.1222 2.26567 70.4111 2.26566 70.5892 2.44369L117.389 49.2433C117.567 49.4213 117.567 49.7102 117.389 49.8882Z" stroke="#ffffff" stroke-width="3"/>
-    </g>
-    <text x="600" y="660" text-anchor="middle" font-family="Hanken Grotesk, sans-serif" font-weight="800" font-size="58" letter-spacing="2" fill="#ffffff">CARDONOMY</text>
-  </svg>
-</template>
-<div id="stage">
-  <div id="device-scale">
-    <div id="root"></div>
-  </div>
-</div>
-<div id="tweak-root"></div>
-
-<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-
-<script type="text/babel" src="ios-frame.jsx"></script>
-<script src="image-slot.js"></script>
-<script type="text/babel" src="tweaks-panel.jsx"></script>
-<script type="text/babel" src="data.jsx"></script>
-<script type="text/babel" src="card_images.jsx"></script>
-<script type="text/babel" src="components.jsx"></script>
-<script type="text/babel" src="screen_home.jsx"></script>
-<script type="text/babel" src="screen_search.jsx"></script>
-<script type="text/babel" src="screen_listing.jsx"></script>
-<script type="text/babel" src="screen_sell.jsx"></script>
-<script type="text/babel" src="screen_sellhub.jsx"></script>
-<script type="text/babel" src="screen_sellshop.jsx"></script>
-<script type="text/babel" src="screen_shop.jsx"></script>
-<script type="text/babel" src="screen_sellbulk.jsx"></script>
-<script type="text/babel" src="screen_account.jsx"></script>
-<script type="text/babel" src="screen_verify.jsx"></script>
-<script type="text/babel" src="screen_authcard.jsx"></script>
-<script type="text/babel" src="screen_trade.jsx"></script>
-<script type="text/babel" src="screen_storefront.jsx"></script>
-<script type="text/babel" src="screen_shopfinder.jsx"></script>
-<script type="text/babel" src="screen_cart.jsx"></script>
-<script type="text/babel" src="screen_checkout.jsx"></script>
-<script type="text/babel" src="screen_watchlist.jsx"></script>
-<script type="text/babel" src="screen_onboarding.jsx"></script>
-<script type="text/babel" src="app.jsx"></script>
-<script type="text/babel" src="cc-tweaks.jsx"></script>
-
-<script>
-  function fitDevice() {
-    var el = document.getElementById('device-scale');
-    if (!el) return;
-    var W = 402, H = 874;
-    var s = Math.min((window.innerWidth - 24) / W, (window.innerHeight - 24) / H, 1);
-    el.style.transform = 'scale(' + s + ')';
-  }
-  window.addEventListener('resize', fitDevice);
-  fitDevice();
-  window.__fitDevice = fitDevice;
-</script>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
 </body>
 </html>
