@@ -91,12 +91,12 @@ function LiveSweep({ onDone }) {
         {/* counter */}
         <div style={{ position: 'absolute', left: 16, right: 16, bottom: 14, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between' }}>
           <div>
-            <div key={count} style={{ fontFamily: TSS.mono, fontWeight: 700, fontSize: 46, color: '#fff', lineHeight: 1,
+            <div key={count} style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 46, color: '#fff', lineHeight: 1,
               animation: 'ccTick 0.3s ease', textShadow: '0 2px 12px rgba(0,0,0,0.5)' }}>{count}</div>
             <div style={{ fontFamily: TSS.sans, fontSize: 12, color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>cards detected</div>
           </div>
           <div style={{ textAlign: 'right' }}>
-            <div style={{ fontFamily: TSS.mono, fontWeight: 700, fontSize: 20, color: 'var(--gold)' }}>{matches}</div>
+            <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 20, color: 'var(--gold)' }}>{matches}</div>
             <div style={{ fontFamily: TSS.sans, fontSize: 11, color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>★ buylist hits</div>
           </div>
         </div>
@@ -296,7 +296,7 @@ function ReviewBody({ scanned, stats, cond, setCond, bulkChoice, setBulkChoice, 
     <div style={{ padding: '18px 16px 16px' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
         <h1 style={{ margin: 0, fontFamily: TSS.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Review</h1>
-        <span style={{ fontFamily: TSS.mono, fontSize: 13, color: TSS.muted, whiteSpace: 'nowrap' }}>{SUB_SS.total.toLocaleString()} cards</span>
+        <span style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.muted, whiteSpace: 'nowrap' }}>{SUB_SS.total.toLocaleString()} cards</span>
       </div>
       <p style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.muted, margin: '4px 0 16px' }}>
         We scanned <b style={{ color: TSS.ink }}>{scanned}+</b> just now. No need to grade each one — set a blanket condition and we flag exceptions.
@@ -334,7 +334,7 @@ function ReviewBody({ scanned, stats, cond, setCond, bulkChoice, setBulkChoice, 
                 fontFamily: TSS.sans, fontWeight: 800, fontSize: 9, borderRadius: 5, padding: '1px 5px' }}>⚠</span>}
             </div>
             <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 11.5, marginTop: 5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
-            <div style={{ fontFamily: TSS.mono, fontSize: 11, color: TSS.muted }}>{moneySS(c.market, { cents: false })}</div>
+            <div style={{ fontFamily: TSS.sans, fontSize: 11, color: TSS.muted }}>{moneySS(c.market, { cents: false })}</div>
           </div>
         ))}
       </div>
@@ -359,7 +359,7 @@ function ReviewBody({ scanned, stats, cond, setCond, bulkChoice, setBulkChoice, 
           <div style={{ fontFamily: TSS.sans, fontSize: 12, color: 'rgba(255,255,255,0.7)', fontWeight: 600 }}>Est. market value</div>
           <div style={{ fontFamily: TSS.sans, fontSize: 11, color: 'rgba(255,255,255,0.5)' }}>Final offer set by the shop</div>
         </div>
-        <div style={{ fontFamily: TSS.mono, fontWeight: 700, fontSize: 26, color: '#fff' }}>{moneySS(stats.estMarket, { cents: false })}</div>
+        <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 26, color: '#fff' }}>{moneySS(stats.estMarket, { cents: false })}</div>
       </div>
     </div>
   );
@@ -394,7 +394,7 @@ function Confirmation({ onThread, onHome, onShop }) {
         {[['Submission', '#' + SUB_SS.id], ['Cards', SUB_SS.total.toLocaleString()], ['Typical reply', '< 1 hr']].map(([k, v], i) => (
           <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: i < 2 ? '1px solid var(--line-2)' : 'none' }}>
             <span style={{ fontFamily: TSS.sans, fontSize: 13.5, color: TSS.muted }}>{k}</span>
-            <span style={{ fontFamily: TSS.mono, fontWeight: 700, fontSize: 13.5, color: i === 2 ? 'var(--up)' : TSS.ink }}>{v}</span>
+            <span style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 13.5, color: i === 2 ? 'var(--up)' : TSS.ink }}>{v}</span>
           </div>
         ))}
       </div>
@@ -437,18 +437,18 @@ function SellerThread({ app, onShop }) {
           <div style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 14, marginBottom: 9 }}>Your offer</div>
           {[['142 buylist matches', moneySS(stats.buylistPayout, { cents: false })], ['34 singles (priced)', '$430'], ['824 bulk', '$8']].map(([k, v]) => (
             <div key={k} style={{ display: 'flex', justifyContent: 'space-between', gap: 10, padding: '4px 0', fontFamily: TSS.sans, fontSize: 13, color: TSS.ink2 }}>
-              <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{k}</span><span style={{ fontFamily: TSS.mono, fontWeight: 600, flexShrink: 0 }}>{v}</span>
+              <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{k}</span><span style={{ fontFamily: TSS.sans, fontWeight: 600, flexShrink: 0 }}>{v}</span>
             </div>
           ))}
           <div style={{ height: 1, background: 'var(--line-2)', margin: '8px 0' }} />
           <div style={{ display: 'flex', gap: 8 }}>
             <div style={{ flex: 1, background: TSS.surface2, borderRadius: 11, padding: '9px 11px' }}>
               <div style={{ fontFamily: TSS.sans, fontSize: 11, color: TSS.muted, fontWeight: 600 }}>💵 Cash</div>
-              <div style={{ fontFamily: TSS.mono, fontWeight: 700, fontSize: 19 }}>{moneySS(cash, { cents: false })}</div>
+              <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 19 }}>{moneySS(cash, { cents: false })}</div>
             </div>
             <div style={{ flex: 1, background: 'var(--up-wash)', borderRadius: 11, padding: '9px 11px', boxShadow: 'inset 0 0 0 1.5px var(--up)' }}>
               <div style={{ fontFamily: TSS.sans, fontSize: 11, color: 'var(--up)', fontWeight: 700 }}>🎁 Store credit +20%</div>
-              <div style={{ fontFamily: TSS.mono, fontWeight: 700, fontSize: 19, color: 'var(--up)' }}>{moneySS(credit, { cents: false })}</div>
+              <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 19, color: 'var(--up)' }}>{moneySS(credit, { cents: false })}</div>
             </div>
           </div>
         </div>

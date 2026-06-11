@@ -56,7 +56,7 @@ function Stepper({ value, set, min = 1, max = 99 }) {
   return (
     <div style={{ display: 'inline-flex', alignItems: 'center', gap: 0, background: TAC.surface2, borderRadius: 9, overflow: 'hidden' }}>
       <button onClick={() => set(Math.max(min, value - 1))} style={{ width: 30, height: 30, color: TAC.ink2, fontSize: 18, fontWeight: 700 }}>−</button>
-      <span style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 14, minWidth: 22, textAlign: 'center' }}>{value}</span>
+      <span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, minWidth: 22, textAlign: 'center' }}>{value}</span>
       <button onClick={() => set(Math.min(max, value + 1))} style={{ width: 30, height: 30, color: TAC.ink2, fontSize: 18, fontWeight: 700 }}>+</button>
     </div>
   );
@@ -132,11 +132,11 @@ function BuylistScreen({ app }) {
         {/* summary */}
         <div style={{ display: 'flex', gap: 9, marginBottom: 16 }}>
           <div style={{ flex: 1, background: TAC.surface, borderRadius: 13, padding: '11px 13px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 20, color: TAC.accent }}>{matches.length}</div>
+            <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 20, color: TAC.accent }}>{matches.length}</div>
             <div style={{ fontFamily: TAC.sans, fontSize: 11, color: TAC.muted }}>matches available now</div>
           </div>
           <div style={{ flex: 1, background: TAC.surface, borderRadius: 13, padding: '11px 13px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 20 }}>{money0AC(totalCommit)}</div>
+            <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 20 }}>{money0AC(totalCommit)}</div>
             <div style={{ fontFamily: TAC.sans, fontSize: 11, color: TAC.muted }}>max commitment</div>
           </div>
         </div>
@@ -155,7 +155,7 @@ function BuylistScreen({ app }) {
                       {isMatch && <Pill label="MATCH" tone="amber" />}
                     </div>
                     <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>
-                      want {e.want} · max <b style={{ fontFamily: TAC.mono, color: TAC.ink2 }}>{money0AC(e.max)}</b>
+                      want {e.want} · max <b style={{ fontFamily: TAC.sans, color: TAC.ink2 }}>{money0AC(e.max)}</b>
                       <span style={{ color: isMatch ? 'var(--up)' : TAC.faint }}> · listed {money0AC(e.card.price)}</span>
                     </div>
                   </button>
@@ -232,8 +232,8 @@ function BuylistEdit({ entry, onSave, onRemove }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
           <span style={{ fontFamily: TAC.sans, fontWeight: 600, fontSize: 14.5 }}>Max price each</span>
           <div style={{ display: 'flex', alignItems: 'center', background: TAC.surface2, borderRadius: 10, padding: '6px 11px' }}>
-            <span style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 17, color: TAC.muted }}>$</span>
-            <input type="number" value={max} onChange={e => setMax(+e.target.value || 0)} style={{ width: 80, border: 'none', outline: 'none', background: 'transparent', fontFamily: TAC.mono, fontWeight: 700, fontSize: 17, textAlign: 'right' }} />
+            <span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, color: TAC.muted }}>$</span>
+            <input type="number" value={max} onChange={e => setMax(+e.target.value || 0)} style={{ width: 80, border: 'none', outline: 'none', background: 'transparent', fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, textAlign: 'right' }} />
           </div>
         </div>
         <div style={{ display: 'flex', gap: 7 }}>
@@ -277,7 +277,7 @@ function PurchasesScreen({ app }) {
                     <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>{p.seller} · ordered {p.date}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 14 }}>{moneyAC(p.total)}</div>
+                    <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>{moneyAC(p.total)}</div>
                     <div style={{ marginTop: 3 }}><Pill label={p.status} tone={p.tone} /></div>
                   </div>
                 </div>
@@ -331,12 +331,12 @@ function SellingScreen({ app }) {
                     </div>
                     <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>{l.type === 'auction' ? l.bids + ' bids · ends ' + l.timeLeft : 'listed at ' + money0AC(l.price)}</div>
                   </div>
-                  <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 15 }}>{moneyAC(l.price)}</div>
+                  <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 15 }}>{moneyAC(l.price)}</div>
                 </div>
                 <div style={{ display: 'flex', gap: 8, marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--line-2)' }}>
                   {[['Views', l.views], ['Watchers', l.watchers], ['Offers', l.offers]].map(([k, v]) => (
                     <div key={k} style={{ flex: 1, textAlign: 'center' }}>
-                      <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 15, color: k === 'Offers' && v > 0 ? TAC.accent : TAC.ink }}>{v}</div>
+                      <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 15, color: k === 'Offers' && v > 0 ? TAC.accent : TAC.ink }}>{v}</div>
                       <div style={{ fontFamily: TAC.sans, fontSize: 10.5, color: TAC.muted }}>{k}</div>
                     </div>
                   ))}
@@ -351,7 +351,7 @@ function SellingScreen({ app }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             <div style={{ background: 'var(--up-wash)', borderRadius: 13, padding: '12px 14px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 4 }}>
               <span style={{ fontFamily: TAC.sans, fontWeight: 600, fontSize: 13.5, color: TAC.ink2 }}>Earned this month</span>
-              <span style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 18, color: 'var(--up)' }}>{moneyAC(sold.reduce((s, l) => s + l.price, 0))}</span>
+              <span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 18, color: 'var(--up)' }}>{moneyAC(sold.reduce((s, l) => s + l.price, 0))}</span>
             </div>
             {sold.map((l, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, background: TAC.surface, borderRadius: 13, padding: 10, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -361,7 +361,7 @@ function SellingScreen({ app }) {
                   <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>to {l.buyer} · {l.date}</div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 14, color: 'var(--up)' }}>+{moneyAC(l.price)}</div>
+                  <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, color: 'var(--up)' }}>+{moneyAC(l.price)}</div>
                   <Pill label="Paid out" tone="green" />
                 </div>
               </div>
@@ -431,7 +431,7 @@ function OffersScreen({ app }) {
                         <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>{o.card.name}</div>
                         <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>{o.from} offered · listed {money0AC(o.list)}</div>
                       </div>
-                      <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 17, color: TAC.accent }}>{money0AC(o.amount)}</div>
+                      <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, color: TAC.accent }}>{money0AC(o.amount)}</div>
                     </div>
                     <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--line-2)' }}>
                       {a ? <div style={{ textAlign: 'center', fontFamily: TAC.sans, fontWeight: 700, fontSize: 13, color: a === 'accept' ? 'var(--up)' : a === 'decline' ? 'var(--down)' : TAC.accent }}>
@@ -474,7 +474,7 @@ function PaymentsScreen({ app }) {
         {/* balance */}
         <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff' }}>
           <div style={{ fontFamily: TAC.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Available to withdraw</div>
-          <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 34, letterSpacing: -0.5, marginTop: 2 }}>{moneyAC(balance)}</div>
+          <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 34, letterSpacing: -0.5, marginTop: 2 }}>{moneyAC(balance)}</div>
           <div style={{ display: 'flex', gap: 9, marginTop: 14 }}>
             <button onClick={() => app.toast('Withdrawing to bank ••6789')} style={{ flex: 1, background: '#fff', color: TAC.ink, borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Withdraw</button>
             <button onClick={() => app.toast('Store credit balance: $80')} style={{ flex: 1, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Store credit</button>
@@ -519,7 +519,7 @@ function PaymentsScreen({ app }) {
                 <div style={{ fontFamily: TAC.sans, fontWeight: 600, fontSize: 13.5 }}>{t.label}</div>
                 <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>{t.sub}</div>
               </div>
-              <div style={{ fontFamily: TAC.mono, fontWeight: 700, fontSize: 14, color: t.pos ? 'var(--up)' : TAC.ink }}>{t.pos ? '+' : ''}{moneyAC(t.amount)}</div>
+              <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, color: t.pos ? 'var(--up)' : TAC.ink }}>{t.pos ? '+' : ''}{moneyAC(t.amount)}</div>
             </div>
           ))}
         </div>

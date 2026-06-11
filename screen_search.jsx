@@ -191,7 +191,7 @@ function SearchScreen({ app, params = {} }) {
         <FilterGroup label={'Max price · ' + moneyS(maxPrice, {cents:false})}>
           <input type="range" min="10" max="35000" step="10" value={maxPrice} onChange={e => setMaxPrice(+e.target.value)}
             style={{ width: '100%', accentColor: 'var(--accent)' }} />
-          <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: TS.mono, fontSize: 11, color: TS.faint }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: TS.sans, fontSize: 11, color: TS.faint }}>
             <span>$10</span><span>$35,000+</span>
           </div>
         </FilterGroup>

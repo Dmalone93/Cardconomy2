@@ -55,13 +55,13 @@ function CheckoutScreen({ app, params }) {
           <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconC.check({ width: 44, height: 44 })}</div>
           <h2 style={{ margin: '20px 0 4px', fontFamily: TC.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>Order confirmed</h2>
-          <div style={{ fontFamily: TC.mono, fontSize: 13, color: TC.muted }}>{orderNo}</div>
+          <div style={{ fontFamily: TC.sans, fontSize: 13, color: TC.muted }}>{orderNo}</div>
           <div style={{ background: TC.surface, borderRadius: 16, padding: 16, marginTop: 22, textAlign: 'left', display: 'flex', gap: 14, alignItems: 'center' }}>
             <div style={{ background: TC.surface2, borderRadius: 10, padding: 8 }}><CardArtC item={item} w={56} /></div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 15 }}>{item.name}</div>
               <div style={{ fontFamily: TC.sans, fontSize: 12.5, color: TC.muted }}>from {item.seller}</div>
-              <div style={{ fontFamily: TC.mono, fontWeight: 700, fontSize: 16, marginTop: 4 }}>{moneyC(total)}</div>
+              <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 16, marginTop: 4 }}>{moneyC(total)}</div>
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--accent-wash)', color: TC.accent, borderRadius: 12, padding: '13px 14px', marginTop: 14, textAlign: 'left' }}>
@@ -93,7 +93,7 @@ function CheckoutScreen({ app, params }) {
             <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
             <div style={{ fontFamily: TC.sans, fontSize: 12, color: TC.muted }}>{setByIdC(item.set)?.name} · {item.seller}</div>
           </div>
-          <div style={{ fontFamily: TC.mono, fontWeight: 700, fontSize: 17 }}>{moneyC(item.price)}</div>
+          <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 17 }}>{moneyC(item.price)}</div>
         </div>
 
         {/* address */}
@@ -111,9 +111,9 @@ function CheckoutScreen({ app, params }) {
         <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 800, fontSize: 14, color: TC.ink2 }}>Delivery</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
           <SelectRow on={ship==='standard'} onClick={() => setShip('standard')} title="Standard · tracked"
-            sub="Arrives Mon, Jun 16" trailing={<span style={{ fontFamily: TC.mono, fontWeight: 700, fontSize: 14, color: shipCost===0?TC.up:TC.ink }}>{shipCost===0?'Free':moneyC(shipCost)}</span>} />
+            sub="Arrives Mon, Jun 16" trailing={<span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14, color: shipCost===0?TC.up:TC.ink }}>{shipCost===0?'Free':moneyC(shipCost)}</span>} />
           <SelectRow on={ship==='express'} onClick={() => setShip('express')} title="Express · insured"
-            sub="Arrives Wed, Jun 11" trailing={<span style={{ fontFamily: TC.mono, fontWeight: 700, fontSize: 14 }}>$9.99</span>} />
+            sub="Arrives Wed, Jun 11" trailing={<span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14 }}>$9.99</span>} />
         </div>
 
         {/* payment */}
@@ -135,13 +135,13 @@ function CheckoutScreen({ app, params }) {
         <div style={{ marginTop: 20, background: TC.surface, borderRadius: 16, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           {[['Item', moneyC(item.price)], ['Shipping', expedited===0?'Free':moneyC(expedited)], ['Buyer Protection', moneyC(protection)], ['Est. tax', moneyC(tax)]].map(([k,v]) => (
             <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontFamily: TC.sans, fontSize: 14, color: TC.ink2 }}>
-              <span style={{ color: TC.muted }}>{k}</span><span style={{ fontFamily: TC.mono, fontWeight: 600 }}>{v}</span>
+              <span style={{ color: TC.muted }}>{k}</span><span style={{ fontFamily: TC.sans, fontWeight: 600 }}>{v}</span>
             </div>
           ))}
           <div style={{ height: 1, background: 'var(--line-2)', margin: '8px 0' }} />
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
             <span style={{ fontFamily: TC.sans, fontWeight: 800, fontSize: 16 }}>Total</span>
-            <span style={{ fontFamily: TC.mono, fontWeight: 700, fontSize: 22 }}>{moneyC(total)}</span>
+            <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 22 }}>{moneyC(total)}</span>
           </div>
         </div>
       </div>

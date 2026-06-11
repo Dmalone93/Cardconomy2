@@ -23,7 +23,7 @@ function CartScreen({ app }) {
           <p style={{ fontFamily: TCart.sans, fontSize: 14, color: TCart.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 280 }}>
             {items.length} card{items.length !== 1 ? 's' : ''} from {sellers.length} seller{sellers.length !== 1 ? 's' : ''} on the way. We'll text tracking as each ships.
           </p>
-          <div style={{ fontFamily: TCart.mono, fontWeight: 700, fontSize: 18, marginTop: 16 }}>{moneyCart(total)}</div>
+          <div style={{ fontFamily: TCart.sans, fontWeight: 700, fontSize: 18, marginTop: 16 }}>{moneyCart(total)}</div>
         </div>
         <div style={{ padding: '12px 16px 30px', borderTop: '1px solid var(--line)', background: TCart.surface }}>
           <button onClick={() => { app.clearCart(); app.nav.setTab('home'); }} style={{ width: '100%', background: TCart.accent, color: '#fff', borderRadius: 14, padding: 16, fontFamily: TCart.sans, fontWeight: 700, fontSize: 16 }}>Keep browsing</button>
@@ -60,7 +60,7 @@ function CartScreen({ app }) {
                     <div style={{ fontFamily: TCart.sans, fontSize: 11.5, color: TCart.muted }}>{c.seller} · {c.shipping === 0 ? 'Free ship' : moneyCart(c.shipping) + ' ship'}</div>
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                    <div style={{ fontFamily: TCart.mono, fontWeight: 700, fontSize: 15 }}>{moneyCart(c.price)}</div>
+                    <div style={{ fontFamily: TCart.sans, fontWeight: 700, fontSize: 15 }}>{moneyCart(c.price)}</div>
                     <button onClick={() => app.removeFromCart(c.id)} style={{ fontFamily: TCart.sans, fontSize: 11.5, fontWeight: 600, color: TCart.down, marginTop: 2 }}>Remove</button>
                   </div>
                 </div>
@@ -77,13 +77,13 @@ function CartScreen({ app }) {
             <div style={{ marginTop: 16, background: TCart.surface, borderRadius: 16, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               {[['Subtotal', moneyCart(subtotal)], ['Shipping', shipping === 0 ? 'Free' : moneyCart(shipping)], ['Buyer Protection', moneyCart(protection)]].map(([k, v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '6px 0', fontFamily: TCart.sans, fontSize: 14, color: TCart.ink2 }}>
-                  <span style={{ color: TCart.muted }}>{k}</span><span style={{ fontFamily: TCart.mono, fontWeight: 600 }}>{v}</span>
+                  <span style={{ color: TCart.muted }}>{k}</span><span style={{ fontFamily: TCart.sans, fontWeight: 600 }}>{v}</span>
                 </div>
               ))}
               <div style={{ height: 1, background: 'var(--line-2)', margin: '8px 0' }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontFamily: TCart.sans, fontWeight: 800, fontSize: 16 }}>Total</span>
-                <span style={{ fontFamily: TCart.mono, fontWeight: 700, fontSize: 22 }}>{moneyCart(total)}</span>
+                <span style={{ fontFamily: TCart.sans, fontWeight: 700, fontSize: 22 }}>{moneyCart(total)}</span>
               </div>
             </div>
           </div>

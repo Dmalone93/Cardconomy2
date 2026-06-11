@@ -11,10 +11,10 @@ function ListCard({ item, app, w }) {
   return (
     <div onClick={() => app.nav.push('listing', { id: item.id })} role="button" style={{
       width: w || '100%', textAlign: 'left', background: T.surface, cursor: 'pointer',
-      borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column',
+      borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
       boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
     }}>
-      <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: T.surface2 }}>
+      <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#ffffff' }}>
         <CardArt item={item} w={140} />
         <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(item.id); }} style={{
           position: 'absolute', top: 10, right: 10, width: 32, height: 32, borderRadius: 999,
@@ -26,14 +26,13 @@ function ListCard({ item, app, w }) {
           <GradeChip grade={item.grade} />
         </div>
       </div>
-      <div style={{ padding: '9px 12px 13px' }}>
+      <div style={{ padding: '10px 12px 12px' }}>
         <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 14, lineHeight: 1.15, letterSpacing: -0.2,
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
         <div style={{ fontFamily: T.sans, fontSize: 11.5, color: T.muted, marginTop: 1, marginBottom: 8,
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.subtitle || item.condition}</div>
-        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 6 }}>
-          <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 16, color: T.ink }}>{money(item.price)}</span>
-          {item.market ? <Delta from={item.history ? item.history[0] : item.market} to={item.price} /> : null}
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+          <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 16, color: T.ink }}>{money(item.price)}</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 7,
           fontFamily: T.sans, fontSize: 11, color: T.muted, whiteSpace: 'nowrap', overflow: 'hidden' }}>
@@ -58,12 +57,12 @@ function ListRow({ item, app }) {
   const watched = app.isWatched(item.id);
   return (
     <button onClick={() => app.nav.push('listing', { id: item.id })} style={{
-      width: '100%', textAlign: 'left', background: T.surface, borderRadius: 14,
+      width: '100%', textAlign: 'left', background: T.surface, borderRadius: 4,
       padding: 10, display: 'flex', gap: 12, alignItems: 'center',
       boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
     }}>
-      <div style={{ background: T.surface2, borderRadius: 10, padding: 7, flexShrink: 0 }}>
-        <CardArt item={item} w={54} radius={6} />
+      <div style={{ background: '#ffffff', borderRadius: 4, padding: 7, flexShrink: 0 }}>
+        <CardArt item={item} w={54} radius={4} />
       </div>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 3 }}>
@@ -78,7 +77,7 @@ function ListRow({ item, app }) {
         </div>
       </div>
       <div style={{ textAlign: 'right', flexShrink: 0 }}>
-        <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 15.5 }}>{money(item.price)}</div>
+        <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 15.5 }}>{money(item.price)}</div>
         {item.type === 'auction'
           ? <div style={{ fontFamily: T.sans, fontSize: 11, color: T.down, fontWeight: 600 }}>{item.timeLeft}</div>
           : <div style={{ fontFamily: T.sans, fontSize: 11, color: T.muted }}>{item.shipping === 0 ? 'Free ship' : money(item.shipping)}</div>}
@@ -108,8 +107,8 @@ function AdCarousel({ onPick, app }) {
   }, [paused, banners.length]);
   if (banners.length === 0) return null;
   return (
-    <div style={{ padding: '14px 16px 4px' }}>
-      <div style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', height: 132,
+    <div style={{ padding: '12px 16px 0' }}>
+      <div style={{ position: 'relative', borderRadius: 4, overflow: 'hidden', height: 132,
         boxShadow: '0 1px 3px rgba(20,24,40,0.06), 0 8px 20px rgba(20,24,40,0.08)' }}
         onTouchStart={() => setPaused(true)}>
         {banners.map((ad, n) => (
@@ -144,8 +143,8 @@ function AdCarousel({ onPick, app }) {
 
 function SectionHeader({ title, action, onAction }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, padding: '0 16px 11px' }}>
-      <h2 style={{ margin: 0, fontFamily: T.sans, fontWeight: 800, fontSize: 19, letterSpacing: -0.4, whiteSpace: 'nowrap' }}>{title}</h2>
+    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, padding: '0 16px 12px' }}>
+      <h2 style={{ margin: 0, fontFamily: T.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3, whiteSpace: 'nowrap' }}>{title}</h2>
       {action && <button onClick={onAction} style={{ fontFamily: T.sans, fontSize: 13.5, fontWeight: 600, color: T.accent, whiteSpace: 'nowrap', flexShrink: 0 }}>{action}</button>}
     </div>
   );
@@ -156,7 +155,7 @@ function SetTile({ set, onClick }) {
   const g = gameById(set.game);
   return (
     <button onClick={onClick} style={{
-      width: 150, flexShrink: 0, textAlign: 'left', borderRadius: 14, overflow: 'hidden',
+      width: 150, flexShrink: 0, textAlign: 'left', borderRadius: 4, overflow: 'hidden',
       background: set.hue, color: '#fff', position: 'relative', height: 96,
       padding: 13, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
       boxShadow: '0 4px 14px rgba(20,24,40,0.12)',
@@ -169,7 +168,7 @@ function SetTile({ set, onClick }) {
         : <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 8px, transparent 8px 16px)' }} />}
       <div style={{ position: 'absolute', top: 11, left: 13, fontFamily: T.sans, fontWeight: 700, fontSize: 10.5, opacity: 0.9, letterSpacing: 0.3, textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{g.short.toUpperCase()}</div>
       <div style={{ position: 'relative', fontFamily: T.sans, fontWeight: 800, fontSize: 15, lineHeight: 1.1, letterSpacing: -0.3, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{set.name.replace(/\s*\(.*\)/, '')}</div>
-      <div style={{ position: 'relative', fontFamily: T.mono, fontSize: 10.5, opacity: 0.9, marginTop: 2, textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>{set.cards} cards · {set.year}</div>
+      <div style={{ position: 'relative', fontFamily: T.sans, fontSize: 10.5, opacity: 0.9, marginTop: 2, textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>{set.cards} cards · {set.year}</div>
     </button>
   );
 }
@@ -181,8 +180,10 @@ function HomeScreen({ app }) {
   const myGames = GAMES.filter(g => app.inPrefs(g.id));
   // if the active chip leaves prefs, snap back to "all"
   React.useEffect(() => { if (game !== 'all' && !app.inPrefs(game)) setGame('all'); }, [app.prefs]);
-  const inFeed = (x) => app.inPrefs(x.game);
-  const filt = (arr) => (game === 'all' ? arr.filter(inFeed) : arr.filter(x => x.game === game));
+  const RELIABLE_IMG = new Set(['pkmn', 'mtg', 'ygo']);
+  const hasImage = (x) => RELIABLE_IMG.has(x.game);
+  const inFeed = (x) => app.inPrefs(x.game) && hasImage(x);
+  const filt = (arr) => (game === 'all' ? arr.filter(inFeed) : arr.filter(x => x.game === game && hasImage(x)));
   const auctions = filt(LISTINGS.filter(l => l.type === 'auction'));
   const trending = filt(LISTINGS.filter(l => l.type === 'buynow'));
   const sets = filt(SETS).filter(s => s.img);
@@ -193,13 +194,13 @@ function HomeScreen({ app }) {
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: T.bg, paddingBottom: 96 }}>
       {/* top bar */}
       <div style={{ padding: '58px 16px 10px', background: T.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 13 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-            <button onClick={() => app.openMenu()} style={{ color: T.ink, padding: '2px 6px 2px 0', display: 'flex', alignItems: 'center' }}>{Icon.menu({})}</button>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 13, position: 'relative' }}>
+          <button onClick={() => app.openMenu()} style={{ color: T.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{Icon.menu({})}</button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 7, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
             <Logo size={26} color={T.accent} />
             <img src="brand/wordmark.png" alt="CARDONOMY" style={{ height: 16, width: 'auto', display: 'block', filter: 'var(--logo-invert, none)' }} />
           </div>
-          <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: T.surface2, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: T.surface2, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             {Icon.cart({ width: 20, height: 20 })}
             {app.cartCount > 0 && (
               <span style={{ position: 'absolute', top: -2, right: -2, minWidth: 17, height: 17, borderRadius: 999, background: T.accent, color: '#fff',
@@ -209,7 +210,7 @@ function HomeScreen({ app }) {
         </div>
         <button onClick={() => app.nav.setTab('search')} style={{
           width: '100%', display: 'flex', alignItems: 'center', gap: 9, textAlign: 'left',
-          background: T.surface2, borderRadius: 12, padding: '11px 14px', color: T.muted,
+          background: T.surface2, borderRadius: 4, padding: '11px 14px', color: T.muted,
           boxShadow: 'inset 0 0 0 1px var(--line)',
         }}>
           {Icon.search({ style: { color: T.faint } })}
@@ -217,8 +218,11 @@ function HomeScreen({ app }) {
         </button>
       </div>
 
+      {/* sponsored ad carousel */}
+      <AdCarousel app={app} onPick={(id) => setGame(id)} />
+
       {/* game chips — only games you follow, editable inline */}
-      <div className="noscroll" style={{ display: 'flex', gap: 8, padding: '14px 16px', overflowX: 'auto', alignItems: 'center' }}>
+      <div className="noscroll" style={{ display: 'flex', gap: 8, padding: '12px 16px 0', overflowX: 'auto', alignItems: 'center' }}>
         <Chip active={game === 'all'} onClick={() => setGame('all')}>{app.allGamesSelected() ? 'All games' : 'My games'}</Chip>
         {myGames.map(g => {
           const logo = window.GAME_LOGOS[g.id];
@@ -245,11 +249,10 @@ function HomeScreen({ app }) {
       </div>
       {window.GamePrefsSheet && <window.GamePrefsSheet app={app} open={prefsOpen} onClose={() => setPrefsOpen(false)} games={GAMES} />}
 
-      {/* sponsored ad carousel */}
-      <AdCarousel app={app} onPick={(id) => setGame(id)} />
-
       {/* featured — swaps with the selected game */}
-      <FeaturedRail app={app} game={game} onPick={(id) => setGame(id)} />
+      <div style={{ paddingTop: 20 }}>
+        <FeaturedRail app={app} game={game} onPick={(id) => setGame(id)} />
+      </div>
 
       {/* your active bids — pinned to top */}
       {(() => {
@@ -258,23 +261,23 @@ function HomeScreen({ app }) {
           .filter(b => b.item && (game === 'all' ? app.inPrefs(b.item.game) : b.item.game === game));
         if (myBids.length === 0) return null;
         return (
-          <div style={{ marginTop: 4, marginBottom: 24 }}>
+          <div style={{ paddingTop: 20 }}>
             <SectionHeader title="Your bids" action="View all" onAction={() => app.nav.setTab('watch')} />
             <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
               {myBids.map(b => {
                 const top = b.amount >= b.item.price;
                 return (
                   <button key={b.id} onClick={() => app.nav.push('listing', { id: b.id })} style={{ width: 200, flexShrink: 0, textAlign: 'left',
-                    background: T.surface, borderRadius: 16, padding: 12, display: 'flex', gap: 11, alignItems: 'center',
+                    background: T.surface, borderRadius: 4, padding: 12, display: 'flex', gap: 11, alignItems: 'center',
                     boxShadow: 'inset 0 0 0 1.5px ' + (top ? 'var(--accent)' : 'var(--down)') }}>
-                    <div style={{ background: T.surface2, borderRadius: 9, padding: 6, flexShrink: 0 }}><CardArt item={b.item} w={44} radius={6} /></div>
+                    <div style={{ background: '#ffffff', borderRadius: 4, padding: 6, flexShrink: 0 }}><CardArt item={b.item} w={44} radius={4} /></div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontFamily: T.sans, fontWeight: 800, fontSize: 10.5,
                         color: top ? T.accent : T.down, marginBottom: 2 }}>
                         {Icon.gavel({ width: 11, height: 11 })} {top ? 'TOP BID' : 'OUTBID'}
                       </div>
                       <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.item.name}</div>
-                      <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 13, marginTop: 1 }}>{money(b.amount)} <span style={{ fontFamily: T.sans, fontWeight: 500, fontSize: 10.5, color: T.muted }}>· {b.item.timeLeft}</span></div>
+                      <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 13, marginTop: 1 }}>{money(b.amount)} <span style={{ fontFamily: T.sans, fontWeight: 500, fontSize: 10.5, color: T.muted }}>· {b.item.timeLeft}</span></div>
                     </div>
                   </button>
                 );
@@ -286,7 +289,7 @@ function HomeScreen({ app }) {
 
       {/* ending soon auctions */}
       {auctions.length > 0 && (
-        <div style={{ marginTop: 4, marginBottom: 24 }}>
+        <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Ending soon" action="All auctions" onAction={() => app.nav.setTab('search')} />
           <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
             {auctions.map(l => <div key={l.id} style={{ width: 168, flexShrink: 0 }}><ListCard item={l} app={app} /></div>)}
@@ -296,7 +299,7 @@ function HomeScreen({ app }) {
 
       {/* trending grid */}
       {trending.length > 0 && (
-        <div style={{ marginBottom: 24 }}>
+        <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Trending now" action="See all" onAction={() => app.nav.setTab('search')} />
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
             {trending.slice(0, 6).map(l => <ListCard key={l.id} item={l} app={app} />)}
@@ -306,7 +309,7 @@ function HomeScreen({ app }) {
 
       {/* shop by set */}
       {sets.length > 0 && (
-        <div style={{ marginBottom: 24 }}>
+        <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Shop by set" action="Browse all" onAction={() => app.nav.setTab('search')} />
           <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
             {sets.map(s => <SetTile key={s.id} set={s} onClick={() => app.nav.push('search', { set: s.id })} />)}
@@ -316,7 +319,7 @@ function HomeScreen({ app }) {
 
       {/* graded spotlight */}
       {graded.length > 0 && (
-        <div style={{ marginBottom: 24 }}>
+        <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Graded spotlight" action="PSA · BGS · CGC" />
           <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '4px 16px 8px', overflowX: 'auto' }}>
             {graded.map(l => {
@@ -325,10 +328,10 @@ function HomeScreen({ app }) {
               return (
                 <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} role="button" style={{
                   flexShrink: 0, width: 168, textAlign: 'left', background: T.surface, cursor: 'pointer',
-                  borderRadius: 16, overflow: 'hidden', display: 'flex', flexDirection: 'column',
+                  borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
                   boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
                 }}>
-                  <div style={{ position: 'relative', padding: '14px 14px 10px', display: 'flex', justifyContent: 'center', background: T.surface2 }}>
+                  <div style={{ position: 'relative', padding: '14px 14px 10px', display: 'flex', justifyContent: 'center', background: '#ffffff' }}>
                     <Slab item={l} w={130} />
                     <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(l.id); }} style={{
                       position: 'absolute', top: 10, right: 10, width: 32, height: 32, borderRadius: 999,
@@ -340,14 +343,13 @@ function HomeScreen({ app }) {
                       <GradeChip grade={l.grade} />
                     </div>
                   </div>
-                  <div style={{ padding: '9px 12px 13px' }}>
+                  <div style={{ padding: '10px 12px 12px' }}>
                     <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 14, lineHeight: 1.15, letterSpacing: -0.2,
                       whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
                     <div style={{ fontFamily: T.sans, fontSize: 11.5, color: T.muted, marginTop: 1, marginBottom: 8,
                       whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.subtitle || l.condition}</div>
-                    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 6 }}>
-                      <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 16, color: T.ink }}>{money(l.price)}</span>
-                      {l.market ? <Delta from={l.history ? l.history[0] : l.market} to={l.price} /> : null}
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                      <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 16, color: T.ink }}>{money(l.price)}</span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 7,
                       fontFamily: T.sans, fontSize: 11, color: T.muted, whiteSpace: 'nowrap', overflow: 'hidden' }}>
@@ -372,7 +374,7 @@ function HomeScreen({ app }) {
 
       {/* bulk lots */}
       {lots.length > 0 && (
-        <div style={{ marginBottom: 24 }}>
+        <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Bulk lots & collections" />
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '0 16px' }}>
             {lots.map(lot => <LotRow key={lot.id} lot={lot} app={app} />)}
@@ -381,7 +383,7 @@ function HomeScreen({ app }) {
       )}
 
       {/* collector's corner — help & education */}
-      <div style={{ marginBottom: 8 }}>
+      <div style={{ paddingTop: 20 }}>
         <SectionHeader title="Collector's corner" action="All guides" onAction={() => app.toast('Opening the help center')} />
         <div style={{ padding: '0 16px', marginTop: -2, marginBottom: 12 }}>
           <div style={{ fontFamily: T.sans, fontSize: 13, color: T.muted, lineHeight: 1.45 }}>New to collecting, or want to protect what you own? Start here.</div>
@@ -389,7 +391,7 @@ function HomeScreen({ app }) {
         <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
           {GUIDES.map(gd => (
             <button key={gd.id} onClick={() => app.toast(gd.title)} style={{ flexShrink: 0, width: 232, textAlign: 'left',
-              background: T.surface, borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05), 0 6px 16px rgba(20,24,40,0.05)',
+              background: T.surface, borderRadius: 4, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05), 0 6px 16px rgba(20,24,40,0.05)',
               position: 'relative', height: 218, display: 'block' }}>
               <img src={gd.src} alt={gd.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.05) 0%, transparent 28%, rgba(0,0,0,0.35) 62%, rgba(0,0,0,0.85) 100%)' }} />
@@ -437,14 +439,14 @@ function FeaturedRail({ app, game, onPick }) {
   if (cards.length === 0) return null;
   const tint = { pkmn: '#d4a017', mtg: '#c2691b', ygo: '#7c4dd1', lor: '#c0392b', digimon: '#1f8fd6' };
   return (
-    <div style={{ marginTop: 4, marginBottom: 24 }}>
+    <div>
       <SectionHeader title={game && game !== 'all' ? 'Featured in ' + (gameById(game) ? gameById(game).short : '') : 'Featured'} action="See all" onAction={() => app.toast('Opening featured')} />
       <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
         {cards.map((c, n) => {
           const g = gameById(c.game);
           return (
             <button key={n} onClick={() => c.action ? app.nav.push(c.action) : onPick(c.game)} style={{ flexShrink: 0, width: 244, textAlign: 'left',
-              background: T.surface, borderRadius: 16, overflow: 'hidden', position: 'relative', height: 210, display: 'block',
+              background: T.surface, borderRadius: 4, overflow: 'hidden', position: 'relative', height: 210, display: 'block',
               boxShadow: '0 1px 3px rgba(20,24,40,0.05), 0 6px 16px rgba(20,24,40,0.06)' }}>
               <img src={c.src} alt={c.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: c.pos || 'center', display: 'block' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.04) 0%, transparent 30%, rgba(0,0,0,0.4) 64%, rgba(0,0,0,0.86) 100%)' }} />
@@ -476,12 +478,12 @@ function LotRow({ lot, app }) {
   const g = gameById(lot.game);
   return (
     <button onClick={() => app.nav.push('listing', { id: lot.id })} style={{
-      width: '100%', textAlign: 'left', background: T.surface, borderRadius: 14,
+      width: '100%', textAlign: 'left', background: T.surface, borderRadius: 4,
       padding: 12, display: 'flex', gap: 12, alignItems: 'center',
       boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
     }}>
       <div style={{
-        width: 58, height: 58, borderRadius: 11, flexShrink: 0, position: 'relative',
+        width: 58, height: 58, borderRadius: 4, flexShrink: 0, position: 'relative',
         background: lot.art, display: 'flex', alignItems: 'center', justifyContent: 'center',
         color: '#fff', overflow: 'hidden',
       }}>
@@ -490,7 +492,7 @@ function LotRow({ lot, app }) {
           : <React.Fragment>
               <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.12) 0 6px, transparent 6px 12px)' }} />
               <div style={{ position: 'relative', textAlign: 'center' }}>
-                <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 17, lineHeight: 1 }}>{lot.count >= 1000 ? (lot.count/1000)+'k' : lot.count}</div>
+                <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 17, lineHeight: 1 }}>{lot.count >= 1000 ? (lot.count/1000)+'k' : lot.count}</div>
                 <div style={{ fontFamily: T.sans, fontSize: 8.5, opacity: 0.85 }}>CARDS</div>
               </div>
             </React.Fragment>}
@@ -500,9 +502,8 @@ function LotRow({ lot, app }) {
         <div style={{ fontFamily: T.sans, fontSize: 11.5, color: T.muted, marginTop: 2,
           whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{lot.note}</div>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, marginTop: 5 }}>
-          <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 15 }}>{money(lot.price)}</span>
-          <span style={{ fontFamily: T.mono, fontSize: 11.5, color: T.faint, textDecoration: 'line-through' }}>{money(lot.market)}</span>
-          <Delta from={lot.market} to={lot.price} style={{ fontSize: 11 }} />
+          <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 15 }}>{money(lot.price)}</span>
+          <span style={{ fontFamily: T.sans, fontSize: 11.5, color: T.faint, textDecoration: 'line-through' }}>{money(lot.market)}</span>
         </div>
       </div>
     </button>

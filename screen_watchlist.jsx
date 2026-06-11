@@ -62,7 +62,7 @@ function WatchScreen({ app }) {
             <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff', marginBottom: 16 }}>
               <div style={{ fontFamily: TW.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Total portfolio value</div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 4 }}>
-                <span style={{ fontFamily: TW.mono, fontWeight: 700, fontSize: 30, letterSpacing: -0.5 }}>{moneyW(port.now)}</span>
+                <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 30, letterSpacing: -0.5 }}>{moneyW(port.now)}</span>
                 <DeltaW from={port.then} to={port.now} style={{ fontSize: 13, color: port.now>=port.then?'#7fe7a4':'#ff9b8a' }} />
               </div>
               <div style={{ marginTop: 12, marginLeft: -4 }}>
@@ -94,7 +94,7 @@ function WatchScreen({ app }) {
                     </div>
                     <div style={{ width: 54, opacity: 0.9 }}>{v.series.length>1 && <SparkW data={v.series} w={54} h={24} up={v.now>=v.then} fill={false} />}</div>
                     <div style={{ textAlign: 'right', minWidth: 60 }}>
-                      <div style={{ fontFamily: TW.mono, fontWeight: 700, fontSize: 14.5 }}>{moneyW(v.now)}</div>
+                      <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14.5 }}>{moneyW(v.now)}</div>
                       <DeltaW from={v.then} to={v.now} style={{ fontSize: 11 }} />
                     </div>
                     {IconW.chevron({ style: { color: TW.faint } })}
@@ -134,7 +134,7 @@ function WatchRow({ item, app }) {
           </div>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontFamily: TW.mono, fontWeight: 700, fontSize: 15 }}>{moneyW(item.price)}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{moneyW(item.price)}</div>
           <DeltaW from={then} to={item.price} style={{ fontSize: 11 }} />
         </div>
       </button>
@@ -155,7 +155,7 @@ function CollectionRow({ item, app }) {
       </div>
       <div style={{ width: 60, opacity: 0.9 }}><SparkW data={item.history} w={60} h={26} up={item.market>=then} fill={false} /></div>
       <div style={{ textAlign: 'right', minWidth: 64 }}>
-        <div style={{ fontFamily: TW.mono, fontWeight: 700, fontSize: 14.5 }}>{moneyW(item.market)}</div>
+        <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14.5 }}>{moneyW(item.market)}</div>
         <DeltaW from={then} to={item.market} style={{ fontSize: 11 }} />
       </div>
     </button>
@@ -206,7 +206,7 @@ function ProfileScreen({ app }) {
               {window.TrustBadge && app.tier >= 1 && <window.TrustBadge tier={app.tier >= 2 ? 2 : 1} />}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-              <StarsW rating={99} /><span style={{ fontFamily: TW.mono, fontSize: 12, color: TW.muted }}>99% · 214 deals</span>
+              <StarsW rating={99} /><span style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>99% · 214 deals</span>
             </div>
           </div>
           {IconW.shield({ style: { color: TW.up } })}
@@ -214,7 +214,7 @@ function ProfileScreen({ app }) {
         <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
           {[['Buying power', '$2,400'], ['This year', '$8.1k spent'], ['Sold', '$3.4k']].map(([k,v]) => (
             <div key={k} style={{ flex: 1, background: TW.surface2, borderRadius: 12, padding: '10px 12px' }}>
-              <div style={{ fontFamily: TW.mono, fontWeight: 700, fontSize: 15 }}>{v}</div>
+              <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{v}</div>
               <div style={{ fontFamily: TW.sans, fontSize: 10.5, color: TW.muted }}>{k}</div>
             </div>
           ))}
@@ -326,7 +326,7 @@ function CollectionDetailScreen({ app, params }) {
         <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff', marginBottom: 16 }}>
           <div style={{ fontFamily: TW.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Collection value</div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 4 }}>
-            <span style={{ fontFamily: TW.mono, fontWeight: 700, fontSize: 28, letterSpacing: -0.5 }}>{moneyW(v.now)}</span>
+            <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.5 }}>{moneyW(v.now)}</span>
             <DeltaW from={v.then} to={v.now} style={{ fontSize: 13, color: v.now>=v.then?'#7fe7a4':'#ff9b8a' }} />
           </div>
           {v.series.length > 1 && <div style={{ marginTop: 12, marginLeft: -4 }}><SparkW data={v.series} w={320} h={50} up={v.now>=v.then} dots /></div>}
@@ -353,7 +353,7 @@ function CollectionDetailScreen({ app, params }) {
                     <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} · <GradeInline grade={item.grade} /></div>
                   </div>
                   <div style={{ textAlign: 'right', minWidth: 58 }}>
-                    <div style={{ fontFamily: TW.mono, fontWeight: 700, fontSize: 14 }}>{moneyW(item.market || item.price)}</div>
+                    <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(item.market || item.price)}</div>
                     <DeltaW from={item.history ? item.history[0] : (item.market||item.price)} to={item.market || item.price} style={{ fontSize: 11 }} />
                   </div>
                 </button>

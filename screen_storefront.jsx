@@ -85,7 +85,7 @@ function StorefrontScreen({ app, params = {} }) {
                     <div style={{ background: TF.surface2, padding: '12px 12px 6px', display: 'flex', justifyContent: 'center' }}><CardArtF item={l} w={86} /></div>
                     <div style={{ padding: '8px 11px 11px' }}>
                       <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
-                      <div style={{ fontFamily: TF.mono, fontWeight: 700, fontSize: 14, marginTop: 2 }}>{moneyF(l.price)}</div>
+                      <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 14, marginTop: 2 }}>{moneyF(l.price)}</div>
                     </div>
                   </button>
                 ))}
@@ -131,12 +131,13 @@ function EnrollShopScreen({ app }) {
       </div>
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 110 }}>
         {/* hero */}
-        <div style={{ background: 'linear-gradient(160deg, #2f8f5b, #1f6e44)', color: '#fff', padding: '92px 22px 30px', position: 'relative', overflow: 'hidden' }}>
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.06) 0 16px, transparent 16px 32px)' }} />
+        <div style={{ color: '#fff', padding: '92px 22px 30px', position: 'relative', overflow: 'hidden', minHeight: 280 }}>
+          <img src="content/enroll-hero.webp" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.7) 75%, rgba(0,0,0,0.9) 100%)' }} />
           <div style={{ position: 'relative' }}>
-            <div style={{ display: 'inline-block', fontFamily: TF.sans, fontWeight: 700, fontSize: 12, background: 'rgba(255,255,255,0.2)', borderRadius: 8, padding: '5px 11px', marginBottom: 14 }}>FOR LOCAL GAME SHOPS</div>
-            <h1 style={{ margin: 0, fontFamily: TF.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, lineHeight: 1.05 }}>Turn your shop into the local card hub</h1>
-            <p style={{ fontFamily: TF.sans, fontSize: 15, opacity: 0.92, lineHeight: 1.5, margin: '12px 0 0' }}>Join the Cardonomy network — free deal flow, a storefront, and tools that bring collectors through your door.</p>
+            <div style={{ display: 'inline-block', fontFamily: TF.sans, fontWeight: 700, fontSize: 12, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(6px)', borderRadius: 4, padding: '5px 11px', marginBottom: 14 }}>FOR LOCAL GAME SHOPS</div>
+            <h1 style={{ margin: 0, fontFamily: TF.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, lineHeight: 1.05, textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>Turn your shop into the local card hub</h1>
+            <p style={{ fontFamily: TF.sans, fontSize: 15, opacity: 0.92, lineHeight: 1.5, margin: '12px 0 0', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>Join the Cardonomy network — free deal flow, a storefront, and tools that bring collectors through your door.</p>
           </div>
         </div>
 
@@ -144,7 +145,7 @@ function EnrollShopScreen({ app }) {
         <div style={{ display: 'flex', gap: 10, padding: 16, marginTop: -2 }}>
           {[['$0', 'to enroll'], ['2 days', 'to go live'], ['9%', 'flat seller fee']].map(([v, k]) => (
             <div key={k} style={{ flex: 1, background: TF.surface, borderRadius: 13, padding: '12px 10px', textAlign: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-              <div style={{ fontFamily: TF.mono, fontWeight: 700, fontSize: 18 }}>{v}</div>
+              <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 18 }}>{v}</div>
               <div style={{ fontFamily: TF.sans, fontSize: 10.5, color: TF.muted }}>{k}</div>
             </div>
           ))}

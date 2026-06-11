@@ -9,7 +9,7 @@ function StatBox({ label, value, sub, color }) {
   return (
     <div style={{ flex: 1, background: TL.surface2, borderRadius: 12, padding: '11px 12px' }}>
       <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, fontWeight: 600, marginBottom: 3 }}>{label}</div>
-      <div style={{ fontFamily: TL.mono, fontWeight: 700, fontSize: 17, color: color || TL.ink }}>{value}</div>
+      <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, color: color || TL.ink }}>{value}</div>
       {sub && <div style={{ fontFamily: TL.sans, fontSize: 10.5, color: TL.muted, marginTop: 1 }}>{sub}</div>}
     </div>
   );
@@ -69,7 +69,7 @@ function ListingScreen({ app, params }) {
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
               boxShadow: '0 12px 30px rgba(0,0,0,0.18)' }}>
               <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.1) 0 10px, transparent 10px 20px)' }} />
-              <div style={{ position: 'relative', fontFamily: TL.mono, fontWeight: 700, fontSize: 52, lineHeight: 1 }}>{item.count}</div>
+              <div style={{ position: 'relative', fontFamily: TL.sans, fontWeight: 700, fontSize: 52, lineHeight: 1 }}>{item.count}</div>
               <div style={{ position: 'relative', fontFamily: TL.sans, fontWeight: 700, fontSize: 14, letterSpacing: 1, opacity: 0.9 }}>CARD LOT</div>
             </div>
           ) : item.grade.company !== 'raw' ? (
@@ -95,9 +95,9 @@ function ListingScreen({ app, params }) {
 
           {/* price */}
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 16 }}>
-            <span style={{ fontFamily: TL.mono, fontWeight: 700, fontSize: 32, letterSpacing: -1, color: TL.ink }}>{moneyL(item.price)}</span>
+            <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 32, letterSpacing: -1, color: TL.ink }}>{moneyL(item.price)}</span>
             {item.market && <span style={{ fontFamily: TL.sans, fontSize: 13, color: TL.muted, paddingBottom: 6 }}>
-              market <b style={{ color: TL.ink2, fontFamily: TL.mono }}>{moneyL(item.market)}</b>
+              market <b style={{ color: TL.ink2, fontFamily: TL.sans }}>{moneyL(item.market)}</b>
             </span>}
           </div>
           {isAuction && (
@@ -155,7 +155,7 @@ function ListingScreen({ app, params }) {
                 </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
-                <span style={{ fontFamily: TL.mono, fontWeight: 700, fontSize: 18 }}>{moneyL(item.price)}</span>
+                <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 18 }}>{moneyL(item.price)}</span>
                 <DeltaL from={hist[0]} to={item.price} />
                 <span style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.muted }}>vs {tf} ago</span>
               </div>
@@ -181,7 +181,7 @@ function ListingScreen({ app, params }) {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
                   <StarsL rating={item.sellerRating} />
-                  <span style={{ fontFamily: TL.mono, fontSize: 12, color: TL.muted }}>{item.sellerRating}% · {item.sellerSales.toLocaleString()} sales</span>
+                  <span style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>{item.sellerRating}% · {item.sellerSales.toLocaleString()} sales</span>
                 </div>
               </div>
               <button onClick={() => app.nav.push('storefront', { shop: 'gnome' })} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13,
@@ -217,7 +217,7 @@ function ListingScreen({ app, params }) {
                 <button key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{ flexShrink: 0, width: 110, textAlign: 'left' }}>
                   <div style={{ background: TL.surface2, borderRadius: 12, padding: 10, display: 'flex', justifyContent: 'center' }}><CardArtL item={l} w={84} /></div>
                   <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 12.5, marginTop: 6, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
-                  <div style={{ fontFamily: TL.mono, fontWeight: 700, fontSize: 13 }}>{moneyL(l.price)}</div>
+                  <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{moneyL(l.price)}</div>
                 </button>
               ))}
             </div>
@@ -233,7 +233,7 @@ function ListingScreen({ app, params }) {
           <React.Fragment>
             <div style={{ flex: 1 }}>
               <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted }}>Current bid · {item.bids} bids</div>
-              <div style={{ fontFamily: TL.mono, fontWeight: 700, fontSize: 20 }}>{moneyL(item.price)}</div>
+              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 20 }}>{moneyL(item.price)}</div>
             </div>
             <button onClick={() => setSheet('bid')} style={{ flex: 1.1, background: TL.accent, color: '#fff', borderRadius: 14,
               padding: '15px 12px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>Place bid</button>
@@ -291,9 +291,9 @@ function ListingScreen({ app, params }) {
 function OfferInput({ value, setValue, placeholder }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', background: TL.surface2, borderRadius: 14, padding: '14px 16px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-      <span style={{ fontFamily: TL.mono, fontWeight: 700, fontSize: 26, color: TL.muted, marginRight: 4 }}>$</span>
+      <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 26, color: TL.muted, marginRight: 4 }}>$</span>
       <input autoFocus type="number" value={value} onChange={e => setValue(e.target.value)} placeholder={placeholder.replace('$','')}
-        style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TL.mono, fontWeight: 700, fontSize: 26, color: TL.ink, minWidth: 0 }} />
+        style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TL.sans, fontWeight: 700, fontSize: 26, color: TL.ink, minWidth: 0 }} />
     </div>
   );
 }

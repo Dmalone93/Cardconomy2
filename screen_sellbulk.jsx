@@ -65,7 +65,7 @@ function SellBulkScreen({ app }) {
         <div style={{ padding: '52px 14px 12px', background: TB.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={goBack} style={{ color: TB.ink }}>{IconB.back({})}</button>
           <span style={{ fontFamily: TB.sans, fontWeight: 800, fontSize: 16, flex: 1 }}>Bulk list to marketplace</span>
-          {phase === 'price' && <span style={{ fontFamily: TB.mono, fontSize: 13, color: TB.muted }}>{listed} cards</span>}
+          {phase === 'price' && <span style={{ fontFamily: TB.sans, fontSize: 13, color: TB.muted }}>{listed} cards</span>}
         </div>
       )}
 
@@ -95,7 +95,7 @@ function SellBulkScreen({ app }) {
           <div style={{ padding: '16px 16px 16px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
               <h1 style={{ margin: 0, fontFamily: TB.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Price &amp; publish</h1>
-              <span style={{ fontFamily: TB.mono, fontSize: 13, color: TB.muted }}>{scanned}+ scanned</span>
+              <span style={{ fontFamily: TB.sans, fontSize: 13, color: TB.muted }}>{scanned}+ scanned</span>
             </div>
             <p style={{ fontFamily: TB.sans, fontSize: 13, color: TB.muted, margin: '4px 0 16px' }}>
               We auto-priced each card from market. Pick a strategy for all, then fine-tune below.
@@ -145,13 +145,13 @@ function SellBulkScreen({ app }) {
             <div style={{ marginTop: 16, background: 'var(--fill)', borderRadius: 16, padding: 16, color: '#fff' }}>
               {[['List price total', moneyB(gross)], ['Seller fee (9%)', '–' + moneyB(fee)]].map(([k, v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', fontFamily: TB.sans, fontSize: 13.5, color: 'rgba(255,255,255,0.75)' }}>
-                  <span>{k}</span><span style={{ fontFamily: TB.mono, fontWeight: 600 }}>{v}</span>
+                  <span>{k}</span><span style={{ fontFamily: TB.sans, fontWeight: 600 }}>{v}</span>
                 </div>
               ))}
               <div style={{ height: 1, background: 'rgba(255,255,255,0.15)', margin: '8px 0' }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontFamily: TB.sans, fontWeight: 700, fontSize: 15 }}>You earn if all sell</span>
-                <span style={{ fontFamily: TB.mono, fontWeight: 700, fontSize: 22, color: '#7fe7a4' }}>{moneyB(net)}</span>
+                <span style={{ fontFamily: TB.sans, fontWeight: 700, fontSize: 22, color: '#7fe7a4' }}>{moneyB(net)}</span>
               </div>
             </div>
           </div>
@@ -172,7 +172,7 @@ function SellBulkScreen({ app }) {
                 <div key={c.id} style={{ flexShrink: 0, position: 'relative' }}>
                   <CardArtB item={c} w={62} />
                   <div style={{ position: 'absolute', bottom: 4, left: '50%', transform: 'translateX(-50%)', background: 'rgba(0,0,0,0.7)', color: '#fff',
-                    fontFamily: TB.mono, fontWeight: 700, fontSize: 9, padding: '1px 5px', borderRadius: 5, whiteSpace: 'nowrap' }}>{moneyB(grossEach(c), { cents: false })}</div>
+                    fontFamily: TB.sans, fontWeight: 700, fontSize: 9, padding: '1px 5px', borderRadius: 5, whiteSpace: 'nowrap' }}>{moneyB(grossEach(c), { cents: false })}</div>
                 </div>
               ))}
             </div>
@@ -224,7 +224,7 @@ function BulkPriceRow({ c, price, listType, excluded, onToggle }) {
         </div>
       </div>
       <div style={{ textAlign: 'right', flexShrink: 0 }}>
-        <div style={{ fontFamily: TB.mono, fontWeight: 700, fontSize: 14, color: excluded ? TB.faint : TB.ink, textDecoration: excluded ? 'line-through' : 'none' }}>{moneyB(price, { cents: false })}</div>
+        <div style={{ fontFamily: TB.sans, fontWeight: 700, fontSize: 14, color: excluded ? TB.faint : TB.ink, textDecoration: excluded ? 'line-through' : 'none' }}>{moneyB(price, { cents: false })}</div>
         <div style={{ fontFamily: TB.sans, fontSize: 10, color: TB.muted }}>{listType === 'auction' ? 'start bid' : 'list price'}</div>
       </div>
       <button onClick={onToggle} style={{ width: 26, height: 26, borderRadius: 999, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',

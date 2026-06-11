@@ -65,7 +65,7 @@ function AuthCardScreen({ app, params = {} }) {
               ))}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 12 }}>
                 <span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 14 }}>Authentication fee</span>
-                <span style={{ fontFamily: TAU.mono, fontWeight: 700, fontSize: 18 }}>{moneyAU(fee)}</span>
+                <span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 18 }}>{moneyAU(fee)}</span>
               </div>
             </div>
             <button onClick={() => setPhase('method')} style={{ width: '100%', marginTop: 16, background: TAU.accent, color: '#fff', borderRadius: 14, padding: 16, fontFamily: TAU.sans, fontWeight: 700, fontSize: 16, boxShadow: 'var(--shadow-2)' }}>Start authentication</button>

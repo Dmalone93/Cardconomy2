@@ -161,7 +161,7 @@ function VerifyScreen({ app }) {
                 <div key={label} style={{ marginBottom: 11 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: TV.sans, fontSize: 12, marginBottom: 4 }}>
                     <span style={{ color: TV.ink2, fontWeight: 600 }}>{label}</span>
-                    <span style={{ fontFamily: TV.mono, color: met ? 'var(--up)' : TV.muted, fontWeight: 700 }}>{val}{unit || ''}{met ? ' ✓' : ' / ' + goal + (unit || '')}</span>
+                    <span style={{ fontFamily: TV.sans, color: met ? 'var(--up)' : TV.muted, fontWeight: 700 }}>{val}{unit || ''}{met ? ' ✓' : ' / ' + goal + (unit || '')}</span>
                   </div>
                   <div style={{ height: 6, borderRadius: 999, background: TV.surface2, overflow: 'hidden' }}>
                     <div style={{ width: pct + '%', height: '100%', borderRadius: 999, background: met ? 'var(--up)' : 'var(--accent)', transition: 'width 0.4s' }} />
@@ -183,7 +183,7 @@ function VerifyScreen({ app }) {
           {TIERS.map(t => (
             <div key={t.key} style={{ display: 'flex', alignItems: 'center', gap: 12, background: TV.surface, borderRadius: 12, padding: '11px 14px',
               boxShadow: (allDone ? Math.max(tier, 1) : tier) === t.n ? 'inset 0 0 0 1.5px ' + t.color : '0 1px 3px rgba(20,24,40,0.04)' }}>
-              <span style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, background: t.wash, color: t.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TV.mono, fontWeight: 700, fontSize: 13 }}>{t.n}</span>
+              <span style={{ width: 28, height: 28, borderRadius: 8, flexShrink: 0, background: t.wash, color: t.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TV.sans, fontWeight: 700, fontSize: 13 }}>{t.n}</span>
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 13.5 }}>{t.label}</div>
                 <div style={{ fontFamily: TV.sans, fontSize: 11.5, color: TV.muted }}>{t.desc}</div>

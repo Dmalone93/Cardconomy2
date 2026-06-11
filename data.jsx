@@ -19,6 +19,8 @@ const SETS = [
   { id: 'base',   game: 'pkmn', name: 'Base Set (1999)',        year: 1999, cards: 102, hue: '#b45309' },
   { id: 'mh3',    game: 'mtg',  name: 'Modern Horizons 3',      year: 2024, cards: 303, hue: '#6d28d9' },
   { id: 'blb',    game: 'mtg',  name: 'Bloomburrow',            year: 2024, cards: 261, hue: '#15803d', img: 'sets/blb.webp' },
+  { id: 'ltr',    game: 'mtg',  name: 'Tales of Middle-earth',  year: 2023, cards: 281, hue: '#b45309', img: 'sets/ltr.jpg' },
+  { id: 'm20',    game: 'mtg',  name: 'Core Set 2020',          year: 2019, cards: 344, hue: '#dc2626', img: 'sets/m20.jpg' },
   { id: 'lea',    game: 'mtg',  name: 'Alpha (1993)',           year: 1993, cards: 295, hue: '#334155' },
   { id: 'ann25',  game: 'ygo',  name: '25th Anniversary Rarity',year: 2023, cards: 70,  hue: '#7c4dd1' },
   { id: 'op07',   game: 'lor',  name: '500 Years in the Future',year: 2024, cards: 118, hue: '#c0392b', img: 'sets/op07.jpg' },

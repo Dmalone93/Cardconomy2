@@ -49,7 +49,7 @@ function ShopFinderScreen({ app }) {
                   {IconSF.shield({ width: 14, height: 14, style: { color: s.tint } })}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-                  <StarsSF rating={s.rating * 20} /><span style={{ fontFamily: TSF.mono, fontSize: 12, color: TSF.muted }}>{s.rating} · {s.dist} mi</span>
+                  <StarsSF rating={s.rating * 20} /><span style={{ fontFamily: TSF.sans, fontSize: 12, color: TSF.muted }}>{s.rating} · {s.dist} mi</span>
                 </div>
               </div>
               {IconSF.chevron({ style: { color: TSF.faint } })}

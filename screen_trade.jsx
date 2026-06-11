@@ -27,7 +27,7 @@ function TradeCardChip({ item, dimmed, onToggle, mode }) {
           fontSize: 13, fontWeight: 800, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>{dimmed ? '+' : '✓'}</span>
       </div>
       <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 11, marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-      <div style={{ fontFamily: TT.mono, fontSize: 10.5, color: TT.muted }}>{m0(item.market)}</div>
+      <div style={{ fontFamily: TT.sans, fontSize: 10.5, color: TT.muted }}>{m0(item.market)}</div>
     </button>
   );
 }
@@ -179,7 +179,7 @@ function TradeScreen({ app, params = {} }) {
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontFamily: TT.sans, fontSize: 10.5, color: TT.muted, fontWeight: 700, letterSpacing: 0.2 }}>OFFERING</div>
                         <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 14.5 }}>{card.name}</div>
-                        <div style={{ fontFamily: TT.mono, fontSize: 12, color: TT.muted }}>{m0(card.market)} market</div>
+                        <div style={{ fontFamily: TT.sans, fontSize: 12, color: TT.muted }}>{m0(card.market)} market</div>
                       </div>
                     </div>
                     <div style={{ marginTop: 11 }}>
@@ -478,7 +478,7 @@ function SideLabel({ color, title, sub, total }) {
         <span style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 15 }}>{title}</span>
         <span style={{ fontFamily: TT.sans, fontSize: 12, color: TT.muted }}>{sub}</span>
       </div>
-      <span style={{ fontFamily: TT.mono, fontWeight: 700, fontSize: 14 }}>{total}</span>
+      <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 14 }}>{total}</span>
     </div>
   );
 }

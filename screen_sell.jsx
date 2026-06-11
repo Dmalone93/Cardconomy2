@@ -75,7 +75,7 @@ function SellScreen({ app }) {
             {IconSE.back({ width: 18, height: 18 })} {step===0 ? 'Cancel' : 'Back'}
           </button>
           <span style={{ fontFamily: TSE.sans, fontWeight: 800, fontSize: 16 }}>List a card</span>
-          <span style={{ fontFamily: TSE.mono, fontSize: 13, color: TSE.muted, width: 40, textAlign: 'right' }}>{step+1}/5</span>
+          <span style={{ fontFamily: TSE.sans, fontSize: 13, color: TSE.muted, width: 40, textAlign: 'right' }}>{step+1}/5</span>
         </div>
         <Stepper step={step} />
       </div>
@@ -104,7 +104,7 @@ function SellScreen({ app }) {
                     </div>
                     <div style={{ textAlign: 'right' }}>
                       <div style={{ fontFamily: TSE.sans, fontSize: 10.5, color: TSE.muted }}>market</div>
-                      <div style={{ fontFamily: TSE.mono, fontWeight: 700, fontSize: 13.5 }}>{moneySE(c.market)}</div>
+                      <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13.5 }}>{moneySE(c.market)}</div>
                     </div>
                     {sel && <div style={{ color: TSE.accent }}>{IconSE.check({})}</div>}
                   </button>
@@ -170,7 +170,7 @@ function SellScreen({ app }) {
                   {on ? (
                     <React.Fragment>
                       <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.1) 0 8px, transparent 8px 16px)' }} />
-                      <div style={{ position: 'relative', fontFamily: TSE.mono, fontSize: 11, fontWeight: 600, opacity: 0.9 }}>photo {i+1}</div>
+                      <div style={{ position: 'relative', fontFamily: TSE.sans, fontSize: 11, fontWeight: 600, opacity: 0.9 }}>photo {i+1}</div>
                       <div style={{ position: 'absolute', top: 8, right: 8, width: 22, height: 22, borderRadius: 999, background: 'rgba(255,255,255,0.9)', color: card.art, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>×</div>
                     </React.Fragment>
                   ) : (
@@ -207,9 +207,9 @@ function SellScreen({ app }) {
 
             <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{listType==='auction'?'Starting bid':'Your price'}</div>
             <div style={{ display: 'flex', alignItems: 'center', background: TSE.surface, borderRadius: 14, padding: '14px 16px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-              <span style={{ fontFamily: TSE.mono, fontWeight: 700, fontSize: 28, color: TSE.muted, marginRight: 4 }}>$</span>
+              <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 28, color: TSE.muted, marginRight: 4 }}>$</span>
               <input type="number" value={price} onChange={e => setPrice(e.target.value)} placeholder={String(suggested)}
-                style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TSE.mono, fontWeight: 700, fontSize: 28, minWidth: 0 }} />
+                style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TSE.sans, fontWeight: 700, fontSize: 28, minWidth: 0 }} />
             </div>
             <button onClick={() => setPrice(String(suggested))} style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8, width: '100%',
               background: 'var(--accent-wash)', borderRadius: 12, padding: '11px 14px', textAlign: 'left' }}>
@@ -243,7 +243,7 @@ function SellScreen({ app }) {
                   <div style={{ marginBottom: 6 }}><GradeChipSE grade={gradeObj} size="lg" /></div>
                   <div style={{ fontFamily: TSE.sans, fontWeight: 800, fontSize: 17 }}>{card.name}</div>
                   <div style={{ fontFamily: TSE.sans, fontSize: 12.5, color: TSE.muted }}>{setByIdSE(card.set)?.name} · {card.number}</div>
-                  <div style={{ fontFamily: TSE.mono, fontWeight: 700, fontSize: 22, marginTop: 8 }}>{moneySE(+price)}</div>
+                  <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 22, marginTop: 8 }}>{moneySE(+price)}</div>
                 </div>
               </div>
               <div style={{ marginTop: 8 }}>
@@ -258,7 +258,7 @@ function SellScreen({ app }) {
                 ))}
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 12, fontFamily: TSE.sans }}>
                   <span style={{ fontWeight: 700, fontSize: 15 }}>You earn</span>
-                  <span style={{ fontFamily: TSE.mono, fontWeight: 700, fontSize: 18, color: TSE.up }}>{moneySE(+price * 0.91 + (freeShip?-4:0))}</span>
+                  <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 18, color: TSE.up }}>{moneySE(+price * 0.91 + (freeShip?-4:0))}</span>
                 </div>
               </div>
             </div>
