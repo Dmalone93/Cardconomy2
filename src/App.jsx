@@ -4,6 +4,8 @@ import Layout from './components/Layout';
 import Home from './screens/Home';
 import Search from './screens/Search';
 import Listing from './screens/Listing';
+import Cart from './screens/Cart';
+import Checkout from './screens/Checkout';
 
 function Placeholder({ name }) {
   return <div style={{ padding: 24 }}><h2>{name}</h2><p>Coming soon...</p></div>;
@@ -21,8 +23,8 @@ export default function App() {
             <Route path="/watch" element={<Placeholder name="Watching" />} />
             <Route path="/profile" element={<Placeholder name="Profile" />} />
             <Route path="/listing/:id" element={<Listing />} />
-            <Route path="/cart" element={<Placeholder name="Cart" />} />
-            <Route path="/checkout/:id" element={<Placeholder name="Checkout" />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/checkout/:id" element={<Checkout />} />
             <Route path="/sell/single" element={<Placeholder name="Sell Single" />} />
             <Route path="/sell/bulk" element={<Placeholder name="Sell Bulk" />} />
             <Route path="/sell/shop/:shopId?" element={<Placeholder name="Sell to Shop" />} />
