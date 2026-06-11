@@ -1,0 +1,14 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# dependencies (none required — static site)
+node_modules/
+
+# local scratch
+scraps/
+screenshots/
+shots/

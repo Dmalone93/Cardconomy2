@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sell to Shop — Bulk Intake Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Patrick+Hand&family=Kalam:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f1e8;
+    --paper2:#ece8db;
+    --ink:#23262e;
+    --ink2:#555a66;
+    --faint:#8b8f9a;
+    --line:#23262e;
+    --blue:#2f57c9;       /* interactive / CTA ink */
+    --blue-wash:#dde4fb;
+    --hi:#ffe24d;          /* highlighter — buylist match */
+    --hi-line:#e6b800;
+    --red:#d6452f;         /* flag / damage */
+    --green:#2f8f5b;
+    --hand:'Patrick Hand', cursive;
+    --note:'Caveat', cursive;
+    --kalam:'Kalam', cursive;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background-color:var(--paper);
+    background-image:radial-gradient(circle, rgba(35,38,46,0.06) 1px, transparent 1.4px);
+    background-size:24px 24px;
+    color:var(--ink);
+    font-family:var(--hand);
+    font-size:15px;
+    line-height:1.35;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:34px 26px 90px;}
+
+  /* ---------- header ---------- */
+  .masthead{margin-bottom:8px;}
+  .kicker{font-family:var(--note);font-size:21px;color:var(--blue);font-weight:700;transform:rotate(-1deg);display:inline-block;}
+  h1{font-family:var(--note);font-weight:700;font-size:48px;line-height:0.98;margin:2px 0 10px;letter-spacing:0.5px;}
+  .scenario{font-family:var(--hand);font-size:16.5px;color:var(--ink2);max-width:720px;}
+  .scenario b{color:var(--ink);}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;align-items:center;}
+  .legend span{display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--ink2);}
+  .sw{width:18px;height:13px;border:1.5px solid var(--ink);display:inline-block;}
+  .sw.hi{background:var(--hi);border-color:var(--hi-line);}
+  .sw.blue{background:var(--blue-wash);border-color:var(--blue);}
+  .sw.red{background:transparent;border-color:var(--red);color:var(--red);position:relative;}
+  .sw.ph{background:repeating-linear-gradient(45deg,transparent 0 3px,rgba(35,38,46,.25) 3px 4px);}
+
+  /* sketchy divider */
+  .rule{height:0;border:0;border-top:2.5px solid var(--ink);border-radius:2px;margin:34px 0 22px;
+        position:relative;opacity:0.85;}
+  .lane-title{font-family:var(--note);font-size:30px;font-weight:700;display:flex;align-items:center;gap:12px;margin:6px 0 4px;}
+  .lane-title .num{font-family:var(--note);background:var(--ink);color:var(--paper);width:38px;height:38px;border-radius:50%;
+        display:grid;place-items:center;font-size:20px;transform:rotate(-4deg);}
+  .lane-sub{font-family:var(--hand);color:var(--ink2);font-size:15px;margin:0 0 18px 50px;}
+
+  /* ---------- board rows ---------- */
+  .row{display:flex;gap:6px;align-items:flex-start;overflow-x:auto;padding:8px 4px 22px;}
+  .row::-webkit-scrollbar{height:8px;}
+  .row::-webkit-scrollbar-thumb{background:rgba(35,38,46,.2);border-radius:9px;}
+
+  .arrow{flex:0 0 56px;align-self:center;display:grid;place-items:center;color:var(--blue);margin-top:30px;}
+  .arrow svg{width:54px;height:34px;}
+
+  .stepcap{font-family:var(--note);font-size:20px;color:var(--blue);font-weight:700;margin:0 0 6px 6px;transform:rotate(-0.5deg);}
+  .stepcap b{color:var(--ink);}
+
+  /* ---------- phone frame ---------- */
+  .phcol{flex:0 0 auto;display:flex;flex-direction:column;}
+  .phone{
+    width:252px;background:#fff;
+    border:2.5px solid var(--ink);
+    border-radius:32px 30px 33px 31px/34px 32px 33px 31px;
+    padding:13px 12px 15px;
+    box-shadow:5px 6px 0 rgba(35,38,46,0.12);
+    position:relative;
+  }
+  .phone.wide{width:300px;}
+  .notch{width:74px;height:7px;border-radius:5px;background:var(--ink);margin:1px auto 11px;opacity:.78;}
+  .scrn{display:flex;flex-direction:column;gap:9px;}
+
+  /* tablet/counter frame for shop */
+  .tablet{
+    width:560px;background:#fff;border:2.5px solid var(--ink);
+    border-radius:20px 18px 21px 19px/19px 21px 18px 20px;
+    padding:16px;box-shadow:6px 7px 0 rgba(35,38,46,0.12);position:relative;
+  }
+  .tablet.full{width:100%;}
+
+  /* ---------- wireframe primitives ---------- */
+  .topbar{display:flex;align-items:center;gap:8px;}
+  .topbar .back{font-size:18px;color:var(--ink2);}
+  .ttl{font-family:var(--kalam);font-weight:700;font-size:16px;}
+  .ttl.sm{font-size:14px;}
+  .sub{font-size:13.5px;color:var(--faint);}
+  .bar{height:9px;background:var(--paper2);border-radius:6px;}
+  .bar.s{width:55%;}.bar.m{width:75%;}.bar.l{width:92%;}
+  .ph-img{border:2px solid var(--ink);border-radius:8px;background:
+      repeating-linear-gradient(45deg,transparent 0 7px,rgba(35,38,46,.10) 7px 8px);
+      position:relative;display:grid;place-items:center;color:var(--faint);font-size:12px;}
+  .ph-img::before{content:"";position:absolute;inset:0;
+      background:linear-gradient(to top right,transparent calc(50% - 1px),rgba(35,38,46,.18) 50%,transparent calc(50% + 1px)),
+                 linear-gradient(to top left,transparent calc(50% - 1px),rgba(35,38,46,.18) 50%,transparent calc(50% + 1px));}
+  .card-mini{flex:0 0 auto;width:34px;height:47px;border:1.5px solid var(--ink);border-radius:4px;background:
+      repeating-linear-gradient(45deg,transparent 0 5px,rgba(35,38,46,.10) 5px 6px);}
+  .pill{border:2px solid var(--ink);border-radius:14px 13px 15px 12px/13px 14px 12px 15px;
+      padding:9px 12px;text-align:center;font-family:var(--kalam);font-weight:700;font-size:14.5px;background:#fff;}
+  .pill.cta{background:var(--blue);color:#fff;border-color:var(--blue);}
+  .pill.ghost{background:#fff;}
+  .pill.sm{padding:6px 10px;font-size:13px;}
+  .chip{border:1.8px solid var(--ink);border-radius:12px;padding:3px 9px;font-size:12.5px;font-family:var(--kalam);display:inline-block;background:#fff;}
+  .chip.on{background:var(--ink);color:#fff;}
+  .chip.hi{background:var(--hi);border-color:var(--hi-line);}
+  .box{border:2px solid var(--ink);border-radius:11px 10px 12px 9px/10px 11px 9px 12px;padding:10px;}
+  .box.dash{border-style:dashed;}
+  .row2{display:flex;gap:7px;}
+  .row2.wrap{flex-wrap:wrap;}
+  .grow{flex:1;}
+  .between{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+  .mono{font-family:var(--kalam);font-weight:700;}
+  .tiny{font-size:12px;color:var(--faint);}
+  .hi-text{background:var(--hi);padding:0 3px;border-radius:3px;}
+  .red{color:var(--red);}
+  .blue{color:var(--blue);}
+  .green{color:var(--green);}
+  .count-big{font-family:var(--kalam);font-weight:700;font-size:30px;line-height:1;}
+
+  /* viewfinder */
+  .viewfinder{border:2.5px solid var(--ink);border-radius:14px;aspect-ratio:3/3.3;position:relative;overflow:hidden;
+      background:repeating-linear-gradient(45deg,transparent 0 9px,rgba(35,38,46,.07) 9px 10px);}
+  .recticle{position:absolute;inset:18% 14%;border:2.5px dashed var(--blue);border-radius:10px;}
+  .corner{position:absolute;width:18px;height:18px;border:3px solid var(--blue);}
+  .scan-tag{position:absolute;background:var(--blue);color:#fff;font-family:var(--kalam);font-weight:700;font-size:11px;padding:2px 6px;border-radius:6px;}
+
+  /* annotation callout */
+  .note{font-family:var(--note);font-size:18px;color:var(--blue);font-weight:700;line-height:1.1;margin:8px 2px 0;max-width:252px;transform:rotate(-0.6deg);}
+  .note.r{color:var(--red);}
+  .note .lbl{display:inline-block;background:var(--blue);color:#fff;font-family:var(--kalam);font-size:11px;padding:1px 6px;border-radius:6px;transform:rotate(0.6deg);margin-right:4px;}
+  .annot-hide .note{display:none;}
+
+  /* efficiency tag under method tab */
+  .effbar{display:flex;flex-wrap:wrap;gap:10px;margin:4px 0 14px 4px;}
+  .eff{font-family:var(--note);font-size:18px;font-weight:700;display:inline-flex;align-items:center;gap:6px;}
+  .eff .v{background:var(--hi);padding:0 6px;border-radius:5px;border:1.5px solid var(--hi-line);}
+
+  /* tabs */
+  .tabs{display:flex;flex-wrap:wrap;gap:9px;margin:4px 0 8px;}
+  .tab{font-family:var(--kalam);font-weight:700;font-size:14.5px;border:2.5px solid var(--ink);background:#fff;
+      border-radius:14px 12px 15px 11px/12px 14px 11px 15px;padding:9px 13px;cursor:pointer;display:flex;align-items:center;gap:8px;
+      box-shadow:3px 3px 0 rgba(35,38,46,0.10);transition:transform .08s;}
+  .tab:hover{transform:translate(-1px,-1px);}
+  .tab .k{width:22px;height:22px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-size:12px;}
+  .tab.active{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:3px 3px 0 rgba(47,87,201,0.3);}
+  .tab.active .k{border-color:#fff;}
+  .panel{display:none;animation:fade .25s ease;}
+  .panel.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .method-lay{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap;}
+  .method-desc{flex:1;min-width:260px;max-width:430px;}
+  .method-desc h3{font-family:var(--note);font-size:30px;font-weight:700;margin:0 0 2px;}
+  .method-desc .how{font-size:15.5px;color:var(--ink2);margin:8px 0;}
+  .bestfor{display:inline-block;background:var(--blue-wash);border:2px solid var(--blue);color:var(--blue);
+      font-family:var(--kalam);font-weight:700;font-size:13.5px;border-radius:10px;padding:5px 10px;margin-top:4px;}
+  .ulist{margin:10px 0 0;padding:0;list-style:none;}
+  .ulist li{position:relative;padding:4px 0 4px 24px;font-size:15px;color:var(--ink2);}
+  .ulist li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:700;font-family:var(--kalam);}
+  .ulist li.x::before{content:"✗";color:var(--red);}
+
+  /* controls */
+  .controls{position:fixed;top:14px;right:16px;z-index:50;display:flex;gap:8px;}
+  .ctrl{font-family:var(--kalam);font-weight:700;font-size:13px;border:2.5px solid var(--ink);background:var(--paper);
+      border-radius:12px;padding:7px 12px;cursor:pointer;box-shadow:2px 2px 0 rgba(35,38,46,0.15);}
+  .ctrl.off{opacity:.5;}
+
+  /* notes footer */
+  .footnotes{margin-top:26px;}
+  .qcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:14px;}
+  .qcard{border:2.5px solid var(--ink);border-radius:16px 14px 17px 13px/14px 16px 13px 17px;background:#fff;padding:14px 16px;
+      box-shadow:4px 5px 0 rgba(35,38,46,0.1);}
+  .qcard h4{font-family:var(--note);font-size:22px;font-weight:700;margin:0 0 6px;}
+  .qcard p{font-size:14.5px;color:var(--ink2);margin:0;}
+  .qcard .q{color:var(--blue);font-weight:700;}
+
+  /* phase-1 model strip */
+  .phase-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+  .pchip{font-family:var(--kalam);font-weight:700;font-size:13.5px;border:2.5px solid var(--ink);background:#fff;
+      border-radius:13px 11px 14px 10px/11px 13px 10px 14px;padding:7px 12px;display:inline-flex;align-items:center;gap:7px;
+      box-shadow:2px 3px 0 rgba(35,38,46,0.1);}
+  .pchip .dot{width:9px;height:9px;border-radius:50%;background:var(--blue);}
+  .pchip.phase{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+  /* price ladder */
+  .ladder{display:flex;flex-direction:column;gap:5px;}
+  .ladrow{display:flex;align-items:center;justify-content:space-between;border:2px solid var(--ink);border-radius:9px;
+      padding:6px 10px;font-family:var(--kalam);font-weight:700;font-size:13.5px;background:#fff;white-space:nowrap;}
+  .ladrow.on{background:var(--blue-wash);border-color:var(--blue);}
+  .ladrow .c{color:var(--ink2);}
+  /* keep value rows on one line in the narrow phone columns */
+  .between > span{white-space:nowrap;}
+
+  /* chat thread */
+  .thread{display:flex;flex-direction:column;gap:8px;}
+  .bubble{max-width:88%;border:2px solid var(--ink);border-radius:13px;padding:8px 11px;font-size:13.5px;background:#fff;}
+  .bubble.shop{align-self:flex-start;border-bottom-left-radius:4px;background:var(--paper2);}
+  .bubble.me{align-self:flex-end;border-bottom-right-radius:4px;background:var(--blue);color:#fff;border-color:var(--blue);}
+  .bubble .who{font-family:var(--kalam);font-weight:700;font-size:10.5px;opacity:.65;display:block;margin-bottom:2px;}
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#f4f1e8">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#f4f1e8"/>
+    <!-- phone silhouette -->
+    <rect x="430" y="170" width="250" height="460" rx="34" fill="#ffffff" stroke="#23262e" stroke-width="6"/>
+    <rect x="520" y="196" width="70" height="10" rx="5" fill="#23262e"/>
+    <!-- viewfinder -->
+    <rect x="462" y="232" width="186" height="210" rx="14" fill="none" stroke="#23262e" stroke-width="5"/>
+    <rect x="498" y="268" width="114" height="138" rx="10" fill="none" stroke="#2f57c9" stroke-width="5" stroke-dasharray="14 10"/>
+    <!-- count box -->
+    <rect x="462" y="458" width="186" height="64" rx="10" fill="none" stroke="#2f57c9" stroke-width="5"/>
+    <text x="478" y="508" font-family="Kalam, cursive" font-size="42" font-weight="700" fill="#2f57c9">247</text>
+    <!-- buylist match swatch -->
+    <rect x="462" y="538" width="186" height="40" rx="9" fill="#ffe24d" stroke="#e6b800" stroke-width="4"/>
+    <!-- title -->
+    <text x="600" y="710" text-anchor="middle" font-family="Caveat, cursive" font-size="56" font-weight="700" fill="#23262e">Sell to Shop</text>
+  </svg>
+</template>
+<div class="controls">
+  <button class="ctrl" id="annotBtn">✎ Annotations: ON</button>
+</div>
+
+<div class="wrap" id="board">
+  <!-- ============ HEADER ============ -->
+  <header class="masthead">
+    <span class="kicker">Cardconomy · flow exploration</span>
+    <h1>Sell to Shop — bulk intake</h1>
+    <p class="scenario">A seller walks into the shop with <b>~1,000 cards</b>. The shop's slammed and can't appraise on the spot, so they hand over a <b>QR code</b>. The seller submits their whole collection from their phone in minutes; the shop gets alerted, sees every card, and instantly spots which ones <b>match their buylist</b>.</p>
+    <div class="legend">
+      <span><i class="sw ph"></i> placeholder / image</span>
+      <span><i class="sw blue"></i> interactive / CTA</span>
+      <span><i class="sw hi"></i> buylist match</span>
+      <span><i class="sw red">✗</i> AI-flagged condition</span>
+      <span class="tiny">✎ annotations = design rationale</span>
+    </div>
+    <div class="phase-strip">
+      <span class="pchip phase">Phase 1 · in-person exchange</span>
+      <span class="pchip"><span class="dot"></span> Seller keeps the cards</span>
+      <span class="pchip"><span class="dot"></span> Shop messages to coordinate</span>
+      <span class="pchip"><span class="dot"></span> Cards &amp; payment swap at the counter</span>
+    </div>
+  </header>
+
+  <hr class="rule">
+
+  <!-- ============ LANE 1: SELLER START ============ -->
+  <div class="lane-title"><span class="num">1</span> Seller · arrive &amp; start</div>
+  <p class="lane-sub">Everything happens on the seller's phone. Zero app install — the QR opens a web flow.</p>
+
+  <div class="row">
+    <!-- F1: QR landing -->
+    <div class="phcol">
+      <div class="stepcap"><b>1.</b> Scan QR → shop landing</div>
+      <div class="phone"><div class="notch"></div><div class="scrn">
+        <div class="box dash" style="text-align:center;padding:14px;">
+          <div class="ph-img" style="width:70px;height:70px;margin:0 auto 6px;">QR</div>
+          <div class="tiny">scanned at counter</div>
+        </div>
+        <div class="row2" style="align-items:center;">
+          <div class="ph-img" style="width:42px;height:42px;border-radius:50%;">logo</div>
+          <div class="grow"><div class="ttl">Gnome Games</div><div class="sub">★★★★☆ · Madison, WI</div></div>
+        </div>
+        <div class="box" style="background:var(--blue-wash);border-color:var(--blue);">
+          <div class="mono blue">Sell your cards here</div>
+          <div class="tiny">Get an offer without waiting at the counter.</div>
+        </div>
+        <div class="bar l"></div><div class="bar m"></div>
+        <div class="pill cta">Start a submission →</div>
+        <div class="pill ghost sm">Just browsing the store</div>
+      </div></div>
+      <div class="note"><span class="lbl">why</span>Lands on the shop's branded page, not generic Cardconomy — feels like selling to <i>this</i> shop.</div>
+    </div>
+
+    <div class="arrow"><svg viewBox="0 0 54 34"><path d="M2 17 q18 -12 36 0 t14 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M44 8 l9 9 -9 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- F2: who are you -->
+    <div class="phcol">
+      <div class="stepcap"><b>2.</b> Quick identity (15 sec)</div>
+      <div class="phone"><div class="notch"></div><div class="scrn">
+        <div class="topbar"><span class="back">‹</span><span class="ttl sm">New submission</span></div>
+        <div class="ttl">How do we reach you?</div>
+        <div class="box"><div class="tiny">Phone or email</div><div class="bar m" style="margin-top:6px;"></div></div>
+        <div class="box"><div class="tiny">Name (for the counter)</div><div class="bar s" style="margin-top:6px;"></div></div>
+        <div class="box dash between" style="border-color:var(--blue);">
+          <span class="mono blue" style="font-size:13px;">Verify by SMS</span><span class="chip on">tap</span>
+        </div>
+        <div class="tiny">No account needed. We text you when the shop responds.</div>
+        <div class="grow" style="min-height:6px;"></div>
+        <div class="pill cta">Continue →</div>
+      </div></div>
+      <div class="note"><span class="lbl">why</span>Friction killer: phone-number-only, no password. The shop just needs a way to text back an offer.</div>
+    </div>
+
+    <div class="arrow"><svg viewBox="0 0 54 34"><path d="M2 17 q18 -12 36 0 t14 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M44 8 l9 9 -9 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- F3: method chooser -->
+    <div class="phcol">
+      <div class="stepcap"><b>3.</b> Pick how to add cards</div>
+      <div class="phone"><div class="notch"></div><div class="scrn">
+        <div class="ttl">Adding ~1,000 cards?</div>
+        <div class="sub">Pick the fastest way. You can mix methods.</div>
+        <div class="box between" style="border-color:var(--blue);background:var(--blue-wash);">
+          <div><div class="mono blue">📷 Live Sweep Scan</div><div class="tiny">flip the stack · fastest</div></div>
+          <span class="chip hi">~18 min</span>
+        </div>
+        <div class="box between"><div><div class="mono">🃏 Batch Fan Photo</div><div class="tiny">9–12 per snap</div></div><span class="tiny">~25 min</span></div>
+        <div class="box between"><div><div class="mono">☑ Set Checklist</div><div class="tiny">tap off a set</div></div><span class="tiny">varies</span></div>
+        <div class="box between"><div><div class="mono">🔍 Search &amp; Add</div><div class="tiny">verify singles</div></div><span class="tiny">precise</span></div>
+        <div class="box between"><div><div class="mono">📄 Import List</div><div class="tiny">Manabox / CSV</div></div><span class="tiny">instant</span></div>
+      </div></div>
+      <div class="note"><span class="lbl">key idea</span>One submission can blend methods — sweep the bulk, then Search &amp; Add the 3 chase cards you want hand-verified.</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ============ LANE 2: INTAKE METHODS ============ -->
+  <div class="lane-title"><span class="num">2</span> The intake methods · "most efficient way"</div>
+  <p class="lane-sub">Five approaches, ranked by how they handle volume. Tap to compare. Live Sweep is the default hero.</p>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-p="m1"><span class="k">A</span> Live Sweep</button>
+    <button class="tab" data-p="m2"><span class="k">B</span> Batch Fan Photo</button>
+    <button class="tab" data-p="m3"><span class="k">C</span> Set Checklist</button>
+    <button class="tab" data-p="m4"><span class="k">D</span> Search &amp; Add</button>
+    <button class="tab" data-p="m5"><span class="k">E</span> Import List</button>
+  </div>
+
+  <!-- METHOD A -->
+  <div class="panel active" id="m1">
+    <div class="effbar">
+      <span class="eff">⏱ <span class="v">~15–20 min / 1,000</span></span>
+      <span class="eff">🎯 best for <span class="v">loose bulk</span></span>
+    </div>
+    <div class="method-lay">
+      <div class="phcol">
+        <div class="phone"><div class="notch"></div><div class="scrn">
+          <div class="between"><span class="ttl sm">Live Sweep</span><span class="chip on">flash ⚡</span></div>
+          <div class="viewfinder">
+            <span class="corner" style="top:8px;left:8px;border-right:0;border-bottom:0;"></span>
+            <span class="corner" style="top:8px;right:8px;border-left:0;border-bottom:0;"></span>
+            <span class="corner" style="bottom:8px;left:8px;border-right:0;border-top:0;"></span>
+            <span class="corner" style="bottom:8px;right:8px;border-left:0;border-top:0;"></span>
+            <div class="recticle"></div>
+            <span class="scan-tag" style="top:30%;left:20%;">Charizard ✓</span>
+            <span class="scan-tag" style="bottom:18%;right:14%;background:var(--green);">+1</span>
+          </div>
+          <div class="box between" style="border-color:var(--blue);">
+            <div><div class="count-big blue">247</div><div class="tiny">cards detected</div></div>
+            <div class="row2" style="gap:3px;">
+              <div class="card-mini"></div><div class="card-mini"></div><div class="card-mini"></div>
+            </div>
+          </div>
+          <div class="tiny">Keep flipping — we auto-capture each face.</div>
+          <div class="row2"><div class="pill ghost grow sm">Pause</div><div class="pill cta grow sm">Done → review</div></div>
+        </div></div>
+        <div class="note"><span class="lbl">flow</span>Camera never closes. Seller riffles the stack like a flipbook; vision model grabs each card. Counter is the dopamine.</div>
+      </div>
+      <div class="method-desc">
+        <h3>A · Live Sweep Scan</h3>
+        <div class="how">Hold the phone over the pile and flip through. The camera stays open and recognizes each card the instant its face is visible — no tap per card. A running counter and a thumbnail tray confirm captures in real time.</div>
+        <span class="bestfor">Default for big, unsorted lots</span>
+        <ul class="ulist">
+          <li>No per-card interaction — pure throughput</li>
+          <li>Blanket condition (e.g. "NM") applied automatically</li>
+          <li>AI flags creases / whitening for review only</li>
+          <li>Haptic buzz + sound on each successful capture</li>
+          <li class="x">Struggles with heavy glare / sleeved cards — prompts to deslevee</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD B -->
+  <div class="panel" id="m2">
+    <div class="effbar">
+      <span class="eff">⏱ <span class="v">~25 min / 1,000</span></span>
+      <span class="eff">🎯 best for <span class="v">semi-sorted stacks</span></span>
+    </div>
+    <div class="method-lay">
+      <div class="phcol">
+        <div class="phone"><div class="notch"></div><div class="scrn">
+          <div class="between"><span class="ttl sm">Batch Fan Photo</span><span class="chip">grid 9</span></div>
+          <div class="viewfinder">
+            <div class="recticle" style="inset:10% 8%;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px;border-style:solid;">
+              <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+              <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+              <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+              <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+              <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+              <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+            </div>
+            <span class="scan-tag" style="bottom:6px;left:50%;transform:translateX(-50%);">9 detected in frame</span>
+          </div>
+          <div class="tiny">Spread cards in a grid or fan, then snap once.</div>
+          <div class="pill cta">◉ Capture batch</div>
+          <div class="box between"><span class="mono">Batch total</span><span class="mono blue">216</span></div>
+        </div></div>
+        <div class="note"><span class="lbl">flow</span>One shutter press segments many cards at once. Great when cards are already laid out in rows or binder pages.</div>
+      </div>
+      <div class="method-desc">
+        <h3>B · Batch Fan Photo</h3>
+        <div class="how">Lay 9–12 cards in a fan or grid, snap a single photo, and the model splits and identifies all of them at once. Repeat per handful. Fewer captures than per-card, more layout effort than sweep.</div>
+        <span class="bestfor">Binder pages &amp; tidy rows</span>
+        <ul class="ulist">
+          <li>Photograph a full 9-pocket binder page in one shot</li>
+          <li>Good lighting control vs. a moving sweep</li>
+          <li>Re-snap a single mis-read without redoing the batch</li>
+          <li class="x">Requires table space to lay cards out</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD C -->
+  <div class="panel" id="m3">
+    <div class="effbar">
+      <span class="eff">⏱ <span class="v">fast for known sets</span></span>
+      <span class="eff">🎯 best for <span class="v">set / master-set sellers</span></span>
+    </div>
+    <div class="method-lay">
+      <div class="phcol">
+        <div class="phone"><div class="notch"></div><div class="scrn">
+          <div class="topbar"><span class="back">‹</span><span class="ttl sm">Scarlet &amp; Violet 151</span></div>
+          <div class="row2 wrap" style="gap:5px;"><span class="chip on">All</span><span class="chip">Holos</span><span class="chip">Have 24</span></div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+            <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;background:var(--blue-wash);border-color:var(--blue);"></div>
+            <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+            <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;background:var(--blue-wash);border-color:var(--blue);"></div>
+            <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+            <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+            <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;background:var(--blue-wash);border-color:var(--blue);"></div>
+            <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+            <div class="card-mini" style="width:100%;height:auto;aspect-ratio:5/7;"></div>
+          </div>
+          <div class="box between" style="border-color:var(--blue);"><span class="mono blue">24 selected</span><span class="chip on">qty / cond</span></div>
+          <div class="pill cta sm">Add to submission</div>
+        </div></div>
+        <div class="note"><span class="lbl">flow</span>Tap the cards you own off the visual set grid. Long-press for quantity &amp; condition. No camera at all.</div>
+      </div>
+      <div class="method-desc">
+        <h3>C · Set Checklist</h3>
+        <div class="how">Pick a set and tap off the cards you have from a complete visual grid. Ideal for collectors selling a near-complete set who already know exactly what they own.</div>
+        <span class="bestfor">"I'm selling most of 151"</span>
+        <ul class="ulist">
+          <li>Zero recognition errors — you pick from the canon</li>
+          <li>Shows gaps, helpful for partial-set buyers</li>
+          <li>Quantity steppers for playsets</li>
+          <li class="x">Slow for scattered cards across many sets</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD D -->
+  <div class="panel" id="m4">
+    <div class="effbar">
+      <span class="eff">⏱ <span class="v">~10s / card</span></span>
+      <span class="eff">🎯 best for <span class="v">high-value singles</span></span>
+    </div>
+    <div class="method-lay">
+      <div class="phcol">
+        <div class="phone"><div class="notch"></div><div class="scrn">
+          <div class="box between"><span class="sub">🔍 Type a card name…</span><span class="chip">🎤</span></div>
+          <div class="box between"><div class="row2" style="align-items:center;"><div class="card-mini"></div><div><div class="mono" style="font-size:13px;">Umbreon VMAX</div><div class="tiny">Evolving Skies · 215</div></div></div><span class="chip on">+</span></div>
+          <div class="box between"><div class="row2" style="align-items:center;"><div class="card-mini"></div><div><div class="mono" style="font-size:13px;">Umbreon GX</div><div class="tiny">Sun &amp; Moon · 169</div></div></div><span class="chip">+</span></div>
+          <div class="box between"><div class="row2" style="align-items:center;"><div class="card-mini"></div><div><div class="mono" style="font-size:13px;">Umbreon V</div><div class="tiny">Evolving Skies · 189</div></div></div><span class="chip">+</span></div>
+          <div class="tiny">Set condition &amp; qty as you add.</div>
+        </div></div>
+        <div class="note"><span class="lbl">flow</span>Type-ahead or voice ("Umbreon V-max, near mint"). Slow but exact — reserved for cards worth verifying by hand.</div>
+      </div>
+      <div class="method-desc">
+        <h3>D · Search &amp; Add</h3>
+        <div class="how">Classic type-ahead search with optional voice entry. The precise fallback for chase cards and anything the scanner is unsure about.</div>
+        <span class="bestfor">The 5 cards that matter most</span>
+        <ul class="ulist">
+          <li>Total control over variant / printing / condition</li>
+          <li>Voice mode for hands-free rapid entry</li>
+          <li>Where the scanner sends "couldn't ID" cards</li>
+          <li class="x">Far too slow as a primary bulk method</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD E -->
+  <div class="panel" id="m5">
+    <div class="effbar">
+      <span class="eff">⏱ <span class="v">seconds</span></span>
+      <span class="eff">🎯 best for <span class="v">already-tracked inventory</span></span>
+    </div>
+    <div class="method-lay">
+      <div class="phcol">
+        <div class="phone"><div class="notch"></div><div class="scrn">
+          <div class="ttl">Import a list</div>
+          <div class="box dash" style="text-align:center;border-color:var(--blue);padding:18px;">
+            <div class="mono blue">⬆ Drop CSV / .txt</div><div class="tiny">Manabox · TCGplayer · Dragon Shield</div>
+          </div>
+          <div class="tiny">— or paste —</div>
+          <div class="box" style="min-height:60px;background:var(--paper2);"><div class="tiny">4 Ragavan (MH2) NM<br>1 Black Lotus (LEA) ...<br>...</div></div>
+          <div class="box between" style="border-color:var(--green);"><span class="mono green">982 rows matched</span><span class="chip">18 to fix</span></div>
+          <div class="pill cta sm">Map &amp; import</div>
+        </div></div>
+        <div class="note"><span class="lbl">flow</span>Power-sellers already have a file. Auto-map columns, flag the unmatched, done in seconds.</div>
+      </div>
+      <div class="method-desc">
+        <h3>E · Import List</h3>
+        <div class="how">Upload or paste an export from popular collection apps. We auto-map columns to cards, surface the handful that don't match, and pull in the rest instantly.</div>
+        <span class="bestfor">Organized / repeat sellers</span>
+        <ul class="ulist">
+          <li>Near-instant for thousands of rows</li>
+          <li>Re-uses condition data the seller already entered</li>
+          <li>Fuzzy-matches messy names</li>
+          <li class="x">Useless for someone with a shoebox of cards</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ============ LANE 3: REVIEW + SUBMIT ============ -->
+  <div class="lane-title"><span class="num">3</span> Review &amp; submit</div>
+  <p class="lane-sub">Bulk shouldn't mean hand-grading 1,000 cards. Default everything, only touch the exceptions.</p>
+
+  <div class="row">
+    <!-- review -->
+    <div class="phcol">
+      <div class="stepcap"><b>4.</b> Smart review</div>
+      <div class="phone"><div class="notch"></div><div class="scrn">
+        <div class="between"><span class="ttl sm">Review · 1,000 cards</span><span class="chip on">edit</span></div>
+        <div class="box between" style="border-color:var(--blue);background:var(--blue-wash);">
+          <div><div class="mono blue">Blanket condition</div><div class="tiny">applies to all unflagged</div></div><span class="chip">NM ▾</span>
+        </div>
+        <div class="box between" style="border-color:var(--red);">
+          <div><div class="mono red">⚠ 12 flagged</div><div class="tiny">creasing / whitening</div></div><span class="chip" style="border-color:var(--red);color:var(--red);">review</span>
+        </div>
+        <div class="box between"><div><div class="mono">⭐ 34 singles ≥ $5</div><div class="tiny">verify these</div></div><span class="chip">view</span></div>
+        <div class="box between"><span class="mono">≈ 950 bulk commons</span><span class="tiny">auto NM</span></div>
+        <div class="between"><span class="tiny">Est. market value</span><span class="mono blue">$2,140</span></div>
+        <div class="pill cta">Send to Gnome Games →</div>
+      </div></div>
+      <div class="note"><span class="lbl">key idea</span>Triage, not data entry: one blanket condition, AI surfaces only the ~46 cards worth a human glance.</div>
+    </div>
+
+    <div class="arrow"><svg viewBox="0 0 54 34"><path d="M2 17 q18 -12 36 0 t14 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M44 8 l9 9 -9 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- confirm -->
+    <div class="phcol">
+      <div class="stepcap"><b>5.</b> Submitted</div>
+      <div class="phone"><div class="notch"></div><div class="scrn" style="align-items:center;text-align:center;gap:12px;padding-top:8px;">
+        <div class="ph-img" style="width:64px;height:64px;border-radius:50%;border-color:var(--green);color:var(--green);font-size:30px;background:none;">✓</div>
+        <div class="ttl">Sent to the shop!</div>
+        <div class="sub">Gnome Games has been alerted. They'll text an offer to •••• 4242.</div>
+        <div class="box" style="width:100%;text-align:left;">
+          <div class="between"><span class="tiny">Submission</span><span class="mono">#CC-4471</span></div>
+          <div class="between"><span class="tiny">Cards</span><span class="mono">1,000</span></div>
+          <div class="between"><span class="tiny">Typical reply</span><span class="mono green">&lt; 1 hr</span></div>
+        </div>
+        <div class="box dash between" style="width:100%;border-color:var(--blue);">
+          <span class="mono blue" style="font-size:13px;">🎫 Counter ticket</span><span class="mono">#4471</span>
+        </div>
+        <div class="pill ghost sm" style="width:100%;">Keep my cards with me</div>
+      </div></div>
+      <div class="note"><span class="lbl">why</span>Seller can keep shopping in-store. The counter ticket ties the digital submission to the physical stack.</div>
+    </div>
+
+    <div class="phcol" style="justify-content:center;margin-top:34px;">
+      <div class="note" style="max-width:200px;font-size:20px;">…meanwhile, behind the counter →</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ============ LANE 4: SHOP SIDE ============ -->
+  <div class="lane-title"><span class="num">4</span> The shop · alert → match → offer</div>
+  <p class="lane-sub">Runs on the shop's counter tablet / POS screen. The payoff: instant buylist matching.</p>
+
+  <!-- alert -->
+  <div class="row">
+    <div class="phcol">
+      <div class="stepcap">Counter alert + queue</div>
+      <div class="tablet"><div class="scrn">
+        <div class="between">
+          <span class="ttl">Buylist inbox</span>
+          <span class="chip hi">🔔 1 new</span>
+        </div>
+        <div class="box between" style="border-color:var(--blue);background:var(--blue-wash);">
+          <div class="row2" style="align-items:center;gap:10px;">
+            <div class="ph-img" style="width:40px;height:40px;border-radius:50%;">J</div>
+            <div><div class="mono blue">Jordan M. · 1,000 cards</div><div class="tiny">submitted 2 min ago · ticket #4471</div></div>
+          </div>
+          <div style="text-align:right;"><div class="mono"><span class="hi-text">142 buylist hits</span></div><div class="tiny">est. payout $612</div></div>
+        </div>
+        <div class="box between"><div class="row2" style="align-items:center;gap:10px;"><div class="ph-img" style="width:40px;height:40px;border-radius:50%;">S</div><div><div class="mono" style="font-size:13px;">Sam · 64 cards</div><div class="tiny">18 min ago</div></div></div><div class="tiny">12 hits</div></div>
+        <div class="box between"><div class="row2" style="align-items:center;gap:10px;"><div class="ph-img" style="width:40px;height:40px;border-radius:50%;">D</div><div><div class="mono" style="font-size:13px;">Dana · 310 cards</div><div class="tiny">1 hr ago · ✓ offer sent</div></div></div><div class="tiny green">replied</div></div>
+      </div></div>
+      <div class="note"><span class="lbl">why</span>Submissions queue up so a busy shop processes them when they get a free minute — the whole point of the QR.</div>
+    </div>
+  </div>
+
+  <!-- dashboard -->
+  <div class="stepcap" style="margin-top:8px;">Submission dashboard — every card + buylist matches highlighted</div>
+  <div class="row">
+    <div class="phcol" style="flex:1;">
+      <div class="tablet full"><div class="scrn">
+        <div class="between">
+          <div><span class="ttl">Jordan M. · #4471</span> <span class="tiny">· 1,000 cards · keeps cards (ticket #4471)</span></div>
+          <span class="chip on">Make offer</span>
+        </div>
+        <!-- summary stats -->
+        <div class="row2 wrap">
+          <div class="box grow" style="min-width:120px;"><div class="tiny">Total cards</div><div class="count-big">1,000</div></div>
+          <div class="box grow" style="min-width:120px;"><div class="tiny">Est. market</div><div class="count-big">$2,140</div></div>
+          <div class="box grow" style="min-width:120px;border-color:var(--hi-line);background:var(--hi);"><div class="tiny">On your buylist</div><div class="count-big">142</div></div>
+          <div class="box grow" style="min-width:120px;border-color:var(--blue);"><div class="tiny">Buylist payout</div><div class="count-big blue">$612</div></div>
+        </div>
+        <!-- filter chips -->
+        <div class="row2 wrap" style="gap:6px;">
+          <span class="chip on">All 1,000</span><span class="chip hi">Buylist matches 142</span><span class="chip">Singles ≥ $5 · 34</span><span class="chip red" style="border-color:var(--red);">Flagged 12</span><span class="chip">Bulk 824</span>
+        </div>
+        <!-- card table -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="box between" style="background:var(--hi);border-color:var(--hi-line);">
+            <div class="row2" style="align-items:center;gap:8px;"><div class="card-mini"></div><div><div class="mono" style="font-size:13px;">Ragavan, Nimble Pilferer</div><div class="tiny">MH2 · NM · ×4</div></div></div>
+            <div style="text-align:right;"><div class="mono blue">WANT 4</div><div class="tiny">pay $22 ea</div></div>
+          </div>
+          <div class="box between" style="background:var(--hi);border-color:var(--hi-line);">
+            <div class="row2" style="align-items:center;gap:8px;"><div class="card-mini"></div><div><div class="mono" style="font-size:13px;">Umbreon VMAX (alt)</div><div class="tiny">EVS · NM · ×1</div></div></div>
+            <div style="text-align:right;"><div class="mono blue">WANT 2</div><div class="tiny">pay $640</div></div>
+          </div>
+          <div class="box between">
+            <div class="row2" style="align-items:center;gap:8px;"><div class="card-mini"></div><div><div class="mono" style="font-size:13px;">Pikachu IR</div><div class="tiny">151 · NM · ×1</div></div></div>
+            <div class="tiny">not on buylist</div>
+          </div>
+          <div class="box between" style="border-color:var(--red);">
+            <div class="row2" style="align-items:center;gap:8px;"><div class="card-mini" style="border-color:var(--red);"></div><div><div class="mono" style="font-size:13px;">Charizard Base <span class="red">⚠</span></div><div class="tiny red">crease flagged</div></div></div>
+            <div class="chip" style="border-color:var(--red);color:var(--red);">inspect</div>
+          </div>
+        </div>
+        <div class="box between" style="background:var(--paper2);"><span class="mono">824 bulk commons / uncommons</span><span class="tiny">offer $8 / 1,000 &nbsp;·&nbsp; or decline bulk</span></div>
+      </div></div>
+      <div class="note"><span class="lbl">the payoff</span>Buylist matches are auto-highlighted yellow with the shop's own buy price &amp; wanted quantity. The shop sees value in seconds, not hours.</div>
+    </div>
+  </div>
+
+  <!-- offer composer -->
+  <div class="stepcap" style="margin-top:8px;">Build the offer — cash vs. store credit</div>
+  <div class="row">
+    <div class="phcol">
+      <div class="tablet"><div class="scrn">
+        <div class="ttl">Offer to Jordan</div>
+        <div class="box between"><span>142 buylist cards</span><span class="mono">$612</span></div>
+        <div class="box between" style="border-color:var(--blue);"><span>34 singles <span class="tiny">→ price guide</span></span><span class="mono blue">tap to price</span></div>
+        <div class="box between" style="background:var(--paper2);"><span>824 bulk <span class="tiny">@ your rates</span></span><span class="mono">$8.20</span></div>
+        <div class="box" style="border-color:var(--blue);">
+          <div class="between"><span class="mono blue">Cash $620</span><span class="mono blue">Credit $744 (+20%)</span></div>
+          <div class="bar l" style="height:14px;background:linear-gradient(90deg,var(--blue) 45%,var(--hi) 45%);border-radius:8px;margin-top:8px;"></div>
+          <div class="tiny" style="margin-top:5px;">Drag to split cash / store credit</div>
+        </div>
+        <div class="row2"><div class="pill ghost grow sm">Counter / note</div><div class="pill cta grow sm">Send offer →</div></div>
+        <div class="box dash between" style="border-color:var(--ink);"><span class="tiny">Or:</span><span class="chip">💬 Message the seller</span></div>
+      </div></div>
+      <div class="note"><span class="lbl">why</span>Store credit at a bonus rate is the LGS's favorite lever — keeps money in the shop. The cash/credit split is one drag.</div>
+    </div>
+
+    <div class="phcol">
+      <div class="stepcap" style="color:var(--ink2);">Seller gets the text →</div>
+      <div class="phone"><div class="notch"></div><div class="scrn">
+        <div class="box between" style="background:var(--green);border-color:var(--green);color:#fff;">
+          <span class="mono" style="color:#fff;">💬 Gnome Games</span><span class="tiny" style="color:#eafff2;">now</span>
+        </div>
+        <div class="box" style="background:var(--paper2);"><div class="mono" style="font-size:13px;">Offer on your 1,000 cards:</div>
+          <div class="between" style="margin-top:6px;"><span>💵 Cash</span><span class="mono">$620</span></div>
+          <div class="between"><span>🎁 Store credit</span><span class="mono green">$744</span></div>
+        </div>
+        <div class="row2"><div class="pill cta grow sm">Accept credit</div><div class="pill ghost grow sm">Cash</div></div>
+        <div class="pill ghost sm">Counter / questions</div>
+        <div class="tiny">Bring stack + ticket #4471 to the counter to finish.</div>
+      </div></div>
+      <div class="note"><span class="lbl">loop closed</span>Seller accepts from the text, walks to the counter with ticket #4471, hands over the stack, gets paid. Shop never lost floor time.</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ============ LANE 5: PRICING ============ -->
+  <div class="lane-title"><span class="num">5</span> Pricing singles &amp; bulk · the price guide</div>
+  <p class="lane-sub">How the shop fills in the $0 from the offer — real market data by condition for singles, standing rates for bulk.</p>
+
+  <div class="row">
+    <!-- price guide drawer -->
+    <div class="phcol">
+      <div class="stepcap">Tap a single → <b>price guide</b></div>
+      <div class="phone wide"><div class="notch"></div><div class="scrn">
+        <div class="row2" style="align-items:center;gap:9px;">
+          <div class="card-mini"></div>
+          <div class="grow"><div class="ttl sm">Umbreon VMAX · alt art</div><div class="sub">Evolving Skies · 215 · ×1</div></div>
+          <span class="back">✕</span>
+        </div>
+        <div class="row2" style="gap:6px;"><span class="chip on">Normal</span><span class="chip">Reverse</span><span class="chip">1st Ed</span></div>
+        <div class="box between" style="border-color:var(--blue);">
+          <div><div class="tiny">Market · NM</div><div class="count-big blue">$640</div></div>
+          <div style="text-align:right;"><div style="width:74px;height:28px;background:linear-gradient(90deg,var(--blue-wash),#fff);border:2px solid var(--blue);border-radius:6px;"></div><div class="tiny green" style="margin-top:3px;">▲ 6.2% / 90d</div></div>
+        </div>
+        <div class="ladder">
+          <div class="ladrow on"><span class="c">Near Mint</span><span>$640 ← stated</span></div>
+          <div class="ladrow"><span class="c">Lightly Played</span><span>$520</span></div>
+          <div class="ladrow"><span class="c">Moderately Pl.</span><span>$400</span></div>
+          <div class="ladrow"><span class="c">Heavily Pl.</span><span>$300</span></div>
+        </div>
+        <div class="tiny">Recent sold comps</div>
+        <div class="box" style="padding:7px 10px;">
+          <div class="between" style="font-size:12.5px;"><span>Jun 5 · NM</span><span class="mono">$655</span></div>
+          <div class="between" style="font-size:12.5px;"><span>Jun 2 · NM</span><span class="mono">$628</span></div>
+          <div class="between" style="font-size:12.5px;"><span>May 28 · LP</span><span class="mono">$540</span></div>
+        </div>
+        <div class="box between" style="border-color:var(--blue);background:var(--blue-wash);">
+          <div class="row2" style="gap:5px;"><span class="chip">60%</span><span class="chip on">70%</span><span class="chip">80%</span></div>
+          <div style="text-align:right;"><div class="tiny">Your buy</div><div class="mono blue" style="font-size:17px;">$448</div></div>
+        </div>
+        <div class="pill cta sm">Add to offer · $448</div>
+      </div></div>
+      <div class="note"><span class="lbl">price guide</span>Same sold-listing data that powers price history across Cardconomy — one source of truth. Shop picks a buy % and it drops straight into the offer.</div>
+    </div>
+
+    <div class="arrow"><svg viewBox="0 0 54 34"><path d="M2 17 q18 -12 36 0 t14 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M44 8 l9 9 -9 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- bulk module -->
+    <div class="phcol">
+      <div class="stepcap">Bulk → <b>standing rates</b></div>
+      <div class="phone wide"><div class="notch"></div><div class="scrn">
+        <div class="between"><span class="ttl sm">Bulk handling</span><span class="chip">edit rates</span></div>
+        <div class="tiny">Your standing rates (set once)</div>
+        <div class="ladder">
+          <div class="ladrow"><span class="c">Commons / Uncommons</span><span>$6 / 1k</span></div>
+          <div class="ladrow"><span class="c">Rares / Holos</span><span>$25 / 1k</span></div>
+          <div class="ladrow"><span class="c">Foils (any)</span><span>$80 / 1k</span></div>
+        </div>
+        <div class="tiny">Jordan's bulk, auto-counted</div>
+        <div class="box" style="padding:8px 10px;">
+          <div class="between" style="font-size:13px;"><span>760 commons/unc.</span><span class="mono">$4.56</span></div>
+          <div class="between" style="font-size:13px;"><span>52 rares/holos</span><span class="mono">$1.30</span></div>
+          <div class="between" style="font-size:13px;"><span>12 foils</span><span class="mono">$0.96</span></div>
+        </div>
+        <div class="box between" style="border-color:var(--blue);"><span class="mono blue">Bulk total · 824</span><span class="mono blue" style="font-size:17px;">$8.20</span></div>
+        <div class="box dash between"><span class="tiny">Seller's choice:</span><span class="row2" style="gap:5px;"><span class="chip on">Sell</span><span class="chip">Keep bulk</span></span></div>
+      </div></div>
+      <div class="note"><span class="lbl">why</span>Shop sets bulk rates once; every submission auto-prices. Sellers can keep bulk rather than dump it for pennies — sell the hits, take the rest home.</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ============ LANE 6: MESSAGE + IN PERSON ============ -->
+  <div class="lane-title"><span class="num">6</span> Message &amp; complete — in person</div>
+  <p class="lane-sub">Phase 1 has no shipping. The shop messages to coordinate the visit; cards &amp; payment swap hands at the counter.</p>
+
+  <div class="row">
+    <!-- shop composes -->
+    <div class="phcol">
+      <div class="stepcap">Shop messages the seller</div>
+      <div class="phone"><div class="notch"></div><div class="scrn">
+        <div class="ttl sm">Message Jordan</div>
+        <div class="box between" style="background:var(--blue-wash);border-color:var(--blue);"><span class="tiny">Offer attached</span><span class="mono blue">$620 / $744</span></div>
+        <div class="tiny">Quick messages — one tap</div>
+        <div class="box" style="border-color:var(--blue);"><span class="mono blue" style="font-size:13px;">“Offer's ready — come on in 👍”</span></div>
+        <div class="box" style="font-size:13.5px;">“Can you bring these 5 back to inspect?”</div>
+        <div class="box" style="font-size:13.5px;">“We'll pass on bulk — bring singles only”</div>
+        <div class="box" style="font-size:13.5px;">“What's your availability this week?”</div>
+        <div class="box dash"><span class="tiny">Type a message…</span></div>
+        <div class="pill cta sm">Send →</div>
+      </div></div>
+      <div class="note"><span class="lbl">why</span>Canned messages cover the common cases in one tap. “Come back in” is the core Phase-1 action — no logistics, just coordination.</div>
+    </div>
+
+    <div class="arrow"><svg viewBox="0 0 54 34"><path d="M2 17 q18 -12 36 0 t14 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M44 8 l9 9 -9 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- seller thread -->
+    <div class="phcol">
+      <div class="stepcap">Seller's thread</div>
+      <div class="phone"><div class="notch"></div><div class="scrn">
+        <div class="box between" style="background:var(--green);border-color:var(--green);color:#fff;"><span class="mono" style="color:#fff;">💬 Gnome Games</span><span class="tiny" style="color:#eafff2;">now</span></div>
+        <div class="thread">
+          <div class="bubble shop"><span class="who">Gnome Games</span>Hey Jordan! Your offer's ready 👇</div>
+          <div class="bubble shop" style="max-width:94%;"><div class="between"><span>💵 Cash</span><span class="mono">$620</span></div><div class="between"><span>🎁 Credit</span><span class="mono green">$744</span></div></div>
+          <div class="bubble shop"><span class="who">Gnome Games</span>Swing by today to finish? Bring the stack + ticket #4471.</div>
+          <div class="bubble me">Yep — after 5pm 👍</div>
+        </div>
+        <div class="row2 wrap" style="gap:5px;"><span class="chip on">Accept credit</span><span class="chip">I'll come now</span><span class="chip">Pick a time</span></div>
+      </div></div>
+      <div class="note"><span class="lbl">one thread</span>Offer, questions and scheduling all live in a single thread tied to the submission. The seller plans the in-person visit right here.</div>
+    </div>
+
+    <div class="arrow"><svg viewBox="0 0 54 34"><path d="M2 17 q18 -12 36 0 t14 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M44 8 l9 9 -9 9" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+
+    <!-- counter completion -->
+    <div class="phcol">
+      <div class="stepcap">At the counter</div>
+      <div class="phone"><div class="notch"></div><div class="scrn">
+        <div class="between"><span class="ttl sm">Ticket #4471</span><span class="chip on">Jordan is here ✓</span></div>
+        <div class="tiny">Check stack against the digital list</div>
+        <div class="box between" style="font-size:13px;"><span class="green">✓ 142 buylist</span><span class="tiny">matched</span></div>
+        <div class="box between" style="font-size:13px;"><span class="green">✓ 34 singles</span><span class="tiny">verified</span></div>
+        <div class="box between" style="font-size:13px;border-color:var(--red);"><span class="red">⚠ Charizard Base</span><span class="tiny red">crease → repriced</span></div>
+        <div class="box between" style="font-size:13px;"><span class="green">✓ 824 bulk</span><span class="tiny">counted</span></div>
+        <div class="box between" style="border-color:var(--blue);background:var(--blue-wash);"><span class="mono blue">Pay out</span><span class="mono blue" style="font-size:16px;">Credit $744</span></div>
+        <div class="pill cta sm">Complete exchange ✓</div>
+      </div></div>
+      <div class="note"><span class="lbl">deal closes</span>The physical check runs against the digital list — fast, because the hard work's done. Cards &amp; payment change hands here. Done.</div>
+    </div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ============ NOTES ============ -->
+  <div class="footnotes">
+    <div class="lane-title"><span class="num">?</span> Open questions for you</div>
+    <div class="qcards">
+      <div class="qcard"><h4>Price guide freshness</h4><p>Singles price from Cardconomy sold-listing data by condition. <span class="q">How live does it need to be</span> — real-time, daily, or weekly snapshots?</p></div>
+      <div class="qcard"><h4>Buy % defaults</h4><p>Shops buy at a % of market (shown at 70%). Should that be a <span class="q">per-shop default, per-rarity, or per-card</span> override each time?</p></div>
+      <div class="qcard"><h4>Split a submission</h4><p>Sellers can keep bulk. Do we let them <span class="q">sell only the hits</span> and walk with the rest — or is it all-or-nothing per submission?</p></div>
+      <div class="qcard"><h4>Scheduling the visit</h4><p>Messaging coordinates the in-person exchange. Is <span class="q">free-text “I'll come at 5”</span> enough for Phase 1, or do we need real appointment slots?</p></div>
+      <div class="qcard"><h4>Offer expiry</h4><p>An offer can sit for days before the seller comes in. <span class="q">How long until it expires</span> or re-prices against the market?</p></div>
+      <div class="qcard"><h4>Next step</h4><p>Want me to take <span class="q">one lane to high fidelity</span> next — the price-guide drawer, the seller's message thread, or the Live Sweep scanner?</p></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // tab switching for intake methods
+  var tabs = document.querySelectorAll('#tabs .tab');
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      tabs.forEach(function(x){ x.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      t.classList.add('active');
+      var el = document.getElementById(t.dataset.p);
+      if (el) el.classList.add('active');
+    });
+  });
+  // annotations toggle
+  var annotOn = true;
+  var btn = document.getElementById('annotBtn');
+  var board = document.getElementById('board');
+  btn.addEventListener('click', function(){
+    annotOn = !annotOn;
+    board.classList.toggle('annot-hide', !annotOn);
+    btn.textContent = annotOn ? '✎ Annotations: ON' : '✎ Annotations: OFF';
+    btn.classList.toggle('off', !annotOn);
+  });
+</script>
+</body>
+</html>

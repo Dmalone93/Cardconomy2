@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardonomy — User Flow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef0f3; --surface:#fff; --surface-2:#f6f7f9;
+    --ink:#16181d; --ink-2:#3a3d44; --muted:#71757e; --faint:#a4a8b0;
+    --line:#dfe2e8;
+    --accent:oklch(0.52 0.2 264); --accent-wash:oklch(0.96 0.03 264);
+    --green:oklch(0.55 0.13 152); --green-wash:oklch(0.95 0.05 152);
+    --gold:oklch(0.7 0.12 85); --gold-wash:oklch(0.95 0.06 85);
+    --amber:oklch(0.7 0.13 70);
+    --sans:'Hanken Grotesk',system-ui,sans-serif; --mono:'Geist Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);}
+  .page{max-width:1560px;margin:0 auto;padding:48px 40px 90px;}
+
+  .brand{display:flex;align-items:center;gap:11px;margin-bottom:14px;}
+  .brand svg{width:26px;height:28px;color:var(--accent);}
+  .brand span{font-weight:800;font-size:19px;letter-spacing:-0.5px;}
+  .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:8px;}
+  h1{margin:0;font-size:40px;font-weight:800;letter-spacing:-1.2px;line-height:1;}
+  .sub{margin:10px 0 0;font-size:15px;color:var(--muted);max-width:640px;line-height:1.5;}
+
+  /* legend */
+  .legend{display:flex;gap:20px;margin:24px 0 30px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--muted);}
+  .legend .item{display:flex;align-items:center;gap:8px;}
+  .lg{width:30px;height:20px;border-radius:6px;flex-shrink:0;}
+  .lg.screen{background:var(--surface);border:1.5px solid var(--line);}
+  .lg.decision{background:var(--gold-wash);border:1.5px solid var(--gold);transform:none;}
+  .lg.terminal{background:var(--green-wash);border:1.5px solid var(--green);border-radius:999px;}
+  .lg.entry{background:var(--ink);}
+
+  /* lanes */
+  .lane{background:var(--surface);border-radius:20px;margin-bottom:18px;box-shadow:0 1px 3px rgba(20,24,40,0.05),0 8px 22px rgba(20,24,40,0.05);overflow:hidden;}
+  .lane-head{display:flex;align-items:center;gap:12px;padding:15px 22px;border-bottom:1px solid var(--line);}
+  .lane-head .ic{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+  .lane-head h2{margin:0;font-size:17px;font-weight:800;letter-spacing:-0.4px;}
+  .lane-head .lh-sub{font-size:12.5px;color:var(--muted);margin-top:1px;}
+  .flow{display:flex;align-items:center;gap:0;padding:22px;overflow-x:auto;}
+
+  /* nodes */
+  .node{flex-shrink:0;border-radius:12px;padding:11px 14px;font-size:13px;font-weight:600;line-height:1.25;min-width:104px;max-width:150px;position:relative;}
+  .node .nt{font-family:var(--mono);font-size:9.5px;letter-spacing:0.5px;text-transform:uppercase;color:var(--faint);font-weight:500;margin-bottom:3px;display:block;}
+  .node.screen{background:var(--surface);border:1.5px solid var(--line);color:var(--ink);}
+  .node.entry{background:var(--ink);color:#fff;border:none;text-align:center;min-width:auto;padding:12px 16px;border-radius:14px;font-weight:700;}
+  .node.entry .nt{color:rgba(255,255,255,0.6);}
+  .node.decision{background:var(--gold-wash);border:1.5px solid var(--gold);color:#7a5b08;}
+  .node.decision .nt{color:var(--gold);}
+  .node.terminal{background:var(--green-wash);border:1.5px solid var(--green);color:#1c5c3a;border-radius:999px;text-align:center;font-weight:700;}
+  .node.accent{background:var(--accent-wash);border:1.5px solid var(--accent);color:var(--accent);}
+  .node.accent .nt{color:var(--accent);}
+
+  /* connector */
+  .arrow{flex-shrink:0;width:30px;height:2px;background:var(--faint);position:relative;margin:0 2px;}
+  .arrow:after{content:"";position:absolute;right:-1px;top:-3px;border-left:6px solid var(--faint);border-top:4px solid transparent;border-bottom:4px solid transparent;}
+  .arrow.sm{width:18px;}
+  .arrow.lbl:before{content:attr(data-l);position:absolute;top:-16px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--muted);white-space:nowrap;font-family:var(--mono);}
+
+  /* branch stack */
+  .branch{flex-shrink:0;display:flex;flex-direction:column;gap:10px;}
+  .branch-row{display:flex;align-items:center;}
+
+  .feeds{font-size:11px;color:var(--accent);font-weight:600;padding:0 6px;white-space:nowrap;}
+  .note{font-size:11.5px;color:var(--muted);padding:0 22px 18px;line-height:1.4;}
+
+  @media print{body{background:#fff;}.page{padding:16px;}.lane{box-shadow:none;border:1px solid var(--line);}.flow{overflow:visible;flex-wrap:wrap;}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="brand">
+    <svg viewBox="0 0 140 149" fill="none"><mask id="lm" fill="#fff"><rect x="37.4222" y="35.3765" width="47.0464" height="70.0965" rx="1.95587" transform="rotate(-48.7591 37.4222 35.3765)"/></mask><rect x="37.4222" y="35.3765" width="47.0464" height="70.0965" rx="1.95587" transform="rotate(-48.7591 37.4222 35.3765)" stroke="currentColor" stroke-width="4.4" mask="url(#lm)"/><rect x="117.848" y="74.0825" width="47.0464" height="70.0965" rx="1.95587" transform="rotate(62.1116 117.848 74.0825)" fill="currentColor"/><rect x="6.35461" y="54.0312" width="47.0464" height="70.0965" rx="1.95587" transform="rotate(5.20122 6.35461 54.0312)" fill="currentColor"/></svg>
+    <span>Cardonomy</span>
+  </div>
+  <div class="kicker">User Flow</div>
+  <h1>Screens, paths &amp; decisions</h1>
+  <p class="sub">Every route through the app, grouped by the five areas of the bottom nav. Rounded cards are screens, gold are decision points, green pills are end states.</p>
+
+  <div class="legend">
+    <div class="item"><span class="lg entry"></span> Entry point</div>
+    <div class="item"><span class="lg screen"></span> Screen</div>
+    <div class="item"><span class="lg decision"></span> Decision</div>
+    <div class="item"><span class="lg terminal"></span> End state</div>
+    <div class="item" style="margin-left:auto;font-family:var(--mono);">↘ dashed labels = the choice taken</div>
+  </div>
+
+  <!-- ENTRY + NAV -->
+  <div class="lane">
+    <div class="lane-head">
+      <span class="ic" style="background:var(--ink)">⌂</span>
+      <div><h2>Entry &amp; navigation</h2><div class="lh-sub">App open → persistent 5-tab bar</div></div>
+    </div>
+    <div class="flow">
+      <div class="node entry"><span class="nt">Open</span>Launch / QR scan</div>
+      <div class="arrow"></div>
+      <div class="branch">
+        <div class="branch-row"><div class="node screen"><span class="nt">Tab</span>Browse</div></div>
+        <div class="branch-row"><div class="node screen"><span class="nt">Tab</span>Search</div></div>
+        <div class="branch-row"><div class="node screen"><span class="nt">Tab</span>Sell hub</div></div>
+        <div class="branch-row"><div class="node screen"><span class="nt">Tab</span>Watching</div></div>
+        <div class="branch-row"><div class="node screen"><span class="nt">Tab</span>Profile</div></div>
+      </div>
+      <div class="feeds">→ each opens a lane below</div>
+    </div>
+  </div>
+
+  <!-- DISCOVER & BUY -->
+  <div class="lane">
+    <div class="lane-head">
+      <span class="ic" style="background:var(--accent)">⌕</span>
+      <div><h2>Discover &amp; buy</h2><div class="lh-sub">Browse / Search → Listing → purchase</div></div>
+    </div>
+    <div class="flow">
+      <div class="node screen"><span class="nt">Tab</span>Browse / Search</div>
+      <div class="arrow"></div>
+      <div class="node screen"><span class="nt">Screen</span>Filters &amp; results</div>
+      <div class="arrow"></div>
+      <div class="node screen"><span class="nt">Screen</span>Listing detail</div>
+      <div class="arrow"></div>
+      <div class="node decision"><span class="nt">Decide</span>How to buy?</div>
+      <div class="arrow sm"></div>
+      <div class="branch">
+        <div class="branch-row"><div class="arrow lbl sm" data-l="Buy Now"></div><div class="node screen"><span class="nt">Flow</span>Checkout</div><div class="arrow sm"></div><div class="node terminal">Order placed</div></div>
+        <div class="branch-row"><div class="arrow lbl sm" data-l="Offer"></div><div class="node screen"><span class="nt">Sheet</span>Make offer</div><div class="arrow sm"></div><div class="node terminal">Offer sent</div></div>
+        <div class="branch-row"><div class="arrow lbl sm" data-l="Auction"></div><div class="node screen"><span class="nt">Sheet</span>Place bid</div><div class="arrow sm"></div><div class="node terminal">High bidder</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SELL -->
+  <div class="lane">
+    <div class="lane-head">
+      <span class="ic" style="background:var(--accent)">+</span>
+      <div><h2>Sell</h2><div class="lh-sub">Sell hub → marketplace, local shop, or trade</div></div>
+    </div>
+    <div class="flow">
+      <div class="node screen"><span class="nt">Tab</span>Sell hub</div>
+      <div class="arrow"></div>
+      <div class="node decision"><span class="nt">Decide</span>Which path?</div>
+      <div class="arrow sm"></div>
+      <div class="branch">
+        <!-- marketplace -->
+        <div class="branch-row">
+          <div class="arrow lbl sm" data-l="Marketplace"></div>
+          <div class="node decision"><span class="nt">Decide</span>One or many?</div>
+          <div class="arrow sm"></div>
+          <div class="branch">
+            <div class="branch-row"><div class="arrow lbl sm" data-l="Single"></div><div class="node screen"><span class="nt">Wizard</span>List a card</div><div class="arrow sm"></div><div class="node terminal">Listed</div></div>
+            <div class="branch-row"><div class="arrow lbl sm" data-l="Bulk"></div><div class="node screen"><span class="nt">Scan</span>Live Sweep</div><div class="arrow sm"></div><div class="node screen"><span class="nt">Screen</span>Price &amp; publish</div><div class="arrow sm"></div><div class="node terminal">Listed</div></div>
+          </div>
+        </div>
+        <!-- sell to shop -->
+        <div class="branch-row">
+          <div class="arrow lbl sm" data-l="Local shop"></div>
+          <div class="node screen"><span class="nt">Land</span>Shop intake</div>
+          <div class="arrow sm"></div>
+          <div class="node screen"><span class="nt">Scan</span>Live Sweep</div>
+          <div class="arrow sm"></div>
+          <div class="node screen"><span class="nt">Screen</span>Review &amp; submit</div>
+          <div class="arrow sm"></div>
+          <div class="node screen"><span class="nt">Thread</span>Shop offer</div>
+          <div class="arrow sm"></div>
+          <div class="node terminal">Counter pickup</div>
+        </div>
+        <!-- trade -->
+        <div class="branch-row">
+          <div class="arrow lbl sm" data-l="Trade"></div>
+          <div class="node decision"><span class="nt">Decide</span>Match or board?</div>
+          <div class="arrow sm"></div>
+          <div class="branch">
+            <div class="branch-row"><div class="arrow lbl sm" data-l="Matches"></div><div class="node screen"><span class="nt">Screen</span>Build trade</div><div class="arrow sm"></div><div class="node screen"><span class="nt">Screen</span>Pick LGS hub</div><div class="arrow sm"></div><div class="node terminal">Proposed</div></div>
+            <div class="branch-row"><div class="arrow lbl sm" data-l="Board"></div><div class="node accent"><span class="nt">Screen</span>Open to Offers</div><div class="arrow sm"></div><div class="node screen"><span class="nt">Composer</span>Post / offer</div><div class="arrow sm"></div><div class="node terminal">Live / sent</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="note">Live Sweep is a shared scanner reused by both bulk-marketplace listing and sell-to-shop. The trade builder is also entered from a board post's “Make an offer.”</div>
+  </div>
+
+  <!-- ACCOUNT -->
+  <div class="lane">
+    <div class="lane-head">
+      <span class="ic" style="background:var(--accent)">◐</span>
+      <div><h2>Watching &amp; profile</h2><div class="lh-sub">Collection, buylist, and account management</div></div>
+    </div>
+    <div class="flow">
+      <div class="branch">
+        <div class="branch-row"><div class="node screen"><span class="nt">Tab</span>Watching</div><div class="arrow sm"></div><div class="node screen"><span class="nt">Screen</span>Watchlist / Collection</div></div>
+        <div class="branch-row" style="margin-top:10px;"><div class="node screen"><span class="nt">Tab</span>Profile</div><div class="arrow sm"></div><div class="branch">
+          <div class="branch-row"><div class="node accent"><span class="nt">Screen</span>My buylist</div></div>
+          <div class="branch-row"><div class="node screen"><span class="nt">Screen</span>Purchases</div></div>
+          <div class="branch-row"><div class="node screen"><span class="nt">Screen</span>Selling</div></div>
+          <div class="branch-row"><div class="node screen"><span class="nt">Screen</span>Offers</div></div>
+          <div class="branch-row"><div class="node screen"><span class="nt">Screen</span>Payments &amp; payouts</div></div>
+          <div class="branch-row"><div class="node screen"><span class="nt">Screen</span>Notifications</div></div>
+        </div></div>
+      </div>
+      <div class="feeds">↺ Buylist matches feed alerts &amp; power shop trade-in pricing</div>
+    </div>
+  </div>
+
+  <!-- LGS -->
+  <div class="lane">
+    <div class="lane-head">
+      <span class="ic" style="background:var(--green)">▢</span>
+      <div><h2>Local game shop</h2><div class="lh-sub">Storefront discovery &amp; shop enrollment</div></div>
+    </div>
+    <div class="flow">
+      <div class="branch">
+        <div class="branch-row"><div class="node screen"><span class="nt">From listing</span>Seller “Store”</div><div class="arrow sm"></div><div class="node screen"><span class="nt">Screen</span>LGS storefront</div><div class="arrow sm"></div><div class="branch">
+          <div class="branch-row"><div class="arrow lbl sm" data-l="Sell"></div><div class="feeds" style="padding-left:0;">→ Shop intake</div></div>
+          <div class="branch-row"><div class="arrow lbl sm" data-l="Trade"></div><div class="feeds" style="padding-left:0;">→ Trade flow</div></div>
+          <div class="branch-row"><div class="arrow lbl sm" data-l="Vault"></div><div class="node screen"><span class="nt">Service</span>Local vault</div></div>
+        </div></div>
+        <div class="branch-row" style="margin-top:10px;"><div class="node entry" style="background:var(--green)"><span class="nt">Shop owner</span>Own a shop?</div><div class="arrow sm"></div><div class="node screen"><span class="nt">Pitch</span>Enrollment</div><div class="arrow sm"></div><div class="node terminal">Application sent</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

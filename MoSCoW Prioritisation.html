@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardonomy — MoSCoW Prioritisation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eef0f3; --surface:#fff; --surface-2:#f6f7f9;
+    --ink:#16181d; --ink-2:#3a3d44; --muted:#71757e; --faint:#a4a8b0;
+    --line:#dfe2e8;
+    --accent:oklch(0.52 0.2 264);
+    --must:oklch(0.55 0.16 18); --must-wash:oklch(0.97 0.02 18); --must-line:oklch(0.84 0.07 18);
+    --should:oklch(0.58 0.14 250); --should-wash:oklch(0.975 0.02 264); --should-line:oklch(0.84 0.06 264);
+    --could:oklch(0.6 0.13 180); --could-wash:oklch(0.975 0.025 190); --could-line:oklch(0.82 0.06 190);
+    --wont:oklch(0.5 0.02 280); --wont-wash:oklch(0.97 0.004 280); --wont-line:oklch(0.86 0.006 280);
+    --sans:'Hanken Grotesk',system-ui,sans-serif; --mono:'Geist Mono',monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:var(--sans);}
+  .page{max-width:1500px;margin:0 auto;padding:52px 44px 90px;}
+
+  .brand{display:flex;align-items:center;gap:11px;margin-bottom:16px;}
+  .brand svg{width:27px;height:29px;color:var(--accent);}
+  .brand span{font-weight:800;font-size:19px;letter-spacing:-0.5px;}
+  .kicker{font-family:var(--mono);font-size:12.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:500;margin-bottom:10px;}
+  h1{margin:0;font-size:44px;font-weight:800;letter-spacing:-1.4px;line-height:1;}
+  .sub{margin:12px 0 0;font-size:15.5px;color:var(--muted);max-width:700px;line-height:1.55;}
+
+  /* effort legend */
+  .elegend{display:flex;gap:10px;margin:24px 0 6px;flex-wrap:wrap;align-items:center;font-size:12.5px;color:var(--muted);}
+  .elegend .t{font-family:var(--mono);font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--faint);margin-right:4px;}
+  .tag{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:0.3px;padding:3px 9px;border-radius:7px;display:inline-flex;align-items:center;gap:5px;}
+  .tag.built{background:oklch(0.95 0.05 152);color:oklch(0.42 0.12 152);}
+  .tag.quick{background:oklch(0.95 0.06 130);color:oklch(0.45 0.13 130);}
+  .tag.medium{background:oklch(0.95 0.06 70);color:oklch(0.48 0.13 60);}
+  .tag.large{background:oklch(0.95 0.05 18);color:oklch(0.5 0.16 18);}
+
+  /* quadrant grid */
+  .quad{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:22px;}
+  .col{background:var(--surface);border-radius:20px;overflow:hidden;box-shadow:0 1px 3px rgba(20,24,40,0.05),0 10px 28px rgba(20,24,40,0.05);display:flex;flex-direction:column;}
+  .col-head{padding:18px 22px;color:#fff;display:flex;align-items:baseline;gap:12px;}
+  .col-head .M{font-size:30px;font-weight:800;letter-spacing:-1px;line-height:1;}
+  .col-head .lbl{font-size:17px;font-weight:800;letter-spacing:-0.3px;}
+  .col-head .desc{font-size:12px;opacity:0.88;margin-left:auto;text-align:right;max-width:230px;line-height:1.35;}
+  .col-body{padding:16px;display:flex;flex-direction:column;gap:10px;flex:1;}
+
+  .card{border-radius:13px;padding:13px 15px;border:1.5px solid var(--line);background:var(--surface);}
+  .card .ct{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+  .card h3{margin:0;font-size:14.5px;font-weight:700;letter-spacing:-0.2px;}
+  .card p{margin:5px 0 0;font-size:12px;color:var(--muted);line-height:1.45;}
+
+  .must .col-head{background:var(--must);}
+  .must .card{background:var(--must-wash);border-color:var(--must-line);}
+  .should .col-head{background:var(--should);}
+  .should .card{background:var(--should-wash);border-color:var(--should-line);}
+  .could .col-head{background:var(--could);}
+  .could .card{background:var(--could-wash);border-color:var(--could-line);}
+  .wont .col-head{background:var(--wont);}
+  .wont .card{background:var(--wont-wash);border-color:var(--wont-line);}
+  .wont .card h3{color:var(--ink-2);}
+
+  .foot{margin-top:26px;background:var(--surface);border-radius:18px;padding:20px 24px;box-shadow:0 1px 3px rgba(20,24,40,0.05);display:flex;gap:30px;flex-wrap:wrap;}
+  .foot .blk{flex:1;min-width:220px;}
+  .foot h4{margin:0 0 6px;font-size:13px;font-weight:800;letter-spacing:-0.2px;display:flex;align-items:center;gap:7px;}
+  .foot h4 .d{width:9px;height:9px;border-radius:3px;}
+  .foot p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.5;}
+
+  @media print{body{background:#fff;}.page{padding:16px;}.col,.foot{box-shadow:none;border:1px solid var(--line);break-inside:avoid;}}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="brand">
+    <svg viewBox="0 0 140 149" fill="none"><mask id="lm" fill="#fff"><rect x="37.4222" y="35.3765" width="47.0464" height="70.0965" rx="1.95587" transform="rotate(-48.7591 37.4222 35.3765)"/></mask><rect x="37.4222" y="35.3765" width="47.0464" height="70.0965" rx="1.95587" transform="rotate(-48.7591 37.4222 35.3765)" stroke="currentColor" stroke-width="4.4" mask="url(#lm)"/><rect x="117.848" y="74.0825" width="47.0464" height="70.0965" rx="1.95587" transform="rotate(62.1116 117.848 74.0825)" fill="currentColor"/><rect x="6.35461" y="54.0312" width="47.0464" height="70.0965" rx="1.95587" transform="rotate(5.20122 6.35461 54.0312)" fill="currentColor"/></svg>
+    <span>Cardonomy</span>
+  </div>
+  <div class="kicker">MoSCoW Prioritisation</div>
+  <h1>What we build, and when</h1>
+  <p class="sub">Every feature from the roadmap sorted by priority. Each card is tagged with build effort so you can see where the quick wins sit versus the heavy, backend-dependent lifts.</p>
+
+  <div class="elegend">
+    <span class="t">Effort key</span>
+    <span class="tag built">● BUILT</span>
+    <span class="tag quick">⚡ QUICK · ½ session</span>
+    <span class="tag medium">◐ MEDIUM · 1 session</span>
+    <span class="tag large">▲ LARGE · backend / multi</span>
+  </div>
+
+  <div class="quad">
+    <!-- MUST -->
+    <div class="col must">
+      <div class="col-head"><span class="M">M</span><span class="lbl">Must have</span><span class="desc">The transactional core — without these there's no product. Already prototyped.</span></div>
+      <div class="col-body">
+        <div class="card"><div class="ct"><h3>Browse, search &amp; filters</h3><span class="tag built">BUILT</span></div><p>Discovery by game, set, grade, price; sticky search.</p></div>
+        <div class="card"><div class="ct"><h3>Listing detail + buy / offer / bid</h3><span class="tag built">BUILT</span></div><p>Slab, price history, and all three purchase routes.</p></div>
+        <div class="card"><div class="ct"><h3>Checkout</h3><span class="tag built">BUILT</span></div><p>Address, shipping, payment, buyer protection.</p></div>
+        <div class="card"><div class="ct"><h3>Sell a card + sell to a shop</h3><span class="tag built">BUILT</span></div><p>Single wizard, plus the QR bulk-intake flow &amp; scanner.</p></div>
+        <div class="card"><div class="ct"><h3>Account &amp; buylist</h3><span class="tag built">BUILT</span></div><p>Purchases, selling, offers, payouts, notifications, buylist.</p></div>
+        <div class="card"><div class="ct"><h3>Real payments &amp; payouts</h3><span class="tag large">▲ LARGE</span></div><p>Processor, escrow, KYC, tax — required to actually transact.</p></div>
+      </div>
+    </div>
+
+    <!-- SHOULD -->
+    <div class="col should">
+      <div class="col-head"><span class="M">S</span><span class="lbl">Should have</span><span class="desc">High-value, mostly quick — these make it feel real and reinforce the community thesis.</span></div>
+      <div class="col-body">
+        <div class="card"><div class="ct"><h3>Card-for-card trading + board</h3><span class="tag built">BUILT</span></div><p>Matches, fairness meter, “Open to Offers” board, LGS meetup.</p></div>
+        <div class="card"><div class="ct"><h3>LGS storefront + enrollment</h3><span class="tag built">BUILT</span></div><p>Shop pages and the sign-up pitch for owners.</p></div>
+        <div class="card"><div class="ct"><h3>Individual seller storefronts</h3><span class="tag quick">⚡ QUICK</span></div><p>Clone the LGS storefront for everyday sellers.</p></div>
+        <div class="card"><div class="ct"><h3>Following + a feed</h3><span class="tag quick">⚡ QUICK</span></div><p>Follow sellers, sets &amp; cards; a “Following” surface.</p></div>
+        <div class="card"><div class="ct"><h3>Saved searches &amp; price alerts</h3><span class="tag quick">⚡ QUICK</span></div><p>Save a search; matches surface in notifications.</p></div>
+        <div class="card"><div class="ct"><h3>Price-guide card pages</h3><span class="tag quick">⚡ QUICK</span></div><p>A destination page per card: chart + sold comps.</p></div>
+        <div class="card"><div class="ct"><h3>Reviews with photos</h3><span class="tag quick">⚡ QUICK</span></div><p>Buyer reviews on storefronts &amp; listings.</p></div>
+      </div>
+    </div>
+
+    <!-- COULD -->
+    <div class="col could">
+      <div class="col-head"><span class="M">C</span><span class="lbl">Could have</span><span class="desc">Differentiators &amp; nice-to-haves — valuable, but a phase or two out.</span></div>
+      <div class="col-body">
+        <div class="card"><div class="ct"><h3>The Vault (store &amp; trade)</h3><span class="tag medium">◐ MEDIUM</span></div><p>Deposit at an LGS, trade without shipping. Mockable now; real custody is large.</p></div>
+        <div class="card"><div class="ct"><h3>Authentication / “Verified”</h3><span class="tag medium">◐ MEDIUM</span></div><p>Submit-for-verification flow + verified badges.</p></div>
+        <div class="card"><div class="ct"><h3>Grading submission service</h3><span class="tag medium">◐ MEDIUM</span></div><p>Send raw cards → grade-pending → graded, tracked.</p></div>
+        <div class="card"><div class="ct"><h3>Public want lists &amp; deal scores</h3><span class="tag quick">⚡ QUICK</span></div><p>Shareable wants; “below market” indicators.</p></div>
+        <div class="card"><div class="ct"><h3>Portfolio &amp; personalised feed</h3><span class="tag medium">◐ MEDIUM</span></div><p>Daily value tracking; recommendation-driven home.</p></div>
+        <div class="card"><div class="ct"><h3>Combined / bulk shipping tools</h3><span class="tag medium">◐ MEDIUM</span></div><p>Seller label &amp; packing flow for multi-item orders.</p></div>
+      </div>
+    </div>
+
+    <!-- WON'T -->
+    <div class="col wont">
+      <div class="col-head"><span class="M">W</span><span class="lbl">Won't have <span style="opacity:0.7;font-weight:600;font-size:12px;">(this phase)</span></span><span class="desc">Out of scope for now — heavy infrastructure or off-thesis. Revisit post-traction.</span></div>
+      <div class="col-body">
+        <div class="card"><div class="ct"><h3>Vault as physical infrastructure</h3><span class="tag large">▲ LARGE</span></div><p>Real custody, insurance, logistics partners.</p></div>
+        <div class="card"><div class="ct"><h3>Authentication at scale</h3><span class="tag large">▲ LARGE</span></div><p>Staffing, grader partnerships, liability.</p></div>
+        <div class="card"><div class="ct"><h3>LGS network as a B2B product</h3><span class="tag large">▲ LARGE</span></div><p>POS integration, contracts, shop onboarding ops.</p></div>
+        <div class="card"><div class="ct"><h3>Flipper / day-trader tooling</h3><span class="tag large">✕ OFF-THESIS</span></div><p>Sniping, arbitrage dashboards — against the community-first stance.</p></div>
+        <div class="card"><div class="ct"><h3>Live breaks / rip streams</h3><span class="tag large">▲ LARGE</span></div><p>Streaming infra — a product unto itself.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="blk"><h4><span class="d" style="background:var(--must)"></span>Reading this board</h4><p>Priority is left-to-right, top-to-bottom: <b>Must</b> ships first, <b>Won't</b> is parked. Colour = priority; the tag = build effort. The two are independent — some Must-haves are large, some Could-haves are quick.</p></div>
+    <div class="blk"><h4><span class="d" style="background:oklch(0.55 0.13 152)"></span>Where we are</h4><p>The prototype already covers the entire <b>Must</b> column and the top of <b>Should</b> — enough to demo the full vision with mock data. The gap to launch is the backend behind it.</p></div>
+    <div class="blk"><h4><span class="d" style="background:var(--should)"></span>Recommended next sprint</h4><p>Batch the four <b>Should · Quick</b> wins (seller storefronts, following/feed, saved-search alerts, price-guide pages) — cheap, and they deepen the community feel.</p></div>
+  </div>
+</div>
+</body>
+</html>
