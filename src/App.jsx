@@ -11,6 +11,9 @@ import Sell from './screens/Sell';
 import SellBulk from './screens/SellBulk';
 import SellShop from './screens/SellShop';
 import Trade from './screens/Trade';
+import ShopFinder from './screens/ShopFinder';
+import Storefront from './screens/Storefront';
+import Shop from './screens/Shop';
 
 function Placeholder({ name }) {
   return <div style={{ padding: 24 }}><h2>{name}</h2><p>Coming soon...</p></div>;
@@ -34,11 +37,11 @@ export default function App() {
             <Route path="/sell/bulk" element={<SellBulk />} />
             <Route path="/sell/shop/:shopId?" element={<SellShop />} />
             <Route path="/trade" element={<Trade />} />
-            <Route path="/shopfinder" element={<Placeholder name="Shop Finder" />} />
-            <Route path="/storefront/:id" element={<Placeholder name="Storefront" />} />
+            <Route path="/shopfinder" element={<ShopFinder />} />
+            <Route path="/storefront/:id" element={<Storefront />} />
             <Route path="/verify" element={<Placeholder name="Verify" />} />
             <Route path="/authcard/:id?" element={<Placeholder name="Auth Card" />} />
-            <Route path="/shop" element={<Placeholder name="Shop Counter" />} />
+            <Route path="/shop" element={<Shop />} />
             <Route path="/collection/:id" element={<Placeholder name="Collection" />} />
             <Route path="/account/:section" element={<Placeholder name="Account" />} />
           </Route>
