@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import Layout from './components/Layout';
 import Home from './screens/Home';
+import Search from './screens/Search';
 
 function Placeholder({ name }) {
   return <div style={{ padding: 24 }}><h2>{name}</h2><p>Coming soon...</p></div>;
@@ -14,7 +15,7 @@ export default function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/search" element={<Placeholder name="Search" />} />
+            <Route path="/search" element={<Search />} />
             <Route path="/sell" element={<Placeholder name="Sell Hub" />} />
             <Route path="/watch" element={<Placeholder name="Watching" />} />
             <Route path="/profile" element={<Placeholder name="Profile" />} />
