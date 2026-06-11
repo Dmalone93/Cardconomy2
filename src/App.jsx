@@ -1,20 +1,39 @@
-import { Container, Heading, Text } from '@radix-ui/themes';
-import { AppProvider, useApp } from './context/AppContext';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AppProvider } from './context/AppContext';
+import Layout from './components/Layout';
 
-function AppInner() {
-  const { cartCount, prefs } = useApp();
-  return (
-    <Container size="2" p="4">
-      <Heading size="6" mb="2">Cardconomy</Heading>
-      <Text color="gray">Cart: {cartCount} items, Following {prefs.length} games</Text>
-    </Container>
-  );
+function Placeholder({ name }) {
+  return <div style={{ padding: 24 }}><h2>{name}</h2><p>Coming soon...</p></div>;
 }
 
 export default function App() {
   return (
-    <AppProvider>
-      <AppInner />
-    </AppProvider>
+    <BrowserRouter>
+      <AppProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Placeholder name="Browse" />} />
+            <Route path="/search" element={<Placeholder name="Search" />} />
+            <Route path="/sell" element={<Placeholder name="Sell Hub" />} />
+            <Route path="/watch" element={<Placeholder name="Watching" />} />
+            <Route path="/profile" element={<Placeholder name="Profile" />} />
+            <Route path="/listing/:id" element={<Placeholder name="Listing" />} />
+            <Route path="/cart" element={<Placeholder name="Cart" />} />
+            <Route path="/checkout/:id" element={<Placeholder name="Checkout" />} />
+            <Route path="/sell/single" element={<Placeholder name="Sell Single" />} />
+            <Route path="/sell/bulk" element={<Placeholder name="Sell Bulk" />} />
+            <Route path="/sell/shop/:shopId?" element={<Placeholder name="Sell to Shop" />} />
+            <Route path="/trade" element={<Placeholder name="Trade" />} />
+            <Route path="/shopfinder" element={<Placeholder name="Shop Finder" />} />
+            <Route path="/storefront/:id" element={<Placeholder name="Storefront" />} />
+            <Route path="/verify" element={<Placeholder name="Verify" />} />
+            <Route path="/authcard/:id?" element={<Placeholder name="Auth Card" />} />
+            <Route path="/shop" element={<Placeholder name="Shop Counter" />} />
+            <Route path="/collection/:id" element={<Placeholder name="Collection" />} />
+            <Route path="/account/:section" element={<Placeholder name="Account" />} />
+          </Route>
+        </Routes>
+      </AppProvider>
+    </BrowserRouter>
   );
 }
