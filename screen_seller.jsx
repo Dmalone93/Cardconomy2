@@ -72,15 +72,15 @@ function SellerScreen({ app, params = {} }) {
             "{seller.blurb}"
           </p>
 
-          {seller.loc && (
-            <button onClick={() => window.open('https://www.google.com/maps/search/' + encodeURIComponent(seller.loc + ', UK'), '_blank')}
+          {(seller.address || seller.loc) && (
+            <button onClick={() => window.open('https://www.google.com/maps/search/' + encodeURIComponent(seller.address || seller.loc + ', UK'), '_blank')}
               style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '11px 14px', background: TS.surface, borderRadius: 4, textAlign: 'left', marginBottom: 16 }}>
-              <span style={{ fontSize: 16, flexShrink: 0 }}>📍</span>
+              <svg width="18" height="18" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: TS.muted }}><path d="M128,16a88.1,88.1,0,0,0-88,88c0,75.3,80,132.17,83.41,134.55a8,8,0,0,0,9.18,0C136,236.17,216,179.3,216,104A88.1,88.1,0,0,0,128,16Zm0,56a32,32,0,1,1-32,32A32,32,0,0,1,128,72Z" fill="currentColor"/></svg>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 13, color: TS.ink }}>{seller.loc}, UK</div>
+                <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 13, color: TS.ink }}>{seller.address || seller.loc + ', UK'}</div>
                 <div style={{ fontFamily: TS.sans, fontSize: 11, color: TS.muted, marginTop: 1 }}>View on Google Maps</div>
               </div>
-              <span style={{ fontFamily: TS.sans, fontSize: 14, color: TS.faint }}>›</span>
+              <svg width="16" height="16" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: TS.faint }}><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z" fill="currentColor"/></svg>
             </button>
           )}
         </div>

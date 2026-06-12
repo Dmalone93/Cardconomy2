@@ -1127,19 +1127,19 @@ const postById = (id) => TRADE_POSTS.find(p => p.id === id);
 
 // Seller pool (derived from LISTINGS sellers)
 const SELLERS = [
-  { name: 'VaultCards',    rating: 99.4, sales: 12840, loc: 'Manchester', since: 2019, blurb: 'Specializing in high-end singles. All cards double-sleeved and shipped in toploaders.', freeShipMin: 50, ships: '1–2 days' },
-  { name: 'KantoCollects', rating: 98.1, sales: 3402, loc: 'Bristol', since: 2021, blurb: 'Kanto-era collector turned seller. Fair prices on vintage and modern Pokémon.', freeShipMin: 30, ships: '2–4 days' },
-  { name: 'ManaBase',      rating: 98.9, sales: 22014, loc: 'Birmingham', since: 2017, blurb: 'One of the UK\'s largest MTG sellers. Competitive pricing on staples and singles.', freeShipMin: 40, ships: '1–2 days' },
-  { name: 'DuelistPrime',  rating: 99.2, sales: 6730, loc: 'Glasgow', since: 2020, blurb: 'Yu-Gi-Oh! specialist. Tournament-ready cards shipped fast.', freeShipMin: 25, ships: '2–3 days' },
-  { name: 'TopDeckTCG',    rating: 99.0, sales: 9410, loc: 'Liverpool', since: 2018, blurb: 'Multi-game seller with deep stock. We ship same day before 2pm.', freeShipMin: 35, ships: '1–2 days' },
-  { name: 'MetaKnight',    rating: 98.4, sales: 4205, loc: 'Newcastle', since: 2022, blurb: 'Competitive player selling rotating stock. Every card is play-tested quality.', freeShipMin: 30, ships: '2–3 days' },
-  { name: 'GrandLineTCG',  rating: 97.6, sales: 1880, loc: 'Cardiff', since: 2023, blurb: 'One Piece and Dragon Ball specialist. Growing fast with fair prices.', freeShipMin: 20, ships: '2–5 days' },
-  { name: 'DigiDestined',  rating: 98.6, sales: 2118, loc: 'Brighton', since: 2022, blurb: 'Digimon and niche TCGs. Hard-to-find cards at reasonable prices.', freeShipMin: 25, ships: '2–4 days' },
-  { name: 'PokeGrails',    rating: 99.0, sales: 7420, loc: 'Leeds', since: 2018, blurb: 'Premium Pokémon singles. PSA and BGS graded inventory available.', freeShipMin: 50, ships: '1–2 days' },
-  { name: 'RareMint',      rating: 99.1, sales: 5230, loc: 'Edinburgh', since: 2019, blurb: 'Curated selection of mint-condition cards across all major TCGs.', freeShipMin: 40, ships: '2–3 days' },
-  { name: 'EeveeVault',    rating: 99.8, sales: 8921, loc: 'Edinburgh', since: 2017, blurb: 'Eeveelution collector and top-rated seller. Insured shipping on all orders.', freeShipMin: 50, ships: '1 day' },
-  { name: 'VintageHolos',  rating: 100,  sales: 5610, loc: 'Leeds', since: 2016, blurb: 'WOTC-era specialist. Every card authenticated and graded.', freeShipMin: 75, ships: '1–2 days' },
-  { name: 'AlphaInvest',   rating: 100,  sales: 1290, loc: 'London', since: 2015, blurb: 'Investment-grade MTG. Alpha, Beta, and Reserved List singles.', freeShipMin: 100, ships: '1–2 days' },
+  { name: 'VaultCards',    rating: 99.4, sales: 12840, loc: 'Manchester', address: '14 Tib Street, Northern Quarter, Manchester M4 1SH', since: 2019, blurb: 'Specializing in high-end singles. All cards double-sleeved and shipped in toploaders.', freeShipMin: 50, ships: '1–2 days' },
+  { name: 'KantoCollects', rating: 98.1, sales: 3402, loc: 'Bristol', address: '27 Park Street, Clifton, Bristol BS1 5NH', since: 2021, blurb: 'Kanto-era collector turned seller. Fair prices on vintage and modern Pokemon.', freeShipMin: 30, ships: '2–4 days' },
+  { name: 'ManaBase',      rating: 98.9, sales: 22014, loc: 'Birmingham', address: '83 Bull Street, Birmingham B4 6AB', since: 2017, blurb: 'One of the UK\'s largest MTG sellers. Competitive pricing on staples and singles.', freeShipMin: 40, ships: '1–2 days' },
+  { name: 'DuelistPrime',  rating: 99.2, sales: 6730, loc: 'Glasgow', address: '9 Buchanan Street, Glasgow G1 3HL', since: 2020, blurb: 'Yu-Gi-Oh! specialist. Tournament-ready cards shipped fast.', freeShipMin: 25, ships: '2–3 days' },
+  { name: 'TopDeckTCG',    rating: 99.0, sales: 9410, loc: 'Liverpool', address: '41 Bold Street, Liverpool L1 4DN', since: 2018, blurb: 'Multi-game seller with deep stock. We ship same day before 2pm.', freeShipMin: 35, ships: '1–2 days' },
+  { name: 'MetaKnight',    rating: 98.4, sales: 4205, loc: 'Newcastle', address: '6 Grainger Street, Newcastle upon Tyne NE1 5JE', since: 2022, blurb: 'Competitive player selling rotating stock. Every card is play-tested quality.', freeShipMin: 30, ships: '2–3 days' },
+  { name: 'GrandLineTCG',  rating: 97.6, sales: 1880, loc: 'Cardiff', address: '22 High Street Arcade, Cardiff CF10 1BB', since: 2023, blurb: 'One Piece and Dragon Ball specialist. Growing fast with fair prices.', freeShipMin: 20, ships: '2–5 days' },
+  { name: 'DigiDestined',  rating: 98.6, sales: 2118, loc: 'Brighton', address: '55 North Laine, Brighton BN1 1GJ', since: 2022, blurb: 'Digimon and niche TCGs. Hard-to-find cards at reasonable prices.', freeShipMin: 25, ships: '2–4 days' },
+  { name: 'PokeGrails',    rating: 99.0, sales: 7420, loc: 'Leeds', address: '18 The Headrow, Leeds LS1 6PU', since: 2018, blurb: 'Premium Pokemon singles. PSA and BGS graded inventory available.', freeShipMin: 50, ships: '1–2 days' },
+  { name: 'RareMint',      rating: 99.1, sales: 5230, loc: 'Edinburgh', address: '31 Cockburn Street, Edinburgh EH1 1BP', since: 2019, blurb: 'Curated selection of mint-condition cards across all major TCGs.', freeShipMin: 40, ships: '2–3 days' },
+  { name: 'EeveeVault',    rating: 99.8, sales: 8921, loc: 'Edinburgh', address: '7 Victoria Street, Edinburgh EH1 2HE', since: 2017, blurb: 'Eeveelution collector and top-rated seller. Insured shipping on all orders.', freeShipMin: 50, ships: '1 day' },
+  { name: 'VintageHolos',  rating: 100,  sales: 5610, loc: 'Leeds', address: '4 Kirkgate, Leeds LS2 7DJ', since: 2016, blurb: 'WOTC-era specialist. Every card authenticated and graded.', freeShipMin: 75, ships: '1–2 days' },
+  { name: 'AlphaInvest',   rating: 100,  sales: 1290, loc: 'London', address: '120 Charing Cross Road, London WC2H 0JR', since: 2015, blurb: 'Investment-grade MTG. Alpha, Beta, and Reserved List singles.', freeShipMin: 100, ships: '1–2 days' },
 ];
 
 const CONDITIONS  = ['Near Mint', 'Lightly Played', 'Moderately Played', 'Heavily Played'];
