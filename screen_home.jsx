@@ -254,7 +254,7 @@ function HomeScreen({ app }) {
               <button key={g.id} onClick={() => setGame(g.id)} title={g.name} style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, height: 38, padding: '0 16px',
                 borderRadius: 999, background: on ? '#fff' : T.surface,
-                boxShadow: on ? '0 0 0 2px var(--accent)' : 'inset 0 0 0 1px var(--line)', transition: 'box-shadow 0.15s' }}>
+                boxShadow: on ? 'inset 0 0 0 1.5px var(--line)' : 'inset 0 0 0 1px var(--line)', transition: 'box-shadow 0.15s' }}>
                 <img src={logo} alt={g.name} style={{ height: 19, width: 'auto', maxWidth: 84, objectFit: 'contain', display: 'block', filter: on ? 'none' : 'saturate(0.92)' }} />
               </button>
             );
