@@ -96,7 +96,10 @@ function ShopDashboard({ app, onCounter }) {
         {/* tab bar */}
         <div style={{ display: 'flex', gap: 0, marginTop: 12 }}>
           <button style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, padding: '10px 0', background: 'none', color: TSH.ink, borderBottom: '2px solid ' + TSH.accent }}>Dashboard</button>
-          <button onClick={onCounter} style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, padding: '10px 0', background: 'none', color: TSH.muted, borderBottom: '2px solid transparent' }}>Counter</button>
+          <button onClick={onCounter} style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, padding: '10px 0', background: 'none', color: TSH.muted, borderBottom: '2px solid transparent', position: 'relative' }}>
+            Counter
+            <span style={{ position: 'absolute', top: 4, marginLeft: 4, minWidth: 18, height: 18, borderRadius: 999, background: 'var(--down)', color: '#fff', fontFamily: TSH.sans, fontWeight: 700, fontSize: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px' }}>2</span>
+          </button>
         </div>
         {/* period picker */}
         <div style={{ display: 'flex', gap: 7, marginTop: 10, paddingBottom: 12 }}>
@@ -125,7 +128,12 @@ function ShopDashboard({ app, onCounter }) {
 
         {/* Section 2: Submissions */}
         <div style={sectionStyle}>
-          <div style={sectionTitle}>Submissions</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <div style={sectionTitle}>Submissions</div>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: 'var(--down)', color: '#fff', borderRadius: 999, padding: '4px 10px', fontFamily: TSH.sans, fontWeight: 700, fontSize: 11 }}>
+              2 new
+            </span>
+          </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 9 }}>
             <div style={{ background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
               <div style={labelStyle}>Received</div>
@@ -144,13 +152,18 @@ function ShopDashboard({ app, onCounter }) {
               <div style={bigNumStyle}>{d.acceptRate}%</div>
             </div>
           </div>
-          <button onClick={onCounter} style={{ width: '100%', marginTop: 12, background: TSH.surface2, borderRadius: 4, padding: '11px 0', textAlign: 'center',
-            fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, color: TSH.accent, boxShadow: 'inset 0 0 0 1px var(--line)' }}>View inbox →</button>
+          <button onClick={onCounter} style={{ width: '100%', marginTop: 12, background: 'var(--fill)', borderRadius: 4, padding: '12px 0', textAlign: 'center',
+            fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, color: '#fff' }}>View inbox · 2 waiting</button>
         </div>
 
         {/* Section 3: Inventory */}
         <div style={sectionStyle}>
-          <div style={sectionTitle}>Inventory</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <div style={sectionTitle}>Inventory</div>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--gold)', color: '#fff', borderRadius: 999, padding: '4px 10px', fontFamily: TSH.sans, fontWeight: 700, fontSize: 11 }}>
+              3 low stock
+            </span>
+          </div>
           <div style={{ display: 'flex', gap: 9, marginBottom: 12 }}>
             <div style={{ flex: 1, background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
               <div style={labelStyle}>Active listings</div>
@@ -180,7 +193,12 @@ function ShopDashboard({ app, onCounter }) {
 
         {/* Section 4: Trades */}
         <div style={sectionStyle}>
-          <div style={sectionTitle}>Trades</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <div style={sectionTitle}>Trades</div>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--accent-wash)', color: TSH.accent, borderRadius: 999, padding: '4px 10px', fontFamily: TSH.sans, fontWeight: 700, fontSize: 11 }}>
+              1 pending
+            </span>
+          </div>
           <div style={{ display: 'flex', gap: 9, marginBottom: 8 }}>
             <div style={{ flex: 1, background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
               <div style={labelStyle}>Trades hosted</div>
@@ -271,17 +289,24 @@ function ShopDashboard({ app, onCounter }) {
 
         {/* Section 7: Recent Activity */}
         <div style={sectionStyle}>
-          <div style={sectionTitle}>Recent activity</div>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <div style={sectionTitle}>Recent activity</div>
+            <span style={{ fontFamily: TSH.sans, fontSize: 11, fontWeight: 600, color: TSH.muted }}>3 unread</span>
+          </div>
           {DASH_ACTIVITY.map((ev, i) => {
             const ico = ACTIVITY_ICONS[ev.type];
+            const isNew = i < 3;
             return (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: i < DASH_ACTIVITY.length - 1 ? '1px solid var(--line-2)' : 'none' }}>
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: i < DASH_ACTIVITY.length - 1 ? '1px solid var(--line-2)' : 'none', background: isNew ? 'var(--accent-wash)' : 'transparent', margin: isNew ? '0 -14px' : 0, padding: isNew ? '7px 14px' : '7px 0', borderRadius: isNew ? 4 : 0 }}>
                 <span style={{ width: 30, height: 30, borderRadius: 999, background: ico.bg, color: ico.color, display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontFamily: TSH.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{ico.symbol}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontFamily: TSH.sans, fontSize: 12.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.text}</div>
                 </div>
-                <span style={{ fontFamily: TSH.sans, fontSize: 11, color: TSH.muted, flexShrink: 0 }}>{ev.time}</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
+                  {isNew && <span style={{ width: 6, height: 6, borderRadius: 999, background: TSH.accent }} />}
+                  <span style={{ fontFamily: TSH.sans, fontSize: 11, color: isNew ? TSH.ink : TSH.muted }}>{ev.time}</span>
+                </div>
               </div>
             );
           })}
