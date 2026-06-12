@@ -3,12 +3,299 @@
 // inbox → submission dashboard → price guide → offer → sent
 // ─────────────────────────────────────────────────────────────
 const { T: TSH, money: moneySH, Icon: IconSH, CardArt: CardArtSH, GradeChip: GradeChipSH, Sparkline: SparkSH, Delta: DeltaSH } = window;
-const { SHOP: SHOP_SH, SUBMISSION: SUB_SH, SUB_CARDS: SC_SH, BULK_RATES: BR_SH, subStats: subStatsSH, setById: setByIdSH } = window;
+const { SHOP: SHOP_SH, SUBMISSION: SUB_SH, SUB_CARDS: SC_SH, BULK_RATES: BR_SH, subStats: subStatsSH, setById: setByIdSH, byId: byIdSH } = window;
 
 function money0(n) { return moneySH(n, { cents: false }); }
+function moneyGBP(n) { return '£' + n.toLocaleString(); }
 
+// ── dashboard mock data ──────────────────────────────────────
+const DASH_DATA = {
+  '7d': { sales: 1240, payouts: 1128, fees: 112, delta: 8, subs: 4, cards: 86, offers: 3, acceptRate: 75, trades: 3, tradeVol: 420, views: 210, unique: 82 },
+  '30d': { sales: 5680, payouts: 5169, fees: 511, delta: 12, subs: 18, cards: 342, offers: 14, acceptRate: 78, trades: 14, tradeVol: 1860, views: 892, unique: 340 },
+  '90d': { sales: 14320, payouts: 13031, fees: 1289, delta: 18, subs: 52, cards: 1040, offers: 41, acceptRate: 79, trades: 38, tradeVol: 5120, views: 2640, unique: 980 },
+  'all': { sales: 28940, payouts: 26335, fees: 2605, delta: 0, subs: 124, cards: 2480, offers: 98, acceptRate: 79, trades: 91, tradeVol: 12400, views: 6200, unique: 2180 },
+};
+
+const DASH_ACTIVITY = [
+  { type: 'sale', text: 'Sold Charizard ex for £38.50', time: '2h ago' },
+  { type: 'submission', text: 'New submission from Jordan M. (24 cards)', time: '5h ago' },
+  { type: 'trade', text: 'Trade completed at your shop', time: 'Yesterday' },
+  { type: 'review', text: 'New 5-star review from Marcus T.', time: 'Yesterday' },
+  { type: 'sale', text: 'Sold Ragavan for £62.00', time: '2d ago' },
+  { type: 'submission', text: 'New submission from Priya K. (12 cards)', time: '2d ago' },
+  { type: 'sale', text: 'Sold Pikachu IR for £38.50', time: '3d ago' },
+  { type: 'trade', text: 'Trade completed at your shop', time: '4d ago' },
+  { type: 'sale', text: 'Sold Blue-Eyes for £184.00', time: '5d ago' },
+  { type: 'review', text: 'New 4-star review from Diego R.', time: '6d ago' },
+];
+
+const DASH_BEST_SELLERS = [
+  { id: 'l01', sold: 8, rev: 308, name: 'Charizard ex' },
+  { id: 'l06', sold: 6, rev: 372, name: 'Ragavan' },
+  { id: 'l09', sold: 5, rev: 192, name: 'Mew ex' },
+  { id: 'l02', sold: 4, rev: 154, name: 'Pikachu IR' },
+  { id: 'l12', sold: 3, rev: 552, name: 'Blue-Eyes' },
+];
+
+const DASH_MOST_WANTED = [
+  { id: 'l03', requests: 12, buyPrice: 28, name: 'Mewtwo ex' },
+  { id: 'l05', requests: 9, buyPrice: 44, name: 'Umbreon VMAX' },
+  { id: 'l07', requests: 8, buyPrice: 18, name: 'Lugia V' },
+  { id: 'l01', requests: 7, buyPrice: 38, name: 'Charizard ex' },
+  { id: 'l04', requests: 6, buyPrice: 62, name: 'Ragavan' },
+];
+
+const DASH_INV_TOP = [
+  { id: 'l01', name: 'Charizard ex', sold: 8 },
+  { id: 'l02', name: 'Pikachu IR', sold: 6 },
+  { id: 'l06', name: 'Ragavan', sold: 5 },
+];
+
+const DASH_BAR_HEIGHTS = [40, 55, 48, 62, 38, 71, 58];
+
+const DASH_SOURCES = [
+  { label: 'Search', pct: 52 },
+  { label: 'Directory', pct: 31 },
+  { label: 'Direct', pct: 17 },
+];
+
+const ACTIVITY_ICONS = {
+  sale: { bg: 'var(--up-wash)', color: 'var(--up)', symbol: '£' },
+  submission: { bg: 'oklch(0.92 0.08 240)', color: 'oklch(0.55 0.18 240)', symbol: '▼' },
+  trade: { bg: 'oklch(0.92 0.08 300)', color: 'oklch(0.55 0.18 300)', symbol: '⇄' },
+  review: { bg: 'oklch(0.93 0.1 80)', color: 'oklch(0.55 0.16 80)', symbol: '★' },
+};
+
+// ── shop dashboard component ─────────────────────────────────
+function ShopDashboard({ app, onCounter }) {
+  const [period, setPeriod] = React.useState('30d');
+  const [topTab, setTopTab] = React.useState('best');
+  const d = DASH_DATA[period];
+  const periods = ['7d', '30d', '90d', 'all'];
+
+  const sectionStyle = { background: TSH.surface, borderRadius: 4, padding: 14, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' };
+  const labelStyle = { fontFamily: TSH.sans, fontSize: 11, color: TSH.muted, fontWeight: 600 };
+  const bigNumStyle = { fontFamily: TSH.sans, fontWeight: 700, fontSize: 22 };
+  const sectionTitle = { fontFamily: TSH.sans, fontWeight: 800, fontSize: 14, marginBottom: 10 };
+
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TSH.bg }}>
+      {/* header */}
+      <div style={{ padding: '50px 16px 0', background: TSH.surface, borderBottom: '1px solid var(--line)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <button onClick={() => app.nav.pop()} style={{ color: TSH.ink, display: 'flex', alignItems: 'center', gap: 4, fontFamily: TSH.sans, fontSize: 14.5, fontWeight: 600 }}>{IconSH.back({ width: 18, height: 18 })} Exit demo</button>
+          <span style={{ fontFamily: TSH.sans, fontSize: 10.5, fontWeight: 700, color: SHOP_SH.tint, background: 'var(--up-wash)', borderRadius: 7, padding: '4px 8px' }}>SHOP VIEW</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 12 }}>
+          <span style={{ width: 38, height: 38, borderRadius: 11, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 800, fontSize: 18 }}>{SHOP_SH.initial}</span>
+          <div>
+            <h1 style={{ margin: 0, fontFamily: TSH.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>{SHOP_SH.name}</h1>
+            <div style={{ fontFamily: TSH.sans, fontSize: 12.5, color: TSH.muted }}>Shop dashboard</div>
+          </div>
+        </div>
+        {/* tab bar */}
+        <div style={{ display: 'flex', gap: 0, marginTop: 12 }}>
+          <button style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, padding: '10px 0', background: 'none', color: TSH.ink, borderBottom: '2px solid ' + TSH.accent }}>Dashboard</button>
+          <button onClick={onCounter} style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, padding: '10px 0', background: 'none', color: TSH.muted, borderBottom: '2px solid transparent' }}>Counter</button>
+        </div>
+        {/* period picker */}
+        <div style={{ display: 'flex', gap: 7, marginTop: 10, paddingBottom: 12 }}>
+          {periods.map(p => (
+            <button key={p} onClick={() => setPeriod(p)} style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, padding: '6px 14px', borderRadius: 999,
+              background: period === p ? 'var(--fill)' : TSH.surface, color: period === p ? '#fff' : TSH.ink2,
+              boxShadow: period === p ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{p === 'all' ? 'All' : p}</button>
+          ))}
+        </div>
+      </div>
+
+      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 14px 30px' }}>
+
+        {/* Section 1: Revenue Summary */}
+        <div style={{ ...sectionTitle }}>Revenue</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 9, marginBottom: 14 }}>
+          {[['Total sales', d.sales], ['Payouts', d.payouts], ['Fees', d.fees]].map(([label, val]) => (
+            <div key={label} style={{ background: TSH.surface, borderRadius: 4, padding: '11px 10px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={labelStyle}>{label}</div>
+              <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 18, marginTop: 2 }}>{moneyGBP(val)}</div>
+              {d.delta > 0 && <div style={{ fontFamily: TSH.sans, fontSize: 11, fontWeight: 700, color: 'var(--up)', marginTop: 2 }}>+{d.delta}%</div>}
+              {d.delta === 0 && period === 'all' && <div style={{ fontFamily: TSH.sans, fontSize: 11, color: TSH.muted, marginTop: 2 }}>all time</div>}
+            </div>
+          ))}
+        </div>
+
+        {/* Section 2: Submissions */}
+        <div style={sectionStyle}>
+          <div style={sectionTitle}>Submissions</div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 9 }}>
+            <div style={{ background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Received</div>
+              <div style={bigNumStyle}>{d.subs}</div>
+            </div>
+            <div style={{ background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Cards reviewed</div>
+              <div style={bigNumStyle}>{d.cards.toLocaleString()}</div>
+            </div>
+            <div style={{ background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Offers made</div>
+              <div style={bigNumStyle}>{d.offers}</div>
+            </div>
+            <div style={{ background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Accept rate</div>
+              <div style={bigNumStyle}>{d.acceptRate}%</div>
+            </div>
+          </div>
+          <button onClick={onCounter} style={{ width: '100%', marginTop: 12, background: TSH.surface2, borderRadius: 4, padding: '11px 0', textAlign: 'center',
+            fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, color: TSH.accent, boxShadow: 'inset 0 0 0 1px var(--line)' }}>View inbox →</button>
+        </div>
+
+        {/* Section 3: Inventory */}
+        <div style={sectionStyle}>
+          <div style={sectionTitle}>Inventory</div>
+          <div style={{ display: 'flex', gap: 9, marginBottom: 12 }}>
+            <div style={{ flex: 1, background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Active listings</div>
+              <div style={bigNumStyle}>47</div>
+            </div>
+            <div style={{ flex: 1, background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Inventory value</div>
+              <div style={bigNumStyle}>{moneyGBP(3280)}</div>
+            </div>
+          </div>
+          <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 12, color: TSH.muted, marginBottom: 8 }}>Top sellers</div>
+          <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto' }}>
+            {DASH_INV_TOP.map(c => {
+              const item = byIdSH(c.id);
+              return (
+                <div key={c.id} style={{ flexShrink: 0, textAlign: 'center', width: 80 }}>
+                  <div style={{ background: TSH.surface2, borderRadius: 4, padding: 6, display: 'inline-block' }}>
+                    {item ? <CardArtSH item={item} w={56} radius={4} /> : <div style={{ width: 56, height: 78, background: TSH.surface2, borderRadius: 4 }} />}
+                  </div>
+                  <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 11.5, marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
+                  <div style={{ fontFamily: TSH.sans, fontSize: 10.5, color: TSH.muted }}>{c.sold} sold</div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Section 4: Trades */}
+        <div style={sectionStyle}>
+          <div style={sectionTitle}>Trades</div>
+          <div style={{ display: 'flex', gap: 9, marginBottom: 8 }}>
+            <div style={{ flex: 1, background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Trades hosted</div>
+              <div style={bigNumStyle}>{d.trades}</div>
+            </div>
+            <div style={{ flex: 1, background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Trade volume</div>
+              <div style={bigNumStyle}>{moneyGBP(d.tradeVol)}</div>
+            </div>
+          </div>
+          <div style={{ fontFamily: TSH.sans, fontSize: 12, color: TSH.muted }}>Your shop hosted {d.trades} trades this period</div>
+        </div>
+
+        {/* Section 5: Storefront Visitors */}
+        <div style={sectionStyle}>
+          <div style={sectionTitle}>Storefront visitors</div>
+          <div style={{ display: 'flex', gap: 9, marginBottom: 12 }}>
+            <div style={{ flex: 1, background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Total views</div>
+              <div style={bigNumStyle}>{d.views.toLocaleString()}</div>
+            </div>
+            <div style={{ flex: 1, background: TSH.surface2, borderRadius: 4, padding: '9px 11px' }}>
+              <div style={labelStyle}>Unique visitors</div>
+              <div style={bigNumStyle}>{d.unique.toLocaleString()}</div>
+            </div>
+          </div>
+          {/* bar chart */}
+          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 6, height: 72, marginBottom: 12 }}>
+            {DASH_BAR_HEIGHTS.map((h, i) => {
+              const maxH = Math.max(...DASH_BAR_HEIGHTS);
+              return <div key={i} style={{ flex: 1, height: (h / maxH) * 72, background: SHOP_SH.tint, borderRadius: '4px 4px 0 0', opacity: 0.7 + (h / maxH) * 0.3 }} />;
+            })}
+          </div>
+          {/* source breakdown */}
+          <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 12, color: TSH.muted, marginBottom: 6 }}>Sources</div>
+          {DASH_SOURCES.map(s => (
+            <div key={s.label} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', fontFamily: TSH.sans, fontSize: 12.5, color: TSH.ink2 }}>
+              <span>{s.label}</span>
+              <span style={{ fontWeight: 700 }}>{s.pct}% <span style={{ color: TSH.muted, fontWeight: 400 }}>({Math.round(d.views * s.pct / 100)})</span></span>
+            </div>
+          ))}
+        </div>
+
+        {/* Section 6: Top Cards */}
+        <div style={sectionStyle}>
+          <div style={{ display: 'flex', gap: 0, marginBottom: 10 }}>
+            <button onClick={() => setTopTab('best')} style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, padding: '8px 0', borderRadius: '4px 0 0 4px',
+              background: topTab === 'best' ? 'var(--fill)' : TSH.surface2, color: topTab === 'best' ? '#fff' : TSH.ink2 }}>Best sellers</button>
+            <button onClick={() => setTopTab('wanted')} style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, padding: '8px 0', borderRadius: '0 4px 4px 0',
+              background: topTab === 'wanted' ? 'var(--fill)' : TSH.surface2, color: topTab === 'wanted' ? '#fff' : TSH.ink2 }}>Most wanted</button>
+          </div>
+          {topTab === 'best' && DASH_BEST_SELLERS.map((c, i) => {
+            const item = byIdSH(c.id);
+            return (
+              <div key={c.id + '-' + i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: i < 4 ? '1px solid var(--line-2)' : 'none' }}>
+                <div style={{ background: TSH.surface2, borderRadius: 4, padding: 4, flexShrink: 0 }}>
+                  {item ? <CardArtSH item={item} w={40} radius={4} /> : <div style={{ width: 40, height: 56, background: TSH.surface2, borderRadius: 4 }} />}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
+                  <div style={{ fontFamily: TSH.sans, fontSize: 11, color: TSH.muted }}>{c.sold} sold</div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13 }}>{moneyGBP(c.rev)}</div>
+                </div>
+              </div>
+            );
+          })}
+          {topTab === 'wanted' && DASH_MOST_WANTED.map((c, i) => {
+            const item = byIdSH(c.id);
+            return (
+              <div key={c.id + '-w-' + i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: i < 4 ? '1px solid var(--line-2)' : 'none' }}>
+                <div style={{ background: TSH.surface2, borderRadius: 4, padding: 4, flexShrink: 0 }}>
+                  {item ? <CardArtSH item={item} w={40} radius={4} /> : <div style={{ width: 40, height: 56, background: TSH.surface2, borderRadius: 4 }} />}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
+                  <div style={{ fontFamily: TSH.sans, fontSize: 11, color: TSH.muted }}>{c.requests}x requested</div>
+                </div>
+                <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                  <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13 }}>{moneyGBP(c.buyPrice)}</div>
+                  <div style={{ fontFamily: TSH.sans, fontSize: 10.5, color: TSH.muted }}>buy price</div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Section 7: Recent Activity */}
+        <div style={sectionStyle}>
+          <div style={sectionTitle}>Recent activity</div>
+          {DASH_ACTIVITY.map((ev, i) => {
+            const ico = ACTIVITY_ICONS[ev.type];
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: i < DASH_ACTIVITY.length - 1 ? '1px solid var(--line-2)' : 'none' }}>
+                <span style={{ width: 30, height: 30, borderRadius: 999, background: ico.bg, color: ico.color, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: TSH.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{ico.symbol}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: TSH.sans, fontSize: 12.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.text}</div>
+                </div>
+                <span style={{ fontFamily: TSH.sans, fontSize: 11, color: TSH.muted, flexShrink: 0 }}>{ev.time}</span>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// ── shop screen (two-tab layout) ─────────────────────────────
 function ShopScreen({ app }) {
-  const [view, setView] = React.useState('inbox'); // inbox | dash | sent
+  const [tab, setTab] = React.useState('dashboard'); // dashboard | counter
+  const [view, setView] = React.useState('inbox'); // inbox | dash | sent (within counter tab)
   const [filter, setFilter] = React.useState('match');
   const [priceCard, setPriceCard] = React.useState(null); // card in price-guide drawer
   const [offer, setOffer] = React.useState(null); // { creditPct }
@@ -20,7 +307,11 @@ function ShopScreen({ app }) {
   });
   const stats = subStatsSH();
 
-  if (view === 'inbox') return <ShopInbox app={app} onOpen={() => setView('dash')} />;
+  // Dashboard tab
+  if (tab === 'dashboard') return <ShopDashboard app={app} onCounter={() => { setTab('counter'); setView('inbox'); }} />;
+
+  // Counter tab
+  if (view === 'inbox') return <ShopInbox app={app} onOpen={() => setView('dash')} onDashboard={() => setTab('dashboard')} />;
   if (view === 'sent') return <ShopSent app={app} offer={offer} onInbox={() => { setView('inbox'); setOffer(null); }} />;
 
   // ── dashboard ──
@@ -324,11 +615,11 @@ function OfferComposer({ offer, cashTotal, onClose, onSend }) {
 }
 
 // ── shop inbox ───────────────────────────────────────────────
-function ShopInbox({ app, onOpen }) {
+function ShopInbox({ app, onOpen, onDashboard }) {
   const stats = subStatsSH();
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TSH.bg }}>
-      <div style={{ padding: '50px 16px 14px', background: TSH.surface, borderBottom: '1px solid var(--line)' }}>
+      <div style={{ padding: '50px 16px 0', background: TSH.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <button onClick={() => app.nav.pop()} style={{ color: TSH.ink, display: 'flex', alignItems: 'center', gap: 4, fontFamily: TSH.sans, fontSize: 14.5, fontWeight: 600 }}>{IconSH.back({ width: 18, height: 18 })} Exit demo</button>
           <span style={{ fontFamily: TSH.sans, fontSize: 10.5, fontWeight: 700, color: SHOP_SH.tint, background: 'var(--up-wash)', borderRadius: 7, padding: '4px 8px' }}>SHOP VIEW</span>
@@ -339,6 +630,11 @@ function ShopInbox({ app, onOpen }) {
             <h1 style={{ margin: 0, fontFamily: TSH.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Buylist inbox</h1>
             <div style={{ fontFamily: TSH.sans, fontSize: 12.5, color: TSH.muted }}>{SHOP_SH.name} · counter</div>
           </div>
+        </div>
+        {/* tab bar */}
+        <div style={{ display: 'flex', gap: 0, marginTop: 12, paddingBottom: 0 }}>
+          <button onClick={onDashboard} style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, padding: '10px 0', background: 'none', color: TSH.muted, borderBottom: '2px solid transparent' }}>Dashboard</button>
+          <button style={{ flex: 1, fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, padding: '10px 0', background: 'none', color: TSH.ink, borderBottom: '2px solid ' + TSH.accent }}>Counter</button>
         </div>
       </div>
 
