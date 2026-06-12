@@ -48,44 +48,40 @@ function SellerScreen({ app, params = {} }) {
           )}
         </div>
 
-        {/* stats row */}
-        <div style={{ display: 'flex', background: TS.surface }}>
-          {[
-            [seller.rating + '%', 'Rating'],
-            [seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : seller.sales, 'Sales'],
-            [seller.ships.replace(' days', 'd').replace(' day', 'd'), 'Ships'],
-            ['£' + seller.freeShipMin, 'Free over'],
-          ].map(([val, label], i) => (
-            <div key={i} style={{
-              flex: 1, textAlign: 'center', padding: '12px 4px',
-              borderRight: i < 3 ? '1px solid var(--line)' : 'none',
-            }}>
-              <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 15 }}>{val}</div>
-              <div style={{ fontFamily: TS.sans, fontSize: 10, color: TS.muted, marginTop: 1 }}>{label}</div>
-            </div>
-          ))}
-        </div>
+        {/* stats + bio + location card */}
+        <div style={{ padding: '16px 16px 0' }}>
+          <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
+            {[
+              [seller.rating + '%', 'Rating'],
+              [seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : seller.sales, 'Sales'],
+              [seller.ships.replace(' days', 'd').replace(' day', 'd'), 'Ships'],
+              ['£' + seller.freeShipMin, 'Free over'],
+            ].map(([val, label], i) => (
+              <div key={i} style={{
+                flex: 1, textAlign: 'center', background: TS.surface, borderRadius: 4, padding: '10px 4px',
+              }}>
+                <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 15 }}>{val}</div>
+                <div style={{ fontFamily: TS.sans, fontSize: 10, color: TS.muted, marginTop: 1 }}>{label}</div>
+              </div>
+            ))}
+          </div>
 
-        {/* bio */}
-        <div style={{ padding: '14px 16px', fontFamily: TS.sans, fontSize: 13, color: TS.ink2, lineHeight: 1.5, borderBottom: '1px solid var(--line)' }}>
-          "{seller.blurb}"
-        </div>
+          <p style={{ fontFamily: TS.sans, fontSize: 14, color: TS.ink2, lineHeight: 1.5, margin: '0 0 14px' }}>
+            "{seller.blurb}"
+          </p>
 
-        {/* location */}
-        {seller.loc && (
-          <button onClick={() => window.open('https://www.google.com/maps/search/' + encodeURIComponent(seller.loc + ', UK'), '_blank')}
-            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: TS.surface, borderBottom: '1px solid var(--line)', textAlign: 'left' }}>
-            <div style={{
-              width: 40, height: 40, borderRadius: 8, background: '#e8f5e9', color: '#16a34a',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0,
-            }}>📍</div>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 13, color: TS.ink }}>{seller.loc}, UK</div>
-              <div style={{ fontFamily: TS.sans, fontSize: 11, color: TS.muted, marginTop: 1 }}>Tap to view on Google Maps</div>
-            </div>
-            <div style={{ fontFamily: TS.sans, fontSize: 14, color: TS.faint }}>›</div>
-          </button>
-        )}
+          {seller.loc && (
+            <button onClick={() => window.open('https://www.google.com/maps/search/' + encodeURIComponent(seller.loc + ', UK'), '_blank')}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '11px 14px', background: TS.surface, borderRadius: 4, textAlign: 'left', marginBottom: 16 }}>
+              <span style={{ fontSize: 16, flexShrink: 0 }}>📍</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 13, color: TS.ink }}>{seller.loc}, UK</div>
+                <div style={{ fontFamily: TS.sans, fontSize: 11, color: TS.muted, marginTop: 1 }}>View on Google Maps</div>
+              </div>
+              <span style={{ fontFamily: TS.sans, fontSize: 14, color: TS.faint }}>›</span>
+            </button>
+          )}
+        </div>
 
         {/* tabs */}
         <div style={{ display: 'flex', borderBottom: '1px solid var(--line)' }}>
@@ -106,11 +102,11 @@ function SellerScreen({ app, params = {} }) {
 
         {/* tab content */}
         {tab === 'listings' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, padding: 16 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 11, padding: 16 }}>
             {listings.map(l => (
               <button key={l.id} onClick={() => app.nav.push('product', { id: window.PRODUCTS.find(p => p.offers.some(o => o.listingId === l.id))?.id || l.id })}
-                style={{ textAlign: 'left', background: TS.surface, borderRadius: 4, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <div style={{ background: TS.surface, padding: '12px 12px 6px', display: 'flex', justifyContent: 'center' }}>
+                style={{ textAlign: 'left', background: TS.surface, borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                <div style={{ padding: '12px 12px 6px', display: 'flex', justifyContent: 'center' }}>
                   <CardArtS item={l} w={86} />
                 </div>
                 <div style={{ padding: '8px 11px 11px' }}>
