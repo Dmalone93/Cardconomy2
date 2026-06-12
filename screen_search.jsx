@@ -168,17 +168,19 @@ function SearchScreen({ app, params = {} }) {
       {!(focused && !q) && (
         <React.Fragment>
           {/* filter bar */}
-          <div className="noscroll" style={{ display: 'flex', gap: 8, padding: '12px 16px 10px', overflowX: 'auto', alignItems: 'center', background: TS.bg }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px 10px', background: TS.bg }}>
             <button onClick={() => setSheet('filters')} style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap',
+              display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', flexShrink: 0,
               fontFamily: TS.sans, fontWeight: 700, fontSize: 13.5, padding: '8px 14px', borderRadius: 999,
               background: activeFilters ? TS.accent : TS.surface, color: activeFilters ? '#fff' : TS.ink2,
               boxShadow: activeFilters ? 'none' : 'inset 0 0 0 1px var(--line)' }}>
               {IconS.filter({ width: 16, height: 16 })} Filters{activeFilters ? ' · ' + activeFilters : ''}
             </button>
-            <ChipS active={listType==='buynow'} onClick={() => setListType(listType==='buynow'?'all':'buynow')}>Buy Now</ChipS>
-            <ChipS active={cond==='Graded only'} onClick={() => setCond(cond==='Graded only'?'Any grade':'Graded only')}>Graded</ChipS>
-            <ChipS active={freeShip} onClick={() => setFreeShip(!freeShip)}>Free ship</ChipS>
+            <div className="noscroll" style={{ display: 'flex', gap: 8, overflowX: 'auto', alignItems: 'center', padding: '2px 0' }}>
+              <ChipS active={listType==='buynow'} onClick={() => setListType(listType==='buynow'?'all':'buynow')}>Buy Now</ChipS>
+              <ChipS active={cond==='Graded only'} onClick={() => setCond(cond==='Graded only'?'Any grade':'Graded only')}>Graded</ChipS>
+              <ChipS active={freeShip} onClick={() => setFreeShip(!freeShip)}>Free ship</ChipS>
+            </div>
           </div>
 
           {/* result meta */}
