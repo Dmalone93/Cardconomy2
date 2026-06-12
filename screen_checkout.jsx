@@ -31,6 +31,15 @@ function SelectRow({ on, onClick, title, sub, trailing }) {
 
 function CheckoutScreen({ app, params }) {
   const item = byIdC(params.id);
+  if (!item) return (
+    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ fontSize: 40, marginBottom: 12 }}>🛒</div>
+        <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 18 }}>Item not found</div>
+        <button onClick={() => app.nav.pop()} style={{ marginTop: 16, color: TC.accent, fontFamily: TC.sans, fontWeight: 600 }}>Go back</button>
+      </div>
+    </div>
+  );
   const [pay, setPay] = React.useState('applepay');
   const [ship, setShip] = React.useState('standard');
   const [placed, setPlaced] = React.useState(false);

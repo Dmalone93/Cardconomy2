@@ -106,7 +106,7 @@ function SellerScreen({ app, params = {} }) {
         {tab === 'listings' && (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 11, padding: 16 }}>
             {listings.map(l => (
-              <button key={l.id} onClick={() => app.nav.push('product', { id: window.PRODUCTS.find(p => p.offers.some(o => o.listingId === l.id))?.id || l.id })}
+              <button key={l.id} onClick={() => { const prod = window.PRODUCTS.find(p => p.offers.some(o => o.listingId === l.id)); app.nav.push(prod ? 'product' : 'listing', { id: prod ? prod.id : l.id }); }}
                 style={{ textAlign: 'left', background: TS.surface, borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 <div style={{ padding: '12px 12px 6px', display: 'flex', justifyContent: 'center' }}>
                   <CardArtS item={l} w={86} />

@@ -89,7 +89,7 @@ function CartScreen({ app }) {
           </div>
 
           <div style={{ padding: '12px 16px 30px', background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)' }}>
-            <button onClick={() => setPlaced(true)} style={{ width: '100%', background: TCart.accent, color: '#fff', borderRadius: 4, padding: 16,
+            <button onClick={() => { if (items.length > 0) { app.nav.push('checkout', { id: items[0].id }); } }} style={{ width: '100%', background: TCart.accent, color: '#fff', borderRadius: 4, padding: 16,
               fontFamily: TCart.sans, fontWeight: 700, fontSize: 16.5, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
               Checkout · {moneyCart(total)}
             </button>

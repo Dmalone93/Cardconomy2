@@ -299,7 +299,7 @@ function HomeScreen({ app }) {
       {/* graded spotlight */}
       {graded.length > 0 && (
         <div style={{ paddingTop: 20 }}>
-          <SectionHeader title="Graded spotlight" action="PSA · BGS · CGC" />
+          <SectionHeader title="Graded spotlight" />
           <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '4px 16px 8px', overflowX: 'auto' }}>
             {graded.map(l => {
               const gWatched = app.isWatched(l.id);
@@ -356,7 +356,7 @@ function HomeScreen({ app }) {
 
       {/* collector's corner — help & education */}
       <div style={{ paddingTop: 20 }}>
-        <SectionHeader title="Collector's corner" action="All guides" onAction={() => app.toast('Opening the help center')} />
+        <SectionHeader title="Collector's corner" />
         <div style={{ padding: '0 16px', marginTop: -2, marginBottom: 12 }}>
           <div style={{ fontFamily: T.sans, fontSize: 13, color: T.muted, lineHeight: 1.45 }}>New to collecting, or want to protect what you own? Start here.</div>
         </div>
@@ -445,7 +445,7 @@ function FeaturedRail({ app, game, onPick }) {
   const tint = { pkmn: '#d4a017', mtg: '#c2691b', ygo: '#7c4dd1', lor: '#c0392b', digimon: '#1f8fd6' };
   return (
     <div>
-      <SectionHeader title={game && game !== 'all' ? 'Featured in ' + (gameById(game) ? gameById(game).short : '') : 'Featured'} action="See all" onAction={() => app.toast('Opening featured')} />
+      <SectionHeader title={game && game !== 'all' ? 'Featured in ' + (gameById(game) ? gameById(game).short : '') : 'Featured'} action="See all" onAction={() => app.nav.setTab('search')} />
       <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
         {cards.map((c, n) => {
           const g = gameById(c.game);

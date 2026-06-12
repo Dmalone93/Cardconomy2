@@ -548,7 +548,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
 
       <div style={{ padding: '16px', marginTop: 'auto' }}>
         {stage === 'proposed' && (
-          <button onClick={() => setStage('countered')} style={{ width: '100%', background: TT.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TT.sans, fontWeight: 700, fontSize: 15.5 }}>Simulate {trader.name}'s reply</button>
+          {false && <button onClick={() => setStage('countered')} style={{ width: '100%', background: TT.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TT.sans, fontWeight: 700, fontSize: 15.5 }}>Simulate {trader.name}'s reply</button>}
         )}
         {stage === 'countered' && (
           <div style={{ display: 'flex', gap: 10 }}>

@@ -187,7 +187,7 @@ function ListingScreen({ app, params }) {
                   <span style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>{item.sellerRating}% · {item.sellerSales.toLocaleString()} sales</span>
                 </div>
               </div>
-              <button onClick={() => app.nav.push('storefront', { shop: 'gnome' })} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13,
+              <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13,
                 color: TL.accent, padding: '8px 12px', borderRadius: 10, boxShadow: 'inset 0 0 0 1px var(--accent)' }}>Store</button>
             </div>
           </div>
@@ -273,7 +273,7 @@ function ListingScreen({ app, params }) {
           <button onClick={() => setSheet('offer')} style={{ flex: 1, background: TL.surface, color: TL.ink, borderRadius: 4,
             padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 15, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Make offer</button>
         )}
-        <button onClick={() => { app.addToCart(item.id); app.toast(app.cart.includes(item.id) ? 'Already in cart' : 'Added to cart'); }} style={{ flex: 1.3, background: 'var(--fill)', color: '#fff', borderRadius: 4,
+        <button onClick={() => app.addToCart(item.id)} style={{ flex: 1.3, background: 'var(--fill)', color: '#fff', borderRadius: 4,
           padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
           {IconL.cart({width:16,height:16})} {app.cart.includes(item.id) ? 'In cart' : 'Add to cart'}

@@ -238,9 +238,8 @@ function ProductScreen({ app, params }) {
               onBuy={(offer) => {
                 if (offer.listingId) {
                   app.addToCart(offer.listingId);
-                  app.toast('Added to cart');
                 } else {
-                  app.toast('Added to cart');
+                  app.toast('This listing is not available for purchase yet');
                 }
               }}
               onOffer={(offer) => { setOfferSheet(offer); setOfferVal(''); }}
@@ -260,7 +259,7 @@ function ProductScreen({ app, params }) {
             </div>
             {product.tradeOffers.map((t, idx) => (
               <TradeOfferCard key={t.id} trade={t} isFirst={idx === 0}
-                onPropose={() => { app.nav.push('trade'); app.toast('Opening trade builder'); }}
+                onPropose={() => app.nav.push('trade')}
               />
             ))}
           </div>
