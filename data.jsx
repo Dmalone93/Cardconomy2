@@ -740,9 +740,136 @@ const TRADE_POSTS = [
 ];
 const postById = (id) => TRADE_POSTS.find(p => p.id === id);
 
+// ─────────────────────────────────────────────────────────────
+// PRODUCTS & OFFERS — product-based marketplace view
+// ─────────────────────────────────────────────────────────────
+
+// Seller pool (derived from LISTINGS sellers)
+const SELLERS = [
+  { name: 'VaultCards',    rating: 99.4, sales: 12840 },
+  { name: 'KantoCollects', rating: 98.1, sales: 3402 },
+  { name: 'ManaBase',      rating: 98.9, sales: 22014 },
+  { name: 'DuelistPrime',  rating: 99.2, sales: 6730 },
+  { name: 'TopDeckTCG',    rating: 99.0, sales: 9410 },
+  { name: 'MetaKnight',    rating: 98.4, sales: 4205 },
+  { name: 'GrandLineTCG',  rating: 97.6, sales: 1880 },
+  { name: 'DigiDestined',  rating: 98.6, sales: 2118 },
+  { name: 'PokeGrails',    rating: 99.0, sales: 7420 },
+  { name: 'RareMint',      rating: 99.1, sales: 5230 },
+  { name: 'EeveeVault',    rating: 99.8, sales: 8921 },
+  { name: 'VintageHolos',  rating: 100,  sales: 5610 },
+  { name: 'AlphaInvest',   rating: 100,  sales: 1290 },
+];
+
+const CONDITIONS  = ['Near Mint', 'Lightly Played', 'Moderately Played', 'Heavily Played'];
+const COND_SHORT  = ['NM', 'LP', 'MP', 'HP'];
+const SHIPS       = ['1–2 days', '2–3 days', '2–4 days', '2–5 days', '3–5 days'];
+const LOCS        = ['Dallas, TX', 'Portland, OR', 'Austin, TX', 'Denver, CO', 'Miami, FL',
+                     'Columbus, OH', 'San Jose, CA', 'Los Angeles, CA', 'Chicago, IL',
+                     'Seattle, WA', 'New York, NY', 'Honolulu, HI'];
+
+// Deterministic pseudo-random from a string seed
+function _hash(s) { let h = 0; for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; } return Math.abs(h); }
+
+// Build PRODUCTS by grouping raw buy-now listings by game+set+number
+const PRODUCTS = (() => {
+  const raw = LISTINGS.filter(l => l.grade && l.grade.company === 'raw' && l.type === 'buynow');
+  const grouped = {};
+  raw.forEach(l => {
+    const key = l.game + '|' + l.set + '|' + l.number;
+    if (!grouped[key]) grouped[key] = [];
+    grouped[key].push(l);
+  });
+
+  let pid = 0;
+  return Object.entries(grouped).map(([key, listings]) => {
+    pid++;
+    const first = listings[0];
+    const id = 'p' + String(pid).padStart(3, '0');
+
+    // Build offers — first from original listing(s)
+    let oid = 0;
+    const offers = listings.map(l => {
+      oid++;
+      return {
+        id: id + '-o' + oid,
+        seller: l.seller,
+        sellerRating: l.sellerRating,
+        sellerSales: l.sellerSales,
+        condition: l.condition || 'Near Mint',
+        condShort: COND_SHORT[CONDITIONS.indexOf(l.condition)] || 'NM',
+        price: l.price,
+        shipping: l.shipping,
+        ships: l.ships,
+        loc: l.loc,
+        accepts_offers: l.accepts_offers,
+        listingId: l.id,
+      };
+    });
+
+    // Add 1–3 mock offers per product
+    const h = _hash(key);
+    const extraCount = 1 + (h % 3); // 1, 2, or 3
+    for (let i = 0; i < extraCount; i++) {
+      oid++;
+      const si = (h + i * 7) % SELLERS.length;
+      const ci = (h + i * 3) % CONDITIONS.length;
+      const shi = (h + i * 5) % SHIPS.length;
+      const li = (h + i * 11) % LOCS.length;
+      const seller = SELLERS[si];
+      // Price varies: 80%–130% of first listing price
+      const mult = 0.80 + ((h + i * 13) % 51) / 100;
+      const price = Math.round(first.price * mult * 100) / 100;
+      const shipCost = (h + i) % 3 === 0 ? 0 : [1.99, 3.99, 4.99][(h + i) % 3];
+      offers.push({
+        id: id + '-o' + oid,
+        seller: seller.name,
+        sellerRating: seller.rating,
+        sellerSales: seller.sales,
+        condition: CONDITIONS[ci],
+        condShort: COND_SHORT[ci],
+        price: price,
+        shipping: shipCost,
+        ships: SHIPS[shi],
+        loc: LOCS[li],
+        accepts_offers: (h + i) % 2 === 0,
+        listingId: null,
+      });
+    }
+
+    // Sort offers by price ascending
+    offers.sort((a, b) => a.price - b.price);
+
+    const prices = offers.map(o => o.price);
+    const low = Math.min(...prices);
+    const high = Math.max(...prices);
+
+    return {
+      id,
+      game: first.game,
+      set: first.set,
+      number: first.number,
+      name: first.name,
+      subtitle: first.subtitle,
+      art: first.art,
+      foil: first.foil,
+      market: first.market,
+      history: first.history,
+      offers,
+      low,
+      high,
+      offerCount: offers.length,
+    };
+  });
+})();
+
+function productById(id) { return PRODUCTS.find(p => p.id === id); }
+function offersForProduct(id) { const p = PRODUCTS.find(p => p.id === id); return p ? p.offers : []; }
+
 Object.assign(window, {
   GAMES, SETS, ART, GRADERS, gradeText, LISTINGS, LOTS, byId, setById, gameById,
   SHOP, SUBMISSION, SUB_CARDS, BULK_RATES, subStats, SCAN_POOL,
   SHOPS, TRADERS, OWNED_REFS, traderById, shopById,
   TRADE_POSTS, postById, GAME_LOGOS,
+  PRODUCTS, productById, offersForProduct, SELLERS, COND_SHORT,
 });
