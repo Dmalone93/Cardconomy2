@@ -210,12 +210,13 @@ function SearchScreen({ app, params = {} }) {
             </span>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
               <button onClick={() => setSheet('sort')} style={{ fontFamily: TS.sans, fontSize: 13, fontWeight: 600, color: TS.accent, padding: '4px 6px' }}>{sort} ▾</button>
-              <button onClick={() => setView(view==='grid'?'list':'grid')} style={{ color: TS.muted, padding: 4 }}>
-                {view==='grid' ? IconS.filter({width:18,height:18}) : IconS.grid({width:18,height:18})}
-              </button>
               {view === 'grid' && (
-                <button onClick={() => setCols(cols === 2 ? 3 : 2)} style={{ color: cols === 3 ? TS.ink : TS.muted, padding: 4 }}>
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="5" height="8" rx="1" fill="currentColor"/><rect x="10" y="3" width="5" height="8" rx="1" fill="currentColor"/><rect x="17" y="3" width="5" height="8" rx="1" fill={cols===3 ? 'currentColor' : 'none'} stroke={cols===3 ? 'none' : 'currentColor'} strokeWidth="1.5" strokeDasharray="2 2"/><rect x="3" y="13" width="5" height="8" rx="1" fill="currentColor"/><rect x="10" y="13" width="5" height="8" rx="1" fill="currentColor"/><rect x="17" y="13" width="5" height="8" rx="1" fill={cols===3 ? 'currentColor' : 'none'} stroke={cols===3 ? 'none' : 'currentColor'} strokeWidth="1.5" strokeDasharray="2 2"/></svg>
+                <button onClick={() => setCols(cols === 2 ? 3 : 2)} style={{ color: TS.ink, padding: 4 }}>
+                  {cols === 2 ? (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="5" height="8" rx="1" fill="currentColor"/><rect x="10" y="3" width="5" height="8" rx="1" fill="currentColor"/><rect x="17" y="3" width="5" height="8" rx="1" fill="currentColor"/><rect x="3" y="13" width="5" height="8" rx="1" fill="currentColor"/><rect x="10" y="13" width="5" height="8" rx="1" fill="currentColor"/><rect x="17" y="13" width="5" height="8" rx="1" fill="currentColor"/></svg>
+                  ) : (
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1" fill="currentColor"/><rect x="13" y="3" width="8" height="8" rx="1" fill="currentColor"/><rect x="3" y="13" width="8" height="8" rx="1" fill="currentColor"/><rect x="13" y="13" width="8" height="8" rx="1" fill="currentColor"/></svg>
+                  )}
                 </button>
               )}
             </div>
