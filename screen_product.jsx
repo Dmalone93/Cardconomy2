@@ -93,6 +93,62 @@ function OfferCard({ offer, onBuy, onOffer, isLowest, onViewSeller }) {
   );
 }
 
+function TradeOfferCard({ trade, isFirst, onPropose }) {
+  return (
+    <div style={{ border: isFirst ? '1.5px solid #7c3aed' : '1px solid var(--line)', borderRadius: 4, padding: 14, marginBottom: 10, background: TP.surface, position: 'relative' }}>
+      {/* trader info */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+        <div style={{
+          width: 32, height: 32, borderRadius: 999, background: '#7c3aed', color: '#fff',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          fontFamily: TP.sans, fontWeight: 700, fontSize: 13, flexShrink: 0,
+        }}>{trade.trader.charAt(0)}</div>
+        <div style={{ flex: 1 }}>
+          <span style={{ fontFamily: TP.sans, fontWeight: 600, fontSize: 13, color: TP.ink }}>{trade.trader}</span>
+          {trade.verified && (
+            <span style={{ marginLeft: 5, background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 4,
+              fontFamily: TP.sans, fontWeight: 700, fontSize: 10 }}>Verified</span>
+          )}
+          <div style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted, marginTop: 1 }}>
+            {trade.traderRating}% · {trade.traderTrades.toLocaleString()} trades · {trade.traderLoc}
+          </div>
+        </div>
+      </div>
+
+      {/* wants in return */}
+      <div style={{ fontFamily: TP.sans, fontSize: 10, color: TP.muted, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.3, marginBottom: 8 }}>Wants in return</div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#faf5ff', borderRadius: 4, padding: 10 }}>
+        <div style={{
+          flexShrink: 0, width: 36, height: 50, background: trade.wantCard.art || '#334155', borderRadius: 3,
+          position: 'relative', overflow: 'hidden',
+        }}>
+          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.1) 0 4px, transparent 4px 8px)' }} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 13, color: TP.ink }}>{trade.wantCard.name}</div>
+          <div style={{ fontFamily: TP.sans, fontSize: 10, color: TP.muted, marginTop: 1 }}>{trade.wantCard.subtitle}</div>
+          <div style={{ fontFamily: TP.sans, fontSize: 10, color: TP.muted, marginTop: 1 }}>
+            Condition: {trade.wantCard.condition === 'Near Mint' ? 'NM+' : trade.wantCard.condition} · {trade.wantCard.gradePref}
+          </div>
+        </div>
+      </div>
+
+      {/* note */}
+      {trade.note && (
+        <div style={{ marginTop: 10, fontFamily: TP.sans, fontSize: 12, color: TP.ink2, fontStyle: 'italic', lineHeight: 1.4 }}>
+          "{trade.note}"
+        </div>
+      )}
+
+      {/* propose trade button */}
+      <button onClick={onPropose} style={{
+        width: '100%', marginTop: 12, background: 'none', border: '1.5px solid #7c3aed', color: '#7c3aed',
+        padding: 10, borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 13,
+      }}>Propose trade</button>
+    </div>
+  );
+}
+
 function ProductScreen({ app, params }) {
   const product = productByIdP(params.id);
   const [offerSheet, setOfferSheet] = React.useState(null);
@@ -194,6 +250,24 @@ function ProductScreen({ app, params }) {
             />
           ))}
         </div>
+
+        {/* trade offers */}
+        {product.tradeOffers && product.tradeOffers.length > 0 && (
+          <div style={{ padding: '0 16px', marginTop: 24 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+              <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16 }}>Available to trade</div>
+              <span style={{ background: '#f5f3ff', color: '#7c3aed', padding: '2px 8px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 10 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
+            </div>
+            <div style={{ fontFamily: TP.sans, fontSize: 12, color: TP.muted, marginBottom: 12, lineHeight: 1.4 }}>
+              These collectors have this card and want to swap — no cash needed.
+            </div>
+            {product.tradeOffers.map((t, idx) => (
+              <TradeOfferCard key={t.id} trade={t} isFirst={idx === 0}
+                onPropose={() => { app.nav.push('trade'); app.toast('Opening trade builder'); }}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* offer sheet */}
