@@ -52,15 +52,16 @@ function SellerScreen({ app, params = {} }) {
         <div style={{ padding: '16px 16px 0' }}>
           <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
             {[
-              ['⭐', seller.rating + '%', 'Rating'],
-              ['🛒', seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : seller.sales, 'Sales'],
-              ['📦', seller.ships.replace(' days', 'd').replace(' day', 'd'), 'Ships'],
-              ['🚚', '£' + seller.freeShipMin, 'Free over'],
+              [<svg width="18" height="18" viewBox="0 0 256 256" fill="none"><path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,91l59.46-5.15,23.21-55.36a16.37,16.37,0,0,1,30.5,0l23.21,55.36L226.92,91a16.46,16.46,0,0,1,9.37,23.84Z" fill="currentColor"/></svg>, seller.rating + '%', 'Rating'],
+              [<svg width="18" height="18" viewBox="0 0 256 256" fill="none"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM128,160a40,40,0,1,1,40-40A40,40,0,0,1,128,160Zm88,40H40V56H216V200ZM56,96V80a16,16,0,0,1,16-16H88a8,8,0,0,1,0,16H72V96a8,8,0,0,1-16,0Zm152,64v16a16,16,0,0,1-16,16H168a8,8,0,0,1,0-16h24V160a8,8,0,0,1,16,0Z" fill="currentColor"/></svg>, seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : seller.sales, 'Sales'],
+              [<svg width="18" height="18" viewBox="0 0 256 256" fill="none"><path d="M223.68,66.15,135.68,18a15.88,15.88,0,0,0-15.36,0l-88,48.17a16,16,0,0,0-8.32,14v95.64a16,16,0,0,0,8.32,14l88,48.17a15.88,15.88,0,0,0,15.36,0l88-48.17a16,16,0,0,0,8.32-14V80.18A16,16,0,0,0,223.68,66.15ZM128,120,47.65,76,128,32l80.35,44Zm8,99.64V133.83l80-43.78v85.76Z" fill="currentColor"/></svg>, seller.ships.replace(' days', 'd').replace(' day', 'd'), 'Ships'],
+              [<svg width="18" height="18" viewBox="0 0 256 256" fill="none"><path d="M255.43,117l-14-35A15.93,15.93,0,0,0,226.58,72H192V64a8,8,0,0,0-8-8H32A16,16,0,0,0,16,72V184a16,16,0,0,0,16,16H49a32,32,0,0,0,62,0h34a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.94,7.94,0,0,0,255.43,117ZM192,88h34.58l9.6,24H192ZM80,208a16,16,0,1,1,16-16A16,16,0,0,1,80,208Zm96,0a16,16,0,1,1,16-16A16,16,0,0,1,176,208Z" fill="currentColor"/></svg>, '£' + seller.freeShipMin, 'Free over'],
             ].map(([icon, val, label], i) => (
               <div key={i} style={{
                 flex: 1, textAlign: 'center', background: TS.surface, borderRadius: 4, padding: '10px 4px',
+                display: 'flex', flexDirection: 'column', alignItems: 'center',
               }}>
-                <div style={{ fontSize: 16, marginBottom: 3 }}>{icon}</div>
+                <div style={{ color: TS.muted, marginBottom: 4 }}>{icon}</div>
                 <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 15 }}>{val}</div>
                 <div style={{ fontFamily: TS.sans, fontSize: 10, color: TS.muted, marginTop: 1 }}>{label}</div>
               </div>
