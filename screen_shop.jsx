@@ -469,7 +469,7 @@ function ShopCardRow({ c, price, onClick, app }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
       <button onClick={onClick} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 11,
         background: flagged ? '#fef2f2' : matched ? 'var(--accent-wash)' : TSH.surface,
-        borderRadius: highValue ? '4px 4px 0 0' : 4, padding: 10,
+        borderRadius: 4, padding: 10,
         boxShadow: flagged ? 'inset 0 0 0 1.5px var(--down)' : matched ? 'inset 0 0 0 1.5px var(--gold)' : c.flag ? 'inset 0 0 0 1.5px var(--down)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
         <div style={{ background: matched ? 'rgba(255,255,255,0.6)' : TSH.surface2, borderRadius: 4, padding: 6, flexShrink: 0 }}>
           <CardArtSH item={c} w={42} radius={4} />
@@ -501,19 +501,13 @@ function ShopCardRow({ c, price, onClick, app }) {
             )}
           </div>
           <button onClick={(e) => { e.stopPropagation(); setFlagged(!flagged); app && app.toast(flagged ? 'Flag removed' : 'Card flagged — added to seller\'s record'); }}
-            style={{ width: 28, height: 28, borderRadius: 4, background: flagged ? '#dc2626' : 'transparent', color: flagged ? '#fff' : TSH.faint,
+            style={{ width: 28, height: 28, borderRadius: 4,
+              background: flagged ? '#dc2626' : highValue ? '#fef2f2' : 'transparent',
+              color: flagged ? '#fff' : highValue ? '#dc2626' : TSH.faint,
               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, flexShrink: 0,
-              boxShadow: flagged ? 'none' : 'inset 0 0 0 1px var(--line)' }}>⚑</button>
+              boxShadow: flagged ? 'none' : highValue ? 'inset 0 0 0 1px #fecaca' : 'inset 0 0 0 1px var(--line)' }}>⚑</button>
         </div>
       </button>
-      {/* high-value authentication label */}
-      {highValue && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#fffbeb', borderRadius: '0 0 4px 4px', padding: '6px 12px',
-          border: '1px solid #fde68a', borderTop: 'none' }}>
-          <span style={{ fontSize: 11 }}>🛡</span>
-          <span style={{ fontFamily: TSH.sans, fontSize: 11, fontWeight: 600, color: '#92400e' }}>Authentication recommended — card over £100</span>
-        </div>
-      )}
     </div>
   );
 }
