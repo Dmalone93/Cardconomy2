@@ -19,9 +19,13 @@ function CondBadge({ condition }) {
   );
 }
 
-function OfferCard({ offer, onBuy, onOffer }) {
+function OfferCard({ offer, onBuy, onOffer, isLowest }) {
   return (
-    <div style={{ border: '1px solid var(--line)', borderRadius: 4, padding: 14, marginBottom: 10, background: TP.surface }}>
+    <div style={{ border: isLowest ? '1.5px solid var(--accent)' : '1px solid var(--line)', borderRadius: 4, padding: 14, marginBottom: 10, background: TP.surface, position: 'relative' }}>
+      {isLowest && (
+        <span style={{ position: 'absolute', top: -9, left: 12, background: 'var(--accent)', color: '#fff',
+          fontFamily: TP.sans, fontWeight: 700, fontSize: 10, padding: '2px 8px', borderRadius: 4, letterSpacing: 0.3 }}>Best price</span>
+      )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
           <span style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 18 }}>{moneyP(offer.price)}</span>
@@ -39,6 +43,10 @@ function OfferCard({ offer, onBuy, onOffer }) {
         }}>{offer.seller.charAt(0)}</div>
         <div style={{ flex: 1 }}>
           <span style={{ fontFamily: TP.sans, fontWeight: 600, color: TP.ink }}>{offer.seller}</span>
+          {offer.sellerRating >= 99 && (
+            <span style={{ marginLeft: 5, background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 4,
+              fontFamily: TP.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>
+          )}
           <span style={{ marginLeft: 6 }}>{offer.sellerRating}% · {offer.sellerSales.toLocaleString()} sales</span>
         </div>
       </div>
@@ -124,13 +132,25 @@ function ProductScreen({ app, params }) {
           </div>
         )}
 
+        {/* buyer protection banner */}
+        <div style={{ margin: '0 16px 16px', padding: '12px 14px', background: TP.surface2, borderRadius: 4, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+          <span style={{ fontSize: 18, flexShrink: 0, color: 'var(--accent)' }}>{IconP.shield ? IconP.shield({ width: 20, height: 20 }) : '🛡️'}</span>
+          <div>
+            <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 13 }}>Buyer Protection</div>
+            <div style={{ fontFamily: TP.sans, fontSize: 12, color: TP.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn't match the listing, get a full refund.</div>
+          </div>
+        </div>
+
         {/* seller offers */}
         <div style={{ padding: '0 16px' }}>
-          <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16, marginBottom: 12 }}>
+          <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16, marginBottom: 6 }}>
             Available from {product.offerCount} seller{product.offerCount !== 1 ? 's' : ''}
           </div>
-          {product.offers.map(o => (
-            <OfferCard key={o.id} offer={o}
+          <div style={{ fontFamily: TP.sans, fontSize: 12, color: TP.muted, marginBottom: 12, lineHeight: 1.4 }}>
+            Orders from the same seller ship together — saving you on postage.
+          </div>
+          {product.offers.map((o, idx) => (
+            <OfferCard key={o.id} offer={o} isLowest={idx === 0}
               onBuy={(offer) => app.nav.push('checkout', { id: offer.listingId || offer.id })}
               onOffer={(offer) => { setOfferSheet(offer); setOfferVal(''); }}
             />

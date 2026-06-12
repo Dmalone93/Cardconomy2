@@ -37,8 +37,9 @@ function ListCard({ item, app, w }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 7,
           fontFamily: T.sans, fontSize: 11, color: T.muted, whiteSpace: 'nowrap', overflow: 'hidden' }}>
           {isAuction ? (
-            <span style={{ color: T.down, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 4, whiteSpace: 'nowrap' }}>
-              {Icon.gavel({ width: 12, height: 12 })} {item.bids} bids · {item.timeLeft}
+            <span style={{ color: '#fff', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 4,
+              whiteSpace: 'nowrap', background: T.down, padding: '2px 7px', borderRadius: 4, fontSize: 10.5 }}>
+              {Icon.gavel({ width: 11, height: 11 })} {item.bids} bids · {item.timeLeft}
             </span>
           ) : (
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
@@ -63,6 +64,11 @@ function ProductCard({ product, app, w }) {
     }}>
       <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#ffffff' }}>
         <CardArt item={product} w={140} />
+        {product.offerCount > 0 && (
+          <span style={{ position: 'absolute', bottom: 8, right: 8, background: 'rgba(0,0,0,0.65)', color: '#fff',
+            fontFamily: T.sans, fontWeight: 700, fontSize: 10, padding: '2px 7px', borderRadius: 999,
+            backdropFilter: 'blur(4px)' }}>{product.offerCount} seller{product.offerCount !== 1 ? 's' : ''}</span>
+        )}
       </div>
       <div style={{ padding: '10px 12px 12px' }}>
         <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 14, lineHeight: 1.15, letterSpacing: -0.2,
