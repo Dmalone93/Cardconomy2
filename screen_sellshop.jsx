@@ -224,6 +224,34 @@ function SellShopScreen({ app }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6, fontFamily: TSS.sans, fontSize: 12.5, color: TSS.muted }}>
               {IconSS.shield({ width: 15, height: 15, style: { color: SHOP_SS.tint } })} We never share your number with buyers.
             </div>
+            {/* ── seller trust profile card ── */}
+            {app.tier && app.tier > 0 && app.isVerified && app.isVerified() ? (
+              <div style={{ marginTop: 18, background: '#f0fdf4', borderRadius: 4, padding: 14, boxShadow: 'inset 0 0 0 1.5px #16a34a' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 22, height: 22, borderRadius: 4, background: '#16a34a', color: '#fff', fontSize: 12 }}>✓</span>
+                  <span style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 14, color: '#16a34a' }}>Verified · Tier {app.tier}</span>
+                </div>
+                <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 15, marginBottom: 4 }}>Your seller profile</div>
+                <div style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.ink2, lineHeight: 1.5 }}>
+                  {app.tier >= 2 ? '98.5' : '—'}% positive · {app.tier >= 2 ? '24' : '0'} completed sales · 0 disputes
+                </div>
+                <div style={{ fontFamily: TSS.sans, fontSize: 12, color: TSS.muted, marginTop: 2 }}>Member since 2024</div>
+                <div style={{ fontFamily: TSS.sans, fontSize: 11.5, color: TSS.muted, fontStyle: 'italic', marginTop: 8 }}>Shops can see your trust level and transaction history</div>
+              </div>
+            ) : (
+              <div style={{ marginTop: 18, background: '#fef2f2', borderRadius: 4, padding: 14, boxShadow: 'inset 0 0 0 1.5px #dc2626' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                  <span style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 14, color: '#dc2626' }}>⚠ Unverified account</span>
+                </div>
+                <div style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.ink2, lineHeight: 1.5 }}>
+                  Shops may require ID verification for high-value submissions.
+                </div>
+                <button onClick={() => app.toast('Verification screen (demo)')} style={{ marginTop: 10, background: 'none', color: '#dc2626', fontFamily: TSS.sans, fontWeight: 700, fontSize: 13, padding: 0, textDecoration: 'underline' }}>
+                  Verify now →
+                </button>
+              </div>
+            )}
+
             <button onClick={() => setPhase('method')} style={{ width: '100%', marginTop: 22, background: TSS.accent, color: '#fff',
               borderRadius: 4, padding: 16, fontFamily: TSS.sans, fontWeight: 700, fontSize: 16 }}>Continue →</button>
           </div>

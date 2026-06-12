@@ -372,6 +372,19 @@ function ShopScreen({ app }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 14px 120px' }}>
+        {/* seller trust banner */}
+        {SUB_SH.seller.verified ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#f0fdf4', borderRadius: 4, padding: '10px 13px', marginBottom: 12, boxShadow: 'inset 0 0 0 1px #16a34a' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, borderRadius: 4, background: '#16a34a', color: '#fff', fontSize: 11, flexShrink: 0 }}>✓</span>
+            <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, color: '#15803d' }}>Verified seller · {SUB_SH.seller.rating}% positive · {SUB_SH.seller.sales} sales</span>
+          </div>
+        ) : (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#fef2f2', borderRadius: 4, padding: '10px 13px', marginBottom: 12, boxShadow: 'inset 0 0 0 1px #dc2626' }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, borderRadius: 4, background: '#dc2626', color: '#fff', fontSize: 11, flexShrink: 0 }}>!</span>
+            <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, color: '#dc2626' }}>⚠ Unverified seller — verify ID before accepting high-value cards</span>
+          </div>
+        )}
+
         {/* stat tiles */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 9 }}>
           <StatTile label="Total cards" value={SUB_SH.total.toLocaleString()} />
@@ -390,7 +403,7 @@ function ShopScreen({ app }) {
 
         {/* card rows */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {filtered.map(c => <ShopCardRow key={c.id} c={c} price={prices[c.id]} onClick={() => setPriceCard(c)} />)}
+          {filtered.map(c => <ShopCardRow key={c.id} c={c} price={prices[c.id]} onClick={() => setPriceCard(c)} app={app} />)}
         </div>
 
         {/* bulk block */}
@@ -447,41 +460,58 @@ function FilterChip({ children, active, onClick, gold, danger }) {
   );
 }
 
-function ShopCardRow({ c, price, onClick }) {
+function ShopCardRow({ c, price, onClick, app }) {
   const matched = !!c.buylist;
   const fill = matched ? Math.min(c.qty, c.buylist.want) : 0;
+  const highValue = c.market > 100;
   return (
-    <button onClick={onClick} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 11,
-      background: matched ? 'var(--accent-wash)' : TSH.surface, borderRadius: 13, padding: 10,
-      boxShadow: matched ? 'inset 0 0 0 1.5px var(--gold)' : c.flag ? 'inset 0 0 0 1.5px var(--down)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
-      <div style={{ background: matched ? 'rgba(255,255,255,0.6)' : TSH.surface2, borderRadius: 9, padding: 6, flexShrink: 0 }}>
-        <CardArtSH item={c} w={42} radius={5} />
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+        <button onClick={onClick} style={{ flex: 1, textAlign: 'left', display: 'flex', alignItems: 'center', gap: 11,
+          background: matched ? 'var(--accent-wash)' : TSH.surface, borderRadius: highValue ? '13px 13px 0 0' : 13, padding: 10,
+          boxShadow: matched ? 'inset 0 0 0 1.5px var(--gold)' : c.flag ? 'inset 0 0 0 1.5px var(--down)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ background: matched ? 'rgba(255,255,255,0.6)' : TSH.surface2, borderRadius: 9, padding: 6, flexShrink: 0 }}>
+            <CardArtSH item={c} w={42} radius={5} />
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</span>
+              {c.flag && <span style={{ color: 'var(--down)', fontSize: 12 }}>⚠</span>}
+            </div>
+            <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {c.cond} · ×{c.qty}{c.flag ? ' · ' + c.flag : ' · ' + (setByIdSH(c.set) ? setByIdSH(c.set).name.replace(/\s*\(.*\)/, '') : '')}
+            </div>
+          </div>
+          <div style={{ textAlign: 'right', flexShrink: 0 }}>
+            {matched ? (
+              <React.Fragment>
+                <div style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 11, color: TSH.accent, whiteSpace: 'nowrap' }}>★ WANT {c.buylist.want}</div>
+                <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap' }}>{money0(c.buylist.buy)}<span style={{ fontFamily: TSH.sans, fontSize: 10, color: TSH.muted }}>/ea</span></div>
+              </React.Fragment>
+            ) : c.flag ? (
+              <div style={{ fontFamily: TSH.sans, fontSize: 11.5, fontWeight: 700, color: 'var(--down)' }}>inspect</div>
+            ) : (
+              <React.Fragment>
+                <div style={{ fontFamily: TSH.sans, fontSize: 10.5, color: TSH.muted }}>your buy</div>
+                <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, color: price ? TSH.ink : TSH.accent }}>{price ? money0(price) : 'price'}</div>
+              </React.Fragment>
+            )}
+          </div>
+        </button>
+        {/* flag card button */}
+        <button onClick={(e) => { e.stopPropagation(); app && app.toast('Card flagged for review — added to seller\'s record'); }}
+          style={{ width: 32, height: 32, borderRadius: 4, background: TSH.surface2, color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 14, flexShrink: 0 }} title="Flag card">🚩</button>
       </div>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</span>
-          {c.flag && <span style={{ color: 'var(--down)', fontSize: 12 }}>⚠</span>}
+      {/* high-value authentication label */}
+      {highValue && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#fffbeb', borderRadius: '0 0 13px 13px', padding: '5px 12px',
+          boxShadow: 'inset 0 0 0 1px #d97706' }}>
+          <span style={{ fontSize: 12 }}>🛡</span>
+          <span style={{ fontFamily: TSH.sans, fontSize: 11, fontWeight: 600, color: '#d97706' }}>Authentication recommended</span>
         </div>
-        <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-          {c.cond} · ×{c.qty}{c.flag ? ' · ' + c.flag : ' · ' + (setByIdSH(c.set) ? setByIdSH(c.set).name.replace(/\s*\(.*\)/, '') : '')}
-        </div>
-      </div>
-      <div style={{ textAlign: 'right', flexShrink: 0 }}>
-        {matched ? (
-          <React.Fragment>
-            <div style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 11, color: TSH.accent, whiteSpace: 'nowrap' }}>★ WANT {c.buylist.want}</div>
-            <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap' }}>{money0(c.buylist.buy)}<span style={{ fontFamily: TSH.sans, fontSize: 10, color: TSH.muted }}>/ea</span></div>
-          </React.Fragment>
-        ) : c.flag ? (
-          <div style={{ fontFamily: TSH.sans, fontSize: 11.5, fontWeight: 700, color: 'var(--down)' }}>inspect</div>
-        ) : (
-          <React.Fragment>
-            <div style={{ fontFamily: TSH.sans, fontSize: 10.5, color: TSH.muted }}>your buy</div>
-            <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, color: price ? TSH.ink : TSH.accent }}>{price ? money0(price) : 'price'}</div>
-          </React.Fragment>
-        )}
-      </div>
-    </button>
+      )}
+    </div>
   );
 }
 
@@ -679,6 +709,20 @@ function ShopInbox({ app, onOpen, onDashboard }) {
             </div>
             <span style={{ fontFamily: TSH.sans, fontSize: 10, fontWeight: 800, color: '#fff', background: 'var(--down)', borderRadius: 999, padding: '3px 8px' }}>NEW</span>
           </div>
+          {/* seller trust section */}
+          {SUB_SH.seller.verified ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10, background: '#f0fdf4', borderRadius: 4, padding: '7px 10px' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 18, height: 18, borderRadius: 4, background: '#16a34a', color: '#fff', fontSize: 10, flexShrink: 0 }}>✓</span>
+              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 12, color: '#16a34a' }}>Verified · Tier {SUB_SH.seller.tier}</span>
+              <span style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.ink2 }}>{SUB_SH.seller.rating}% · {SUB_SH.seller.sales} sales · {SUB_SH.seller.disputes} disputes</span>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10, background: '#fef2f2', borderRadius: 4, padding: '7px 10px' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 18, height: 18, borderRadius: 4, background: '#dc2626', color: '#fff', fontSize: 10, flexShrink: 0 }}>!</span>
+              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 12, color: '#dc2626' }}>⚠ Unverified</span>
+              <span style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.ink2 }}>First-time seller · No transaction history</span>
+            </div>
+          )}
           <div style={{ display: 'flex', gap: 8, marginTop: 13 }}>
             <div style={{ flex: 1, background: '#fff', borderRadius: 11, padding: '9px 11px' }}>
               <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 17, color: TSH.accent }}>{stats.buylistCount}</div>

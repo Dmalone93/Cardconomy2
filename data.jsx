@@ -644,7 +644,18 @@ const BULK_RATES = [
 ];
 
 const SUBMISSION = {
-  id: 'CC-4471', ticket: '4471', seller: { name: 'Jordan M.', initial: 'J', phone: '•••• 4242' },
+  id: 'CC-4471', ticket: '4471', seller: {
+    name: 'Jordan M.',
+    initial: 'J',
+    phone: '•••• 4242',
+    tier: 2,
+    verified: true,
+    rating: 98.5,
+    sales: 24,
+    disputes: 0,
+    memberSince: '2024',
+    flags: 0,
+  },
   total: 1000, submittedAgo: '2 min ago',
   cards: SUB_CARDS, bulk: BULK_RATES,
   get bulkCount() { return BULK_RATES.reduce((s, b) => s + b.count, 0); },
