@@ -2,7 +2,7 @@
 // Product detail — multi-seller view for raw cards
 // ─────────────────────────────────────────────────────────────
 const { T: TP, money: moneyP, CardArt: CardArtP, Sparkline: SparkP, Icon: IconP, Sheet: SheetP, Badge: BadgeP } = window;
-const { productById: productByIdP, gameById: gameByIdP, setById: setByIdP, COND_SHORT: COND_SHORT_P } = window;
+const { productById: productByIdP, gameById: gameByIdP, setById: setByIdP, COND_SHORT: COND_SHORT_P, listingsBySeller: listingsBySellerP } = window;
 
 function CondBadge({ condition }) {
   const colors = {
@@ -19,7 +19,7 @@ function CondBadge({ condition }) {
   );
 }
 
-function OfferCard({ offer, onBuy, onOffer, isLowest }) {
+function OfferCard({ offer, onBuy, onOffer, isLowest, onViewSeller }) {
   return (
     <div style={{ border: isLowest ? '1.5px solid var(--accent)' : '1px solid var(--line)', borderRadius: 4, padding: 14, marginBottom: 10, background: TP.surface, position: 'relative' }}>
       {isLowest && (
@@ -42,7 +42,7 @@ function OfferCard({ offer, onBuy, onOffer, isLowest }) {
           fontFamily: TP.sans, fontWeight: 700, fontSize: 12, flexShrink: 0,
         }}>{offer.seller.charAt(0)}</div>
         <div style={{ flex: 1 }}>
-          <span style={{ fontFamily: TP.sans, fontWeight: 600, color: TP.ink }}>{offer.seller}</span>
+          <button onClick={onViewSeller} style={{ fontFamily: TP.sans, fontWeight: 600, color: 'var(--accent)', background: 'none', padding: 0, textDecoration: 'underline' }}>{offer.seller}</button>
           {offer.sellerRating >= 99 && (
             <span style={{ marginLeft: 5, background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 4,
               fontFamily: TP.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>
@@ -83,6 +83,12 @@ function OfferCard({ offer, onBuy, onOffer, isLowest }) {
           marginTop: offer.images > 0 ? 6 : 8, color: TP.accent, fontFamily: TP.sans, fontWeight: 600, fontSize: 12,
           background: 'none', padding: 0 }}>Make an offer</button>
       )}
+      {onViewSeller && (
+        <button onClick={onViewSeller} style={{
+          marginTop: 8, color: 'var(--accent)', fontFamily: TP.sans, fontWeight: 600, fontSize: 11,
+          background: 'none', padding: 0, display: 'flex', alignItems: 'center', gap: 3,
+        }}>View all {listingsBySellerP(offer.seller).length} listings from this seller →</button>
+      )}
     </div>
   );
 }
@@ -111,7 +117,7 @@ function ProductScreen({ app, params }) {
       {/* header */}
       <div style={{ display: 'flex', alignItems: 'center', padding: '52px 12px 10px', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TP.surface, color: TP.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>{IconP.back({})}</button>
-        <div style={{ flex: 1, fontFamily: TP.sans, fontWeight: 700, fontSize: 16, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{product.name}</div>
+        <div style={{ flex: 1, fontFamily: TP.sans, fontWeight: 700, fontSize: 16, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Back</div>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 40 }}>
@@ -150,7 +156,7 @@ function ProductScreen({ app, params }) {
 
         {/* price chart */}
         {product.history && (
-          <div style={{ padding: '0 16px 16px' }}>
+          <div style={{ padding: '8px 16px 16px' }}>
             <SparkP data={product.history} w={320} h={48} up={up} />
             <div style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted, marginTop: 4 }}>30-day price trend</div>
           </div>
@@ -175,6 +181,7 @@ function ProductScreen({ app, params }) {
           </div>
           {product.offers.map((o, idx) => (
             <OfferCard key={o.id} offer={o} isLowest={idx === 0}
+              onViewSeller={() => app.nav.push('seller', { name: o.seller })}
               onBuy={(offer) => {
                 if (offer.listingId) {
                   app.addToCart(offer.listingId);
