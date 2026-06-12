@@ -71,6 +71,22 @@ function SellerScreen({ app, params = {} }) {
           "{seller.blurb}"
         </div>
 
+        {/* location */}
+        {seller.loc && (
+          <button onClick={() => window.open('https://www.google.com/maps/search/' + encodeURIComponent(seller.loc + ', UK'), '_blank')}
+            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: TS.surface, borderBottom: '1px solid var(--line)', textAlign: 'left' }}>
+            <div style={{
+              width: 40, height: 40, borderRadius: 8, background: '#e8f5e9', color: '#16a34a',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18, flexShrink: 0,
+            }}>📍</div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 13, color: TS.ink }}>{seller.loc}, UK</div>
+              <div style={{ fontFamily: TS.sans, fontSize: 11, color: TS.muted, marginTop: 1 }}>Tap to view on Google Maps</div>
+            </div>
+            <div style={{ fontFamily: TS.sans, fontSize: 14, color: TS.faint }}>›</div>
+          </button>
+        )}
+
         {/* tabs */}
         <div style={{ display: 'flex', borderBottom: '1px solid var(--line)' }}>
           {[
