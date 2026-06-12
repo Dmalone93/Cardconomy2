@@ -103,6 +103,15 @@ function ListingScreen({ app, params }) {
             </div>
           )}
 
+          {/* buyer protection banner */}
+          <div style={{ marginTop: 18, padding: '12px 14px', background: TL.surface2, borderRadius: 4, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+            <span style={{ fontSize: 18, flexShrink: 0, color: 'var(--accent)' }}>{IconL.shield ? IconL.shield({ width: 20, height: 20 }) : '🛡️'}</span>
+            <div>
+              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Buyer Protection</div>
+              <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn't match the listing, get a full refund.</div>
+            </div>
+          </div>
+
           {/* seller's real photos */}
           {!isLot && (
             <div style={{ marginTop: 22 }}>
@@ -114,7 +123,7 @@ function ListingScreen({ app, params }) {
                 Real photos {item.seller} took of this exact card — tap a frame to add one.
               </div>
               <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', margin: '0 -18px', padding: '0 18px 4px' }}>
-                {[['front', 'Front'], ['back', 'Back'], ['angle', 'Detail / flaws']].map(([k, label], i) => (
+                {[['front', 'Front'], ['back', 'Back'], ['angle', 'Detail / flaws'], ['cert', 'Certificate']].map(([k, label], i) => (
                   <div key={k} style={{ flexShrink: 0, width: i === 0 ? 168 : 132 }}>
                     <image-slot
                       id={'cardphoto-' + item.id + '-' + k}
@@ -168,7 +177,9 @@ function ListingScreen({ app, params }) {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
                   <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>{item.seller}</span>
-                  {window.TrustBadge && <window.TrustBadge tier={item.sellerRating >= 99 ? 2 : 1} />}
+                  {window.TrustBadge ? <window.TrustBadge tier={item.sellerRating >= 99 ? 2 : 1} /> : (
+                    item.sellerRating >= 99 && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 4, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>
+                  )}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
                   <StarsL rating={item.sellerRating} />
@@ -183,6 +194,12 @@ function ListingScreen({ app, params }) {
           {/* shipping / protection */}
           <div style={{ marginTop: 18 }}>
             <InfoRow icon={IconL.truck({})} title={item.shipping === 0 ? 'Free shipping' : moneyL(item.shipping) + ' shipping'} sub={'Ships from ' + item.loc} value={item.ships} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 0', borderBottom: '1px solid var(--line-2)' }}>
+              <div style={{ color: TL.muted }}>{IconL.truck ? IconL.truck({ width: 16, height: 16 }) : '📦'}</div>
+              <div style={{ fontFamily: TL.sans, fontSize: 13, fontWeight: 600, color: TL.ink2 }}>
+                Estimated delivery: <span style={{ fontWeight: 700, color: TL.ink }}>{item.ships || '3–5 business days'}</span>
+              </div>
+            </div>
             <InfoRow icon={IconL.shield({})} title="Cardonomy Buyer Protection" sub="Full refund if item not as described" />
             <InfoRow icon={IconL.tag({})} title="Authenticity guarantee" sub={item.grade && item.grade.company!=='raw' ? gradeTextL(item.grade)+' verified slab' : 'Verified by seller'} />
           </div>
