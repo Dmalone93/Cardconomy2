@@ -416,7 +416,7 @@ function Confirmation({ onThread, onHome, onShop }) {
         display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconSS.check({ width: 44, height: 44 })}</div>
       <h1 style={{ margin: '20px 0 4px', fontFamily: TSS.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>Sent to {SHOP_SS.name}!</h1>
       <p style={{ fontFamily: TSS.sans, fontSize: 14, color: TSS.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 280 }}>
-        They\'ve been alerted and will text an offer to {SUB_SS.seller.phone}. Keep shopping — your cards stay with you.
+        They've been alerted and will text an offer to {SUB_SS.seller.phone}. Keep shopping — your cards stay with you.
       </p>
       <div style={{ background: TSS.surface, borderRadius: 4, padding: 16, marginTop: 20, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
         {[['Submission', '#' + SUB_SS.id], ['Cards', SUB_SS.total.toLocaleString()], ['Typical reply', '< 1 hr']].map(([k, v], i) => (
@@ -436,7 +436,7 @@ function Confirmation({ onThread, onHome, onShop }) {
       <button onClick={onThread} style={{ width: '100%', marginTop: 18, background: TSS.accent, color: '#fff', borderRadius: 4,
         padding: 15, fontFamily: TSS.sans, fontWeight: 700, fontSize: 15.5 }}>View message thread</button>
       <button onClick={onShop} style={{ width: '100%', marginTop: 9, background: TSS.surface, color: TSS.ink, borderRadius: 4,
-        padding: 13, fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Demo: see the shop\'s side →</button>
+        padding: 13, fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Demo: see the shop's side →</button>
       <button onClick={onHome} style={{ marginTop: 10, color: TSS.muted, fontFamily: TSS.sans, fontWeight: 600, fontSize: 14 }}>Back to browse</button>
     </div>
   );
@@ -482,7 +482,7 @@ function SellerThread({ app, onShop }) {
         </div>
         <Bubble who="shop">Swing by today to finish? Bring the stack + ticket #{SUB_SS.ticket}.</Bubble>
         {reply && <Bubble who="me">{reply}</Bubble>}
-        {reply && <Bubble who="shop">Perfect — see you then! We\'ll have it ready. 👋</Bubble>}
+        {reply && <Bubble who="shop">Perfect — see you then! We'll have it ready. 👋</Bubble>}
       </div>
 
       {/* quick replies */}
@@ -491,11 +491,11 @@ function SellerThread({ app, onShop }) {
           <div className="noscroll" style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
             <QuickReply label={'Accept credit · ' + moneySS(credit, { cents: false })} primary onClick={() => { setReply('Accept store credit 🎁 — coming by after 5pm 👍'); app.toast('Offer accepted'); }} />
             <QuickReply label={'Take cash · ' + moneySS(cash, { cents: false })} onClick={() => { setReply('Cash works — I\'ll come by after 5pm 👍'); app.toast('Offer accepted'); }} />
-            <QuickReply label="Pick a time" onClick={() => setReply("What times work today? I\'m flexible.")} />
+            <QuickReply label="Pick a time" onClick={() => setReply("What times work today? I'm flexible.")} />
           </div>
         ) : (
           <button onClick={onShop} style={{ width: '100%', background: TSS.surface2, color: TSS.ink, borderRadius: 4, padding: 13,
-            fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Demo: see the shop\'s side →</button>
+            fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Demo: see the shop's side →</button>
         )}
       </div>
     </div>

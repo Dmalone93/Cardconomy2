@@ -164,7 +164,7 @@ function SellBulkScreen({ app }) {
               display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconB.check({ width: 44, height: 44 })}</div>
             <h1 style={{ margin: '20px 0 4px', fontFamily: TB.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>{listed} cards listed!</h1>
             <p style={{ fontFamily: TB.sans, fontSize: 14, color: TB.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 290 }}>
-              Your cards are live on the marketplace{listType === 'auction' ? ' as 7-day auctions' : ''}. We\'ll notify you on every sale and offer.
+              Your cards are live on the marketplace{listType === 'auction' ? ' as 7-day auctions' : ''}. We'll notify you on every sale and offer.
             </p>
             {/* mini grid of what went live */}
             <div className="noscroll" style={{ display: 'flex', gap: 8, overflowX: 'auto', margin: '20px -24px 0', padding: '0 24px 6px' }}>

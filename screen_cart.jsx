@@ -21,7 +21,7 @@ function CartScreen({ app }) {
             display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconCart.check({ width: 44, height: 44 })}</div>
           <h2 style={{ margin: '20px 0 4px', fontFamily: TCart.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>Order confirmed</h2>
           <p style={{ fontFamily: TCart.sans, fontSize: 14, color: TCart.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 280 }}>
-            {items.length} card{items.length !== 1 ? 's' : ''} from {sellers.length} seller{sellers.length !== 1 ? 's' : ''} on the way. We\'ll text tracking as each ships.
+            {items.length} card{items.length !== 1 ? 's' : ''} from {sellers.length} seller{sellers.length !== 1 ? 's' : ''} on the way. We'll text tracking as each ships.
           </p>
           <div style={{ fontFamily: TCart.sans, fontWeight: 700, fontSize: 18, marginTop: 16 }}>{moneyCart(total)}</div>
         </div>
@@ -70,7 +70,7 @@ function CartScreen({ app }) {
             {sellers.length > 1 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 12, background: 'var(--accent-wash)', borderRadius: 4, padding: '11px 13px' }}>
                 <span style={{ color: TCart.accent }}>{IconCart.truck({ width: 16, height: 16 })}</span>
-                <span style={{ fontFamily: TCart.sans, fontSize: 12.5, color: TCart.ink2, lineHeight: 1.4 }}>Items ship from {sellers.length} sellers — you\'ll get separate tracking for each.</span>
+                <span style={{ fontFamily: TCart.sans, fontSize: 12.5, color: TCart.ink2, lineHeight: 1.4 }}>Items ship from {sellers.length} sellers — you'll get separate tracking for each.</span>
               </div>
             )}
 

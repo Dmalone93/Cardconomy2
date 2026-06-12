@@ -257,7 +257,7 @@ function DWatch({ app }) {
   return (
     <div className="wrap" style={{ padding: '32px 24px 20px' }}>
       <h1 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, margin: '0 0 6px' }}>Watching</h1>
-      <p style={{ color: 'var(--muted)', fontSize: 15, margin: '0 0 24px' }}>{items.length} cards you\'re tracking.</p>
+      <p style={{ color: 'var(--muted)', fontSize: 15, margin: '0 0 24px' }}>{items.length} cards you're tracking.</p>
       {items.length === 0 ? <Empty label="Nothing saved yet" sub="Tap the heart on any card to track it here." app={app} /> : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 18 }}>
           {items.map(it => <window.DCard key={it.id} item={it} app={app} />)}

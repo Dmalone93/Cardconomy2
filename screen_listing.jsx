@@ -100,7 +100,7 @@ function ListingScreen({ app, params }) {
           </div>
           {isLot && (
             <div style={{ marginTop: 12, background: TL.surface2, borderRadius: 12, padding: '12px 14px', fontFamily: TL.sans, fontSize: 13.5, color: TL.ink2 }}>
-              <b>What\'s inside:</b> {item.note}. Condition {item.condition}.
+              <b>What's inside:</b> {item.note}. Condition {item.condition}.
             </div>
           )}
 
@@ -109,15 +109,15 @@ function ListingScreen({ app, params }) {
             <span style={{ fontSize: 18, flexShrink: 0, color: 'var(--accent)' }}>{IconL.shield ? IconL.shield({ width: 20, height: 20 }) : '🛡️'}</span>
             <div>
               <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Buyer Protection</div>
-              <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn\'t match the listing, get a full refund.</div>
+              <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn't match the listing, get a full refund.</div>
             </div>
           </div>
 
-          {/* seller\'s real photos */}
+          {/* seller's real photos */}
           {!isLot && (
             <div style={{ marginTop: 22 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                <span style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17 }}>Seller\'s photos</span>
+                <span style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17 }}>Seller's photos</span>
                 <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 10, color: 'var(--up)', background: 'var(--up-wash)', borderRadius: 6, padding: '2px 7px', letterSpacing: 0.3 }}>ACTUAL CARD</span>
               </div>
               <div style={{ fontFamily: TL.sans, fontSize: 12.5, color: TL.muted, marginBottom: 11, lineHeight: 1.4 }}>
@@ -138,7 +138,7 @@ function ListingScreen({ app, params }) {
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 8, fontFamily: TL.sans, fontSize: 11.5, color: TL.muted }}>
                 {IconL.shield({ width: 14, height: 14, style: { color: TL.muted } })}
-                Photos are the seller\'s own. Graded slabs are authenticity-verified.
+                Photos are the seller's own. Graded slabs are authenticity-verified.
               </div>
             </div>
           )}

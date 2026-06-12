@@ -68,7 +68,7 @@ function TradeScreen({ app, params = {} }) {
   const getSel = getAll.filter(id => get[id]);
   const giveVal = giveSel.reduce((s, id) => s + byIdT(id).market, 0);
   const getVal = getSel.reduce((s, id) => s + byIdT(id).market, 0);
-  const diff = getVal - giveVal;          // >0 → you\'re getting more → you should add cash
+  const diff = getVal - giveVal;          // >0 → you're getting more → you should add cash
   const fairPct = giveVal + getVal === 0 ? 50 : Math.round((giveVal / (giveVal + getVal)) * 100);
   const suggestedCash = Math.abs(Math.round(diff));
 
@@ -86,7 +86,7 @@ function TradeScreen({ app, params = {} }) {
         <div style={{ padding: '52px 14px 12px', background: TT.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={goBack} style={{ color: TT.ink }}>{IconT.back({})}</button>
           <span style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 16, flex: 1 }}>
-            {phase === 'matches' ? 'Trade with collectors\' : phase === 'board' ? 'Open to Offers' : phase === 'post' ? 'Post a trade' : phase === 'build' ? 'Build a trade' : 'Choose where to meet'}
+            {phase === 'matches' ? 'Trade with collectors' : phase === 'board' ? 'Open to Offers' : phase === 'post' ? 'Post a trade' : phase === 'build' ? 'Build a trade' : 'Choose where to meet'}
           </span>
         </div>
       )}
@@ -98,7 +98,7 @@ function TradeScreen({ app, params = {} }) {
             <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 14px', marginBottom: 16 }}>
               <span style={{ color: TT.accent, marginTop: 1 }}>{IconT.bolt({ width: 17, height: 17 })}</span>
               <span style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, lineHeight: 1.45 }}>
-                Swap cards directly — no cash needed. We match your <b>collection</b> with nearby collectors\' <b>want lists</b> and suggest a shop to meet at.
+                Swap cards directly — no cash needed. We match your <b>collection</b> with nearby collectors' <b>want lists</b> and suggest a shop to meet at.
               </span>
             </div>
             <div style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
@@ -202,7 +202,7 @@ function TradeScreen({ app, params = {} }) {
         {phase === 'post' && (
           <div style={{ padding: '18px 16px 30px' }}>
             <p style={{ fontFamily: TT.sans, fontSize: 13.5, color: TT.muted, margin: '0 0 16px', lineHeight: 1.45 }}>
-              List a card you\'ll part with and stay open to offers. Set the criteria you\'d accept — others propose, you decide.
+              List a card you'll part with and stay open to offers. Set the criteria you\'d accept — others propose, you decide.
             </p>
 
             <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 14, marginBottom: 9 }}>You're offering</div>
@@ -232,7 +232,7 @@ function TradeScreen({ app, params = {} }) {
             </div>
 
             <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 14, marginBottom: 4 }}>Preferences {openAny && <span style={{ color: TT.muted, fontWeight: 400, fontSize: 12.5 }}>· optional</span>}</div>
-            <div style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.muted, marginBottom: 12 }}>Narrow what you\'d accept.</div>
+            <div style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.muted, marginBottom: 12 }}>Narrow what you'd accept.</div>
 
             <PrefRow label="Game">
               {GAMES_T.map(g => <PrefChip key={g.id} on={prefGames.includes(g.id)} onClick={() => setPrefGames(s => s.includes(g.id) ? s.filter(x => x !== g.id) : [...s, g.id])}>{g.short}</PrefChip>)}
@@ -256,7 +256,7 @@ function TradeScreen({ app, params = {} }) {
             <div style={{ width: 80, height: 80, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconT.check({ width: 42, height: 42 })}</div>
             <h1 style={{ margin: '18px 0 4px', fontFamily: TT.sans, fontWeight: 800, fontSize: 23, letterSpacing: -0.5 }}>Your trade is live!</h1>
             <p style={{ fontFamily: TT.sans, fontSize: 14, color: TT.muted, lineHeight: 1.5, margin: '0 auto 20px', maxWidth: 280 }}>
-              {byIdT(offerCard) ? byIdT(offerCard).name : 'Your card'} is on the Open to Offers board. We\'ll notify you when collectors propose a swap.
+              {byIdT(offerCard) ? byIdT(offerCard).name : 'Your card'} is on the Open to Offers board. We'll notify you when collectors propose a swap.
             </p>
             <div style={{ display: 'inline-block', background: TT.surface, borderRadius: 14, padding: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <CardArtT item={byIdT(offerCard)} w={96} />
@@ -368,7 +368,7 @@ function TradeScreen({ app, params = {} }) {
             </div>
             <div style={{ background: TT.surface, borderRadius: 13, padding: '13px 15px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 13, marginBottom: 9 }}>Safe-trade checklist</div>
-              {['Meet in a public, well-lit place (a shop is ideal)', 'Inspect cards before money or cards change hands', 'Keep it in the app — share no personal contact info', 'Tell someone where you\'re going'].map((s, i) => (
+              {['Meet in a public, well-lit place (a shop is ideal)', 'Inspect cards before money or cards change hands', 'Keep it in the app — share no personal contact info', 'Tell someone where you're going'].map((s, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, padding: '4px 0' }}>
                   <span style={{ color: 'var(--up)', fontSize: 13, marginTop: 1 }}>✓</span>
                   <span style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, lineHeight: 1.4 }}>{s}</span>
@@ -546,7 +546,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
           <div style={{ marginTop: 12, background: TT.surface, borderRadius: 14, padding: 12, display: 'flex', gap: 10, alignItems: 'flex-start', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <Avatar who={trader} size={34} />
             <div style={{ flex: 1, fontFamily: TT.sans, fontSize: 13, color: TT.ink, lineHeight: 1.45 }}>
-              <b>{trader.name}:</b> {stage === 'countered' ? 'Accepted the trade! Any chance we meet at Northside Collectibles instead? It\'s right by me. 🙏' : stage === 'agreed' ? 'Perfect, see you there! 🎉' : 'Works for me — see you at ' + counterSpot.name + '! 🎉'}
+              <b>{trader.name}:</b> {stage === 'countered' ? 'Accepted the trade! Any chance we meet at Northside Collectibles instead? It's right by me. 🙏' : stage === 'agreed' ? 'Perfect, see you there! 🎉' : 'Works for me — see you at ' + counterSpot.name + '! 🎉'}
             </div>
           </div>
         )}

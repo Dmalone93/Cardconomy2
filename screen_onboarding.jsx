@@ -38,7 +38,7 @@ function GamePrefsSheet({ app, open, onClose, games }) {
   return (
     <window.Sheet open={open} onClose={onClose} title="Games you follow">
       <p style={{ fontFamily: TOB.sans, fontSize: 13.5, color: TOB.muted, margin: '0 0 14px', lineHeight: 1.45 }}>
-        We\'ll tailor your home feed, search and alerts to these games. Change anytime.
+        We'll tailor your home feed, search and alerts to these games. Change anytime.
       </p>
       <button onClick={() => setSel(all ? [games[0].id] : games.map(g => g.id))} style={{ marginBottom: 12, fontFamily: TOB.sans, fontWeight: 700, fontSize: 13, color: TOB.accent }}>
         {all ? 'Clear all' : 'Follow all games'}

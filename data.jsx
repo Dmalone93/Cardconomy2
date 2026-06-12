@@ -972,7 +972,7 @@ const setById = (id) => SETS.find(s => s.id === id);
 const gameById = (id) => GAMES.find(g => g.id === id);
 
 // ─────────────────────────────────────────────────────────────
-// Sell-to-shop: shop, buylist, and a seller\'s bulk submission
+// Sell-to-shop: shop, buylist, and a seller's bulk submission
 // ─────────────────────────────────────────────────────────────
 const SHOP = {
   id: 'gnome', name: 'Gnome Games', initial: 'G', tint: '#2f8f5b',
@@ -1083,7 +1083,7 @@ const SHOPS = [
 ];
 
 // Nearby collectors to trade with. haves = cards they'd give;
-// wants = cards they\'re after (referencing your collection).
+// wants = cards they're after (referencing your collection).
 const TRADERS = [
   { id: 't1', name: 'Marcus T.', initial: 'M', tint: '#1d4ed8', dist: 1.9, rating: 99, deals: 84,
     haves: ['l19', 'l06'], wants: ['l07'] },
@@ -1111,7 +1111,7 @@ const GAME_LOGOS = {
 // acceptable offers (games, min condition, graded/raw/any).
 const TRADE_POSTS = [
   { id: 'p1', trader: 't1', offer: 'l03', open: true,
-    prefs: { games: ['pkmn'], cond: 'NM+', slab: 'Graded' }, note: 'Chasing high-end Pokémon slabs. Show me what you\'ve got!' },
+    prefs: { games: ['pkmn'], cond: 'NM+', slab: 'Graded' }, note: 'Chasing high-end Pokemon slabs. Show me what you\'ve got!' },
   { id: 'p2', trader: 't3', offer: 'l08', open: false, wants: ['l09'],
     prefs: { games: ['pkmn'], cond: 'NM', slab: 'Any' }, note: 'Want a Pidgeot ex — will add cash.' },
   { id: 'p3', trader: 't2', offer: 'l06', open: true,

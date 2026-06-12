@@ -500,7 +500,7 @@ function ShopCardRow({ c, price, onClick, app }) {
               </React.Fragment>
             )}
           </div>
-          <button onClick={(e) => { e.stopPropagation(); setFlagged(!flagged); app && app.toast(flagged ? 'Flag removed' : 'Card flagged — added to seller\'s record'); }}
+          <button onClick={(e) => { e.stopPropagation(); setFlagged(!flagged); app && app.toast(flagged ? 'Flag removed' : 'Card flagged — added to seller's record'); }}
             style={{ width: 28, height: 28, borderRadius: 4,
               background: flagged ? '#dc2626' : highValue ? '#fef2f2' : 'transparent',
               color: flagged ? '#fff' : highValue ? '#dc2626' : TSH.faint,
@@ -772,7 +772,7 @@ function ShopSent({ app, offer, onInbox }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconSH.check({ width: 44, height: 44 })}</div>
         <h1 style={{ margin: '20px 0 4px', fontFamily: TSH.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.5 }}>Offer sent to {SUB_SH.seller.name}</h1>
         <p style={{ fontFamily: TSH.sans, fontSize: 14, color: TSH.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 270 }}>
-          They\'ve been texted. When they come in with ticket #{SUB_SH.ticket}, check the stack against the list and pay out.
+          They've been texted. When they come in with ticket #{SUB_SH.ticket}, check the stack against the list and pay out.
         </p>
         <div style={{ background: TSH.surface, borderRadius: 16, padding: 16, marginTop: 20, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           {[['Cash option', money0(offer ? offer.cash : 620)], ['Store credit', money0(Math.round((offer ? offer.cash : 620) * 1.2))], ['Ticket', '#' + SUB_SH.ticket]].map(([k, v], i) => (
