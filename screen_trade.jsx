@@ -487,6 +487,12 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
   const { byId: byIdL } = window;
   // location negotiation: proposed → countered → agreed
   const [stage, setStage] = React.useState('proposed');
+  React.useEffect(() => {
+    if (stage === 'proposed') {
+      const t = setTimeout(() => setStage('countered'), 3000);
+      return () => clearTimeout(t);
+    }
+  }, [stage]);
   const counterSpot = { id: 'counter', name: 'Northside Collectibles', sub: trader.name + "'s pick · 0.5 km from them · trade hub", kind: 'shop', tint: '#7c3aed', initial: 'N' };
   const agreedPlace = stage === 'accepted-counter' ? counterSpot : place;
 
@@ -548,7 +554,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
 
       <div style={{ padding: '16px', marginTop: 'auto' }}>
         {stage === 'proposed' && (
-          {false && <button onClick={() => setStage('countered')} style={{ width: '100%', background: TT.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TT.sans, fontWeight: 700, fontSize: 15.5 }}>Simulate {trader.name}'s reply</button>}
+          <div style={{ fontFamily: TT.sans, fontSize: 13, color: TT.muted, textAlign: 'center' }}>Waiting for {trader.name} to respond…</div>
         )}
         {stage === 'countered' && (
           <div style={{ display: 'flex', gap: 10 }}>

@@ -218,6 +218,24 @@ function ListingScreen({ app, params }) {
             </button>
           )}
 
+          {/* authenticate card */}
+          {item.grade && item.grade.company !== 'raw' && (
+            <div style={{ padding: '0 0px', marginTop: 16 }}>
+              <button onClick={() => app.nav.push('authcard', { id: item.id })} style={{
+                width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px',
+                background: TL.surface, borderRadius: 4, textAlign: 'left',
+                boxShadow: 'inset 0 0 0 1px var(--line)',
+              }}>
+                <svg width="20" height="20" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: TL.accent }}><path d="M208,40H48A16,16,0,0,0,32,56V200a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Zm80,32H48V56H208V200ZM64,96V80A16,16,0,0,1,80,64H96a8,8,0,0,1,0,16H80V96a8,8,0,0,1-16,0Zm144,64v16a16,16,0,0,1-16,16H176a8,8,0,0,1,0-16h16V160a8,8,0,0,1,16,0Z" fill="currentColor"/></svg>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: TL.ink }}>Authenticate this card</div>
+                  <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginTop: 1 }}>Get an official verification seal</div>
+                </div>
+                <svg width="16" height="16" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: TL.faint }}><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z" fill="currentColor"/></svg>
+              </button>
+            </div>
+          )}
+
           {/* similar */}
           <div style={{ marginTop: 26 }}>
             <div style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17, marginBottom: 12 }}>Similar listings</div>

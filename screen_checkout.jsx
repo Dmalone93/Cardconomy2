@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Checkout / Buy It Now
 // ─────────────────────────────────────────────────────────────
-const { T: TC, money: moneyC, CardArt: CardArtC, GradeChip: GradeChipC, Icon: IconC } = window;
+const { T: TC, money: moneyC, CardArt: CardArtC, GradeChip: GradeChipC, Icon: IconC, Sheet: SheetC } = window;
 const { byId: byIdC, setById: setByIdC } = window;
 
 function Radio({ on }) {
@@ -44,6 +44,8 @@ function CheckoutScreen({ app, params }) {
   const [ship, setShip] = React.useState('standard');
   const [placed, setPlaced] = React.useState(false);
   const [working, setWorking] = React.useState(false);
+  const [editAddr, setEditAddr] = React.useState(false);
+  const [addr, setAddr] = React.useState({ name: 'Alex Rivera', line1: '14 Harbour Lane', city: 'Bristol', postcode: 'BS1 4RW' });
 
   const shipCost = item.shipping || 0;
   const expedited = ship === 'express' ? 9.99 : shipCost;
@@ -54,7 +56,7 @@ function CheckoutScreen({ app, params }) {
 
   function place() {
     setWorking(true);
-    setTimeout(() => { setWorking(false); setPlaced(true); }, 1100);
+    setTimeout(() => { setWorking(false); app.clearCart(); setPlaced(true); }, 1100);
   }
 
   if (placed) {
@@ -107,11 +109,11 @@ function CheckoutScreen({ app, params }) {
 
         {/* address */}
         <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 800, fontSize: 14, color: TC.ink2 }}>Ship to</div>
-        <button onClick={() => app.toast('Edit address')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TC.surface, borderRadius: 4, padding: '13px 14px', textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: TC.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TC.sans, fontWeight: 800, flexShrink: 0 }}>A</div>
+        <button onClick={() => setEditAddr(true)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TC.surface, borderRadius: 4, padding: '13px 14px', textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: TC.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TC.sans, fontWeight: 800, flexShrink: 0 }}>{addr.name[0]}</div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14.5 }}>Alex Rivera</div>
-            <div style={{ fontFamily: TC.sans, fontSize: 12.5, color: TC.muted }}>14 Harbour Lane, Bristol, BS1 4DJ</div>
+            <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14.5 }}>{addr.name}</div>
+            <div style={{ fontFamily: TC.sans, fontSize: 12.5, color: TC.muted }}>{addr.line1}, {addr.city}, {addr.postcode}</div>
           </div>
           {IconC.chevron({ style: { color: TC.faint } })}
         </button>
@@ -163,6 +165,30 @@ function CheckoutScreen({ app, params }) {
           {working ? 'Processing…' : pay==='applepay' ? <React.Fragment><span style={{ fontSize: 19 }}></span> Pay · {moneyC(total)}</React.Fragment> : 'Place order · ' + moneyC(total)}
         </button>
       </div>
+
+      <SheetC open={editAddr} onClose={() => setEditAddr(false)} title="Delivery address">
+        <div style={{ padding: '8px 0 20px' }}>
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ fontFamily: TC.sans, fontWeight: 600, fontSize: 12, color: TC.ink2, marginBottom: 4 }}>Full name</div>
+            <input value={addr.name} onChange={e => setAddr(a => ({...a, name: e.target.value}))} style={{ width: '100%', padding: '10px 12px', borderRadius: 4, border: 'none', background: TC.surface2, fontFamily: TC.sans, fontSize: 14, color: TC.ink, outline: 'none', boxShadow: 'inset 0 0 0 1px var(--line)' }} />
+          </div>
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ fontFamily: TC.sans, fontWeight: 600, fontSize: 12, color: TC.ink2, marginBottom: 4 }}>Address</div>
+            <input value={addr.line1} onChange={e => setAddr(a => ({...a, line1: e.target.value}))} style={{ width: '100%', padding: '10px 12px', borderRadius: 4, border: 'none', background: TC.surface2, fontFamily: TC.sans, fontSize: 14, color: TC.ink, outline: 'none', boxShadow: 'inset 0 0 0 1px var(--line)' }} />
+          </div>
+          <div style={{ display: 'flex', gap: 10 }}>
+            <div style={{ flex: 2, marginBottom: 12 }}>
+              <div style={{ fontFamily: TC.sans, fontWeight: 600, fontSize: 12, color: TC.ink2, marginBottom: 4 }}>City</div>
+              <input value={addr.city} onChange={e => setAddr(a => ({...a, city: e.target.value}))} style={{ width: '100%', padding: '10px 12px', borderRadius: 4, border: 'none', background: TC.surface2, fontFamily: TC.sans, fontSize: 14, color: TC.ink, outline: 'none', boxShadow: 'inset 0 0 0 1px var(--line)' }} />
+            </div>
+            <div style={{ flex: 1, marginBottom: 12 }}>
+              <div style={{ fontFamily: TC.sans, fontWeight: 600, fontSize: 12, color: TC.ink2, marginBottom: 4 }}>Postcode</div>
+              <input value={addr.postcode} onChange={e => setAddr(a => ({...a, postcode: e.target.value}))} style={{ width: '100%', padding: '10px 12px', borderRadius: 4, border: 'none', background: TC.surface2, fontFamily: TC.sans, fontSize: 14, color: TC.ink, outline: 'none', boxShadow: 'inset 0 0 0 1px var(--line)' }} />
+            </div>
+          </div>
+          <button onClick={() => setEditAddr(false)} style={{ width: '100%', marginTop: 8, background: 'var(--fill)', color: '#fff', borderRadius: 4, padding: 14, fontFamily: TC.sans, fontWeight: 700, fontSize: 15 }}>Save address</button>
+        </div>
+      </SheetC>
     </div>
   );
 }
