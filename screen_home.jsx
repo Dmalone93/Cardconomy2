@@ -420,23 +420,23 @@ function HomeScreen({ app }) {
 // ── featured / spotlight rail (pref-aware editorial content) ──
 const SPOTLIGHT = [
   // Pokémon
-  { game: ‘pkmn’, set: ‘s151’, src: ‘content/pkmn-151.png’, title: ‘Scarlet & Violet 151’, sub: ‘The set everyone\’s chasing — singles & lots’, pos: ‘center’ },
-  { game: ‘pkmn’, set: ‘base’, src: ‘content/pkmn-grails.webp’, title: ‘The grail cards’, sub: ‘Illustrator Pikachu & 1st-edition Charizard’, pos: ‘center’ },
-  { game: ‘pkmn’, set: ‘evs’, src: ‘content/pkmn-slabs.jpg’, title: ‘Graded & protected’, sub: ‘PSA-slabbed vintage holos’, pos: ‘center 30%’ },
+  { game: 'pkmn', set: 's151', src: 'content/pkmn-151.png', title: 'Scarlet & Violet 151', sub: 'The set everyone\'s chasing — singles & lots', pos: 'center' },
+  { game: 'pkmn', set: 'base', src: 'content/pkmn-grails.webp', title: 'The grail cards', sub: 'Illustrator Pikachu & 1st-edition Charizard', pos: 'center' },
+  { game: 'pkmn', set: 'evs', src: 'content/pkmn-slabs.jpg', title: 'Graded & protected', sub: 'PSA-slabbed vintage holos', pos: 'center 30%' },
   // One Piece
-  { game: ‘lor’, set: ‘op07’, src: ‘content/op-crew.webp’, title: ‘One Piece Card Game’, sub: ‘The whole crew, in your binder’, pos: ‘center’ },
-  { game: ‘lor’, set: ‘op08’, src: ‘content/op-25th.jpg’, title: ‘Anime 25th Collection’, sub: ‘EB-02 sealed booster boxes in stock’, pos: ‘center’ },
-  { game: ‘lor’, set: ‘op10’, src: ‘content/op-magazine.jpg’, title: ‘One Piece Magazine’, sub: ‘Promo cards & collector features’, pos: ‘center top’ },
+  { game: 'lor', set: 'op07', src: 'content/op-crew.webp', title: 'One Piece Card Game', sub: 'The whole crew, in your binder', pos: 'center' },
+  { game: 'lor', set: 'op08', src: 'content/op-25th.jpg', title: 'Anime 25th Collection', sub: 'EB-02 sealed booster boxes in stock', pos: 'center' },
+  { game: 'lor', set: 'op10', src: 'content/op-magazine.jpg', title: 'One Piece Magazine', sub: 'Promo cards & collector features', pos: 'center top' },
   // Yu-Gi-Oh!
-  { game: ‘ygo’, set: ‘ann25’, src: ‘content/ygo-gods.webp’, title: ‘The Egyptian Gods’, sub: ‘Ra, Slifer & Obelisk — vintage holos’, pos: ‘center’ },
-  { game: ‘ygo’, set: ‘lob’, src: ‘content/ygo-meta.jpg’, title: ‘Today\’s meta’, sub: ‘Tournament staples & new releases’, pos: ‘center’ },
-  { game: ‘ygo’, set: ‘ra02’, src: ‘content/ygo-duelpower.gif’, title: ‘Duel Power’, sub: ‘Collector boxes & sealed product’, pos: ‘center’ },
-  { game: ‘ygo’, src: ‘content/ygo-locals.webp’, title: ‘Locals night’, sub: ‘Find a Yu-Gi-Oh! event near you’, pos: ‘center’, action: ‘shopfinder’ },
+  { game: 'ygo', set: 'ann25', src: 'content/ygo-gods.webp', title: 'The Egyptian Gods', sub: 'Ra, Slifer & Obelisk — vintage holos', pos: 'center' },
+  { game: 'ygo', set: 'lob', src: 'content/ygo-meta.jpg', title: 'Today\'s meta', sub: 'Tournament staples & new releases', pos: 'center' },
+  { game: 'ygo', set: 'ra02', src: 'content/ygo-duelpower.gif', title: 'Duel Power', sub: 'Collector boxes & sealed product', pos: 'center' },
+  { game: 'ygo', src: 'content/ygo-locals.webp', title: 'Locals night', sub: 'Find a Yu-Gi-Oh! event near you', pos: 'center', action: 'shopfinder' },
   // Magic: The Gathering
-  { game: ‘mtg’, set: ‘mh3’, src: ‘content/mtg-brand.webp’, title: ‘Magic: The Gathering’, sub: ‘Singles, sealed & graded — all eras’, pos: ‘center’ },
-  { game: ‘mtg’, set: ‘mh3’, src: ‘content/mtg-mh3.webp’, title: ‘Modern Horizons 3’, sub: ‘Preorder Commander decks now’, pos: ‘center’ },
-  { game: ‘mtg’, set: ‘lea’, src: ‘content/mtg-packs.jpeg’, title: ‘Endless possibilities’, sub: ‘Every pack, 15 cards — open a world’, pos: ‘center 22%’ },
-  { game: ‘mtg’, src: ‘content/mtg-locals.png’, title: ‘Locals night’, sub: ‘Find a Magic event near you’, pos: ‘center’, action: ‘shopfinder’ },
+  { game: 'mtg', set: 'mh3', src: 'content/mtg-brand.webp', title: 'Magic: The Gathering', sub: 'Singles, sealed & graded — all eras', pos: 'center' },
+  { game: 'mtg', set: 'mh3', src: 'content/mtg-mh3.webp', title: 'Modern Horizons 3', sub: 'Preorder Commander decks now', pos: 'center' },
+  { game: 'mtg', set: 'lea', src: 'content/mtg-packs.jpeg', title: 'Endless possibilities', sub: 'Every pack, 15 cards — open a world', pos: 'center 22%' },
+  { game: 'mtg', src: 'content/mtg-locals.png', title: 'Locals night', sub: 'Find a Magic event near you', pos: 'center', action: 'shopfinder' },
 ];
 
 function FeaturedRail({ app, game, onPick }) {
