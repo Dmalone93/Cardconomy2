@@ -46,6 +46,7 @@ function SearchScreen({ app, params = {} }) {
   const [listType, setListType] = React.useState('all'); // all | buynow
   const [sort, setSort] = React.useState('Best match');
   const [view, setView] = React.useState('grid');
+  const [cols, setCols] = React.useState(2);
   const [sheet, setSheet] = React.useState(null); // 'filters' | 'sort'
   const [focused, setFocused] = React.useState(false);
 
@@ -190,6 +191,11 @@ function SearchScreen({ app, params = {} }) {
               <button onClick={() => setView(view==='grid'?'list':'grid')} style={{ color: TS.muted, padding: 4 }}>
                 {view==='grid' ? IconS.filter({width:18,height:18}) : IconS.grid({width:18,height:18})}
               </button>
+              {view === 'grid' && (
+                <button onClick={() => setCols(cols === 2 ? 3 : 2)} style={{ fontFamily: TS.sans, fontSize: 11, fontWeight: 700, color: TS.muted, padding: '3px 6px', background: 'none' }}>
+                  {cols === 2 ? '▦ 3' : '▦ 2'}
+                </button>
+              )}
             </div>
           </div>
 
@@ -202,7 +208,7 @@ function SearchScreen({ app, params = {} }) {
                 <div style={{ fontSize: 13.5, marginTop: 4 }}>Try removing a filter or widening your price.</div>
               </div>
             ) : view === 'grid' ? (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: cols === 3 ? '1fr 1fr 1fr' : '1fr 1fr', gap: cols === 3 ? 8 : 12 }}>
                 {productResults.map(p => <ProductCardS key={'p-'+p.id} product={p} app={app} />)}
                 {listingResults.map(l => <ListCardS key={l.id} item={l} app={app} />)}
               </div>
