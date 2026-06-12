@@ -481,4 +481,18 @@ function LotRow({ lot, app }) {
   );
 }
 
-Object.assign(window, { ListCard, ListRow, LotRow, SectionHeader, SetTile, HomeScreen, ProductCard });
+// ── skeleton card (shimmer placeholder while content loads) ──
+function SkeletonCard({ w }) {
+  return (
+    <div style={{ width: w || '100%', background: T.surface, borderRadius: 4, overflow: 'hidden' }}>
+      <div className="shimmer" style={{ height: 180 }} />
+      <div style={{ padding: '10px 12px 12px' }}>
+        <div className="shimmer" style={{ height: 14, width: '75%', marginBottom: 8 }} />
+        <div className="shimmer" style={{ height: 11, width: '50%', marginBottom: 12 }} />
+        <div className="shimmer" style={{ height: 16, width: '35%' }} />
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { ListCard, ListRow, LotRow, SectionHeader, SetTile, HomeScreen, ProductCard, SkeletonCard });

@@ -74,6 +74,16 @@
   @keyframes ccBlink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
   @keyframes ccTick { 0% { transform: translateY(4px); opacity: 0.4; } 100% { transform: none; opacity: 1; } }
   @keyframes ccCardIn { from { transform: translate(-50%,-46%) rotate(4deg) scale(0.9); opacity: 0; } to { transform: translate(-50%,-50%) rotate(-3deg) scale(1); opacity: 1; } }
+  @keyframes ccShimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .shimmer {
+    background: linear-gradient(90deg, var(--surface-2) 25%, var(--line) 50%, var(--surface-2) 75%);
+    background-size: 200% 100%;
+    animation: ccShimmer 1.5s ease infinite;
+    border-radius: 4px;
+  }
 </style>
 </head>
 <body>
