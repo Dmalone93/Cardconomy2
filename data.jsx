@@ -779,6 +779,21 @@ const LOCS        = ['Manchester', 'Bristol', 'Birmingham', 'Glasgow', 'Liverpoo
                      'Newcastle', 'Cardiff', 'Brighton', 'Leeds',
                      'Edinburgh', 'London', 'Bath'];
 
+const TRADER_NAMES = [
+  'Jake_Collector', 'SlabKing_UK', 'PikaPal', 'CardVaultNZ',
+  'GrailHunter', 'FoilFreak', 'MintCondition', 'TradeEmAll',
+  'SleeveItUp', 'DeckMaster99',
+];
+const TRADE_NOTES = [
+  'Happy to meet locally or ship insured.',
+  'Looking to complete my set. Fair trades only.',
+  'Will consider other offers too — message me.',
+  'Chasing this card for a while. Graded preferred.',
+  'Can add cash to balance if needed.',
+  'Straight swap, both cards in similar condition.',
+  'Open to negotiation. Let me know what you have.',
+];
+
 // Deterministic pseudo-random from a string seed
 function _hash(s) { let h = 0; for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; } return Math.abs(h); }
 
@@ -857,6 +872,37 @@ const PRODUCTS = (() => {
     const low = Math.min(...prices);
     const high = Math.max(...prices);
 
+    // Generate 0–2 mock trade offers
+    const tradeOfferCount = h % 5 === 0 ? 0 : (h % 3 === 0 ? 2 : 1);
+    const sameGameListings = LISTINGS.filter(l => l.game === first.game && l.id !== first.id);
+    const tradeOffers = [];
+    for (let ti = 0; ti < tradeOfferCount && sameGameListings.length > 0; ti++) {
+      const tni = (h + ti * 9) % TRADER_NAMES.length;
+      const tli = (h + ti * 13) % LOCS.length;
+      const wantIdx = (h + ti * 7) % sameGameListings.length;
+      const wantCard = sameGameListings[wantIdx];
+      const tNoteIdx = (h + ti * 11) % TRADE_NOTES.length;
+      const tRating = 95 + ((h + ti * 4) % 50) / 10; // 95.0–99.9
+      const tTrades = 50 + (h + ti * 17) % 1200;
+      tradeOffers.push({
+        id: id + '-t' + (ti + 1),
+        trader: TRADER_NAMES[tni],
+        traderRating: Math.round(tRating * 10) / 10,
+        traderTrades: tTrades,
+        traderLoc: LOCS[tli],
+        verified: tRating >= 98,
+        wantCard: {
+          name: wantCard.name,
+          subtitle: wantCard.subtitle,
+          art: wantCard.art,
+          game: wantCard.game,
+          condition: CONDITIONS[(h + ti) % 2 === 0 ? 0 : 1],
+          gradePref: (h + ti) % 3 === 0 ? 'Graded preferred' : (h + ti) % 3 === 1 ? 'Raw OK' : 'Any',
+        },
+        note: TRADE_NOTES[tNoteIdx],
+      });
+    }
+
     return {
       id,
       game: first.game,
@@ -872,6 +918,8 @@ const PRODUCTS = (() => {
       low,
       high,
       offerCount: offers.length,
+      tradeOffers,
+      tradeCount: tradeOffers.length,
     };
   });
 })();
