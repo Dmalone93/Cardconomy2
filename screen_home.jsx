@@ -54,8 +54,8 @@ function ProductCard({ product, app, w }) {
       borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
       boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
     }}>
-      <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#ffffff' }}>
-        <CardArt item={product} w={w ? Math.round(w * 0.65) : 140} />
+      <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#ffffff', overflow: 'hidden' }}>
+        <CardArt item={product} w={140} />
         {product.offerCount > 0 && (
           <span style={{ position: 'absolute', bottom: 8, right: 8, background: 'rgba(0,0,0,0.65)', color: '#fff',
             fontFamily: T.sans, fontWeight: 700, fontSize: 10, padding: '2px 7px', borderRadius: 999,
@@ -111,12 +111,12 @@ function ListRow({ item, app }) {
 // ── ad carousel ──────────────────────────────────────────────
 // each banner's id is a game id, so we can show only ads for games the user follows
 const AD_BANNERS = [
-  { id: 'pkmn', src: 'ads/pokemon.webp', tint: '#1f4d3a', tag: 'Pokémon TCG', cta: 'New: Surging Sparks' },
-  { id: 'lor', src: 'ads/onepiece.webp', tint: '#7c4a1e', tag: 'One Piece Card Game', cta: 'Shop the latest set' },
-  { id: 'ygo', src: 'ads/yugioh.webp', tint: '#1a2740', tag: 'Yu-Gi-Oh!', cta: '25th Anniversary in stock' },
+  { id: 'pkmn', set: 'ssp', src: 'ads/pokemon.webp', tint: '#1f4d3a', tag: 'Pokémon TCG', cta: 'New: Surging Sparks' },
+  { id: 'lor', set: 'op10', src: 'ads/onepiece.webp', tint: '#7c4a1e', tag: 'One Piece Card Game', cta: 'Shop the latest set' },
+  { id: 'ygo', set: 'ann25', src: 'ads/yugioh.webp', tint: '#1a2740', tag: 'Yu-Gi-Oh!', cta: '25th Anniversary in stock' },
 ];
 
-function AdCarousel({ onPick, app }) {
+function AdCarousel({ app }) {
   const banners = AD_BANNERS.filter(ad => !app || app.inPrefs(ad.id));
   const [i, setI] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
@@ -134,7 +134,7 @@ function AdCarousel({ onPick, app }) {
         boxShadow: '0 1px 3px rgba(20,24,40,0.06), 0 8px 20px rgba(20,24,40,0.08)' }}
         onTouchStart={() => setPaused(true)}>
         {banners.map((ad, n) => (
-          <button key={ad.id} onClick={() => onPick(ad.id)} style={{
+          <button key={ad.id} onClick={() => app.nav.push('search', { set: ad.set, game: ad.id })} style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, textAlign: 'left',
             opacity: n === i ? 1 : 0, transition: 'opacity 0.6s ease', pointerEvents: n === i ? 'auto' : 'none',
             background: ad.tint }}>
@@ -241,7 +241,7 @@ function HomeScreen({ app }) {
       </div>
 
       {/* sponsored ad carousel */}
-      <AdCarousel app={app} onPick={(id) => { setGame(id); app.nav.setTab('search'); }} />
+      <AdCarousel app={app} />
 
       {/* game chips — only games you follow, editable inline */}
       <div className="noscroll" style={{ display: 'flex', gap: 8, padding: '12px 16px 0', overflowX: 'auto', alignItems: 'center' }}>
@@ -420,23 +420,23 @@ function HomeScreen({ app }) {
 // ── featured / spotlight rail (pref-aware editorial content) ──
 const SPOTLIGHT = [
   // Pokémon
-  { game: 'pkmn', src: 'content/pkmn-151.png', title: 'Scarlet & Violet 151', sub: 'The set everyone’s chasing — singles & lots', pos: 'center' },
-  { game: 'pkmn', src: 'content/pkmn-grails.webp', title: 'The grail cards', sub: 'Illustrator Pikachu & 1st-edition Charizard', pos: 'center' },
-  { game: 'pkmn', src: 'content/pkmn-slabs.jpg', title: 'Graded & protected', sub: 'PSA-slabbed vintage holos', pos: 'center 30%' },
+  { game: ‘pkmn’, set: ‘s151’, src: ‘content/pkmn-151.png’, title: ‘Scarlet & Violet 151’, sub: ‘The set everyone’s chasing — singles & lots’, pos: ‘center’ },
+  { game: ‘pkmn’, set: ‘base’, src: ‘content/pkmn-grails.webp’, title: ‘The grail cards’, sub: ‘Illustrator Pikachu & 1st-edition Charizard’, pos: ‘center’ },
+  { game: ‘pkmn’, set: ‘evs’, src: ‘content/pkmn-slabs.jpg’, title: ‘Graded & protected’, sub: ‘PSA-slabbed vintage holos’, pos: ‘center 30%’ },
   // One Piece
-  { game: 'lor', src: 'content/op-crew.webp', title: 'One Piece Card Game', sub: 'The whole crew, in your binder', pos: 'center' },
-  { game: 'lor', src: 'content/op-25th.jpg', title: 'Anime 25th Collection', sub: 'EB-02 sealed booster boxes in stock', pos: 'center' },
-  { game: 'lor', src: 'content/op-magazine.jpg', title: 'One Piece Magazine', sub: 'Promo cards & collector features', pos: 'center top' },
+  { game: ‘lor’, set: ‘op07’, src: ‘content/op-crew.webp’, title: ‘One Piece Card Game’, sub: ‘The whole crew, in your binder’, pos: ‘center’ },
+  { game: ‘lor’, set: ‘op08’, src: ‘content/op-25th.jpg’, title: ‘Anime 25th Collection’, sub: ‘EB-02 sealed booster boxes in stock’, pos: ‘center’ },
+  { game: ‘lor’, set: ‘op10’, src: ‘content/op-magazine.jpg’, title: ‘One Piece Magazine’, sub: ‘Promo cards & collector features’, pos: ‘center top’ },
   // Yu-Gi-Oh!
-  { game: 'ygo', src: 'content/ygo-gods.webp', title: 'The Egyptian Gods', sub: 'Ra, Slifer & Obelisk — vintage holos', pos: 'center' },
-  { game: 'ygo', src: 'content/ygo-meta.jpg', title: 'Today’s meta', sub: 'Tournament staples & new releases', pos: 'center' },
-  { game: 'ygo', src: 'content/ygo-duelpower.gif', title: 'Duel Power', sub: 'Collector boxes & sealed product', pos: 'center' },
-  { game: 'ygo', src: 'content/ygo-locals.webp', title: 'Locals night', sub: 'Find a Yu-Gi-Oh! event near you', pos: 'center', action: 'shopfinder' },
+  { game: ‘ygo’, set: ‘ann25’, src: ‘content/ygo-gods.webp’, title: ‘The Egyptian Gods’, sub: ‘Ra, Slifer & Obelisk — vintage holos’, pos: ‘center’ },
+  { game: ‘ygo’, set: ‘lob’, src: ‘content/ygo-meta.jpg’, title: ‘Today’s meta’, sub: ‘Tournament staples & new releases’, pos: ‘center’ },
+  { game: ‘ygo’, set: ‘ra02’, src: ‘content/ygo-duelpower.gif’, title: ‘Duel Power’, sub: ‘Collector boxes & sealed product’, pos: ‘center’ },
+  { game: ‘ygo’, src: ‘content/ygo-locals.webp’, title: ‘Locals night’, sub: ‘Find a Yu-Gi-Oh! event near you’, pos: ‘center’, action: ‘shopfinder’ },
   // Magic: The Gathering
-  { game: 'mtg', src: 'content/mtg-brand.webp', title: 'Magic: The Gathering', sub: 'Singles, sealed & graded — all eras', pos: 'center' },
-  { game: 'mtg', src: 'content/mtg-mh3.webp', title: 'Modern Horizons 3', sub: 'Preorder Commander decks now', pos: 'center' },
-  { game: 'mtg', src: 'content/mtg-packs.jpeg', title: 'Endless possibilities', sub: 'Every pack, 15 cards — open a world', pos: 'center 22%' },
-  { game: 'mtg', src: 'content/mtg-locals.png', title: 'Locals night', sub: 'Find a Magic event near you', pos: 'center', action: 'shopfinder' },
+  { game: ‘mtg’, set: ‘mh3’, src: ‘content/mtg-brand.webp’, title: ‘Magic: The Gathering’, sub: ‘Singles, sealed & graded — all eras’, pos: ‘center’ },
+  { game: ‘mtg’, set: ‘mh3’, src: ‘content/mtg-mh3.webp’, title: ‘Modern Horizons 3’, sub: ‘Preorder Commander decks now’, pos: ‘center’ },
+  { game: ‘mtg’, set: ‘lea’, src: ‘content/mtg-packs.jpeg’, title: ‘Endless possibilities’, sub: ‘Every pack, 15 cards — open a world’, pos: ‘center 22%’ },
+  { game: ‘mtg’, src: ‘content/mtg-locals.png’, title: ‘Locals night’, sub: ‘Find a Magic event near you’, pos: ‘center’, action: ‘shopfinder’ },
 ];
 
 function FeaturedRail({ app, game, onPick }) {
@@ -450,7 +450,7 @@ function FeaturedRail({ app, game, onPick }) {
         {cards.map((c, n) => {
           const g = gameById(c.game);
           return (
-            <button key={n} onClick={() => c.action ? app.nav.push(c.action) : app.nav.setTab('search')} style={{ flexShrink: 0, width: 244, textAlign: 'left',
+            <button key={n} onClick={() => c.action ? app.nav.push(c.action) : app.nav.push('search', { set: c.set, game: c.game })} style={{ flexShrink: 0, width: 244, textAlign: 'left',
               background: T.surface, borderRadius: 4, overflow: 'hidden', position: 'relative', height: 210, display: 'block',
               boxShadow: '0 1px 3px rgba(20,24,40,0.05), 0 6px 16px rgba(20,24,40,0.06)' }}>
               <img src={c.src} alt={c.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: c.pos || 'center', display: 'block' }} />

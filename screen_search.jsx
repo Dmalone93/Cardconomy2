@@ -183,10 +183,30 @@ function SearchScreen({ app, params = {} }) {
             </div>
           </div>
 
+          {/* set header */}
+          {setF !== 'all' && setByIdS(setF) && (() => {
+            const setInfo = setByIdS(setF);
+            const gameInfo = gameByIdS(setInfo.game);
+            return (
+              <div style={{ margin: '0 16px 12px', padding: '14px 16px', background: setInfo.hue || 'var(--fill)', borderRadius: 4, color: '#fff', position: 'relative', overflow: 'hidden' }}>
+                {setInfo.img && <img src={setInfo.img} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} />}
+                <div style={{ position: 'relative' }}>
+                  {gameInfo && <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 10, opacity: 0.8, letterSpacing: 0.4, marginBottom: 4 }}>{gameInfo.short.toUpperCase()}</div>}
+                  <div style={{ fontFamily: TS.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>{setInfo.name.replace(/\s*\(.*\)/, '')}</div>
+                  <div style={{ display: 'flex', gap: 12, marginTop: 6, fontFamily: TS.sans, fontSize: 12, opacity: 0.85 }}>
+                    <span>{setInfo.cards} cards</span>
+                    <span>Released {setInfo.year}</span>
+                  </div>
+                  <button onClick={() => { setSetF('all'); }} style={{ position: 'absolute', top: 0, right: 0, color: 'rgba(255,255,255,0.7)', fontFamily: TS.sans, fontWeight: 700, fontSize: 18, background: 'none', padding: '0 2px', lineHeight: 1 }}>×</button>
+                </div>
+              </div>
+            );
+          })()}
+
           {/* result meta */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '2px 16px 10px' }}>
             <span style={{ fontFamily: TS.sans, fontSize: 13, color: TS.muted }}>
-              <b style={{ color: TS.ink }}>{totalResults}</b> result{totalResults!==1?'s':''}{setF!=='all' ? ' in ' + setByIdS(setF).name.replace(/\s*\(.*\)/,'') : ''}
+              <b style={{ color: TS.ink }}>{totalResults}</b> result{totalResults!==1?'s':''}{setF!=='all' && setByIdS(setF) ? ' in ' + setByIdS(setF).name.replace(/\s*\(.*\)/,'') : ''}
             </span>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
               <button onClick={() => setSheet('sort')} style={{ fontFamily: TS.sans, fontSize: 13, fontWeight: 600, color: TS.accent, padding: '4px 6px' }}>{sort} ▾</button>
