@@ -118,11 +118,8 @@ function TradeOfferCard({ trade, isFirst, onPropose }) {
       {/* wants in return */}
       <div style={{ fontFamily: TP.sans, fontSize: 10, color: TP.muted, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.3, marginBottom: 8 }}>Wants in return</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#faf5ff', borderRadius: 4, padding: 10 }}>
-        <div style={{
-          flexShrink: 0, width: 36, height: 50, background: trade.wantCard.art || '#334155', borderRadius: 3,
-          position: 'relative', overflow: 'hidden',
-        }}>
-          <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.1) 0 4px, transparent 4px 8px)' }} />
+        <div style={{ flexShrink: 0 }}>
+          <CardArtP item={trade.wantCard} w={36} radius={3} />
         </div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 13, color: TP.ink }}>{trade.wantCard.name}</div>
