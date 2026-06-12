@@ -31,7 +31,7 @@ function WatchScreen({ app }) {
           <h1 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 800, fontSize: 26, letterSpacing: -0.6 }}>Your cards</h1>
         </div>
         <p style={{ fontFamily: TW.sans, fontSize: 14.5, color: TW.muted, margin: '0 0 14px', lineHeight: 1.45 }}>
-          Track prices on cards you're watching and the value of your collection.
+          Track prices on cards you\'re watching and the value of your collection.
         </p>
         <div style={{ display: 'flex', gap: 22 }}>
           {[['watch', 'Watching ' + watched.length], ['collection', 'Collection']].map(([id, label]) => (
@@ -419,7 +419,7 @@ function CollectionDetailScreen({ app, params }) {
 // ── sheet: add cards to a collection ─────────────────────────
 function AddCardsSheet({ app, col, onClose }) {
   if (!window.Sheet) return null;
-  // candidates: everything except what's already in this collection
+  // candidates: everything except what\'s already in this collection
   const candidates = LISTINGS_W.filter(l => !col.cards.includes(l.id));
   return (
     <window.Sheet open={true} onClose={onClose} title={'Add to ' + col.name}>

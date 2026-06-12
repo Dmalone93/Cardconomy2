@@ -87,7 +87,7 @@ function SellHubScreen({ app }) {
           <span style={{ width: 30, height: 30, borderRadius: 9, background: SHOP_H.tint, color: '#fff', display: 'flex',
             alignItems: 'center', justifyContent: 'center', fontFamily: TH.sans, fontWeight: 800, fontSize: 14, flexShrink: 0 }}>{SHOP_H.initial}</span>
           <span style={{ flex: 1, fontFamily: TH.sans, fontSize: 12.5, color: TH.muted }}>
-            <b style={{ color: TH.ink2 }}>Demo:</b> peek at the shop's counter view
+            <b style={{ color: TH.ink2 }}>Demo:</b> peek at the shop\'s counter view
           </span>
           {IconH.chevron({ style: { color: TH.faint } })}
         </button>

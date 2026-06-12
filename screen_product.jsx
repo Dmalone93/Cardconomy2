@@ -220,7 +220,7 @@ function ProductScreen({ app, params }) {
           <span style={{ fontSize: 18, flexShrink: 0, color: 'var(--accent)' }}>{IconP.shield ? IconP.shield({ width: 20, height: 20 }) : '🛡️'}</span>
           <div>
             <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 13 }}>Buyer Protection</div>
-            <div style={{ fontFamily: TP.sans, fontSize: 12, color: TP.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn't match the listing, get a full refund.</div>
+            <div style={{ fontFamily: TP.sans, fontSize: 12, color: TP.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn\'t match the listing, get a full refund.</div>
           </div>
         </div>
 

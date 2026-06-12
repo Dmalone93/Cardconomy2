@@ -13,7 +13,7 @@ function DSell({ app }) {
     { k: 'single', tint: 'var(--accent)', icon: IconSl.tag, title: 'List a single card', meta: 'Buy It Now or auction', desc: 'Search the catalog, set condition, add photos and price one card with full control.', go: () => app.go('sell_single') },
     { k: 'bulk', tint: 'var(--gold)', icon: IconSl.bolt, title: 'Bulk list a stack', meta: 'Upload · auto-priced', desc: 'Drop a CSV or photos of many cards. We auto-price each at market — review and publish them all at once.', go: () => app.go('sell_bulk') },
     { k: 'shop', tint: '#2f8f5b', icon: IconSl.shield, title: 'Sell to a local shop', meta: 'In-person · cash or credit', desc: 'Got hundreds of cards? Start a submission and finish at the counter. Best on your phone.', go: () => app.toast('Continue on the Cardonomy app →') },
-    { k: 'trade', tint: '#7c3aed', icon: IconSl.gavel, title: 'Trade with collectors', meta: 'Card-for-card', desc: 'Swap directly with nearby collectors and meet at a local shop. Available in the app.', go: () => app.toast('Continue on the Cardonomy app →') },
+    { k: 'trade', tint: '#7c3aed', icon: IconSl.gavel, title: 'Trade with collectors\', meta: 'Card-for-card', desc: 'Swap directly with nearby collectors and meet at a local shop. Available in the app.', go: () => app.toast('Continue on the Cardonomy app →') },
   ];
   return (
     <div className="wrap" style={{ padding: '36px 24px 30px' }}>
@@ -61,7 +61,7 @@ function DSellSingle({ app }) {
     <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
       <div style={{ width: 88, height: 88, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'dPop 0.4s ease' }}>{IconSl.check({ width: 46, height: 46 })}</div>
       <h1 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 30, margin: '20px 0 6px' }}>Your card is live!</h1>
-      <p style={{ color: 'var(--muted)', fontSize: 16, maxWidth: 400, margin: '0 auto 8px' }}>{card.name} is listed for {mSl(+price)}. We'll notify you on every offer and sale.</p>
+      <p style={{ color: 'var(--muted)', fontSize: 16, maxWidth: 400, margin: '0 auto 8px' }}>{card.name} is listed for {mSl(+price)}. We\'ll notify you on every offer and sale.</p>
       <div style={{ margin: '20px auto', display: 'inline-block', background: 'var(--surface)', borderRadius: 14, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}><CardArtSl item={{ ...card, grade: gradeObj }} w={120} /></div>
       <div><button onClick={() => app.go('home')} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Back to browse</button></div>
     </div>
@@ -233,7 +233,7 @@ function DSellBulk({ app }) {
 
       {phase === 'upload' && (
         <div>
-          <p style={{ color: 'var(--muted)', fontSize: 15.5, margin: '0 0 24px', maxWidth: 600 }}>Upload a collection export (CSV from Manabox, TCGplayer, Dragon Shield) or drop photos of your cards. We'll identify each one and price it at market.</p>
+          <p style={{ color: 'var(--muted)', fontSize: 15.5, margin: '0 0 24px', maxWidth: 600 }}>Upload a collection export (CSV from Manabox, TCGplayer, Dragon Shield) or drop photos of your cards. We\'ll identify each one and price it at market.</p>
           <div onDragOver={e => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)} onDrop={e => { e.preventDefault(); setDragOver(false); setPhase('review'); }} onClick={() => setPhase('review')}
             style={{ border: '2.5px dashed ' + (dragOver ? 'var(--accent)' : 'var(--line)'), background: dragOver ? 'var(--accent-wash)' : 'var(--surface)', borderRadius: 18, padding: '56px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.15s' }}>
             <div style={{ width: 60, height: 60, margin: '0 auto 16px', borderRadius: 16, background: 'var(--accent-wash)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

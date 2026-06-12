@@ -227,7 +227,7 @@ function Step2({ form, set }) {
   return (
     <div>
       <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Verify your business</h2>
-      <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>We verify within 2 business days. Your shop won't appear publicly until verified.</p>
+      <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>We verify within 2 business days. Your shop won\'t appear publicly until verified.</p>
       <WizardField label="Owner full name" value={form.ownerName} onChange={v => set('ownerName', v)} placeholder="Sara Johnson" />
       <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink2, marginBottom: 10 }}>Your role</div>
       <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
@@ -860,7 +860,7 @@ function EnrollShopScreen({ app }) {
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TF.bg, alignItems: 'center', justifyContent: 'center', padding: 32, textAlign: 'center' }}>
         <div style={{ width: 84, height: 84, borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconF.check({ width: 44, height: 44 })}</div>
         <h1 style={{ margin: '20px 0 6px', fontFamily: TF.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.5 }}>Your application is in review</h1>
-        <p style={{ fontFamily: TF.sans, fontSize: 14.5, color: TF.muted, lineHeight: 1.5, maxWidth: 290 }}>We'll verify your shop within 2 business days and send your QR intake kit.</p>
+        <p style={{ fontFamily: TF.sans, fontSize: 14.5, color: TF.muted, lineHeight: 1.5, maxWidth: 290 }}>We\'ll verify your shop within 2 business days and send your QR intake kit.</p>
 
         {/* summary card */}
         <div style={{ background: TF.surface, borderRadius: 4, padding: 16, marginTop: 20, width: '100%', maxWidth: 300, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -924,7 +924,7 @@ function EnrollShopScreen({ app }) {
         {step === 4 && !form.buylistSkipped && (
           <button onClick={() => { set('buylistSkipped', true); setStep(5); }}
             style={{ width: '100%', marginTop: 8, color: TF.muted, fontFamily: TF.sans, fontWeight: 600, fontSize: 14, padding: 8, background: 'none' }}>
-            I'll set this up later
+            I\'ll set this up later
           </button>
         )}
       </div>

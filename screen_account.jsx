@@ -125,7 +125,7 @@ function BuylistScreen({ app }) {
         <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 14px', marginBottom: 14 }}>
           <span style={{ color: TAC.accent, marginTop: 1 }}>{AIcon.star({ width: 18, height: 18 }, true)}</span>
           <span style={{ fontFamily: TAC.sans, fontSize: 12.5, color: TAC.ink2, lineHeight: 1.45 }}>
-            Set the cards you're after and the max you'll pay. We alert you when a match is listed — and shops use it to price your trade-ins instantly.
+            Set the cards you\'re after and the max you\'ll pay. We alert you when a match is listed — and shops use it to price your trade-ins instantly.
           </span>
         </div>
 
@@ -141,7 +141,7 @@ function BuylistScreen({ app }) {
           </div>
         </div>
 
-        {entries.length === 0 ? emptyBlock(AIcon.star({ width: 30, height: 30 }), 'No cards yet', 'Tap + to add cards you want to buy and the price you'll pay.') : (
+        {entries.length === 0 ? emptyBlock(AIcon.star({ width: 30, height: 30 }), 'No cards yet', 'Tap + to add cards you want to buy and the price you\'ll pay.') : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {entries.map(e => {
               const isMatch = e.active && e.card.price <= e.max;

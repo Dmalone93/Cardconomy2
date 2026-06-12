@@ -172,7 +172,7 @@ function DHome({ app }) {
       {/* trust band */}
       <section className="wrap" style={{ marginTop: 50 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {[[IconH.shield, 'Buyer Protection', 'Full refund if an item never arrives or isn't as described.'],
+          {[[IconH.shield, 'Buyer Protection', 'Full refund if an item never arrives or isn\'t as described.'],
             [IconH.bolt, 'Verified sellers', 'Every shop and top seller is vetted, with transparent ratings.'],
             [IconH.tag, 'Real market pricing', 'Live price history and sold comps on every card.']].map(([ic, h, b], i) => (
             <div key={i} style={{ display: 'flex', gap: 14, background: 'var(--surface)', borderRadius: 16, padding: 22, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>

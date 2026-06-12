@@ -8,8 +8,8 @@
 //
 // Owns the host protocol (listens for __activate_edit_mode / __deactivate_edit_mode,
 // posts __edit_mode_available / __edit_mode_set_keys / __edit_mode_dismissed) so
-// individual prototypes don't re-roll it. Ships a consistent set of controls so you
-// don't hand-draw <input type="range">, segmented radios, steppers, etc.
+// individual prototypes don\'t re-roll it. Ships a consistent set of controls so you
+// don\'t hand-draw <input type="range">, segmented radios, steppers, etc.
 //
 // Usage (in an HTML file that loads React + Babel):
 //
@@ -53,7 +53,7 @@
 // options are many or long. For color tweaks always curate 3-4 options rather than
 // a free picker; an option can also be a whole 2–5 color palette (the stored value
 // is the array). The Tweak* controls are a floor, not a ceiling — build custom
-// controls inside the panel if a tweak calls for UI they don't cover.
+// controls inside the panel if a tweak calls for UI they don\'t cover.
 /* END USAGE */
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -173,7 +173,7 @@ const __TWEAKS_STYLE = `
 function useTweaks(defaults) {
   const [values, setValues] = React.useState(defaults);
   // Accepts either setTweak('key', value) or setTweak({ key: value, ... }) so a
-  // useState-style call doesn't write a "[object Object]" key into the persisted
+  // useState-style call doesn\'t write a "[object Object]" key into the persisted
   // JSON block.
   const setTweak = React.useCallback((keyOrEdits, val) => {
     const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
@@ -333,7 +333,7 @@ function TweakRadio({ label, value, options, onChange }) {
   const trackRef = React.useRef(null);
   const [dragging, setDragging] = React.useState(false);
   // The active value is read by pointer-move handlers attached for the lifetime
-  // of a drag — ref it so a stale closure doesn't fire onChange for every move.
+  // of a drag — ref it so a stale closure doesn\'t fire onChange for every move.
   const valueRef = React.useRef(value);
   valueRef.current = value;
 

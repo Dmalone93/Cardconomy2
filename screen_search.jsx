@@ -65,7 +65,7 @@ function SearchScreen({ app, params = {} }) {
 
   // listing results (graded slabs — exclude raw buy-now since those are products now)
   let listingResults = (cond === 'Raw / Ungraded') ? [] : LISTINGS_S.filter(l => {
-    // Exclude raw buy-now listings (they're products now)
+    // Exclude raw buy-now listings (they\'re products now)
     if (l.grade && l.grade.company === 'raw' && l.type === 'buynow') return false;
     if (game !== 'all' && l.game !== game) return false;
     if (setF !== 'all' && l.set !== setF) return false;

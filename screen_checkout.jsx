@@ -138,7 +138,7 @@ function CheckoutScreen({ app, params }) {
         <div style={{ marginTop: 16, display: 'flex', gap: 11, alignItems: 'flex-start', background: 'var(--up-wash)', borderRadius: 4, padding: '13px 14px' }}>
           <span style={{ color: TC.up, marginTop: 1 }}>{IconC.shield({})}</span>
           <div style={{ fontFamily: TC.sans, fontSize: 12.5, color: TC.ink2, lineHeight: 1.45 }}>
-            <b>Buyer Protection included.</b> Full refund if your card doesn't arrive or isn't as described. Graded slabs are authenticity-verified.
+            <b>Buyer Protection included.</b> Full refund if your card doesn\'t arrive or isn\'t as described. Graded slabs are authenticity-verified.
           </div>
         </div>
 

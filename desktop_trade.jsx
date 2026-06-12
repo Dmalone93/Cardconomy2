@@ -86,7 +86,7 @@ function DTrade({ app }) {
       {tab === 'post' && (
         <div style={{ maxWidth: 560, background: 'var(--surface)', borderRadius: 16, padding: 24, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
           <div style={{ fontWeight: 800, fontSize: 18, marginBottom: 6 }}>Post a card, stay open to offers</div>
-          <p style={{ color: 'var(--muted)', fontSize: 14, margin: '0 0 18px', lineHeight: 1.5 }}>List a card you'll part with and set the criteria you'd accept. Collectors propose; you decide.</p>
+          <p style={{ color: 'var(--muted)', fontSize: 14, margin: '0 0 18px', lineHeight: 1.5 }}>List a card you\'ll part with and set the criteria you\'d accept. Collectors propose; you decide.</p>
           <div style={{ fontWeight: 700, fontSize: 13.5, marginBottom: 10 }}>Pick a card to offer</div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 18 }}>
             {OWNED_D.map(id => byIdTr(id) && <div key={id} style={{ background: 'var(--surface-2)', borderRadius: 9, padding: 7 }}><CardArtTr item={byIdTr(id)} w={56} /></div>)}

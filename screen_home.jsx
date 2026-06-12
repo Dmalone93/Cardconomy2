@@ -354,9 +354,9 @@ function HomeScreen({ app }) {
         </div>
       )}
 
-      {/* collector's corner — help & education */}
+      {/* collector\'s corner — help & education */}
       <div style={{ paddingTop: 20 }}>
-        <SectionHeader title="Collector's corner" />
+        <SectionHeader title="Collector\'s corner" />
         <div style={{ padding: '0 16px', marginTop: -2, marginBottom: 12 }}>
           <div style={{ fontFamily: T.sans, fontSize: 13, color: T.muted, lineHeight: 1.45 }}>New to collecting, or want to protect what you own? Start here.</div>
         </div>
@@ -471,7 +471,7 @@ function FeaturedRail({ app, game, onPick }) {
   );
 }
 
-// guide tiles for Collector's corner
+// guide tiles for Collector\'s corner
 const GUIDES = [
   { id: 'grading', src: 'ads/learn-grading.jpg', tag: 'GUIDE', title: 'How grading works', desc: 'PSA, BGS & CGC scales explained — what each grade means for value.', cta: 'Learn grading',
     body: 'Card grading is the process of having a professional service evaluate your card\'s condition and seal it in a tamper-proof case (a "slab") with a grade.\n\nThe three main grading companies are PSA (Professional Sports Authenticator), BGS (Beckett Grading Services), and CGC (Certified Guaranty Company).\n\n**PSA Scale (1–10):**\nPSA uses a whole-number scale. A PSA 10 "Gem Mint" is the highest grade — sharp corners, perfect centering, no surface flaws. PSA 9 "Mint" allows very minor imperfections. Most raw NM cards grade between PSA 7 and PSA 9.\n\n**BGS Scale (1–10 with subgrades):**\nBGS provides four subgrades: Centering, Corners, Edges, and Surface. A BGS 9.5 "Gem Mint" is considered equivalent to a PSA 10. A perfect BGS 10 "Pristine" (also called a "Black Label" when all four subgrades are 10) is extremely rare and commands massive premiums.\n\n**CGC Scale (1–10):**\nCGC is newer to the hobby but growing fast. They offer subgrades similar to BGS and are generally more affordable. A CGC 9.5 is roughly comparable to a PSA 10.\n\n**Why grade?**\nGrading adds value, protects the card, and provides a universal condition standard. A raw Near Mint Charizard might sell for £300, but a PSA 10 of the same card could fetch £1,200+. However, grading costs £15–50 per card and takes weeks, so it only makes sense for higher-value cards.' },

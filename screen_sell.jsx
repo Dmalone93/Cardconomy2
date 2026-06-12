@@ -57,7 +57,7 @@ function SellScreen({ app }) {
           alignItems: 'center', justifyContent: 'center', marginBottom: 20, animation: 'ccPop 0.4s ease' }}>{IconSE.check({ width: 44, height: 44 })}</div>
         <h2 style={{ margin: 0, fontFamily: TSE.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.5 }}>Your card is live!</h2>
         <p style={{ fontFamily: TSE.sans, fontSize: 14.5, color: TSE.muted, lineHeight: 1.5, marginTop: 10, maxWidth: 280 }}>
-          {card.name} is now listed for {moneySE(+price)}. We'll notify you when it sells or gets an offer.
+          {card.name} is now listed for {moneySE(+price)}. We\'ll notify you when it sells or gets an offer.
         </p>
         <div style={{ marginTop: 20 }}><CardArtSE item={{ ...card, grade: gradeObj }} w={110} /></div>
         <button onClick={reset} style={{ marginTop: 26, background: TSE.accent, color: '#fff', borderRadius: 4, padding: '14px 28px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 16 }}>List another card</button>
