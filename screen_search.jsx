@@ -3,7 +3,8 @@
 // ─────────────────────────────────────────────────────────────
 const { T: TS, money: moneyS, Chip: ChipS, Icon: IconS, Sheet: SheetS } = window;
 const { ListRow: ListRowS, ListCard: ListCardS } = window;
-const { GAMES: GAMES_S, SETS: SETS_S, LISTINGS: LISTINGS_S, gameById: gameByIdS, setById: setByIdS } = window;
+const { GAMES: GAMES_S, SETS: SETS_S, LISTINGS: LISTINGS_S, PRODUCTS: PRODUCTS_S, gameById: gameByIdS, setById: setByIdS } = window;
+const { ProductCard: ProductCardS } = window;
 
 const CONDITIONS = ['Any grade', 'Graded only', 'PSA 10', 'Raw / Ungraded'];
 const SORTS = ['Best match', 'Price: low to high', 'Price: high to low', 'Ending soonest'];
@@ -48,8 +49,23 @@ function SearchScreen({ app, params = {} }) {
   const [sheet, setSheet] = React.useState(null); // 'filters' | 'sort'
   const [focused, setFocused] = React.useState(false);
 
-  // results
-  let res = LISTINGS_S.filter(l => {
+  // product results (raw cards grouped)
+  const productResults = (listType === 'auction' || cond === 'Graded only' || cond === 'PSA 10') ? [] : PRODUCTS_S.filter(p => {
+    if (game !== 'all' && p.game !== game) return false;
+    if (setF !== 'all' && p.set !== setF) return false;
+    if (q.trim()) {
+      const qLow = q.trim().toLowerCase();
+      if (!p.name.toLowerCase().includes(qLow) && !(p.subtitle || '').toLowerCase().includes(qLow)) return false;
+    }
+    if (p.price > maxPrice) return false;
+    if (freeShip && !(p.shipping === 0)) return false;
+    return true;
+  });
+
+  // listing results (graded slabs + auctions — exclude raw buy-now since those are products now)
+  let listingResults = (cond === 'Raw / Ungraded' && listType !== 'auction') ? [] : LISTINGS_S.filter(l => {
+    // Exclude raw buy-now listings (they're products now)
+    if (l.grade && l.grade.company === 'raw' && l.type === 'buynow') return false;
     if (game !== 'all' && l.game !== game) return false;
     if (setF !== 'all' && l.set !== setF) return false;
     if (q.trim()) {
@@ -64,9 +80,11 @@ function SearchScreen({ app, params = {} }) {
     if (listType !== 'all' && l.type !== listType) return false;
     return true;
   });
-  if (sort === 'Price: low to high') res = [...res].sort((a,b)=>a.price-b.price);
-  if (sort === 'Price: high to low') res = [...res].sort((a,b)=>b.price-a.price);
-  if (sort === 'Ending soonest') res = [...res].sort((a,b)=>(a.type==='auction'?0:1)-(b.type==='auction'?0:1));
+  if (sort === 'Price: low to high') listingResults = [...listingResults].sort((a,b)=>a.price-b.price);
+  if (sort === 'Price: high to low') listingResults = [...listingResults].sort((a,b)=>b.price-a.price);
+  if (sort === 'Ending soonest') listingResults = [...listingResults].sort((a,b)=>(a.type==='auction'?0:1)-(b.type==='auction'?0:1));
+
+  const totalResults = productResults.length + listingResults.length;
 
   const activeFilters = [game !== 'all', setF !== 'all', cond !== 'Any grade', freeShip, listType !== 'all', maxPrice < 35000].filter(Boolean).length;
   const popular = ['Charizard ex', 'Moonbreon', 'Black Lotus', 'Blue-Eyes', '151', 'PSA 10'];
@@ -136,7 +154,7 @@ function SearchScreen({ app, params = {} }) {
           {/* result meta */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '2px 16px 10px' }}>
             <span style={{ fontFamily: TS.sans, fontSize: 13, color: TS.muted }}>
-              <b style={{ color: TS.ink }}>{res.length}</b> result{res.length!==1?'s':''}{setF!=='all' ? ' in ' + setByIdS(setF).name.replace(/\s*\(.*\)/,'') : ''}
+              <b style={{ color: TS.ink }}>{totalResults}</b> result{totalResults!==1?'s':''}{setF!=='all' ? ' in ' + setByIdS(setF).name.replace(/\s*\(.*\)/,'') : ''}
             </span>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
               <button onClick={() => setSheet('sort')} style={{ fontFamily: TS.sans, fontSize: 13, fontWeight: 600, color: TS.accent, padding: '4px 6px' }}>{sort} ▾</button>
@@ -148,7 +166,7 @@ function SearchScreen({ app, params = {} }) {
 
           {/* results */}
           <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
-            {res.length === 0 ? (
+            {totalResults === 0 ? (
               <div style={{ textAlign: 'center', padding: '60px 20px', color: TS.muted, fontFamily: TS.sans }}>
                 <div style={{ fontSize: 40, marginBottom: 8 }}>🔍</div>
                 <div style={{ fontWeight: 700, fontSize: 16, color: TS.ink }}>No cards match</div>
@@ -156,11 +174,13 @@ function SearchScreen({ app, params = {} }) {
               </div>
             ) : view === 'grid' ? (
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                {res.map(l => <ListCardS key={l.id} item={l} app={app} />)}
+                {productResults.map(p => <ProductCardS key={'p-'+p.id} product={p} app={app} />)}
+                {listingResults.map(l => <ListCardS key={l.id} item={l} app={app} />)}
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-                {res.map(l => <ListRowS key={l.id} item={l} app={app} />)}
+                {productResults.map(p => <ProductCardS key={'p-'+p.id} product={p} app={app} />)}
+                {listingResults.map(l => <ListRowS key={l.id} item={l} app={app} />)}
               </div>
             )}
           </div>
@@ -209,7 +229,7 @@ function SearchScreen({ app, params = {} }) {
         <button onClick={() => setSheet(null)} style={{
           width: '100%', marginTop: 14, background: TS.accent, color: '#fff', borderRadius: 14,
           padding: 15, fontFamily: TS.sans, fontWeight: 700, fontSize: 16 }}>
-          Show {res.length} result{res.length!==1?'s':''}
+          Show {totalResults} result{totalResults!==1?'s':''}
         </button>
         <button onClick={() => { setGame('all'); setSetF('all'); setCond('Any grade'); setMaxPrice(35000); setFreeShip(false); setListType('all'); }}
           style={{ width: '100%', marginTop: 8, color: TS.muted, fontFamily: TS.sans, fontWeight: 600, fontSize: 14, padding: 8 }}>Reset all</button>
