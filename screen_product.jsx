@@ -42,7 +42,7 @@ function OfferCard({ offer, onBuy, onOffer, isLowest, onViewSeller }) {
           fontFamily: TP.sans, fontWeight: 700, fontSize: 12, flexShrink: 0,
         }}>{offer.seller.charAt(0)}</div>
         <div style={{ flex: 1 }}>
-          <button onClick={onViewSeller} style={{ fontFamily: TP.sans, fontWeight: 600, color: 'var(--accent)', background: 'none', padding: 0, textDecoration: 'underline' }}>{offer.seller}</button>
+          <button onClick={onViewSeller} style={{ fontFamily: TP.sans, fontWeight: 600, color: '#2563eb', background: 'none', padding: 0, textDecoration: 'underline' }}>{offer.seller}</button>
           {offer.sellerRating >= 99 && (
             <span style={{ marginLeft: 5, background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 4,
               fontFamily: TP.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>
@@ -85,7 +85,7 @@ function OfferCard({ offer, onBuy, onOffer, isLowest, onViewSeller }) {
       )}
       {onViewSeller && (
         <button onClick={onViewSeller} style={{
-          marginTop: 8, color: 'var(--accent)', fontFamily: TP.sans, fontWeight: 600, fontSize: 11,
+          marginTop: 8, color: '#2563eb', fontFamily: TP.sans, fontWeight: 600, fontSize: 11,
           background: 'none', padding: 0, display: 'flex', alignItems: 'center', gap: 3,
         }}>View all {listingsBySellerP(offer.seller).length} listings from this seller →</button>
       )}
