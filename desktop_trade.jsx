@@ -52,7 +52,7 @@ function DTrade({ app }) {
                   {!p.open && p.wants && p.wants.map(id => byIdTr(id) && <span key={id} style={{ fontWeight: 600, fontSize: 11.5, color: 'var(--accent)', background: 'var(--accent-wash)', borderRadius: 7, padding: '3px 9px' }}>{byIdTr(id).name}</span>)}
                   {chips.map((c, i) => <span key={i} style={{ fontWeight: 600, fontSize: 11.5, color: 'var(--ink-2)', background: 'var(--surface-2)', borderRadius: 7, padding: '3px 9px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>{c}</span>)}
                 </div>
-                <div style={{ fontSize: 12.5, color: 'var(--ink-2)', fontStyle: 'italic', marginBottom: 13, lineHeight: 1.4 }}>“{p.note}”</div>
+                <div style={{ fontSize: 12.5, color: 'var(--ink-2)', fontStyle: 'italic', marginBottom: 13, lineHeight: 1.4 }}>"{p.note}"</div>
                 <button onClick={() => app.toast('Offer builder — continue in the app')} style={{ width: '100%', background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: 12, fontWeight: 700, fontSize: 14 }}>Make an offer</button>
               </div>
             );

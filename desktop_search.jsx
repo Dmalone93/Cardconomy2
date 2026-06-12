@@ -58,7 +58,7 @@ function DSearch({ app, params = {} }) {
   if (sort === 'Ending soonest') res = [...res].sort((a, b) => (a.type === 'auction' ? 0 : 1) - (b.type === 'auction' ? 0 : 1));
   if (sort === 'Biggest discount') res = [...res].sort((a, b) => (a.price / a.market) - (b.price / b.market));
 
-  const title = q ? '“' + q + '”' : setF !== 'all' ? setByIdSS(setF).name : game !== 'all' ? (GAMESS.find(g => g.id === game)?.name || 'All cards') : 'All cards';
+  const title = q ? '"' + q + '"' : setF !== 'all' ? setByIdSS(setF).name : game !== 'all' ? (GAMESS.find(g => g.id === game)?.name || 'All cards') : 'All cards';
   const reset = () => { setGame('all'); setSetF('all'); setCond('Any grade'); setType('all'); setFreeShip(false); setMaxPrice(35000); };
 
   return (
