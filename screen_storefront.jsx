@@ -149,14 +149,14 @@ function Step1({ form, set }) {
       <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Your shop</h2>
       <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>Basic details so collectors can find you.</p>
       <WizardField label="Shop name" value={form.shopName} onChange={v => set('shopName', v)} placeholder="e.g. Gnome Games" />
-      <WizardField label="Street address" value={form.address} onChange={v => set('address', v)} placeholder="123 Main St" />
+      <WizardField label="Address line 1" value={form.address} onChange={v => set('address', v)} placeholder="12 High Street" />
       <div style={{ display: 'flex', gap: 10 }}>
-        <WizardField label="City" value={form.city} onChange={v => set('city', v)} placeholder="Madison" style={{ flex: 2 }} />
-        <WizardField label="State" value={form.state} onChange={v => set('state', v)} placeholder="WI" style={{ flex: 1 }} />
+        <WizardField label="City / Town" value={form.city} onChange={v => set('city', v)} placeholder="Manchester" style={{ flex: 2 }} />
+        <WizardField label="County" value={form.county} onChange={v => set('county', v)} placeholder="Greater Manchester" style={{ flex: 2 }} />
       </div>
       <div style={{ display: 'flex', gap: 10 }}>
-        <WizardField label="ZIP code" value={form.zip} onChange={v => set('zip', v)} placeholder="53703" style={{ flex: 1 }} />
-        <WizardField label="Phone" value={form.phone} onChange={v => set('phone', v)} placeholder="(608) 555-0123" type="tel" style={{ flex: 2 }} />
+        <WizardField label="Postcode" value={form.postcode} onChange={v => set('postcode', v)} placeholder="M1 2AB" style={{ flex: 1 }} />
+        <WizardField label="Phone" value={form.phone} onChange={v => set('phone', v)} placeholder="07700 900123" type="tel" style={{ flex: 2 }} />
       </div>
       <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink2, marginBottom: 10, marginTop: 6 }}>Opening hours</div>
       {DAYS.map(([key, label]) => (
@@ -221,6 +221,7 @@ function Step2({ form, set }) {
 // ── Step 3: Games You Buy ────────────────────────────────────
 function Step3({ form, set }) {
   const GAME_LIST = window.GAMES || [];
+  const LOGOS = window.GAME_LOGOS || {};
   const toggle = (id) => {
     const g = form.games.includes(id) ? form.games.filter(x => x !== id) : [...form.games, id];
     set('games', g);
@@ -232,17 +233,21 @@ function Step3({ form, set }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
         {GAME_LIST.map(g => {
           const on = form.games.includes(g.id);
+          const logo = LOGOS[g.id];
           return (
             <button key={g.id} onClick={() => toggle(g.id)} style={{
               padding: 16, borderRadius: 4, textAlign: 'center',
               background: on ? g.tint + '1a' : TF.surface,
               boxShadow: on ? '0 0 0 2px ' + g.tint : 'inset 0 0 0 1px var(--line)',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
+              position: 'relative',
             }}>
-              <span style={{ width: 32, height: 32, borderRadius: 999, background: g.tint, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {on && <span style={{ color: '#fff', fontWeight: 800, fontSize: 16 }}>✓</span>}
-              </span>
-              <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 14, color: on ? g.tint : TF.ink }}>{g.short}</span>
+              {on && <span style={{ position: 'absolute', top: 8, right: 8, width: 20, height: 20, borderRadius: 999, background: g.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800 }}>✓</span>}
+              {logo
+                ? <img src={logo} alt={g.name} style={{ height: 28, width: 'auto', maxWidth: 100, objectFit: 'contain', filter: on ? 'none' : 'saturate(0.5) opacity(0.6)' }} />
+                : <span style={{ width: 32, height: 32, borderRadius: 999, background: g.tint, display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
+              }
+              <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 13, color: on ? g.tint : TF.muted }}>{g.short}</span>
             </button>
           );
         })}
@@ -254,43 +259,139 @@ function Step3({ form, set }) {
 // ── Step 4: Buylist Setup ────────────────────────────────────
 function Step4({ form, set }) {
   const setRate = (key, val) => set('bulkRates', { ...form.bulkRates, [key]: val });
+  const LISTINGS_ALL = window.LISTINGS || [];
+  const [searchQ, setSearchQ] = React.useState('');
+  const [searchOpen, setSearchOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
+  const [buyPrice, setBuyPrice] = React.useState('');
+  const [buyCond, setBuyCond] = React.useState('NM');
+  const [buyQty, setBuyQty] = React.useState('1');
+
+  const searchResults = searchQ.trim().length >= 2
+    ? LISTINGS_ALL.filter(l => l.name.toLowerCase().includes(searchQ.trim().toLowerCase())).slice(0, 8)
+    : [];
+
+  const addCard = () => {
+    if (!selectedCard || !buyPrice) return;
+    set('wantedCards', [...form.wantedCards, {
+      name: selectedCard.name, subtitle: selectedCard.subtitle, game: selectedCard.game,
+      maxPrice: parseFloat(buyPrice), condition: buyCond, qty: parseInt(buyQty) || 1,
+    }]);
+    setSelectedCard(null); setBuyPrice(''); setBuyCond('NM'); setBuyQty('1'); setSearchQ(''); setSearchOpen(false);
+  };
+
+  const CONDS = ['NM', 'LP', 'MP', 'HP', 'Any'];
+  const condColors = { NM: '#16a34a', LP: '#d97706', MP: '#ea580c', HP: '#dc2626', Any: '#71757e' };
+
   return (
     <div>
       <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Buylist setup</h2>
-      <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>Set your standing bulk buy rates. Sellers see these when submitting cards.</p>
+      <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>Set your standing bulk buy rates and wanted singles. Sellers see these when submitting.</p>
+
       <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink2, marginBottom: 10 }}>Bulk rates (per 1,000 cards)</div>
       {[['cu', 'Commons / Uncommons'], ['rh', 'Rares / Holos'], ['fo', 'Foils (any)']].map(([key, label]) => (
         <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
           <span style={{ flex: 1, fontFamily: TF.sans, fontSize: 14, fontWeight: 500 }}>{label}</span>
           <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: TF.surface, borderRadius: 4, padding: '8px 12px', boxShadow: 'inset 0 0 0 1px var(--line)', width: 90 }}>
-            <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 15, color: TF.muted }}>$</span>
+            <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 15, color: TF.muted }}>£</span>
             <input value={form.bulkRates[key]} onChange={e => setRate(key, e.target.value)} type="number"
               style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TF.sans, fontWeight: 700, fontSize: 15, color: TF.ink, width: 40 }} />
           </div>
         </div>
       ))}
-      <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink2, marginTop: 20, marginBottom: 10 }}>Wanted singles</div>
-      <p style={{ fontFamily: TF.sans, fontSize: 13, color: TF.muted, margin: '0 0 12px' }}>Cards you always want to buy. Sellers with matches get highlighted.</p>
-      {form.wantedCards.length === 0 && (
-        <div style={{ padding: 20, textAlign: 'center', color: TF.faint, fontFamily: TF.sans, fontSize: 13, background: TF.surface, borderRadius: 4, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-          No wanted cards yet
+
+      <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink2, marginTop: 24, marginBottom: 6 }}>Wanted singles</div>
+      <p style={{ fontFamily: TF.sans, fontSize: 13, color: TF.muted, margin: '0 0 12px' }}>Search for cards you want to buy. Set your max price and minimum condition.</p>
+
+      {/* card search */}
+      <div style={{ position: 'relative', marginBottom: 12 }}>
+        <input value={searchQ} onChange={e => { setSearchQ(e.target.value); setSearchOpen(true); setSelectedCard(null); }}
+          onFocus={() => setSearchOpen(true)}
+          placeholder="Search cards — e.g. Charizard, Black Lotus..."
+          style={{ width: '100%', padding: '12px 14px', borderRadius: 4, border: 'none',
+            background: TF.surface, boxShadow: 'inset 0 0 0 1px var(--line)',
+            fontFamily: TF.sans, fontSize: 14, color: TF.ink, outline: 'none' }} />
+        {searchOpen && searchResults.length > 0 && (
+          <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, zIndex: 10, background: TF.surface, borderRadius: 4, boxShadow: '0 4px 20px rgba(0,0,0,0.15)', maxHeight: 240, overflow: 'auto', marginTop: 4 }}>
+            {searchResults.map(l => {
+              const g = gameByIdF(l.game);
+              return (
+                <button key={l.id} onClick={() => { setSelectedCard(l); setSearchQ(l.name); setSearchOpen(false); }}
+                  style={{ width: '100%', textAlign: 'left', padding: '10px 14px', display: 'flex', alignItems: 'center', gap: 10, background: 'transparent', borderBottom: '1px solid var(--line)' }}>
+                  <span style={{ width: 8, height: 8, borderRadius: 999, background: g ? g.tint : '#999', flexShrink: 0 }} />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
+                    <div style={{ fontFamily: TF.sans, fontSize: 11.5, color: TF.muted }}>{l.subtitle} · {g ? g.short : ''}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* selected card — set price, condition, qty */}
+      {selectedCard && (
+        <div style={{ background: TF.surface, borderRadius: 4, padding: 14, marginBottom: 12, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+          <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 14, marginBottom: 2 }}>{selectedCard.name}</div>
+          <div style={{ fontFamily: TF.sans, fontSize: 12, color: TF.muted, marginBottom: 12 }}>{selectedCard.subtitle}</div>
+          <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 12, color: TF.ink2, marginBottom: 4 }}>Max buy price</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: TF.bg, borderRadius: 4, padding: '8px 10px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+                <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 15, color: TF.muted }}>£</span>
+                <input value={buyPrice} onChange={e => setBuyPrice(e.target.value)} type="number" placeholder="0"
+                  style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TF.sans, fontWeight: 700, fontSize: 15, color: TF.ink, width: 50 }} />
+              </div>
+            </div>
+            <div style={{ width: 70 }}>
+              <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 12, color: TF.ink2, marginBottom: 4 }}>Qty</div>
+              <input value={buyQty} onChange={e => setBuyQty(e.target.value)} type="number"
+                style={{ width: '100%', padding: '8px 10px', borderRadius: 4, border: 'none', background: TF.bg, boxShadow: 'inset 0 0 0 1px var(--line)', fontFamily: TF.sans, fontWeight: 700, fontSize: 15, color: TF.ink, textAlign: 'center' }} />
+            </div>
+          </div>
+          <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 12, color: TF.ink2, marginBottom: 6 }}>Min. condition</div>
+          <div style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+            {CONDS.map(c => (
+              <button key={c} onClick={() => setBuyCond(c)} style={{
+                flex: 1, padding: '8px 0', borderRadius: 4, textAlign: 'center',
+                background: buyCond === c ? condColors[c] + '1a' : TF.bg,
+                boxShadow: buyCond === c ? '0 0 0 2px ' + condColors[c] : 'inset 0 0 0 1px var(--line)',
+                fontFamily: TF.sans, fontWeight: 700, fontSize: 12,
+                color: buyCond === c ? condColors[c] : TF.muted,
+              }}>{c}</button>
+            ))}
+          </div>
+          <button onClick={addCard} disabled={!buyPrice}
+            style={{ width: '100%', padding: 12, borderRadius: 4, fontFamily: TF.sans, fontWeight: 700, fontSize: 14,
+              background: buyPrice ? 'var(--fill)' : 'var(--line)', color: buyPrice ? '#fff' : TF.muted }}>
+            Add to buylist
+          </button>
         </div>
       )}
-      {form.wantedCards.map((c, i) => (
-        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, padding: '10px 12px', background: TF.surface, borderRadius: 4 }}>
-          <span style={{ flex: 1, fontFamily: TF.sans, fontWeight: 600, fontSize: 14 }}>{c.name}</span>
-          <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 14 }}>${c.maxPrice}</span>
-          <button onClick={() => set('wantedCards', form.wantedCards.filter((_, j) => j !== i))}
-            style={{ color: TF.faint, fontWeight: 700, fontSize: 18, background: 'none', padding: '0 4px' }}>×</button>
+
+      {/* wanted cards list */}
+      {form.wantedCards.length > 0 && (
+        <div style={{ marginTop: 8 }}>
+          <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 12, color: TF.faint, marginBottom: 8 }}>{form.wantedCards.length} card{form.wantedCards.length !== 1 ? 's' : ''} on buylist</div>
+          {form.wantedCards.map((c, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6, padding: '10px 12px', background: TF.surface, borderRadius: 4 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
+                <div style={{ fontFamily: TF.sans, fontSize: 11.5, color: TF.muted }}>{c.condition} · qty {c.qty}</div>
+              </div>
+              <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 14, flexShrink: 0 }}>£{c.maxPrice}</span>
+              <button onClick={() => set('wantedCards', form.wantedCards.filter((_, j) => j !== i))}
+                style={{ color: TF.faint, fontWeight: 700, fontSize: 18, background: 'none', padding: '0 4px' }}>×</button>
+            </div>
+          ))}
         </div>
-      ))}
-      <button onClick={() => {
-        const examples = [{ name: 'Charizard ex', maxPrice: 300 }, { name: 'Black Lotus', maxPrice: 20000 }, { name: 'Umbreon VMAX', maxPrice: 900 }];
-        const next = examples[form.wantedCards.length % examples.length];
-        set('wantedCards', [...form.wantedCards, next]);
-      }} style={{ marginTop: 10, fontFamily: TF.sans, fontWeight: 600, fontSize: 14, color: TF.accent, background: 'none', padding: 0 }}>
-        + Add a card
-      </button>
+      )}
+      {form.wantedCards.length === 0 && !selectedCard && (
+        <div style={{ padding: 20, textAlign: 'center', color: TF.faint, fontFamily: TF.sans, fontSize: 13, background: TF.surface, borderRadius: 4, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+          Search above to add cards to your buylist
+        </div>
+      )}
     </div>
   );
 }
@@ -315,9 +416,9 @@ function Step5({ form, set }) {
       </div>
       {form.payoutMethod === 'bank' && (
         <div>
-          <WizardField label="Account holder name" value={form.bankName} onChange={v => set('bankName', v)} placeholder="Gnome Games LLC" />
-          <WizardField label="Routing number" value={form.routing} onChange={v => set('routing', v)} placeholder="021000021" />
-          <WizardField label="Account number" value={form.account} onChange={v => set('account', v)} placeholder="•••••••1234" />
+          <WizardField label="Account holder name" value={form.bankName} onChange={v => set('bankName', v)} placeholder="Gnome Games Ltd" />
+          <WizardField label="Sort code" value={form.routing} onChange={v => set('routing', v)} placeholder="12-34-56" />
+          <WizardField label="Account number" value={form.account} onChange={v => set('account', v)} placeholder="12345678" />
         </div>
       )}
     </div>
@@ -398,7 +499,7 @@ function Step6({ form, set }) {
 function EnrollShopScreen({ app }) {
   const [step, setStep] = React.useState(0);
   const [form, setForm] = React.useState({
-    shopName: '', address: '', city: '', state: '', zip: '', phone: '',
+    shopName: '', address: '', city: '', county: '', postcode: '', phone: '',
     hours: {
       mon: { open: '10:00', close: '20:00', closed: false },
       tue: { open: '10:00', close: '20:00', closed: false },
@@ -422,7 +523,7 @@ function EnrollShopScreen({ app }) {
 
   // Step validation — determines if Continue is enabled
   const canContinue = () => {
-    if (step === 1) return form.shopName && form.address && form.city && form.state && form.zip && form.phone;
+    if (step === 1) return form.shopName && form.address && form.city && form.county && form.postcode && form.phone;
     if (step === 2) return form.ownerName && form.role;
     if (step === 3) return form.games.length > 0;
     if (step === 4) return form.buylistSkipped || (form.bulkRates.cu && form.bulkRates.rh && form.bulkRates.fo);
@@ -490,7 +591,7 @@ function EnrollShopScreen({ app }) {
               <span style={{ width: 34, height: 34, borderRadius: 10, background: '#2f8f5b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TF.sans, fontWeight: 800, fontSize: 15 }}>G</span>
               <div>
                 <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 13 }}>Sara — Gnome Games</div>
-                <div style={{ fontFamily: TF.sans, fontSize: 11.5, opacity: 0.7 }}>Madison, WI · enrolled 2024</div>
+                <div style={{ fontFamily: TF.sans, fontSize: 11.5, opacity: 0.7 }}>Manchester · enrolled 2024</div>
               </div>
             </div>
           </div>
@@ -521,7 +622,7 @@ function EnrollShopScreen({ app }) {
             </div>
             <div>
               <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 15 }}>{form.shopName}</div>
-              <div style={{ fontFamily: TF.sans, fontSize: 12, color: TF.muted }}>{form.city}{form.state ? ', ' + form.state : ''}</div>
+              <div style={{ fontFamily: TF.sans, fontSize: 12, color: TF.muted }}>{form.city}{form.postcode ? ', ' + form.postcode : ''}</div>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
