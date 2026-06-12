@@ -34,6 +34,7 @@ function ListingScreen({ app, params }) {
   const [tf, setTf] = React.useState('90D');
   const [sheet, setSheet] = React.useState(null);
   const [offer, setOffer] = React.useState('');
+  const [offerSent, setOfferSent] = React.useState(null);
   const watched = app.isWatched(item.id);
   const g = gameByIdL(item.game);
   const set = setByIdL(item.set);
@@ -230,6 +231,37 @@ function ListingScreen({ app, params }) {
               ))}
             </div>
           </div>
+
+          {/* mock message thread after offer */}
+          {offerSent && (
+            <div style={{ marginTop: 26 }}>
+              <div style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17, marginBottom: 12 }}>Your offer</div>
+              {/* buyer message */}
+              <div style={{ background: TL.surface2, borderRadius: 4, padding: 14, marginBottom: 10 }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>You offered {moneyL(offerSent.amount)}</span>
+                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11, color: '#b45309', background: '#fef3c7', borderRadius: 4, padding: '2px 8px' }}>Pending</span>
+                </div>
+                <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>Sent just now</div>
+              </div>
+              {/* seller reply */}
+              <div style={{ background: TL.surface, borderRadius: 4, padding: 14, marginBottom: 10, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                  <div style={{ width: 28, height: 28, borderRadius: 4, background: TL.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{offerSent.seller[0]}</div>
+                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{offerSent.seller}</span>
+                  <span style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginLeft: 'auto' }}>Just now</span>
+                </div>
+                <div style={{ fontFamily: TL.sans, fontSize: 13.5, color: TL.ink2, lineHeight: 1.45 }}>
+                  Thanks for the offer! I can do {moneyL(Math.round(offerSent.amount * 1.05))} if you can cover postage?
+                </div>
+              </div>
+              {/* reply input (mock) */}
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <input readOnly placeholder="Reply..." style={{ flex: 1, padding: '12px 14px', borderRadius: 4, border: 'none', background: TL.surface2, boxShadow: 'inset 0 0 0 1px var(--line)', fontFamily: TL.sans, fontSize: 14, color: TL.ink, outline: 'none' }} />
+                <button style={{ padding: '12px 16px', borderRadius: 4, background: TL.accent, color: '#fff', fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Send</button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -259,7 +291,7 @@ function ListingScreen({ app, params }) {
             <ChipL key={m} onClick={() => setOffer(String(Math.round(item.price*m)))}>{moneyL(item.price*m,{cents:false})}</ChipL>
           ))}
         </div>
-        <button onClick={() => { setSheet(null); setOffer(''); app.toast('Offer sent to ' + item.seller); }} style={{
+        <button onClick={() => { const amt = parseFloat(offer); setOfferSent({ amount: amt, seller: item.seller }); setSheet(null); setOffer(''); app.toast('Offer sent to ' + item.seller); }} style={{
           width: '100%', background: TL.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
           opacity: offer ? 1 : 0.5 }} disabled={!offer}>Send offer</button>
       </SheetL>

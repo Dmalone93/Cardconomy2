@@ -67,6 +67,9 @@ function WatchScreen({ app }) {
               <div style={{ marginTop: 12, marginLeft: -4 }}>
                 <SparkW data={port.series} w={320} h={56} up={port.now>=port.then} dots />
               </div>
+              <div style={{ marginTop: 6, fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: port.now >= port.then ? '#7fe7a4' : '#ff9b8a' }}>
+                +12.4% this month
+              </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontFamily: TW.sans, fontSize: 11.5, opacity: 0.7 }}>
                 <span>{app.ownedIds().length} cards · {app.collections.length} collections</span><span>Updated just now</span>
               </div>
@@ -373,7 +376,13 @@ function CollectionDetailScreen({ app, params }) {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {v.cards.map(item => (
+            {v.cards.map(item => {
+              const currentVal = item.market || item.price;
+              const purchaseVal = item.history ? item.history[0] : currentVal;
+              const gainAbs = currentVal - purchaseVal;
+              const gainPct = purchaseVal > 0 ? ((gainAbs / purchaseVal) * 100).toFixed(0) : 0;
+              const gainUp = gainAbs >= 0;
+              return (
               <div key={item.id} style={{ background: TW.surface, borderRadius: 14, padding: 10, display: 'flex', gap: 12, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 <button onClick={() => app.nav.push('listing', { id: item.id })} style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, minWidth: 0, textAlign: 'left' }}>
                   <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={44} radius={6} /></div>
@@ -382,13 +391,17 @@ function CollectionDetailScreen({ app, params }) {
                     <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} · <GradeInline grade={item.grade} /></div>
                   </div>
                   <div style={{ textAlign: 'right', minWidth: 58 }}>
-                    <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(item.market || item.price)}</div>
-                    <DeltaW from={item.history ? item.history[0] : (item.market||item.price)} to={item.market || item.price} style={{ fontSize: 11 }} />
+                    <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(currentVal)}</div>
+                    <DeltaW from={purchaseVal} to={currentVal} style={{ fontSize: 11 }} />
+                    {gainAbs !== 0 && <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 10.5, color: gainUp ? 'var(--up)' : 'var(--down)', marginTop: 1 }}>
+                      {gainUp ? '+' : ''}{moneyW(Math.abs(gainAbs))} ({gainUp ? '+' : ''}{gainPct}%)
+                    </div>}
                   </div>
                 </button>
                 <button onClick={() => app.removeCardFromCollection(col.id, item.id)} style={{ color: TW.faint, padding: 4, flexShrink: 0 }}>{IconW.trash({ width: 18, height: 18 })}</button>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
 

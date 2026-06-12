@@ -92,6 +92,45 @@ function StorefrontScreen({ app, params = {} }) {
               </div>
             </React.Fragment>
           )}
+
+          {/* reviews */}
+          <div style={{ marginTop: 22 }}>
+            <div style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 16, marginBottom: 10 }}>Reviews</div>
+            {[
+              { stars: 5, text: 'Great shop, fair prices on graded cards', author: 'Marcus T.', time: '2 weeks ago' },
+              { stars: 4, text: 'Quick trade, friendly staff', author: 'Priya K.', time: '1 month ago' },
+              { stars: 5, text: 'Best LGS in the area for Pokemon', author: 'Diego R.', time: '2 months ago' },
+            ].map((r, i) => (
+              <div key={i} style={{ background: TF.surface, borderRadius: 4, padding: 14, marginBottom: 8, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+                  <StarsF rating={r.stars * 20} />
+                </div>
+                <div style={{ fontFamily: TF.sans, fontSize: 14, color: TF.ink, lineHeight: 1.4, marginBottom: 6 }}>"{r.text}"</div>
+                <div style={{ fontFamily: TF.sans, fontSize: 12, color: TF.muted }}>{r.author} · {r.time}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* currently buying */}
+          {inv.length > 0 && (
+            <div style={{ marginTop: 22 }}>
+              <div style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 16, marginBottom: 10 }}>Currently buying</div>
+              <div className="noscroll" style={{ display: 'flex', gap: 11, overflowX: 'auto', margin: '0 -16px', padding: '0 16px 4px' }}>
+                {inv.slice(0, 4).map((l, i) => {
+                  const buyPrice = Math.round(l.price * (0.55 + i * 0.05));
+                  return (
+                    <div key={l.id} style={{ flexShrink: 0, width: 110, textAlign: 'center' }}>
+                      <div style={{ background: TF.surface, borderRadius: 4, padding: 10, display: 'flex', justifyContent: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                        <CardArtF item={l} w={78} />
+                      </div>
+                      <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 12, marginTop: 6, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
+                      <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 12.5, color: 'var(--up)', marginTop: 2 }}>Buying at {mf(buyPrice)}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
