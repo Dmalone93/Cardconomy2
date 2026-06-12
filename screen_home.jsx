@@ -2,7 +2,7 @@
 // Home / browse / discovery  (+ shared ListCard / ListRow)
 // ─────────────────────────────────────────────────────────────
 const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon, Logo } = window;
-const { GAMES, SETS, LISTINGS, LOTS, gameById, setById, gradeText } = window;
+const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText } = window;
 
 // ── shared: grid tile ────────────────────────────────────────
 function ListCard({ item, app, w }) {
@@ -46,6 +46,32 @@ function ListCard({ item, app, w }) {
               {item.shipping === 0 ? 'Free shipping' : money(item.shipping) + ' ship'}
             </span>
           )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── shared: product grid tile ────────────────────────────────
+function ProductCard({ product, app, w }) {
+  const g = gameById(product.game);
+  return (
+    <div onClick={() => app.nav.push('product', { id: product.id })} role="button" style={{
+      width: w || '100%', textAlign: 'left', background: T.surface, cursor: 'pointer',
+      borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
+      boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
+    }}>
+      <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#ffffff' }}>
+        <CardArt item={product} w={140} />
+      </div>
+      <div style={{ padding: '10px 12px 12px' }}>
+        <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 14, lineHeight: 1.15, letterSpacing: -0.2,
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.name}</div>
+        <div style={{ fontFamily: T.sans, fontSize: 11.5, color: T.muted, marginTop: 1, marginBottom: 8,
+          whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.subtitle}</div>
+        <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 16, color: T.ink }}>{money(product.market)}</div>
+        <div style={{ fontFamily: T.sans, fontSize: 11, color: T.muted, marginTop: 4 }}>
+          from {money(product.low)} · {product.offerCount} seller{product.offerCount !== 1 ? 's' : ''}
         </div>
       </div>
     </div>
@@ -185,7 +211,7 @@ function HomeScreen({ app }) {
   const inFeed = (x) => app.inPrefs(x.game) && hasImage(x);
   const filt = (arr) => (game === 'all' ? arr.filter(inFeed) : arr.filter(x => x.game === game && hasImage(x)));
   const auctions = filt(LISTINGS.filter(l => l.type === 'auction'));
-  const trending = filt(LISTINGS.filter(l => l.type === 'buynow'));
+  const trendingProducts = filt(PRODUCTS);
   const sets = filt(SETS).filter(s => s.img);
   const graded = filt(LISTINGS.filter(l => l.grade.company !== 'raw'));
   const lots = filt(LOTS);
@@ -298,11 +324,11 @@ function HomeScreen({ app }) {
       )}
 
       {/* trending grid */}
-      {trending.length > 0 && (
+      {trendingProducts.length > 0 && (
         <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Trending now" action="See all" onAction={() => app.nav.setTab('search')} />
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
-            {trending.slice(0, 6).map(l => <ListCard key={l.id} item={l} app={app} />)}
+            {trendingProducts.slice(0, 6).map(p => <ProductCard key={p.id} product={p} app={app} />)}
           </div>
         </div>
       )}
@@ -510,4 +536,4 @@ function LotRow({ lot, app }) {
   );
 }
 
-Object.assign(window, { ListCard, ListRow, LotRow, SectionHeader, SetTile, HomeScreen });
+Object.assign(window, { ListCard, ListRow, LotRow, SectionHeader, SetTile, HomeScreen, ProductCard });
