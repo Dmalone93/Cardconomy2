@@ -103,6 +103,21 @@ function DSearch({ app, params = {} }) {
 
         {/* results */}
         <div>
+          {setF !== 'all' && (() => {
+            const setInfo = setByIdSS(setF);
+            if (!setInfo) return null;
+            const setCards = LISTSS.filter(l => l.set === setF).length;
+            return (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 14, background: 'linear-gradient(135deg, var(--accent-wash), var(--surface))', borderRadius: 14, padding: '14px 18px', marginBottom: 18, boxShadow: 'inset 0 0 0 1px var(--accent)' }}>
+                <div style={{ width: 10, height: 10, borderRadius: 999, background: 'var(--accent)', flexShrink: 0 }} />
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 700, fontSize: 15 }}>{setInfo.name}</div>
+                  <div style={{ fontSize: 12.5, color: 'var(--muted)', marginTop: 2 }}>{setCards} card{setCards !== 1 ? 's' : ''}{setInfo.year ? ' · Released ' + setInfo.year : ''}</div>
+                </div>
+                <button onClick={() => setSetF('all')} style={{ color: 'var(--accent)', fontWeight: 700, fontSize: 13, padding: '6px 12px', borderRadius: 8, background: 'var(--surface)', boxShadow: 'inset 0 0 0 1px var(--line)' }}>Clear set</button>
+              </div>
+            );
+          })()}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {game !== 'all' && <Pill label={GAMESS.find(g => g.id === game)?.short} onX={() => { setGame('all'); setSetF('all'); }} />}

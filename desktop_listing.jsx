@@ -85,7 +85,7 @@ function DListing({ app, params }) {
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ fontWeight: 700, fontSize: 15.5 }}>{item.seller}</span>{window.TrustBadge && <window.TrustBadge tier={item.sellerRating >= 99 ? 2 : 1} />}</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 2 }}><StarsLi rating={item.sellerRating} /><span style={{ fontFamily: TLi.mono, fontSize: 12.5, color: 'var(--muted)' }}>{item.sellerRating}% · {item.sellerSales.toLocaleString()} sales</span></div>
             </div>
-            <button onClick={() => app.go('storefront', { shop: 'gnome' })} style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--accent)', border: '1.5px solid var(--accent)', borderRadius: 10, padding: '9px 16px' }}>Visit store</button>
+            <button onClick={() => app.go('seller', { name: item.seller })} style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--accent)', border: '1.5px solid var(--accent)', borderRadius: 10, padding: '9px 16px' }}>Visit store</button>
           </div>
 
           {/* info rows */}
@@ -153,6 +153,48 @@ function DListing({ app, params }) {
           {similar.map(l => <DCardLi key={l.id} item={l} app={app} />)}
         </div>
       </section>
+
+      {/* trade offers */}
+      {(() => {
+        const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
+        if (!product || !product.tradeOffers || product.tradeOffers.length === 0) return null;
+        return (
+          <section style={{ marginTop: 40 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+              <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.6, margin: 0 }}>Available to trade</h2>
+              <span style={{ background: '#f5f3ff', color: '#7c3aed', padding: '4px 10px', borderRadius: 7, fontWeight: 700, fontSize: 11 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
+            </div>
+            <p style={{ fontSize: 14, color: 'var(--muted)', margin: '0 0 18px' }}>These collectors have this card and want to swap — no cash needed.</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 16 }}>
+              {product.tradeOffers.map((t, idx) => (
+                <div key={t.id} style={{ background: 'var(--surface)', borderRadius: 16, padding: 18, boxShadow: idx === 0 ? 'inset 0 0 0 2px #7c3aed, 0 1px 3px rgba(20,24,40,0.06)' : '0 1px 3px rgba(20,24,40,0.06)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 11, marginBottom: 14 }}>
+                    <div style={{ width: 38, height: 38, borderRadius: 999, background: '#7c3aed', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 15, flexShrink: 0 }}>{t.trader.charAt(0)}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontWeight: 700, fontSize: 14 }}>{t.trader}</span>
+                        {t.verified && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '2px 7px', borderRadius: 5, fontWeight: 700, fontSize: 10 }}>Verified</span>}
+                      </div>
+                      <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{t.traderRating}% · {t.traderTrades.toLocaleString()} trades · {t.traderLoc}</div>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--muted)', letterSpacing: 0.3, marginBottom: 8, textTransform: 'uppercase' }}>Wants in return</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#faf5ff', borderRadius: 10, padding: 12, marginBottom: 10 }}>
+                    <div style={{ flexShrink: 0 }}><CardArtLi item={t.wantCard} w={40} radius={5} /></div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontWeight: 700, fontSize: 13.5 }}>{t.wantCard.name}</div>
+                      <div style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 1 }}>{t.wantCard.subtitle}</div>
+                      <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 1 }}>Condition: {t.wantCard.condition === 'Near Mint' ? 'NM+' : t.wantCard.condition} · {t.wantCard.gradePref}</div>
+                    </div>
+                  </div>
+                  {t.note && <div style={{ fontSize: 13, color: 'var(--ink-2)', fontStyle: 'italic', lineHeight: 1.4, marginBottom: 10 }}>"{t.note}"</div>}
+                  <button onClick={() => app.go('trade')} style={{ width: '100%', background: 'none', border: '1.5px solid #7c3aed', color: '#7c3aed', padding: 11, borderRadius: 11, fontWeight: 700, fontSize: 14 }}>Propose trade</button>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      })()}
 
       <style>{`@media (max-width: 1040px){ .lst-grid{ grid-template-columns: 1fr 1fr !important; } .lst-buybox{ grid-column: 1 / -1; position: static !important; } }
         @media (max-width: 720px){ .lst-grid{ grid-template-columns: 1fr !important; } .lst-gallery{ position: static !important; } }`}</style>

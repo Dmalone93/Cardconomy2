@@ -218,4 +218,169 @@ function DShopDash({ app }) {
   );
 }
 
-Object.assign(window, { DTrade, DStorefront, DShopDash });
+// ── ONLINE SELLER PROFILE ────────────────────────────────────
+function DSellerProfile({ app, params = {} }) {
+  const seller = window.sellerByName(params.name);
+  const [tab, setTab] = React.useState('listings');
+
+  if (!seller) return (
+    <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>🔍</div>
+      <div style={{ fontWeight: 700, fontSize: 20 }}>Seller not found</div>
+      <button onClick={() => app.go('home')} style={{ marginTop: 16, color: 'var(--accent)', fontWeight: 600, fontSize: 14 }}>Back to home</button>
+    </div>
+  );
+
+  const listings = window.listingsBySeller(seller.name);
+  const isTrusted = seller.rating >= 99;
+  const isFastShipper = seller.ships && seller.ships.includes('1');
+
+  return (
+    <div>
+      {/* branded header */}
+      <div style={{ background: 'var(--fill)', color: '#fff', padding: '40px 0 36px', textAlign: 'center' }}>
+        <div className="wrap">
+          <div style={{
+            width: 72, height: 72, borderRadius: 999, background: '#fff', color: 'var(--fill)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontWeight: 800, fontSize: 30, margin: '0 auto 12px',
+          }}>{seller.name.charAt(0)}</div>
+          <h1 style={{ fontFamily: TTr.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.8, margin: '0 0 4px' }}>{seller.name}</h1>
+          <div style={{ fontSize: 13.5, opacity: 0.65 }}>{seller.loc} · Since {seller.since}</div>
+          {(isTrusted || isFastShipper) && (
+            <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 12 }}>
+              {isTrusted && <span style={{ background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>Trusted</span>}
+              {isFastShipper && <span style={{ background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>Fast Shipper</span>}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="wrap" style={{ padding: '24px 24px 40px' }}>
+        {/* stats row */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 24 }}>
+          {[
+            ['Rating', seller.rating + '%'],
+            ['Sales', seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : String(seller.sales)],
+            ['Ships', seller.ships],
+            ['Free over', '\u00a3' + seller.freeShipMin],
+          ].map(([label, val], i) => (
+            <div key={i} style={{ background: 'var(--surface)', borderRadius: 'var(--radius-3, 14px)', padding: '16px 18px', textAlign: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ fontFamily: TTr.mono, fontWeight: 700, fontSize: 20 }}>{val}</div>
+              <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 3 }}>{label}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* bio */}
+        <p style={{ fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.5, maxWidth: 640, margin: '0 0 20px', fontStyle: 'italic' }}>
+          "{seller.blurb}"
+        </p>
+
+        {/* location */}
+        {(seller.address || seller.loc) && (
+          <button onClick={() => window.open('https://www.google.com/maps/search/' + encodeURIComponent(seller.address || seller.loc + ', UK'), '_blank')}
+            style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 18px', background: 'var(--surface)', borderRadius: 14, textAlign: 'left', marginBottom: 28, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <span style={{ color: 'var(--muted)' }}>{IconTr.tag({ width: 18, height: 18 })}</span>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 600, fontSize: 14 }}>{seller.address || seller.loc + ', UK'}</div>
+              <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>View on Google Maps</div>
+            </div>
+            <span style={{ color: 'var(--faint)', fontSize: 18 }}>›</span>
+          </button>
+        )}
+
+        {/* tabs */}
+        <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid var(--line)', marginBottom: 24 }}>
+          {[
+            ['listings', 'Listings (' + listings.length + ')'],
+            ['reviews', 'Reviews'],
+            ['policies', 'Policies'],
+          ].map(([key, label]) => (
+            <button key={key} onClick={() => setTab(key)} style={{
+              padding: '12px 18px', fontWeight: 700, fontSize: 15, position: 'relative',
+              color: tab === key ? 'var(--accent)' : 'var(--ink-2)',
+            }}>
+              {label}
+              {tab === key && <div style={{ position: 'absolute', left: 14, right: 14, bottom: -1, height: 3, borderRadius: 3, background: 'var(--accent)' }} />}
+            </button>
+          ))}
+        </div>
+
+        {/* listings tab */}
+        {tab === 'listings' && (
+          <div>
+            {listings.length > 0 ? (
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 }}>
+                {listings.map(l => <window.DCard key={l.id} item={l} app={app} />)}
+              </div>
+            ) : (
+              <div style={{ textAlign: 'center', padding: '60px 20px', background: 'var(--surface)', borderRadius: 16 }}>
+                <div style={{ fontWeight: 700, fontSize: 16, color: 'var(--muted)' }}>No listings available right now</div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* reviews tab */}
+        {tab === 'reviews' && (
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+              <div style={{ fontWeight: 800, fontSize: 32, letterSpacing: -0.5 }}>{seller.rating}%</div>
+              <div>
+                <div style={{ display: 'flex', gap: 2 }}>
+                  {Array.from({ length: 5 }, (_, s) => <span key={s} style={{ color: '#f59e0b', fontSize: 16 }}>★</span>)}
+                </div>
+                <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 2 }}>Based on {seller.sales.toLocaleString()} transactions</div>
+              </div>
+            </div>
+            {[
+              { stars: 5, text: 'Cards arrived double-sleeved in a toploader. Exactly as described, fast shipping.', author: 'Marcus T.', time: '1 week ago' },
+              { stars: 5, text: 'Great prices and the card was in perfect condition. Will buy again.', author: 'Priya K.', time: '2 weeks ago' },
+              { stars: 4, text: 'Good seller, card was NM as listed. Shipping took a little longer than expected.', author: 'Diego R.', time: '1 month ago' },
+              { stars: 5, text: 'Packaged really well, no damage at all. Highly recommend.', author: 'Sophie L.', time: '1 month ago' },
+              { stars: 4, text: 'Fair price, honest grading. Would trade with again.', author: 'James W.', time: '2 months ago' },
+            ].map((r, i) => (
+              <div key={i} style={{ background: 'var(--surface)', borderRadius: 14, padding: 18, marginBottom: 10, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 999, background: 'var(--fill)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{r.author.charAt(0)}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 600, fontSize: 14 }}>{r.author}</div>
+                    <div style={{ fontSize: 12, color: 'var(--muted)' }}>{r.time}</div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 2 }}>
+                    {Array.from({ length: 5 }, (_, s) => <span key={s} style={{ color: s < r.stars ? '#f59e0b' : '#e5e7eb', fontSize: 13 }}>★</span>)}
+                  </div>
+                </div>
+                <div style={{ fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.5 }}>{r.text}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* policies tab */}
+        {tab === 'policies' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {[
+              { title: 'Shipping', text: 'All orders shipped Royal Mail 1st Class Signed. Free shipping on orders over the threshold shown above. Cards are sent double-sleeved in toploaders with cardboard reinforcement.' },
+              { title: 'Returns', text: 'Returns accepted within 14 days of delivery if the card does not match the listing description. Buyer pays return shipping unless the item was misrepresented. Refunds processed within 2 business days of receiving the return.' },
+              { title: 'Grading Standards', text: 'We grade conservatively using TCGPlayer standards. NM means no visible wear under direct light. LP may have minor whitening on edges. All graded cards include close-up photos in the listing.' },
+            ].map((p, i) => (
+              <div key={i} style={{ background: 'var(--surface)', borderRadius: 14, padding: 20, display: 'flex', gap: 16, alignItems: 'flex-start', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--accent-wash)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {IconTr.shield({ width: 20, height: 20 })}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 6 }}>{p.title}</div>
+                  <div style={{ fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.55 }}>{p.text}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { DTrade, DStorefront, DShopDash, DSellerProfile });

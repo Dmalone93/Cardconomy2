@@ -5,7 +5,7 @@ const { T, money, CardArt, Icon, Logo } = window;
 const { GAMES, SETS, LISTINGS, gameById } = window;
 const { DHome, DSearch, DListing } = window;
 const { DSell, DSellSingle, DSellBulk } = window;
-const { DTrade, DStorefront, DShopDash } = window;
+const { DTrade, DStorefront, DShopDash, DSellerProfile } = window;
 
 // ── icons specific to desktop ────────────────────────────────
 const DIcon = {
@@ -196,7 +196,24 @@ function App() {
     isWatched: (id) => watch.includes(id),
     toggleWatch: (id) => setWatch(w => { if (w.includes(id)) { showToast('Removed from Watching'); return w.filter(x => x !== id); } showToast('Saved to Watching ♥'); return [...w, id]; }),
     inCart: (id) => cart.includes(id),
-    addToCart: (id) => setCart(c => { if (c.includes(id)) { showToast('Already in cart'); return c; } showToast('Added to cart 🛒'); return [...c, id]; }),
+    addToCart: (id) => {
+      if (cart.includes(id)) { showToast('Already in cart'); return; }
+      setCart(c => [...c, id]);
+      const item = window.byId(id);
+      const seller = item && window.sellerByName(item.seller);
+      if (seller && seller.freeShipMin) {
+        const newCart = [...cart, id];
+        const sellerItems = newCart.map(window.byId).filter(Boolean).filter(x => x.seller === seller.name);
+        const sellerTotal = sellerItems.reduce((s, x) => s + x.price, 0);
+        const remaining = seller.freeShipMin - sellerTotal;
+        const otherListings = window.listingsBySeller(seller.name).filter(l => !newCart.includes(l.id));
+        if (remaining > 0 && otherListings.length > 0) {
+          showToast('Added to cart \u2014 add \u00a3' + remaining.toFixed(2) + ' more from ' + seller.name + ' for free shipping');
+          return;
+        }
+      }
+      showToast('Added to cart');
+    },
     removeFromCart: (id) => setCart(c => c.filter(x => x !== id)),
     clearCart: () => setCart([]),
     isBidding: (id) => bids[id] != null,
@@ -216,6 +233,7 @@ function App() {
   else if (route.name === 'trade') Screen = DTrade;
   else if (route.name === 'storefront') Screen = DStorefront;
   else if (route.name === 'shop_dash') Screen = DShopDash;
+  else if (route.name === 'seller') Screen = DSellerProfile;
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
