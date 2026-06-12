@@ -155,7 +155,7 @@ function DSellSingle({ app }) {
               </div>
               <Label>{listType === 'auction' ? 'Starting bid' : 'Your price'}</Label>
               <div style={{ display: 'flex', alignItems: 'center', background: 'var(--surface)', borderRadius: 14, padding: '14px 18px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-                <span style={{ fontFamily: TSl.mono, fontWeight: 700, fontSize: 28, color: 'var(--muted)', marginRight: 6 }}>$</span>
+                <span style={{ fontFamily: TSl.mono, fontWeight: 700, fontSize: 28, color: 'var(--muted)', marginRight: 6 }}>£</span>
                 <input type="number" value={price} onChange={e => setPrice(e.target.value)} placeholder={String(suggested)} style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TSl.mono, fontWeight: 700, fontSize: 28, minWidth: 0 }} />
               </div>
               <button onClick={() => setPrice(String(suggested))} style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 10, width: '100%', background: 'var(--accent-wash)', borderRadius: 12, padding: '13px 16px', textAlign: 'left' }}>

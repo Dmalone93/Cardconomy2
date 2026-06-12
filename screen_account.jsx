@@ -232,7 +232,7 @@ function BuylistEdit({ entry, onSave, onRemove }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
           <span style={{ fontFamily: TAC.sans, fontWeight: 600, fontSize: 14.5 }}>Max price each</span>
           <div style={{ display: 'flex', alignItems: 'center', background: TAC.surface2, borderRadius: 10, padding: '6px 11px' }}>
-            <span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, color: TAC.muted }}>$</span>
+            <span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, color: TAC.muted }}>£</span>
             <input type="number" value={max} onChange={e => setMax(+e.target.value || 0)} style={{ width: 80, border: 'none', outline: 'none', background: 'transparent', fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, textAlign: 'right' }} />
           </div>
         </div>
@@ -379,7 +379,7 @@ function SellingScreen({ app }) {
 // OFFERS
 // ═════════════════════════════════════════════════════════════
 const OFFERS_SENT = [
-  { ref: 'l01', amount: 400, status: 'Countered', tone: 'amber', note: 'Seller countered at $420', date: '2h ago' },
+  { ref: 'l01', amount: 400, status: 'Countered', tone: 'amber', note: 'Seller countered at £420', date: '2h ago' },
   { ref: 'l05', amount: 27000, status: 'Pending', tone: 'blue', note: 'Waiting on AlphaInvest', date: '1d ago' },
 ];
 const OFFERS_RECEIVED = [
@@ -411,7 +411,7 @@ function OffersScreen({ app }) {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--line-2)' }}>
                   <span style={{ flex: 1, fontFamily: TAC.sans, fontSize: 12.5, color: o.tone === 'amber' ? TAC.accent : TAC.ink2, fontWeight: o.tone === 'amber' ? 600 : 400 }}>{o.note}</span>
-                  {o.status === 'Countered' && <button onClick={() => app.startBuy(o.card)} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: '#fff', background: TAC.accent, borderRadius: 8, padding: '6px 12px' }}>Accept $420</button>}
+                  {o.status === 'Countered' && <button onClick={() => app.startBuy(o.card)} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: '#fff', background: TAC.accent, borderRadius: 8, padding: '6px 12px' }}>Accept £420</button>}
                 </div>
               </div>
             ))}
@@ -477,7 +477,7 @@ function PaymentsScreen({ app }) {
           <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 34, letterSpacing: -0.5, marginTop: 2 }}>{moneyAC(balance)}</div>
           <div style={{ display: 'flex', gap: 9, marginTop: 14 }}>
             <button onClick={() => app.toast('Withdrawing to bank ••6789')} style={{ flex: 1, background: '#fff', color: TAC.ink, borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Withdraw</button>
-            <button onClick={() => app.toast('Store credit balance: $80')} style={{ flex: 1, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Store credit</button>
+            <button onClick={() => app.toast('Store credit balance: £80')} style={{ flex: 1, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Store credit</button>
           </div>
         </div>
 
@@ -532,9 +532,9 @@ function PaymentsScreen({ app }) {
 // NOTIFICATIONS
 // ═════════════════════════════════════════════════════════════
 const NOTIFS = [
-  { icon: AIcon.star, tint: 'var(--gold)', title: 'Buylist match listed', body: 'Umbreon VMAX (PSA 10) at $1,280 — under your $1,250? Close.', time: '12m', unread: true },
-  { icon: IconAC.gavel, tint: 'var(--accent)', title: 'Outbid on Black Lotus', body: 'Someone bid $28,500. You can raise your max.', time: '1h', unread: true },
-  { icon: IconAC.tag, tint: 'var(--up)', title: 'Your card sold!', body: 'Pikachu IR sold for $38.50 — payout on the way.', time: '5h', unread: false },
+  { icon: AIcon.star, tint: 'var(--gold)', title: 'Buylist match listed', body: 'Umbreon VMAX (PSA 10) at £1,280 — under your £1,250? Close.', time: '12m', unread: true },
+  { icon: IconAC.gavel, tint: 'var(--accent)', title: 'Outbid on Black Lotus', body: 'Someone bid £28,500. You can raise your max.', time: '1h', unread: true },
+  { icon: IconAC.tag, tint: 'var(--up)', title: 'Your card sold!', body: 'Pikachu IR sold for £38.50 — payout on the way.', time: '5h', unread: false },
   { icon: IconAC.truck, tint: 'var(--accent)', title: 'Order shipped', body: 'Blue-Eyes White Dragon is on its way. Arrives Jun 11.', time: '1d', unread: false },
 ];
 const NOTIF_PREFS = [

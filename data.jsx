@@ -74,7 +74,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'buynow', price: 432.00, market: 451.00, accepts_offers: true,
     history: series(290, 432), seller: 'VaultCards', sellerRating: 99.4, sellerSales: 12840,
-    shipping: 0, ships: '1–2 days', loc: 'Dallas, TX', watchers: 41, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Manchester', watchers: 41, sold: 0,
   },
   {
     id: 'l02', name: 'Pikachu', subtitle: 'Illustration Rare',
@@ -82,7 +82,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 38.50, market: 42.00, accepts_offers: true,
     history: series(55, 38.5), seller: 'KantoCollects', sellerRating: 98.1, sellerSales: 3402,
-    shipping: 4.99, ships: '2–4 days', loc: 'Portland, OR', watchers: 12, sold: 0,
+    shipping: 4.99, ships: '2–4 days', loc: 'Bristol', watchers: 12, sold: 0,
   },
   {
     id: 'l03', name: 'Umbreon VMAX', subtitle: 'Alt Art "Moonbreon"',
@@ -90,7 +90,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'auction', price: 1280.00, market: 1420.00, bids: 23, timeLeft: '5h 12m',
     history: series(980, 1280), seller: 'EeveeVault', sellerRating: 99.8, sellerSales: 8921,
-    shipping: 0, ships: '1 day', loc: 'Seattle, WA', watchers: 188, sold: 0,
+    shipping: 0, ships: '1 day', loc: 'Edinburgh', watchers: 188, sold: 0,
   },
   {
     id: 'l04', name: 'Mewtwo', subtitle: 'Holo · 1st Edition Shadowless',
@@ -98,7 +98,7 @@ const LISTINGS = [
     grade: { company: 'bgs', grade: 9 }, condition: 'Mint',
     type: 'buynow', price: 2150.00, market: 2240.00, accepts_offers: true,
     history: series(1600, 2150), seller: 'VintageHolos', sellerRating: 100, sellerSales: 5610,
-    shipping: 0, ships: '1–2 days', loc: 'Chicago, IL', watchers: 96, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Leeds', watchers: 96, sold: 0,
   },
   {
     id: 'l05', name: 'Black Lotus', subtitle: 'Power Nine',
@@ -106,7 +106,7 @@ const LISTINGS = [
     grade: { company: 'bgs', grade: 8.5 }, condition: 'NM-MT+',
     type: 'auction', price: 28500.00, market: 31000.00, bids: 47, timeLeft: '1d 4h',
     history: series(22000, 28500), seller: 'AlphaInvest', sellerRating: 100, sellerSales: 1290,
-    shipping: 0, ships: 'Insured · 2 days', loc: 'New York, NY', watchers: 502, sold: 0,
+    shipping: 0, ships: 'Insured · 2 days', loc: 'London', watchers: 502, sold: 0,
   },
   {
     id: 'l06', name: 'Ragavan, Nimble Pilferer', subtitle: 'Borderless Mythic',
@@ -114,7 +114,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 62.00, market: 58.00, accepts_offers: true,
     history: series(48, 62), seller: 'ManaBase', sellerRating: 98.9, sellerSales: 22014,
-    shipping: 1.99, ships: '2–3 days', loc: 'Austin, TX', watchers: 8, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Birmingham', watchers: 8, sold: 0,
   },
   {
     id: 'l07', name: 'Blue-Eyes White Dragon', subtitle: 'Quarter Century Secret Rare',
@@ -122,7 +122,7 @@ const LISTINGS = [
     grade: { company: 'cgc', grade: 9.5 }, condition: 'Gem Mint',
     type: 'buynow', price: 184.00, market: 175.00, accepts_offers: true,
     history: series(140, 184), seller: 'DuelistPrime', sellerRating: 99.2, sellerSales: 6730,
-    shipping: 0, ships: '1–2 days', loc: 'Miami, FL', watchers: 27, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Liverpool', watchers: 27, sold: 0,
   },
   {
     id: 'l08', name: 'Dark Magician', subtitle: 'Quarter Century Secret Rare',
@@ -130,7 +130,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 71.50, market: 79.00, accepts_offers: true,
     history: series(90, 71.5), seller: 'DuelistPrime', sellerRating: 99.2, sellerSales: 6730,
-    shipping: 4.99, ships: '2–4 days', loc: 'Miami, FL', watchers: 15, sold: 0,
+    shipping: 4.99, ships: '2–4 days', loc: 'Liverpool', watchers: 15, sold: 0,
   },
   {
     id: 'l09', name: 'Pidgeot ex', subtitle: 'Special Illustration Rare',
@@ -138,7 +138,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 9 }, condition: 'Mint',
     type: 'buynow', price: 96.00, market: 102.00, accepts_offers: true,
     history: series(78, 96), seller: 'VaultCards', sellerRating: 99.4, sellerSales: 12840,
-    shipping: 0, ships: '1–2 days', loc: 'Dallas, TX', watchers: 19, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Manchester', watchers: 19, sold: 0,
   },
   {
     id: 'l10', name: 'Monkey D. Luffy', subtitle: 'Leader Parallel',
@@ -146,7 +146,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'auction', price: 44.00, market: 52.00, bids: 9, timeLeft: '11h 40m',
     history: series(36, 44), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 33, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 33, sold: 0,
   },
   {
     id: 'l11', name: 'Latias & Latios GX', subtitle: 'Tag Team · Full Art',
@@ -154,7 +154,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Lightly Played',
     type: 'buynow', price: 27.00, market: 31.00, accepts_offers: true,
     history: series(40, 27), seller: 'KantoCollects', sellerRating: 98.1, sellerSales: 3402,
-    shipping: 4.99, ships: '2–4 days', loc: 'Portland, OR', watchers: 6, sold: 0,
+    shipping: 4.99, ships: '2–4 days', loc: 'Bristol', watchers: 6, sold: 0,
   },
   {
     id: 'l12', name: 'Sting, the Glistening Goblin', subtitle: 'Showcase Foil',
@@ -162,7 +162,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 14.25, market: 12.50, accepts_offers: false,
     history: series(9, 14.25), seller: 'ManaBase', sellerRating: 98.9, sellerSales: 22014,
-    shipping: 1.99, ships: '2–3 days', loc: 'Austin, TX', watchers: 4, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Birmingham', watchers: 4, sold: 0,
   },
   {
     id: 'l19', name: 'Omnimon', subtitle: 'Alternative Art',
@@ -170,7 +170,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 48.00, market: 54.00, accepts_offers: true,
     history: series(40, 48), seller: 'DigiDestined', sellerRating: 98.6, sellerSales: 2118,
-    shipping: 0, ships: '2–3 days', loc: 'Los Angeles, CA', watchers: 16, sold: 0,
+    shipping: 0, ships: '2–3 days', loc: 'Brighton', watchers: 16, sold: 0,
   },
   {
     id: 'l20', name: 'Agumon', subtitle: 'Box Topper',
@@ -178,7 +178,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Lightly Played',
     type: 'auction', price: 12.00, market: 15.00, bids: 5, timeLeft: '13h 05m',
     history: series(9, 12), seller: 'DigiDestined', sellerRating: 98.6, sellerSales: 2118,
-    shipping: 3.99, ships: '2–4 days', loc: 'Los Angeles, CA', watchers: 6, sold: 0,
+    shipping: 3.99, ships: '2–4 days', loc: 'Brighton', watchers: 6, sold: 0,
   },
 
   // ── more Pokémon ──
@@ -188,7 +188,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'auction', price: 138.00, market: 152.00, bids: 17, timeLeft: '9h 24m',
     history: series(96, 138), seller: 'EeveeVault', sellerRating: 99.8, sellerSales: 8921,
-    shipping: 0, ships: '1 day', loc: 'Seattle, WA', watchers: 64, sold: 0,
+    shipping: 0, ships: '1 day', loc: 'Edinburgh', watchers: 64, sold: 0,
   },
   {
     id: 'l14', name: 'Mew ex', subtitle: 'Ultra Rare',
@@ -196,7 +196,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 44.00, market: 49.00, accepts_offers: true,
     history: series(58, 44), seller: 'KantoCollects', sellerRating: 98.1, sellerSales: 3402,
-    shipping: 4.99, ships: '2–4 days', loc: 'Portland, OR', watchers: 14, sold: 0,
+    shipping: 4.99, ships: '2–4 days', loc: 'Bristol', watchers: 14, sold: 0,
   },
   {
     id: 'l21', name: 'Snorlax', subtitle: 'Holo · 1st Edition',
@@ -204,7 +204,7 @@ const LISTINGS = [
     grade: { company: 'bgs', grade: 9 }, condition: 'Mint',
     type: 'buynow', price: 640.00, market: 690.00, accepts_offers: true,
     history: series(470, 640), seller: 'VintageHolos', sellerRating: 100, sellerSales: 5610,
-    shipping: 0, ships: '1–2 days', loc: 'Chicago, IL', watchers: 73, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Leeds', watchers: 73, sold: 0,
   },
   {
     id: 'l22', name: 'Gyarados', subtitle: 'Holo · 1st Edition',
@@ -212,7 +212,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 8 }, condition: 'NM-MT',
     type: 'buynow', price: 410.00, market: 445.00, accepts_offers: true,
     history: series(320, 410), seller: 'VintageHolos', sellerRating: 100, sellerSales: 5610,
-    shipping: 0, ships: '1–2 days', loc: 'Chicago, IL', watchers: 38, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Leeds', watchers: 38, sold: 0,
   },
   {
     id: 'l23', name: 'Rayquaza VMAX', subtitle: 'Alt Art Secret Rare',
@@ -220,7 +220,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'auction', price: 520.00, market: 580.00, bids: 31, timeLeft: '6h 48m',
     history: series(390, 520), seller: 'EeveeVault', sellerRating: 99.8, sellerSales: 8921,
-    shipping: 0, ships: '1 day', loc: 'Seattle, WA', watchers: 142, sold: 0,
+    shipping: 0, ships: '1 day', loc: 'Edinburgh', watchers: 142, sold: 0,
   },
   {
     id: 'l24', name: 'Iono', subtitle: 'Special Illustration Rare',
@@ -228,7 +228,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 72.00, market: 68.00, accepts_offers: true,
     history: series(55, 72), seller: 'VaultCards', sellerRating: 99.4, sellerSales: 12840,
-    shipping: 0, ships: '1–2 days', loc: 'Dallas, TX', watchers: 21, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Manchester', watchers: 21, sold: 0,
   },
   {
     id: 'l25', name: 'Gardevoir ex', subtitle: 'Special Illustration Rare',
@@ -236,7 +236,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 9 }, condition: 'Mint',
     type: 'buynow', price: 88.00, market: 95.00, accepts_offers: true,
     history: series(70, 88), seller: 'KantoCollects', sellerRating: 98.1, sellerSales: 3402,
-    shipping: 0, ships: '2–4 days', loc: 'Portland, OR', watchers: 18, sold: 0,
+    shipping: 0, ships: '2–4 days', loc: 'Bristol', watchers: 18, sold: 0,
   },
 
   // ── more Magic: The Gathering ──
@@ -246,7 +246,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 58.00, market: 64.00, accepts_offers: true,
     history: series(95, 58), seller: 'ManaBase', sellerRating: 98.9, sellerSales: 22014,
-    shipping: 1.99, ships: '2–3 days', loc: 'Austin, TX', watchers: 44, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Birmingham', watchers: 44, sold: 0,
   },
   {
     id: 'l27', name: 'Orcish Bowmasters', subtitle: 'Extended Art',
@@ -254,7 +254,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 34.00, market: 31.00, accepts_offers: true,
     history: series(28, 34), seller: 'TopDeckTCG', sellerRating: 99.0, sellerSales: 9410,
-    shipping: 1.99, ships: '2–3 days', loc: 'Denver, CO', watchers: 9, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Glasgow', watchers: 9, sold: 0,
   },
   {
     id: 'l28', name: 'Sheoldred, the Apocalypse', subtitle: 'Borderless Mythic',
@@ -262,7 +262,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 76.00, market: 84.00, accepts_offers: true,
     history: series(64, 76), seller: 'TopDeckTCG', sellerRating: 99.0, sellerSales: 9410,
-    shipping: 1.99, ships: '2–3 days', loc: 'Denver, CO', watchers: 23, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Glasgow', watchers: 23, sold: 0,
   },
   {
     id: 'l29', name: 'Mox Sapphire', subtitle: 'Power Nine',
@@ -270,7 +270,7 @@ const LISTINGS = [
     grade: { company: 'bgs', grade: 7 }, condition: 'NM',
     type: 'auction', price: 8200.00, market: 9000.00, bids: 22, timeLeft: '2d 6h',
     history: series(6400, 8200), seller: 'AlphaInvest', sellerRating: 100, sellerSales: 1290,
-    shipping: 0, ships: 'Insured · 2 days', loc: 'New York, NY', watchers: 211, sold: 0,
+    shipping: 0, ships: 'Insured · 2 days', loc: 'London', watchers: 211, sold: 0,
   },
   {
     id: 'l30', name: 'Ancestral Recall', subtitle: 'Power Nine',
@@ -278,7 +278,7 @@ const LISTINGS = [
     grade: { company: 'cgc', grade: 8 }, condition: 'NM',
     type: 'buynow', price: 11500.00, market: 12400.00, accepts_offers: true,
     history: series(9000, 11500), seller: 'AlphaInvest', sellerRating: 100, sellerSales: 1290,
-    shipping: 0, ships: 'Insured · 2 days', loc: 'New York, NY', watchers: 168, sold: 0,
+    shipping: 0, ships: 'Insured · 2 days', loc: 'London', watchers: 168, sold: 0,
   },
   {
     id: 'l31', name: 'Liliana of the Veil', subtitle: 'Borderless Planeswalker',
@@ -286,7 +286,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 22.00, market: 25.00, accepts_offers: true,
     history: series(30, 22), seller: 'ManaBase', sellerRating: 98.9, sellerSales: 22014,
-    shipping: 1.99, ships: '2–3 days', loc: 'Austin, TX', watchers: 7, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Birmingham', watchers: 7, sold: 0,
   },
 
   // ── more Yu-Gi-Oh! ──
@@ -296,7 +296,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 58.00, market: 64.00, accepts_offers: true,
     history: series(46, 58), seller: 'DuelistPrime', sellerRating: 99.2, sellerSales: 6730,
-    shipping: 4.99, ships: '2–4 days', loc: 'Miami, FL', watchers: 19, sold: 0,
+    shipping: 4.99, ships: '2–4 days', loc: 'Liverpool', watchers: 19, sold: 0,
   },
   {
     id: 'l33', name: 'Exodia the Forbidden One', subtitle: 'Secret Rare',
@@ -304,7 +304,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 9 }, condition: 'Mint',
     type: 'auction', price: 210.00, market: 240.00, bids: 13, timeLeft: '14h 30m',
     history: series(160, 210), seller: 'MetaKnight', sellerRating: 98.4, sellerSales: 4205,
-    shipping: 0, ships: '1–2 days', loc: 'Columbus, OH', watchers: 51, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Newcastle', watchers: 51, sold: 0,
   },
   {
     id: 'l34', name: 'Ash Blossom & Joyous Spring', subtitle: 'Ultra Rare',
@@ -312,7 +312,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 18.00, market: 16.50, accepts_offers: true,
     history: series(14, 18), seller: 'MetaKnight', sellerRating: 98.4, sellerSales: 4205,
-    shipping: 1.99, ships: '2–3 days', loc: 'Columbus, OH', watchers: 11, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Newcastle', watchers: 11, sold: 0,
   },
   {
     id: 'l35', name: 'Slifer the Sky Dragon', subtitle: 'Ghost Rare',
@@ -320,7 +320,7 @@ const LISTINGS = [
     grade: { company: 'bgs', grade: 9 }, condition: 'Mint',
     type: 'buynow', price: 124.00, market: 135.00, accepts_offers: true,
     history: series(98, 124), seller: 'DuelistPrime', sellerRating: 99.2, sellerSales: 6730,
-    shipping: 0, ships: '1–2 days', loc: 'Miami, FL', watchers: 29, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Liverpool', watchers: 29, sold: 0,
   },
 
   // ── more One Piece ──
@@ -330,7 +330,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 32.00, market: 36.00, accepts_offers: true,
     history: series(26, 32), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 22, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 22, sold: 0,
   },
   {
     id: 'l37', name: 'Nami', subtitle: 'Character Parallel',
@@ -338,7 +338,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 21.00, market: 24.00, accepts_offers: true,
     history: series(17, 21), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 13, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 13, sold: 0,
   },
   {
     id: 'l38', name: 'Trafalgar Law', subtitle: 'Leader',
@@ -346,7 +346,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'auction', price: 28.00, market: 34.00, bids: 7, timeLeft: '17h 12m',
     history: series(22, 28), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 19, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 19, sold: 0,
   },
   {
     id: 'l39', name: 'Shanks', subtitle: 'Secret Rare',
@@ -354,7 +354,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'buynow', price: 96.00, market: 108.00, accepts_offers: true,
     history: series(72, 96), seller: 'RareMint', sellerRating: 99.1, sellerSales: 5230,
-    shipping: 0, ships: '1–2 days', loc: 'Honolulu, HI', watchers: 47, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Bath', watchers: 47, sold: 0,
   },
 
   // ── more Digimon ──
@@ -364,7 +364,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 26.00, market: 29.00, accepts_offers: true,
     history: series(20, 26), seller: 'DigiDestined', sellerRating: 98.6, sellerSales: 2118,
-    shipping: 0, ships: '2–3 days', loc: 'Los Angeles, CA', watchers: 14, sold: 0,
+    shipping: 0, ships: '2–3 days', loc: 'Brighton', watchers: 14, sold: 0,
   },
   {
     id: 'l41', name: 'MetalGarurumon', subtitle: 'Super Rare',
@@ -372,7 +372,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 23.00, market: 21.00, accepts_offers: true,
     history: series(18, 23), seller: 'DigiDestined', sellerRating: 98.6, sellerSales: 2118,
-    shipping: 0, ships: '2–3 days', loc: 'Los Angeles, CA', watchers: 8, sold: 0,
+    shipping: 0, ships: '2–3 days', loc: 'Brighton', watchers: 8, sold: 0,
   },
 
   // ── more Pokémon (live API art) ──
@@ -382,7 +382,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'auction', price: 540.00, market: 620.00, bids: 28, timeLeft: '7h 18m',
     history: series(420, 540), seller: 'VaultCards', sellerRating: 99.4, sellerSales: 12840,
-    shipping: 0, ships: '1–2 days', loc: 'Seattle, WA', watchers: 96, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Edinburgh', watchers: 96, sold: 0,
   },
   {
     id: 'l43', name: 'Lugia V', subtitle: 'Alternate Art Secret',
@@ -390,7 +390,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 132.00, market: 148.00, accepts_offers: true,
     history: series(108, 132), seller: 'PokeGrails', sellerRating: 99.0, sellerSales: 7420,
-    shipping: 0, ships: '1–2 days', loc: 'Chicago, IL', watchers: 44, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Leeds', watchers: 44, sold: 0,
   },
   {
     id: 'l44', name: 'Giratina VSTAR', subtitle: 'Secret Rare',
@@ -398,7 +398,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'buynow', price: 188.00, market: 205.00, accepts_offers: true,
     history: series(150, 188), seller: 'PokeGrails', sellerRating: 99.0, sellerSales: 7420,
-    shipping: 0, ships: '1–2 days', loc: 'Chicago, IL', watchers: 61, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Leeds', watchers: 61, sold: 0,
   },
   {
     id: 'l45', name: 'Mewtwo VSTAR', subtitle: 'Galarian Gallery',
@@ -406,7 +406,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 28.00, market: 32.00, accepts_offers: true,
     history: series(22, 28), seller: 'TopDeckTCG', sellerRating: 99.0, sellerSales: 9410,
-    shipping: 1.99, ships: '2–3 days', loc: 'Denver, CO', watchers: 12, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Glasgow', watchers: 12, sold: 0,
   },
   {
     id: 'l46', name: 'Pikachu VMAX', subtitle: 'Rainbow Rare',
@@ -414,7 +414,7 @@ const LISTINGS = [
     grade: { company: 'cgc', grade: 9.5 }, condition: 'Gem Mint',
     type: 'auction', price: 84.00, market: 96.00, bids: 11, timeLeft: '10h 03m',
     history: series(64, 84), seller: 'VaultCards', sellerRating: 99.4, sellerSales: 12840,
-    shipping: 0, ships: '1–2 days', loc: 'Seattle, WA', watchers: 33, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Edinburgh', watchers: 33, sold: 0,
   },
 
   // ── more Magic: The Gathering (live API art) ──
@@ -424,7 +424,7 @@ const LISTINGS = [
     grade: { company: 'bgs', grade: 7.5 }, condition: 'NM',
     type: 'auction', price: 7600.00, market: 8400.00, bids: 19, timeLeft: '2d 1h',
     history: series(6000, 7600), seller: 'AlphaInvest', sellerRating: 100, sellerSales: 1290,
-    shipping: 0, ships: 'Insured · 2 days', loc: 'New York, NY', watchers: 188, sold: 0,
+    shipping: 0, ships: 'Insured · 2 days', loc: 'London', watchers: 188, sold: 0,
   },
   {
     id: 'l48', name: 'Time Walk', subtitle: 'Power Nine',
@@ -432,7 +432,7 @@ const LISTINGS = [
     grade: { company: 'cgc', grade: 8.5 }, condition: 'NM-MT',
     type: 'buynow', price: 13400.00, market: 14200.00, accepts_offers: true,
     history: series(10800, 13400), seller: 'AlphaInvest', sellerRating: 100, sellerSales: 1290,
-    shipping: 0, ships: 'Insured · 2 days', loc: 'New York, NY', watchers: 142, sold: 0,
+    shipping: 0, ships: 'Insured · 2 days', loc: 'London', watchers: 142, sold: 0,
   },
   {
     id: 'l49', name: 'Sol Ring', subtitle: 'Alpha',
@@ -440,7 +440,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Lightly Played',
     type: 'buynow', price: 320.00, market: 360.00, accepts_offers: true,
     history: series(260, 320), seller: 'ManaBase', sellerRating: 98.9, sellerSales: 22014,
-    shipping: 1.99, ships: '2–3 days', loc: 'Austin, TX', watchers: 27, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Birmingham', watchers: 27, sold: 0,
   },
   {
     id: 'l50', name: 'Atraxa, Grand Unifier', subtitle: 'Borderless Mythic',
@@ -448,7 +448,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 38.00, market: 44.00, accepts_offers: true,
     history: series(48, 38), seller: 'ManaBase', sellerRating: 98.9, sellerSales: 22014,
-    shipping: 1.99, ships: '2–3 days', loc: 'Austin, TX', watchers: 18, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Birmingham', watchers: 18, sold: 0,
   },
   {
     id: 'l51', name: 'Lightning Bolt', subtitle: 'Alpha',
@@ -456,7 +456,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 6 }, condition: 'EX',
     type: 'buynow', price: 540.00, market: 590.00, accepts_offers: true,
     history: series(440, 540), seller: 'AlphaInvest', sellerRating: 100, sellerSales: 1290,
-    shipping: 0, ships: 'Insured · 2 days', loc: 'New York, NY', watchers: 36, sold: 0,
+    shipping: 0, ships: 'Insured · 2 days', loc: 'London', watchers: 36, sold: 0,
   },
 
   // ── more Yu-Gi-Oh! (live API art) ──
@@ -466,7 +466,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'auction', price: 168.00, market: 190.00, bids: 21, timeLeft: '12h 47m',
     history: series(128, 168), seller: 'DuelistPrime', sellerRating: 99.2, sellerSales: 6730,
-    shipping: 0, ships: '1–2 days', loc: 'Miami, FL', watchers: 58, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Liverpool', watchers: 58, sold: 0,
   },
   {
     id: 'l53', name: 'Elemental HERO Stratos', subtitle: 'Ultra Rare',
@@ -474,7 +474,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 22.00, market: 25.00, accepts_offers: true,
     history: series(18, 22), seller: 'MetaKnight', sellerRating: 98.4, sellerSales: 4205,
-    shipping: 1.99, ships: '2–3 days', loc: 'Columbus, OH', watchers: 9, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Newcastle', watchers: 9, sold: 0,
   },
   {
     id: 'l54', name: 'Stardust Dragon', subtitle: 'Quarter Century Secret Rare',
@@ -482,7 +482,7 @@ const LISTINGS = [
     grade: { company: 'cgc', grade: 9.5 }, condition: 'Gem Mint',
     type: 'buynow', price: 64.00, market: 72.00, accepts_offers: true,
     history: series(50, 64), seller: 'DuelistPrime', sellerRating: 99.2, sellerSales: 6730,
-    shipping: 0, ships: '1–2 days', loc: 'Miami, FL', watchers: 24, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Liverpool', watchers: 24, sold: 0,
   },
   {
     id: 'l55', name: 'Pot of Greed', subtitle: 'Ultra Rare',
@@ -490,7 +490,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 16.00, market: 14.50, accepts_offers: true,
     history: series(12, 16), seller: 'MetaKnight', sellerRating: 98.4, sellerSales: 4205,
-    shipping: 1.99, ships: '2–3 days', loc: 'Columbus, OH', watchers: 7, sold: 0,
+    shipping: 1.99, ships: '2–3 days', loc: 'Newcastle', watchers: 7, sold: 0,
   },
 
   // ── more One Piece (live API art) ──
@@ -500,7 +500,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 34.00, market: 39.00, accepts_offers: true,
     history: series(27, 34), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 26, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 26, sold: 0,
   },
   {
     id: 'l57', name: 'Sanji', subtitle: 'Super Rare',
@@ -508,7 +508,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 18.00, market: 21.00, accepts_offers: true,
     history: series(14, 18), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 11, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 11, sold: 0,
   },
   {
     id: 'l58', name: 'Boa Hancock', subtitle: 'Secret Rare',
@@ -516,7 +516,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'auction', price: 72.00, market: 84.00, bids: 13, timeLeft: '15h 31m',
     history: series(56, 72), seller: 'RareMint', sellerRating: 99.1, sellerSales: 5230,
-    shipping: 0, ships: '1–2 days', loc: 'Honolulu, HI', watchers: 39, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Bath', watchers: 39, sold: 0,
   },
   {
     id: 'l59', name: 'Yamato', subtitle: 'Leader',
@@ -524,7 +524,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 26.00, market: 30.00, accepts_offers: true,
     history: series(21, 26), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 15, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 15, sold: 0,
   },
 
   // ── more Digimon ──
@@ -534,7 +534,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 21.00, market: 24.00, accepts_offers: true,
     history: series(17, 21), seller: 'DigiDestined', sellerRating: 98.6, sellerSales: 2118,
-    shipping: 0, ships: '2–3 days', loc: 'Los Angeles, CA', watchers: 10, sold: 0,
+    shipping: 0, ships: '2–3 days', loc: 'Brighton', watchers: 10, sold: 0,
   },
   {
     id: 'l61', name: 'Gallantmon', subtitle: 'Super Rare',
@@ -542,7 +542,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 19.00, market: 17.50, accepts_offers: true,
     history: series(15, 19), seller: 'DigiDestined', sellerRating: 98.6, sellerSales: 2118,
-    shipping: 0, ships: '2–3 days', loc: 'Los Angeles, CA', watchers: 6, sold: 0,
+    shipping: 0, ships: '2–3 days', loc: 'Brighton', watchers: 6, sold: 0,
   },
 
   // ── One Piece · Royal Blood (OP-10) ──
@@ -552,7 +552,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 42.00, market: 48.00, accepts_offers: true,
     history: series(33, 42), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 28, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 28, sold: 0,
   },
   {
     id: 'l63', name: 'Kaido', subtitle: 'Secret Rare',
@@ -560,7 +560,7 @@ const LISTINGS = [
     grade: { company: 'psa', grade: 10 }, condition: 'Gem Mint',
     type: 'auction', price: 88.00, market: 104.00, bids: 16, timeLeft: '9h 55m',
     history: series(66, 88), seller: 'RareMint', sellerRating: 99.1, sellerSales: 5230,
-    shipping: 0, ships: '1–2 days', loc: 'Honolulu, HI', watchers: 52, sold: 0,
+    shipping: 0, ships: '1–2 days', loc: 'Bath', watchers: 52, sold: 0,
   },
   {
     id: 'l64', name: 'Kurozumi Higurashi', subtitle: 'Super Rare',
@@ -568,7 +568,7 @@ const LISTINGS = [
     grade: { company: 'raw' }, condition: 'Near Mint',
     type: 'buynow', price: 16.00, market: 19.00, accepts_offers: true,
     history: series(13, 16), seller: 'GrandLineTCG', sellerRating: 97.6, sellerSales: 1880,
-    shipping: 3.99, ships: '2–5 days', loc: 'San Jose, CA', watchers: 9, sold: 0,
+    shipping: 3.99, ships: '2–5 days', loc: 'Cardiff', watchers: 9, sold: 0,
   },
 ];
 
@@ -606,7 +606,7 @@ const gameById = (id) => GAMES.find(g => g.id === id);
 // ─────────────────────────────────────────────────────────────
 const SHOP = {
   id: 'gnome', name: 'Gnome Games', initial: 'G', tint: '#2f8f5b',
-  loc: 'Madison, WI', rating: 4.6, reviews: 1280,
+  loc: 'Oxford', rating: 4.6, reviews: 1280,
   blurb: 'Buying singles, sealed & collections daily. Cash or store credit (+20%).',
   creditBonus: 0.20,
 };
@@ -687,15 +687,15 @@ const SCAN_POOL = [
 // Local game shops — act as storefronts, buylist intake, local
 // vaults, and neutral trade-hub meetup venues.
 const SHOPS = [
-  { id: 'gnome', name: 'Gnome Games', initial: 'G', tint: '#2f8f5b', loc: 'Madison, WI', dist: 0.8,
+  { id: 'gnome', name: 'Gnome Games', initial: 'G', tint: '#2f8f5b', loc: 'Oxford', dist: 1.3,
     rating: 4.6, reviews: 1280, vault: true, tradeHub: true, events: true, enrolled: true,
     blurb: 'Buying singles, sealed & collections daily. Cash or store credit (+20%).',
     hours: 'Open till 9pm', inventory: ['l01', 'l09', 'l04', 'l07'], games: ['pkmn', 'mtg', 'ygo'] },
-  { id: 'dragon', name: "Dragon's Den", initial: 'D', tint: '#7c3aed', loc: 'Madison, WI', dist: 2.3,
+  { id: 'dragon', name: "Dragon's Den", initial: 'D', tint: '#7c3aed', loc: 'Oxford', dist: 3.7,
     rating: 4.8, reviews: 540, vault: true, tradeHub: true, events: true, enrolled: true,
     blurb: 'Competitive play, vintage singles, and a member vault for graded slabs.',
     hours: 'Open till 10pm', inventory: ['l05', 'l06', 'l12'], games: ['mtg', 'lor'] },
-  { id: 'mythic', name: 'Mythic Cards & Games', initial: 'M', tint: '#c2410c', loc: 'Sun Prairie, WI', dist: 4.1,
+  { id: 'mythic', name: 'Mythic Cards & Games', initial: 'M', tint: '#c2410c', loc: 'Headington', dist: 6.6,
     rating: 4.4, reviews: 312, vault: false, tradeHub: true, events: false, enrolled: true,
     blurb: 'Family-run shop. Trade nights every Friday, all ages welcome.',
     hours: 'Open till 8pm', inventory: ['l08', 'l10'], games: ['pkmn', 'ygo', 'digimon'] },
@@ -704,11 +704,11 @@ const SHOPS = [
 // Nearby collectors to trade with. haves = cards they'd give;
 // wants = cards they're after (referencing your collection).
 const TRADERS = [
-  { id: 't1', name: 'Marcus T.', initial: 'M', tint: '#1d4ed8', dist: 1.2, rating: 99, deals: 84,
+  { id: 't1', name: 'Marcus T.', initial: 'M', tint: '#1d4ed8', dist: 1.9, rating: 99, deals: 84,
     haves: ['l19', 'l06'], wants: ['l07'] },
-  { id: 't2', name: 'Priya K.', initial: 'P', tint: '#9d174d', dist: 3.5, rating: 98, deals: 42,
+  { id: 't2', name: 'Priya K.', initial: 'P', tint: '#9d174d', dist: 5.6, rating: 98, deals: 42,
     haves: ['l12', 'l19'], wants: ['l09'] },
-  { id: 't3', name: 'Diego R.', initial: 'D', tint: '#0e7490', dist: 0.6, rating: 100, deals: 210,
+  { id: 't3', name: 'Diego R.', initial: 'D', tint: '#0e7490', dist: 1.0, rating: 100, deals: 210,
     haves: ['l11', 'l12'], wants: ['l02'] },
 ];
 
@@ -764,9 +764,9 @@ const SELLERS = [
 const CONDITIONS  = ['Near Mint', 'Lightly Played', 'Moderately Played', 'Heavily Played'];
 const COND_SHORT  = ['NM', 'LP', 'MP', 'HP'];
 const SHIPS       = ['1–2 days', '2–3 days', '2–4 days', '2–5 days', '3–5 days'];
-const LOCS        = ['Dallas, TX', 'Portland, OR', 'Austin, TX', 'Denver, CO', 'Miami, FL',
-                     'Columbus, OH', 'San Jose, CA', 'Los Angeles, CA', 'Chicago, IL',
-                     'Seattle, WA', 'New York, NY', 'Honolulu, HI'];
+const LOCS        = ['Manchester', 'Bristol', 'Birmingham', 'Glasgow', 'Liverpool',
+                     'Newcastle', 'Cardiff', 'Brighton', 'Leeds',
+                     'Edinburgh', 'London', 'Bath'];
 
 // Deterministic pseudo-random from a string seed
 function _hash(s) { let h = 0; for (let i = 0; i < s.length; i++) { h = (h * 31 + s.charCodeAt(i)) | 0; } return Math.abs(h); }

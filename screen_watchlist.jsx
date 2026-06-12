@@ -212,7 +212,7 @@ function ProfileScreen({ app }) {
           {IconW.shield({ style: { color: TW.up } })}
         </div>
         <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-          {[['Buying power', '$2,400'], ['This year', '$8.1k spent'], ['Sold', '$3.4k']].map(([k,v]) => (
+          {[['Buying power', '£2,400'], ['This year', '£8.1k spent'], ['Sold', '£3.4k']].map(([k,v]) => (
             <div key={k} style={{ flex: 1, background: TW.surface2, borderRadius: 12, padding: '10px 12px' }}>
               <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{v}</div>
               <div style={{ fontFamily: TW.sans, fontSize: 10.5, color: TW.muted }}>{k}</div>

@@ -17,9 +17,9 @@ const STRATS = [
 function MethodRowB({ icon, title, sub, time, hero, onClick }) {
   return (
     <button onClick={onClick} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 13,
-      background: hero ? 'var(--accent-wash)' : TB.surface, borderRadius: 14, padding: '14px 15px',
+      background: hero ? 'var(--accent-wash)' : TB.surface, borderRadius: 4, padding: '14px 15px',
       boxShadow: hero ? 'inset 0 0 0 2px var(--accent)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
-      <span style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, background: hero ? TB.accent : TB.surface2,
+      <span style={{ width: 42, height: 42, borderRadius: 4, flexShrink: 0, background: hero ? TB.accent : TB.surface2,
         color: hero ? '#fff' : TB.ink2, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>{icon}</span>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontFamily: TB.sans, fontWeight: 700, fontSize: 15, color: hero ? TB.accent : TB.ink }}>{title}</div>
@@ -81,7 +81,7 @@ function SellBulkScreen({ app }) {
               <MethodRowB icon="🔍" title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
               <MethodRowB icon="📄" title="Import List" sub="Manabox · TCGplayer · CSV" time="instant" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
             </div>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TB.surface2, borderRadius: 12, padding: '12px 13px' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TB.surface2, borderRadius: 4, padding: '12px 13px' }}>
               <span style={{ color: TB.accent, marginTop: 1 }}>{IconB.tag({ width: 16, height: 16 })}</span>
               <span style={{ fontFamily: TB.sans, fontSize: 12.5, color: TB.ink2, lineHeight: 1.45 }}>
                 After scanning, we price every card from live market data. You set one strategy for all, then tweak any before publishing.
@@ -104,7 +104,7 @@ function SellBulkScreen({ app }) {
             {/* pricing strategy */}
             <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
               {STRATS.map(s => (
-                <button key={s.id} onClick={() => setStrat(s.id)} style={{ flex: 1, textAlign: 'left', padding: '11px 12px', borderRadius: 13,
+                <button key={s.id} onClick={() => setStrat(s.id)} style={{ flex: 1, textAlign: 'left', padding: '11px 12px', borderRadius: 4,
                   background: strat === s.id ? 'var(--accent-wash)' : TB.surface, boxShadow: strat === s.id ? 'inset 0 0 0 2px var(--accent)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
                   <div style={{ fontFamily: TB.sans, fontWeight: 700, fontSize: 13, color: strat === s.id ? TB.accent : TB.ink }}>{s.label}</div>
                   <div style={{ fontFamily: TB.sans, fontSize: 10.5, color: TB.muted, marginTop: 1 }}>{s.sub}</div>
@@ -114,17 +114,17 @@ function SellBulkScreen({ app }) {
 
             {/* listing format */}
             <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
-              <button onClick={() => setListType('buynow')} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '11px 0', borderRadius: 12,
+              <button onClick={() => setListType('buynow')} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '11px 0', borderRadius: 4,
                 fontFamily: TB.sans, fontWeight: 700, fontSize: 13.5, background: listType === 'buynow' ? 'var(--fill)' : TB.surface, color: listType === 'buynow' ? '#fff' : TB.ink2,
                 boxShadow: listType === 'buynow' ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{IconB.bolt({ width: 14, height: 14 })} Buy It Now</button>
-              <button onClick={() => setListType('auction')} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '11px 0', borderRadius: 12,
+              <button onClick={() => setListType('auction')} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '11px 0', borderRadius: 4,
                 fontFamily: TB.sans, fontWeight: 700, fontSize: 13.5, background: listType === 'auction' ? 'var(--fill)' : TB.surface, color: listType === 'auction' ? '#fff' : TB.ink2,
                 boxShadow: listType === 'auction' ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{IconB.gavel({ width: 14, height: 14 })} Auction</button>
             </div>
 
             {/* toggles */}
-            <div style={{ background: TB.surface, borderRadius: 13, padding: '4px 14px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-              <ToggleLine label="Offer free shipping" on={freeShip} onClick={() => setFreeShip(!freeShip)} />
+            <div style={{ background: TB.surface, borderRadius: 4, padding: '4px 14px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <ToggleLine label="Offer free postage" on={freeShip} onClick={() => setFreeShip(!freeShip)} />
               <div style={{ height: 1, background: 'var(--line-2)' }} />
               <ToggleLine label="Accept offers on all" on={offers} onClick={() => setOffers(!offers)} />
             </div>
@@ -142,7 +142,7 @@ function SellBulkScreen({ app }) {
             </div>
 
             {/* payout summary */}
-            <div style={{ marginTop: 16, background: 'var(--fill)', borderRadius: 16, padding: 16, color: '#fff' }}>
+            <div style={{ marginTop: 16, background: 'var(--fill)', borderRadius: 4, padding: 16, color: '#fff' }}>
               {[['List price total', moneyB(gross)], ['Seller fee (9%)', '–' + moneyB(fee)]].map(([k, v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', fontFamily: TB.sans, fontSize: 13.5, color: 'rgba(255,255,255,0.75)' }}>
                   <span>{k}</span><span style={{ fontFamily: TB.sans, fontWeight: 600 }}>{v}</span>
@@ -176,7 +176,7 @@ function SellBulkScreen({ app }) {
                 </div>
               ))}
             </div>
-            <button onClick={() => app.nav.setTab('watch')} style={{ width: '100%', marginTop: 22, background: TB.accent, color: '#fff', borderRadius: 14,
+            <button onClick={() => app.nav.setTab('watch')} style={{ width: '100%', marginTop: 22, background: TB.accent, color: '#fff', borderRadius: 4,
               padding: 15, fontFamily: TB.sans, fontWeight: 700, fontSize: 15.5 }}>Manage my listings</button>
             <button onClick={() => app.nav.setTab('home')} style={{ marginTop: 10, color: TB.muted, fontFamily: TB.sans, fontWeight: 600, fontSize: 14 }}>Back to browse</button>
           </div>
@@ -186,7 +186,7 @@ function SellBulkScreen({ app }) {
       {/* footer */}
       {phase === 'price' && (
         <div style={{ padding: '12px 16px 30px', background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)' }}>
-          <button onClick={() => setPhase('done')} disabled={listed === 0} style={{ width: '100%', background: TB.accent, color: '#fff', borderRadius: 14,
+          <button onClick={() => setPhase('done')} disabled={listed === 0} style={{ width: '100%', background: TB.accent, color: '#fff', borderRadius: 4,
             padding: 16, fontFamily: TB.sans, fontWeight: 700, fontSize: 16, opacity: listed === 0 ? 0.45 : 1, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
             Publish {listed} listing{listed !== 1 ? 's' : ''} · {moneyB(gross)}
           </button>
@@ -211,7 +211,7 @@ function ToggleLine({ label, on, onClick }) {
 
 function BulkPriceRow({ c, price, listType, excluded, onToggle }) {
   return (
-    <div style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 11, background: TB.surface, borderRadius: 13, padding: 10,
+    <div style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 11, background: TB.surface, borderRadius: 4, padding: 10,
       opacity: excluded ? 0.5 : 1, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
       <div style={{ background: TB.surface2, borderRadius: 9, padding: 6, flexShrink: 0 }}><CardArtB item={c} w={42} radius={5} /></div>
       <div style={{ flex: 1, minWidth: 0 }}>

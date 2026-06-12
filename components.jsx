@@ -16,9 +16,9 @@ const T = {
 function money(n, opts = {}) {
   const { cents = true } = opts;
   if (n == null) return '—';
-  const fixed = n >= 1000 ? n.toLocaleString('en-US', { minimumFractionDigits: cents ? 2 : 0, maximumFractionDigits: cents ? 2 : 0 })
+  const fixed = n >= 1000 ? n.toLocaleString('en-GB', { minimumFractionDigits: cents ? 2 : 0, maximumFractionDigits: cents ? 2 : 0 })
     : n.toFixed(cents ? 2 : 0);
-  return '$' + fixed;
+  return '£' + fixed;
 }
 
 // ── Card art placeholder (looks like trading-card face) ──────

@@ -123,7 +123,7 @@ function TradeScreen({ app, params = {} }) {
                       <Avatar who={t} size={42} />
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 15, display: 'flex', alignItems: 'center', gap: 6 }}>{t.name}{window.TrustBadge && <window.TrustBadge tier={t.rating >= 99 ? 2 : 1} showLabel={false} />}</div>
-                        <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.muted }}>{t.dist} mi · {t.rating}% · {t.deals} trades</div>
+                        <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.muted }}>{t.dist} km · {t.rating}% · {t.deals} trades</div>
                       </div>
                       <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 11, color: 'var(--up)', background: 'var(--up-wash)', borderRadius: 7, padding: '4px 9px' }}>2-way match</span>
                     </div>
@@ -170,7 +170,7 @@ function TradeScreen({ app, params = {} }) {
                       <Avatar who={t} size={36} />
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 14, display: 'flex', alignItems: 'center', gap: 5 }}>{t.name}{window.TrustBadge && <window.TrustBadge tier={t.rating >= 99 ? 2 : 1} showLabel={false} />}</div>
-                        <div style={{ fontFamily: TT.sans, fontSize: 11, color: TT.muted }}>{t.dist} mi · {t.rating}%</div>
+                        <div style={{ fontFamily: TT.sans, fontSize: 11, color: TT.muted }}>{t.dist} km · {t.rating}%</div>
                       </div>
                       <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 10.5, color: 'var(--gold)', background: 'oklch(0.95 0.06 85)', borderRadius: 7, padding: '4px 9px' }}>OPEN TO OFFERS</span>
                     </div>
@@ -280,7 +280,7 @@ function TradeScreen({ app, params = {} }) {
               <Avatar who={trader} size={40} />
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 15 }}>Trading with {trader.name}</div>
-                <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.muted }}>{trader.dist} mi · {trader.rating}% positive</div>
+                <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.muted }}>{trader.dist} km · {trader.rating}% positive</div>
               </div>
             </div>
 
@@ -399,7 +399,7 @@ function TradeScreen({ app, params = {} }) {
                         {s.vault && <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 9.5, color: 'var(--gold)', background: 'oklch(0.95 0.06 85)', borderRadius: 5, padding: '1px 5px' }}>VAULT</span>}
                       </div>
                       <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.muted }}>{s.loc} · {s.hours}</div>
-                      <div style={{ fontFamily: TT.sans, fontSize: 11, color: TT.accent, fontWeight: 600, marginTop: 2 }}>~{mid} mi midpoint · {s.dist} mi you · {theirDist} mi them</div>
+                      <div style={{ fontFamily: TT.sans, fontSize: 11, color: TT.accent, fontWeight: 600, marginTop: 2 }}>~{mid} km midpoint · {s.dist} km you · {theirDist} km them</div>
                     </div>
                     <span style={{ width: 22, height: 22, borderRadius: 999, flexShrink: 0, boxShadow: sel ? 'none' : 'inset 0 0 0 2px var(--line)', background: sel ? 'var(--accent)' : 'transparent',
                       display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{sel && <span style={{ width: 8, height: 8, borderRadius: 999, background: '#fff' }} />}</span>
@@ -410,9 +410,9 @@ function TradeScreen({ app, params = {} }) {
 
             <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 13.5, color: TT.ink2, margin: '20px 2px 9px' }}>Public meetup spots</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {[{ id: 'lib', name: 'Central Library — café', sub: '1.6 mi midpoint · busy, well-lit', emoji: '📚' },
-                { id: 'mall', name: 'Riverside Mall food court', sub: '2.1 mi midpoint · public & central', emoji: '🛍️' },
-                { id: 'cafe', name: 'Grounds Coffee on Main', sub: '1.2 mi midpoint · cameras, seating', emoji: '☕' }].map(p => {
+              {[{ id: 'lib', name: 'Central Library — café', sub: '1.6 km midpoint · busy, well-lit', emoji: '📚' },
+                { id: 'mall', name: 'Riverside Mall food court', sub: '2.1 km midpoint · public & central', emoji: '🛍️' },
+                { id: 'cafe', name: 'Grounds Coffee on Main', sub: '1.2 km midpoint · cameras, seating', emoji: '☕' }].map(p => {
                 const sel = place && place.id === p.id;
                 return (
                   <button key={p.id} onClick={() => setPlace({ id: p.id, name: p.name, sub: p.sub, kind: 'public', tint: 'var(--muted)', initial: p.emoji })} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 12,
@@ -487,7 +487,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
   const { byId: byIdL } = window;
   // location negotiation: proposed → countered → agreed
   const [stage, setStage] = React.useState('proposed');
-  const counterSpot = { id: 'counter', name: 'Northside Collectibles', sub: trader.name + "'s pick · 0.5 mi from them · trade hub", kind: 'shop', tint: '#7c3aed', initial: 'N' };
+  const counterSpot = { id: 'counter', name: 'Northside Collectibles', sub: trader.name + "'s pick · 0.5 km from them · trade hub", kind: 'shop', tint: '#7c3aed', initial: 'N' };
   const agreedPlace = stage === 'accepted-counter' ? counterSpot : place;
 
   return (

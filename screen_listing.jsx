@@ -291,8 +291,8 @@ function ListingScreen({ app, params }) {
 function OfferInput({ value, setValue, placeholder }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', background: TL.surface2, borderRadius: 14, padding: '14px 16px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-      <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 26, color: TL.muted, marginRight: 4 }}>$</span>
-      <input autoFocus type="number" value={value} onChange={e => setValue(e.target.value)} placeholder={placeholder.replace('$','')}
+      <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 26, color: TL.muted, marginRight: 4 }}>£</span>
+      <input autoFocus type="number" value={value} onChange={e => setValue(e.target.value)} placeholder={placeholder.replace('£','')}
         style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TL.sans, fontWeight: 700, fontSize: 26, color: TL.ink, minWidth: 0 }} />
     </div>
   );

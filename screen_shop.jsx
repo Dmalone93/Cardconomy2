@@ -384,7 +384,7 @@ function ShopScreen({ app }) {
         <div className="noscroll" style={{ display: 'flex', gap: 7, overflowX: 'auto', margin: '14px 0 10px' }}>
           <FilterChip active={filter === 'all'} onClick={() => setFilter('all')}>All itemized</FilterChip>
           <FilterChip active={filter === 'match'} onClick={() => setFilter('match')} gold>★ Buylist {stats.buylistCount}</FilterChip>
-          <FilterChip active={filter === 'singles'} onClick={() => setFilter('singles')}>Singles ≥ $5</FilterChip>
+          <FilterChip active={filter === 'singles'} onClick={() => setFilter('singles')}>Singles ≥ £5</FilterChip>
           <FilterChip active={filter === 'flag'} onClick={() => setFilter('flag')} danger>⚠ Flagged</FilterChip>
         </div>
 

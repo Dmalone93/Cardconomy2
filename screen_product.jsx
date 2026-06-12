@@ -166,7 +166,7 @@ function ProductScreen({ app, params }) {
               Listed at {moneyP(offerSheet.price)} · {offerSheet.condition}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: TP.surface2, borderRadius: 4, padding: '12px 14px' }}>
-              <span style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 22, color: TP.muted }}>$</span>
+              <span style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 22, color: TP.muted }}>£</span>
               <input value={offerVal} onChange={e => setOfferVal(e.target.value)} placeholder="0.00" type="number"
                 style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TP.sans, fontWeight: 700, fontSize: 22, color: TP.ink, minWidth: 0 }} />
             </div>

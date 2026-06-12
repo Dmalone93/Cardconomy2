@@ -47,7 +47,7 @@ function StorefrontScreen({ app, params = {} }) {
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontFamily: TF.sans, fontSize: 12.5, color: TF.ink2, marginBottom: 12 }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>📍 {shop.loc} · {shop.dist} mi</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>📍 {shop.loc} · {shop.dist} km</span>
             <span style={{ color: 'var(--up)', fontWeight: 700 }}>● {shop.hours}</span>
           </div>
           <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.ink2, lineHeight: 1.5, margin: '0 0 16px' }}>{shop.blurb}</p>
@@ -772,7 +772,7 @@ function EnrollShopScreen({ app }) {
 
           {/* stat strip */}
           <div style={{ display: 'flex', gap: 10, padding: 16, marginTop: -2 }}>
-            {[['$0', 'to enroll'], ['2 days', 'to go live'], ['9%', 'flat seller fee']].map(([v, k]) => (
+            {[['£0', 'to enroll'], ['2 days', 'to go live'], ['9%', 'flat seller fee']].map(([v, k]) => (
               <div key={k} style={{ flex: 1, background: TF.surface, borderRadius: 13, padding: '12px 10px', textAlign: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 18 }}>{v}</div>
                 <div style={{ fontFamily: TF.sans, fontSize: 10.5, color: TF.muted }}>{k}</div>

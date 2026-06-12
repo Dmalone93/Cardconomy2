@@ -51,7 +51,7 @@ function AuthCardScreen({ app, params = {} }) {
               <div style={{ width: 64, height: 64, margin: '0 auto 12px', borderRadius: 18, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconAU.shield({ width: 30, height: 30 })}</div>
               <h1 style={{ margin: 0, fontFamily: TAU.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.5 }}>Get it Cardonomy Verified</h1>
               <p style={{ fontFamily: TAU.sans, fontSize: 13.5, color: TAU.muted, lineHeight: 1.5, margin: '8px auto 0', maxWidth: 300 }}>
-                Raw cards over $100 can be authenticated by our team. Verified cards get a tamper-evident seal and sell for more, with buyer trust built in.
+                Raw cards over £100 can be authenticated by our team. Verified cards get a tamper-evident seal and sell for more, with buyer trust built in.
               </p>
             </div>
             <div style={{ background: TAU.surface, borderRadius: 14, padding: 15, boxShadow: 'var(--shadow-1)' }}>

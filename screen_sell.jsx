@@ -60,7 +60,7 @@ function SellScreen({ app }) {
           {card.name} is now listed for {moneySE(+price)}. We'll notify you when it sells or gets an offer.
         </p>
         <div style={{ marginTop: 20 }}><CardArtSE item={{ ...card, grade: gradeObj }} w={110} /></div>
-        <button onClick={reset} style={{ marginTop: 26, background: TSE.accent, color: '#fff', borderRadius: 14, padding: '14px 28px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 16 }}>List another card</button>
+        <button onClick={reset} style={{ marginTop: 26, background: TSE.accent, color: '#fff', borderRadius: 4, padding: '14px 28px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 16 }}>List another card</button>
         <button onClick={() => { reset(); app.nav.pop(); }} style={{ marginTop: 10, color: TSE.muted, fontFamily: TSE.sans, fontWeight: 600, fontSize: 14 }}>Back to selling</button>
       </div>
     );
@@ -86,7 +86,7 @@ function SellScreen({ app }) {
           <div>
             <h2 style={{ margin: '0 0 4px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>What are you selling?</h2>
             <p style={{ fontFamily: TSE.sans, fontSize: 13.5, color: TSE.muted, margin: '0 0 14px' }}>Search our catalog to auto-fill the card details.</p>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: TSE.surface, borderRadius: 12, padding: '11px 14px', boxShadow: 'inset 0 0 0 1px var(--line)', marginBottom: 14 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: TSE.surface, borderRadius: 4, padding: '11px 14px', boxShadow: 'inset 0 0 0 1px var(--line)', marginBottom: 14 }}>
               {IconSE.search({ width: 18, height: 18, style: { color: TSE.faint } })}
               <input value={q} onChange={e => setQ(e.target.value)} placeholder="e.g. Charizard ex 151" autoFocus
                 style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TSE.sans, fontSize: 15, minWidth: 0 }} />
@@ -96,7 +96,7 @@ function SellScreen({ app }) {
                 const sel = card && card.name === c.name && card.number === c.number;
                 return (
                   <button key={i} onClick={() => setCard(c)} style={{ display: 'flex', alignItems: 'center', gap: 12, textAlign: 'left',
-                    background: TSE.surface, borderRadius: 12, padding: 10, boxShadow: sel ? 'inset 0 0 0 2px var(--accent)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
+                    background: TSE.surface, borderRadius: 4, padding: 10, boxShadow: sel ? 'inset 0 0 0 2px var(--accent)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
                     <div style={{ background: TSE.surface2, borderRadius: 9, padding: 6 }}><CardArtSE item={c} w={42} radius={5} /></div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 14.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
@@ -118,7 +118,7 @@ function SellScreen({ app }) {
         {step === 1 && (
           <div>
             <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Condition & grading</h2>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: TSE.surface, borderRadius: 14, padding: '15px 16px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: TSE.surface, borderRadius: 4, padding: '15px 16px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div>
                 <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 15 }}>Professionally graded</div>
                 <div style={{ fontFamily: TSE.sans, fontSize: 12.5, color: TSE.muted }}>In a PSA / BGS / CGC slab</div>
@@ -161,7 +161,7 @@ function SellScreen({ app }) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {photos.map((on, i) => (
                 <button key={i} onClick={() => setPhotos(photos.map((p,j) => j===i ? !p : p))} style={{
-                  aspectRatio: '1', borderRadius: 14, position: 'relative', overflow: 'hidden',
+                  aspectRatio: '1', borderRadius: 4, position: 'relative', overflow: 'hidden',
                   background: on ? card.art : TSE.surface,
                   boxShadow: on ? 'none' : 'inset 0 0 0 2px var(--line)',
                   border: on ? 'none' : '2px dashed transparent',
@@ -191,13 +191,13 @@ function SellScreen({ app }) {
           <div>
             <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Set your price</h2>
             <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-              <button onClick={() => setListType('buynow')} style={{ flex: 1, padding: 14, borderRadius: 14, textAlign: 'left',
+              <button onClick={() => setListType('buynow')} style={{ flex: 1, padding: 14, borderRadius: 4, textAlign: 'left',
                 background: listType==='buynow'?'var(--accent-wash)':TSE.surface, boxShadow: listType==='buynow'?'inset 0 0 0 2px var(--accent)':'inset 0 0 0 1px var(--line)' }}>
                 <div style={{ color: listType==='buynow'?TSE.accent:TSE.muted, marginBottom: 4 }}>{IconSE.bolt({width:18,height:18})}</div>
                 <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 14.5 }}>Buy It Now</div>
                 <div style={{ fontFamily: TSE.sans, fontSize: 11.5, color: TSE.muted }}>Fixed price</div>
               </button>
-              <button onClick={() => setListType('auction')} style={{ flex: 1, padding: 14, borderRadius: 14, textAlign: 'left',
+              <button onClick={() => setListType('auction')} style={{ flex: 1, padding: 14, borderRadius: 4, textAlign: 'left',
                 background: listType==='auction'?'var(--accent-wash)':TSE.surface, boxShadow: listType==='auction'?'inset 0 0 0 2px var(--accent)':'inset 0 0 0 1px var(--line)' }}>
                 <div style={{ color: listType==='auction'?TSE.accent:TSE.muted, marginBottom: 4 }}>{IconSE.gavel({width:18,height:18})}</div>
                 <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 14.5 }}>Auction</div>
@@ -206,13 +206,13 @@ function SellScreen({ app }) {
             </div>
 
             <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{listType==='auction'?'Starting bid':'Your price'}</div>
-            <div style={{ display: 'flex', alignItems: 'center', background: TSE.surface, borderRadius: 14, padding: '14px 16px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-              <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 28, color: TSE.muted, marginRight: 4 }}>$</span>
+            <div style={{ display: 'flex', alignItems: 'center', background: TSE.surface, borderRadius: 4, padding: '14px 16px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+              <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 28, color: TSE.muted, marginRight: 4 }}>£</span>
               <input type="number" value={price} onChange={e => setPrice(e.target.value)} placeholder={String(suggested)}
                 style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TSE.sans, fontWeight: 700, fontSize: 28, minWidth: 0 }} />
             </div>
             <button onClick={() => setPrice(String(suggested))} style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8, width: '100%',
-              background: 'var(--accent-wash)', borderRadius: 12, padding: '11px 14px', textAlign: 'left' }}>
+              background: 'var(--accent-wash)', borderRadius: 4, padding: '11px 14px', textAlign: 'left' }}>
               <span style={{ color: TSE.accent }}>{IconSE.tag({})}</span>
               <span style={{ flex: 1, fontFamily: TSE.sans, fontSize: 13, color: TSE.ink2 }}>Suggested: <b>{moneySE(suggested)}</b> based on recent {graded?grader.toUpperCase()+' '+grade:'raw'} sales</span>
               <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13, color: TSE.accent }}>Use</span>
@@ -225,8 +225,8 @@ function SellScreen({ app }) {
               </div>
             )}
 
-            <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18, background: TSE.surface, borderRadius: 14, padding: '14px 16px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-              <span style={{ fontFamily: TSE.sans, fontWeight: 600, fontSize: 14.5 }}>Offer free shipping</span>
+            <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18, background: TSE.surface, borderRadius: 4, padding: '14px 16px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <span style={{ fontFamily: TSE.sans, fontWeight: 600, fontSize: 14.5 }}>Offer free postage</span>
               <ToggleSwitchSE on={freeShip} onClick={() => setFreeShip(!freeShip)} />
             </label>
           </div>
@@ -236,7 +236,7 @@ function SellScreen({ app }) {
         {step === 4 && (
           <div>
             <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Review listing</h2>
-            <div style={{ background: TSE.surface, borderRadius: 16, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ background: TSE.surface, borderRadius: 4, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div style={{ display: 'flex', gap: 14 }}>
                 <div style={{ background: TSE.surface2, borderRadius: 10, padding: 8 }}><CardArtSE item={{...card, grade: gradeObj}} w={70} /></div>
                 <div style={{ flex: 1 }}>
@@ -250,7 +250,7 @@ function SellScreen({ app }) {
                 {[['Format', listType==='auction'?days+'-day auction':'Buy It Now'],
                   ['Condition', graded ? grader.toUpperCase()+' '+grade : cond],
                   ['Photos', photoCount + ' added'],
-                  ['Shipping', freeShip ? 'Free (you pay)' : 'Buyer pays'],
+                  ['Postage', freeShip ? 'Free Royal Mail (you pay)' : 'Buyer pays'],
                   ['Seller fee', moneySE(+price * 0.09) + ' (9%)']].map(([k,v]) => (
                   <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', borderBottom: '1px solid var(--line-2)', fontFamily: TSE.sans, fontSize: 14 }}>
                     <span style={{ color: TSE.muted }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span>
@@ -269,7 +269,7 @@ function SellScreen({ app }) {
       {/* footer */}
       <div style={{ padding: '12px 16px 30px', background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)' }}>
         <button onClick={() => step < 4 ? setStep(step+1) : setDone(true)} disabled={!canNext} style={{
-          width: '100%', background: TSE.accent, color: '#fff', borderRadius: 14, padding: 16, fontFamily: TSE.sans, fontWeight: 700, fontSize: 16,
+          width: '100%', background: TSE.accent, color: '#fff', borderRadius: 4, padding: 16, fontFamily: TSE.sans, fontWeight: 700, fontSize: 16,
           opacity: canNext ? 1 : 0.45, boxShadow: canNext ? '0 4px 14px oklch(0.52 0.2 264 / 0.35)' : 'none' }}>
           {step < 4 ? 'Continue' : 'List it for ' + (price ? moneySE(+price) : '')}
         </button>
