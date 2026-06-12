@@ -389,14 +389,28 @@ function Sheet({ open, onClose, children, height = 'auto', title }) {
 // ── toast ────────────────────────────────────────────────────
 function Toast({ msg }) {
   if (!msg) return null;
+  const isRich = typeof msg === 'object' && msg.title;
   return (
     <div style={{
       position: 'absolute', bottom: 96, left: '50%', transform: 'translateX(-50%)',
       zIndex: 90, background: 'var(--fill)', color: '#fff', borderRadius: 12,
-      padding: '11px 18px', fontFamily: T.sans, fontSize: 14, fontWeight: 600,
+      padding: isRich ? '11px 14px' : '11px 18px', fontFamily: T.sans, fontSize: 14, fontWeight: 600,
       boxShadow: '0 8px 24px rgba(0,0,0,0.3)', animation: 'ccFade 0.2s ease',
-      display: 'flex', alignItems: 'center', gap: 8, whiteSpace: 'nowrap',
-    }}>{msg}</div>
+      display: 'flex', alignItems: 'center', gap: 10, whiteSpace: 'nowrap',
+      maxWidth: 'calc(100% - 32px)',
+    }}>
+      {isRich ? (
+        <React.Fragment>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: 13, fontWeight: 700 }}>{msg.title}</div>
+            {msg.subtitle && <div style={{ fontSize: 11, opacity: 0.8, marginTop: 1, fontWeight: 500 }}>{msg.subtitle}</div>}
+          </div>
+          {msg.action && msg.onAction && (
+            <button onClick={msg.onAction} style={{ color: 'var(--accent-wash)', fontFamily: T.sans, fontWeight: 700, fontSize: 11, background: 'none', padding: '4px 0', whiteSpace: 'nowrap', flexShrink: 0 }}>{msg.action}</button>
+          )}
+        </React.Fragment>
+      ) : msg}
+    </div>
   );
 }
 
