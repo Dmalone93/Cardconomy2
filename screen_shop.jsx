@@ -71,7 +71,6 @@ function ShopDashboard({ app, onCounter }) {
   const [period, setPeriod] = React.useState('30d');
   const [topTab, setTopTab] = React.useState('best');
   const d = DASH_DATA[period];
-  const periods = ['7d', '30d', '90d', 'all'];
 
   const sectionStyle = { background: TSH.surface, borderRadius: 4, padding: 14, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' };
   const labelStyle = { fontFamily: TSH.sans, fontSize: 11, color: TSH.muted, fontWeight: 600 };
@@ -101,12 +100,16 @@ function ShopDashboard({ app, onCounter }) {
             <span style={{ position: 'absolute', top: 4, marginLeft: 4, minWidth: 18, height: 18, borderRadius: 999, background: 'var(--down)', color: '#fff', fontFamily: TSH.sans, fontWeight: 700, fontSize: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px' }}>2</span>
           </button>
         </div>
-        {/* period picker */}
-        <div style={{ display: 'flex', gap: 7, marginTop: 10, paddingBottom: 12 }}>
-          {periods.map(p => (
-            <button key={p} onClick={() => setPeriod(p)} style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, padding: '6px 14px', borderRadius: 999,
-              background: period === p ? 'var(--fill)' : TSH.surface, color: period === p ? '#fff' : TSH.ink2,
-              boxShadow: period === p ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{p === 'all' ? 'All' : p}</button>
+        {/* period picker — segmented control */}
+        <div style={{ display: 'flex', marginTop: 12, marginBottom: 12, background: TSH.surface2, borderRadius: 4, padding: 2 }}>
+          {[['7d', '7 days'], ['30d', '30 days'], ['90d', '90 days'], ['all', 'All time']].map(([key, label]) => (
+            <button key={key} onClick={() => setPeriod(key)} style={{
+              flex: 1, fontFamily: TSH.sans, fontWeight: 600, fontSize: 13, padding: '8px 0',
+              borderRadius: 3, transition: 'all 0.15s',
+              background: period === key ? TSH.surface : 'transparent',
+              color: period === key ? TSH.ink : TSH.muted,
+              boxShadow: period === key ? '0 1px 3px rgba(0,0,0,0.08)' : 'none',
+            }}>{label}</button>
           ))}
         </div>
       </div>
