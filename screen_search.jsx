@@ -1,9 +1,9 @@
 // ─────────────────────────────────────────────────────────────
 // Search + filters + results
 // ─────────────────────────────────────────────────────────────
-const { T: TS, money: moneyS, Chip: ChipS, Icon: IconS, Sheet: SheetS } = window;
+const { T: TS, money: moneyS, Chip: ChipS, Icon: IconS, Sheet: SheetS, CardArt: CardArtS } = window;
 const { ListRow: ListRowS, ListCard: ListCardS } = window;
-const { GAMES: GAMES_S, SETS: SETS_S, LISTINGS: LISTINGS_S, PRODUCTS: PRODUCTS_S, gameById: gameByIdS, setById: setByIdS } = window;
+const { GAMES: GAMES_S, SETS: SETS_S, LISTINGS: LISTINGS_S, PRODUCTS: PRODUCTS_S, gameById: gameByIdS, setById: setByIdS, byId: byIdS } = window;
 const { ProductCard: ProductCardS } = window;
 
 const CONDITIONS = ['Any grade', 'Graded only', 'PSA 10', 'Raw / Ungraded'];
@@ -118,6 +118,37 @@ function SearchScreen({ app, params = {} }) {
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
             {popular.map(p => <ChipS key={p} onClick={() => { setQ(p); setFocused(false); }}>{p}</ChipS>)}
           </div>
+
+          {/* recently viewed */}
+          <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, marginBottom: 10, letterSpacing: 0.2 }}>RECENTLY VIEWED</div>
+          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', marginBottom: 24, paddingBottom: 4 }}>
+            {['l01', 'l06', 'l09', 'l07'].map(lid => {
+              const card = byIdS(lid);
+              if (!card) return null;
+              return (
+                <button key={lid} onClick={() => app.nav.push('listing', { id: lid })} style={{ flexShrink: 0, width: 80, textAlign: 'center', background: 'none', padding: 0 }}>
+                  <div style={{ background: TS.surface, borderRadius: 10, padding: 6, marginBottom: 4, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                    <CardArtS item={card} w={68} radius={6} />
+                  </div>
+                  <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 11, color: TS.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{card.name}</div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* saved searches */}
+          <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, marginBottom: 10, letterSpacing: 0.2 }}>SAVED SEARCHES</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
+            {['Charizard NM', 'PSA 10 Pokemon', 'Modern Horizons 3'].map(s => (
+              <button key={s} onClick={() => { setQ(s); setFocused(false); }} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: TS.sans, fontWeight: 600, fontSize: 13.5,
+                padding: '8px 14px', borderRadius: 4, background: TS.surface, color: TS.ink,
+                boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+                {IconS.search({ width: 14, height: 14, style: { color: TS.faint } })} {s}
+              </button>
+            ))}
+          </div>
+
           <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, marginBottom: 10, letterSpacing: 0.2 }}>BROWSE BY GAME</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {GAMES_S.map(g => (

@@ -173,6 +173,7 @@ function EmptyState({ icon, title, body, cta, onCta }) {
 // ── Profile ──────────────────────────────────────────────────
 function ProfileScreen({ app }) {
   const [prefsOpen, setPrefsOpen] = React.useState(false);
+  const port = valueOf(app.ownedIds());
   const ACCT_LABEL = { buyer: 'Collector', seller: 'Individual seller', store: 'Game shop' };
   const followed = (window.GAMES || []).filter(g => app.inPrefs(g.id));
   const menu = [
@@ -212,6 +213,43 @@ function ProfileScreen({ app }) {
         </div>
       </div>
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
+        {/* trading reputation */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5, marginBottom: 10 }}>Your reputation</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+            <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.5 }}>98.5%</span>
+            <span style={{ background: '#22c55e', color: '#fff', fontFamily: TW.sans, fontWeight: 700, fontSize: 11, padding: '3px 8px', borderRadius: 4 }}>Trust score</span>
+          </div>
+          <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, marginBottom: 8 }}>24 completed trades · 156 sales · 0 disputes</div>
+          <StarsW rating={98} />
+        </div>
+
+        {/* recent activity */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5, marginBottom: 10 }}>Recent activity</div>
+          {[
+            ['Sold Charizard ex for £38.50', '2h ago'],
+            ['Completed trade with Marcus T.', 'Yesterday'],
+            ['Added 3 cards to Main Binder', '2d ago'],
+            ['Listed Ragavan for £62.00', '3d ago'],
+          ].map(([text, time], i) => (
+            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+              <span style={{ fontFamily: TW.sans, fontSize: 13.5, fontWeight: 600, color: TW.ink }}>{text}</span>
+              <span style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.faint, flexShrink: 0, marginLeft: 10 }}>{time}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* collection value summary */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5, marginBottom: 8 }}>Collection value</div>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+            <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.5 }}>{moneyW(port.now)}</span>
+            <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: TW.up, background: 'rgba(34,197,94,0.12)', padding: '2px 8px', borderRadius: 4 }}>+12% this month</span>
+          </div>
+          <div style={{ fontFamily: TW.sans, fontSize: 12.5, color: TW.muted, marginTop: 4 }}>{app.ownedIds().length} cards across {app.collections.length} collection{app.collections.length !== 1 ? 's' : ''}</div>
+        </div>
+
         {window.VerifyGate && <div style={{ marginBottom: 12 }}><window.VerifyGate app={app} need={1} action="sell, bid & trade" /></div>}
 
         {/* account type */}
