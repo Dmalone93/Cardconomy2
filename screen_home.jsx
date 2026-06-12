@@ -55,7 +55,7 @@ function ProductCard({ product, app, w }) {
       boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
     }}>
       <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#ffffff' }}>
-        <CardArt item={product} w={140} />
+        <CardArt item={product} w={w ? Math.round(w * 0.65) : 140} />
         {product.offerCount > 0 && (
           <span style={{ position: 'absolute', bottom: 8, right: 8, background: 'rgba(0,0,0,0.65)', color: '#fff',
             fontFamily: T.sans, fontWeight: 700, fontSize: 10, padding: '2px 7px', borderRadius: 999,
@@ -199,6 +199,7 @@ function SetTile({ set, onClick }) {
 function HomeScreen({ app }) {
   const [game, setGame] = React.useState('all');
   const [prefsOpen, setPrefsOpen] = React.useState(false);
+  const [article, setArticle] = React.useState(null);
   const myGames = GAMES.filter(g => app.inPrefs(g.id));
   // if the active chip leaves prefs, snap back to "all"
   React.useEffect(() => { if (game !== 'all' && !app.inPrefs(game)) setGame('all'); }, [app.prefs]);
@@ -240,7 +241,7 @@ function HomeScreen({ app }) {
       </div>
 
       {/* sponsored ad carousel */}
-      <AdCarousel app={app} onPick={(id) => setGame(id)} />
+      <AdCarousel app={app} onPick={(id) => { setGame(id); app.nav.setTab('search'); }} />
 
       {/* game chips — only games you follow, editable inline */}
       <div className="noscroll" style={{ display: 'flex', gap: 8, padding: '12px 16px 0', overflowX: 'auto', alignItems: 'center' }}>
@@ -361,7 +362,7 @@ function HomeScreen({ app }) {
         </div>
         <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
           {GUIDES.map(gd => (
-            <button key={gd.id} onClick={() => app.toast(gd.title)} style={{ flexShrink: 0, width: 232, textAlign: 'left',
+            <button key={gd.id} onClick={() => setArticle(gd)} style={{ flexShrink: 0, width: 232, textAlign: 'left',
               background: T.surface, borderRadius: 4, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05), 0 6px 16px rgba(20,24,40,0.05)',
               position: 'relative', height: 218, display: 'block' }}>
               <img src={gd.src} alt={gd.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
@@ -379,6 +380,39 @@ function HomeScreen({ app }) {
           ))}
         </div>
       </div>
+
+      {/* article overlay */}
+      {article && (
+        <div style={{ position: 'absolute', inset: 0, zIndex: 50, background: T.bg, display: 'flex', flexDirection: 'column', animation: 'ccPushIn 0.26s ease' }}>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '52px 12px 10px', gap: 10 }}>
+            <button onClick={() => setArticle(null)} style={{ width: 38, height: 38, borderRadius: 999, background: T.surface, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>{Icon.back({})}</button>
+            <div style={{ flex: 1, fontFamily: T.sans, fontWeight: 700, fontSize: 16 }}>Back</div>
+          </div>
+          <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 40 }}>
+            <div style={{ height: 160, position: 'relative', overflow: 'hidden' }}>
+              <img src={article.src} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)' }} />
+              <span style={{ position: 'absolute', top: 12, left: 14, fontFamily: T.sans, fontWeight: 700, fontSize: 10, letterSpacing: 0.4, color: T.accent, background: '#fff', borderRadius: 6, padding: '3px 8px' }}>{article.tag}</span>
+              <div style={{ position: 'absolute', bottom: 14, left: 14, right: 14 }}>
+                <div style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 22, color: '#fff', letterSpacing: -0.4, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{article.title}</div>
+              </div>
+            </div>
+            <div style={{ padding: '20px 16px' }}>
+              {(article.body || '').split('\n\n').map((para, i) => {
+                if (para.startsWith('**') && para.endsWith('**')) {
+                  return <h3 key={i} style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 16, margin: '20px 0 8px', letterSpacing: -0.2 }}>{para.replace(/\*\*/g, '')}</h3>;
+                }
+                const parts = para.split(/(\*\*[^*]+\*\*)/g);
+                return (
+                  <p key={i} style={{ fontFamily: T.sans, fontSize: 14, color: T.ink2, lineHeight: 1.6, margin: '0 0 14px' }}>
+                    {parts.map((part, j) => part.startsWith('**') ? <strong key={j} style={{ fontWeight: 700, color: T.ink }}>{part.replace(/\*\*/g, '')}</strong> : part)}
+                  </p>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -416,7 +450,7 @@ function FeaturedRail({ app, game, onPick }) {
         {cards.map((c, n) => {
           const g = gameById(c.game);
           return (
-            <button key={n} onClick={() => c.action ? app.nav.push(c.action) : onPick(c.game)} style={{ flexShrink: 0, width: 244, textAlign: 'left',
+            <button key={n} onClick={() => c.action ? app.nav.push(c.action) : app.nav.setTab('search')} style={{ flexShrink: 0, width: 244, textAlign: 'left',
               background: T.surface, borderRadius: 4, overflow: 'hidden', position: 'relative', height: 210, display: 'block',
               boxShadow: '0 1px 3px rgba(20,24,40,0.05), 0 6px 16px rgba(20,24,40,0.06)' }}>
               <img src={c.src} alt={c.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: c.pos || 'center', display: 'block' }} />
@@ -439,9 +473,12 @@ function FeaturedRail({ app, game, onPick }) {
 
 // guide tiles for Collector's corner
 const GUIDES = [
-  { id: 'grading', src: 'ads/learn-grading.jpg', tag: 'GUIDE', title: 'How grading works', desc: 'PSA, BGS & CGC scales explained — what each grade means for value.', cta: 'Learn grading' },
-  { id: 'auth', src: 'ads/learn-authenticate.jpg', tag: 'PROTECT', title: 'Buy with confidence', desc: 'How authentication & Buyer Protection keep every purchase safe.', cta: 'How we verify' },
-  { id: 'care', src: 'ads/learn-protect.jpg', tag: 'CARE', title: 'Store & protect', desc: 'Sleeves, toploaders & vaulting to keep your collection mint.', cta: 'Care tips' },
+  { id: 'grading', src: 'ads/learn-grading.jpg', tag: 'GUIDE', title: 'How grading works', desc: 'PSA, BGS & CGC scales explained — what each grade means for value.', cta: 'Learn grading',
+    body: 'Card grading is the process of having a professional service evaluate your card\'s condition and seal it in a tamper-proof case (a "slab") with a grade.\n\nThe three main grading companies are PSA (Professional Sports Authenticator), BGS (Beckett Grading Services), and CGC (Certified Guaranty Company).\n\n**PSA Scale (1–10):**\nPSA uses a whole-number scale. A PSA 10 "Gem Mint" is the highest grade — sharp corners, perfect centering, no surface flaws. PSA 9 "Mint" allows very minor imperfections. Most raw NM cards grade between PSA 7 and PSA 9.\n\n**BGS Scale (1–10 with subgrades):**\nBGS provides four subgrades: Centering, Corners, Edges, and Surface. A BGS 9.5 "Gem Mint" is considered equivalent to a PSA 10. A perfect BGS 10 "Pristine" (also called a "Black Label" when all four subgrades are 10) is extremely rare and commands massive premiums.\n\n**CGC Scale (1–10):**\nCGC is newer to the hobby but growing fast. They offer subgrades similar to BGS and are generally more affordable. A CGC 9.5 is roughly comparable to a PSA 10.\n\n**Why grade?**\nGrading adds value, protects the card, and provides a universal condition standard. A raw Near Mint Charizard might sell for £300, but a PSA 10 of the same card could fetch £1,200+. However, grading costs £15–50 per card and takes weeks, so it only makes sense for higher-value cards.' },
+  { id: 'auth', src: 'ads/learn-authenticate.jpg', tag: 'PROTECT', title: 'Buy with confidence', desc: 'How authentication & Buyer Protection keep every purchase safe.', cta: 'How we verify',
+    body: 'Every purchase on Cardconomy is backed by Buyer Protection — a guarantee that if the card doesn\'t match the listing, you get a full refund.\n\n**How it works:**\n\n1. **Verified sellers** — All sellers are identity-verified and their transaction history is public. Sellers with 99%+ positive ratings earn a "Trusted" badge.\n\n2. **Photo requirements** — Listings for cards over £50 require front and back photos. Graded cards must show the slab label. We use image analysis to flag suspicious photos.\n\n3. **Buyer Protection window** — After delivery, you have 48 hours to inspect the card and report any issues. If the card doesn\'t match the listed condition, grade, or description, open a case and we\'ll review it.\n\n4. **Dispute resolution** — Our team reviews photo evidence from both buyer and seller. If the listing was inaccurate, the buyer gets a full refund including shipping. Repeat offenders are suspended.\n\n5. **Counterfeit detection** — We partner with grading companies to verify slab serial numbers. If a card is flagged as potentially counterfeit, the sale is paused for manual review.\n\n**What\'s NOT covered:**\n- Buyer\'s remorse (you changed your mind)\n- Price drops after purchase\n- Cards accurately described as "Heavily Played" or "Damaged"' },
+  { id: 'care', src: 'ads/learn-protect.jpg', tag: 'CARE', title: 'Store & protect', desc: 'Sleeves, toploaders & vaulting to keep your collection mint.', cta: 'Care tips',
+    body: 'Proper storage is the difference between a card holding its value and losing it. Here\'s how to protect your collection at every level.\n\n**Inner sleeves (penny sleeves):**\nThe first line of defense. Soft, clear plastic sleeves that fit snugly around a standard card. Cost about 1p each. Always sleeve before placing in anything else.\n\n**Toploaders:**\nRigid plastic holders that prevent bending. Put the sleeved card in a toploader for any card worth more than a few pounds. Use "thick" toploaders (130pt+) for cards with texture or extra thickness.\n\n**Binder pages:**\nFor collections you want to browse, use side-loading 9-pocket pages in a D-ring binder. Side-loading prevents cards from sliding out. Avoid O-ring binders — they can dent cards near the spine.\n\n**Magnetic holders (One Touch):**\nUltra Premium holders with a magnetic seal. Perfect for displaying high-value raw cards. Use the right thickness (35pt for standard cards, 55pt+ for thicker cards).\n\n**Climate control:**\nStore cards away from direct sunlight, heat, and humidity. Ideal conditions: 18-22°C, 40-50% relative humidity. A dry, dark cupboard works well. Avoid attics, garages, and basements.\n\n**Handling:**\nAlways handle cards by the edges. Wash and dry your hands first. Consider cotton gloves for vintage or high-value cards. Never eat or drink near your collection.' },
 ];
 
 // ── bulk lot row ─────────────────────────────────────────────
