@@ -17,8 +17,7 @@ function valueOf(ids) {
 
 function WatchScreen({ app }) {
   const [tab, setTab] = React.useState('watch');
-  const watched = app.watch.map(id => byIdW(id)).filter(Boolean)
-    .sort((a, b) => (app.isBidding(b.id) ? 1 : 0) - (app.isBidding(a.id) ? 1 : 0));
+  const watched = app.watch.map(id => byIdW(id)).filter(Boolean);
 
   // overall portfolio = union of all collection cards
   const port = valueOf(app.ownedIds());
@@ -49,7 +48,7 @@ function WatchScreen({ app }) {
         {tab === 'watch' ? (
           watched.length === 0 ? (
             <EmptyState icon={IconW.heart({ width: 40, height: 40 }, false)} title="Nothing saved yet"
-              body="Tap the heart on any card to track its price and get notified before auctions end."
+              body="Tap the heart on any card to track its price and get notified about deals."
               cta="Browse cards" onCta={() => app.nav.setTab('home')} />
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -121,17 +120,9 @@ function WatchRow({ item, app }) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ marginBottom: 3, display: 'flex', alignItems: 'center', gap: 6 }}>
             <GradeChipW grade={item.grade} />
-            {app.isBidding(item.id) && (
-              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0, whiteSpace: 'nowrap', fontFamily: TW.sans, fontWeight: 800, fontSize: 10,
-                color: '#fff', background: app.bids[item.id] >= item.price ? 'var(--accent)' : 'var(--down)',
-                borderRadius: 6, padding: '2px 6px' }}>{IconW.gavel({ width: 10, height: 10 })} {app.bids[item.id] >= item.price ? 'TOP BID' : 'OUTBID'}</span>
-            )}
           </div>
           <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-          <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: item.type==='auction'?TW.down:TW.muted, fontWeight: item.type==='auction'?700:400 }}>
-            {app.isBidding(item.id) ? 'Your bid ' + moneyW(app.bids[item.id]) + ' · ' + item.timeLeft
-              : item.type==='auction' ? '⏱ Ends in ' + item.timeLeft + ' · ' + item.bids + ' bids' : 'Buy It Now'}
-          </div>
+          <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>Buy It Now</div>
         </div>
         <div style={{ textAlign: 'right' }}>
           <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{moneyW(item.price)}</div>
@@ -187,7 +178,7 @@ function ProfileScreen({ app }) {
   const menu = [
     ['Purchases', '3 orders', IconW.truck, 'purchases'],
     ['Selling', '2 active listings', IconW.tag, 'selling'],
-    ['Offers', '1 pending', IconW.gavel, 'offers'],
+    ['Offers', '1 pending', IconW.tag, 'offers'],
     ['Verification & trust', app.tier >= 2 ? 'Trusted Seller' : app.tier >= 1 ? 'ID Verified' : 'Get verified', IconW.shield, 'verify'],
     ['Payments & payouts', '', IconW.shield, 'payments'],
     ['Notifications', '2 new', IconW.bolt, 'notifications'],

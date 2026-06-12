@@ -31,18 +31,15 @@ function InfoRow({ icon, title, value, sub }) {
 function ListingScreen({ app, params }) {
   const item = byIdL(params.id);
   const isLot = !!item.count;
-  const isAuction = item.type === 'auction';
   const [tf, setTf] = React.useState('90D');
   const [sheet, setSheet] = React.useState(null);
   const [offer, setOffer] = React.useState('');
-  const [bid, setBid] = React.useState('');
   const watched = app.isWatched(item.id);
   const g = gameByIdL(item.game);
   const set = setByIdL(item.set);
   const hist = item.history || [item.market, item.price];
   const histSlice = tf === '30D' ? hist.slice(-5) : tf === '90D' ? hist : hist;
   const up = item.price >= hist[0];
-  const minBid = +(item.price + Math.max(1, item.price * 0.03)).toFixed(2);
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TL.bg, animation: 'ccPushIn 0.26s ease' }}>
@@ -100,12 +97,6 @@ function ListingScreen({ app, params }) {
               market <b style={{ color: TL.ink2, fontFamily: TL.sans }}>{moneyL(item.market)}</b>
             </span>}
           </div>
-          {isAuction && (
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 8, background: 'var(--accent-wash)',
-              color: TL.accent, borderRadius: 8, padding: '6px 11px', fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>
-              {IconL.gavel({ width: 14, height: 14 })} {item.bids} bids · ends in {item.timeLeft}
-            </div>
-          )}
           {isLot && (
             <div style={{ marginTop: 12, background: TL.surface2, borderRadius: 12, padding: '12px 14px', fontFamily: TL.sans, fontSize: 13.5, color: TL.ink2 }}>
               <b>What's inside:</b> {item.note}. Condition {item.condition}.
@@ -229,30 +220,17 @@ function ListingScreen({ app, params }) {
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 30, padding: '12px 16px 30px',
         background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)',
         display: 'flex', gap: 10, alignItems: 'center' }}>
-        {isAuction ? (
-          <React.Fragment>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted }}>Current bid · {item.bids} bids</div>
-              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 20 }}>{moneyL(item.price)}</div>
-            </div>
-            <button onClick={() => setSheet('bid')} style={{ flex: 1.1, background: TL.accent, color: '#fff', borderRadius: 14,
-              padding: '15px 12px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>Place bid</button>
-          </React.Fragment>
-        ) : (
-          <React.Fragment>
-            {item.accepts_offers && (
-              <button onClick={() => setSheet('offer')} style={{ flex: 1, background: TL.surface, color: TL.ink, borderRadius: 14,
-                padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 15, boxShadow: 'inset 0 0 0 1.5px var(--ink)' }}>Offer</button>
-            )}
-            <button onClick={() => app.addToCart(item.id)} style={{ width: 52, flexShrink: 0, background: TL.surface, color: app.inCart(item.id) ? TL.accent : TL.ink, borderRadius: 14,
-              padding: '15px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 0 1.5px ' + (app.inCart(item.id) ? 'var(--accent)' : 'var(--line)') }}>
-              {app.inCart(item.id) ? IconL.check({ width: 20, height: 20 }) : IconL.cart({ width: 20, height: 20 })}
-            </button>
-            <button onClick={() => app.startBuy(item)} style={{ flex: 1.3, background: TL.accent, color: '#fff', borderRadius: 14,
-              padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>{IconL.bolt({width:15,height:15})} Buy now</button>
-          </React.Fragment>
+        {item.accepts_offers && (
+          <button onClick={() => setSheet('offer')} style={{ flex: 1, background: TL.surface, color: TL.ink, borderRadius: 14,
+            padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 15, boxShadow: 'inset 0 0 0 1.5px var(--ink)' }}>Offer</button>
         )}
+        <button onClick={() => app.addToCart(item.id)} style={{ width: 52, flexShrink: 0, background: TL.surface, color: app.inCart(item.id) ? TL.accent : TL.ink, borderRadius: 14,
+          padding: '15px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 0 1.5px ' + (app.inCart(item.id) ? 'var(--accent)' : 'var(--line)') }}>
+          {app.inCart(item.id) ? IconL.check({ width: 20, height: 20 }) : IconL.cart({ width: 20, height: 20 })}
+        </button>
+        <button onClick={() => app.startBuy(item)} style={{ flex: 1.3, background: TL.accent, color: '#fff', borderRadius: 14,
+          padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>{IconL.bolt({width:15,height:15})} Buy now</button>
       </div>
 
       {/* offer sheet */}
@@ -269,21 +247,6 @@ function ListingScreen({ app, params }) {
           opacity: offer ? 1 : 0.5 }} disabled={!offer}>Send offer</button>
       </SheetL>
 
-      {/* bid sheet */}
-      <SheetL open={sheet==='bid'} onClose={() => setSheet(null)} title="Place a bid">
-        <div style={{ fontFamily: TL.sans, fontSize: 13.5, color: TL.muted, marginBottom: 14 }}>
-          Current bid {moneyL(item.price)} · enter {moneyL(minBid)} or more. Ends in {item.timeLeft}.
-        </div>
-        <OfferInput value={bid} setValue={setBid} placeholder={moneyL(minBid)} />
-        <div style={{ display: 'flex', gap: 8, margin: '12px 0' }}>
-          {[minBid, minBid*1.1, minBid*1.25].map((b,i) => (
-            <ChipL key={i} onClick={() => setBid(String(Math.round(b)))}>{moneyL(b,{cents:false})}</ChipL>
-          ))}
-        </div>
-        <button onClick={() => { setSheet(null); setBid(''); app.placeBid(item, +bid); }} style={{
-          width: '100%', background: TL.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
-          opacity: bid ? 1 : 0.5 }} disabled={!bid}>Confirm bid</button>
-      </SheetL>
     </div>
   );
 }

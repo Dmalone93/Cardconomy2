@@ -7,7 +7,6 @@ const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText } = 
 // ── shared: grid tile ────────────────────────────────────────
 function ListCard({ item, app, w }) {
   const watched = app.isWatched(item.id);
-  const isAuction = item.type === 'auction';
   return (
     <div onClick={() => app.nav.push('listing', { id: item.id })} role="button" style={{
       width: w || '100%', textAlign: 'left', background: T.surface, cursor: 'pointer',
@@ -36,17 +35,10 @@ function ListCard({ item, app, w }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 7,
           fontFamily: T.sans, fontSize: 11, color: T.muted, whiteSpace: 'nowrap', overflow: 'hidden' }}>
-          {isAuction ? (
-            <span style={{ color: '#fff', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 4,
-              whiteSpace: 'nowrap', background: T.down, padding: '2px 7px', borderRadius: 4, fontSize: 10.5 }}>
-              {Icon.gavel({ width: 11, height: 11 })} {item.bids} bids · {item.timeLeft}
-            </span>
-          ) : (
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-              {Icon.bolt({ width: 11, height: 11, style: { color: T.accent } })}
-              {item.shipping === 0 ? 'Free shipping' : money(item.shipping) + ' ship'}
-            </span>
-          )}
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+            {Icon.bolt({ width: 11, height: 11, style: { color: T.accent } })}
+            {item.shipping === 0 ? 'Free shipping' : money(item.shipping) + ' ship'}
+          </span>
         </div>
       </div>
     </div>
@@ -110,9 +102,7 @@ function ListRow({ item, app }) {
       </div>
       <div style={{ textAlign: 'right', flexShrink: 0 }}>
         <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 15.5 }}>{money(item.price)}</div>
-        {item.type === 'auction'
-          ? <div style={{ fontFamily: T.sans, fontSize: 11, color: T.down, fontWeight: 600 }}>{item.timeLeft}</div>
-          : <div style={{ fontFamily: T.sans, fontSize: 11, color: T.muted }}>{item.shipping === 0 ? 'Free ship' : money(item.shipping)}</div>}
+        <div style={{ fontFamily: T.sans, fontSize: 11, color: T.muted }}>{item.shipping === 0 ? 'Free ship' : money(item.shipping)}</div>
       </div>
     </button>
   );
@@ -216,7 +206,6 @@ function HomeScreen({ app }) {
   const hasImage = (x) => RELIABLE_IMG.has(x.game);
   const inFeed = (x) => app.inPrefs(x.game) && hasImage(x);
   const filt = (arr) => (game === 'all' ? arr.filter(inFeed) : arr.filter(x => x.game === game && hasImage(x)));
-  const auctions = filt(LISTINGS.filter(l => l.type === 'auction'));
   const trendingProducts = filt(PRODUCTS);
   const sets = filt(SETS).filter(s => s.img);
   const graded = filt(LISTINGS.filter(l => l.grade.company !== 'raw'));
@@ -286,49 +275,6 @@ function HomeScreen({ app }) {
         <FeaturedRail app={app} game={game} onPick={(id) => setGame(id)} />
       </div>
 
-      {/* your active bids — pinned to top */}
-      {(() => {
-        const myBids = app.myBids
-          .map(b => ({ ...b, item: window.byId(b.id) }))
-          .filter(b => b.item && (game === 'all' ? app.inPrefs(b.item.game) : b.item.game === game));
-        if (myBids.length === 0) return null;
-        return (
-          <div style={{ paddingTop: 20 }}>
-            <SectionHeader title="Your bids" action="View all" onAction={() => app.nav.setTab('watch')} />
-            <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
-              {myBids.map(b => {
-                const top = b.amount >= b.item.price;
-                return (
-                  <button key={b.id} onClick={() => app.nav.push('listing', { id: b.id })} style={{ width: 200, flexShrink: 0, textAlign: 'left',
-                    background: T.surface, borderRadius: 4, padding: 12, display: 'flex', gap: 11, alignItems: 'center',
-                    boxShadow: 'inset 0 0 0 1.5px ' + (top ? 'var(--accent)' : 'var(--down)') }}>
-                    <div style={{ background: '#ffffff', borderRadius: 4, padding: 6, flexShrink: 0 }}><CardArt item={b.item} w={44} radius={4} /></div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontFamily: T.sans, fontWeight: 800, fontSize: 10.5,
-                        color: top ? T.accent : T.down, marginBottom: 2 }}>
-                        {Icon.gavel({ width: 11, height: 11 })} {top ? 'TOP BID' : 'OUTBID'}
-                      </div>
-                      <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{b.item.name}</div>
-                      <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 13, marginTop: 1 }}>{money(b.amount)} <span style={{ fontFamily: T.sans, fontWeight: 500, fontSize: 10.5, color: T.muted }}>· {b.item.timeLeft}</span></div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })()}
-
-      {/* ending soon auctions */}
-      {auctions.length > 0 && (
-        <div style={{ paddingTop: 20 }}>
-          <SectionHeader title="Ending soon" action="All auctions" onAction={() => app.nav.setTab('search')} />
-          <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
-            {auctions.map(l => <div key={l.id} style={{ width: 168, flexShrink: 0 }}><ListCard item={l} app={app} /></div>)}
-          </div>
-        </div>
-      )}
-
       {/* trending grid */}
       {trendingProducts.length > 0 && (
         <div style={{ paddingTop: 20 }}>
@@ -356,7 +302,6 @@ function HomeScreen({ app }) {
           <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '4px 16px 8px', overflowX: 'auto' }}>
             {graded.map(l => {
               const gWatched = app.isWatched(l.id);
-              const gAuction = l.type === 'auction';
               return (
                 <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} role="button" style={{
                   flexShrink: 0, width: 168, textAlign: 'left', background: T.surface, cursor: 'pointer',
@@ -385,16 +330,10 @@ function HomeScreen({ app }) {
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 7,
                       fontFamily: T.sans, fontSize: 11, color: T.muted, whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                      {gAuction ? (
-                        <span style={{ color: T.down, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 4, whiteSpace: 'nowrap' }}>
-                          {Icon.gavel({ width: 12, height: 12 })} {l.bids} bids · {l.timeLeft}
-                        </span>
-                      ) : (
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-                          {Icon.bolt({ width: 11, height: 11, style: { color: T.accent } })}
-                          {l.shipping === 0 ? 'Free shipping' : money(l.shipping) + ' ship'}
-                        </span>
-                      )}
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+                        {Icon.bolt({ width: 11, height: 11, style: { color: T.accent } })}
+                        {l.shipping === 0 ? 'Free shipping' : money(l.shipping) + ' ship'}
+                      </span>
                     </div>
                   </div>
                 </div>

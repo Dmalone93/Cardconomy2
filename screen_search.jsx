@@ -7,7 +7,7 @@ const { GAMES: GAMES_S, SETS: SETS_S, LISTINGS: LISTINGS_S, PRODUCTS: PRODUCTS_S
 const { ProductCard: ProductCardS } = window;
 
 const CONDITIONS = ['Any grade', 'Graded only', 'PSA 10', 'Raw / Ungraded'];
-const SORTS = ['Best match', 'Price: low to high', 'Price: high to low', 'Ending soonest'];
+const SORTS = ['Best match', 'Price: low to high', 'Price: high to low'];
 
 function SearchScreen({ app, params = {} }) {
   const showBack = app.nav.stackDepth > 0;
@@ -43,14 +43,14 @@ function SearchScreen({ app, params = {} }) {
   const [cond, setCond] = React.useState('Any grade');
   const [maxPrice, setMaxPrice] = React.useState(35000);
   const [freeShip, setFreeShip] = React.useState(false);
-  const [listType, setListType] = React.useState('all'); // all | buynow | auction
+  const [listType, setListType] = React.useState('all'); // all | buynow
   const [sort, setSort] = React.useState('Best match');
   const [view, setView] = React.useState('grid');
   const [sheet, setSheet] = React.useState(null); // 'filters' | 'sort'
   const [focused, setFocused] = React.useState(false);
 
   // product results (raw cards grouped)
-  const productResults = (listType === 'auction' || cond === 'Graded only' || cond === 'PSA 10') ? [] : PRODUCTS_S.filter(p => {
+  const productResults = (cond === 'Graded only' || cond === 'PSA 10') ? [] : PRODUCTS_S.filter(p => {
     if (game !== 'all' && p.game !== game) return false;
     if (setF !== 'all' && p.set !== setF) return false;
     if (q.trim()) {
@@ -62,8 +62,8 @@ function SearchScreen({ app, params = {} }) {
     return true;
   });
 
-  // listing results (graded slabs + auctions — exclude raw buy-now since those are products now)
-  let listingResults = (cond === 'Raw / Ungraded' && listType !== 'auction') ? [] : LISTINGS_S.filter(l => {
+  // listing results (graded slabs — exclude raw buy-now since those are products now)
+  let listingResults = (cond === 'Raw / Ungraded') ? [] : LISTINGS_S.filter(l => {
     // Exclude raw buy-now listings (they're products now)
     if (l.grade && l.grade.company === 'raw' && l.type === 'buynow') return false;
     if (game !== 'all' && l.game !== game) return false;
@@ -82,7 +82,6 @@ function SearchScreen({ app, params = {} }) {
   });
   if (sort === 'Price: low to high') listingResults = [...listingResults].sort((a,b)=>a.price-b.price);
   if (sort === 'Price: high to low') listingResults = [...listingResults].sort((a,b)=>b.price-a.price);
-  if (sort === 'Ending soonest') listingResults = [...listingResults].sort((a,b)=>(a.type==='auction'?0:1)-(b.type==='auction'?0:1));
 
   const totalResults = productResults.length + listingResults.length;
 
@@ -146,7 +145,6 @@ function SearchScreen({ app, params = {} }) {
               {IconS.filter({ width: 16, height: 16 })} Filters{activeFilters ? ' · ' + activeFilters : ''}
             </button>
             <ChipS active={listType==='buynow'} onClick={() => setListType(listType==='buynow'?'all':'buynow')}>Buy Now</ChipS>
-            <ChipS active={listType==='auction'} onClick={() => setListType(listType==='auction'?'all':'auction')}>Auctions</ChipS>
             <ChipS active={cond==='Graded only'} onClick={() => setCond(cond==='Graded only'?'Any grade':'Graded only')}>Graded</ChipS>
             <ChipS active={freeShip} onClick={() => setFreeShip(!freeShip)}>Free ship</ChipS>
           </div>
@@ -217,7 +215,7 @@ function SearchScreen({ app, params = {} }) {
         </FilterGroup>
         <FilterGroup label="Listing type">
           <div style={{ display: 'flex', gap: 8 }}>
-            {[['all','All'],['buynow','Buy Now'],['auction','Auction']].map(([v,l]) => (
+            {[['all','All'],['buynow','Buy Now']].map(([v,l]) => (
               <ChipS key={v} active={listType===v} onClick={() => setListType(v)}>{l}</ChipS>
             ))}
           </div>

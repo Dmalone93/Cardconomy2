@@ -36,9 +36,6 @@ const SCREENS = {
 function loadWatch() {
   try { return JSON.parse(localStorage.getItem('cc_watch') || '["l03","l05"]'); } catch (e) { return []; }
 }
-function loadBids() {
-  try { return JSON.parse(localStorage.getItem('cc_bids') || '{}'); } catch (e) { return {}; }
-}
 function loadCart() {
   try { return JSON.parse(localStorage.getItem('cc_cart') || '[]'); } catch (e) { return []; }
 }
@@ -63,7 +60,6 @@ function App() {
   const [tab, setTab] = React.useState(init && TAB_ROOT[init.screen] && !init.id ? init.screen : 'home');
   const [stack, setStack] = React.useState(init && init.id ? [{ screen: init.screen, params: { id: init.id } }] : []); // [{screen, params}]
   const [watch, setWatch] = React.useState(loadWatch);
-  const [bids, setBids] = React.useState(loadBids);
   const [cart, setCart] = React.useState(loadCart);
   const [tier, setTier] = React.useState(() => { try { return JSON.parse(localStorage.getItem('cc_tier') || '0'); } catch (e) { return 0; } });
   const [acct, setAcct] = React.useState(() => loadJSON('cc_acct', 'buyer')); // buyer | seller | store
@@ -75,7 +71,6 @@ function App() {
   const toastTimer = React.useRef(null);
 
   React.useEffect(() => { localStorage.setItem('cc_watch', JSON.stringify(watch)); }, [watch]);
-  React.useEffect(() => { localStorage.setItem('cc_bids', JSON.stringify(bids)); }, [bids]);
   React.useEffect(() => { localStorage.setItem('cc_cart', JSON.stringify(cart)); }, [cart]);
   React.useEffect(() => { localStorage.setItem('cc_tier', JSON.stringify(tier)); }, [tier]);
   React.useEffect(() => { localStorage.setItem('cc_acct', JSON.stringify(acct)); }, [acct]);
@@ -106,14 +101,6 @@ function App() {
       showToast('Saved to Watching ♥'); return [...w, id];
     }),
     startBuy: (item) => setStack(s => [...s, { screen: 'checkout', params: { id: item.id } }]),
-    bids,
-    isBidding: (id) => bids[id] != null,
-    myBids: Object.keys(bids).map(id => ({ id, amount: bids[id] })),
-    placeBid: (item, amount) => {
-      setBids(b => ({ ...b, [item.id]: amount }));
-      setWatch(w => w.includes(item.id) ? w : [...w, item.id]);
-      showToast("You're the high bidder! \uD83C\uDF89");
-    },
     toast: showToast,
     openMenu: () => setMenuOpen(true),
     cart,

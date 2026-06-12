@@ -300,7 +300,7 @@ function PurchasesScreen({ app }) {
 // ═════════════════════════════════════════════════════════════
 const ACTIVE_LISTINGS = [
   { ref: 'l09', price: 96, views: 142, watchers: 8, offers: 2, type: 'buynow' },
-  { ref: 'l10', price: 44, views: 89, watchers: 33, offers: 0, type: 'auction', timeLeft: '11h 40m', bids: 9 },
+  { ref: 'l10', price: 44, views: 89, watchers: 33, offers: 0, type: 'buynow' },
 ];
 const SOLD_LISTINGS = [
   { ref: 'l02', price: 38.5, buyer: 'mtg_mike', date: 'Jun 4' },
@@ -327,9 +327,9 @@ function SellingScreen({ app }) {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.card.name}</span>
-                      <Pill label={l.type === 'auction' ? 'Auction' : 'Buy Now'} tone={l.type === 'auction' ? 'amber' : 'blue'} />
+                      <Pill label="Buy Now" tone="blue" />
                     </div>
-                    <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>{l.type === 'auction' ? l.bids + ' bids · ends ' + l.timeLeft : 'listed at ' + money0AC(l.price)}</div>
+                    <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>listed at {money0AC(l.price)}</div>
                   </div>
                   <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 15 }}>{moneyAC(l.price)}</div>
                 </div>
@@ -419,7 +419,7 @@ function OffersScreen({ app }) {
         )}
 
         {tab === 'received' && (
-          recv.length === 0 ? emptyBlock(IconAC.gavel({ width: 28, height: 28 }), 'No offers yet', 'Offers buyers send on your listings land here.') : (
+          recv.length === 0 ? emptyBlock(IconAC.tag({ width: 28, height: 28 }), 'No offers yet', 'Offers buyers send on your listings land here.') : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {recv.map((o, i) => {
                 const a = acted[i];
@@ -533,13 +533,12 @@ function PaymentsScreen({ app }) {
 // ═════════════════════════════════════════════════════════════
 const NOTIFS = [
   { icon: AIcon.star, tint: 'var(--gold)', title: 'Buylist match listed', body: 'Umbreon VMAX (PSA 10) at £1,280 — under your £1,250? Close.', time: '12m', unread: true },
-  { icon: IconAC.gavel, tint: 'var(--accent)', title: 'Outbid on Black Lotus', body: 'Someone bid £28,500. You can raise your max.', time: '1h', unread: true },
+  { icon: IconAC.tag, tint: 'var(--accent)', title: 'New offer received', body: 'Someone offered £27,000 on Black Lotus. Review it now.', time: '1h', unread: true },
   { icon: IconAC.tag, tint: 'var(--up)', title: 'Your card sold!', body: 'Pikachu IR sold for £38.50 — payout on the way.', time: '5h', unread: false },
   { icon: IconAC.truck, tint: 'var(--accent)', title: 'Order shipped', body: 'Blue-Eyes White Dragon is on its way. Arrives Jun 11.', time: '1d', unread: false },
 ];
 const NOTIF_PREFS = [
   ['Buylist matches', 'When a card you want is listed', true],
-  ['Outbid alerts', 'When someone outbids you', true],
   ['Offers', 'Offers on your listings', true],
   ['Price drops', 'Watched cards that drop in price', false],
   ['Shop responses', 'When a shop replies to a submission', true],
