@@ -464,24 +464,27 @@ function ShopCardRow({ c, price, onClick, app }) {
   const matched = !!c.buylist;
   const fill = matched ? Math.min(c.qty, c.buylist.want) : 0;
   const highValue = c.market > 100;
+  const [flagged, setFlagged] = React.useState(false);
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-        <button onClick={onClick} style={{ flex: 1, textAlign: 'left', display: 'flex', alignItems: 'center', gap: 11,
-          background: matched ? 'var(--accent-wash)' : TSH.surface, borderRadius: highValue ? '13px 13px 0 0' : 13, padding: 10,
-          boxShadow: matched ? 'inset 0 0 0 1.5px var(--gold)' : c.flag ? 'inset 0 0 0 1.5px var(--down)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ background: matched ? 'rgba(255,255,255,0.6)' : TSH.surface2, borderRadius: 9, padding: 6, flexShrink: 0 }}>
-            <CardArtSH item={c} w={42} radius={5} />
+      <button onClick={onClick} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 11,
+        background: flagged ? '#fef2f2' : matched ? 'var(--accent-wash)' : TSH.surface,
+        borderRadius: highValue ? '4px 4px 0 0' : 4, padding: 10,
+        boxShadow: flagged ? 'inset 0 0 0 1.5px var(--down)' : matched ? 'inset 0 0 0 1.5px var(--gold)' : c.flag ? 'inset 0 0 0 1.5px var(--down)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
+        <div style={{ background: matched ? 'rgba(255,255,255,0.6)' : TSH.surface2, borderRadius: 4, padding: 6, flexShrink: 0 }}>
+          <CardArtSH item={c} w={42} radius={4} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</span>
+            {c.flag && <span style={{ color: 'var(--down)', fontSize: 12 }}>⚠</span>}
+            {flagged && <span style={{ background: '#fef2f2', color: '#dc2626', padding: '1px 6px', borderRadius: 4, fontFamily: TSH.sans, fontWeight: 700, fontSize: 9 }}>FLAGGED</span>}
           </div>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</span>
-              {c.flag && <span style={{ color: 'var(--down)', fontSize: 12 }}>⚠</span>}
-            </div>
-            <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {c.cond} · ×{c.qty}{c.flag ? ' · ' + c.flag : ' · ' + (setByIdSH(c.set) ? setByIdSH(c.set).name.replace(/\s*\(.*\)/, '') : '')}
-            </div>
+          <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {c.cond} · ×{c.qty}{c.flag ? ' · ' + c.flag : ' · ' + (setByIdSH(c.set) ? setByIdSH(c.set).name.replace(/\s*\(.*\)/, '') : '')}
           </div>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ textAlign: 'right', flexShrink: 0 }}>
             {matched ? (
               <React.Fragment>
@@ -497,18 +500,18 @@ function ShopCardRow({ c, price, onClick, app }) {
               </React.Fragment>
             )}
           </div>
-        </button>
-        {/* flag card button */}
-        <button onClick={(e) => { e.stopPropagation(); app && app.toast('Card flagged for review — added to seller\'s record'); }}
-          style={{ width: 32, height: 32, borderRadius: 4, background: TSH.surface2, color: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: 14, flexShrink: 0 }} title="Flag card">🚩</button>
-      </div>
+          <button onClick={(e) => { e.stopPropagation(); setFlagged(!flagged); app && app.toast(flagged ? 'Flag removed' : 'Card flagged — added to seller\'s record'); }}
+            style={{ width: 28, height: 28, borderRadius: 4, background: flagged ? '#dc2626' : 'transparent', color: flagged ? '#fff' : TSH.faint,
+              display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, flexShrink: 0,
+              boxShadow: flagged ? 'none' : 'inset 0 0 0 1px var(--line)' }}>⚑</button>
+        </div>
+      </button>
       {/* high-value authentication label */}
       {highValue && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#fffbeb', borderRadius: '0 0 13px 13px', padding: '5px 12px',
-          boxShadow: 'inset 0 0 0 1px #d97706' }}>
-          <span style={{ fontSize: 12 }}>🛡</span>
-          <span style={{ fontFamily: TSH.sans, fontSize: 11, fontWeight: 600, color: '#d97706' }}>Authentication recommended</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: '#fffbeb', borderRadius: '0 0 4px 4px', padding: '6px 12px',
+          border: '1px solid #fde68a', borderTop: 'none' }}>
+          <span style={{ fontSize: 11 }}>🛡</span>
+          <span style={{ fontFamily: TSH.sans, fontSize: 11, fontWeight: 600, color: '#92400e' }}>Authentication recommended — card over £100</span>
         </div>
       )}
     </div>
