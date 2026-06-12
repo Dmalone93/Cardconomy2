@@ -5,7 +5,7 @@ const { T, money, CardArt, Icon, Logo } = window;
 const { GAMES, SETS, LISTINGS, gameById } = window;
 const { DHome, DSearch, DListing } = window;
 const { DSell, DSellSingle, DSellBulk } = window;
-const { DTrade, DStorefront, DShopDash, DSellerProfile } = window;
+const { DTrade, DStorefront, DShopDash } = window;
 
 // ── icons specific to desktop ────────────────────────────────
 const DIcon = {
@@ -233,7 +233,7 @@ function App() {
   else if (route.name === 'trade') Screen = DTrade;
   else if (route.name === 'storefront') Screen = DStorefront;
   else if (route.name === 'shop_dash') Screen = DShopDash;
-  else if (route.name === 'seller') Screen = DSellerProfile;
+  else if (route.name === 'seller') Screen = window.DSellerProfile;
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
