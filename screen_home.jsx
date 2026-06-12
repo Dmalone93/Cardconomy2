@@ -206,7 +206,7 @@ function HomeScreen({ app }) {
   const myGames = GAMES.filter(g => app.inPrefs(g.id));
   // if the active chip leaves prefs, snap back to "all"
   React.useEffect(() => { if (game !== 'all' && !app.inPrefs(game)) setGame('all'); }, [app.prefs]);
-  const RELIABLE_IMG = new Set(['pkmn', 'mtg', 'ygo']);
+  const RELIABLE_IMG = new Set(['pkmn', 'mtg', 'ygo', 'lor']);
   const hasImage = (x) => RELIABLE_IMG.has(x.game);
   const inFeed = (x) => app.inPrefs(x.game) && hasImage(x);
   const filt = (arr) => (game === 'all' ? arr.filter(inFeed) : arr.filter(x => x.game === game && hasImage(x)));
