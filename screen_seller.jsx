@@ -94,7 +94,7 @@ function SellerScreen({ app, params = {} }) {
             {listings.map(l => (
               <button key={l.id} onClick={() => app.nav.push('product', { id: window.PRODUCTS.find(p => p.offers.some(o => o.listingId === l.id))?.id || l.id })}
                 style={{ textAlign: 'left', background: TS.surface, borderRadius: 4, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <div style={{ background: TS.surface2, padding: '12px 12px 6px', display: 'flex', justifyContent: 'center' }}>
+                <div style={{ background: TS.surface, padding: '12px 12px 6px', display: 'flex', justifyContent: 'center' }}>
                   <CardArtS item={l} w={86} />
                 </div>
                 <div style={{ padding: '8px 11px 11px' }}>
@@ -113,16 +113,47 @@ function SellerScreen({ app, params = {} }) {
         )}
 
         {tab === 'reviews' && (
-          <div style={{ padding: 16, textAlign: 'center', color: TS.faint, fontFamily: TS.sans, fontSize: 13 }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>⭐</div>
-            Reviews coming soon
+          <div style={{ padding: 16 }}>
+            {[
+              { stars: 5, text: 'Cards arrived double-sleeved in a toploader. Exactly as described, fast shipping.', author: 'Marcus T.', time: '1 week ago' },
+              { stars: 5, text: 'Great prices and the card was in perfect condition. Will buy again.', author: 'Priya K.', time: '2 weeks ago' },
+              { stars: 4, text: 'Good seller, card was NM as listed. Shipping took a little longer than expected.', author: 'Diego R.', time: '1 month ago' },
+              { stars: 5, text: 'Packaged really well, no damage at all. Highly recommend.', author: 'Sophie L.', time: '1 month ago' },
+              { stars: 4, text: 'Fair price, honest grading. Would trade with again.', author: 'James W.', time: '2 months ago' },
+            ].map((r, i) => (
+              <div key={i} style={{ background: TS.surface, borderRadius: 4, padding: 14, marginBottom: 8, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginBottom: 6 }}>
+                  {Array.from({ length: 5 }, (_, s) => (
+                    <span key={s} style={{ color: s < r.stars ? '#f59e0b' : '#e5e7eb', fontSize: 14 }}>★</span>
+                  ))}
+                </div>
+                <div style={{ fontFamily: TS.sans, fontSize: 13, color: TS.ink, lineHeight: 1.4, marginBottom: 6 }}>"{r.text}"</div>
+                <div style={{ fontFamily: TS.sans, fontSize: 11, color: TS.muted }}>{r.author} · {r.time}</div>
+              </div>
+            ))}
           </div>
         )}
 
         {tab === 'policies' && (
-          <div style={{ padding: 16, textAlign: 'center', color: TS.faint, fontFamily: TS.sans, fontSize: 13 }}>
-            <div style={{ fontSize: 32, marginBottom: 8 }}>📋</div>
-            Shipping & return policies coming soon
+          <div style={{ padding: 16 }}>
+            <div style={{ background: TS.surface, borderRadius: 4, padding: 14, marginBottom: 10, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 14, marginBottom: 6 }}>Shipping</div>
+              <div style={{ fontFamily: TS.sans, fontSize: 13, color: TS.ink2, lineHeight: 1.5 }}>
+                All orders shipped Royal Mail 1st Class Signed. Free shipping on orders over the threshold shown above. Cards are sent double-sleeved in toploaders with cardboard reinforcement.
+              </div>
+            </div>
+            <div style={{ background: TS.surface, borderRadius: 4, padding: 14, marginBottom: 10, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 14, marginBottom: 6 }}>Returns</div>
+              <div style={{ fontFamily: TS.sans, fontSize: 13, color: TS.ink2, lineHeight: 1.5 }}>
+                Returns accepted within 14 days of delivery if the card does not match the listing description. Buyer pays return shipping unless the item was misrepresented. Refunds processed within 2 business days of receiving the return.
+              </div>
+            </div>
+            <div style={{ background: TS.surface, borderRadius: 4, padding: 14, marginBottom: 10, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 14, marginBottom: 6 }}>Grading Standards</div>
+              <div style={{ fontFamily: TS.sans, fontSize: 13, color: TS.ink2, lineHeight: 1.5 }}>
+                We grade conservatively using TCGPlayer standards. NM means no visible wear under direct light. LP may have minor whitening on edges. All graded cards include close-up photos in the listing.
+              </div>
+            </div>
           </div>
         )}
       </div>
