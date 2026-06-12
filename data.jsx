@@ -799,6 +799,7 @@ const PRODUCTS = (() => {
     const id = 'p' + String(pid).padStart(3, '0');
 
     // Build offers — first from original listing(s)
+    const h = _hash(key);
     let oid = 0;
     const offers = listings.map(l => {
       oid++;
@@ -820,7 +821,6 @@ const PRODUCTS = (() => {
     });
 
     // Add 1–3 mock offers per product
-    const h = _hash(key);
     const extraCount = 1 + (h % 3); // 1, 2, or 3
     for (let i = 0; i < extraCount; i++) {
       oid++;
