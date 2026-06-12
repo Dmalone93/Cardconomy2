@@ -52,14 +52,15 @@ function SellerScreen({ app, params = {} }) {
         <div style={{ padding: '16px 16px 0' }}>
           <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
             {[
-              [seller.rating + '%', 'Rating'],
-              [seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : seller.sales, 'Sales'],
-              [seller.ships.replace(' days', 'd').replace(' day', 'd'), 'Ships'],
-              ['£' + seller.freeShipMin, 'Free over'],
-            ].map(([val, label], i) => (
+              ['⭐', seller.rating + '%', 'Rating'],
+              ['🛒', seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : seller.sales, 'Sales'],
+              ['📦', seller.ships.replace(' days', 'd').replace(' day', 'd'), 'Ships'],
+              ['🚚', '£' + seller.freeShipMin, 'Free over'],
+            ].map(([icon, val, label], i) => (
               <div key={i} style={{
                 flex: 1, textAlign: 'center', background: TS.surface, borderRadius: 4, padding: '10px 4px',
               }}>
+                <div style={{ fontSize: 16, marginBottom: 3 }}>{icon}</div>
                 <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 15 }}>{val}</div>
                 <div style={{ fontFamily: TS.sans, fontSize: 10, color: TS.muted, marginTop: 1 }}>{label}</div>
               </div>
