@@ -32,8 +32,8 @@ function OfferCard({ offer, onBuy, onOffer, isLowest }) {
           <CondBadge condition={offer.condition} />
         </div>
         <button onClick={() => onBuy(offer)} style={{
-          background: 'var(--fill)', color: '#fff', padding: '8px 18px', borderRadius: 4,
-          fontFamily: TP.sans, fontWeight: 700, fontSize: 13 }}>Buy</button>
+          background: 'var(--fill)', color: '#fff', padding: '8px 14px', borderRadius: 4,
+          fontFamily: TP.sans, fontWeight: 700, fontSize: 12 }}>Add to cart</button>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: TP.muted }}>
         <div style={{
@@ -175,7 +175,14 @@ function ProductScreen({ app, params }) {
           </div>
           {product.offers.map((o, idx) => (
             <OfferCard key={o.id} offer={o} isLowest={idx === 0}
-              onBuy={(offer) => app.nav.push('checkout', { id: offer.listingId || offer.id })}
+              onBuy={(offer) => {
+                if (offer.listingId) {
+                  app.addToCart(offer.listingId);
+                  app.toast('Added to cart');
+                } else {
+                  app.toast('Added to cart');
+                }
+              }}
               onOffer={(offer) => { setOfferSheet(offer); setOfferVal(''); }}
             />
           ))}

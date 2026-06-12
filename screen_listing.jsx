@@ -270,16 +270,14 @@ function ListingScreen({ app, params }) {
         background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)',
         display: 'flex', gap: 10, alignItems: 'center' }}>
         {item.accepts_offers && (
-          <button onClick={() => setSheet('offer')} style={{ flex: 1, background: TL.surface, color: TL.ink, borderRadius: 14,
-            padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 15, boxShadow: 'inset 0 0 0 1.5px var(--ink)' }}>Offer</button>
+          <button onClick={() => setSheet('offer')} style={{ flex: 1, background: TL.surface, color: TL.ink, borderRadius: 4,
+            padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 15, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Make offer</button>
         )}
-        <button onClick={() => app.addToCart(item.id)} style={{ width: 52, flexShrink: 0, background: TL.surface, color: app.inCart(item.id) ? TL.accent : TL.ink, borderRadius: 14,
-          padding: '15px 0', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 0 1.5px ' + (app.inCart(item.id) ? 'var(--accent)' : 'var(--line)') }}>
-          {app.inCart(item.id) ? IconL.check({ width: 20, height: 20 }) : IconL.cart({ width: 20, height: 20 })}
+        <button onClick={() => { app.addToCart(item.id); app.toast(app.cart.includes(item.id) ? 'Already in cart' : 'Added to cart'); }} style={{ flex: 1.3, background: 'var(--fill)', color: '#fff', borderRadius: 4,
+          padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+          {IconL.cart({width:16,height:16})} {app.cart.includes(item.id) ? 'In cart' : 'Add to cart'}
         </button>
-        <button onClick={() => app.startBuy(item)} style={{ flex: 1.3, background: TL.accent, color: '#fff', borderRadius: 14,
-          padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>{IconL.bolt({width:15,height:15})} Buy now</button>
       </div>
 
       {/* offer sheet */}
