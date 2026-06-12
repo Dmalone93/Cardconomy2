@@ -13,6 +13,7 @@ const { SellerScreen } = window;
 const { VerifyScreen } = window;
 const { AuthCardScreen } = window;
 const { Onboarding } = window;
+const { sellerByName: sellerByNameA, listingsBySeller: listingsBySellerA, byId: byIdA } = window;
 
 const ALL_GAME_IDS = (window.GAMES || []).map(g => g.id);
 
@@ -83,7 +84,8 @@ function App() {
   function showToast(msg) {
     setToastState(msg);
     clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToastState(null), 1900);
+    const duration = (typeof msg === 'object' && msg.title) ? 4000 : 1900;
+    toastTimer.current = setTimeout(() => setToastState(null), duration);
   }
 
   const nav = {
@@ -108,7 +110,30 @@ function App() {
     cart,
     cartCount: cart.length,
     inCart: (id) => cart.includes(id),
-    addToCart: (id) => setCart(c => { if (c.includes(id)) { showToast('Already in cart'); return c; } showToast('Added to cart \uD83D\uDED2'); return [...c, id]; }),
+    addToCart: (id) => setCart(c => {
+      if (c.includes(id)) { showToast('Already in cart'); return c; }
+      const newCart = [...c, id];
+      // upsell check
+      const item = byIdA(id);
+      const seller = item && sellerByNameA(item.seller);
+      if (seller && seller.freeShipMin) {
+        const sellerItems = newCart.map(byIdA).filter(Boolean).filter(x => x.seller === seller.name);
+        const sellerTotal = sellerItems.reduce((s, x) => s + x.price, 0);
+        const remaining = seller.freeShipMin - sellerTotal;
+        const otherListings = listingsBySellerA(seller.name).filter(l => !newCart.includes(l.id));
+        if (remaining > 0 && otherListings.length > 0) {
+          showToast({
+            title: 'Added to cart ✓',
+            subtitle: 'Add £' + remaining.toFixed(2) + ' more from ' + seller.name + ' for free shipping',
+            action: 'Browse →',
+            onAction: () => nav.push('seller', { name: seller.name }),
+          });
+          return newCart;
+        }
+      }
+      showToast('Added to cart 🛒');
+      return newCart;
+    }),
     removeFromCart: (id) => setCart(c => c.filter(x => x !== id)),
     clearCart: () => setCart([]),
     tier,
