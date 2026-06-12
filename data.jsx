@@ -757,19 +757,19 @@ const postById = (id) => TRADE_POSTS.find(p => p.id === id);
 
 // Seller pool (derived from LISTINGS sellers)
 const SELLERS = [
-  { name: 'VaultCards',    rating: 99.4, sales: 12840 },
-  { name: 'KantoCollects', rating: 98.1, sales: 3402 },
-  { name: 'ManaBase',      rating: 98.9, sales: 22014 },
-  { name: 'DuelistPrime',  rating: 99.2, sales: 6730 },
-  { name: 'TopDeckTCG',    rating: 99.0, sales: 9410 },
-  { name: 'MetaKnight',    rating: 98.4, sales: 4205 },
-  { name: 'GrandLineTCG',  rating: 97.6, sales: 1880 },
-  { name: 'DigiDestined',  rating: 98.6, sales: 2118 },
-  { name: 'PokeGrails',    rating: 99.0, sales: 7420 },
-  { name: 'RareMint',      rating: 99.1, sales: 5230 },
-  { name: 'EeveeVault',    rating: 99.8, sales: 8921 },
-  { name: 'VintageHolos',  rating: 100,  sales: 5610 },
-  { name: 'AlphaInvest',   rating: 100,  sales: 1290 },
+  { name: 'VaultCards',    rating: 99.4, sales: 12840, loc: 'Manchester', since: 2019, blurb: 'Specializing in high-end singles. All cards double-sleeved and shipped in toploaders.', freeShipMin: 50, ships: '1–2 days' },
+  { name: 'KantoCollects', rating: 98.1, sales: 3402, loc: 'Bristol', since: 2021, blurb: 'Kanto-era collector turned seller. Fair prices on vintage and modern Pokémon.', freeShipMin: 30, ships: '2–4 days' },
+  { name: 'ManaBase',      rating: 98.9, sales: 22014, loc: 'Birmingham', since: 2017, blurb: 'One of the UK\'s largest MTG sellers. Competitive pricing on staples and singles.', freeShipMin: 40, ships: '1–2 days' },
+  { name: 'DuelistPrime',  rating: 99.2, sales: 6730, loc: 'Glasgow', since: 2020, blurb: 'Yu-Gi-Oh! specialist. Tournament-ready cards shipped fast.', freeShipMin: 25, ships: '2–3 days' },
+  { name: 'TopDeckTCG',    rating: 99.0, sales: 9410, loc: 'Liverpool', since: 2018, blurb: 'Multi-game seller with deep stock. We ship same day before 2pm.', freeShipMin: 35, ships: '1–2 days' },
+  { name: 'MetaKnight',    rating: 98.4, sales: 4205, loc: 'Newcastle', since: 2022, blurb: 'Competitive player selling rotating stock. Every card is play-tested quality.', freeShipMin: 30, ships: '2–3 days' },
+  { name: 'GrandLineTCG',  rating: 97.6, sales: 1880, loc: 'Cardiff', since: 2023, blurb: 'One Piece and Dragon Ball specialist. Growing fast with fair prices.', freeShipMin: 20, ships: '2–5 days' },
+  { name: 'DigiDestined',  rating: 98.6, sales: 2118, loc: 'Brighton', since: 2022, blurb: 'Digimon and niche TCGs. Hard-to-find cards at reasonable prices.', freeShipMin: 25, ships: '2–4 days' },
+  { name: 'PokeGrails',    rating: 99.0, sales: 7420, loc: 'Leeds', since: 2018, blurb: 'Premium Pokémon singles. PSA and BGS graded inventory available.', freeShipMin: 50, ships: '1–2 days' },
+  { name: 'RareMint',      rating: 99.1, sales: 5230, loc: 'Edinburgh', since: 2019, blurb: 'Curated selection of mint-condition cards across all major TCGs.', freeShipMin: 40, ships: '2–3 days' },
+  { name: 'EeveeVault',    rating: 99.8, sales: 8921, loc: 'Edinburgh', since: 2017, blurb: 'Eeveelution collector and top-rated seller. Insured shipping on all orders.', freeShipMin: 50, ships: '1 day' },
+  { name: 'VintageHolos',  rating: 100,  sales: 5610, loc: 'Leeds', since: 2016, blurb: 'WOTC-era specialist. Every card authenticated and graded.', freeShipMin: 75, ships: '1–2 days' },
+  { name: 'AlphaInvest',   rating: 100,  sales: 1290, loc: 'London', since: 2015, blurb: 'Investment-grade MTG. Alpha, Beta, and Reserved List singles.', freeShipMin: 100, ships: '1–2 days' },
 ];
 
 const CONDITIONS  = ['Near Mint', 'Lightly Played', 'Moderately Played', 'Heavily Played'];
@@ -878,11 +878,13 @@ const PRODUCTS = (() => {
 
 function productById(id) { return PRODUCTS.find(p => p.id === id); }
 function offersForProduct(id) { const p = PRODUCTS.find(p => p.id === id); return p ? p.offers : []; }
+function sellerByName(name) { return SELLERS.find(s => s.name === name); }
+function listingsBySeller(name) { return LISTINGS.filter(l => l.seller === name); }
 
 Object.assign(window, {
   GAMES, SETS, ART, GRADERS, gradeText, LISTINGS, LOTS, byId, setById, gameById,
   SHOP, SUBMISSION, SUB_CARDS, BULK_RATES, subStats, SCAN_POOL,
   SHOPS, TRADERS, OWNED_REFS, traderById, shopById,
   TRADE_POSTS, postById, GAME_LOGOS,
-  PRODUCTS, productById, offersForProduct, SELLERS, COND_SHORT,
+  PRODUCTS, productById, offersForProduct, SELLERS, COND_SHORT, sellerByName, listingsBySeller,
 });
