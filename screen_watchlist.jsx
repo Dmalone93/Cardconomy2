@@ -104,7 +104,7 @@ function WatchScreen({ app }) {
                 );
               })}
               {app.collections.length === 0 && (
-                <div style={{ textAlign: 'center', padding: '40px 20px', color: TW.muted, fontFamily: TW.sans, fontSize: 14 }}>No collections yet — tap “New” to start one.</div>
+                <div style={{ textAlign: 'center', padding: '40px 20px', color: TW.muted, fontFamily: TW.sans, fontSize: 14 }}>No collections yet — tap "New" to start one.</div>
               )}
             </div>
           </div>

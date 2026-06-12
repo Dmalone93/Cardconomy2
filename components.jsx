@@ -443,7 +443,7 @@ function SideMenu({ app, open, onClose }) {
     ['My buylist', Icon.tag, () => go(() => app.nav.push('buylist'))],
     ['Watching', Icon.heart, () => go(() => app.nav.setTab('watch'))],
     ['Find a local shop', Icon.shield, () => go(() => app.nav.push('shopfinder'))],
-    ['Collector’s corner', Icon.bolt, () => go(() => app.toast('Opening the help center'))],
+    ['Collector's corner', Icon.bolt, () => go(() => app.toast('Opening the help center'))],
   ];
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 95 }}>

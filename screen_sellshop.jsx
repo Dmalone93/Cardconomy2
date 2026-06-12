@@ -490,7 +490,7 @@ function SellerThread({ app, onShop }) {
         {!reply ? (
           <div className="noscroll" style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
             <QuickReply label={'Accept credit · ' + moneySS(credit, { cents: false })} primary onClick={() => { setReply('Accept store credit 🎁 — coming by after 5pm 👍'); app.toast('Offer accepted'); }} />
-            <QuickReply label={'Take cash · ' + moneySS(cash, { cents: false })} onClick={() => { setReply('Cash works — I’ll come by after 5pm 👍'); app.toast('Offer accepted'); }} />
+            <QuickReply label={'Take cash · ' + moneySS(cash, { cents: false })} onClick={() => { setReply('Cash works — I'll come by after 5pm 👍'); app.toast('Offer accepted'); }} />
             <QuickReply label="Pick a time" onClick={() => setReply("What times work today? I'm flexible.")} />
           </div>
         ) : (

@@ -1111,7 +1111,7 @@ const GAME_LOGOS = {
 // acceptable offers (games, min condition, graded/raw/any).
 const TRADE_POSTS = [
   { id: 'p1', trader: 't1', offer: 'l03', open: true,
-    prefs: { games: ['pkmn'], cond: 'NM+', slab: 'Graded' }, note: 'Chasing high-end Pokémon slabs. Show me what you’ve got!' },
+    prefs: { games: ['pkmn'], cond: 'NM+', slab: 'Graded' }, note: 'Chasing high-end Pokémon slabs. Show me what you've got!' },
   { id: 'p2', trader: 't3', offer: 'l08', open: false, wants: ['l09'],
     prefs: { games: ['pkmn'], cond: 'NM', slab: 'Any' }, note: 'Want a Pidgeot ex — will add cash.' },
   { id: 'p3', trader: 't2', offer: 'l06', open: true,

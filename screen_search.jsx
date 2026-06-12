@@ -103,7 +103,7 @@ function SearchScreen({ app, params = {} }) {
             borderRadius: 11, padding: '9px 12px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
             {IconS.search({ width: 18, height: 18, style: { color: TS.faint } })}
             <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
-              placeholder={'Try “' + typed + '”'} style={{
+              placeholder={'Try "' + typed + '"'} style={{
               flex: 1, border: 'none', outline: 'none', background: 'transparent',
               fontFamily: TS.sans, fontSize: 15, color: TS.ink, minWidth: 0,
             }} />

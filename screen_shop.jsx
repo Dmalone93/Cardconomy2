@@ -740,9 +740,9 @@ function ShopInbox({ app, onOpen, onDashboard }) {
         {/* other queue items */}
         <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 12.5, color: TSH.muted, margin: '4px 0 9px', letterSpacing: 0.2 }}>EARLIER</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-          <QueueRow initial="S" name="Sam R." cards="64 cards" meta="18 min ago" tag="12 hits" tagColor={TSH.accent} onClick={() => app.toast('Demo focuses on Jordan’s submission')} />
-          <QueueRow initial="D" name="Dana P." cards="310 cards" meta="1 hr ago · offer sent" tag="replied" tagColor="var(--up)" onClick={() => app.toast('Demo focuses on Jordan’s submission')} />
-          <QueueRow initial="M" name="Miguel A." cards="1,420 cards" meta="3 hr ago · completed" tag="paid" tagColor={TSH.muted} onClick={() => app.toast('Demo focuses on Jordan’s submission')} />
+          <QueueRow initial="S" name="Sam R." cards="64 cards" meta="18 min ago" tag="12 hits" tagColor={TSH.accent} onClick={() => app.toast('Demo focuses on Jordan's submission')} />
+          <QueueRow initial="D" name="Dana P." cards="310 cards" meta="1 hr ago · offer sent" tag="replied" tagColor="var(--up)" onClick={() => app.toast('Demo focuses on Jordan's submission')} />
+          <QueueRow initial="M" name="Miguel A." cards="1,420 cards" meta="3 hr ago · completed" tag="paid" tagColor={TSH.muted} onClick={() => app.toast('Demo focuses on Jordan's submission')} />
         </div>
       </div>
     </div>
@@ -784,7 +784,7 @@ function ShopSent({ app, offer, onInbox }) {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--accent-wash)', color: TSH.accent, borderRadius: 12, padding: '13px 14px', marginTop: 14, textAlign: 'left' }}>
           {IconSH.shield({})}
-          <span style={{ fontFamily: TSH.sans, fontSize: 13, fontWeight: 600 }}>Submission moves to “Awaiting pickup” in your queue.</span>
+          <span style={{ fontFamily: TSH.sans, fontSize: 13, fontWeight: 600 }}>Submission moves to "Awaiting pickup" in your queue.</span>
         </div>
       </div>
       <div style={{ padding: '12px 16px 30px', borderTop: '1px solid var(--line)', background: TSH.surface, display: 'flex', gap: 10 }}>

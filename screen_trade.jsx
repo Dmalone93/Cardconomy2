@@ -189,7 +189,7 @@ function TradeScreen({ app, params = {} }) {
                         {chips.map((c, i) => <span key={i} style={{ fontFamily: TT.sans, fontWeight: 600, fontSize: 11.5, color: TT.ink2, background: TT.surface2, borderRadius: 7, padding: '3px 9px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>{c}</span>)}
                       </div>
                     </div>
-                    <div style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, fontStyle: 'italic', margin: '11px 0 12px', lineHeight: 1.4 }}>“{p.note}”</div>
+                    <div style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, fontStyle: 'italic', margin: '11px 0 12px', lineHeight: 1.4 }}>"{p.note}"</div>
                     <button onClick={() => { setBoardOffer(p.offer); setTraderId(p.trader); setPhase('build'); }} style={{ width: '100%', background: TT.accent, color: '#fff', borderRadius: 11, padding: 12, fontFamily: TT.sans, fontWeight: 700, fontSize: 14 }}>Make an offer</button>
                   </div>
                 );
@@ -368,7 +368,7 @@ function TradeScreen({ app, params = {} }) {
             </div>
             <div style={{ background: TT.surface, borderRadius: 13, padding: '13px 15px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 13, marginBottom: 9 }}>Safe-trade checklist</div>
-              {['Meet in a public, well-lit place (a shop is ideal)', 'Inspect cards before money or cards change hands', 'Keep it in the app — share no personal contact info', 'Tell someone where you’re going'].map((s, i) => (
+              {['Meet in a public, well-lit place (a shop is ideal)', 'Inspect cards before money or cards change hands', 'Keep it in the app — share no personal contact info', 'Tell someone where you're going'].map((s, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, padding: '4px 0' }}>
                   <span style={{ color: 'var(--up)', fontSize: 13, marginTop: 1 }}>✓</span>
                   <span style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, lineHeight: 1.4 }}>{s}</span>
@@ -546,7 +546,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
           <div style={{ marginTop: 12, background: TT.surface, borderRadius: 14, padding: 12, display: 'flex', gap: 10, alignItems: 'flex-start', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <Avatar who={trader} size={34} />
             <div style={{ flex: 1, fontFamily: TT.sans, fontSize: 13, color: TT.ink, lineHeight: 1.45 }}>
-              <b>{trader.name}:</b> {stage === 'countered' ? 'Accepted the trade! Any chance we meet at Northside Collectibles instead? It’s right by me. 🙏' : stage === 'agreed' ? 'Perfect, see you there! 🎉' : 'Works for me — see you at ' + counterSpot.name + '! 🎉'}
+              <b>{trader.name}:</b> {stage === 'countered' ? 'Accepted the trade! Any chance we meet at Northside Collectibles instead? It's right by me. 🙏' : stage === 'agreed' ? 'Perfect, see you there! 🎉' : 'Works for me — see you at ' + counterSpot.name + '! 🎉'}
             </div>
           </div>
         )}
