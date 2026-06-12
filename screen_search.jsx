@@ -206,7 +206,7 @@ function SearchScreen({ app, params = {} }) {
           {/* result meta */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '2px 16px 10px' }}>
             <span style={{ fontFamily: TS.sans, fontSize: 13, color: TS.muted }}>
-              <b style={{ color: TS.ink }}>{totalResults}</b> result{totalResults!==1?'s':''}{setF!=='all' && setByIdS(setF) ? ' in ' + setByIdS(setF).name.replace(/\s*\(.*\)/,'') : ''}
+              <b style={{ color: TS.ink }}>{totalResults}</b> result{totalResults!==1?'s':''}
             </span>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
               <button onClick={() => setSheet('sort')} style={{ fontFamily: TS.sans, fontSize: 13, fontWeight: 600, color: TS.accent, padding: '4px 6px' }}>{sort} ▾</button>

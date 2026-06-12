@@ -49,12 +49,14 @@ function CardArt({ item, w = 120, radius = 10, showFoil = true }) {
   const showShimmer = !realUrl && !failed;
   // Show colored placeholder only as fallback when image fails
   const showPlaceholder = failed || (realUrl && loaded);
+  // Show a minimal fallback (no hatching/name/set) when image failed
+  const showMinimalFallback = failed && !realUrl;
 
   return (
     <div style={{
       width: w, maxWidth: '100%', height: h, borderRadius: radius, position: 'relative',
       overflow: 'hidden', flexShrink: 0, isolation: 'isolate', aspectRatio: '1 / 1.4',
-      background: showShimmer ? 'transparent' : art,
+      background: showShimmer ? 'transparent' : showMinimalFallback ? '#e5e7eb' : art,
       boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 ' + Math.round(w*0.05) + 'px rgba(0,0,0,0.0)',
     }}>
       {/* shimmer while image is resolving */}
@@ -74,15 +76,15 @@ function CardArt({ item, w = 120, radius = 10, showFoil = true }) {
           }}
         />
       )}
-      {/* card border frame — only when showing colored placeholder */}
-      {!showShimmer && (
+      {/* card border frame — only when showing colored placeholder (not minimal fallback) */}
+      {!showShimmer && !showMinimalFallback && (
         <div style={{
           position: 'absolute', inset: Math.max(3, w*0.045), borderRadius: radius*0.6,
           boxShadow: 'inset 0 0 0 1.5px rgba(255,255,255,0.22)',
         }} />
       )}
-      {/* art window — hatch placeholder (only when failed / colored fallback) */}
-      {!showShimmer && (
+      {/* art window — hatch placeholder (only when showing full colored fallback) */}
+      {!showShimmer && !showMinimalFallback && (
         <div style={{
           position: 'absolute', left: w*0.10, right: w*0.10, top: w*0.13, height: h*0.46,
           borderRadius: radius*0.4, overflow: 'hidden',
@@ -98,19 +100,23 @@ function CardArt({ item, w = 120, radius = 10, showFoil = true }) {
           )}
         </div>
       )}
-      {/* name plate */}
+      {/* name plate — minimal fallback shows centered, full fallback at 60% */}
       {!showShimmer && (
         <div style={{
-          position: 'absolute', left: w*0.10, right: w*0.10, top: h*0.60,
-          color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.4)',
+          position: 'absolute', left: w*0.10, right: w*0.10,
+          top: showMinimalFallback ? '50%' : h*0.60,
+          transform: showMinimalFallback ? 'translateY(-50%)' : 'none',
+          color: showMinimalFallback ? '#9ca3af' : '#fff',
+          textShadow: showMinimalFallback ? 'none' : '0 1px 2px rgba(0,0,0,0.4)',
+          textAlign: showMinimalFallback ? 'center' : 'left',
         }}>
-          <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: Math.max(8, w*0.085), lineHeight: 1.1, letterSpacing: -0.2 }}>
+          <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: Math.max(8, w * (showMinimalFallback ? 0.075 : 0.085)), lineHeight: 1.2, letterSpacing: -0.2 }}>
             {item.name}
           </div>
         </div>
       )}
-      {/* bottom strip: set / number */}
-      {!showShimmer && (
+      {/* bottom strip: set / number — hide on minimal fallback */}
+      {!showShimmer && !showMinimalFallback && (
         <div style={{
           position: 'absolute', left: w*0.10, right: w*0.10, bottom: w*0.10,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -122,8 +128,8 @@ function CardArt({ item, w = 120, radius = 10, showFoil = true }) {
           <span>{item.number || ''}</span>
         </div>
       )}
-      {/* game pip */}
-      {!showShimmer && g && (
+      {/* game pip — hide on minimal fallback */}
+      {!showShimmer && !showMinimalFallback && g && (
         <div style={{
           position: 'absolute', top: w*0.085, right: w*0.085,
           width: Math.max(14, w*0.14), height: Math.max(14, w*0.14), borderRadius: 999,
