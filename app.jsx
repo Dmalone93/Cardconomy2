@@ -8,6 +8,7 @@ const { BuylistScreen, PurchasesScreen, SellingScreen, OffersScreen, PaymentsScr
 const { CollectionDetailScreen } = window;
 const { TradeScreen, StorefrontScreen, EnrollShopScreen, ShopFinderScreen } = window;
 const { CartScreen } = window;
+const { ProductScreen } = window;
 const { VerifyScreen } = window;
 const { AuthCardScreen } = window;
 const { Onboarding } = window;
@@ -29,6 +30,7 @@ const SCREENS = {
   authcard: AuthCardScreen,
   checkout: CheckoutScreen, watch: WatchScreen, profile: ProfileScreen,
   collection: CollectionDetailScreen,
+  product: ProductScreen,
 };
 
 function loadWatch() {
