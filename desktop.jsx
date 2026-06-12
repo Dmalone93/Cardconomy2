@@ -57,7 +57,7 @@ function Header({ app, openMega, megaOpen }) {
         </form>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
           <HeaderBtn icon={DIcon.heart()} label="Watching" onClick={() => app.go('watch')} count={app.watch.length} />
-          <HeaderBtn icon={DIcon.user()} label="Account" onClick={() => app.toast('Account')} />
+          <HeaderBtn icon={DIcon.user()} label="Account" onClick={() => app.go('account')} />
           <HeaderBtn icon={DIcon.cart()} label="Cart" onClick={() => app.go('cart')} count={app.cart.length} accent />
         </nav>
       </div>
@@ -233,6 +233,7 @@ function App() {
   else if (route.name === 'trade') Screen = DTrade;
   else if (route.name === 'storefront') Screen = DStorefront;
   else if (route.name === 'shop_dash') Screen = DShopDash;
+  else if (route.name === 'account') Screen = DAccount;
   else if (route.name === 'seller') Screen = window.DSellerProfile;
 
   return (
@@ -263,6 +264,60 @@ function DWatch({ app }) {
           {items.map(it => <window.DCard key={it.id} item={it} app={app} />)}
         </div>
       )}
+    </div>
+  );
+}
+
+function DAccount({ app }) {
+  return (
+    <div className="wrap" style={{ padding: '32px 24px 40px' }}>
+      <h1 style={{ fontWeight: 800, fontSize: 30, letterSpacing: -0.8, margin: '0 0 6px' }}>My Account</h1>
+      <p style={{ color: 'var(--muted)', fontSize: 15, margin: '0 0 28px' }}>Manage your profile, orders, and settings.</p>
+
+      <div style={{ display: 'flex', gap: 16, alignItems: 'center', background: 'var(--surface)', borderRadius: 16, padding: 20, marginBottom: 24, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+        <div style={{ width: 56, height: 56, borderRadius: 999, background: 'var(--fill)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 22, flexShrink: 0 }}>A</div>
+        <div>
+          <div style={{ fontWeight: 700, fontSize: 18 }}>Alex Rivera</div>
+          <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 2 }}>alex.rivera@email.com</div>
+          <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
+            <span style={{ background: 'var(--up-wash)', color: 'var(--up)', padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 10 }}>Verified</span>
+            <span style={{ background: 'var(--accent-wash)', color: 'var(--accent)', padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 10 }}>Collector</span>
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 28 }}>
+        {[['3', 'Orders'], ['2', 'Active Listings'], ['1', 'Pending Offers']].map(([val, label], i) => (
+          <div key={i} style={{ background: 'var(--surface)', borderRadius: 14, padding: '18px 16px', textAlign: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ fontWeight: 700, fontSize: 22 }}>{val}</div>
+            <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 3 }}>{label}</div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {[
+          ['Purchases', 'View order history and tracking'],
+          ['Selling', 'Manage your active listings'],
+          ['Offers', 'Sent and received offers'],
+          ['Payments', 'Balance, payouts, and payment methods'],
+          ['Buylist', 'Cards you want to buy'],
+          ['Notifications', 'Alerts and preferences'],
+          ['Verification', 'Identity and trust level'],
+        ].map(([title, sub], i) => (
+          <button key={i} onClick={() => app.toast(title)} style={{
+            display: 'flex', alignItems: 'center', gap: 14, padding: '16px 18px',
+            background: 'var(--surface)', borderRadius: 14, textAlign: 'left', width: '100%',
+            boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
+          }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontWeight: 600, fontSize: 15 }}>{title}</div>
+              <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 1 }}>{sub}</div>
+            </div>
+            <span style={{ color: 'var(--faint)', fontSize: 18 }}>›</span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
