@@ -244,7 +244,7 @@ function HomeScreen({ app }) {
       <AdCarousel app={app} />
 
       {/* game chips — only games you follow, editable inline */}
-      <div className="noscroll" style={{ display: 'flex', gap: 8, padding: '12px 16px 0', overflowX: 'auto', alignItems: 'center' }}>
+      <div className="noscroll" style={{ display: 'flex', gap: 8, padding: '14px 16px 2px', overflowX: 'auto', alignItems: 'center' }}>
         <Chip active={game === 'all'} onClick={() => setGame('all')}>{app.allGamesSelected() ? 'All games' : 'My games'}</Chip>
         {myGames.map(g => {
           const logo = window.GAME_LOGOS[g.id];
