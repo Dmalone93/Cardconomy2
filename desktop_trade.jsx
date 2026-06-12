@@ -225,7 +225,7 @@ function DSellerProfile({ app, params = {} }) {
 
   if (!seller) return (
     <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
-      <div style={{ fontSize: 40, marginBottom: 12 }}>🔍</div>
+      <div style={{ fontSize: 40, marginBottom: 12 }}>?</div>
       <div style={{ fontWeight: 700, fontSize: 20 }}>Seller not found</div>
       <button onClick={() => app.go('home')} style={{ marginTop: 16, color: 'var(--accent)', fontWeight: 600, fontSize: 14 }}>Back to home</button>
     </div>
@@ -246,7 +246,7 @@ function DSellerProfile({ app, params = {} }) {
             fontWeight: 800, fontSize: 30, margin: '0 auto 12px',
           }}>{seller.name.charAt(0)}</div>
           <h1 style={{ fontFamily: TTr.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.8, margin: '0 0 4px' }}>{seller.name}</h1>
-          <div style={{ fontSize: 13.5, opacity: 0.65 }}>{seller.loc} · Since {seller.since}</div>
+          <div style={{ fontSize: 13.5, opacity: 0.65 }}>{seller.loc} - Since {seller.since}</div>
           {(isTrusted || isFastShipper) && (
             <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginTop: 12 }}>
               {isTrusted && <span style={{ background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>Trusted</span>}
@@ -286,7 +286,7 @@ function DSellerProfile({ app, params = {} }) {
               <div style={{ fontWeight: 600, fontSize: 14 }}>{seller.address || seller.loc + ', UK'}</div>
               <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>View on Google Maps</div>
             </div>
-            <span style={{ color: 'var(--faint)', fontSize: 18 }}>›</span>
+            <span style={{ color: 'var(--faint)', fontSize: 18 }}>></span>
           </button>
         )}
 
