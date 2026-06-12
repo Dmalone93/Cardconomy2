@@ -54,9 +54,33 @@ function OfferCard({ offer, onBuy, onOffer, isLowest }) {
         <span>{offer.shipping === 0 ? '✓ Free shipping' : moneyP(offer.shipping) + ' shipping'}</span>
         <span>Ships {offer.ships}</span>
       </div>
+      {/* seller photos */}
+      {offer.images > 0 && (
+        <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+          {Array.from({ length: offer.images }, (_, i) => (
+            <div key={i} style={{
+              width: 52, height: 52, borderRadius: 4, background: TP.surface2,
+              boxShadow: 'inset 0 0 0 1px var(--line)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              overflow: 'hidden',
+            }}>
+              <div style={{
+                width: '100%', height: '100%',
+                backgroundImage: 'repeating-linear-gradient(135deg, rgba(0,0,0,0.03) 0 6px, transparent 6px 12px)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <span style={{ fontSize: 16, opacity: 0.3 }}>📷</span>
+              </div>
+            </div>
+          ))}
+          <span style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted, alignSelf: 'center', marginLeft: 2 }}>
+            {offer.images} photo{offer.images !== 1 ? 's' : ''}
+          </span>
+        </div>
+      )}
       {offer.accepts_offers && (
         <button onClick={() => onOffer(offer)} style={{
-          marginTop: 8, color: TP.accent, fontFamily: TP.sans, fontWeight: 600, fontSize: 12,
+          marginTop: offer.images > 0 ? 6 : 8, color: TP.accent, fontFamily: TP.sans, fontWeight: 600, fontSize: 12,
           background: 'none', padding: 0 }}>Make an offer</button>
       )}
     </div>

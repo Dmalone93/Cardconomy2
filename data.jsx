@@ -804,6 +804,7 @@ const PRODUCTS = (() => {
         loc: l.loc,
         accepts_offers: l.accepts_offers,
         listingId: l.id,
+        images: (h % 3 !== 0) ? 2 : 0, // mock: number of seller photos attached
       };
     });
 
@@ -834,6 +835,7 @@ const PRODUCTS = (() => {
         loc: LOCS[li],
         accepts_offers: (h + i) % 2 === 0,
         listingId: null,
+        images: (h + i) % 4 === 0 ? 3 : (h + i) % 3 === 0 ? 1 : 0,
       });
     }
 
