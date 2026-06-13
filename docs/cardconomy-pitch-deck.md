@@ -12,7 +12,7 @@
 
 ## The Problem
 
-The trading card market is worth multi-billion pound globally but the buying and selling experience is fragmented and frustrating:
+The trading card market is growing rapidly but the buying and selling experience is fragmented and frustrating:
 
 | Pain Point | Who Feels It | Current Reality |
 |-----------|-------------|----------------|
@@ -52,7 +52,7 @@ The trading card market is worth multi-billion pound globally but the buying and
 | **3 Pricing Strategies** | At market / Undercut 5% / Quick sale — applied to your whole batch | "I spent hours researching what price to set for each card" |
 | **Sell to Local Shop** | Scan your cards, submit digitally to a nearby shop, get an offer via the app | "I drove 40 minutes to a shop and they lowballed me because I had no leverage" |
 | **Trade Builder** | Match with nearby collectors, build fair proposals, meet at a verified shop | "I want to trade but I don't want to meet a stranger in a car park" |
-| **9% Seller Fee** | Flat, transparent fee. No insertion fees, no final value fee confusion | "eBay's fee structure has 14 different variables" |
+| **Simple, Transparent Fees** | Flat percentage, no insertion fees, no per-item charges | "eBay's fee structure has 14 different variables" |
 | **Verification & Trust** | 3-step verification (phone, ID, payout). TrustBadge shown on all your listings | "Buyers skip my listings because I'm a new seller with no history" |
 | **Card Authentication** | Submit raw cards for Cardonomy Verified seal — at a local shop or by mail | "I have a card worth hundreds but no one trusts it's real without grading" |
 
@@ -70,7 +70,7 @@ The trading card market is worth multi-billion pound globally but the buying and
 | **Revenue Analytics** | Today/7d/30d revenue with walk-in vs online split, buy rate performance | "I have no idea if my buy rates are competitive or leaving money on the table" |
 | **Public Storefront** | Rating, reviews, services, in-stock inventory — visible to every user in the app | "I'm invisible to anyone who doesn't already know my shop" |
 | **Trade Hub Host** | Your shop is listed as a safe meetup point. Collectors come to trade at your location | "I want more foot traffic but I'm competing with online-only sellers" |
-| **Free Enrollment** | No monthly fee, no SaaS subscription. Revenue share model only | "Every POS/inventory tool wants £50-100/month before I've made a sale" |
+| **Free for Early Adopters** | No upfront cost to get started | "There is no digital tool built for how we actually work" |
 | **Triage System** | Scanned cards auto-sort into: flagged for damage, buylist matches, notable singles, bulk | "Sorting a 1000-card lot takes hours of manual inspection" |
 
 **Demo flow:** Store dashboard (attention items + revenue) > Shop counter (submission queue) > Grade cards > Make offer > Message thread with seller
@@ -85,7 +85,7 @@ The trading card market is worth multi-billion pound globally but the buying and
 |---|------|-----------|
 | **Listing a card** | Write title, fill 15 fields, take photos, set price, choose format | Scan card > auto-fill everything > set price > done |
 | **Bulk selling** | List each card individually or create "lot" listings that undersell | LiveSweep scanner + batch pricing strategies |
-| **Fees** | ~13% (12.8% final value + 30p/order) | 9% flat |
+| **Fees** | Complex (final value + insertion + processing) | Simple flat percentage, no per-item fees |
 | **Trust** | Feedback score (easily gamed) | 3-step ID verification + TrustBadge + card authentication |
 | **Price guidance** | None — you guess from "sold" listings | Market price on every card, price history charts, suggested pricing |
 | **Local trading** | Not supported | Trade builder + shop meetup points + safety checklist |
@@ -193,7 +193,7 @@ Every user type gets a purpose-built command center:
 1. Show the **store dashboard** — revenue, submission queue, buylist performance
 2. Open **shop counter** — queue with statuses, grading interface
 3. Show **storefront** — how the shop appears to buyers
-4. Walk through **enrollment** — free, no monthly fee
+4. Walk through **enrollment** — free for early adopters
 
 ### Closing (30 seconds)
 *"We built this for the UK market. There's no Cardmarket-quality marketplace here, no TCGplayer equivalent, and local game stores have zero digital infrastructure. Cardconomy fills all three gaps."*
@@ -203,11 +203,11 @@ Every user type gets a purpose-built command center:
 ## Key Numbers to Mention
 
 - **5 games supported:** Pokemon, Magic, Yu-Gi-Oh, One Piece, Lorcana
-- **9% seller fee** (flat, no hidden fees)
+- **Simple seller fee** (flat %, no insertion or per-item fees — pricing TBD)
 - **3-step verification** (phone, ID, payout)
 - **3 selling paths:** marketplace, local shop, trade
 - **Mobile + Desktop** — full parity across both
-- **Free for shops** — no SaaS fee, revenue share only
+- **Free for early adopter shops** — no upfront cost to get started
 
 ---
 
