@@ -1,0 +1,67 @@
+const { transformFileSync } = require('@babel/core');
+const fs = require('fs');
+const path = require('path');
+
+const DIST = path.join(__dirname, 'dist');
+
+// Ensure dist exists
+if (!fs.existsSync(DIST)) fs.mkdirSync(DIST);
+
+// 1. Compile all .jsx files to .js in dist/
+const jsxFiles = fs.readdirSync(__dirname).filter(f => f.endsWith('.jsx'));
+console.log(`Compiling ${jsxFiles.length} JSX files...`);
+for (const file of jsxFiles) {
+  const result = transformFileSync(path.join(__dirname, file), {
+    presets: ['@babel/preset-react'],
+  });
+  const outName = file.replace(/\.jsx$/, '.js');
+  fs.writeFileSync(path.join(DIST, outName), result.code);
+  console.log(`  ${file} → ${outName}`);
+}
+
+// 2. Copy plain JS files
+const jsFiles = fs.readdirSync(__dirname).filter(f => f.endsWith('.js') && f !== 'build.js');
+for (const file of jsFiles) {
+  fs.copyFileSync(path.join(__dirname, file), path.join(DIST, file));
+  console.log(`  copied ${file}`);
+}
+
+// 3. Process HTML files — remove Babel standalone, change script types
+const htmlFiles = ['index.html', 'Desktop.html'];
+for (const htmlFile of htmlFiles) {
+  const src = path.join(__dirname, htmlFile);
+  if (!fs.existsSync(src)) continue;
+  let html = fs.readFileSync(src, 'utf8');
+  // Remove Babel standalone script tag
+  html = html.replace(/<script[^>]*babel\.min\.js[^>]*><\/script>\s*/g, '');
+  // Change type="text/babel" src="foo.jsx" → src="foo.js"
+  html = html.replace(/type="text\/babel"\s+src="([^"]+)\.jsx(\?[^"]*)?\"/g, 'src="$1.js"');
+  // Also handle src="foo.jsx" type="text/babel" (reversed order)
+  html = html.replace(/src="([^"]+)\.jsx(\?[^"]*)?\"\s+type="text\/babel\"/g, 'src="$1.js"');
+  fs.writeFileSync(path.join(DIST, htmlFile), html);
+  console.log(`  processed ${htmlFile}`);
+}
+
+// 4. Copy asset directories
+const assetDirs = ['ads', 'assets', 'brand', 'content', 'logos', 'lots', 'sets', 'screenshots', 'shots', 'uploads'];
+for (const dir of assetDirs) {
+  const src = path.join(__dirname, dir);
+  if (!fs.existsSync(src)) continue;
+  copyDirSync(src, path.join(DIST, dir));
+  console.log(`  copied ${dir}/`);
+}
+
+console.log('Build complete!');
+
+function copyDirSync(src, dest) {
+  if (!fs.existsSync(dest)) fs.mkdirSync(dest, { recursive: true });
+  for (const entry of fs.readdirSync(src, { withFileTypes: true })) {
+    const s = path.join(src, entry.name);
+    const d = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyDirSync(s, d);
+    } else {
+      fs.copyFileSync(s, d);
+    }
+  }
+}

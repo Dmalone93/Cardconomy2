@@ -5,8 +5,11 @@ Thumbs.db
 .vscode/
 .idea/
 
-# dependencies (none required — static site)
+# dependencies
 node_modules/
+
+# build output (Vercel builds this)
+dist/
 
 # local scratch
 scraps/
