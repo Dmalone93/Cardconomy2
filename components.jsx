@@ -56,6 +56,7 @@ function CardArt({ item, w = 120, radius = 10, showFoil = true }) {
     <div style={{
       width: w, maxWidth: '100%', height: h, borderRadius: radius, position: 'relative',
       overflow: 'hidden', flexShrink: 0, isolation: 'isolate',
+      transition: 'transform 0.2s ease, box-shadow 0.2s ease',
       background: showShimmer ? 'transparent' : showMinimalFallback ? '#e5e7eb' : art,
       boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 ' + Math.round(w*0.05) + 'px rgba(0,0,0,0.0)',
     }}>

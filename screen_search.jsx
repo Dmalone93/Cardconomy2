@@ -234,12 +234,12 @@ function SearchScreen({ app, params = {} }) {
                 <div style={{ fontSize: 13.5, marginTop: 4 }}>Try removing a filter or widening your price.</div>
               </div>
             ) : view === 'grid' ? (
-              <div style={{ display: 'grid', gridTemplateColumns: cols === 3 ? '1fr 1fr 1fr' : '1fr 1fr', gap: cols === 3 ? 8 : 12 }}>
+              <div className="stagger" style={{ display: 'grid', gridTemplateColumns: cols === 3 ? '1fr 1fr 1fr' : '1fr 1fr', gap: cols === 3 ? 8 : 12 }}>
                 {productResults.map(p => <ProductCardS key={'p-'+p.id} product={p} app={app} />)}
                 {listingResults.map(l => <ListCardS key={l.id} item={l} app={app} />)}
               </div>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+              <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
                 {productResults.map(p => <ProductCardS key={'p-'+p.id} product={p} app={app} />)}
                 {listingResults.map(l => <ListRowS key={l.id} item={l} app={app} />)}
               </div>

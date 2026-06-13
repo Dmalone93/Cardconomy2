@@ -84,6 +84,24 @@
     animation: ccShimmer 1.5s ease infinite;
     border-radius: 4px;
   }
+  @keyframes ccStagger { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes ccPushOut { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateX(-20px); } }
+  @keyframes ccTabIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes ccLift { from { transform: translateY(0); } to { transform: translateY(-3px); } }
+  @keyframes ccPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+  @keyframes ccCountUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes ccGlow { 0% { box-shadow: 0 0 0 0 rgba(99,102,241,0.3); } 100% { box-shadow: 0 0 0 8px rgba(99,102,241,0); } }
+  .stagger > * { animation: ccStagger 0.35s ease both; }
+  .stagger > *:nth-child(1) { animation-delay: 0s; }
+  .stagger > *:nth-child(2) { animation-delay: 0.04s; }
+  .stagger > *:nth-child(3) { animation-delay: 0.08s; }
+  .stagger > *:nth-child(4) { animation-delay: 0.12s; }
+  .stagger > *:nth-child(5) { animation-delay: 0.16s; }
+  .stagger > *:nth-child(6) { animation-delay: 0.20s; }
+  .stagger > *:nth-child(7) { animation-delay: 0.24s; }
+  .stagger > *:nth-child(8) { animation-delay: 0.28s; }
+  .stagger > *:nth-child(9) { animation-delay: 0.32s; }
+  .stagger > *:nth-child(10) { animation-delay: 0.36s; }
 </style>
 </head>
 <body>

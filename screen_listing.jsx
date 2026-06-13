@@ -93,7 +93,7 @@ function ListingScreen({ app, params }) {
 
           {/* price */}
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 16 }}>
-            <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 32, letterSpacing: -1, color: TL.ink }}>{moneyL(item.price)}</span>
+            <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 32, letterSpacing: -1, color: TL.ink, animation: 'ccCountUp 0.4s ease 0.15s both' }}>{moneyL(item.price)}</span>
             {item.market && <span style={{ fontFamily: TL.sans, fontSize: 13, color: TL.muted, paddingBottom: 6 }}>
               market <b style={{ color: TL.ink2, fontFamily: TL.sans }}>{moneyL(item.market)}</b>
             </span>}

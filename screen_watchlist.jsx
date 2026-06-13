@@ -236,7 +236,7 @@ function SellerDash({ app, header }) {
         </div>
 
         {/* activity feed */}
-        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+        <div className="stagger" style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Activity</div>
           {ACTIVITY.map(([dot, text, time], i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
@@ -323,7 +323,7 @@ function BuyerDash({ app, header }) {
         {/* 2. Needs attention */}
         <div style={{ marginBottom: 14 }}>
           <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 8 }}>Needs Attention</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {ATTENTION.map(function(a, i) {
               return (
                 <div key={i} style={{ background: TW.surface, borderRadius: 14, padding: '12px 14px', borderLeft: '4px solid ' + a.border, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -337,7 +337,7 @@ function BuyerDash({ app, header }) {
         </div>
 
         {/* 3. Watchlist price movements */}
-        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+        <div className="stagger" style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>{'Watching ' + watched.length}</div>
           {watched.length === 0 && <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, padding: '8px 0' }}>No watched cards yet.</div>}
           {watched.map(function(item, i) {
@@ -490,7 +490,7 @@ function StoreDash({ app, header }) {
         </div>
 
         {/* 4. Submission queue */}
-        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+        <div className="stagger" style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Submission Queue</div>
           {QUEUE.map(function(q, i) {
             return (

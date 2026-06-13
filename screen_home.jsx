@@ -280,7 +280,7 @@ function HomeScreen({ app }) {
       {trendingProducts.length > 0 && (
         <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Trending now" action="See all" onAction={() => app.nav.setTab('search')} />
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
+          <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
             {trendingProducts.slice(0, 6).map(p => <ProductCard key={p.id} product={p} app={app} />)}
           </div>
         </div>
@@ -300,7 +300,7 @@ function HomeScreen({ app }) {
       {graded.length > 0 && (
         <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Graded spotlight" />
-          <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '4px 16px 8px', overflowX: 'auto' }}>
+          <div className="noscroll stagger" style={{ display: 'flex', gap: 12, padding: '4px 16px 8px', overflowX: 'auto' }}>
             {graded.map(l => {
               const gWatched = app.isWatched(l.id);
               return (
@@ -348,7 +348,7 @@ function HomeScreen({ app }) {
       {lots.length > 0 && (
         <div style={{ paddingTop: 20 }}>
           <SectionHeader title="Bulk lots & collections" />
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '0 16px' }}>
+          <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '0 16px' }}>
             {lots.map(lot => <LotRow key={lot.id} lot={lot} app={app} />)}
           </div>
         </div>
