@@ -49,7 +49,17 @@ for (const { src: srcName, out: outName } of htmlFiles) {
   console.log(`  ${srcName} → ${outName}`);
 }
 
-// 4. Copy asset directories
+// 4. Copy static HTML files (no Babel processing needed)
+const staticHtml = ['deck.html'];
+for (const file of staticHtml) {
+  const src = path.join(__dirname, file);
+  if (fs.existsSync(src)) {
+    fs.copyFileSync(src, path.join(DIST, file));
+    console.log(`  copied ${file}`);
+  }
+}
+
+// 5. Copy asset directories
 const assetDirs = ['ads', 'assets', 'brand', 'content', 'logos', 'lots', 'sets', 'screenshots', 'shots', 'uploads'];
 for (const dir of assetDirs) {
   const src = path.join(__dirname, dir);
