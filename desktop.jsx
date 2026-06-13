@@ -269,9 +269,44 @@ function DWatch({ app }) {
 }
 
 function DAccount({ app }) {
-  var Sparkline = window.Sparkline;
-  var Delta = window.Delta;
   var listings = window.LISTINGS || [];
+
+  var balanceRanges = {
+    '7d': [40, 55, 30, 84, 60, 72, 84],
+    '30d': [120, 95, 140, 160, 180, 155, 190, 210, 195, 230, 248],
+    '90d': [50, 65, 80, 95, 110, 130, 140, 120, 150, 170, 190, 210, 230, 248],
+  };
+  var rangeState = React.useState('7d');
+  var balanceRange = rangeState[0];
+  var setBalanceRange = rangeState[1];
+
+  function renderSparkSVG(data, color, height) {
+    var gradId = 'sg' + Math.random().toString(36).slice(2, 8);
+    var min = Math.min.apply(null, data);
+    var max = Math.max.apply(null, data);
+    var range = max - min || 1;
+    var pts = data.map(function(v, i) {
+      var x = (i / (data.length - 1)) * 100;
+      var y = 30 - ((v - min) / range) * 26 - 2;
+      return x.toFixed(2) + ',' + y.toFixed(2);
+    });
+    var linePath = 'M' + pts.join(' L');
+    var areaPath = linePath + ' L100,30 L0,30 Z';
+    return (
+      <svg width="100%" viewBox="0 0 100 30" preserveAspectRatio="none" style={{ display: 'block', height: height || 36 }}>
+        <style>{'@keyframes drawLine { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }'}</style>
+        <defs>
+          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+            <stop offset="100%" stopColor={color} stopOpacity="0" />
+          </linearGradient>
+        </defs>
+        <path d={areaPath} fill={'url(#' + gradId + ')'} />
+        <path d={linePath} fill="none" stroke={color} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round"
+          style={{ strokeDasharray: 200, animation: 'drawLine 1.5s ease forwards' }} />
+      </svg>
+    );
+  }
 
   var activityData = [
     { dot: 'var(--up)', text: 'Sold Charizard EX', amt: '+\u00a384', time: '2 hours ago', cardId: 'l01' },
@@ -302,12 +337,52 @@ function DAccount({ app }) {
   var sectionLabel = { fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, color: 'var(--muted)', margin: '0 0 12px' };
   var cardStyle = { background: 'var(--surface)', borderRadius: 14, padding: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' };
 
+  var pillBase = { padding: '4px 10px', borderRadius: 6, fontWeight: 600, fontSize: 11, border: 'none', cursor: 'pointer' };
+
   return (
     <div className="wrap" style={{ padding: '32px 24px 40px' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, alignItems: 'start' }}>
 
         {/* ── Left column ── */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+          {/* Needs attention */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={sectionLabel}>Needs attention</div>
+
+            {/* Offer expiring */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
+              background: 'var(--surface)', borderRadius: 12, borderLeft: '4px solid #f59e0b',
+              boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>Offer expiring soon</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Dark Magician {'\u00b7'} {money(42)} from @buyer_jane {'\u00b7'} 18h left</div>
+              </div>
+              <button onClick={function() { app.toast('Reviewing offer'); }} style={{ background: '#f59e0b', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Review</button>
+            </div>
+
+            {/* Ship order */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
+              background: 'var(--surface)', borderRadius: 12, borderLeft: '4px solid #22c55e',
+              boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>Ship your sold card</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Charizard EX to Sam R. {'\u00b7'} Sold 2h ago</div>
+              </div>
+              <button onClick={function() { app.toast('Printing label'); }} style={{ background: '#22c55e', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Print label</button>
+            </div>
+
+            {/* Buylist match */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
+              background: 'var(--surface)', borderRadius: 12, borderLeft: '4px solid var(--accent)',
+              boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>2 buylist matches available</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Blue-Eyes White Dragon and Pikachu EX at your price</div>
+              </div>
+              <button onClick={function() { app.toast('Viewing buylist'); }} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>View</button>
+            </div>
+          </div>
 
           {/* Balance card */}
           <button onClick={function() { app.toast('Opening payments'); }} style={{
@@ -319,20 +394,29 @@ function DAccount({ app }) {
               <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(248.47)}</span>
               <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'\u25b2'} {money(84)} this week</span>
             </div>
-            {Sparkline && (
-              <div style={{ margin: '14px 0 4px' }}>
-                <Sparkline data={[40, 55, 30, 84, 60, 72, 84]} width={220} height={32} color="#4ade80" />
-              </div>
-            )}
+            <div style={{ display: 'flex', gap: 6, margin: '12px 0 4px' }} onClick={function(e) { e.stopPropagation(); }}>
+              {['7d', '30d', '90d'].map(function(r) {
+                var sel = r === balanceRange;
+                return (
+                  <button key={r} onClick={function() { setBalanceRange(r); }} style={Object.assign({}, pillBase, {
+                    background: sel ? 'rgba(255,255,255,0.2)' : 'transparent',
+                    color: sel ? '#fff' : 'rgba(255,255,255,0.5)',
+                  })}>{r}</button>
+                );
+              })}
+            </div>
+            <div style={{ margin: '6px 0 4px' }}>
+              {renderSparkSVG(balanceRanges[balanceRange], '#4ade80', 36)}
+            </div>
             <div style={{ display: 'flex', gap: 10, marginTop: 16 }} onClick={function(e) { e.stopPropagation(); }}>
               <button onClick={function() { app.toast('Withdraw'); }} style={{
                 background: 'rgba(255,255,255,0.1)', color: '#fff', borderRadius: 10, padding: '10px 20px',
                 fontWeight: 700, fontSize: 13, border: 'none',
               }}>Withdraw</button>
-              <button onClick={function() { app.toast('Store credit'); }} style={{
+              <button onClick={function() { app.toast('Top up'); }} style={{
                 background: 'rgba(99,102,241,0.8)', color: '#fff', borderRadius: 10, padding: '10px 20px',
                 fontWeight: 700, fontSize: 13, border: 'none',
-              }}>Store credit</button>
+              }}>Top up</button>
             </div>
           </button>
 
@@ -419,11 +503,9 @@ function DAccount({ app }) {
               <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 26 }}>{money(2480)}</span>
               <span style={{ background: 'rgba(34,197,94,0.12)', color: '#22c55e', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>+12% this month</span>
             </div>
-            {Sparkline && (
-              <div style={{ margin: '8px 0 14px' }}>
-                <Sparkline data={[1800, 1950, 2100, 2200, 2150, 2350, 2480]} width={200} height={28} color="var(--accent)" />
-              </div>
-            )}
+            <div style={{ margin: '8px 0 14px' }}>
+              {renderSparkSVG([1800, 1950, 2100, 2200, 2150, 2350, 2480], '#6366f1', 28)}
+            </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {topCards.map(function(card) {
                 return (
