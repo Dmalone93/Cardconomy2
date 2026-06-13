@@ -101,7 +101,7 @@ function AuthCardScreen({ app, params = {} }) {
               <div style={{ width: 76, height: 76, margin: '0 auto 12px', borderRadius: 999, background: 'var(--accent-wash)', color: TAU.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconAU.check({ width: 40, height: 40 })}</div>
               <h1 style={{ margin: 0, fontFamily: TAU.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.5 }}>Submitted for authentication</h1>
               <p style={{ fontFamily: TAU.sans, fontSize: 13.5, color: TAU.muted, lineHeight: 1.5, margin: '8px auto 0', maxWidth: 300 }}>
-                {method === 'shop' ? 'Take the card to Gnome Games (ticket #AC-2231). We'll text when it\'s sealed.' : 'Your prepaid label is in Notifications. Pack the card and drop it off — tracking starts automatically.'}
+                {method === 'shop' ? 'Take the card to Gnome Games (ticket #AC-2231). We\u2019ll text when it\u2019s sealed.' : 'Your prepaid label is in Notifications. Pack the card and drop it off — tracking starts automatically.'}
               </p>
             </div>
             {/* status tracker */}

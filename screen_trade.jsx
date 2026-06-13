@@ -368,7 +368,7 @@ function TradeScreen({ app, params = {} }) {
             </div>
             <div style={{ background: TT.surface, borderRadius: 13, padding: '13px 15px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 13, marginBottom: 9 }}>Safe-trade checklist</div>
-              {['Meet in a public, well-lit place (a shop is ideal)', 'Inspect cards before money or cards change hands', 'Keep it in the app — share no personal contact info', 'Tell someone where you're going'].map((s, i) => (
+              {['Meet in a public, well-lit place (a shop is ideal)', 'Inspect cards before money or cards change hands', 'Keep it in the app — share no personal contact info', 'Tell someone where you\u2019re going'].map((s, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 9, padding: '4px 0' }}>
                   <span style={{ color: 'var(--up)', fontSize: 13, marginTop: 1 }}>✓</span>
                   <span style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, lineHeight: 1.4 }}>{s}</span>

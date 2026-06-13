@@ -141,7 +141,7 @@ function BuylistScreen({ app }) {
           </div>
         </div>
 
-        {entries.length === 0 ? emptyBlock(AIcon.star({ width: 30, height: 30 }), 'No cards yet', 'Tap + to add cards you want to buy and the price you'll pay.') : (
+        {entries.length === 0 ? emptyBlock(AIcon.star({ width: 30, height: 30 }), 'No cards yet', 'Tap + to add cards you want to buy and the price you\u2019ll pay.') : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {entries.map(e => {
               const isMatch = e.active && e.card.price <= e.max;
@@ -369,7 +369,7 @@ function SellingScreen({ app }) {
           </div>
         )}
 
-        {tab === 'drafts' && emptyBlock(IconAC.tag({ width: 28, height: 28 }), 'No drafts', 'Start a listing and save it for later — it'll wait here.')}
+        {tab === 'drafts' && emptyBlock(IconAC.tag({ width: 28, height: 28 }), 'No drafts', 'Start a listing and save it for later — it\u2019ll wait here.')}
       </div>
     </div>
   );
