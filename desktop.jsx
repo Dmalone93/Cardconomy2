@@ -269,54 +269,207 @@ function DWatch({ app }) {
 }
 
 function DAccount({ app }) {
+  var Sparkline = window.Sparkline;
+  var Delta = window.Delta;
+  var listings = window.LISTINGS || [];
+
+  var activityData = [
+    { dot: 'var(--up)', text: 'Sold Charizard EX', amt: '+\u00a384', time: '2 hours ago', cardId: 'l01' },
+    { dot: 'var(--accent)', text: 'New offer on Dark Magician', amt: '\u00a342', time: '5 hours ago', cardId: 'l04' },
+    { dot: 'var(--faint)', text: 'Order #1847 delivered', amt: null, time: '1 day ago', cardId: null },
+    { dot: 'var(--up)', text: 'Trade completed with Jamie', amt: null, time: '1 day ago', cardId: null },
+    { dot: 'var(--accent)', text: 'Listing viewed 12 times', amt: null, time: '2 days ago', cardId: null },
+    { dot: 'var(--up)', text: 'Sold Moonbreon VMAX', amt: '+\u00a3156', time: '3 days ago', cardId: 'l05' },
+    { dot: 'var(--faint)', text: 'Buylist match: Blue-Eyes', amt: null, time: '3 days ago', cardId: null },
+    { dot: 'var(--accent)', text: 'New watcher on Pikachu EX', amt: null, time: '4 days ago', cardId: null },
+  ];
+
+  var openItems = [
+    { color: '#3b82f6', wash: 'rgba(59,130,246,0.1)', label: '2 active listings', sub: '24 views \u00b7 3 watchers' },
+    { color: '#f59e0b', wash: 'rgba(245,158,11,0.1)', label: '1 pending offer', sub: 'Dark Magician \u00b7 \u00a342 \u00b7 18h left' },
+    { color: '#22c55e', wash: 'rgba(34,197,94,0.1)', label: '1 ready to ship', sub: 'Charizard EX \u00b7 Sam R.' },
+    { color: '#8b5cf6', wash: 'rgba(139,92,246,0.1)', label: '3 purchases', sub: '1 in transit' },
+  ];
+
+  var topCards = listings.filter(function(l) { return l.art || l.img; }).slice(0, 3);
+
+  var buylistMatches = [
+    { name: 'Blue-Eyes White Dragon', max: 35, available: 28 },
+    { name: 'Moonbreon VMAX', max: 140, available: 156 },
+    { name: 'Pikachu EX', max: 22, available: 18 },
+  ];
+
+  var sectionLabel = { fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, color: 'var(--muted)', margin: '0 0 12px' };
+  var cardStyle = { background: 'var(--surface)', borderRadius: 14, padding: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' };
+
   return (
     <div className="wrap" style={{ padding: '32px 24px 40px' }}>
-      <h1 style={{ fontWeight: 800, fontSize: 30, letterSpacing: -0.8, margin: '0 0 6px' }}>My Account</h1>
-      <p style={{ color: 'var(--muted)', fontSize: 15, margin: '0 0 28px' }}>Manage your profile, orders, and settings.</p>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, alignItems: 'start' }}>
 
-      <div style={{ display: 'flex', gap: 16, alignItems: 'center', background: 'var(--surface)', borderRadius: 16, padding: 20, marginBottom: 24, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-        <div style={{ width: 56, height: 56, borderRadius: 999, background: 'var(--fill)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 22, flexShrink: 0 }}>A</div>
-        <div>
-          <div style={{ fontWeight: 700, fontSize: 18 }}>Alex Rivera</div>
-          <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 2 }}>alex.rivera@email.com</div>
-          <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
-            <span style={{ background: 'var(--up-wash)', color: 'var(--up)', padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 10 }}>Verified</span>
-            <span style={{ background: 'var(--accent-wash)', color: 'var(--accent)', padding: '2px 8px', borderRadius: 4, fontWeight: 700, fontSize: 10 }}>Collector</span>
+        {/* ── Left column ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+          {/* Balance card */}
+          <button onClick={function() { app.toast('Opening payments'); }} style={{
+            background: 'linear-gradient(135deg, #16181d, #2a2d3a)', borderRadius: 18, padding: '24px 26px',
+            textAlign: 'left', width: '100%', color: '#fff', position: 'relative', overflow: 'hidden',
+          }}>
+            <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, opacity: 0.45, marginBottom: 6 }}>Available Balance</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
+              <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(248.47)}</span>
+              <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'\u25b2'} {money(84)} this week</span>
+            </div>
+            {Sparkline && (
+              <div style={{ margin: '14px 0 4px' }}>
+                <Sparkline data={[40, 55, 30, 84, 60, 72, 84]} width={220} height={32} color="#4ade80" />
+              </div>
+            )}
+            <div style={{ display: 'flex', gap: 10, marginTop: 16 }} onClick={function(e) { e.stopPropagation(); }}>
+              <button onClick={function() { app.toast('Withdraw'); }} style={{
+                background: 'rgba(255,255,255,0.1)', color: '#fff', borderRadius: 10, padding: '10px 20px',
+                fontWeight: 700, fontSize: 13, border: 'none',
+              }}>Withdraw</button>
+              <button onClick={function() { app.toast('Store credit'); }} style={{
+                background: 'rgba(99,102,241,0.8)', color: '#fff', borderRadius: 10, padding: '10px 20px',
+                fontWeight: 700, fontSize: 13, border: 'none',
+              }}>Store credit</button>
+            </div>
+          </button>
+
+          {/* Status tiles */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+            {[
+              { val: '2', label: 'Active listings', sub: '24 views \u00b7 3 watchers', color: 'var(--ink)' },
+              { val: '1', label: 'Pending offers', sub: 'Respond \u2192', color: '#f59e0b' },
+              { val: '1', label: 'To ship', sub: 'Print label \u2192', color: '#22c55e' },
+            ].map(function(tile, i) {
+              return (
+                <button key={i} onClick={function() { app.toast(tile.label); }} style={Object.assign({}, cardStyle, { textAlign: 'center', cursor: 'pointer', border: 'none' })}>
+                  <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 24, color: 'var(--ink)' }}>{tile.val}</div>
+                  <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 3 }}>{tile.label}</div>
+                  <div style={{ fontSize: 11, color: tile.color, fontWeight: 600, marginTop: 4 }}>{tile.sub}</div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Open items list */}
+          <div>
+            <div style={sectionLabel}>Open Items</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {openItems.map(function(item, i) {
+                return (
+                  <button key={i} onClick={function() { app.toast(item.label); }} style={{
+                    display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
+                    background: 'var(--surface)', borderRadius: 14, textAlign: 'left', width: '100%',
+                    boxShadow: '0 1px 3px rgba(20,24,40,0.05)', border: 'none', cursor: 'pointer',
+                  }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 10, background: item.wash,
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+                    }}>
+                      <div style={{ width: 10, height: 10, borderRadius: 999, background: item.color }} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 600, fontSize: 14 }}>{item.label}</div>
+                      <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{item.sub}</div>
+                    </div>
+                    <span style={{ color: 'var(--faint)', fontSize: 18 }}>{'\u203a'}</span>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14, marginBottom: 28 }}>
-        {[['3', 'Orders'], ['2', 'Active Listings'], ['1', 'Pending Offers']].map(([val, label], i) => (
-          <div key={i} style={{ background: 'var(--surface)', borderRadius: 14, padding: '18px 16px', textAlign: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontWeight: 700, fontSize: 22 }}>{val}</div>
-            <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 3 }}>{label}</div>
-          </div>
-        ))}
-      </div>
+        {/* ── Right column ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {[
-          ['Purchases', 'View order history and tracking'],
-          ['Selling', 'Manage your active listings'],
-          ['Offers', 'Sent and received offers'],
-          ['Payments', 'Balance, payouts, and payment methods'],
-          ['Buylist', 'Cards you want to buy'],
-          ['Notifications', 'Alerts and preferences'],
-          ['Verification', 'Identity and trust level'],
-        ].map(([title, sub], i) => (
-          <button key={i} onClick={() => app.toast(title)} style={{
-            display: 'flex', alignItems: 'center', gap: 14, padding: '16px 18px',
-            background: 'var(--surface)', borderRadius: 14, textAlign: 'left', width: '100%',
-            boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
-          }}>
-            <div style={{ flex: 1 }}>
-              <div style={{ fontWeight: 600, fontSize: 15 }}>{title}</div>
-              <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 1 }}>{sub}</div>
+          {/* Activity feed */}
+          <div style={cardStyle}>
+            <div style={sectionLabel}>Recent Activity</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {activityData.map(function(ev, i) {
+                var item = ev.cardId ? window.byId(ev.cardId) : null;
+                return (
+                  <div key={i} style={{
+                    display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0',
+                    borderBottom: i < activityData.length - 1 ? '1px solid var(--line-2)' : 'none',
+                  }}>
+                    <div style={{ width: 6, height: 6, borderRadius: 999, background: ev.dot, flexShrink: 0 }} />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.text}</div>
+                      <div style={{ fontSize: 11, color: 'var(--muted)' }}>{ev.time}</div>
+                    </div>
+                    {item && <CardArt item={item} w={28} />}
+                    {ev.amt && <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 12, color: ev.amt.charAt(0) === '+' ? 'var(--up)' : 'var(--ink)', flexShrink: 0 }}>{ev.amt}</span>}
+                  </div>
+                );
+              })}
             </div>
-            <span style={{ color: 'var(--faint)', fontSize: 18 }}>›</span>
-          </button>
-        ))}
+          </div>
+
+          {/* Collection summary */}
+          <div style={cardStyle}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
+              <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Collection</div>
+              <button onClick={function() { app.toast('View collection'); }} style={{ fontSize: 11, color: 'var(--accent)', fontWeight: 600, border: 'none', background: 'none', cursor: 'pointer' }}>View all {'\u2192'}</button>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
+              <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 26 }}>{money(2480)}</span>
+              <span style={{ background: 'rgba(34,197,94,0.12)', color: '#22c55e', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>+12% this month</span>
+            </div>
+            {Sparkline && (
+              <div style={{ margin: '8px 0 14px' }}>
+                <Sparkline data={[1800, 1950, 2100, 2200, 2150, 2350, 2480]} width={200} height={28} color="var(--accent)" />
+              </div>
+            )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {topCards.map(function(card) {
+                return (
+                  <div key={card.id} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <CardArt item={card} w={36} />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{card.name}</div>
+                    </div>
+                    <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 13 }}>{money(card.price)}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Buylist */}
+          <div style={cardStyle}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+              <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Buylist</div>
+              <span style={{ background: 'var(--accent)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>2 matches</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {buylistMatches.map(function(m, i) {
+                var isGood = m.available <= m.max;
+                return (
+                  <button key={i} onClick={function() { app.toast(m.name); }} style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    padding: '10px 12px', borderRadius: 10, textAlign: 'left', width: '100%',
+                    background: isGood ? 'rgba(34,197,94,0.06)' : 'var(--surface-2)',
+                    border: isGood ? '1px solid rgba(34,197,94,0.2)' : '1px solid var(--line-2)',
+                    cursor: 'pointer',
+                  }}>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600 }}>{m.name}</div>
+                      <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 1 }}>Your max: {money(m.max)}</div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: isGood ? 'var(--up)' : 'var(--ink)' }}>Available: {money(m.available)}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   );
