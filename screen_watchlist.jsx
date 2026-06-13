@@ -179,11 +179,23 @@ function EmptyState({ icon, title, body, cta, onCta }) {
   );
 }
 
-// ── Dashboard ────────────────────────────────────────────────
-function DashboardScreen({ app }) {
+// ── Mini sparkline SVG helper ────────────────────────────────
+function MiniSpark({ data, color, w, h }) {
+  if (!data || data.length < 2) return null;
+  const mn = Math.min(...data), mx = Math.max(...data), range = mx - mn || 1;
+  const pts = data.map(function(v, i) { return (i / (data.length - 1)) * 100 + ',' + (30 - ((v - mn) / range) * 28); }).join(' ');
+  return (
+    <svg width={w || '100%'} height={h || 30} viewBox="0 0 100 30" preserveAspectRatio="none" style={{ display: 'block' }}>
+      <polyline points={pts} fill="none" stroke={color || TW.accent} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// ── Seller Dashboard (existing content, extracted) ───────────
+function SellerDash({ app, header }) {
   const port = valueOf(app.ownedIds());
   const ACTIVITY = [
-    ['#22c55e', 'Sold Charizard ex for £38.50', '2h ago'],
+    ['#22c55e', 'Sold Charizard ex for \u00A338.50', '2h ago'],
     ['#3b82f6', 'New offer on Ragavan', '4h ago'],
     ['#a855f7', 'Completed trade with Marcus T.', 'Yesterday'],
     ['#f59e0b', 'Added 3 cards to Main Binder', '2d ago'],
@@ -191,22 +203,8 @@ function DashboardScreen({ app }) {
   ];
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
-      {/* minimal header */}
-      <div style={{ padding: '52px 16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ width: 30, height: 30, borderRadius: 10, background: TW.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 14 }}>A</div>
-          <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 17 }}>Alex</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <button onClick={() => app.nav.push('notifications')} style={{ position: 'relative', color: TW.ink, padding: 4, display: 'flex' }}>
-            {IconD.bell({})}
-            <span style={{ position: 'absolute', top: 2, right: 2, width: 8, height: 8, borderRadius: 999, background: '#ef4444' }} />
-          </button>
-          <button onClick={() => app.nav.push('settings')} style={{ color: TW.ink, padding: 4, display: 'flex' }}>{IconD.gear({})}</button>
-        </div>
-      </div>
-
-      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '8px 16px 100px' }}>
+      {header}
+      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
         {/* balance card */}
         <button onClick={() => app.nav.push('payments')} style={{ width: '100%', textAlign: 'left', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', borderRadius: 20, padding: 20, color: '#fff', marginBottom: 14 }}>
           <div style={{ fontFamily: TW.sans, fontSize: 12, opacity: 0.65, fontWeight: 600 }}>Available balance</div>
@@ -278,6 +276,285 @@ function DashboardScreen({ app }) {
       </div>
     </div>
   );
+}
+
+// ── Buyer / Collector Dashboard ──────────────────────────────
+function BuyerDash({ app, header }) {
+  const port = valueOf(app.ownedIds());
+  const sparkData = port.series.length > 2 ? port.series : [1800, 1950, 2100, 2200, 2150, 2350, 2480];
+  const watched = app.watch.map(function(id) { return byIdW(id); }).filter(Boolean).slice(0, 4);
+
+  const ATTENTION = [
+    { border: TW.accent, title: '2 buylist matches at your price', sub: 'Blue-Eyes and Pikachu EX', cta: 'View', ctaColor: TW.accent, onTap: function() { app.nav.push('buylist'); } },
+    { border: '#22c55e', title: 'Order arriving today', sub: 'Charizard EX from CardKing', cta: 'Track', ctaColor: '#22c55e', onTap: function() { app.toast('Tracking order'); } },
+    { border: '#eab308', title: 'Price drop on watched card', sub: 'Dark Magician down 8% today', cta: 'View', ctaColor: '#eab308', onTap: function() { app.nav.setTab('watch'); } },
+  ];
+
+  const BUYLIST_MATCHES = [
+    { name: 'Blue-Eyes White Dragon', max: 28, available: 24 },
+    { name: 'Pikachu EX', max: 15, available: 14.50 },
+    { name: 'Mew VMAX', max: 42, available: 45 },
+  ];
+
+  const ORDERS = [
+    { color: '#3b82f6', name: 'Charizard EX', status: 'Shipped', statusColor: '#3b82f6', time: '2d ago' },
+    { color: '#22c55e', name: 'Pikachu VMAX', status: 'Delivered', statusColor: '#22c55e', time: '5d ago' },
+    { color: '#f59e0b', name: 'Dark Magician', status: 'Processing', statusColor: '#f59e0b', time: '1h ago' },
+  ];
+
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
+      {header}
+      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
+
+        {/* 1. Portfolio hero card */}
+        <button onClick={() => app.nav.setTab('watch')} style={{ width: '100%', textAlign: 'left', background: TW.surface, borderRadius: 20, padding: 20, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase' }}>Portfolio Value</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 32, letterSpacing: -1, marginTop: 4 }}>{moneyW(port.now)}</div>
+          <span style={{ display: 'inline-block', marginTop: 6, background: '#dcfce7', color: '#16a34a', borderRadius: 999, padding: '3px 10px', fontFamily: TW.sans, fontWeight: 700, fontSize: 12 }}>+12% this month</span>
+          <div style={{ marginTop: 12 }}>
+            <MiniSpark data={sparkData} color="#22c55e" h={34} />
+          </div>
+          <div style={{ marginTop: 8, fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>
+            {app.ownedIds().length} cards {'\u00B7'} {app.collections.length} collection{app.collections.length !== 1 ? 's' : ''}
+          </div>
+        </button>
+
+        {/* 2. Needs attention */}
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 8 }}>Needs Attention</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {ATTENTION.map(function(a, i) {
+              return (
+                <div key={i} style={{ background: TW.surface, borderRadius: 14, padding: '12px 14px', borderLeft: '4px solid ' + a.border, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                  <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13.5 }}>{a.title}</div>
+                  <div style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted, marginTop: 2 }}>{a.sub}</div>
+                  <button onClick={a.onTap} style={{ marginTop: 8, background: a.ctaColor, color: '#fff', borderRadius: 8, padding: '6px 14px', fontFamily: TW.sans, fontWeight: 700, fontSize: 12 }}>{a.cta}</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 3. Watchlist price movements */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>{'Watching ' + watched.length}</div>
+          {watched.length === 0 && <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, padding: '8px 0' }}>No watched cards yet.</div>}
+          {watched.map(function(item, i) {
+            var price = item.market || item.price;
+            var arrow = item.history ? (price >= item.history[0] ? '\u25B2' : '\u25BC') : '';
+            var arrowColor = item.history ? (price >= item.history[0] ? '#22c55e' : '#ef4444') : TW.muted;
+            return (
+              <button key={item.id} onClick={function() { app.nav.push('listing', { id: item.id }); }} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+                <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</span>
+                <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{moneyW(price)}</span>
+                {arrow && <span style={{ fontFamily: TW.sans, fontSize: 11, color: arrowColor, flexShrink: 0 }}>{arrow}</span>}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 4. Buylist matches */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+            <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase' }}>Buylist</span>
+            <span style={{ background: TW.accent, color: '#fff', borderRadius: 999, padding: '1px 7px', fontFamily: TW.sans, fontWeight: 700, fontSize: 11 }}>{BUYLIST_MATCHES.length}</span>
+          </div>
+          {BUYLIST_MATCHES.map(function(m, i) {
+            var good = m.available <= m.max;
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+                <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 600, fontSize: 13 }}>{m.name}</span>
+                <span style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>{'Max: ' + moneyW(m.max)}</span>
+                <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: good ? '#22c55e' : TW.ink }}>{moneyW(m.available)}</span>
+              </div>
+            );
+          })}
+          <button onClick={function() { app.nav.push('buylist'); }} style={{ marginTop: 8, fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: TW.accent }}>{'View all \u2192'}</button>
+        </div>
+
+        {/* 5. Recent purchases */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Orders</div>
+          {ORDERS.map(function(o, i) {
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+                <div style={{ width: 28, height: 28, borderRadius: 7, background: o.color, flexShrink: 0 }} />
+                <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 600, fontSize: 13 }}>{o.name}</span>
+                <span style={{ background: o.statusColor + '22', color: o.statusColor, borderRadius: 999, padding: '2px 8px', fontFamily: TW.sans, fontWeight: 700, fontSize: 11 }}>{o.status}</span>
+                <span style={{ fontFamily: TW.sans, fontSize: 11, color: TW.faint, flexShrink: 0 }}>{o.time}</span>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// ── Store Dashboard ──────────────────────────────────────────
+function StoreDash({ app, header }) {
+  const [range, setRange] = React.useState('today');
+
+  const SPARK_DATA = {
+    today: [80, 120, 95, 200, 180, 250, 322],
+    '7d': [820, 950, 1100, 780, 1247, 1050, 1180],
+    '30d': [3200, 3800, 4100, 3600, 4500, 5200, 4800, 5100, 5400],
+  };
+
+  const ATTENTION = [
+    { border: '#f59e0b', title: '3 submissions pending review', sub: 'Jordan M., Sam R., Dana P.', cta: 'Review', ctaColor: '#f59e0b', onTap: function() { app.toast('Opening submissions'); } },
+    { border: '#22c55e', title: '1 bulk lot ready to price', sub: 'Miguel A. - 1,420 cards', cta: 'Price', ctaColor: '#22c55e', onTap: function() { app.toast('Opening bulk lot'); } },
+    { border: TW.accent, title: 'Buylist restock needed', sub: '5 high-demand cards below threshold', cta: 'Restock', ctaColor: TW.accent, onTap: function() { app.toast('Opening restock'); } },
+  ];
+
+  const QUEUE = [
+    { init: 'J', name: 'Jordan M.', cards: '48 cards', time: '12 min ago', status: 'Grading', color: '#3b82f6' },
+    { init: 'S', name: 'Sam R.', cards: '64 cards', time: '18 min ago', status: 'New', color: '#f59e0b' },
+    { init: 'D', name: 'Dana P.', cards: '310 cards', time: '1 hr ago', status: 'Offer sent', color: '#22c55e' },
+    { init: 'M', name: 'Miguel A.', cards: '1,420 cards', time: '3 hr ago', status: 'Completed', color: 'var(--muted)' },
+  ];
+
+  var LOW_STOCK = [
+    { name: 'Blue-Eyes White Dragon', stock: '0 in stock', color: '#ef4444' },
+    { name: 'Charizard EX', stock: '1 left', color: '#f59e0b' },
+    { name: 'Dark Magician', stock: '2 left', color: '#f59e0b' },
+  ];
+
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
+      {header}
+      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
+
+        {/* 1. Needs attention */}
+        <div style={{ marginBottom: 14 }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 8 }}>Needs Attention</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {ATTENTION.map(function(a, i) {
+              return (
+                <div key={i} style={{ background: TW.surface, borderRadius: 14, padding: '12px 14px', borderLeft: '4px solid ' + a.border, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                  <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13.5 }}>{a.title}</div>
+                  <div style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted, marginTop: 2 }}>{a.sub}</div>
+                  <button onClick={a.onTap} style={{ marginTop: 8, background: a.ctaColor, color: '#fff', borderRadius: 8, padding: '6px 14px', fontFamily: TW.sans, fontWeight: 700, fontSize: 12 }}>{a.cta}</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* 2. Revenue card */}
+        <div style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', borderRadius: 20, padding: 20, color: '#fff', marginBottom: 14 }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, opacity: 0.65, textTransform: 'uppercase' }}>{"Today\u2019s Revenue"}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 34, letterSpacing: -1, marginTop: 4 }}>{moneyW(1247)}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: '#7fe7a4', marginTop: 4 }}>&#9650; up 23% vs last week</div>
+          {/* date range pills */}
+          <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
+            {[['today', 'Today'], ['7d', '7d'], ['30d', '30d']].map(function(r) {
+              var active = range === r[0];
+              return (
+                <button key={r[0]} onClick={function() { setRange(r[0]); }} style={{ background: active ? 'rgba(255,255,255,0.18)' : 'rgba(255,255,255,0.06)', color: '#fff', borderRadius: 8, padding: '5px 14px', fontFamily: TW.sans, fontWeight: 700, fontSize: 12, opacity: active ? 1 : 0.7 }}>{r[1]}</button>
+              );
+            })}
+          </div>
+          <div style={{ marginTop: 12 }}>
+            <MiniSpark data={SPARK_DATA[range]} color="#7fe7a4" h={34} />
+          </div>
+          {/* walk-in / online split bar */}
+          <div style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ flex: 62, height: 6, borderRadius: 999, background: TW.accent }} />
+            <div style={{ flex: 38, height: 6, borderRadius: 999, background: '#a855f7' }} />
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 4, fontFamily: TW.sans, fontSize: 11, opacity: 0.65 }}>
+            <span>Walk-in 62%</span><span>Online 38%</span>
+          </div>
+        </div>
+
+        {/* 3. Queue stats tiles */}
+        <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
+          <button onClick={function() { app.toast('Opening submissions'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>4</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Submissions</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#f59e0b', marginTop: 4 }}>2 new today</div>
+          </button>
+          <button onClick={function() { app.toast('Opening bulk lots'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Bulk lots</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: TW.muted, marginTop: 4 }}>1,420 cards</div>
+          </button>
+          <button onClick={function() { app.toast('Opening buylist'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>12</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Buylist hits</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: TW.accent, marginTop: 4 }}>today</div>
+          </button>
+        </div>
+
+        {/* 4. Submission queue */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Submission Queue</div>
+          {QUEUE.map(function(q, i) {
+            return (
+              <button key={i} onClick={function() { app.toast('Opening submission'); }} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+                <div style={{ width: 28, height: 28, borderRadius: 999, background: q.color + '22', color: q.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{q.init}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>{q.name}</div>
+                  <div style={{ fontFamily: TW.sans, fontSize: 11, color: TW.muted }}>{q.cards + ' \u00B7 ' + q.time}</div>
+                </div>
+                <span style={{ background: q.color + '22', color: q.color, borderRadius: 999, padding: '2px 8px', fontFamily: TW.sans, fontWeight: 700, fontSize: 11 }}>{q.status}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* 5. Buylist performance */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Buylist Performance</div>
+          <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 26, color: TW.accent }}>12</div>
+              <div style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>matched today</div>
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 26 }}>68%</div>
+              <div style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>avg buy rate</div>
+            </div>
+          </div>
+          {LOW_STOCK.map(function(ls, i) {
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+                <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 600, fontSize: 13 }}>{ls.name}</span>
+                <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: ls.color }}>{ls.stock}</span>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+// ── Dashboard (delegates by account type) ────────────────────
+function DashboardScreen({ app }) {
+  var header = (
+    <div style={{ padding: '52px 16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ width: 30, height: 30, borderRadius: 10, background: TW.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 14 }}>A</div>
+        <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 17 }}>Alex</span>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <button onClick={function() { app.nav.push('notifications'); }} style={{ position: 'relative', color: TW.ink, padding: 4, display: 'flex' }}>
+          {IconD.bell({})}
+          <span style={{ position: 'absolute', top: 2, right: 2, width: 8, height: 8, borderRadius: 999, background: '#ef4444' }} />
+        </button>
+        <button onClick={function() { app.nav.push('settings'); }} style={{ color: TW.ink, padding: 4, display: 'flex' }}>{IconD.gear({})}</button>
+      </div>
+    </div>
+  );
+
+  if (app.acct === 'store') return <StoreDash app={app} header={header} />;
+  if (app.acct === 'seller') return <SellerDash app={app} header={header} />;
+  return <BuyerDash app={app} header={header} />;
 }
 
 // ── Settings ─────────────────────────────────────────────────
