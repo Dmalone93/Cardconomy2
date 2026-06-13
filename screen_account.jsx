@@ -284,7 +284,7 @@ function PurchasesScreen({ app }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--line-2)' }}>
                   <span style={{ color: TAC.muted }}>{IconAC.truck({ width: 16, height: 16 })}</span>
                   <span style={{ flex: 1, fontFamily: TAC.sans, fontSize: 12.5, color: TAC.ink2 }}>{p.track}</span>
-                  <button onClick={() => app.toast(p.status === 'Delivered' ? 'Leaving a review' : 'Tracking order')} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: TAC.accent }}>{p.status === 'Delivered' ? 'Review' : 'Track'}</button>
+                  <button onClick={() => app.toast(p.status === 'Delivered' ? 'Review submitted — thank you!' : 'Tracking: your card is on the way')} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: TAC.accent }}>{p.status === 'Delivered' ? 'Review' : 'Track'}</button>
                 </div>
               </div>
             ))}
@@ -340,7 +340,7 @@ function SellingScreen({ app }) {
                       <div style={{ fontFamily: TAC.sans, fontSize: 10.5, color: TAC.muted }}>{k}</div>
                     </div>
                   ))}
-                  <button onClick={() => app.toast(l.offers > 0 ? 'Reviewing offers' : 'Editing listing')} style={{ alignSelf: 'center', fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: TAC.accent, padding: '6px 10px' }}>{l.offers > 0 ? 'Offers' : 'Edit'}</button>
+                  <button onClick={() => l.offers > 0 ? app.nav.push('offers') : app.toast('Opening listing editor')} style={{ alignSelf: 'center', fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: TAC.accent, padding: '6px 10px' }}>{l.offers > 0 ? 'Offers' : 'Edit'}</button>
                 </div>
               </div>
             ))}
@@ -476,14 +476,14 @@ function PaymentsScreen({ app }) {
           <div style={{ fontFamily: TAC.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Available to withdraw</div>
           <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 34, letterSpacing: -0.5, marginTop: 2 }}>{moneyAC(balance)}</div>
           <div style={{ display: 'flex', gap: 9, marginTop: 14 }}>
-            <button onClick={() => app.toast('Withdrawing to bank ••6789')} style={{ flex: 1, background: '#fff', color: TAC.ink, borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Withdraw</button>
-            <button onClick={() => app.toast('Store credit balance: £80')} style={{ flex: 1, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Store credit</button>
+            <button onClick={() => app.toast('Withdrawal of \u00A3248.47 initiated to \u2022\u20226789')} style={{ flex: 1, background: '#fff', color: TAC.ink, borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Withdraw</button>
+            <button onClick={() => app.toast('Top up your balance to buy cards')} style={{ flex: 1, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Top up</button>
           </div>
         </div>
 
         {/* payout destination */}
         <div style={{ fontFamily: TAC.sans, fontWeight: 800, fontSize: 14, color: TAC.ink2, margin: '20px 0 9px' }}>Payout method</div>
-        <button onClick={() => app.toast('Edit bank account')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TAC.surface, borderRadius: 13, padding: '13px 14px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+        <button onClick={() => app.toast('Bank account editor would open here')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TAC.surface, borderRadius: 13, padding: '13px 14px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <span style={{ width: 38, height: 38, borderRadius: 10, background: TAC.surface2, color: TAC.ink2, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{AIcon.bank({ width: 20, height: 20 })}</span>
           <div style={{ flex: 1, textAlign: 'left' }}>
             <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Chase checking</div>
@@ -505,7 +505,7 @@ function PaymentsScreen({ app }) {
               {def && <Pill label="Default" tone="blue" />}
             </div>
           ))}
-          <button onClick={() => app.toast('Add a card')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '13px 14px', borderTop: '1px solid var(--line-2)', color: TAC.accent }}>
+          <button onClick={() => app.toast('Payment method form would open here')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '13px 14px', borderTop: '1px solid var(--line-2)', color: TAC.accent }}>
             {AIcon.plus({})}<span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Add payment method</span>
           </button>
         </div>

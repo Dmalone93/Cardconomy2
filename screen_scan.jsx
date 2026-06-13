@@ -61,7 +61,7 @@ function ScanScreen({ app, params = {} }) {
   }
   function doPriceCheck() {
     app.nav.pop();
-    app.nav.push('product', { pid: card.id });
+    app.nav.push('product', { id: card.id });
   }
   function doViewListing() {
     app.nav.pop();

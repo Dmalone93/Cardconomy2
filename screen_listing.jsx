@@ -51,7 +51,7 @@ function ListingScreen({ app, params }) {
         <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
           boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.back({})}</button>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={() => app.toast('Link copied')} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
+          <button onClick={() => { if (navigator.clipboard) navigator.clipboard.writeText(window.location.href); app.toast('Link copied to clipboard'); }} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
             boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.share({})}</button>
           <button onClick={() => app.toggleWatch(item.id)} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
             boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: watched?TL.down:TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.heart({width:20,height:20}, watched)}</button>

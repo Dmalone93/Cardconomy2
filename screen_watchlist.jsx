@@ -286,7 +286,7 @@ function BuyerDash({ app, header }) {
 
   const ATTENTION = [
     { border: TW.accent, title: '2 buylist matches at your price', sub: 'Blue-Eyes and Pikachu EX', cta: 'View', ctaColor: TW.accent, onTap: function() { app.nav.push('buylist'); } },
-    { border: '#22c55e', title: 'Order arriving today', sub: 'Charizard EX from CardKing', cta: 'Track', ctaColor: '#22c55e', onTap: function() { app.toast('Tracking order'); } },
+    { border: '#22c55e', title: 'Order arriving today', sub: 'Charizard EX from CardKing', cta: 'Track', ctaColor: '#22c55e', onTap: function() { app.nav.push('purchases'); } },
     { border: '#eab308', title: 'Price drop on watched card', sub: 'Dark Magician down 8% today', cta: 'View', ctaColor: '#eab308', onTap: function() { app.nav.setTab('watch'); } },
   ];
 
@@ -404,9 +404,9 @@ function StoreDash({ app, header }) {
   };
 
   const ATTENTION = [
-    { border: '#f59e0b', title: '3 submissions pending review', sub: 'Jordan M., Sam R., Dana P.', cta: 'Review', ctaColor: '#f59e0b', onTap: function() { app.toast('Opening submissions'); } },
-    { border: '#22c55e', title: '1 bulk lot ready to price', sub: 'Miguel A. - 1,420 cards', cta: 'Price', ctaColor: '#22c55e', onTap: function() { app.toast('Opening bulk lot'); } },
-    { border: TW.accent, title: 'Buylist restock needed', sub: '5 high-demand cards below threshold', cta: 'Restock', ctaColor: TW.accent, onTap: function() { app.toast('Opening restock'); } },
+    { border: '#f59e0b', title: '3 submissions pending review', sub: 'Jordan M., Sam R., Dana P.', cta: 'Review', ctaColor: '#f59e0b', onTap: function() { app.nav.push('shop'); } },
+    { border: '#22c55e', title: '1 bulk lot ready to price', sub: 'Miguel A. - 1,420 cards', cta: 'Price', ctaColor: '#22c55e', onTap: function() { app.nav.push('shop'); } },
+    { border: TW.accent, title: 'Buylist restock needed', sub: '5 high-demand cards below threshold', cta: 'Restock', ctaColor: TW.accent, onTap: function() { app.nav.push('buylist'); } },
   ];
 
   const QUEUE = [
@@ -472,17 +472,17 @@ function StoreDash({ app, header }) {
 
         {/* 3. Queue stats tiles */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
-          <button onClick={function() { app.toast('Opening submissions'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <button onClick={function() { app.nav.push('shop'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>4</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Submissions</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#f59e0b', marginTop: 4 }}>2 new today</div>
           </button>
-          <button onClick={function() { app.toast('Opening bulk lots'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <button onClick={function() { app.nav.push('shop'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Bulk lots</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: TW.muted, marginTop: 4 }}>1,420 cards</div>
           </button>
-          <button onClick={function() { app.toast('Opening buylist'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <button onClick={function() { app.nav.push('buylist'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>12</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Buylist hits</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: TW.accent, marginTop: 4 }}>today</div>
@@ -494,7 +494,7 @@ function StoreDash({ app, header }) {
           <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Submission Queue</div>
           {QUEUE.map(function(q, i) {
             return (
-              <button key={i} onClick={function() { app.toast('Opening submission'); }} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+              <button key={i} onClick={function() { app.nav.push('shop'); }} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
                 <div style={{ width: 28, height: 28, borderRadius: 999, background: q.color + '22', color: q.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{q.init}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>{q.name}</div>

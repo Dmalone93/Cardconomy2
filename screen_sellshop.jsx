@@ -246,7 +246,7 @@ function SellShopScreen({ app }) {
                 <div style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.ink2, lineHeight: 1.5 }}>
                   Shops may require ID verification for high-value submissions.
                 </div>
-                <button onClick={() => app.toast('Verification screen (demo)')} style={{ marginTop: 10, background: 'none', color: '#dc2626', fontFamily: TSS.sans, fontWeight: 700, fontSize: 13, padding: 0, textDecoration: 'underline' }}>
+                <button onClick={() => app.nav.push('verify')} style={{ marginTop: 10, background: 'none', color: '#dc2626', fontFamily: TSS.sans, fontWeight: 700, fontSize: 13, padding: 0, textDecoration: 'underline' }}>
                   Verify now →
                 </button>
               </div>
@@ -264,10 +264,10 @@ function SellShopScreen({ app }) {
             <p style={{ fontFamily: TSS.sans, fontSize: 13.5, color: TSS.muted, margin: '0 0 16px' }}>Big stack? Start with Live Sweep. You can mix methods.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <MethodRow hero icon="📷" title="Live Sweep Scan" sub="Flip the stack — we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
-              <MethodRow icon="🃏" title="Batch Fan Photo" sub="9–12 cards per snap" time="~25 min" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
-              <MethodRow icon="☑" title="Set Checklist" sub="Tap cards off a set grid" time="varies" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
-              <MethodRow icon="🔍" title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
-              <MethodRow icon="📄" title="Import List" sub="Manabox · TCGplayer · CSV" time="instant" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
+              <MethodRow icon="🃏" title="Batch Fan Photo" sub="9–12 cards per snap" time="~25 min" onClick={() => app.toast('Use Live Sweep for this demo')} />
+              <MethodRow icon="☑" title="Set Checklist" sub="Tap cards off a set grid" time="varies" onClick={() => app.toast('Use Live Sweep for this demo')} />
+              <MethodRow icon="🔍" title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Use Live Sweep for this demo')} />
+              <MethodRow icon="📄" title="Import List" sub="Manabox · TCGplayer · CSV" time="instant" onClick={() => app.toast('Use Live Sweep for this demo')} />
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TSS.surface2, borderRadius: 4, padding: '12px 13px' }}>
               <span style={{ color: TSS.accent, marginTop: 1 }}>{IconSS.bolt({ width: 16, height: 16 })}</span>
@@ -343,9 +343,9 @@ function ReviewBody({ scanned, stats, cond, setCond, bulkChoice, setBulkChoice, 
 
       {/* triage groups */}
       <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 9 }}>
-        <TriageCard color="var(--down)" icon="⚠" title={flagged.length + ' flagged for damage'} sub="Creasing / whitening — tap to review" onClick={() => app.toast('Showing flagged cards')} accent />
-        <TriageCard color="var(--gold)" icon="★" title={stats.buylistCount + ' match the buylist'} sub="Auto-priced at the shop\'s buy rate" onClick={() => app.toast('Showing buylist matches')} />
-        <TriageCard color="var(--accent)" icon="◎" title={stats.singles + ' singles \u2265 \u00a35'} sub="Priced from the live guide" onClick={() => app.toast('Showing notable singles')} />
+        <TriageCard color="var(--down)" icon="⚠" title={flagged.length + ' flagged for damage'} sub="Creasing / whitening — tap to review" onClick={() => app.toast('Flagged cards highlighted below')} accent />
+        <TriageCard color="var(--gold)" icon="★" title={stats.buylistCount + ' match the buylist'} sub="Auto-priced at the shop\'s buy rate" onClick={() => app.toast('Buylist matches highlighted below')} />
+        <TriageCard color="var(--accent)" icon="◎" title={stats.singles + ' singles \u2265 \u00a35'} sub="Priced from the live guide" onClick={() => app.toast('Notable singles highlighted below')} />
         <TriageCard color="var(--muted)" icon="≈" title={(SUB_SS.bulkCount).toLocaleString() + ' bulk commons'} sub={'Auto ' + cond + ' · standing bulk rate'} muted />
       </div>
 
