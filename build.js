@@ -15,7 +15,10 @@ for (const file of jsxFiles) {
     presets: ['@babel/preset-react'],
   });
   const outName = file.replace(/\.jsx$/, '.js');
-  fs.writeFileSync(path.join(DIST, outName), result.code);
+  // Wrap in IIFE to replicate Babel standalone's eval scoping —
+  // without this, const/let declarations conflict across files
+  const wrapped = `(function(){\n${result.code}\n}).call(this);`;
+  fs.writeFileSync(path.join(DIST, outName), wrapped);
   console.log(`  ${file} → ${outName}`);
 }
 
