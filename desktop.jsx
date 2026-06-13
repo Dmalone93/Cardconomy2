@@ -76,7 +76,7 @@ function Header({ app, openMega, megaOpen }) {
           <button onClick={() => app.go('search', { cond: 'Graded only' })} style={{ padding: '0 13px', height: 46, color: 'var(--ink-2)' }}>Graded</button>
           <button onClick={() => app.go('search', {})} style={{ padding: '0 13px', height: 46, color: 'var(--ink-2)' }}>Bulk lots</button>
           <button onClick={() => app.go('trade')} style={{ padding: '0 13px', height: 46, color: 'var(--ink-2)' }}>Trade</button>
-          <button onClick={() => app.toast('Price guide')} style={{ marginLeft: 'auto', padding: '0 13px', height: 46, color: 'var(--accent)', fontWeight: 700 }}>Price Guide</button>
+          <button onClick={() => app.toast('Price Guide coming soon')} style={{ marginLeft: 'auto', padding: '0 13px', height: 46, color: 'var(--accent)', fontWeight: 700 }}>Price Guide</button>
         </div>
       </div>
     </header>
@@ -412,11 +412,11 @@ function DAccountSeller({ app }) {
               {renderSparkSVG(balanceRanges[balanceRange], '#4ade80', 36)}
             </div>
             <div style={{ display: 'flex', gap: 10, marginTop: 16 }} onClick={function(e) { e.stopPropagation(); }}>
-              <button onClick={function() { app.toast('Withdraw'); }} style={{
+              <button onClick={function() { app.toast('Withdrawal initiated'); }} style={{
                 background: 'rgba(255,255,255,0.1)', color: '#fff', borderRadius: 10, padding: '10px 20px',
                 fontWeight: 700, fontSize: 13, border: 'none',
               }}>Withdraw</button>
-              <button onClick={function() { app.toast('Top up'); }} style={{
+              <button onClick={function() { app.toast('Top up your balance to buy cards'); }} style={{
                 background: 'rgba(99,102,241,0.8)', color: '#fff', borderRadius: 10, padding: '10px 20px',
                 fontWeight: 700, fontSize: 13, border: 'none',
               }}>Top up</button>
@@ -431,7 +431,7 @@ function DAccountSeller({ app }) {
               { val: '1', label: 'To ship', sub: 'Print label \u2192', color: '#22c55e' },
             ].map(function(tile, i) {
               return (
-                <button key={i} onClick={function() { app.toast(tile.label); }} style={Object.assign({}, cardStyle, { textAlign: 'center', cursor: 'pointer', border: 'none' })}>
+                <button key={i} onClick={function() { app.go('account'); }} style={Object.assign({}, cardStyle, { textAlign: 'center', cursor: 'pointer', border: 'none' })}>
                   <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 24, color: 'var(--ink)' }}>{tile.val}</div>
                   <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 3 }}>{tile.label}</div>
                   <div style={{ fontSize: 11, color: tile.color, fontWeight: 600, marginTop: 4 }}>{tile.sub}</div>
@@ -446,7 +446,7 @@ function DAccountSeller({ app }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {openItems.map(function(item, i) {
                 return (
-                  <button key={i} onClick={function() { app.toast(item.label); }} style={{
+                  <button key={i} onClick={function() { app.go('account'); }} style={{
                     display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
                     background: 'var(--surface)', borderRadius: 14, textAlign: 'left', width: '100%',
                     boxShadow: '0 1px 3px rgba(20,24,40,0.05)', border: 'none', cursor: 'pointer',
@@ -500,7 +500,7 @@ function DAccountSeller({ app }) {
           <div style={cardStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
               <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Collection</div>
-              <button onClick={function() { app.toast('View collection'); }} style={{ fontSize: 11, color: 'var(--accent)', fontWeight: 600, border: 'none', background: 'none', cursor: 'pointer' }}>View all {'\u2192'}</button>
+              <button onClick={function() { app.go('watch'); }} style={{ fontSize: 11, color: 'var(--accent)', fontWeight: 600, border: 'none', background: 'none', cursor: 'pointer' }}>View all {'\u2192'}</button>
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
               <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 26 }}>{money(2480)}</span>
@@ -534,7 +534,7 @@ function DAccountSeller({ app }) {
               {buylistMatches.map(function(m, i) {
                 var isGood = m.available <= m.max;
                 return (
-                  <button key={i} onClick={function() { app.toast(m.name); }} style={{
+                  <button key={i} onClick={function() { app.toast('Match: ' + m.name + ' available at your price'); }} style={{
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                     padding: '10px 12px', borderRadius: 10, textAlign: 'left', width: '100%',
                     background: isGood ? 'rgba(34,197,94,0.06)' : 'var(--surface-2)',
@@ -617,7 +617,7 @@ function DAccountBuyer({ app }) {
                 var delta = watchDeltas[i];
                 var isUp = delta.charAt(0) === '+';
                 return (
-                  <button key={card.id} onClick={function() { app.toast(card.name); }} style={{
+                  <button key={card.id} onClick={function() { app.go('listing', { id: card.id }); }} style={{
                     display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', width: '100%',
                     borderBottom: i < watchItems.length - 1 ? '1px solid var(--line-2)' : 'none',
                     background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
@@ -645,7 +645,7 @@ function DAccountBuyer({ app }) {
               {recentOrders.map(function(order, i) {
                 var mockItem = (listings.filter(function(l) { return l.art || l.img; }))[i] || listings[i];
                 return (
-                  <button key={i} onClick={function() { app.toast(order.name); }} style={{
+                  <button key={i} onClick={function() { app.go('search'); }} style={{
                     display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', width: '100%',
                     borderBottom: i < recentOrders.length - 1 ? '1px solid var(--line-2)' : 'none',
                     background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
@@ -682,6 +682,11 @@ function DAccountBuyer({ app }) {
                 { color: '#22c55e', title: 'Order arriving today', sub: 'Charizard EX from CardKing', btn: 'Track' },
                 { color: '#f59e0b', title: 'Price drop on watched card', sub: 'Dark Magician down 8%', btn: 'View' },
               ].map(function(item, i) {
+                var actions = [
+                  function() { app.toast('Opening buylist'); app.go('account'); },
+                  function() { app.toast('Tracking: your card is on the way'); },
+                  function() { app.go('watch'); },
+                ];
                 return (
                   <div key={i} style={{
                     display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
@@ -692,7 +697,7 @@ function DAccountBuyer({ app }) {
                       <div style={{ fontWeight: 600, fontSize: 14 }}>{item.title}</div>
                       <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>{item.sub}</div>
                     </div>
-                    <button onClick={function() { app.toast(item.title); }} style={{
+                    <button onClick={actions[i]} style={{
                       background: item.color, color: '#fff', borderRadius: 8, padding: '8px 16px',
                       fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0, cursor: 'pointer',
                     }}>{item.btn}</button>
@@ -712,7 +717,7 @@ function DAccountBuyer({ app }) {
               {buylistMatches.map(function(m, i) {
                 var isGood = m.available <= m.max;
                 return (
-                  <button key={i} onClick={function() { app.toast(m.name); }} style={{
+                  <button key={i} onClick={function() { app.toast('Match: ' + m.name + ' available at your price'); }} style={{
                     display: 'flex', justifyContent: 'space-between', alignItems: 'center',
                     padding: '10px 12px', borderRadius: 10, textAlign: 'left', width: '100%',
                     background: isGood ? 'rgba(34,197,94,0.06)' : 'var(--surface-2)',
@@ -786,7 +791,7 @@ function DAccountStore({ app }) {
                 <div style={{ fontWeight: 600, fontSize: 14 }}>3 submissions pending review</div>
                 <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Jordan M., Sam R., Dana P.</div>
               </div>
-              <button onClick={function() { app.toast('Review submissions'); }} style={{ background: '#f59e0b', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Review</button>
+              <button onClick={function() { app.toast('Opening submission queue'); app.go('account'); }} style={{ background: '#f59e0b', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Review</button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
@@ -796,7 +801,7 @@ function DAccountStore({ app }) {
                 <div style={{ fontWeight: 600, fontSize: 14 }}>1 bulk lot ready to price</div>
                 <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Miguel A. - 1,420 cards</div>
               </div>
-              <button onClick={function() { app.toast('Price bulk lot'); }} style={{ background: '#22c55e', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Price</button>
+              <button onClick={function() { app.toast('Opening bulk lot pricing'); app.go('account'); }} style={{ background: '#22c55e', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Price</button>
             </div>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
@@ -806,12 +811,12 @@ function DAccountStore({ app }) {
                 <div style={{ fontWeight: 600, fontSize: 14 }}>Buylist restock needed</div>
                 <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>5 high-demand cards below threshold</div>
               </div>
-              <button onClick={function() { app.toast('Restock buylist'); }} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Restock</button>
+              <button onClick={function() { app.toast('Opening buylist restock'); app.go('account'); }} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Restock</button>
             </div>
           </div>
 
           {/* Revenue card */}
-          <button onClick={function() { app.toast('Opening revenue'); }} style={{
+          <button onClick={function() { app.toast('Revenue analytics would open here'); }} style={{
             background: 'linear-gradient(135deg, #16181d, #2a2d3a)', borderRadius: 18, padding: '24px 26px',
             textAlign: 'left', width: '100%', color: '#fff', position: 'relative', overflow: 'hidden',
           }}>
@@ -852,7 +857,7 @@ function DAccountStore({ app }) {
               { val: '12', label: 'Buylist hits', sub: 'today', color: 'var(--accent)' },
             ].map(function(tile, i) {
               return (
-                <button key={i} onClick={function() { app.toast(tile.label); }} style={Object.assign({}, cardStyle, { textAlign: 'center', cursor: 'pointer', border: 'none' })}>
+                <button key={i} onClick={function() { app.go('account'); }} style={Object.assign({}, cardStyle, { textAlign: 'center', cursor: 'pointer', border: 'none' })}>
                   <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 24, color: 'var(--ink)' }}>{tile.val}</div>
                   <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 3 }}>{tile.label}</div>
                   <div style={{ fontSize: 11, color: tile.color, fontWeight: 600, marginTop: 4 }}>{tile.sub}</div>
@@ -874,7 +879,7 @@ function DAccountStore({ app }) {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {submissions.map(function(s, i) {
                 return (
-                  <button key={i} onClick={function() { app.toast('Opening ' + s.name); }} style={{
+                  <button key={i} onClick={function() { app.toast('Opening ' + s.name + ' submission (' + s.cards + ')'); }} style={{
                     display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', width: '100%',
                     borderBottom: i < submissions.length - 1 ? '1px solid var(--line-2)' : 'none',
                     background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
@@ -1021,7 +1026,7 @@ function DEnroll({ app }) {
         <div className="wrap" style={{ padding: '64px 24px', textAlign: 'center' }}>
           <h1 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 40, letterSpacing: -1.2, margin: '0 0 14px', maxWidth: 720, marginInline: 'auto', lineHeight: 1.05 }}>Turn your shop into the local card hub</h1>
           <p style={{ fontSize: 17, opacity: 0.92, maxWidth: 560, margin: '0 auto 26px', lineHeight: 1.5 }}>Free deal flow, a storefront, and tools that bring collectors through your door.</p>
-          <button onClick={() => app.toast('Enrollment — coming soon')} style={{ background: '#fff', color: '#1f6e44', borderRadius: 12, padding: '15px 32px', fontWeight: 700, fontSize: 16 }}>Enroll your shop — free</button>
+          <button onClick={() => app.toast('Shop enrollment opens in the mobile app')} style={{ background: '#fff', color: '#1f6e44', borderRadius: 12, padding: '15px 32px', fontWeight: 700, fontSize: 16 }}>Enroll your shop — free</button>
         </div>
       </div>
       <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, padding: '44px 24px' }}>

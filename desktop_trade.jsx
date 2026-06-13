@@ -53,7 +53,7 @@ function DTrade({ app }) {
                   {chips.map((c, i) => <span key={i} style={{ fontWeight: 600, fontSize: 11.5, color: 'var(--ink-2)', background: 'var(--surface-2)', borderRadius: 7, padding: '3px 9px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>{c}</span>)}
                 </div>
                 <div style={{ fontSize: 12.5, color: 'var(--ink-2)', fontStyle: 'italic', marginBottom: 13, lineHeight: 1.4 }}>"{p.note}"</div>
-                <button onClick={() => app.toast('Offer builder — continue in the app')} style={{ width: '100%', background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: 12, fontWeight: 700, fontSize: 14 }}>Make an offer</button>
+                <button onClick={() => app.toast('Open the mobile app to build trade offers')} style={{ width: '100%', background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: 12, fontWeight: 700, fontSize: 14 }}>Make an offer</button>
               </div>
             );
           })}
@@ -76,7 +76,7 @@ function DTrade({ app }) {
                   <div style={{ width: 1, background: 'var(--line-2)' }} />
                   <div style={{ flex: 1 }}><div style={{ fontSize: 10.5, fontWeight: 700, color: 'var(--accent)', marginBottom: 6, letterSpacing: 0.2 }}>THEY WANT</div><div style={{ display: 'flex', gap: 5 }}>{youGive.slice(0, 2).map(id => <MiniFaceD key={id} id={id} />)}</div></div>
                 </div>
-                <button onClick={() => app.toast('Trade builder — continue in the app')} style={{ width: '100%', marginTop: 14, background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: 12, fontWeight: 700, fontSize: 14 }}>Build this trade</button>
+                <button onClick={() => app.toast('Open the mobile app to build this trade')} style={{ width: '100%', marginTop: 14, background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: 12, fontWeight: 700, fontSize: 14 }}>Build this trade</button>
               </div>
             );
           })}
@@ -91,7 +91,7 @@ function DTrade({ app }) {
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 18 }}>
             {OWNED_D.map(id => byIdTr(id) && <div key={id} style={{ background: 'var(--surface-2)', borderRadius: 9, padding: 7 }}><CardArtTr item={byIdTr(id)} w={56} /></div>)}
           </div>
-          <button onClick={() => app.toast('Posted to the board ★')} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: '13px 24px', fontWeight: 700, fontSize: 15 }}>Post to the board</button>
+          <button onClick={() => app.toast('Trade posted to the board')} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: '13px 24px', fontWeight: 700, fontSize: 15 }}>Post to the board</button>
         </div>
       )}
     </div>
@@ -182,7 +182,7 @@ function DShopDash({ app }) {
       <button onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--muted)', fontSize: 14, fontWeight: 600, marginBottom: 16 }}>‹ Back to inbox</button>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 22 }}>
         <div><h1 style={{ fontFamily: TTr.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.8, margin: 0 }}>{SUB_D.seller.name} · #{SUB_D.id}</h1><div style={{ fontSize: 13.5, color: 'var(--muted)', marginTop: 2 }}>{SUB_D.total.toLocaleString()} cards · ticket #{SUB_D.ticket}</div></div>
-        <button onClick={() => app.toast('Offer sent to ' + SUB_D.seller.name)} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: '13px 26px', fontWeight: 700, fontSize: 15 }}>Build offer →</button>
+        <button onClick={() => app.toast('Offer sent to ' + SUB_D.seller.name + ' for review')} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: '13px 26px', fontWeight: 700, fontSize: 15 }}>Build offer →</button>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 24 }}>
         {[['Total cards', SUB_D.total.toLocaleString(), false], ['Est. market', m0Tr(stats.estMarket), false], ['On your buylist', stats.buylistCount, 'gold'], ['Buylist payout', m0Tr(buylistPayout), 'accent']].map(([k, v, hl], i) => (
