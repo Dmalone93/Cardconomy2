@@ -30,19 +30,23 @@ for (const file of jsFiles) {
 }
 
 // 3. Process HTML files — remove Babel standalone, change script types
-const htmlFiles = ['index.html', 'Desktop.html'];
-for (const htmlFile of htmlFiles) {
-  const src = path.join(__dirname, htmlFile);
-  if (!fs.existsSync(src)) continue;
-  let html = fs.readFileSync(src, 'utf8');
+// Map source → output names (lowercase for Vercel case-sensitivity)
+const htmlFiles = [
+  { src: 'index.html', out: 'index.html' },
+  { src: 'Desktop.html', out: 'desktop.html' },
+];
+for (const { src: srcName, out: outName } of htmlFiles) {
+  const srcPath = path.join(__dirname, srcName);
+  if (!fs.existsSync(srcPath)) continue;
+  let html = fs.readFileSync(srcPath, 'utf8');
   // Remove Babel standalone script tag
   html = html.replace(/<script[^>]*babel\.min\.js[^>]*><\/script>\s*/g, '');
   // Change type="text/babel" src="foo.jsx" → src="foo.js"
   html = html.replace(/type="text\/babel"\s+src="([^"]+)\.jsx(\?[^"]*)?\"/g, 'src="$1.js"');
   // Also handle src="foo.jsx" type="text/babel" (reversed order)
   html = html.replace(/src="([^"]+)\.jsx(\?[^"]*)?\"\s+type="text\/babel\"/g, 'src="$1.js"');
-  fs.writeFileSync(path.join(DIST, htmlFile), html);
-  console.log(`  processed ${htmlFile}`);
+  fs.writeFileSync(path.join(DIST, outName), html);
+  console.log(`  ${srcName} → ${outName}`);
 }
 
 // 4. Copy asset directories
