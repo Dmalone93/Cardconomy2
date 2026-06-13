@@ -3,6 +3,12 @@
 // ─────────────────────────────────────────────────────────────
 const { T: TW, money: moneyW, CardArt: CardArtW, GradeChip: GradeChipW, Sparkline: SparkW, Delta: DeltaW, Stars: StarsW, Icon: IconW } = window;
 const { byId: byIdW, LISTINGS: LISTINGS_W, setById: setByIdW } = window;
+const { Sparkline: SparkD } = window;
+
+const IconD = {
+  bell: (p = {}) => <svg width={p.w || 20} height={p.w || 20} viewBox="0 0 24 24" fill="none" {...p}><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  gear: (p = {}) => <svg width={p.w || 20} height={p.w || 20} viewBox="0 0 24 24" fill="none" {...p}><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" strokeWidth="2"/></svg>,
+};
 
 // value helpers for a set of card ids
 function valueOf(ids) {
@@ -173,155 +179,164 @@ function EmptyState({ icon, title, body, cta, onCta }) {
   );
 }
 
-// ── Profile ──────────────────────────────────────────────────
-function ProfileScreen({ app }) {
-  const [prefsOpen, setPrefsOpen] = React.useState(false);
+// ── Dashboard ────────────────────────────────────────────────
+function DashboardScreen({ app }) {
   const port = valueOf(app.ownedIds());
-  const ACCT_LABEL = { buyer: 'Collector', seller: 'Individual seller', store: 'Game shop' };
-  const followed = (window.GAMES || []).filter(g => app.inPrefs(g.id));
-  const menu = [
-    ['Purchases', '3 orders', IconW.truck, 'purchases'],
-    ['Selling', '2 active listings', IconW.tag, 'selling'],
-    ['Offers', '1 pending', IconW.tag, 'offers'],
-    ['Verification & trust', app.tier >= 2 ? 'Trusted Seller' : app.tier >= 1 ? 'ID Verified' : 'Get verified', IconW.shield, 'verify'],
-    ['Payments & payouts', '', IconW.shield, 'payments'],
-    ['Notifications', '2 new', IconW.bolt, 'notifications'],
+  const ACTIVITY = [
+    ['#22c55e', 'Sold Charizard ex for £38.50', '2h ago'],
+    ['#3b82f6', 'New offer on Ragavan', '4h ago'],
+    ['#a855f7', 'Completed trade with Marcus T.', 'Yesterday'],
+    ['#f59e0b', 'Added 3 cards to Main Binder', '2d ago'],
+    ['#ef4444', 'Price alert: Mew ex up 12%', '3d ago'],
   ];
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
-      <div style={{ padding: '50px 16px 20px', background: TW.surface, borderBottom: '1px solid var(--line)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
-          <button onClick={() => app.openMenu()} style={{ color: TW.ink, padding: '2px 6px 2px 0', display: 'flex' }}>{IconW.menu({})}</button>
+      {/* minimal header */}
+      <div style={{ padding: '52px 16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ width: 30, height: 30, borderRadius: 10, background: TW.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 14 }}>A</div>
+          <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 17 }}>Alex</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
-          <div style={{ width: 58, height: 58, borderRadius: 16, background: TW.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 26 }}>A</div>
-          <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.3 }}>Alex Rivera</span>
-              {window.TrustBadge && app.tier >= 1 && <window.TrustBadge tier={app.tier >= 2 ? 2 : 1} />}
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-              <StarsW rating={99} /><span style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>99% · 214 deals</span>
-            </div>
-          </div>
-          {IconW.shield({ style: { color: TW.up } })}
-        </div>
-        <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
-          {[['Buying power', '£2,400'], ['This year', '£8.1k spent'], ['Sold', '£3.4k']].map(([k,v]) => (
-            <div key={k} style={{ flex: 1, background: TW.surface2, borderRadius: 12, padding: '10px 12px' }}>
-              <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{v}</div>
-              <div style={{ fontFamily: TW.sans, fontSize: 10.5, color: TW.muted }}>{k}</div>
-            </div>
-          ))}
+          <button onClick={() => app.nav.push('notifications')} style={{ position: 'relative', color: TW.ink, padding: 4, display: 'flex' }}>
+            {IconD.bell({})}
+            <span style={{ position: 'absolute', top: 2, right: 2, width: 8, height: 8, borderRadius: 999, background: '#ef4444' }} />
+          </button>
+          <button onClick={() => app.nav.push('settings')} style={{ color: TW.ink, padding: 4, display: 'flex' }}>{IconD.gear({})}</button>
         </div>
       </div>
-      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
-        {/* trading reputation */}
-        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5, marginBottom: 10 }}>Your reputation</div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-            <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.5 }}>98.5%</span>
-            <span style={{ background: '#22c55e', color: '#fff', fontFamily: TW.sans, fontWeight: 700, fontSize: 11, padding: '3px 8px', borderRadius: 4 }}>Trust score</span>
+
+      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '8px 16px 100px' }}>
+        {/* balance card */}
+        <button onClick={() => app.nav.push('payments')} style={{ width: '100%', textAlign: 'left', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', borderRadius: 20, padding: 20, color: '#fff', marginBottom: 14 }}>
+          <div style={{ fontFamily: TW.sans, fontSize: 12, opacity: 0.65, fontWeight: 600 }}>Available balance</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 34, letterSpacing: -1, marginTop: 4 }}>{moneyW(248.47)}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: '#7fe7a4', marginTop: 4 }}>&#9650; {moneyW(84)} this week</div>
+          <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
+            <span style={{ flex: 1, textAlign: 'center', background: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: '9px 0', fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>Withdraw</span>
+            <span style={{ flex: 1, textAlign: 'center', background: 'rgba(255,255,255,0.07)', borderRadius: 10, padding: '9px 0', fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>Store credit</span>
           </div>
-          <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, marginBottom: 8 }}>24 completed trades · 156 sales · 0 disputes</div>
-          <StarsW rating={98} />
+        </button>
+
+        {/* status tiles */}
+        <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
+          <button onClick={() => app.nav.push('selling')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>2</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Active listings</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: TW.accent, marginTop: 4 }}>24 views today</div>
+          </button>
+          <button onClick={() => app.nav.push('offers')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Pending offers</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#f59e0b', marginTop: 4 }}>{'Respond \u2192'}</div>
+          </button>
+          <button onClick={() => app.nav.push('selling')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>To ship</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#22c55e', marginTop: 4 }}>{'Print label \u2192'}</div>
+          </button>
         </div>
 
-        {/* recent activity */}
-        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5, marginBottom: 10 }}>Recent activity</div>
-          {[
-            ['Sold Charizard ex for £38.50', '2h ago'],
-            ['Completed trade with Marcus T.', 'Yesterday'],
-            ['Added 3 cards to Main Binder', '2d ago'],
-            ['Listed Ragavan for £62.00', '3d ago'],
-          ].map(([text, time], i) => (
-            <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '9px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
-              <span style={{ fontFamily: TW.sans, fontSize: 13.5, fontWeight: 600, color: TW.ink }}>{text}</span>
-              <span style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.faint, flexShrink: 0, marginLeft: 10 }}>{time}</span>
+        {/* activity feed */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Activity</div>
+          {ACTIVITY.map(([dot, text, time], i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+              <span style={{ width: 8, height: 8, borderRadius: 999, background: dot, flexShrink: 0 }} />
+              <span style={{ flex: 1, fontFamily: TW.sans, fontSize: 13, fontWeight: 600, color: TW.ink }}>{text}</span>
+              <span style={{ fontFamily: TW.sans, fontSize: 11, color: TW.faint, flexShrink: 0 }}>{time}</span>
             </div>
           ))}
         </div>
 
-        {/* collection value summary */}
-        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5, marginBottom: 8 }}>Collection value</div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-            <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.5 }}>{moneyW(port.now)}</span>
-            <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: TW.up, background: 'rgba(34,197,94,0.12)', padding: '2px 8px', borderRadius: 4 }}>+12% this month</span>
+        {/* collection row */}
+        <button onClick={() => app.nav.setTab('watch')} style={{ width: '100%', textAlign: 'left', background: TW.surface, borderRadius: 16, padding: 14, marginBottom: 10,
+          display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ position: 'relative', width: 48, height: 36, flexShrink: 0 }}>
+            <div style={{ position: 'absolute', left: 0, top: 4, width: 28, height: 28, borderRadius: 6, background: '#3b82f6' }} />
+            <div style={{ position: 'absolute', left: 10, top: 2, width: 28, height: 28, borderRadius: 6, background: '#a855f7' }} />
+            <div style={{ position: 'absolute', left: 20, top: 0, width: 28, height: 28, borderRadius: 6, background: '#ef4444' }} />
           </div>
-          <div style={{ fontFamily: TW.sans, fontSize: 12.5, color: TW.muted, marginTop: 4 }}>{app.ownedIds().length} cards across {app.collections.length} collection{app.collections.length !== 1 ? 's' : ''}</div>
-        </div>
-
-        {window.VerifyGate && <div style={{ marginBottom: 12 }}><window.VerifyGate app={app} need={1} action="sell, bid & trade" /></div>}
-
-        {/* account type */}
-        <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-            <span style={{ width: 40, height: 40, borderRadius: 12, background: TW.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, flexShrink: 0 }}>
-              {app.acct === 'store' ? '🏪' : app.acct === 'seller' ? '💸' : '🎴'}
-            </span>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted, fontWeight: 600 }}>Account type</div>
-              <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5 }}>{ACCT_LABEL[app.acct] || 'Collector'}</div>
-            </div>
-            {app.acct === 'store' && <window.Badge tone="accent">Verified shop</window.Badge>}
-          </div>
-          {app.acct === 'buyer' && (
-            <button onClick={() => { app.setAcct('seller'); app.toast('You can now sell 🎉'); }} style={{ width: '100%', marginTop: 12, background: TW.ink, color: '#fff',
-              borderRadius: 11, padding: '11px 14px', fontFamily: TW.sans, fontWeight: 700, fontSize: 14, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}>
-              {IconW.sell({ width: 17, height: 17 })} Become a seller
-            </button>
-          )}
-          {app.acct === 'seller' && (
-            <button onClick={() => app.nav.push('enroll_shop')} style={{ width: '100%', marginTop: 12, background: TW.surface2, color: TW.ink,
-              borderRadius: 11, padding: '11px 14px', fontFamily: TW.sans, fontWeight: 700, fontSize: 13.5 }}>Run a shop? Enroll as a Local Game Store →</button>
-          )}
-        </div>
-
-        {/* preferred games */}
-        <button onClick={() => setPrefsOpen(true)} style={{ width: '100%', textAlign: 'left', background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 12,
-          display: 'flex', alignItems: 'center', gap: 11, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <span style={{ width: 40, height: 40, borderRadius: 12, background: TW.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', color: TW.muted, flexShrink: 0 }}>{IconW.filter({ width: 19, height: 19 })}</span>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5 }}>Games you follow</div>
-            <div style={{ fontFamily: TW.sans, fontSize: 12.5, color: TW.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {app.allGamesSelected() ? 'All games' : followed.map(g => g.short).join(' · ')}
-            </div>
-          </div>
-          <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: TW.accent }}>Edit</span>
-        </button>
-
-        <button onClick={() => app.nav.setTab('sell')} style={{ width: '100%', background: TW.accent, color: '#fff', borderRadius: 14, padding: 15,
-          fontFamily: TW.sans, fontWeight: 700, fontSize: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 12 }}>
-          {IconW.sell({ width: 20, height: 20 })} List a card to sell
-        </button>
-
-        {/* buylist card */}
-        <button onClick={() => app.nav.push('buylist')} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 13,
-          background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <span style={{ width: 44, height: 44, borderRadius: 13, flexShrink: 0, background: 'var(--gold)', color: '#3a2a00',
-            display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 17l-5.3 2.6 1.1-6L3.4 9.4l6-.8L12 3z"/></svg>
-          </span>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5 }}>My buylist</div>
-            <div style={{ fontFamily: TW.sans, fontSize: 12.5, color: TW.muted }}>3 active · 2 matches available now</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{'Collection \u00B7 '}{moneyW(port.now)}</div>
           </div>
           {IconW.chevron({ style: { color: TW.faint } })}
         </button>
 
-        <div style={{ background: TW.surface, borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          {menu.map(([title, sub, icon, route], i) => (
-            <button key={title} onClick={() => app.nav.push(route)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 13, padding: '15px 16px',
-              borderBottom: i<menu.length-1 ? '1px solid var(--line-2)' : 'none', textAlign: 'left' }}>
-              <span style={{ color: TW.muted }}>{icon({})}</span>
-              <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 600, fontSize: 15 }}>{title}</span>
-              {sub && <span style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted }}>{sub}</span>}
-              {IconW.chevron({ style: { color: TW.faint } })}
-            </button>
-          ))}
+        {/* buylist row */}
+        <button onClick={() => app.nav.push('buylist')} style={{ width: '100%', textAlign: 'left', background: TW.surface, borderRadius: 16, padding: 14, marginBottom: 18,
+          display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <span style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: 'var(--gold)', color: '#3a2a00',
+            display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 17l-5.3 2.6 1.1-6L3.4 9.4l6-.8L12 3z"/></svg>
+          </span>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{'Buylist \u00B7 2 matches'}</div>
+          </div>
+          {IconW.chevron({ style: { color: TW.faint } })}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ── Settings ─────────────────────────────────────────────────
+function SettingsScreen({ app }) {
+  const [prefsOpen, setPrefsOpen] = React.useState(false);
+  const ACCT_LABEL = { buyer: 'Collector', seller: 'Individual seller', store: 'Game shop' };
+  const ACCT_EMOJI = { buyer: '\uD83C\uDCCF', seller: '\uD83D\uDCB8', store: '\uD83C\uDFEA' };
+  const followed = (window.GAMES || []).filter(function(g) { return app.inPrefs(g.id); });
+  const rows = [
+    ['Account type', ACCT_LABEL[app.acct] || 'Collector', function() { var next = app.acct === 'buyer' ? 'seller' : app.acct === 'seller' ? 'store' : 'buyer'; app.setAcct(next); }],
+    ['Verification & trust', app.tier >= 2 ? 'Trusted Seller' : app.tier >= 1 ? 'ID Verified' : 'Get verified', function() { app.nav.push('verify'); }],
+    ['Payment methods', '', function() { app.nav.push('payments'); }],
+    ['Games you follow', app.allGamesSelected() ? 'All games' : followed.map(function(g) { return g.short; }).join(', '), function() { setPrefsOpen(true); }],
+  ];
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
+      {/* back header */}
+      <div style={{ padding: '52px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <button onClick={() => app.nav.pop()} style={{ color: TW.ink }}>{IconW.back({})}</button>
+        <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 18 }}>Settings</span>
+      </div>
+
+      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
+        {/* identity card */}
+        <div style={{ background: TW.surface, borderRadius: 16, padding: 16, marginBottom: 14, display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <div style={{ width: 52, height: 52, borderRadius: 15, background: TW.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 24, flexShrink: 0 }}>A</div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>Alex Rivera</div>
+            <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, marginTop: 2 }}>{ACCT_EMOJI[app.acct] || '\uD83C\uDCCF'} {ACCT_LABEL[app.acct] || 'Collector'}</div>
+          </div>
+          {window.TrustBadge && app.tier >= 1 && <window.TrustBadge tier={app.tier >= 2 ? 2 : 1} />}
         </div>
+
+        {/* settings list */}
+        <div style={{ background: TW.surface, borderRadius: 16, overflow: 'hidden', marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          {rows.map(function(row, i) {
+            var title = row[0], sub = row[1], onTap = row[2];
+            return (
+              <button key={title} onClick={onTap} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 13, padding: '15px 16px',
+                borderBottom: i < rows.length - 1 ? '1px solid var(--line-2)' : 'none', textAlign: 'left' }}>
+                <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 600, fontSize: 15 }}>{title}</span>
+                {sub && <span style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted }}>{sub}</span>}
+                {IconW.chevron({ style: { color: TW.faint } })}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* upgrade buttons */}
+        {app.acct === 'buyer' && (
+          <button onClick={() => { app.setAcct('seller'); app.toast('You can now sell!'); }} style={{ width: '100%', marginBottom: 12, background: TW.ink, color: '#fff',
+            borderRadius: 13, padding: '13px 16px', fontFamily: TW.sans, fontWeight: 700, fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+            {IconW.sell({ width: 18, height: 18 })} Become a seller
+          </button>
+        )}
+        {app.acct !== 'store' && app.acct !== 'buyer' && (
+          <button onClick={() => app.nav.push('enroll_shop')} style={{ width: '100%', marginBottom: 12, background: TW.surface2, color: TW.ink,
+            borderRadius: 13, padding: '13px 16px', fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>Enroll as Local Game Store</button>
+        )}
       </div>
       {window.GamePrefsSheet && <window.GamePrefsSheet app={app} open={prefsOpen} onClose={() => setPrefsOpen(false)} games={window.GAMES || []} />}
     </div>
@@ -442,4 +457,4 @@ function AddCardsSheet({ app, col, onClose }) {
   );
 }
 
-Object.assign(window, { WatchScreen, ProfileScreen, EmptyState, CollectionDetailScreen });
+Object.assign(window, { WatchScreen, DashboardScreen, SettingsScreen, EmptyState, CollectionDetailScreen });
