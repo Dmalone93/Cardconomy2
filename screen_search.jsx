@@ -107,7 +107,10 @@ function SearchScreen({ app, params = {} }) {
               flex: 1, border: 'none', outline: 'none', background: 'transparent',
               fontFamily: TS.sans, fontSize: 15, color: TS.ink, minWidth: 0,
             }} />
-            {q && <button onClick={() => setQ('')} style={{ color: TS.faint, fontSize: 18, lineHeight: 1 }}>×</button>}
+            {q && <button onClick={() => setQ('')} style={{ color: TS.faint, fontSize: 18, lineHeight: 1 }}>{'\u00d7'}</button>}
+            <button onClick={() => app.nav.push('scan', { from: 'search' })} style={{ padding: 4, display: 'flex', color: TS.faint, flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/></svg>
+            </button>
           </div>
         </div>
       </div>

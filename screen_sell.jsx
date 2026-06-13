@@ -86,7 +86,7 @@ function SellScreen({ app }) {
           <div>
             <h2 style={{ margin: '0 0 4px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>What are you selling?</h2>
             <p style={{ fontFamily: TSE.sans, fontSize: 13.5, color: TSE.muted, margin: '0 0 14px' }}>Search our catalog to auto-fill the card details.</p>
-            <button onClick={() => app.toast('Opening camera to scan card')} style={{
+            <button onClick={() => app.nav.push('scan', { from: 'sell' })} style={{
               width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
               padding: '12px 14px', background: 'var(--fill)', color: '#fff', borderRadius: 4,
               fontFamily: TSE.sans, fontWeight: 700, fontSize: 14, marginBottom: 14,

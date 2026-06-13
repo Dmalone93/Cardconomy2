@@ -438,7 +438,15 @@ function AddCardsSheet({ app, col, onClose }) {
   const candidates = LISTINGS_W.filter(l => !col.cards.includes(l.id));
   return (
     <window.Sheet open={true} onClose={onClose} title={'Add to ' + col.name}>
-      <p style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, margin: '0 0 12px' }}>Tap a card you own to add it to this collection.</p>
+      <button onClick={() => { onClose(); app.nav.push('scan', { from: 'collection' }); }} style={{
+        width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+        padding: '12px 14px', background: 'var(--fill)', color: '#fff', borderRadius: 10,
+        fontFamily: TW.sans, fontWeight: 700, fontSize: 14, marginBottom: 12,
+      }}>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/></svg>
+        Scan a card
+      </button>
+      <p style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, margin: '0 0 12px' }}>Or tap a card you own to add it to this collection.</p>
       <div className="noscroll" style={{ maxHeight: 360, overflow: 'auto', display: 'flex', flexDirection: 'column', gap: 8 }}>
         {candidates.map(item => (
           <button key={item.id} onClick={() => { app.addCardToCollection(col.id, item.id); app.toast('Added to ' + col.name); }}

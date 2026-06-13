@@ -10,6 +10,7 @@ const { TradeScreen, StorefrontScreen, EnrollShopScreen, ShopFinderScreen } = wi
 const { CartScreen } = window;
 const { ProductScreen } = window;
 const { SellerScreen } = window;
+const { ScanScreen } = window;
 const { VerifyScreen } = window;
 const { AuthCardScreen } = window;
 const { Onboarding } = window;
@@ -35,6 +36,7 @@ const SCREENS = {
   collection: CollectionDetailScreen,
   product: ProductScreen,
   seller: SellerScreen,
+  scan: ScanScreen,
 };
 
 function loadWatch() {
