@@ -179,6 +179,7 @@ function App() {
   const [watch, setWatch] = React.useState(() => load('cc_watch', ['l03', 'l05']));
   const [cart, setCart] = React.useState(() => load('cc_cart', []));
   const [bids, setBids] = React.useState(() => load('cc_bids', {}));
+  const [acct, setAcct] = React.useState(() => load('cc_acct', 'buyer'));
   const [megaOpen, setMegaOpen] = React.useState(false);
   const [toast, setToast] = React.useState(null);
   const tRef = React.useRef(null);
@@ -186,13 +187,14 @@ function App() {
   React.useEffect(() => { localStorage.setItem('cc_watch', JSON.stringify(watch)); }, [watch]);
   React.useEffect(() => { localStorage.setItem('cc_cart', JSON.stringify(cart)); }, [cart]);
   React.useEffect(() => { localStorage.setItem('cc_bids', JSON.stringify(bids)); }, [bids]);
+  React.useEffect(() => { localStorage.setItem('cc_acct', JSON.stringify(acct)); }, [acct]);
 
   const showToast = (m) => { setToast(m); clearTimeout(tRef.current); tRef.current = setTimeout(() => setToast(null), 1900); };
 
   const app = {
     route,
     go: (name, params = {}) => { setRoute({ name, params }); setMegaOpen(false); window.scrollTo(0, 0); },
-    watch, cart, bids,
+    watch, cart, bids, acct, setAcct,
     isWatched: (id) => watch.includes(id),
     toggleWatch: (id) => setWatch(w => { if (w.includes(id)) { showToast('Removed from Watching'); return w.filter(x => x !== id); } showToast('Saved to Watching ♥'); return [...w, id]; }),
     inCart: (id) => cart.includes(id),
@@ -268,7 +270,36 @@ function DWatch({ app }) {
   );
 }
 
-function DAccount({ app }) {
+function renderSparkSVG(data, color, height) {
+  var gradId = 'sg' + Math.random().toString(36).slice(2, 8);
+  var min = Math.min.apply(null, data);
+  var max = Math.max.apply(null, data);
+  var range = max - min || 1;
+  var pts = data.map(function(v, i) {
+    var x = (i / (data.length - 1)) * 100;
+    var y = 30 - ((v - min) / range) * 26 - 2;
+    return x.toFixed(2) + ',' + y.toFixed(2);
+  });
+  var linePath = 'M' + pts.join(' L');
+  var areaPath = linePath + ' L100,30 L0,30 Z';
+  return (
+    <svg width="100%" viewBox="0 0 100 30" preserveAspectRatio="none" style={{ display: 'block', height: height || 36 }}>
+      <style>{'@keyframes drawLine { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }'}</style>
+      <defs>
+        <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity="0.3" />
+          <stop offset="100%" stopColor={color} stopOpacity="0" />
+        </linearGradient>
+      </defs>
+      <path d={areaPath} fill={'url(#' + gradId + ')'} />
+      <path d={linePath} fill="none" stroke={color} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round"
+        style={{ strokeDasharray: 200, animation: 'drawLine 1.5s ease forwards' }} />
+    </svg>
+  );
+}
+
+// ── Seller dashboard (original DAccount code) ───────────────
+function DAccountSeller({ app }) {
   var listings = window.LISTINGS || [];
 
   var balanceRanges = {
@@ -279,34 +310,6 @@ function DAccount({ app }) {
   var rangeState = React.useState('7d');
   var balanceRange = rangeState[0];
   var setBalanceRange = rangeState[1];
-
-  function renderSparkSVG(data, color, height) {
-    var gradId = 'sg' + Math.random().toString(36).slice(2, 8);
-    var min = Math.min.apply(null, data);
-    var max = Math.max.apply(null, data);
-    var range = max - min || 1;
-    var pts = data.map(function(v, i) {
-      var x = (i / (data.length - 1)) * 100;
-      var y = 30 - ((v - min) / range) * 26 - 2;
-      return x.toFixed(2) + ',' + y.toFixed(2);
-    });
-    var linePath = 'M' + pts.join(' L');
-    var areaPath = linePath + ' L100,30 L0,30 Z';
-    return (
-      <svg width="100%" viewBox="0 0 100 30" preserveAspectRatio="none" style={{ display: 'block', height: height || 36 }}>
-        <style>{'@keyframes drawLine { from { stroke-dashoffset: 200; } to { stroke-dashoffset: 0; } }'}</style>
-        <defs>
-          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity="0.3" />
-            <stop offset="100%" stopColor={color} stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <path d={areaPath} fill={'url(#' + gradId + ')'} />
-        <path d={linePath} fill="none" stroke={color} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round"
-          style={{ strokeDasharray: 200, animation: 'drawLine 1.5s ease forwards' }} />
-      </svg>
-    );
-  }
 
   var activityData = [
     { dot: 'var(--up)', text: 'Sold Charizard EX', amt: '+\u00a384', time: '2 hours ago', cardId: 'l01' },
@@ -555,6 +558,413 @@ function DAccount({ app }) {
       </div>
     </div>
   );
+}
+
+// ── Buyer / Collector dashboard ─────────────────────────────
+function DAccountBuyer({ app }) {
+  var listings = window.LISTINGS || [];
+  var watchItems = listings.filter(function(l) { return l.art || l.img; }).slice(0, 5);
+
+  var sectionLabel = { fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, color: 'var(--muted)', margin: '0 0 12px' };
+  var cardStyle = { background: 'var(--surface)', borderRadius: 14, padding: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' };
+
+  var watchDeltas = ['+4.2%', '-1.8%', '+7.1%', '-3.4%', '+2.6%'];
+
+  var recentOrders = [
+    { name: 'Charizard EX', seller: 'CardKing', status: 'Delivered', statusColor: '#22c55e', total: 84 },
+    { name: 'Dark Magician', seller: 'TopDeck', status: 'Shipped', statusColor: '#3b82f6', total: 42 },
+    { name: 'Pikachu EX', seller: 'PokeMart', status: 'Processing', statusColor: '#f59e0b', total: 18 },
+  ];
+
+  var buylistMatches = [
+    { name: 'Blue-Eyes White Dragon', max: 35, available: 28 },
+    { name: 'Moonbreon VMAX', max: 140, available: 156 },
+    { name: 'Pikachu EX', max: 22, available: 18 },
+  ];
+
+  return (
+    <div className="wrap" style={{ padding: '32px 24px 40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, alignItems: 'start' }}>
+
+        {/* ── Left column ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+          {/* Portfolio value hero */}
+          <div style={cardStyle}>
+            <div style={sectionLabel}>Portfolio Value</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
+              <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(2480)}</span>
+              <span style={{ background: 'rgba(34,197,94,0.12)', color: '#22c55e', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>+12% this month</span>
+            </div>
+            <div style={{ margin: '10px 0 14px' }}>
+              {renderSparkSVG([1800, 1950, 2100, 2200, 2150, 2350, 2480], '#6366f1', 44)}
+            </div>
+            <div style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 14 }}>42 cards across 2 collections</div>
+            <button onClick={function() { app.toast('View collection'); }} style={{
+              background: 'transparent', color: 'var(--accent)', border: '1.5px solid var(--accent)',
+              borderRadius: 10, padding: '10px 20px', fontWeight: 700, fontSize: 13, cursor: 'pointer',
+            }}>View collection</button>
+          </div>
+
+          {/* Watchlist price movements */}
+          <div style={cardStyle}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+              <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Watching</div>
+              <span style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600 }}>{watchItems.length}</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {watchItems.map(function(card, i) {
+                var delta = watchDeltas[i];
+                var isUp = delta.charAt(0) === '+';
+                return (
+                  <button key={card.id} onClick={function() { app.toast(card.name); }} style={{
+                    display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', width: '100%',
+                    borderBottom: i < watchItems.length - 1 ? '1px solid var(--line-2)' : 'none',
+                    background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
+                    borderBottomStyle: i < watchItems.length - 1 ? 'solid' : 'none',
+                    borderBottomWidth: i < watchItems.length - 1 ? 1 : 0,
+                    borderBottomColor: 'var(--line-2)',
+                  }}>
+                    <CardArt item={card} w={32} />
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{card.name}</div>
+                      <div style={{ fontSize: 11, color: 'var(--muted)' }}>{card.set || card.game || ''}</div>
+                    </div>
+                    <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{money(card.price)}</span>
+                    <span style={{ fontWeight: 700, fontSize: 11, color: isUp ? 'var(--up)' : 'var(--down)', flexShrink: 0, minWidth: 44, textAlign: 'right' }}>{delta}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Recent purchases */}
+          <div style={cardStyle}>
+            <div style={sectionLabel}>Recent Orders</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {recentOrders.map(function(order, i) {
+                var mockItem = (listings.filter(function(l) { return l.art || l.img; }))[i] || listings[i];
+                return (
+                  <button key={i} onClick={function() { app.toast(order.name); }} style={{
+                    display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', width: '100%',
+                    borderBottom: i < recentOrders.length - 1 ? '1px solid var(--line-2)' : 'none',
+                    background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
+                    borderBottomStyle: i < recentOrders.length - 1 ? 'solid' : 'none',
+                    borderBottomWidth: i < recentOrders.length - 1 ? 1 : 0,
+                    borderBottomColor: 'var(--line-2)',
+                  }}>
+                    {mockItem && <CardArt item={mockItem} w={36} />}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600 }}>{order.name}</div>
+                      <div style={{ fontSize: 11, color: 'var(--muted)' }}>{order.seller}</div>
+                    </div>
+                    <span style={{
+                      padding: '3px 8px', borderRadius: 6, fontWeight: 600, fontSize: 10,
+                      background: order.statusColor + '18', color: order.statusColor,
+                    }}>{order.status}</span>
+                    <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{money(order.total)}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Right column ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+          {/* Needs attention */}
+          <div style={cardStyle}>
+            <div style={sectionLabel}>Needs Attention</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {[
+                { color: 'var(--accent)', title: '2 buylist matches at your price', sub: 'Blue-Eyes and Pikachu EX', btn: 'View' },
+                { color: '#22c55e', title: 'Order arriving today', sub: 'Charizard EX from CardKing', btn: 'Track' },
+                { color: '#f59e0b', title: 'Price drop on watched card', sub: 'Dark Magician down 8%', btn: 'View' },
+              ].map(function(item, i) {
+                return (
+                  <div key={i} style={{
+                    display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
+                    borderRadius: 12, borderLeft: '4px solid ' + item.color,
+                    background: 'var(--surface-2)',
+                  }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 600, fontSize: 14 }}>{item.title}</div>
+                      <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>{item.sub}</div>
+                    </div>
+                    <button onClick={function() { app.toast(item.title); }} style={{
+                      background: item.color, color: '#fff', borderRadius: 8, padding: '8px 16px',
+                      fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0, cursor: 'pointer',
+                    }}>{item.btn}</button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Buylist matches */}
+          <div style={cardStyle}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+              <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Buylist</div>
+              <span style={{ background: 'var(--accent)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>2 matches</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {buylistMatches.map(function(m, i) {
+                var isGood = m.available <= m.max;
+                return (
+                  <button key={i} onClick={function() { app.toast(m.name); }} style={{
+                    display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                    padding: '10px 12px', borderRadius: 10, textAlign: 'left', width: '100%',
+                    background: isGood ? 'rgba(34,197,94,0.06)' : 'var(--surface-2)',
+                    border: isGood ? '1px solid rgba(34,197,94,0.2)' : '1px solid var(--line-2)',
+                    cursor: 'pointer',
+                  }}>
+                    <div>
+                      <div style={{ fontSize: 13, fontWeight: 600 }}>{m.name}</div>
+                      <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 1 }}>Your max: {money(m.max)}</div>
+                    </div>
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: isGood ? 'var(--up)' : 'var(--ink)' }}>Available: {money(m.available)}</div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Store / LGS dashboard ───────────────────────────────────
+function DAccountStore({ app }) {
+  var revenueRanges = {
+    today: [80, 120, 95, 200, 180, 250, 322],
+    '7d': [820, 950, 1100, 780, 1247, 1050, 1180],
+    '30d': [3200, 3800, 4100, 3600, 4500, 5200, 4800, 5100, 5400],
+  };
+  var rangeState = React.useState('today');
+  var revenueRange = rangeState[0];
+  var setRevenueRange = rangeState[1];
+
+  var sectionLabel = { fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, color: 'var(--muted)', margin: '0 0 12px' };
+  var cardStyle = { background: 'var(--surface)', borderRadius: 14, padding: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' };
+  var pillBase = { padding: '4px 10px', borderRadius: 6, fontWeight: 600, fontSize: 11, border: 'none', cursor: 'pointer' };
+
+  var submissions = [
+    { init: 'J', name: 'Jordan M.', cards: '48 cards', time: '12 min ago', status: 'Grading', statusColor: '#3b82f6' },
+    { init: 'S', name: 'Sam R.', cards: '64 cards', time: '18 min ago', status: 'New', statusColor: '#f59e0b' },
+    { init: 'D', name: 'Dana P.', cards: '310 cards', time: '1 hr ago', status: 'Offer sent', statusColor: '#22c55e' },
+    { init: 'M', name: 'Miguel A.', cards: '1,420 cards', time: '3 hr ago', status: 'Completed', statusColor: '#71757e' },
+  ];
+
+  var recentSales = [
+    { desc: 'Charizard EX (NM)', amt: 84, time: '1h ago' },
+    { desc: 'Pikachu EX lot (3x)', amt: 54, time: '2h ago' },
+    { desc: 'Blue-Eyes White Dragon', amt: 28, time: '3h ago' },
+    { desc: 'Sealed ETB - Paldea Evolved', amt: 200, time: '5h ago' },
+    { desc: 'Dark Magician (LP)', amt: 15, time: 'yesterday' },
+  ];
+
+  return (
+    <div className="wrap" style={{ padding: '32px 24px 40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1.5fr 1fr', gap: 24, alignItems: 'start' }}>
+
+        {/* ── Left column ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+          {/* Needs attention (standalone rows, not in a card) */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={sectionLabel}>Needs Attention</div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
+              background: 'var(--surface)', borderRadius: 12, borderLeft: '4px solid #f59e0b',
+              boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>3 submissions pending review</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Jordan M., Sam R., Dana P.</div>
+              </div>
+              <button onClick={function() { app.toast('Review submissions'); }} style={{ background: '#f59e0b', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Review</button>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
+              background: 'var(--surface)', borderRadius: 12, borderLeft: '4px solid #22c55e',
+              boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>1 bulk lot ready to price</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Miguel A. - 1,420 cards</div>
+              </div>
+              <button onClick={function() { app.toast('Price bulk lot'); }} style={{ background: '#22c55e', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Price</button>
+            </div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px',
+              background: 'var(--surface)', borderRadius: 12, borderLeft: '4px solid var(--accent)',
+              boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 600, fontSize: 14 }}>Buylist restock needed</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>5 high-demand cards below threshold</div>
+              </div>
+              <button onClick={function() { app.toast('Restock buylist'); }} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Restock</button>
+            </div>
+          </div>
+
+          {/* Revenue card */}
+          <button onClick={function() { app.toast('Opening revenue'); }} style={{
+            background: 'linear-gradient(135deg, #16181d, #2a2d3a)', borderRadius: 18, padding: '24px 26px',
+            textAlign: 'left', width: '100%', color: '#fff', position: 'relative', overflow: 'hidden',
+          }}>
+            <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, opacity: 0.45, marginBottom: 6 }}>{"Today's Revenue"}</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
+              <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(1247)}</span>
+              <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'\u25b2'} 23% vs last week</span>
+            </div>
+            <div style={{ display: 'flex', gap: 6, margin: '12px 0 4px' }} onClick={function(e) { e.stopPropagation(); }}>
+              {['today', '7d', '30d'].map(function(r) {
+                var sel = r === revenueRange;
+                return (
+                  <button key={r} onClick={function() { setRevenueRange(r); }} style={Object.assign({}, pillBase, {
+                    background: sel ? 'rgba(255,255,255,0.2)' : 'transparent',
+                    color: sel ? '#fff' : 'rgba(255,255,255,0.5)',
+                  })}>{r === 'today' ? 'Today' : r}</button>
+                );
+              })}
+            </div>
+            <div style={{ margin: '6px 0 4px' }}>
+              {renderSparkSVG(revenueRanges[revenueRange], '#4ade80', 36)}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 0, borderRadius: 6, overflow: 'hidden', height: 8, marginTop: 14 }}>
+              <div style={{ width: '62%', height: '100%', background: 'var(--accent)' }} />
+              <div style={{ width: '38%', height: '100%', background: '#f59e0b' }} />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6 }}>
+              <span style={{ fontSize: 11, opacity: 0.6 }}>Walk-in 62%</span>
+              <span style={{ fontSize: 11, opacity: 0.6 }}>Online 38%</span>
+            </div>
+          </button>
+
+          {/* Queue stats tiles */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
+            {[
+              { val: '4', label: 'Submissions pending', sub: '2 new today', color: 'var(--ink)' },
+              { val: '1', label: 'Bulk lots', sub: '1,420 cards', color: 'var(--ink)' },
+              { val: '12', label: 'Buylist hits', sub: 'today', color: 'var(--accent)' },
+            ].map(function(tile, i) {
+              return (
+                <button key={i} onClick={function() { app.toast(tile.label); }} style={Object.assign({}, cardStyle, { textAlign: 'center', cursor: 'pointer', border: 'none' })}>
+                  <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 24, color: 'var(--ink)' }}>{tile.val}</div>
+                  <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 3 }}>{tile.label}</div>
+                  <div style={{ fontSize: 11, color: tile.color, fontWeight: 600, marginTop: 4 }}>{tile.sub}</div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ── Right column ── */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+
+          {/* Submission queue */}
+          <div style={cardStyle}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+              <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Submission Queue</div>
+              <span style={{ background: 'var(--accent)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>4 active</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {submissions.map(function(s, i) {
+                return (
+                  <button key={i} onClick={function() { app.toast('Opening ' + s.name); }} style={{
+                    display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', width: '100%',
+                    borderBottom: i < submissions.length - 1 ? '1px solid var(--line-2)' : 'none',
+                    background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left',
+                    borderBottomStyle: i < submissions.length - 1 ? 'solid' : 'none',
+                    borderBottomWidth: i < submissions.length - 1 ? 1 : 0,
+                    borderBottomColor: 'var(--line-2)',
+                  }}>
+                    <div style={{
+                      width: 32, height: 32, borderRadius: 999, background: s.statusColor + '22',
+                      color: s.statusColor, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      fontWeight: 700, fontSize: 13, flexShrink: 0,
+                    }}>{s.init}</div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600 }}>{s.name}</div>
+                      <div style={{ fontSize: 11, color: 'var(--muted)' }}>{s.cards} {'\u00b7'} {s.time}</div>
+                    </div>
+                    <span style={{
+                      padding: '3px 8px', borderRadius: 6, fontWeight: 600, fontSize: 10,
+                      background: s.statusColor, color: '#fff',
+                    }}>{s.status}</span>
+                    <span style={{ color: 'var(--faint)', fontSize: 18 }}>{'\u203a'}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Buylist performance */}
+          <div style={cardStyle}>
+            <div style={sectionLabel}>Buylist Performance</div>
+            <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
+              <div style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 28, color: 'var(--accent)' }}>12</div>
+                <div style={{ fontSize: 11, color: 'var(--muted)' }}>matched today</div>
+              </div>
+              <div style={{ width: 1, background: 'var(--line-2)' }} />
+              <div style={{ flex: 1, textAlign: 'center' }}>
+                <div style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 28 }}>68%</div>
+                <div style={{ fontSize: 11, color: 'var(--muted)' }}>avg buy rate</div>
+              </div>
+            </div>
+            <div style={{ height: 1, background: 'var(--line-2)', margin: '0 0 12px' }} />
+            <div style={Object.assign({}, sectionLabel, { fontSize: 9 })}>Low Stock</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {[
+                { name: 'Blue-Eyes White Dragon', stock: 'Out of stock', color: 'var(--down)' },
+                { name: 'Charizard EX', stock: '1 left', color: '#f59e0b' },
+                { name: 'Dark Magician', stock: '2 left', color: 'var(--muted)' },
+              ].map(function(item, i) {
+                return (
+                  <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '6px 0' }}>
+                    <span style={{ fontSize: 13, fontWeight: 500 }}>{item.name}</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: item.color }}>{item.stock}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Recent sales */}
+          <div style={cardStyle}>
+            <div style={sectionLabel}>Recent Sales</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {recentSales.map(function(sale, i) {
+                return (
+                  <div key={i} style={{
+                    display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0',
+                    borderBottom: i < recentSales.length - 1 ? '1px solid var(--line-2)' : 'none',
+                  }}>
+                    <div style={{ width: 6, height: 6, borderRadius: 999, background: 'var(--up)', flexShrink: 0 }} />
+                    <div style={{ flex: 1, fontSize: 13, fontWeight: 500 }}>{sale.desc}</div>
+                    <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 12, flexShrink: 0 }}>{money(sale.amt)}</span>
+                    <span style={{ fontSize: 11, color: 'var(--muted)', flexShrink: 0 }}>{sale.time}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── Account screen — delegates by account type ──────────────
+function DAccount({ app }) {
+  if (app.acct === 'store') return <DAccountStore app={app} />;
+  if (app.acct === 'seller') return <DAccountSeller app={app} />;
+  return <DAccountBuyer app={app} />;
 }
 
 function DCart({ app }) {
