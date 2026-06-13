@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 const { IOSDevice } = window;
 const { T: TA, BottomNav, Toast, SideMenu } = window;
-const { HomeScreen, SearchScreen, ListingScreen, SellScreen, CheckoutScreen, WatchScreen, ProfileScreen, SellHubScreen, SellMarketScreen, SellBulkScreen, SellShopScreen, ShopScreen } = window;
+const { HomeScreen, SearchScreen, ListingScreen, SellScreen, CheckoutScreen, WatchScreen, DashboardScreen, SettingsScreen, SellHubScreen, SellMarketScreen, SellBulkScreen, SellShopScreen, ShopScreen } = window;
 const { BuylistScreen, PurchasesScreen, SellingScreen, OffersScreen, PaymentsScreen, NotificationsScreen } = window;
 const { CollectionDetailScreen } = window;
 const { TradeScreen, StorefrontScreen, EnrollShopScreen, ShopFinderScreen } = window;
@@ -18,7 +18,7 @@ const { sellerByName: sellerByNameA, listingsBySeller: listingsBySellerA, byId: 
 const ALL_GAME_IDS = (window.GAMES || []).map(g => g.id);
 
 const TAB_ROOT = {
-  home: HomeScreen, search: SearchScreen, sell: SellHubScreen, watch: WatchScreen, profile: ProfileScreen,
+  home: HomeScreen, search: SearchScreen, sell: SellHubScreen, watch: WatchScreen, profile: DashboardScreen,
 };
 const SCREENS = {
   home: HomeScreen, search: SearchScreen, listing: ListingScreen, sell: SellHubScreen,
@@ -30,7 +30,8 @@ const SCREENS = {
   cart: CartScreen,
   verify: VerifyScreen,
   authcard: AuthCardScreen,
-  checkout: CheckoutScreen, watch: WatchScreen, profile: ProfileScreen,
+  checkout: CheckoutScreen, watch: WatchScreen, profile: DashboardScreen,
+  settings: SettingsScreen,
   collection: CollectionDetailScreen,
   product: ProductScreen,
   seller: SellerScreen,
