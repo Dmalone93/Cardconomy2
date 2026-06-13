@@ -546,7 +546,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
           <div style={{ marginTop: 12, background: TT.surface, borderRadius: 14, padding: 12, display: 'flex', gap: 10, alignItems: 'flex-start', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <Avatar who={trader} size={34} />
             <div style={{ flex: 1, fontFamily: TT.sans, fontSize: 13, color: TT.ink, lineHeight: 1.45 }}>
-              <b>{trader.name}:</b> {stage === 'countered' ? 'Accepted the trade! Any chance we meet at Northside Collectibles instead? It's right by me. 🙏' : stage === 'agreed' ? 'Perfect, see you there! 🎉' : 'Works for me — see you at ' + counterSpot.name + '! 🎉'}
+              <b>{trader.name}:</b> {stage === 'countered' ? 'Accepted the trade! Any chance we meet at Northside Collectibles instead? It\u2019s right by me. 🙏' : stage === 'agreed' ? 'Perfect, see you there! 🎉' : 'Works for me — see you at ' + counterSpot.name + '! 🎉'}
             </div>
           </div>
         )}
