@@ -212,7 +212,7 @@ function SellerDash({ app, header }) {
           <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: '#7fe7a4', marginTop: 4 }}>&#9650; {moneyW(84)} this week</div>
           <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
             <span style={{ flex: 1, textAlign: 'center', background: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: '9px 0', fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>Withdraw</span>
-            <span style={{ flex: 1, textAlign: 'center', background: 'rgba(255,255,255,0.07)', borderRadius: 10, padding: '9px 0', fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>Store credit</span>
+            <span style={{ flex: 1, textAlign: 'center', background: 'rgba(255,255,255,0.07)', borderRadius: 10, padding: '9px 0', fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>Top up</span>
           </div>
         </button>
 
