@@ -12,7 +12,7 @@
 
 ## The Problem
 
-The trading card market is worth $50B+ globally but the buying and selling experience is fragmented and frustrating:
+The trading card market is worth multi-billion pound globally but the buying and selling experience is fragmented and frustrating:
 
 | Pain Point | Who Feels It | Current Reality |
 |-----------|-------------|----------------|
@@ -85,7 +85,7 @@ The trading card market is worth $50B+ globally but the buying and selling exper
 |---|------|-----------|
 | **Listing a card** | Write title, fill 15 fields, take photos, set price, choose format | Scan card > auto-fill everything > set price > done |
 | **Bulk selling** | List each card individually or create "lot" listings that undersell | LiveSweep scanner + batch pricing strategies |
-| **Fees** | ~13% (final value + payment processing + insertion) | 9% flat |
+| **Fees** | ~13% (12.8% final value + 30p/order) | 9% flat |
 | **Trust** | Feedback score (easily gamed) | 3-step ID verification + TrustBadge + card authentication |
 | **Price guidance** | None — you guess from "sold" listings | Market price on every card, price history charts, suggested pricing |
 | **Local trading** | Not supported | Trade builder + shop meetup points + safety checklist |
@@ -150,7 +150,7 @@ No other marketplace connects online and in-person. Cardconomy has:
 - Digital submission queue (scan at home, review at counter)
 - Shops as authentication centers
 
-**Why it matters:** 60%+ of high-value card trades still happen in person. Everyone else ignores this.
+**Why it matters:** A significant share of high-value card trades still happen in person. Everyone else ignores this.
 
 ### 2. Scan-to-Sell in Seconds
 LiveSweep + single card scan removes the #1 barrier to selling:
@@ -158,7 +158,7 @@ LiveSweep + single card scan removes the #1 barrier to selling:
 - Batch pricing strategies for bulk
 - Triage system for shops (flagged/buylist/singles/bulk)
 
-**Why it matters:** The average eBay listing takes 8-12 minutes per card. LiveSweep does 100 cards in 5 minutes.
+**Why it matters:** The average eBay listing takes 8+ minutes per card. LiveSweep does cards in seconds each.
 
 ### 3. Three Dashboards, Three Personas
 Every user type gets a purpose-built command center:
@@ -214,7 +214,7 @@ Every user type gets a purpose-built command center:
 ## FAQ / Objections
 
 **"This is just another marketplace"**
-> No — it's the only one with local shop infrastructure. Every other marketplace is shipping-only. We connect the 60% of trades that happen in person.
+> No — it's the only one with local shop infrastructure. Every other marketplace is shipping-only. We connect the trades that happen in person.
 
 **"Why would a shop use this?"**
 > Free deal flow. Sellers scan their cards before they walk in. The shop reviews from the counter, makes offers, and never has to manually sort a stack again. It's a free upgrade to their intake process.

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardconomy — Trade Show Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Hanken Grotesk', -apple-system, system-ui, sans-serif; background: #0a0a0f; color: #fff; overflow: hidden; }
+
+  .deck { width: 100vw; height: 100vh; position: relative; }
+  .slide { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 80px 120px; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+  .slide.active { opacity: 1; pointer-events: auto; }
+
+  /* backgrounds */
+  .bg-dark { background: linear-gradient(135deg, #0a0a0f 0%, #16181d 100%); }
+  .bg-accent { background: linear-gradient(135deg, #4338ca 0%, #6366f1 50%, #818cf8 100%); }
+  .bg-green { background: linear-gradient(135deg, #065f46 0%, #059669 100%); }
+  .bg-amber { background: linear-gradient(135deg, #78350f 0%, #d97706 100%); }
+  .bg-surface { background: #f8f9fb; color: #16181d; }
+
+  h1 { font-size: 64px; font-weight: 900; letter-spacing: -2px; line-height: 1.05; margin-bottom: 24px; }
+  h2 { font-size: 48px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 20px; }
+  h3 { font-size: 32px; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 12px; }
+  .subtitle { font-size: 24px; font-weight: 500; opacity: 0.7; line-height: 1.5; max-width: 800px; }
+  .label { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; opacity: 0.5; margin-bottom: 16px; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 40px; }
+  .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px; margin-top: 40px; }
+
+  .card { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 28px; }
+  .card-light { background: #fff; border: 1px solid #e7e8ec; border-radius: 16px; padding: 28px; color: #16181d; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .card h3 { font-size: 22px; margin-bottom: 10px; }
+  .card p { font-size: 16px; opacity: 0.7; line-height: 1.5; }
+  .card-light h3 { font-size: 22px; margin-bottom: 10px; color: #16181d; }
+  .card-light p { font-size: 15px; color: #71757e; line-height: 1.5; }
+
+  .pill { display: inline-block; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; }
+  .pill-accent { background: rgba(99,102,241,0.15); color: #818cf8; }
+  .pill-green { background: rgba(34,197,94,0.15); color: #4ade80; }
+  .pill-amber { background: rgba(245,158,11,0.15); color: #fbbf24; }
+  .pill-red { background: rgba(239,68,68,0.15); color: #f87171; }
+
+  .stat { text-align: center; }
+  .stat-num { font-size: 56px; font-weight: 900; letter-spacing: -2px; }
+  .stat-label { font-size: 16px; font-weight: 600; opacity: 0.6; margin-top: 6px; }
+
+  .compare-row { display: grid; grid-template-columns: 200px 1fr 1fr; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .compare-row.header { border-bottom: 2px solid rgba(255,255,255,0.15); }
+  .compare-cell { padding: 14px 18px; font-size: 15px; line-height: 1.4; }
+  .compare-cell:first-child { font-weight: 700; opacity: 0.6; }
+  .compare-cell.them { opacity: 0.5; }
+  .compare-cell.us { color: #4ade80; font-weight: 600; }
+
+  .pain-row { display: flex; align-items: flex-start; gap: 16px; padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .pain-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .pain-text { font-size: 17px; line-height: 1.4; }
+  .pain-text strong { font-weight: 700; }
+
+  .feature-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
+  .feature-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 8px; flex-shrink: 0; }
+  .feature-item p { font-size: 17px; line-height: 1.4; }
+  .feature-item strong { font-weight: 700; }
+
+  .quote { font-size: 28px; font-weight: 600; line-height: 1.5; font-style: italic; max-width: 900px; opacity: 0.9; }
+  .quote::before { content: '\201C'; font-size: 60px; line-height: 0; vertical-align: -18px; opacity: 0.3; margin-right: 4px; }
+
+  .demo-step { display: flex; align-items: center; gap: 18px; padding: 14px 0; }
+  .demo-num { width: 36px; height: 36px; border-radius: 50%; background: rgba(99,102,241,0.2); color: #818cf8; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0; }
+  .demo-text { font-size: 18px; line-height: 1.4; }
+
+  /* nav */
+  .nav { position: fixed; bottom: 32px; right: 40px; display: flex; gap: 10px; z-index: 100; }
+  .nav button { width: 44px; height: 44px; border-radius: 50%; border: none; background: rgba(255,255,255,0.1); color: #fff; font-size: 18px; cursor: pointer; backdrop-filter: blur(8px); }
+  .nav button:hover { background: rgba(255,255,255,0.2); }
+  .progress { position: fixed; bottom: 0; left: 0; height: 3px; background: #6366f1; transition: width 0.4s ease; z-index: 100; }
+  .slide-count { position: fixed; bottom: 38px; left: 40px; font-size: 13px; opacity: 0.3; font-weight: 600; z-index: 100; }
+
+  .left-border { border-left: 4px solid; padding-left: 20px; margin-bottom: 16px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .two-col-wide { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: start; }
+
+  @media (max-width: 1200px) {
+    .slide { padding: 60px 80px; }
+    h1 { font-size: 48px; }
+    h2 { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+<!-- SLIDE 1: Title -->
+<div class="slide bg-dark active">
+  <div class="label">Trade Show 2026</div>
+  <h1>Cardconomy</h1>
+  <p class="subtitle">The marketplace that connects collectors, sellers, and local game stores in one platform — with tools none of the incumbents offer.</p>
+  <div style="display:flex;gap:12px;margin-top:40px">
+    <span class="pill pill-accent">Buyers</span>
+    <span class="pill pill-green">Sellers</span>
+    <span class="pill pill-amber">Local Game Stores</span>
+  </div>
+</div>
+
+<!-- SLIDE 2: The Problem -->
+<div class="slide bg-dark">
+  <div class="label">The Problem</div>
+  <h2>A multi-billion pound market with a broken experience</h2>
+  <div class="grid-3" style="margin-top:32px">
+    <div class="pain-row" style="flex-direction:column;border:none">
+      <div class="pain-icon" style="background:rgba(239,68,68,0.15)">&#128531;</div>
+      <div><strong>Listing friction</strong><br><span style="opacity:0.6;font-size:15px">Photographing and pricing 500 cards takes days on eBay or Cardmarket</span></div>
+    </div>
+    <div class="pain-row" style="flex-direction:column;border:none">
+      <div class="pain-icon" style="background:rgba(245,158,11,0.15)">&#128663;</div>
+      <div><strong>No local infrastructure</strong><br><span style="opacity:0.6;font-size:15px">Trades happen in car parks with no safety or dispute resolution</span></div>
+    </div>
+    <div class="pain-row" style="flex-direction:column;border:none">
+      <div class="pain-icon" style="background:rgba(139,92,246,0.15)">&#127978;</div>
+      <div><strong>Shops are invisible</strong><br><span style="opacity:0.6;font-size:15px">LGS cannot compete with online marketplaces for walk-in traffic</span></div>
+    </div>
+    <div class="pain-row" style="flex-direction:column;border:none">
+      <div class="pain-icon" style="background:rgba(59,130,246,0.15)">&#128269;</div>
+      <div><strong>Price opacity</strong><br><span style="opacity:0.6;font-size:15px">You need 3 tabs open to know if a price is fair</span></div>
+    </div>
+    <div class="pain-row" style="flex-direction:column;border:none">
+      <div class="pain-icon" style="background:rgba(34,197,94,0.15)">&#128065;</div>
+      <div><strong>Collection blindness</strong><br><span style="opacity:0.6;font-size:15px">No single place to track what you own and what it is worth</span></div>
+    </div>
+    <div class="pain-row" style="flex-direction:column;border:none">
+      <div class="pain-icon" style="background:rgba(99,102,241,0.15)">&#128274;</div>
+      <div><strong>Trust gap</strong><br><span style="opacity:0.6;font-size:15px">Fakes are rampant, verification is weak, protection varies</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Three Differentiators -->
+<div class="slide bg-accent">
+  <div class="label">What Makes Us Different</div>
+  <h2>Three things no one else does</h2>
+  <div class="grid-3" style="margin-top:36px">
+    <div class="card" style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)">
+      <div style="font-size:40px;margin-bottom:16px">&#127979;</div>
+      <h3 style="font-size:24px">Local-First</h3>
+      <p>Verified shop network, safe trade meetups, digital submission queues. A significant share of high-value trades still happen in person — we are the only platform that supports this.</p>
+    </div>
+    <div class="card" style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)">
+      <div style="font-size:40px;margin-bottom:16px">&#128247;</div>
+      <h3 style="font-size:24px">Scan-to-Sell</h3>
+      <p>Point, identify, auto-price, publish. LiveSweep identifies cards in seconds. A typical eBay listing takes 8+ minutes per card.</p>
+    </div>
+    <div class="card" style="background:rgba(255,255,255,0.12);border-color:rgba(255,255,255,0.2)">
+      <div style="font-size:40px;margin-bottom:16px">&#128202;</div>
+      <h3 style="font-size:24px">Purpose-Built Dashboards</h3>
+      <p>Buyers track portfolios. Sellers manage earnings. Shops run their counter. Three personas, three command centers — not one generic page.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: For Buyers -->
+<div class="slide bg-dark">
+  <div class="label">For Buyers &amp; Collectors</div>
+  <h2>Find, buy, track, collect</h2>
+  <div class="two-col" style="margin-top:32px">
+    <div>
+      <div class="feature-item"><div class="feature-dot" style="background:#6366f1"></div><p><strong>Smart Dashboard</strong> — portfolio value, price movements, buylist matches, orders at a glance</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#6366f1"></div><p><strong>Multi-seller Product Pages</strong> — compare every seller, condition, and price on one screen</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#6366f1"></div><p><strong>Buylist with Auto-matching</strong> — set max price, get notified when it is available</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#6366f1"></div><p><strong>Collection Tracker</strong> — named collections, per-card gain/loss, sparklines</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#6366f1"></div><p><strong>Scan to Identify</strong> — camera scan, instant market price, add to collection</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#6366f1"></div><p><strong>Price History Charts</strong> — 30/90/365-day trends on every listing</p></div>
+    </div>
+    <div class="card" style="padding:24px">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.4;margin-bottom:12px">Pain point solved</div>
+      <div class="quote" style="font-size:20px">"I had 8 eBay tabs open comparing prices for one card. I use a spreadsheet to track my collection. I check Cardmarket every morning hoping someone listed what I need."</div>
+      <div style="margin-top:20px;font-size:14px;opacity:0.5">Every buyer, every day</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: For Sellers -->
+<div class="slide bg-dark">
+  <div class="label">For Individual Sellers</div>
+  <h2>List in seconds, not hours</h2>
+  <div class="two-col" style="margin-top:32px">
+    <div>
+      <div class="feature-item"><div class="feature-dot" style="background:#4ade80"></div><p><strong>Seller Dashboard</strong> — balance, offers, shipments, activity with "needs attention" alerts</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#4ade80"></div><p><strong>LiveSweep Scanner</strong> — flip through a stack, auto-identify and auto-price every card</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#4ade80"></div><p><strong>3 Pricing Strategies</strong> — at market, undercut 5%, or quick sale across your batch</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#4ade80"></div><p><strong>Sell to Local Shop</strong> — scan cards, submit digitally, get an offer via the app</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#4ade80"></div><p><strong>Trade Builder</strong> — match with collectors, fairness calculator, meet at verified shops</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#4ade80"></div><p><strong>9% Flat Fee</strong> — no insertion fees, no hidden charges. eBay is ~13%</p></div>
+    </div>
+    <div class="card" style="padding:24px">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.4;margin-bottom:12px">Pain point solved</div>
+      <div class="quote" style="font-size:20px">"Listing 200 cards on eBay took me an entire weekend. I drove 40 minutes to a shop and they lowballed me because I had no leverage."</div>
+      <div style="margin-top:20px;font-size:14px;opacity:0.5">Every casual seller</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: For Stores -->
+<div class="slide bg-dark">
+  <div class="label">For Local Game Stores</div>
+  <h2>Your counter, digitised</h2>
+  <div class="two-col" style="margin-top:32px">
+    <div>
+      <div class="feature-item"><div class="feature-dot" style="background:#fbbf24"></div><p><strong>Store Dashboard</strong> — daily revenue, submission queue, buylist performance, low stock alerts</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#fbbf24"></div><p><strong>Digital Submission Queue</strong> — sellers scan before they walk in. Review and offer from the counter</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#fbbf24"></div><p><strong>Buylist Integration</strong> — your buylist is visible to every seller. Matching cards are flagged automatically</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#fbbf24"></div><p><strong>Triage System</strong> — scanned cards auto-sort: flagged, buylist hits, notable singles, bulk</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#fbbf24"></div><p><strong>Public Storefront</strong> — rating, reviews, inventory, services — visible to every app user</p></div>
+      <div class="feature-item"><div class="feature-dot" style="background:#fbbf24"></div><p><strong>Free Enrollment</strong> — no monthly fee. Revenue share only</p></div>
+    </div>
+    <div class="card" style="padding:24px">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;opacity:0.4;margin-bottom:12px">Pain point solved</div>
+      <div class="quote" style="font-size:20px">"Someone drops off 500 cards and I have to stop everything to sort them. I have no idea if my buy rates are competitive. Every POS tool wants a monthly subscription."</div>
+      <div style="margin-top:20px;font-size:14px;opacity:0.5">Every LGS owner</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: vs eBay -->
+<div class="slide bg-dark">
+  <div class="label">Competitive Positioning</div>
+  <h2>vs. eBay</h2>
+  <div style="margin-top:32px">
+    <div class="compare-row header">
+      <div class="compare-cell" style="opacity:1;font-size:14px;text-transform:uppercase;letter-spacing:1px"></div>
+      <div class="compare-cell" style="opacity:0.4;font-weight:700">eBay</div>
+      <div class="compare-cell" style="color:#4ade80;font-weight:700">Cardconomy</div>
+    </div>
+    <div class="compare-row"><div class="compare-cell">Listing a card</div><div class="compare-cell them">Write title, 15 fields, photos, price</div><div class="compare-cell us">Scan > auto-fill > price > done</div></div>
+    <div class="compare-row"><div class="compare-cell">Bulk selling</div><div class="compare-cell them">List each card individually</div><div class="compare-cell us">LiveSweep + batch pricing</div></div>
+    <div class="compare-row"><div class="compare-cell">Fees</div><div class="compare-cell them">~13% (12.8% + &pound;0.30/order)</div><div class="compare-cell us">9% flat</div></div>
+    <div class="compare-row"><div class="compare-cell">Trust</div><div class="compare-cell them">Feedback score (easily gamed)</div><div class="compare-cell us">3-step ID verification + TrustBadge</div></div>
+    <div class="compare-row"><div class="compare-cell">Price guidance</div><div class="compare-cell them">None — guess from sold listings</div><div class="compare-cell us">Market price + history charts + auto-pricing</div></div>
+    <div class="compare-row"><div class="compare-cell">Local trading</div><div class="compare-cell them">Not supported</div><div class="compare-cell us">Trade builder + shop meetups</div></div>
+    <div class="compare-row" style="border:none"><div class="compare-cell">For shops</div><div class="compare-cell them">Same tools as individuals</div><div class="compare-cell us">Counter view, queue, buylist, revenue</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 8: vs Cardmarket & Others -->
+<div class="slide bg-dark">
+  <div class="label">Competitive Positioning</div>
+  <h2>vs. Cardmarket, Whatnot, TCGplayer</h2>
+  <div class="grid-3" style="margin-top:28px">
+    <div class="card">
+      <h3 style="font-size:20px">vs. Cardmarket</h3>
+      <div style="margin-top:12px">
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">Web-only, no mobile app</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">Europe-only, shipping-only</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">No scanning, no local trades</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">No shop-specific tools</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">Dated, functional UI</p></div>
+      </div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);font-size:14px;opacity:0.7">They solved pricing transparency. We add everything they did not.</div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:20px">vs. Whatnot</h3>
+      <div style="margin-top:12px">
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">Live-only, no browse-and-buy</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">FOMO-driven impulse buying</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">Requires being "on camera"</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">No price transparency</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">No collection tracking</p></div>
+      </div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);font-size:14px;opacity:0.7">Whatnot is entertainment. We are utility for informed decisions.</div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:20px">vs. TCGplayer</h3>
+      <div style="margin-top:12px">
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">US-focused, 10.25% + &pound;0.25/order fee</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">Competes with LGS (Direct)</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">No card scanning for listing</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">Killed their collection tracker</p></div>
+        <div class="feature-item"><div class="feature-dot" style="background:#f87171"></div><p style="font-size:14px">No local trading</p></div>
+      </div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,0.08);font-size:14px;opacity:0.7">They went direct and alienated shops. We make shops the backbone.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 9: Key Numbers -->
+<div class="slide bg-accent">
+  <div class="label">By The Numbers</div>
+  <h2>Built and ready to demo</h2>
+  <div class="grid-3" style="margin-top:48px">
+    <div class="stat"><div class="stat-num">5</div><div class="stat-label">Games Supported</div><div style="font-size:13px;opacity:0.5;margin-top:4px">Pokemon, Magic, Yu-Gi-Oh, One Piece, Lorcana</div></div>
+    <div class="stat"><div class="stat-num">9%</div><div class="stat-label">Flat Seller Fee</div><div style="font-size:13px;opacity:0.5;margin-top:4px">No insertion fees, no hidden charges</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Selling Paths</div><div style="font-size:13px;opacity:0.5;margin-top:4px">Marketplace, local shop, trade</div></div>
+    <div class="stat"><div class="stat-num">3</div><div class="stat-label">Dashboard Personas</div><div style="font-size:13px;opacity:0.5;margin-top:4px">Buyer, seller, game store</div></div>
+    <div class="stat"><div class="stat-num">30+</div><div class="stat-label">Interactive Screens</div><div style="font-size:13px;opacity:0.5;margin-top:4px">Mobile + desktop, full parity</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">Monthly Fee for Shops</div><div style="font-size:13px;opacity:0.5;margin-top:4px">Free enrollment, revenue share only</div></div>
+  </div>
+</div>
+
+<!-- SLIDE 10: Demo Script -->
+<div class="slide bg-dark">
+  <div class="label">Live Demo</div>
+  <h2>Walk-through (6 minutes)</h2>
+  <div class="grid-3" style="margin-top:28px">
+    <div class="card" style="border-color:rgba(99,102,241,0.3)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span class="pill pill-accent">2 min</span><h3 style="margin:0;font-size:20px">Buyer</h3></div>
+      <div class="demo-step"><div class="demo-num">1</div><div class="demo-text" style="font-size:15px">Dashboard — portfolio, alerts, matches</div></div>
+      <div class="demo-step"><div class="demo-num">2</div><div class="demo-text" style="font-size:15px">Search — filters, scan button</div></div>
+      <div class="demo-step"><div class="demo-num">3</div><div class="demo-text" style="font-size:15px">Product page — multi-seller compare</div></div>
+      <div class="demo-step"><div class="demo-num">4</div><div class="demo-text" style="font-size:15px">Listing — price history, offer</div></div>
+      <div class="demo-step"><div class="demo-num">5</div><div class="demo-text" style="font-size:15px">Collection — gain/loss tracking</div></div>
+    </div>
+    <div class="card" style="border-color:rgba(34,197,94,0.3)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span class="pill pill-green">2 min</span><h3 style="margin:0;font-size:20px">Seller</h3></div>
+      <div class="demo-step"><div class="demo-num">1</div><div class="demo-text" style="font-size:15px">Dashboard — balance, attention items</div></div>
+      <div class="demo-step"><div class="demo-num">2</div><div class="demo-text" style="font-size:15px">Sell hub — three paths</div></div>
+      <div class="demo-step"><div class="demo-num">3</div><div class="demo-text" style="font-size:15px">Single card wizard with scan</div></div>
+      <div class="demo-step"><div class="demo-num">4</div><div class="demo-text" style="font-size:15px">Offers — accept, counter, decline</div></div>
+      <div class="demo-step"><div class="demo-num">5</div><div class="demo-text" style="font-size:15px">Sell to local shop — LiveSweep</div></div>
+    </div>
+    <div class="card" style="border-color:rgba(251,191,36,0.3)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span class="pill pill-amber">2 min</span><h3 style="margin:0;font-size:20px">Store</h3></div>
+      <div class="demo-step"><div class="demo-num">1</div><div class="demo-text" style="font-size:15px">Dashboard — revenue, queue, buylist</div></div>
+      <div class="demo-step"><div class="demo-num">2</div><div class="demo-text" style="font-size:15px">Shop counter — submission queue</div></div>
+      <div class="demo-step"><div class="demo-num">3</div><div class="demo-text" style="font-size:15px">Grade cards, build offer</div></div>
+      <div class="demo-step"><div class="demo-num">4</div><div class="demo-text" style="font-size:15px">Storefront — public shop profile</div></div>
+      <div class="demo-step"><div class="demo-num">5</div><div class="demo-text" style="font-size:15px">Enrollment — free, no monthly fee</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 11: FAQ -->
+<div class="slide bg-dark">
+  <div class="label">Objection Handling</div>
+  <h2>Common questions</h2>
+  <div style="margin-top:32px;display:flex;flex-direction:column;gap:24px;max-width:900px">
+    <div class="left-border" style="border-color:rgba(99,102,241,0.5)">
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">"This is just another marketplace"</div>
+      <p style="font-size:16px;opacity:0.7;line-height:1.5">It is the only one with local shop infrastructure. Every other marketplace is shipping-only. We connect the trades that happen in person — something no other platform does.</p>
+    </div>
+    <div class="left-border" style="border-color:rgba(34,197,94,0.5)">
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">"Why would a shop use this?"</div>
+      <p style="font-size:16px;opacity:0.7;line-height:1.5">Free deal flow. Sellers scan before they walk in. The shop reviews from the counter and never has to manually sort a stack again. Free upgrade to their intake process.</p>
+    </div>
+    <div class="left-border" style="border-color:rgba(251,191,36,0.5)">
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">"How do you compete with eBay?"</div>
+      <p style="font-size:16px;opacity:0.7;line-height:1.5">We do not compete head-on. We win on specialisation — card-specific scanning, pricing, grading, and authentication that eBay will never build, plus the local network they cannot replicate.</p>
+    </div>
+    <div class="left-border" style="border-color:rgba(239,68,68,0.5)">
+      <div style="font-size:18px;font-weight:700;margin-bottom:6px">"Is this just a prototype?"</div>
+      <p style="font-size:16px;opacity:0.7;line-height:1.5">Fully interactive with working navigation, state persistence, and realistic data. Every flow walks through end to end. We are demonstrating the product vision, not static mockups.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: Closing -->
+<div class="slide bg-accent">
+  <h1 style="font-size:56px;max-width:900px">The UK has no Cardmarket.<br>No TCGplayer.<br>No digital infrastructure for local game stores.</h1>
+  <p class="subtitle" style="margin-top:24px;font-size:22px;opacity:0.85">Cardconomy fills all three gaps.</p>
+  <div style="margin-top:48px;display:flex;gap:16px">
+    <span class="pill" style="background:rgba(255,255,255,0.2);color:#fff;font-size:16px;padding:10px 22px">cardconomyy.vercel.app</span>
+  </div>
+</div>
+
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button onclick="prev()" aria-label="Previous">&#8592;</button>
+  <button onclick="next()" aria-label="Next">&#8594;</button>
+</div>
+<div class="progress" id="progress"></div>
+<div class="slide-count" id="counter"></div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  const total = slides.length;
+
+  function show(n) {
+    slides[current].classList.remove('active');
+    current = Math.max(0, Math.min(n, total - 1));
+    slides[current].classList.add('active');
+    document.getElementById('progress').style.width = ((current + 1) / total * 100) + '%';
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+  }
+
+  function next() { show(current + 1); }
+  function prev() { show(current - 1); }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+    if (e.key === 'Home') { e.preventDefault(); show(0); }
+    if (e.key === 'End') { e.preventDefault(); show(total - 1); }
+  });
+
+  // Touch support
+  let touchX = 0;
+  document.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e) {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (dx < -50) next();
+    if (dx > 50) prev();
+  });
+
+  show(0);
+</script>
+</body>
+</html>
