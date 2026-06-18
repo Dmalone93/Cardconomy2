@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 const { T: TH, money: mH, CardArt: CardArtH, Slab: SlabH, GradeChip: GradeChipH, Delta: DeltaH, Icon: IconH } = window;
 const { GAMES: GAMESH, SETS: SETSH, LISTINGS: LISTH, LOTS: LOTSH, gameById: gameByIdH, setById: setByIdH } = window;
+const { HOT_DEALS: HOT_DEALS_H, PRICE_MOVERS: PRICE_MOVERS_H, byId: byIdH } = window;
 
 // ── shared product card ──────────────────────────────────────
 function DCard({ item, app }) {
@@ -124,6 +125,53 @@ function DHome({ app }) {
 
       <Row title="Trending now" action="See all" onAction={() => app.go('search', {})}>
         <div style={grid(210)}>{trending.slice(0, 10).map(l => <DCard key={l.id} item={l} app={app} />)}</div>
+      </Row>
+
+      {/* ── Hot Deals ── */}
+      <Row title="Hot Deals" action="View all" onAction={() => app.go('search')}>
+        <div style={grid(170)}>
+          {HOT_DEALS_H.slice(0, 6).map(d => {
+            const item = byIdH(d.id);
+            if (!item) return null;
+            return (
+              <div key={d.id} style={{ position: 'relative' }}>
+                <DCard item={item} app={app} />
+                <div style={{ position: 'absolute', top: 8, left: 8, background: TH.down, color: '#fff',
+                  fontSize: 11, fontWeight: 700, borderRadius: 4, padding: '2px 6px' }}>
+                  {d.discount}% below market
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </Row>
+
+      {/* ── Daily Movers ── */}
+      <Row title="Daily Movers" action="View all">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 8 }}>
+          {PRICE_MOVERS_H.map(m => {
+            const item = byIdH(m.id);
+            if (!item) return null;
+            const up = m.change > 0;
+            return (
+              <div key={m.id} onClick={() => app.go('listing', { id: item.id })} style={{
+                display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px',
+                background: TH.surface, borderRadius: 8, cursor: 'pointer',
+              }}>
+                <CardArtH item={item} w={44} radius={4} />
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: TH.ink, overflow: 'hidden',
+                    textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</div>
+                  <div style={{ fontSize: 12, color: TH.muted }}>{mH(item.price)}</div>
+                </div>
+                <div style={{ fontSize: 14, fontWeight: 700, fontFamily: TH.mono,
+                  color: up ? TH.up : TH.down }}>
+                  {up ? '\u25B2' : '\u25BC'} {Math.abs(m.change).toFixed(1)}%
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </Row>
 
       {/* shop by set band */}
