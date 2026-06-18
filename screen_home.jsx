@@ -5,6 +5,73 @@ const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon,
 const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText, GAME_LOGOS } = window;
 const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 
+// ── CardFan hero — fanned stack of 3 cards with parallax ────
+const FAN_CARDS = ['l01', 'l05', 'l03']; // Charizard, Umbreon, Pikachu (visually striking)
+const FAN_LAYOUT = [
+  { rotate: -14, x: -38, y: 18, z: 1, parallax: 0.3 },  // left
+  { rotate: 0,   x: 0,   y: -8, z: 3, parallax: 0.6 },  // centre (fastest)
+  { rotate: 15,  x: 38,  y: 18, z: 2, parallax: 0.35 },  // right
+];
+
+function CardFan({ app }) {
+  const [scrollY, setScrollY] = React.useState(0);
+  const reduceMotion = React.useRef(false);
+  React.useEffect(() => {
+    reduceMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }, []);
+  React.useEffect(() => {
+    const scroller = document.querySelector('.noscroll');
+    if (!scroller) return;
+    const onScroll = () => {
+      if (!reduceMotion.current) setScrollY(scroller.scrollTop);
+    };
+    scroller.addEventListener('scroll', onScroll, { passive: true });
+    return () => scroller.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const cards = FAN_CARDS.map(id => byId(id)).filter(Boolean);
+  if (cards.length === 0) return null;
+
+  return (
+    <div style={{ position: 'relative', height: 220, display: 'flex', alignItems: 'center',
+      justifyContent: 'center', overflow: 'hidden', background: 'var(--fill)',
+      borderRadius: '0 0 20px 20px', marginBottom: 4 }}>
+      {/* dark radial glow */}
+      <div style={{ position: 'absolute', inset: 0,
+        background: 'radial-gradient(ellipse at 50% 80%, var(--accent) 0%, transparent 60%)', opacity: 0.15 }} />
+      {/* fanned cards */}
+      {cards.slice(0, 3).map((card, i) => {
+        const layout = FAN_LAYOUT[i] || FAN_LAYOUT[0];
+        const drift = reduceMotion.current ? 0 : scrollY * layout.parallax * -0.3;
+        return (
+          <div key={card.id} onClick={() => app.nav.push('listing', { id: card.id })}
+            style={{
+              position: 'absolute', width: 110, height: 154, borderRadius: 14, cursor: 'pointer',
+              transform: `translate(${layout.x}px, ${layout.y + drift}px) rotate(${layout.rotate}deg)`,
+              zIndex: layout.z, transition: reduceMotion.current ? 'none' : 'transform 0.1s linear',
+              boxShadow: '0 8px 30px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)',
+              border: '1px solid rgba(255,255,255,0.12)',
+              overflow: 'hidden',
+            }}>
+            <CardArt item={card} w={110} radius={14} />
+            {/* foil sheen overlay */}
+            <div style={{ position: 'absolute', inset: 0, borderRadius: 14, zIndex: 5, pointerEvents: 'none',
+              background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 60%, transparent 75%)',
+            }} />
+          </div>
+        );
+      })}
+      {/* tagline overlay */}
+      <div style={{ position: 'absolute', bottom: 16, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 15, color: '#fff',
+          letterSpacing: -0.3, textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+          The UK home for trading cards
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ── shared: grid tile ────────────────────────────────────────
 function ListCard({ item, app, w }) {
   const watched = app.isWatched(item.id);
@@ -335,6 +402,9 @@ function HomeScreen({ app }) {
           <span style={{ fontFamily: T.sans, fontSize: 14.5 }}>Search Charizard, Black Lotus, sets…</span>
         </button>
       </div>
+
+      {/* ── Card Fan hero ── */}
+      <CardFan app={app} />
 
       {/* sponsored ad carousel */}
       <AdCarousel app={app} />
