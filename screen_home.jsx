@@ -339,6 +339,43 @@ function HomeScreen({ app }) {
       {/* sponsored ad carousel */}
       <AdCarousel app={app} />
 
+      {/* ── Three Communities ── */}
+      <div style={{ padding: '24px 14px 8px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 16 }}>
+          <div style={{ fontSize: 19, fontWeight: 800, color: T.ink, lineHeight: 1.2, letterSpacing: -0.4 }}>
+            Connecting the whole TCG community
+          </div>
+          <div style={{ fontSize: 13, color: T.muted, marginTop: 6, lineHeight: 1.5 }}>
+            The only marketplace where buyers, sellers, and local game shops trade together.
+          </div>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {[
+            { icon: '\uD83D\uDCE6', title: 'Buyers & Collectors', desc: 'Find cards across every game, buy with protection, and build your collection.', cta: 'Start browsing', color: 'var(--up)', action: () => app.nav.setTab('search') },
+            { icon: '\uD83D\uDCB0', title: 'Individual Sellers', desc: 'List in seconds, sell at 4% \u2014 the lowest fee in the market \u2014 or trade card-for-card.', cta: 'List a card', color: 'var(--accent)', action: () => app.nav.setTab('sell') },
+            { icon: '\uD83C\uDFEA', title: 'Local Game Shops', desc: 'Get a digital storefront, receive cards from local sellers, and reach collectors nationwide.', cta: 'Enrol your shop', color: 'var(--gold)', action: () => app.nav.push('enroll_shop') },
+          ].map(p => (
+            <div key={p.title} style={{ display: 'flex', gap: 12, padding: '14px', background: T.surface,
+              borderRadius: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.04)', alignItems: 'flex-start' }}>
+              <div style={{ fontSize: 24, flexShrink: 0, marginTop: 2 }}>{p.icon}</div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 14, fontWeight: 700, color: T.ink }}>{p.title}</div>
+                <div style={{ fontSize: 12, color: T.muted, marginTop: 3, lineHeight: 1.5 }}>{p.desc}</div>
+                <div onClick={p.action} style={{ fontSize: 12, fontWeight: 700, color: p.color,
+                  marginTop: 6, cursor: 'pointer' }}>{p.cta} \u2192</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* connecting bar */}
+        <div style={{ height: 3, borderRadius: 2, margin: '14px 40px 4px',
+          background: 'linear-gradient(90deg, var(--up), var(--accent), var(--gold))' }} />
+        <div style={{ textAlign: 'center' }}>
+          <span onClick={() => app.nav.push('howitworks')} style={{ fontSize: 12, fontWeight: 600,
+            color: T.accent, cursor: 'pointer' }}>Learn how it works \u2192</span>
+        </div>
+      </div>
+
       {/* ── Browse by Game ── */}
       <div style={{ marginTop: 20 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',

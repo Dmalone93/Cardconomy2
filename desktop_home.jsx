@@ -140,16 +140,41 @@ function DHome({ app }) {
     <div style={{ paddingBottom: 30 }}>
       <Hero app={app} />
 
-      {/* ── Welcome tagline ── */}
-      <div className="wrap" style={{ marginTop: 32, marginBottom: 8, textAlign: 'center' }}>
-        <h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.8,
-          margin: '0 0 8px', color: TH.ink }}>
-          The UK home for trading cards
-        </h2>
-        <p style={{ fontSize: 15, color: TH.muted, lineHeight: 1.5, maxWidth: 520, margin: '0 auto' }}>
-          Buy, sell, and trade across every game. Lower fees than anyone else, with real buyer protection and local game shop support.
-        </p>
-      </div>
+      {/* ── Three Communities ── */}
+      <section className="wrap" style={{ marginTop: 36, marginBottom: 12 }}>
+        <div style={{ textAlign: 'center', marginBottom: 24 }}>
+          <h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8,
+            margin: '0 0 10px', color: TH.ink }}>
+            Connecting the whole TCG community
+          </h2>
+          <p style={{ fontSize: 15, color: TH.muted, lineHeight: 1.5, maxWidth: 560, margin: '0 auto' }}>
+            The only marketplace where buyers, sellers, and local game shops trade together. One platform. Lower fees. Real community.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+          {[
+            { icon: '\uD83D\uDCE6', title: 'Buyers & Collectors', desc: 'Find cards across every game, buy with protection, and build your collection.', cta: 'Start browsing', color: 'var(--up)', route: 'search' },
+            { icon: '\uD83D\uDCB0', title: 'Individual Sellers', desc: 'List in seconds, sell at 4% \u2014 the lowest fee in the market \u2014 or trade card-for-card.', cta: 'List a card', color: 'var(--accent)', route: 'sell_single' },
+            { icon: '\uD83C\uDFEA', title: 'Local Game Shops', desc: 'Get a digital storefront, receive cards from local sellers, and reach collectors nationwide.', cta: 'Enrol your shop', color: 'var(--gold)', route: 'enroll' },
+          ].map(p => (
+            <div key={p.title} style={{ background: 'var(--surface)', borderRadius: 16, padding: '24px 20px',
+              boxShadow: '0 1px 3px rgba(20,24,40,0.05)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: 32, marginBottom: 12 }}>{p.icon}</div>
+              <div style={{ fontSize: 17, fontWeight: 800, color: TH.ink, marginBottom: 6 }}>{p.title}</div>
+              <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, flex: 1 }}>{p.desc}</div>
+              <button onClick={() => app.go(p.route)} style={{ marginTop: 14, padding: '10px 18px',
+                borderRadius: 10, border: 'none', background: p.color, color: '#fff',
+                fontWeight: 700, fontSize: 13.5, cursor: 'pointer', alignSelf: 'flex-start' }}>{p.cta} \u2192</button>
+            </div>
+          ))}
+        </div>
+        <div style={{ height: 3, borderRadius: 2, margin: '20px 120px 8px',
+          background: 'linear-gradient(90deg, var(--up), var(--accent), var(--gold))' }} />
+        <div style={{ textAlign: 'center' }}>
+          <button onClick={() => app.go('howitworks')} style={{ fontSize: 14, fontWeight: 600,
+            color: 'var(--accent)', cursor: 'pointer' }}>Learn how it works \u2192</button>
+        </div>
+      </section>
 
       {/* ── Browse by Game (hero tiles) ── */}
       <Row title="Browse by Game" action="Browse all" onAction={() => app.go('search')}>
