@@ -4,6 +4,7 @@
 const { T: TL, money: moneyL, Slab: SlabL, CardArt: CardArtL, GradeChip: GradeChipL,
   Sparkline: SparkL, Delta: DeltaL, Stars: StarsL, Chip: ChipL, Icon: IconL, Sheet: SheetL } = window;
 const { byId: byIdL, setById: setByIdL, gameById: gameByIdL, gradeText: gradeTextL, LISTINGS: LISTINGS_L } = window;
+const { PRINTINGS: PRINTINGS_L } = window;
 
 function StatBox({ label, value, sub, color }) {
   return (
@@ -34,6 +35,7 @@ function ListingScreen({ app, params }) {
   const [tf, setTf] = React.useState('90D');
   const [sheet, setSheet] = React.useState(null);
   const [offer, setOffer] = React.useState('');
+  const [showPrintings, setShowPrintings] = React.useState(false);
   const [offerSent, setOfferSent] = React.useState(null);
   const finishes = [{ key: 'standard', label: 'Standard', price: item.foil ? item.price * 0.6 : item.price },
     { key: 'foil', label: 'Foil', price: item.foil ? item.price : item.price * 1.8 }];
@@ -111,6 +113,17 @@ function ListingScreen({ app, params }) {
               </div>
             ))}
           </div>
+
+          {/* See all printings */}
+          {PRINTINGS_L && PRINTINGS_L[item.name] && PRINTINGS_L[item.name].length > 1 && (
+            <div onClick={() => setShowPrintings(true)} style={{
+              marginTop: 8, padding: '6px 12px', borderRadius: 8, background: TL.surface2,
+              fontSize: 13, fontWeight: 600, color: TL.accent, cursor: 'pointer',
+              display: 'inline-flex', alignItems: 'center', gap: 4,
+            }}>
+              <IconL name="grid" size={14} /> See all printings ({PRINTINGS_L[item.name].length})
+            </div>
+          )}
 
           {/* price */}
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 16 }}>
@@ -318,6 +331,28 @@ function ListingScreen({ app, params }) {
           {IconL.cart({width:16,height:16})} {app.cart.includes(item.id) ? 'In cart' : 'Add to cart'}
         </button>
       </div>
+
+      {/* printings sheet */}
+      {showPrintings && (
+        <SheetL title="All Printings" onClose={() => setShowPrintings(false)}>
+          <div style={{ padding: '0 16px 20px' }}>
+            {(PRINTINGS_L[item.name] || []).map((p, i) => {
+              const s = setByIdL(p.set);
+              return (
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between',
+                  alignItems: 'center', padding: '12px 0',
+                  borderBottom: '1px solid ' + TL.line }}>
+                  <div>
+                    <div style={{ fontSize: 14, fontWeight: 600, color: TL.ink }}>{s ? s.name : p.set}</div>
+                    <div style={{ fontSize: 12, color: TL.muted }}>{p.number}</div>
+                  </div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: TL.ink }}>{moneyL(p.price)}</div>
+                </div>
+              );
+            })}
+          </div>
+        </SheetL>
+      )}
 
       {/* offer sheet */}
       <SheetL open={sheet==='offer'} onClose={() => setSheet(null)} title="Make an offer">
