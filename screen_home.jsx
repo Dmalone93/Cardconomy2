@@ -2,7 +2,7 @@
 // Home / browse / discovery  (+ shared ListCard / ListRow)
 // ─────────────────────────────────────────────────────────────
 const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon, Logo } = window;
-const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText } = window;
+const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText, GAME_LOGOS } = window;
 const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 
 // ── shared: grid tile ────────────────────────────────────────
@@ -158,21 +158,37 @@ function MoverCard({ item, change, app }) {
   );
 }
 
-// ── game tile (Browse by Game carousel) ──────────────────────
+// ── game tile (Browse by Game carousel — tall portrait style) ─
 function GameBrowseTile({ game, app }) {
+  const logo = GAME_LOGOS && GAME_LOGOS[game.id];
   return (
     <div onClick={() => app.nav.push('search', { game: game.id })} role="button" style={{
-      flexShrink: 0, width: 110, cursor: 'pointer', textAlign: 'center',
+      flexShrink: 0, width: 130, height: 180, cursor: 'pointer', borderRadius: 12,
+      overflow: 'hidden', position: 'relative',
+      background: `linear-gradient(135deg, ${game.tint} 0%, ${game.tint}cc 40%, #16181d 100%)`,
+      boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
     }}>
-      <div style={{ width: 110, height: 70, borderRadius: 10, background: game.tint,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
-        <span style={{ fontSize: 28, fontWeight: 800, color: '#fff', opacity: 0.9 }}>
-          {game.short.charAt(0)}
-        </span>
+      {/* diagonal accent stripe */}
+      <div style={{ position: 'absolute', inset: 0,
+        background: `linear-gradient(160deg, transparent 30%, ${game.tint}44 50%, transparent 70%)`,
+      }} />
+      {/* logo or fallback text */}
+      <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center', padding: 16, zIndex: 1 }}>
+        {logo ? (
+          <img src={logo} alt={game.short} style={{ maxWidth: 90, maxHeight: 60,
+            objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.95 }} />
+        ) : (
+          <span style={{ fontSize: 32, fontWeight: 800, color: '#fff', opacity: 0.9, letterSpacing: -1 }}>
+            {game.short.charAt(0)}
+          </span>
+        )}
+        <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.7)',
+          marginTop: 8, textTransform: 'uppercase', letterSpacing: 1 }}>{game.short}</div>
       </div>
-      <div style={{ fontSize: 12, fontWeight: 600, color: T.ink, marginTop: 6,
-        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{game.short}</div>
+      {/* bottom gradient for depth */}
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%',
+        background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' }} />
     </div>
   );
 }
@@ -341,13 +357,15 @@ function HomeScreen({ app }) {
       {window.GamePrefsSheet && <window.GamePrefsSheet app={app} open={prefsOpen} onClose={() => setPrefsOpen(false)} games={GAMES} />}
 
       {/* ── Browse by Game ── */}
-      <div style={{ marginTop: 16 }}>
+      <div style={{ marginTop: 20 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '0 14px', marginBottom: 8 }}>
+          padding: '0 14px', marginBottom: 10 }}>
           <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Browse by Game</div>
+          <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600,
+            color: T.accent, cursor: 'pointer' }}>Browse all</div>
         </div>
-        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px',
-          WebkitOverflowScrolling: 'touch' }}>
+        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px 4px',
+          WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
           {GAMES.filter(g => g && g.id).map(g => <GameBrowseTile key={g.id} game={g} app={app} />)}
         </div>
       </div>
