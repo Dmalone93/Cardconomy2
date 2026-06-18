@@ -31,7 +31,7 @@ function BigChoice({ icon, tint, title, desc, meta, onClick, badge }) {
 function SellHubScreen({ app }) {
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: TH.bg, paddingBottom: 96 }}>
-      <div style={{ padding: '52px 16px 18px', background: TH.surface, borderBottom: '1px solid var(--line)' }}>
+      <div style={{ padding: '14px 16px 18px', background: TH.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
           <button onClick={() => app.openMenu()} style={{ color: TH.ink, padding: '2px 2px 2px 0', display: 'flex' }}>{IconH.menu({})}</button>
           <h1 style={{ margin: 0, fontFamily: TH.sans, fontWeight: 800, fontSize: 26, letterSpacing: -0.6 }}>Sell your cards</h1>
@@ -113,7 +113,7 @@ function SellHubScreen({ app }) {
 function SellMarketScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TH.bg }}>
-      <div style={{ padding: '52px 14px 14px', background: TH.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ padding: '14px 14px 14px', background: TH.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TH.ink }}>{IconH.back({})}</button>
         <span style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 17 }}>Sell on the marketplace</span>
       </div>

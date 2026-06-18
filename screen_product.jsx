@@ -176,7 +176,7 @@ function ProductScreen({ app, params }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TP.bg, animation: 'ccPushIn 0.26s ease' }}>
       {/* header */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '52px 12px 10px', gap: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '14px 12px 10px', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TP.surface, color: TP.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>{IconP.back({})}</button>
         <div style={{ flex: 1, fontFamily: TP.sans, fontWeight: 700, fontSize: 16, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Back</div>
       </div>

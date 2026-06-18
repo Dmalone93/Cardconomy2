@@ -378,7 +378,7 @@ function HomeScreen({ app }) {
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: T.bg, paddingBottom: 96 }}>
       {/* top bar */}
-      <div style={{ padding: '58px 16px 10px', background: T.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
+      <div style={{ padding: '14px 16px 10px', background: T.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 13, position: 'relative' }}>
           <button onClick={() => app.openMenu()} style={{ color: T.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{Icon.menu({})}</button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
@@ -606,7 +606,7 @@ function HomeScreen({ app }) {
       {/* article overlay */}
       {article && (
         <div style={{ position: 'absolute', inset: 0, zIndex: 50, background: T.bg, display: 'flex', flexDirection: 'column', animation: 'ccPushIn 0.26s ease' }}>
-          <div style={{ display: 'flex', alignItems: 'center', padding: '52px 12px 10px', gap: 10 }}>
+          <div style={{ display: 'flex', alignItems: 'center', padding: '14px 12px 10px', gap: 10 }}>
             <button onClick={() => setArticle(null)} style={{ width: 38, height: 38, borderRadius: 999, background: T.surface, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>{Icon.back({})}</button>
             <div style={{ flex: 1, fontFamily: T.sans, fontWeight: 700, fontSize: 16 }}>Back</div>
           </div>

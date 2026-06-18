@@ -20,7 +20,7 @@ function StorefrontScreen({ app, params = {} }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TF.bg }}>
       {/* nav */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, padding: '52px 12px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, padding: '14px 12px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--glass)', backdropFilter: 'blur(6px)', boxShadow: '0 1px 4px rgba(0,0,0,0.12)', color: TF.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconF.back({})}</button>
         <button onClick={() => app.toast('Following ' + shop.name)} style={{ height: 38, padding: '0 16px', borderRadius: 999, background: 'var(--glass)', backdropFilter: 'blur(6px)', boxShadow: '0 1px 4px rgba(0,0,0,0.12)', color: TF.ink, fontFamily: TF.sans, fontWeight: 700, fontSize: 13.5 }}>+ Follow</button>
       </div>
@@ -372,7 +372,7 @@ function BuylistWizard({ open, cards, onDone, onClose }) {
     return (
       <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: TF.bg, display: 'flex', flexDirection: 'column' }}>
         {/* header */}
-        <div style={{ padding: '52px 12px 10px', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+        <div style={{ padding: '14px 12px 10px', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
           <button onClick={() => { onDone(items); onClose(); }}
             style={{ width: 38, height: 38, borderRadius: 999, background: TF.surface, color: TF.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>
             {IconF.back({})}
@@ -497,7 +497,7 @@ function BuylistWizard({ open, cards, onDone, onClose }) {
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 50, background: TF.bg, display: 'flex', flexDirection: 'column' }}>
       {/* header */}
-      <div style={{ padding: '52px 12px 10px', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+      <div style={{ padding: '14px 12px 10px', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
         <button onClick={() => setView('search')}
           style={{ width: 38, height: 38, borderRadius: 999, background: TF.surface, color: TF.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>
           {IconF.back({})}
@@ -774,7 +774,7 @@ function EnrollShopScreen({ app }) {
   if (step === 0) {
     return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TF.bg }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, padding: '52px 12px 10px' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, padding: '14px 12px 10px' }}>
           <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--glass)', backdropFilter: 'blur(6px)', boxShadow: '0 1px 4px rgba(0,0,0,0.12)', color: TF.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconF.back({})}</button>
         </div>
         <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 110 }}>
@@ -879,7 +879,7 @@ function EnrollShopScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TF.bg }}>
       {/* header */}
-      <div style={{ padding: '52px 12px 8px', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
+      <div style={{ padding: '14px 12px 8px', display: 'flex', alignItems: 'center', gap: 10, flexShrink: 0 }}>
         <button onClick={() => step === 1 ? setStep(0) : setStep(step - 1)}
           style={{ width: 38, height: 38, borderRadius: 999, background: TF.surface, color: TF.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>
           {IconF.back({})}

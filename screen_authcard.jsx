@@ -28,7 +28,7 @@ function AuthCardScreen({ app, params = {} }) {
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TAU.bg }}>
-      <div style={{ padding: '52px 14px 12px', background: TAU.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ padding: '14px 14px 12px', background: TAU.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => phase === 'intro' || phase === 'submitted' ? app.nav.pop() : setPhase('intro')} style={{ color: TAU.ink }}>{IconAU.back({})}</button>
         <span style={{ fontFamily: TAU.sans, fontWeight: 800, fontSize: 17 }}>Authenticate card</span>
       </div>

@@ -46,7 +46,7 @@ function LiveSweep({ onDone }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: '#0c0e13' }}>
       {/* header */}
-      <div style={{ padding: '52px 16px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div style={{ padding: '14px 16px 10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <button onClick={() => onDone(0)} style={{ color: '#fff', display: 'flex', alignItems: 'center', gap: 4, fontFamily: TSS.sans, fontSize: 15, fontWeight: 600 }}>
           {IconSS.back({ width: 18, height: 18 })} Methods
         </button>
@@ -166,7 +166,7 @@ function SellShopScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TSS.bg }}>
       {phase !== 'done' && phase !== 'thread' && (
-        <div style={{ padding: '52px 14px 12px', background: TSS.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ padding: '14px 14px 12px', background: TSS.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={goBack} style={{ color: TSS.ink }}>{IconSS.back({})}</button>
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ width: 26, height: 26, borderRadius: 8, background: SHOP_SS.tint, color: '#fff', display: 'flex',
@@ -449,7 +449,7 @@ function SellerThread({ app, onShop }) {
   const [reply, setReply] = React.useState(null);
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ padding: '52px 14px 12px', background: SHOP_SS.tint, color: '#fff', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ padding: '14px 14px 12px', background: SHOP_SS.tint, color: '#fff', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.setTab('home')} style={{ color: '#fff' }}>{IconSS.back({})}</button>
         <span style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSS.sans, fontWeight: 800 }}>{SHOP_SS.initial}</span>
         <div style={{ flex: 1 }}>

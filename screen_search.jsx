@@ -94,7 +94,7 @@ function SearchScreen({ app, params = {} }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TS.bg }}>
       {/* search header */}
-      <div style={{ padding: '56px 12px 10px', background: TS.surface, borderBottom: '1px solid var(--line)' }}>
+      <div style={{ padding: '14px 12px 10px', background: TS.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           {showBack ? (
             <button onClick={() => app.nav.pop()} style={{ color: TS.ink, padding: 4 }}>{IconS.back({})}</button>

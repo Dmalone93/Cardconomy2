@@ -69,7 +69,7 @@ function SellScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TSE.bg }}>
       {/* header */}
-      <div style={{ padding: '56px 0 12px', background: TSE.surface, borderBottom: '1px solid var(--line)' }}>
+      <div style={{ padding: '14px 0 12px', background: TSE.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 16px 14px' }}>
           <button onClick={() => step === 0 ? app.nav.pop() : setStep(step-1)} style={{ color: TSE.ink, fontFamily: TSE.sans, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 4 }}>
             {IconSE.back({ width: 18, height: 18 })} {step===0 ? 'Cancel' : 'Back'}

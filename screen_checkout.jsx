@@ -90,7 +90,7 @@ function CheckoutScreen({ app, params }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TC.bg, animation: 'ccPushIn 0.26s ease' }}>
       {/* header */}
-      <div style={{ padding: '54px 16px 12px', background: TC.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ padding: '14px 16px 12px', background: TC.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TC.ink }}>{IconC.back({})}</button>
         <span style={{ fontFamily: TC.sans, fontWeight: 800, fontSize: 18 }}>Checkout</span>
       </div>

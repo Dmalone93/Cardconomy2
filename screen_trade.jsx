@@ -83,7 +83,7 @@ function TradeScreen({ app, params = {} }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TT.bg }}>
       {phase !== 'sent' && (
-        <div style={{ padding: '52px 14px 12px', background: TT.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ padding: '14px 14px 12px', background: TT.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={goBack} style={{ color: TT.ink }}>{IconT.back({})}</button>
           <span style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 16, flex: 1 }}>
             {phase === 'matches' ? 'Trade with collectors' : phase === 'board' ? 'Open to Offers' : phase === 'post' ? 'Post a trade' : phase === 'build' ? 'Build a trade' : 'Choose where to meet'}

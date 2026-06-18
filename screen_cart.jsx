@@ -34,7 +34,7 @@ function CartScreen({ app }) {
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TCart.bg }}>
-      <div style={{ padding: '54px 16px 12px', background: TCart.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ padding: '14px 16px 12px', background: TCart.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TCart.ink }}>{IconCart.back({})}</button>
         <span style={{ fontFamily: TCart.sans, fontWeight: 800, fontSize: 18, flex: 1 }}>Your cart</span>
         <span style={{ fontFamily: TCart.sans, fontSize: 13, color: TCart.muted }}>{items.length} item{items.length !== 1 ? 's' : ''}</span>

@@ -12,7 +12,7 @@ function ShopFinderScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TSF.bg }}>
       {/* header — matches the Trade-with-collectors header exactly */}
-      <div style={{ padding: '52px 14px 12px', background: TSF.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ padding: '14px 14px 12px', background: TSF.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TSF.ink }}>{IconSF.back({})}</button>
         <span style={{ fontFamily: TSF.sans, fontWeight: 800, fontSize: 16, flex: 1 }}>Find a local shop</span>
       </div>

@@ -25,7 +25,7 @@ function SellerScreen({ app, params = {} }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TS.bg, animation: 'ccPushIn 0.26s ease' }}>
       {/* header bar */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '52px 12px 10px', gap: 10 }}>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '14px 12px 10px', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TS.surface, color: TS.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>{IconS.back({})}</button>
         <div style={{ flex: 1, fontFamily: TS.sans, fontWeight: 700, fontSize: 16 }}>Back</div>
       </div>

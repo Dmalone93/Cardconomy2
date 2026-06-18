@@ -20,7 +20,7 @@ const AIcon = {
 // ── shared chrome ────────────────────────────────────────────
 function AccHeader({ app, title, sub, right }) {
   return (
-    <div style={{ padding: '52px 14px 14px', background: TAC.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+    <div style={{ padding: '14px 14px 14px', background: TAC.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
       <button onClick={() => app.nav.pop()} style={{ color: TAC.ink, flexShrink: 0 }}>{IconAC.back({})}</button>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontFamily: TAC.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>{title}</div>

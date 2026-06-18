@@ -31,7 +31,7 @@ function WatchScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
       {/* header w/ tabs */}
-      <div style={{ padding: '56px 16px 0', background: TW.surface, borderBottom: '1px solid var(--line)' }}>
+      <div style={{ padding: '14px 16px 0', background: TW.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '0 0 4px' }}>
           <button onClick={() => app.openMenu()} style={{ color: TW.ink, padding: '2px 2px 2px 0', display: 'flex' }}>{IconW.menu({})}</button>
           <h1 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 800, fontSize: 26, letterSpacing: -0.6 }}>Your cards</h1>
@@ -537,7 +537,7 @@ function StoreDash({ app, header }) {
 // ── Dashboard (delegates by account type) ────────────────────
 function DashboardScreen({ app }) {
   var header = (
-    <div style={{ padding: '52px 16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <div style={{ padding: '14px 16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{ width: 30, height: 30, borderRadius: 10, background: TW.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 14 }}>A</div>
         <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 17 }}>Alex</span>
@@ -572,7 +572,7 @@ function SettingsScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
       {/* back header */}
-      <div style={{ padding: '52px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ padding: '14px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TW.ink }}>{IconW.back({})}</button>
         <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 18 }}>Settings</span>
       </div>
@@ -636,7 +636,7 @@ function CollectionDetailScreen({ app, params }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
       {/* header (back chevron — pushed screen) */}
-      <div style={{ padding: '52px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+      <div style={{ padding: '14px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TW.ink }}>{IconW.back({})}</button>
         <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 16, flex: 1, display: 'flex', alignItems: 'center', gap: 7 }}>
           <span>{col.icon || '🃏'}</span>{col.name}

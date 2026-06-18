@@ -62,7 +62,7 @@ function SellBulkScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TB.bg }}>
       {phase !== 'done' && (
-        <div style={{ padding: '52px 14px 12px', background: TB.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ padding: '14px 14px 12px', background: TB.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={goBack} style={{ color: TB.ink }}>{IconB.back({})}</button>
           <span style={{ fontFamily: TB.sans, fontWeight: 800, fontSize: 16, flex: 1 }}>Bulk list to marketplace</span>
           {phase === 'price' && <span style={{ fontFamily: TB.sans, fontSize: 13, color: TB.muted }}>{listed} cards</span>}

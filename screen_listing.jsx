@@ -51,7 +51,7 @@ function ListingScreen({ app, params }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TL.bg, animation: 'ccPushIn 0.26s ease' }}>
       {/* nav */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, padding: '52px 12px 10px',
+      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, padding: '14px 12px 10px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         background: 'linear-gradient(180deg, rgba(238,240,243,0.96), rgba(238,240,243,0))' }}>
         <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
