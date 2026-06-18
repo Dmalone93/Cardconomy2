@@ -164,6 +164,9 @@ function ProductScreen({ app, params }) {
   const s = setByIdP(product.set);
   const hist = product.history || [product.market, product.low];
   const up = hist.length >= 2 ? hist[hist.length - 1] >= hist[0] : true;
+  const finishes = [{ key: 'standard', label: 'Standard', price: product.foil ? product.market * 0.6 : product.market },
+    { key: 'foil', label: 'Foil', price: product.foil ? product.market : product.market * 1.8 }];
+  const [finish, setFinish] = React.useState(product.foil ? 'foil' : 'standard');
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TP.bg, animation: 'ccPushIn 0.26s ease' }}>
@@ -188,6 +191,24 @@ function ProductScreen({ app, params }) {
           <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
             {g && <span style={{ background: g.tint + '1a', color: g.tint, padding: '3px 10px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{g.short}</span>}
             {product.foil && <span style={{ background: '#f5f3ff', color: '#7c3aed', padding: '3px 10px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>Foil</span>}
+          </div>
+
+          {/* ── Finish tabs ── */}
+          <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+            {finishes.map(f => (
+              <div key={f.key} onClick={() => setFinish(f.key)} style={{
+                flex: 1, padding: '8px 0', borderRadius: 10, textAlign: 'center', cursor: 'pointer',
+                background: finish === f.key ? TP.accentWash : TP.surface2,
+                border: finish === f.key ? '2px solid ' + TP.accent : '2px solid transparent',
+              }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: finish === f.key ? TP.accent : TP.muted }}>
+                  {f.label}
+                </div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: TP.ink, marginTop: 2 }}>
+                  {moneyP(f.price)}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
 

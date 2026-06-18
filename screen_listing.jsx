@@ -35,6 +35,9 @@ function ListingScreen({ app, params }) {
   const [sheet, setSheet] = React.useState(null);
   const [offer, setOffer] = React.useState('');
   const [offerSent, setOfferSent] = React.useState(null);
+  const finishes = [{ key: 'standard', label: 'Standard', price: item.foil ? item.price * 0.6 : item.price },
+    { key: 'foil', label: 'Foil', price: item.foil ? item.price : item.price * 1.8 }];
+  const [finish, setFinish] = React.useState(item.foil ? 'foil' : 'standard');
   const watched = app.isWatched(item.id);
   const g = gameByIdL(item.game);
   const set = setByIdL(item.set);
@@ -89,6 +92,24 @@ function ListingScreen({ app, params }) {
           <h1 style={{ margin: 0, fontFamily: TL.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.6, lineHeight: 1.1 }}>{item.name}</h1>
           <div style={{ fontFamily: TL.sans, fontSize: 14, color: TL.muted, marginTop: 4 }}>
             {set ? set.name : ''}{item.number ? ' · ' + item.number : ''}{isLot ? '' : ' · ' + item.condition}
+          </div>
+
+          {/* ── Finish tabs ── */}
+          <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+            {finishes.map(f => (
+              <div key={f.key} onClick={() => setFinish(f.key)} style={{
+                flex: 1, padding: '8px 0', borderRadius: 10, textAlign: 'center', cursor: 'pointer',
+                background: finish === f.key ? TL.accentWash : TL.surface2,
+                border: finish === f.key ? '2px solid ' + TL.accent : '2px solid transparent',
+              }}>
+                <div style={{ fontSize: 12, fontWeight: 600, color: finish === f.key ? TL.accent : TL.muted }}>
+                  {f.label}
+                </div>
+                <div style={{ fontSize: 15, fontWeight: 700, color: TL.ink, marginTop: 2 }}>
+                  {moneyL(f.price)}
+                </div>
+              </div>
+            ))}
           </div>
 
           {/* price */}
