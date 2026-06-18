@@ -147,7 +147,7 @@ function Footer({ app }) {
             <div style={{ fontWeight: 700, fontSize: 13.5, marginBottom: 12 }}>{h}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
               {items.map(i => <button key={i} onClick={() => {
-                const r = { 'Find a shop': ['storefront', { shop: 'gnome' }], 'Enroll your shop': ['enroll'], 'The Vault': ['storefront', { shop: 'gnome' }], 'Trade hubs': ['trade'], 'List a card': ['sell_single'], 'Sell to a shop': ['sell'], 'Trade cards': ['trade'], 'Browse all': ['search', {}], 'Auctions': ['search', { type: 'auction' }], 'Graded slabs': ['search', { cond: 'Graded only' }], 'Bulk lots': ['search', {}], 'Shop dashboard (demo)': ['shop_dash'] }[i];
+                const r = { 'Find a shop': ['storefront', { shop: 'gnome' }], 'Enroll your shop': ['enroll'], 'The Vault': ['storefront', { shop: 'gnome' }], 'Trade hubs': ['trade'], 'List a card': ['sell_single'], 'Sell to a shop': ['sell'], 'Trade cards': ['trade'], 'Browse all': ['search', {}], 'Auctions': ['search', { type: 'auction' }], 'Graded slabs': ['search', { cond: 'Graded only' }], 'Bulk lots': ['search', {}], 'Shop dashboard (demo)': ['shop_dash'], 'Seller fees': ['fees'] }[i];
                 if (r) app.go(r[0], r[1] || {}); else app.toast(i);
               }} style={{ textAlign: 'left', fontSize: 13, color: 'rgba(255,255,255,0.6)' }}>{i}</button>)}
             </div>
@@ -237,6 +237,7 @@ function App() {
   else if (route.name === 'shop_dash') Screen = DShopDash;
   else if (route.name === 'account') Screen = DAccount;
   else if (route.name === 'seller') Screen = window.DSellerProfile;
+  else if (route.name === 'fees') Screen = DFees;
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -250,6 +251,21 @@ function App() {
       </main>
       <Footer app={app} />
       <Toast msg={toast} />
+    </div>
+  );
+}
+
+// ── fees screen wrapper (adapts mobile FeesScreen for desktop) ──
+function DFees({ app }) {
+  const adaptedApp = Object.assign({}, app, {
+    nav: {
+      pop: () => app.go('home'),
+      setTab: (tab) => app.go(tab),
+    },
+  });
+  return (
+    <div className="wrap" style={{ padding: '32px 24px', maxWidth: 640, margin: '0 auto' }}>
+      {window.FeesScreen ? React.createElement(window.FeesScreen, { app: adaptedApp }) : null}
     </div>
   );
 }

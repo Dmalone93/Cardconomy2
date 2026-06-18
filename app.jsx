@@ -14,6 +14,7 @@ const { ScanScreen } = window;
 const { VerifyScreen } = window;
 const { AuthCardScreen } = window;
 const { Onboarding } = window;
+const { FeesScreen } = window;
 const { sellerByName: sellerByNameA, listingsBySeller: listingsBySellerA, byId: byIdA } = window;
 
 const ALL_GAME_IDS = (window.GAMES || []).map(g => g.id);
@@ -37,6 +38,7 @@ const SCREENS = {
   product: ProductScreen,
   seller: SellerScreen,
   scan: ScanScreen,
+  fees: FeesScreen,
 };
 
 function loadWatch() {
