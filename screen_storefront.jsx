@@ -743,44 +743,24 @@ function Step6({ form, set }) {
   );
 }
 
-// ── shop enrollment wizard ────────────────────────────────────
+// ── shop enrollment wizard (simplified 3-step) ───────────────
 function EnrollShopScreen({ app }) {
   const [step, setStep] = React.useState(0);
   const [form, setForm] = React.useState({
-    shopName: '', address: '', city: '', county: '', postcode: '', phone: '',
-    hours: {
-      mon: { open: '10:00', close: '20:00', closed: false },
-      tue: { open: '10:00', close: '20:00', closed: false },
-      wed: { open: '10:00', close: '20:00', closed: false },
-      thu: { open: '10:00', close: '20:00', closed: false },
-      fri: { open: '10:00', close: '20:00', closed: false },
-      sat: { open: '10:00', close: '20:00', closed: false },
-      sun: { open: '11:00', close: '18:00', closed: false },
-    },
-    ownerName: '', role: 'owner', uploaded: false,
-    games: [],
-    bulkRates: { cu: '6', rh: '25', fo: '80' },
-    wantedCards: [],
-    buylistSkipped: false,
-    payoutMethod: 'bank',
-    bankName: '', routing: '', account: '',
-    logo: false, accentColor: '#2f8f5b', bio: '',
+    shopName: '', postcode: '', bio: '',
+    games: [], condPref: 'all',
+    accentColor: '#2f8f5b',
   });
 
   const set = (key, val) => setForm(f => ({ ...f, [key]: val }));
 
-  // Step validation — determines if Continue is enabled
   const canContinue = () => {
-    if (step === 1) return form.shopName && form.address && form.city && form.county && form.postcode && form.phone;
-    if (step === 2) return form.ownerName && form.role;
-    if (step === 3) return form.games.length > 0;
-    if (step === 4) return form.buylistSkipped || (form.bulkRates.cu && form.bulkRates.rh && form.bulkRates.fo);
-    if (step === 5) return form.payoutMethod === 'credit' || (form.bankName && form.routing && form.account);
-    if (step === 6) return true; // branding is all optional
+    if (step === 1) return form.shopName && form.postcode;
+    if (step === 2) return form.games.length > 0;
     return true;
   };
 
-  const STEP_LABELS = ['Shop', 'Verify', 'Games', 'Buylist', 'Payout', 'Brand'];
+  const STEP_LABELS = ['Your Shop', 'What You Buy', 'Go Live'];
 
   const props = [
     [IconF.bolt, 'Free deal flow', 'Walk-in sellers scan a QR and submit their whole collection digitally — even when your counter is slammed.'],
@@ -811,7 +791,7 @@ function EnrollShopScreen({ app }) {
 
           {/* stat strip */}
           <div style={{ display: 'flex', gap: 10, padding: 16, marginTop: -2 }}>
-            {[['£0', 'to enroll'], ['2 days', 'to go live'], ['9%', 'flat seller fee']].map(([v, k]) => (
+            {[['£0', 'to enroll'], ['2 min', 'to sign up'], ['4%', 'seller fee']].map(([v, k]) => (
               <div key={k} style={{ flex: 1, background: TF.surface, borderRadius: 13, padding: '12px 10px', textAlign: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 18 }}>{v}</div>
                 <div style={{ fontFamily: TF.sans, fontSize: 10.5, color: TF.muted }}>{k}</div>
@@ -853,8 +833,8 @@ function EnrollShopScreen({ app }) {
     );
   }
 
-  // ── Success screen (step 7) ──
-  if (step === 7) {
+  // ── Success screen (step 3) ──
+  if (step === 3) {
     const GAME_LIST = window.GAMES || [];
     return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TF.bg, alignItems: 'center', justifyContent: 'center', padding: 32, textAlign: 'center' }}>
@@ -887,7 +867,15 @@ function EnrollShopScreen({ app }) {
     );
   }
 
-  // ── Wizard steps 1-6 ──
+  // ── Wizard steps 1-2 ──
+  const GAME_LIST = window.GAMES || [];
+  const LOGOS = window.GAME_LOGOS || {};
+  const toggleGame = (id) => {
+    set('games', form.games.includes(id) ? form.games.filter(g => g !== id) : [...form.games, id]);
+  };
+  const inputStyle = { width: '100%', padding: '12px 14px', borderRadius: 10, border: '1px solid var(--line)',
+    fontFamily: TF.sans, fontSize: 15, color: TF.ink, background: TF.surface, outline: 'none' };
+
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TF.bg }}>
       {/* header */}
@@ -897,36 +885,93 @@ function EnrollShopScreen({ app }) {
           {IconF.back({})}
         </button>
         <div style={{ flex: 1, fontFamily: TF.sans, fontWeight: 700, fontSize: 16 }}>
-          Step {step} of 6 — {STEP_LABELS[step - 1]}
+          Step {step} of 2 — {STEP_LABELS[step - 1]}
         </div>
       </div>
-      <div style={{ padding: '8px 0 16px', flexShrink: 0 }}>
-        <StepIndicator current={step} total={6} onJump={setStep} />
+      {/* progress bar */}
+      <div style={{ padding: '8px 16px 16px', flexShrink: 0 }}>
+        <div style={{ height: 4, borderRadius: 2, background: TF.line }}>
+          <div style={{ height: '100%', borderRadius: 2, background: TF.accent,
+            width: (step / 2 * 100) + '%', transition: 'width 0.3s' }} />
+        </div>
       </div>
 
       {/* step content */}
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 120px' }}>
-        {step === 1 && <Step1 form={form} set={set} />}
-        {step === 2 && <Step2 form={form} set={set} />}
-        {step === 3 && <Step3 form={form} set={set} />}
-        {step === 4 && <Step4 form={form} set={set} />}
-        {step === 5 && <Step5 form={form} set={set} />}
-        {step === 6 && <Step6 form={form} set={set} />}
+        {step === 1 && (
+          <div>
+            <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Tell us about your shop</h2>
+            <p style={{ fontFamily: TF.sans, fontSize: 13.5, color: TF.muted, lineHeight: 1.5, margin: '0 0 20px' }}>
+              Just the basics. You can add hours, photos, and branding later.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <div>
+                <label style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink, display: 'block', marginBottom: 6 }}>Shop name *</label>
+                <input value={form.shopName} onChange={e => set('shopName', e.target.value)}
+                  placeholder="e.g. Gnome Games" style={inputStyle} />
+              </div>
+              <div>
+                <label style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink, display: 'block', marginBottom: 6 }}>Postcode *</label>
+                <input value={form.postcode} onChange={e => set('postcode', e.target.value)}
+                  placeholder="e.g. M1 4BT" style={inputStyle} />
+              </div>
+              <div>
+                <label style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink, display: 'block', marginBottom: 6 }}>One-line description</label>
+                <input value={form.bio} onChange={e => set('bio', e.target.value)}
+                  placeholder="e.g. Manchester\u2019s friendliest card shop" style={inputStyle} />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {step === 2 && (
+          <div>
+            <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>What do you buy?</h2>
+            <p style={{ fontFamily: TF.sans, fontSize: 13.5, color: TF.muted, lineHeight: 1.5, margin: '0 0 20px' }}>
+              Select the games you accept from walk-in sellers. You can change this anytime.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
+              {GAME_LIST.map(g => {
+                const on = form.games.includes(g.id);
+                const logo = LOGOS[g.id];
+                return (
+                  <button key={g.id} onClick={() => toggleGame(g.id)} style={{
+                    padding: '14px 12px', borderRadius: 12, textAlign: 'center', cursor: 'pointer',
+                    background: on ? TF.accentWash : TF.surface,
+                    border: on ? '2px solid var(--accent)' : '1px solid var(--line)',
+                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+                  }}>
+                    {logo ? <img src={logo} alt={g.name} style={{ height: 22, objectFit: 'contain' }} />
+                      : <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 13 }}>{g.short}</span>}
+                    {on && <span style={{ fontSize: 10, fontWeight: 700, color: TF.accent }}>Selected</span>}
+                  </button>
+                );
+              })}
+            </div>
+            <div>
+              <label style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink, display: 'block', marginBottom: 8 }}>Condition preference</label>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {[['all', 'Any condition'], ['nm', 'NM+ only'], ['graded', 'Graded only']].map(([k, l]) => (
+                  <button key={k} onClick={() => set('condPref', k)} style={{
+                    padding: '8px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                    background: form.condPref === k ? TF.accent : TF.surface,
+                    color: form.condPref === k ? '#fff' : TF.ink,
+                    border: form.condPref === k ? 'none' : '1px solid var(--line)',
+                  }}>{l}</button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* sticky continue */}
       <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '12px 16px 30px', background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)' }}>
         <button onClick={() => setStep(step + 1)} disabled={!canContinue()}
           style={{ width: '100%', background: canContinue() ? 'var(--fill)' : 'var(--line)', color: canContinue() ? '#fff' : TF.muted,
-            borderRadius: 4, padding: 16, fontFamily: TF.sans, fontWeight: 700, fontSize: 16 }}>
-          {step === 6 ? 'Submit application' : 'Continue'}
+            borderRadius: 12, padding: 16, fontFamily: TF.sans, fontWeight: 700, fontSize: 16 }}>
+          {step === 2 ? 'Submit application' : 'Continue'}
         </button>
-        {step === 4 && !form.buylistSkipped && (
-          <button onClick={() => { set('buylistSkipped', true); setStep(5); }}
-            style={{ width: '100%', marginTop: 8, color: TF.muted, fontFamily: TF.sans, fontWeight: 600, fontSize: 14, padding: 8, background: 'none' }}>
-            I'll set this up later
-          </button>
-        )}
       </div>
     </div>
   );

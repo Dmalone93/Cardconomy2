@@ -169,6 +169,7 @@ function ProductScreen({ app, params }) {
     { key: 'foil', label: 'Foil', price: product.foil ? product.market : product.market * 1.8 }];
   const [finish, setFinish] = React.useState(product.foil ? 'foil' : 'standard');
   const [ptf, setPtf] = React.useState('30D');
+  const [chartOpen, setChartOpen] = React.useState(false);
   const vInfo = variantP ? variantP(product) : null;
   const demand = demandP ? demandP(product) : null;
 
@@ -182,16 +183,8 @@ function ProductScreen({ app, params }) {
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
         {/* hero card image */}
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0', background: '#ffffff', position: 'relative' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0', background: '#ffffff' }}>
           <CardArtP item={product} w={160} radius={4} />
-          {vInfo && (
-            <div style={{ position: 'absolute', top: 28, right: '50%', transform: 'translateX(88px)',
-              background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)', color: '#fff',
-              padding: '4px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700,
-              display: 'flex', alignItems: 'center', gap: 4 }}>
-              ★ {vInfo.current}
-            </div>
-          )}
         </div>
 
         {/* card info */}
@@ -241,27 +234,36 @@ function ProductScreen({ app, params }) {
           </div>
         </div>
 
-        {/* ── Price chart ── */}
+        {/* ── Price chart (collapsible) ── */}
         {product.history && (
-          <div style={{ margin: '12px 16px' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+          <div style={{ margin: '0 16px 12px' }}>
+            <div onClick={() => setChartOpen(!chartOpen)} style={{
+              display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '10px 0', cursor: 'pointer' }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: TP.ink }}>Price History</div>
-              <div style={{ display: 'flex', gap: 4 }}>
-                {['7D', '30D', '90D', '1Y'].map(t => (
-                  <div key={t} onClick={() => setPtf(t)} style={{
-                    padding: '3px 8px', borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: 'pointer',
-                    background: ptf === t ? TP.accent : TP.surface2,
-                    color: ptf === t ? '#fff' : TP.muted,
-                  }}>{t}</div>
-                ))}
-              </div>
+              <span style={{ fontSize: 12, color: TP.muted, fontWeight: 600 }}>
+                {chartOpen ? 'Hide' : 'Show chart'}
+              </span>
             </div>
-            {(() => {
-              const sliceLen = { '7D': 3, '30D': 6, '90D': 9, '1Y': 12 }[ptf] || 6;
-              const hist = product.history.slice(-sliceLen);
-              const up = hist[hist.length - 1] >= hist[0];
-              return <SparkP data={hist} w={320} h={140} up={up} fill dots />;
-            })()}
+            {chartOpen && (
+              <div>
+                <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
+                  {['7D', '30D', '90D', '1Y'].map(t => (
+                    <div key={t} onClick={() => setPtf(t)} style={{
+                      padding: '3px 8px', borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: 'pointer',
+                      background: ptf === t ? TP.accent : TP.surface2,
+                      color: ptf === t ? '#fff' : TP.muted,
+                    }}>{t}</div>
+                  ))}
+                </div>
+                {(() => {
+                  const sliceLen = { '7D': 3, '30D': 6, '90D': 9, '1Y': 12 }[ptf] || 6;
+                  const hist = product.history.slice(-sliceLen);
+                  const up2 = hist[hist.length - 1] >= hist[0];
+                  return <SparkP data={hist} w={320} h={120} up={up2} fill dots />;
+                })()}
+              </div>
+            )}
           </div>
         )}
 
@@ -274,33 +276,29 @@ function ProductScreen({ app, params }) {
           </div>
         </div>
 
-        {/* ── Demand indicator ── */}
+        {/* ── Demand indicator (compact) ── */}
         {demand && (
-          <div style={{ margin: '0 16px 16px', padding: '16px', background: TP.surface,
-            borderRadius: 12, border: '1px solid ' + (demand.hot ? 'var(--gold)' : TP.line) }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-              <div style={{ fontFamily: TP.sans, fontWeight: 800, fontSize: 17 }}>
+          <div style={{ margin: '0 16px 12px', display: 'flex', alignItems: 'center', gap: 10,
+            padding: '10px 14px', background: TP.surface, borderRadius: 10,
+            border: '1px solid ' + (demand.hot ? 'var(--gold)' : TP.line) }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 14 }}>
                 {demand.wants} buyers want this
+                {demand.hot && <span style={{ marginLeft: 6, background: 'var(--gold)', color: '#fff',
+                  padding: '2px 7px', borderRadius: 4, fontSize: 10, fontWeight: 700 }}>HOT</span>}
               </div>
-              {demand.hot && (
-                <span style={{ background: 'var(--gold)', color: '#fff', padding: '3px 10px',
-                  borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>HOT</span>
-              )}
+              <div style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted, marginTop: 2 }}>
+                {demand.localWants} near {demand.loc} · {demand.listed} listed
+              </div>
             </div>
-            <div style={{ fontFamily: TP.sans, fontSize: 13, color: TP.muted, marginBottom: 10 }}>
-              {demand.localWants} within {demand.loc} · only {demand.listed} listed
-            </div>
-            <div style={{ height: 6, borderRadius: 3, background: TP.line, overflow: 'hidden', marginBottom: 6 }}>
-              <div style={{ height: '100%', borderRadius: 3, width: (Math.round(demand.wants / (demand.wants + demand.listed) * 100)) + '%',
-                background: demand.hot ? 'var(--gold)' : 'var(--accent)' }} />
-            </div>
-            <div style={{ display: 'flex', gap: 14, fontSize: 11, fontFamily: TP.sans, fontWeight: 600 }}>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ width: 6, height: 6, borderRadius: 999, background: demand.hot ? 'var(--gold)' : 'var(--accent)' }} /> Wants
-              </span>
-              <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: TP.muted }}>
-                <span style={{ width: 6, height: 6, borderRadius: 999, background: TP.line }} /> Listed
-              </span>
+            <div style={{ width: 50, height: 50, borderRadius: 999, position: 'relative',
+              background: `conic-gradient(${demand.hot ? 'var(--gold)' : 'var(--accent)'} ${Math.round(demand.wants / (demand.wants + demand.listed) * 360)}deg, ${TP.line} 0deg)`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ width: 38, height: 38, borderRadius: 999, background: TP.surface,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: TP.sans, fontWeight: 700, fontSize: 12, color: TP.ink }}>
+                {Math.round(demand.wants / (demand.wants + demand.listed) * 100)}%
+              </div>
             </div>
           </div>
         )}
@@ -315,19 +313,31 @@ function ProductScreen({ app, params }) {
             <div style={{ fontFamily: TP.sans, fontSize: 13, color: TP.muted, marginBottom: 10, lineHeight: 1.5 }}>
               {vInfo.total} printings share this number. Not the same card.
             </div>
-            <div style={{ display: 'flex', gap: 8, overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: 4 }}>
+            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: 4 }}>
               {vInfo.all.map((v, i) => {
                 const isCurrent = v.variant === vInfo.current;
                 return (
                   <div key={i} style={{
-                    flexShrink: 0, width: 120, padding: '12px', borderRadius: 10, cursor: 'pointer',
+                    flexShrink: 0, width: 110, cursor: 'pointer',
+                    borderRadius: 12, overflow: 'hidden',
                     background: isCurrent ? TP.accentWash : TP.surface,
                     border: isCurrent ? '2px solid ' + TP.accent : '1px solid ' + TP.line,
                   }}>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: isCurrent ? TP.accent : TP.ink,
-                      marginBottom: 4 }}>{v.variant}</div>
-                    <div style={{ fontSize: 11, color: TP.muted, marginBottom: 4 }}>{v.number}</div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: TP.ink }}>{moneyP(v.price)}</div>
+                    {/* card art thumbnail */}
+                    <div style={{ height: 90, background: v.art || '#e5e7eb', position: 'relative', overflow: 'hidden' }}>
+                      <CardArtP item={{ ...product, art: v.art }} w={110} radius={0} />
+                      {isCurrent && (
+                        <div style={{ position: 'absolute', bottom: 4, left: 4, background: TP.accent,
+                          color: '#fff', fontSize: 9, fontWeight: 700, borderRadius: 4, padding: '2px 6px' }}>
+                          Current
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ padding: '8px 10px' }}>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: isCurrent ? TP.accent : TP.ink,
+                        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.variant}</div>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: TP.ink, marginTop: 2 }}>{moneyP(v.price)}</div>
+                    </div>
                   </div>
                 );
               })}
