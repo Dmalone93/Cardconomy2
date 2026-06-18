@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Cardonomy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,13 +55,10 @@
     color: var(--ink);
     overflow: hidden;
   }
-  #stage {
+  #root {
     position: fixed; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    background:
-      radial-gradient(120% 120% at 50% 0%, #d8dbe1 0%, #c2c5cc 60%, #b6b9c1 100%);
+    overflow: hidden;
   }
-  #device-scale { transform-origin: center center; }
   button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
   input, textarea { font-family: inherit; }
   ::-webkit-scrollbar { width: 0; height: 0; }
@@ -117,15 +114,7 @@
     <text x="600" y="660" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="58" letter-spacing="2" fill="#ffffff">CARDONOMY</text>
   </svg>
 </template>
-<div id="stage">
-  <div id="device-scale">
-    <div id="root"></div>
-  </div>
-</div>
-<button onclick="window.location.href='desktop.html'" style="position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#16181d;color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:12px;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.2)">
-  <svg width="16" height="16" viewBox="0 0 256 256" fill="none"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24H208a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40Zm8,136a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V64a8,8,0,0,1,8-8H208a8,8,0,0,1,8,8ZM80,216a8,8,0,0,1,8-8h80a8,8,0,0,1,0,16H88A8,8,0,0,1,80,216Z" fill="currentColor"/></svg>
-  Desktop
-</button>
+<div id="root"></div>
 <div id="tweak-root"></div>
 
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
@@ -164,17 +153,5 @@
 <script type="text/babel" src="app.jsx"></script>
 <script type="text/babel" src="cc-tweaks.jsx"></script>
 
-<script>
-  function fitDevice() {
-    var el = document.getElementById('device-scale');
-    if (!el) return;
-    var W = 402, H = 874;
-    var s = Math.min((window.innerWidth - 24) / W, (window.innerHeight - 24) / H, 1);
-    el.style.transform = 'scale(' + s + ')';
-  }
-  window.addEventListener('resize', fitDevice);
-  fitDevice();
-  window.__fitDevice = fitDevice;
-</script>
 </body>
 </html>

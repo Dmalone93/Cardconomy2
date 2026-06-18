@@ -357,8 +357,9 @@ function ProductScreen({ app, params }) {
             <OfferCard key={o.id} offer={o} isLowest={idx === 0}
               onViewSeller={() => app.nav.push('seller', { name: o.seller })}
               onBuy={(offer) => {
-                if (offer.listingId) {
-                  app.addToCart(offer.listingId);
+                const lid = offer.listingId || (product.offers.find(o => o.listingId) || {}).listingId;
+                if (lid) {
+                  app.addToCart(lid);
                 } else {
                   app.toast('This listing is not available for purchase yet');
                 }

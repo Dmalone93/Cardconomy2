@@ -442,6 +442,17 @@ function SideMenu({ app, open, onClose }) {
   );
 }
 
+// ── Native share utility ─────────────────────────────────────
+function shareCard(item) {
+  const url = window.location.origin + '/#listing/' + item.id;
+  const text = item.name + (item.subtitle ? ' \u2014 ' + item.subtitle : '');
+  if (navigator.share) {
+    navigator.share({ title: item.name, text: text, url: url }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(url);
+  }
+}
+
 Object.assign(window, {
-  T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Badge, Icon, BottomNav, Sheet, Toast, Logo, SideMenu,
+  T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Badge, Icon, BottomNav, Sheet, Toast, Logo, SideMenu, shareCard,
 });

@@ -201,13 +201,10 @@ class ErrBoundary extends React.Component {
 
 function Root() {
   return (
-    <IOSDevice>
-      <ErrBoundary>
-        <App />
-      </ErrBoundary>
-    </IOSDevice>
+    <ErrBoundary>
+      <App />
+    </ErrBoundary>
   );
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(<Root />);
-if (window.__fitDevice) setTimeout(window.__fitDevice, 30);
