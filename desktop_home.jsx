@@ -133,7 +133,6 @@ function Hero({ app }) {
 }
 
 function DHome({ app }) {
-  const auctions = LISTH.filter(l => l.type === 'auction');
   const trending = LISTH.filter(l => l.type === 'buynow');
   const graded = LISTH.filter(l => l.grade.company !== 'raw');
 
@@ -141,35 +140,22 @@ function DHome({ app }) {
     <div style={{ paddingBottom: 30 }}>
       <Hero app={app} />
 
-      {/* game quick nav */}
-      <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: 14, marginTop: 28 }}>
-        {GAMESH.map(g => {
-          const logo = window.GAME_LOGOS[g.id];
-          return (
-            <button key={g.id} onClick={() => app.go('search', { game: g.id })} style={{ background: 'var(--surface)', borderRadius: 13, padding: '20px 16px', textAlign: 'center',
-              boxShadow: '0 1px 3px rgba(20,24,40,0.05)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12, height: 104, transition: 'box-shadow 0.16s, transform 0.16s' }}
-              onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 22px rgba(20,24,40,0.12)'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-              onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(20,24,40,0.05)'; e.currentTarget.style.transform = 'none'; }}>
-              {logo
-                ? <img src={logo} alt={g.name} style={{ height: 40, width: 'auto', maxWidth: '85%', objectFit: 'contain', display: 'block' }} />
-                : <React.Fragment>
-                    <span style={{ width: 38, height: 38, borderRadius: 11, background: g.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 18 }}>{g.name[0]}</span>
-                    <span style={{ fontWeight: 700, fontSize: 13.5 }}>{g.short}</span>
-                  </React.Fragment>}
-            </button>
-          );
-        })}
+      {/* ── Welcome tagline ── */}
+      <div className="wrap" style={{ marginTop: 32, marginBottom: 8, textAlign: 'center' }}>
+        <h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.8,
+          margin: '0 0 8px', color: TH.ink }}>
+          The UK home for trading cards
+        </h2>
+        <p style={{ fontSize: 15, color: TH.muted, lineHeight: 1.5, maxWidth: 520, margin: '0 auto' }}>
+          Buy, sell, and trade across every game. Lower fees than anyone else, with real buyer protection and local game shop support.
+        </p>
       </div>
 
       {/* ── Browse by Game (hero tiles) ── */}
       <Row title="Browse by Game" action="Browse all" onAction={() => app.go('search')}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
           {GAMESH.filter(g => g && g.id).map(g => <DGameTile key={g.id} game={g} app={app} />)}
         </div>
-      </Row>
-
-      <Row title="Ending soon" action="All auctions" onAction={() => app.go('search', { type: 'auction' })}>
-        <div style={grid(210)}>{auctions.map(l => <DCard key={l.id} item={l} app={app} />)}</div>
       </Row>
 
       <Row title="Trending now" action="See all" onAction={() => app.go('search', {})}>
@@ -266,10 +252,46 @@ function DHome({ app }) {
         </div>
       </section>
 
+      {/* ── Why Cardconomy banner ── */}
+      <section style={{ marginTop: 50, background: 'var(--accent)', padding: '48px 0', color: '#fff' }}>
+        <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'center' }}>
+          <div>
+            <h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, margin: '0 0 14px' }}>
+              Built for the UK TCG community
+            </h2>
+            <p style={{ fontSize: 15, lineHeight: 1.7, opacity: 0.85, margin: '0 0 20px' }}>
+              Cardconomy is the only marketplace with local game shop integration, real card-for-card trading, and the lowest fees in the market. No hidden charges, no inflated prices.
+            </p>
+            <button onClick={() => app.go('fees')} style={{
+              padding: '12px 24px', borderRadius: 10, border: '2px solid rgba(255,255,255,0.4)',
+              background: 'rgba(255,255,255,0.15)', color: '#fff', fontWeight: 700, fontSize: 14,
+              cursor: 'pointer', transition: 'background 0.2s',
+            }} onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.25)'}
+               onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}>
+              Compare our fees \u2192
+            </button>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
+            {[
+              ['6% + 30p', 'Total fee', 'The lowest in the TCG market'],
+              ['\u00A30', 'To list', 'Free to list any card for sale'],
+              ['3', 'Personas', 'Buyer, seller, and game shop flows'],
+              ['5', 'Games', 'Pok\u00E9mon, Magic, Yu-Gi-Oh!, One Piece, Digimon'],
+            ].map(([num, label, sub], i) => (
+              <div key={i} style={{ background: 'rgba(255,255,255,0.12)', borderRadius: 12, padding: '16px 14px' }}>
+                <div style={{ fontSize: 24, fontWeight: 800 }}>{num}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, marginTop: 2 }}>{label}</div>
+                <div style={{ fontSize: 12, opacity: 0.7, marginTop: 4, lineHeight: 1.4 }}>{sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* trust band */}
       <section className="wrap" style={{ marginTop: 50 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {[[IconH.shield, 'Buyer Protection', 'Full refund if an item never arrives or isn\'t as described.'],
+          {[[IconH.shield, 'Buyer Protection', 'Full refund if an item never arrives or isn\u2019t as described.'],
             [IconH.bolt, 'Verified sellers', 'Every shop and top seller is vetted, with transparent ratings.'],
             [IconH.tag, 'Real market pricing', 'Live price history and sold comps on every card.']].map(([ic, h, b], i) => (
             <div key={i} style={{ display: 'flex', gap: 14, background: 'var(--surface)', borderRadius: 16, padding: 22, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
