@@ -5,6 +5,7 @@ const { T: TS, money: moneyS, Chip: ChipS, Icon: IconS, Sheet: SheetS, CardArt: 
 const { ListRow: ListRowS, ListCard: ListCardS } = window;
 const { GAMES: GAMES_S, SETS: SETS_S, LISTINGS: LISTINGS_S, PRODUCTS: PRODUCTS_S, gameById: gameByIdS, setById: setByIdS, byId: byIdS } = window;
 const { ProductCard: ProductCardS } = window;
+const { HOT_DEALS: HOT_DEALS_S } = window;
 
 const CONDITIONS = ['Any grade', 'Graded only', 'PSA 10', 'Raw / Ungraded'];
 const SORTS = ['Best match', 'Price: low to high', 'Price: high to low'];
@@ -49,6 +50,7 @@ function SearchScreen({ app, params = {} }) {
   const [cols, setCols] = React.useState(2);
   const [sheet, setSheet] = React.useState(null); // 'filters' | 'sort'
   const [focused, setFocused] = React.useState(false);
+  const [browseMode, setBrowseMode] = React.useState('buy');
 
   // product results (raw cards grouped)
   const productResults = (cond === 'Graded only' || cond === 'PSA 10') ? [] : PRODUCTS_S.filter(p => {
@@ -186,6 +188,18 @@ function SearchScreen({ app, params = {} }) {
             </div>
           </div>
 
+          {/* ── Browse mode tabs ── */}
+          <div style={{ display: 'flex', gap: 6, padding: '8px 14px 0' }}>
+            {[['buy', 'Buy'], ['new', 'Just Listed'], ['deals', 'Deals']].map(([key, label]) => (
+              <div key={key} onClick={() => setBrowseMode(key)} style={{
+                padding: '6px 14px', borderRadius: 20, fontSize: 13, fontWeight: 600, cursor: 'pointer',
+                background: browseMode === key ? TS.accent : TS.surface,
+                color: browseMode === key ? '#fff' : TS.ink,
+                border: browseMode === key ? 'none' : '1px solid ' + TS.line,
+              }}>{label}</div>
+            ))}
+          </div>
+
           {/* set header */}
           {setF !== 'all' && setByIdS(setF) && (() => {
             const setInfo = setByIdS(setF);
@@ -226,25 +240,47 @@ function SearchScreen({ app, params = {} }) {
           </div>
 
           {/* results */}
-          <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
-            {totalResults === 0 ? (
-              <div style={{ textAlign: 'center', padding: '60px 20px', color: TS.muted, fontFamily: TS.sans }}>
-                <div style={{ fontSize: 40, marginBottom: 8 }}>🔍</div>
-                <div style={{ fontWeight: 700, fontSize: 16, color: TS.ink }}>No cards match</div>
-                <div style={{ fontSize: 13.5, marginTop: 4 }}>Try removing a filter or widening your price.</div>
+          {(() => {
+            // Build merged array: products tagged with type 'product', listings as-is
+            const merged = [
+              ...productResults.map(p => ({ ...p, _type: 'product' })),
+              ...listingResults.map(l => ({ ...l, _type: 'listing' })),
+            ];
+            // Apply browse mode filter
+            const dealIds = new Set((HOT_DEALS_S || []).map(d => d.id));
+            let browsed = merged;
+            if (browseMode === 'new') {
+              browsed = [...merged].reverse(); // newest first (reverse of default)
+            } else if (browseMode === 'deals') {
+              browsed = merged.filter(x => dealIds.has(x.id));
+            }
+            const browseCount = browsed.length;
+            return (
+              <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
+                {browseCount === 0 ? (
+                  <div style={{ textAlign: 'center', padding: '60px 20px', color: TS.muted, fontFamily: TS.sans }}>
+                    <div style={{ fontSize: 40, marginBottom: 8 }}>🔍</div>
+                    <div style={{ fontWeight: 700, fontSize: 16, color: TS.ink }}>No cards match</div>
+                    <div style={{ fontSize: 13.5, marginTop: 4 }}>Try removing a filter or widening your price.</div>
+                  </div>
+                ) : view === 'grid' ? (
+                  <div className="stagger" style={{ display: 'grid', gridTemplateColumns: cols === 3 ? '1fr 1fr 1fr' : '1fr 1fr', gap: cols === 3 ? 8 : 12 }}>
+                    {browsed.map(x => x._type === 'product'
+                      ? <ProductCardS key={'p-'+x.id} product={x} app={app} />
+                      : <ListCardS key={x.id} item={x} app={app} />
+                    )}
+                  </div>
+                ) : (
+                  <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+                    {browsed.map(x => x._type === 'product'
+                      ? <ProductCardS key={'p-'+x.id} product={x} app={app} />
+                      : <ListRowS key={x.id} item={x} app={app} />
+                    )}
+                  </div>
+                )}
               </div>
-            ) : view === 'grid' ? (
-              <div className="stagger" style={{ display: 'grid', gridTemplateColumns: cols === 3 ? '1fr 1fr 1fr' : '1fr 1fr', gap: cols === 3 ? 8 : 12 }}>
-                {productResults.map(p => <ProductCardS key={'p-'+p.id} product={p} app={app} />)}
-                {listingResults.map(l => <ListCardS key={l.id} item={l} app={app} />)}
-              </div>
-            ) : (
-              <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-                {productResults.map(p => <ProductCardS key={'p-'+p.id} product={p} app={app} />)}
-                {listingResults.map(l => <ListRowS key={l.id} item={l} app={app} />)}
-              </div>
-            )}
-          </div>
+            );
+          })()}
         </React.Fragment>
       )}
 
