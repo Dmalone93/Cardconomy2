@@ -158,6 +158,25 @@ function MoverCard({ item, change, app }) {
   );
 }
 
+// ── game tile (Browse by Game carousel) ──────────────────────
+function GameTile({ game, app }) {
+  return (
+    <div onClick={() => app.nav.push('search', { game: game.id })} role="button" style={{
+      flexShrink: 0, width: 110, cursor: 'pointer', textAlign: 'center',
+    }}>
+      <div style={{ width: 110, height: 70, borderRadius: 10, background: game.tint,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.12)' }}>
+        <span style={{ fontSize: 28, fontWeight: 800, color: '#fff', opacity: 0.9 }}>
+          {game.short.charAt(0)}
+        </span>
+      </div>
+      <div style={{ fontSize: 12, fontWeight: 600, color: T.ink, marginTop: 6,
+        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{game.short}</div>
+    </div>
+  );
+}
+
 // ── ad carousel ──────────────────────────────────────────────
 // each banner's id is a game id, so we can show only ads for games the user follows
 const AD_BANNERS = [
@@ -320,6 +339,18 @@ function HomeScreen({ app }) {
         </button>
       </div>
       {window.GamePrefsSheet && <window.GamePrefsSheet app={app} open={prefsOpen} onClose={() => setPrefsOpen(false)} games={GAMES} />}
+
+      {/* ── Browse by Game ── */}
+      <div style={{ marginTop: 16 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '0 14px', marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Browse by Game</div>
+        </div>
+        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px',
+          WebkitOverflowScrolling: 'touch' }}>
+          {GAMES.map(g => <GameTile key={g.id} game={g} app={app} />)}
+        </div>
+      </div>
 
       {/* featured — swaps with the selected game */}
       <div style={{ paddingTop: 20 }}>
@@ -615,4 +646,4 @@ function SkeletonCard({ w }) {
   );
 }
 
-Object.assign(window, { ListCard, ListRow, LotRow, SectionHeader, SetTile, HomeScreen, ProductCard, SkeletonCard });
+Object.assign(window, { ListCard, ListRow, LotRow, SectionHeader, SetTile, HomeScreen, ProductCard, GameTile, SkeletonCard });
