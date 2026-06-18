@@ -1,7 +1,8 @@
 // ─────────────────────────────────────────────────────────────
 // Fee comparison page
 // ─────────────────────────────────────────────────────────────
-const { T: TFE, money: moneyFE, Icon: IconFE, Chip: ChipFE } = window;
+const { T: TFE, money: moneyFE } = window;
+const FEE_ICONS = { back: '\u2190', shield: '\u26E8', bolt: '\u26A1', check: '\u2713' };
 
 function FeesScreen({ app }) {
   const [salePrice, setSalePrice] = React.useState(25);
@@ -72,7 +73,7 @@ function FeesScreen({ app }) {
       {/* ── Header ── */}
       <div style={{ display: 'flex', alignItems: 'center', padding: '12px 14px', gap: 10 }}>
         <div onClick={() => app.nav.pop()} style={{ cursor: 'pointer' }}>
-          <IconFE name="back" size={22} />
+          <span style={{ fontSize: 20 }}>{FEE_ICONS.back}</span>
         </div>
         <div style={{ fontSize: 17, fontWeight: 700, color: TFE.ink }}>Fees</div>
       </div>
@@ -206,7 +207,7 @@ function FeesScreen({ app }) {
               borderRadius: 12, background: TFE.surface }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: TFE.accentWash,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <IconFE name={icon} size={18} />
+                <span style={{ fontSize: 16 }}>{FEE_ICONS[icon] || '\u2022'}</span>
               </div>
               <div>
                 <div style={{ fontSize: 14, fontWeight: 600, color: TFE.ink }}>{title}</div>
