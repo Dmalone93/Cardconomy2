@@ -191,10 +191,11 @@ function GameBrowseTile({ game, app }) {
       <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'flex-end', padding: '16px 12px', zIndex: 1 }}>
         {logo ? (
-          <img src={logo} alt={game.short} style={{ maxWidth: 100, maxHeight: 44,
-            objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.95 }} />
+          <img src={logo} alt={game.short} style={{ maxWidth: 105, maxHeight: 48,
+            objectFit: 'contain', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.6))' }} />
         ) : (
-          <span style={{ fontSize: 15, fontWeight: 800, color: '#fff' }}>
+          <span style={{ fontSize: 15, fontWeight: 800, color: '#fff',
+            textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>
             {game.short}
           </span>
         )}

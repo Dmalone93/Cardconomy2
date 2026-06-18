@@ -2,8 +2,50 @@
 // Cardonomy Desktop — Home / Browse + shared DCard tile
 // ─────────────────────────────────────────────────────────────
 const { T: TH, money: mH, CardArt: CardArtH, Slab: SlabH, GradeChip: GradeChipH, Delta: DeltaH, Icon: IconH } = window;
-const { GAMES: GAMESH, SETS: SETSH, LISTINGS: LISTH, LOTS: LOTSH, gameById: gameByIdH, setById: setByIdH } = window;
+const { GAMES: GAMESH, SETS: SETSH, LISTINGS: LISTH, LOTS: LOTSH, gameById: gameByIdH, setById: setByIdH, GAME_LOGOS: GAME_LOGOS_H } = window;
 const { HOT_DEALS: HOT_DEALS_H, PRICE_MOVERS: PRICE_MOVERS_H, byId: byIdH } = window;
+
+// ── game hero images + tile for desktop ──────────────────────
+const GAME_HEROES_H = {
+  pkmn: 'logos/heroes/pkmn.jpg', mtg: 'logos/heroes/mtg.jpg',
+  ygo: 'logos/heroes/ygo.jpg', lor: 'logos/heroes/lor.webp',
+  digimon: 'logos/heroes/digimon.png',
+};
+
+function DGameTile({ game, app }) {
+  const logo = GAME_LOGOS_H && GAME_LOGOS_H[game.id];
+  const hero = GAME_HEROES_H[game.id];
+  const [hover, setHover] = React.useState(false);
+  return (
+    <div onClick={() => app.go('search', { game: game.id })}
+      onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+      role="button" style={{
+      cursor: 'pointer', borderRadius: 14, overflow: 'hidden', position: 'relative',
+      aspectRatio: '3/4', background: game.tint,
+      boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
+      transform: hover ? 'scale(1.03)' : 'scale(1)',
+      transition: 'transform 0.2s',
+    }}>
+      {hero && <img src={hero} alt="" style={{
+        position: 'absolute', inset: 0, width: '100%', height: '100%',
+        objectFit: 'cover', objectPosition: 'center top',
+      }} />}
+      <div style={{ position: 'absolute', inset: 0,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.75) 100%)',
+      }} />
+      <div style={{ position: 'absolute', inset: 0, display: 'flex',
+        alignItems: 'flex-end', justifyContent: 'center', padding: '16px 12px', zIndex: 1 }}>
+        {logo ? (
+          <img src={logo} alt={game.short} style={{ maxWidth: 120, maxHeight: 50,
+            objectFit: 'contain', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.6))' }} />
+        ) : (
+          <span style={{ fontSize: 16, fontWeight: 800, color: '#fff',
+            textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>{game.short}</span>
+        )}
+      </div>
+    </div>
+  );
+}
 
 // ── shared product card ──────────────────────────────────────
 function DCard({ item, app }) {
@@ -118,6 +160,13 @@ function DHome({ app }) {
           );
         })}
       </div>
+
+      {/* ── Browse by Game (hero tiles) ── */}
+      <Row title="Browse by Game" action="Browse all" onAction={() => app.go('search')}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+          {GAMESH.filter(g => g && g.id).map(g => <DGameTile key={g.id} game={g} app={app} />)}
+        </div>
+      </Row>
 
       <Row title="Ending soon" action="All auctions" onAction={() => app.go('search', { type: 'auction' })}>
         <div style={grid(210)}>{auctions.map(l => <DCard key={l.id} item={l} app={app} />)}</div>
