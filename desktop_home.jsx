@@ -138,8 +138,6 @@ function DHome({ app }) {
 
   return (
     <div style={{ paddingBottom: 30 }}>
-      <Hero app={app} />
-
       {/* ── Card Fan ── */}
       <div style={{ position: 'relative', height: 280, display: 'flex', alignItems: 'center',
         justifyContent: 'center', overflow: 'hidden',
@@ -275,6 +273,9 @@ function DHome({ app }) {
           })}
         </div>
       </Row>
+
+      {/* ── Sponsored hero carousel ── */}
+      <div style={{ marginTop: 32 }}><Hero app={app} /></div>
 
       {/* shop by set band */}
       <section style={{ marginTop: 44 }}>
