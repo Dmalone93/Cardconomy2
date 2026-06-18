@@ -406,9 +406,6 @@ function HomeScreen({ app }) {
       {/* ── Card Fan hero ── */}
       <CardFan app={app} />
 
-      {/* sponsored ad carousel */}
-      <AdCarousel app={app} />
-
       {/* ── Three Communities ── */}
       <div style={{ padding: '24px 14px 8px' }}>
         <div style={{ textAlign: 'center', marginBottom: 16 }}>
@@ -507,6 +504,9 @@ function HomeScreen({ app }) {
           })}
         </div>
       </div>
+
+      {/* sponsored ad carousel */}
+      <AdCarousel app={app} />
 
       {/* shop by set */}
       {sets.length > 0 && (
