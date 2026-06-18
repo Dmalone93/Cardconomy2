@@ -167,6 +167,7 @@ function ProductScreen({ app, params }) {
   const finishes = [{ key: 'standard', label: 'Standard', price: product.foil ? product.market * 0.6 : product.market },
     { key: 'foil', label: 'Foil', price: product.foil ? product.market : product.market * 1.8 }];
   const [finish, setFinish] = React.useState(product.foil ? 'foil' : 'standard');
+  const [ptf, setPtf] = React.useState('30D');
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TP.bg, animation: 'ccPushIn 0.26s ease' }}>
@@ -228,11 +229,27 @@ function ProductScreen({ app, params }) {
           </div>
         </div>
 
-        {/* price chart */}
+        {/* ── Price chart ── */}
         {product.history && (
-          <div style={{ padding: '8px 16px 16px' }}>
-            <SparkP data={product.history} w={320} h={48} up={up} />
-            <div style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted, marginTop: 4 }}>30-day price trend</div>
+          <div style={{ margin: '12px 16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+              <div style={{ fontSize: 14, fontWeight: 600, color: TP.ink }}>Price History</div>
+              <div style={{ display: 'flex', gap: 4 }}>
+                {['7D', '30D', '90D', '1Y'].map(t => (
+                  <div key={t} onClick={() => setPtf(t)} style={{
+                    padding: '3px 8px', borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: 'pointer',
+                    background: ptf === t ? TP.accent : TP.surface2,
+                    color: ptf === t ? '#fff' : TP.muted,
+                  }}>{t}</div>
+                ))}
+              </div>
+            </div>
+            {(() => {
+              const sliceLen = { '7D': 3, '30D': 6, '90D': 9, '1Y': 12 }[ptf] || 6;
+              const hist = product.history.slice(-sliceLen);
+              const up = hist[hist.length - 1] >= hist[0];
+              return <SparkP data={hist} w={320} h={140} up={up} fill dots />;
+            })()}
           </div>
         )}
 

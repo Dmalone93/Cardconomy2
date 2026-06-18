@@ -44,7 +44,8 @@ function ListingScreen({ app, params }) {
   const g = gameByIdL(item.game);
   const set = setByIdL(item.set);
   const hist = item.history || [item.market, item.price];
-  const histSlice = tf === '30D' ? hist.slice(-5) : tf === '90D' ? hist : hist;
+  const sliceLen = { '7D': 3, '30D': 6, '90D': 9, '1Y': 12 }[tf] || 6;
+  const histSlice = hist.slice(-sliceLen);
   const up = item.price >= hist[0];
 
   return (
@@ -183,7 +184,7 @@ function ListingScreen({ app, params }) {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
                 <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>Price history</span>
                 <span style={{ display: 'flex', gap: 4 }}>
-                  {['30D','90D','1Y'].map(t => (
+                  {['7D','30D','90D','1Y'].map(t => (
                     <button key={t} onClick={() => setTf(t)} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11.5,
                       padding: '4px 9px', borderRadius: 7, color: tf===t?'#fff':TL.muted, background: tf===t?'var(--fill)':'transparent' }}>{t}</button>
                   ))}
@@ -194,7 +195,7 @@ function ListingScreen({ app, params }) {
                 <DeltaL from={hist[0]} to={item.price} />
                 <span style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.muted }}>vs {tf} ago</span>
               </div>
-              <SparkL data={histSlice} w={320} h={70} up={up} dots />
+              <SparkL data={histSlice} w={320} h={140} up={up} fill dots />
               <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
                 <StatBox label="Last sold" value={moneyL(hist[hist.length-2])} sub="2 days ago" />
                 <StatBox label="90-day low" value={moneyL(Math.min(...hist))} />
