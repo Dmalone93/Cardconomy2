@@ -81,15 +81,16 @@ function HowItWorksScreen({ app }) {
   ];
 
   return (
-    <div style={{ minHeight: '100%', background: THW.bg }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: THW.bg }}>
       {/* ── Header ── */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '12px 14px', gap: 10 }}>
-        <div onClick={() => app.nav.pop()} style={{ cursor: 'pointer' }}>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '12px 14px', gap: 10, flexShrink: 0 }}>
+        <div onClick={() => app.nav.pop()} style={{ cursor: 'pointer', padding: 4 }}>
           <span style={{ fontSize: 20 }}>{'\u2190'}</span>
         </div>
         <div style={{ fontSize: 17, fontWeight: 700, color: THW.ink }}>How It Works</div>
       </div>
 
+      <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
       {/* ── Hero ── */}
       <div style={{ padding: '20px 14px 28px', textAlign: 'center' }}>
         <div style={{ fontSize: 24, fontWeight: 800, color: THW.ink, lineHeight: 1.2, letterSpacing: -0.5 }}>
@@ -202,6 +203,7 @@ function HowItWorksScreen({ app }) {
           border: '1px solid var(--line)',
         }}>List a card for sale</button>
       </div>
+      </div>{/* end scroll wrapper */}
     </div>
   );
 }
