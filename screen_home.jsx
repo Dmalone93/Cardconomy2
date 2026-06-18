@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon, Logo } = window;
 const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText } = window;
+const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 
 // ── shared: grid tile ────────────────────────────────────────
 function ListCard({ item, app, w }) {
@@ -105,6 +106,55 @@ function ListRow({ item, app }) {
         <div style={{ fontFamily: T.sans, fontSize: 11, color: T.muted }}>{item.shipping === 0 ? 'Free ship' : money(item.shipping)}</div>
       </div>
     </button>
+  );
+}
+
+// ── deal card (Hot Deals row) ─────────────────────────────────
+function DealCard({ item, discount, app, w }) {
+  const watched = app.isWatched(item.id);
+  return (
+    <div onClick={() => app.nav.push('listing', { id: item.id })} role="button" style={{
+      width: w || 150, flexShrink: 0, textAlign: 'left', background: T.surface, cursor: 'pointer',
+      borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
+      boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
+    }}>
+      <div style={{ position: 'relative' }}>
+        <CardArt item={item} w={150} radius={0} />
+        <div style={{ position: 'absolute', top: 6, left: 6, background: T.down, color: '#fff',
+          fontSize: 11, fontWeight: 700, borderRadius: 4, padding: '2px 6px' }}>
+          {discount}% below market
+        </div>
+      </div>
+      <div style={{ padding: '8px 8px 10px' }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: T.ink, overflow: 'hidden',
+          textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</div>
+        <div style={{ fontSize: 15, fontWeight: 700, color: T.ink, marginTop: 2 }}>{money(item.price)}</div>
+        <div style={{ fontSize: 12, color: T.muted, textDecoration: 'line-through', marginTop: 1 }}>{money(item.market)}</div>
+      </div>
+    </div>
+  );
+}
+
+// ── mover card (Daily Movers row) ────────────────────────────
+function MoverCard({ item, change, app }) {
+  const up = change > 0;
+  return (
+    <div onClick={() => app.nav.push('listing', { id: item.id })} role="button" style={{
+      display: 'flex', alignItems: 'center', gap: 10, padding: '8px 12px',
+      background: T.surface, borderRadius: 8, cursor: 'pointer', minWidth: 220, flexShrink: 0,
+      boxShadow: '0 1px 3px rgba(20,24,40,0.04)',
+    }}>
+      <CardArt item={item} w={40} radius={4} />
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: 13, fontWeight: 600, color: T.ink, overflow: 'hidden',
+          textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</div>
+        <div style={{ fontSize: 12, color: T.muted }}>{money(item.price)}</div>
+      </div>
+      <div style={{ fontSize: 14, fontWeight: 700, fontFamily: T.mono,
+        color: up ? T.up : T.down }}>
+        {up ? '\u25B2' : '\u25BC'} {Math.abs(change).toFixed(1)}%
+      </div>
+    </div>
   );
 }
 
@@ -285,6 +335,39 @@ function HomeScreen({ app }) {
           </div>
         </div>
       )}
+
+      {/* ── Hot Deals ── */}
+      <div style={{ marginTop: 20 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '0 14px', marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Hot Deals</div>
+          <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600,
+            color: T.accent, cursor: 'pointer' }}>View all</div>
+        </div>
+        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px',
+          scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
+          {HOT_DEALS.map(d => {
+            const item = byId(d.id);
+            return item ? <DealCard key={d.id} item={item} discount={d.discount} app={app} /> : null;
+          })}
+        </div>
+      </div>
+
+      {/* ── Price Movers ── */}
+      <div style={{ marginTop: 20 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '0 14px', marginBottom: 8 }}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Daily Movers</div>
+          <div style={{ fontSize: 13, fontWeight: 600, color: T.accent, cursor: 'pointer' }}>View all</div>
+        </div>
+        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', padding: '0 14px',
+          scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
+          {PRICE_MOVERS.map(m => {
+            const item = byId(m.id);
+            return item ? <MoverCard key={m.id} item={item} change={m.change} app={app} /> : null;
+          })}
+        </div>
+      </div>
 
       {/* shop by set */}
       {sets.length > 0 && (
