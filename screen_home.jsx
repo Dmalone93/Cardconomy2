@@ -34,11 +34,11 @@ function CardFan({ app }) {
 
   return (
     <div style={{ position: 'relative', height: 220, display: 'flex', alignItems: 'center',
-      justifyContent: 'center', overflow: 'hidden', background: 'var(--fill)',
-      borderRadius: '0 0 20px 20px', marginBottom: 4 }}>
-      {/* dark radial glow */}
+      justifyContent: 'center', overflow: 'hidden',
+      background: 'linear-gradient(180deg, var(--fill) 0%, var(--fill) 50%, var(--bg) 100%)' }}>
+      {/* emerald radial glow */}
       <div style={{ position: 'absolute', inset: 0,
-        background: 'radial-gradient(ellipse at 50% 80%, var(--accent) 0%, transparent 60%)', opacity: 0.15 }} />
+        background: 'radial-gradient(ellipse at 50% 60%, var(--accent) 0%, transparent 55%)', opacity: 0.12 }} />
       {/* fanned cards */}
       {cards.slice(0, 3).map((card, i) => {
         const layout = FAN_LAYOUT[i] || FAN_LAYOUT[0];

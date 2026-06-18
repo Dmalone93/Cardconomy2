@@ -140,6 +140,48 @@ function DHome({ app }) {
     <div style={{ paddingBottom: 30 }}>
       <Hero app={app} />
 
+      {/* ── Card Fan ── */}
+      <div style={{ position: 'relative', height: 280, display: 'flex', alignItems: 'center',
+        justifyContent: 'center', overflow: 'hidden',
+        background: 'linear-gradient(180deg, var(--fill) 0%, var(--fill) 40%, var(--bg) 100%)',
+        marginTop: -1 }}>
+        <div style={{ position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse at 50% 60%, var(--accent) 0%, transparent 50%)', opacity: 0.1 }} />
+        {(() => {
+          const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03')].filter(Boolean);
+          const layouts = [
+            { rotate: -14, x: -70, y: 20, z: 1 },
+            { rotate: 0, x: 0, y: -12, z: 3 },
+            { rotate: 15, x: 70, y: 20, z: 2 },
+          ];
+          return fanCards.slice(0, 3).map((card, i) => {
+            const l = layouts[i];
+            return (
+              <div key={card.id} onClick={() => app.go('listing', { id: card.id })} style={{
+                position: 'absolute', width: 150, height: 210, borderRadius: 14, cursor: 'pointer',
+                transform: `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`,
+                zIndex: l.z, boxShadow: '0 10px 40px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)',
+                border: '1px solid rgba(255,255,255,0.1)', overflow: 'hidden',
+                transition: 'transform 0.3s ease',
+              }}
+                onMouseEnter={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y - 8}px) rotate(${l.rotate}deg) scale(1.04)`; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`; }}
+              >
+                <CardArtH item={card} w={150} radius={14} />
+                <div style={{ position: 'absolute', inset: 0, borderRadius: 14, zIndex: 5, pointerEvents: 'none',
+                  background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 60%, transparent 75%)' }} />
+              </div>
+            );
+          });
+        })()}
+        <div style={{ position: 'absolute', bottom: 20, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
+          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 20, color: '#fff',
+            letterSpacing: -0.4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+            The UK home for trading cards
+          </div>
+        </div>
+      </div>
+
       {/* ── Three Communities ── */}
       <section className="wrap" style={{ marginTop: 36, marginBottom: 12 }}>
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
