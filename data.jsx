@@ -1320,6 +1320,60 @@ const PRICE_MOVERS = [
 ];
 
 // ── Cross-set printings (same card name across sets) ──
+// ── Card variants (same code, different art/printing) ────────
+const VARIANTS = {
+  'Charizard ex': [
+    { variant: 'Standard', number: '006/165', price: 18.00, art: '#c2410c' },
+    { variant: 'Full Art', number: '199/165', price: 185.00, art: '#b45309' },
+    { variant: 'Special Illustration Rare', number: '199/165', price: 432.00, art: '#c2410c' },
+  ],
+  'Pikachu': [
+    { variant: 'Standard', number: '025/165', price: 3.50, art: '#d4a017' },
+    { variant: 'Illustration Rare', number: '173/165', price: 42.00, art: '#d4a017' },
+  ],
+  'Monkey D. Luffy': [
+    { variant: 'Standard', number: 'OP01-001', price: 8.00, art: '#c0392b' },
+    { variant: 'Parallel', number: 'OP01-001', price: 33.00, art: '#c0392b' },
+    { variant: 'Manga Art', number: 'OP01-001', price: 89.00, art: '#c0392b' },
+  ],
+  'Dark Magician': [
+    { variant: 'Standard', number: 'LDK2-ENY10', price: 4.50, art: '#7c4dd1' },
+    { variant: 'Secret Rare', number: 'TN19-EN001', price: 28.00, art: '#7c4dd1' },
+    { variant: 'Quarter Century Secret Rare', number: 'QCDB-EN001', price: 79.00, art: '#7c4dd1' },
+    { variant: 'Ghost Rare', number: 'GFP2-EN100', price: 145.00, art: '#7c4dd1' },
+  ],
+  'Ragavan, Nimble Pilferer': [
+    { variant: 'Standard', number: '138/303', price: 48.00, art: '#c2691b' },
+    { variant: 'Borderless', number: '361/303', price: 58.00, art: '#c2691b' },
+    { variant: 'Retro Frame', number: '412/303', price: 72.00, art: '#c2691b' },
+  ],
+  'Black Lotus': [
+    { variant: 'Alpha', number: 'LEA-232', price: 28500.00, art: '#334155' },
+    { variant: 'Beta', number: 'LEB-232', price: 22000.00, art: '#334155' },
+  ],
+};
+
+// ── Demand data (mock: buyers who want each card) ────────────
+function demandForProduct(product) {
+  const h = _hash(product.id);
+  const wants = 3 + (h % 25);
+  const listed = product.offerCount || 1;
+  const localWants = Math.max(1, Math.floor(wants * (0.3 + (h % 40) / 100)));
+  const locs = ['London', 'Manchester', 'Birmingham', 'Edinburgh', 'Scotland', 'Bristol', 'Leeds', 'Liverpool'];
+  const loc = locs[h % locs.length];
+  const hot = wants > 10 && listed <= 3;
+  return { wants, listed, localWants, loc, hot };
+}
+
+// ── Variant badge for a product ──────────────────────────────
+function variantForProduct(product) {
+  const variants = VARIANTS[product.name];
+  if (!variants || variants.length <= 1) return null;
+  // Match by price proximity to guess which variant this is
+  const sorted = [...variants].sort((a, b) => Math.abs(a.price - product.market) - Math.abs(b.price - product.market));
+  return { current: sorted[0].variant, all: variants, total: variants.length };
+}
+
 const PRINTINGS = {
   'Charizard ex': [
     { set: 's151', number: '199/165', price: 432.00 },
@@ -1338,5 +1392,5 @@ Object.assign(window, {
   SHOPS, TRADERS, OWNED_REFS, traderById, shopById,
   TRADE_POSTS, postById, GAME_LOGOS,
   PRODUCTS, productById, offersForProduct, SELLERS, COND_SHORT, sellerByName, listingsBySeller,
-  HOT_DEALS, PRICE_MOVERS, PRINTINGS,
+  HOT_DEALS, PRICE_MOVERS, PRINTINGS, VARIANTS, demandForProduct, variantForProduct,
 });

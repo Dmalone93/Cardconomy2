@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 const { T: TP, money: moneyP, CardArt: CardArtP, Sparkline: SparkP, Icon: IconP, Sheet: SheetP, Badge: BadgeP } = window;
 const { productById: productByIdP, gameById: gameByIdP, setById: setByIdP, COND_SHORT: COND_SHORT_P, listingsBySeller: listingsBySellerP } = window;
+const { demandForProduct: demandP, variantForProduct: variantP } = window;
 
 function CondBadge({ condition }) {
   const colors = {
@@ -168,6 +169,8 @@ function ProductScreen({ app, params }) {
     { key: 'foil', label: 'Foil', price: product.foil ? product.market : product.market * 1.8 }];
   const [finish, setFinish] = React.useState(product.foil ? 'foil' : 'standard');
   const [ptf, setPtf] = React.useState('30D');
+  const vInfo = variantP ? variantP(product) : null;
+  const demand = demandP ? demandP(product) : null;
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TP.bg, animation: 'ccPushIn 0.26s ease' }}>
@@ -177,21 +180,30 @@ function ProductScreen({ app, params }) {
         <div style={{ flex: 1, fontFamily: TP.sans, fontWeight: 700, fontSize: 16, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Back</div>
       </div>
 
-      <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 40 }}>
+      <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
         {/* hero card image */}
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0', background: '#ffffff' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '20px 0', background: '#ffffff', position: 'relative' }}>
           <CardArtP item={product} w={160} radius={4} />
+          {vInfo && (
+            <div style={{ position: 'absolute', top: 28, right: '50%', transform: 'translateX(88px)',
+              background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(6px)', color: '#fff',
+              padding: '4px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700,
+              display: 'flex', alignItems: 'center', gap: 4 }}>
+              ★ {vInfo.current}
+            </div>
+          )}
         </div>
 
         {/* card info */}
         <div style={{ padding: '16px 16px 0' }}>
           <div style={{ fontFamily: TP.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>{product.name}</div>
           <div style={{ fontFamily: TP.sans, fontSize: 14, color: TP.muted, marginTop: 2 }}>
-            {product.subtitle}{s ? ' · ' + s.name : ''}{product.number ? ' · ' + product.number : ''}
+            {vInfo ? vInfo.current + ' \u00B7 ' : ''}{product.subtitle}{s ? ' \u00B7 ' + s.name : ''}{product.number ? ' \u00B7 ' + product.number : ''}
           </div>
-          <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
+          <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
             {g && <span style={{ background: g.tint + '1a', color: g.tint, padding: '3px 10px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{g.short}</span>}
             {product.foil && <span style={{ background: '#f5f3ff', color: '#7c3aed', padding: '3px 10px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>Foil</span>}
+            {vInfo && <span style={{ background: TP.accentWash, color: TP.accent, padding: '3px 10px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{vInfo.current}</span>}
           </div>
 
           {/* ── Finish tabs ── */}
@@ -262,6 +274,67 @@ function ProductScreen({ app, params }) {
           </div>
         </div>
 
+        {/* ── Demand indicator ── */}
+        {demand && (
+          <div style={{ margin: '0 16px 16px', padding: '16px', background: TP.surface,
+            borderRadius: 12, border: '1px solid ' + (demand.hot ? 'var(--gold)' : TP.line) }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+              <div style={{ fontFamily: TP.sans, fontWeight: 800, fontSize: 17 }}>
+                {demand.wants} buyers want this
+              </div>
+              {demand.hot && (
+                <span style={{ background: 'var(--gold)', color: '#fff', padding: '3px 10px',
+                  borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>HOT</span>
+              )}
+            </div>
+            <div style={{ fontFamily: TP.sans, fontSize: 13, color: TP.muted, marginBottom: 10 }}>
+              {demand.localWants} within {demand.loc} · only {demand.listed} listed
+            </div>
+            <div style={{ height: 6, borderRadius: 3, background: TP.line, overflow: 'hidden', marginBottom: 6 }}>
+              <div style={{ height: '100%', borderRadius: 3, width: (Math.round(demand.wants / (demand.wants + demand.listed) * 100)) + '%',
+                background: demand.hot ? 'var(--gold)' : 'var(--accent)' }} />
+            </div>
+            <div style={{ display: 'flex', gap: 14, fontSize: 11, fontFamily: TP.sans, fontWeight: 600 }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ width: 6, height: 6, borderRadius: 999, background: demand.hot ? 'var(--gold)' : 'var(--accent)' }} /> Wants
+              </span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 4, color: TP.muted }}>
+                <span style={{ width: 6, height: 6, borderRadius: 999, background: TP.line }} /> Listed
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* ── Same Code / Variants section ── */}
+        {vInfo && vInfo.total > 1 && (
+          <div style={{ padding: '0 16px', marginBottom: 16 }}>
+            <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 12, color: TP.accent,
+              letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 4 }}>
+              Same Code · {product.number}
+            </div>
+            <div style={{ fontFamily: TP.sans, fontSize: 13, color: TP.muted, marginBottom: 10, lineHeight: 1.5 }}>
+              {vInfo.total} printings share this number. Not the same card.
+            </div>
+            <div style={{ display: 'flex', gap: 8, overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: 4 }}>
+              {vInfo.all.map((v, i) => {
+                const isCurrent = v.variant === vInfo.current;
+                return (
+                  <div key={i} style={{
+                    flexShrink: 0, width: 120, padding: '12px', borderRadius: 10, cursor: 'pointer',
+                    background: isCurrent ? TP.accentWash : TP.surface,
+                    border: isCurrent ? '2px solid ' + TP.accent : '1px solid ' + TP.line,
+                  }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: isCurrent ? TP.accent : TP.ink,
+                      marginBottom: 4 }}>{v.variant}</div>
+                    <div style={{ fontSize: 11, color: TP.muted, marginBottom: 4 }}>{v.number}</div>
+                    <div style={{ fontSize: 14, fontWeight: 700, color: TP.ink }}>{moneyP(v.price)}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
         {/* seller offers */}
         <div style={{ padding: '0 16px' }}>
           <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16, marginBottom: 6 }}>
@@ -304,7 +377,22 @@ function ProductScreen({ app, params }) {
         )}
       </div>
 
-      {/* offer sheet */}
+      {/* ── Sticky bottom bar ── */}
+      <div style={{ flexShrink: 0, background: TP.surface, borderTop: '1px solid ' + TP.line, padding: '10px 16px',
+        display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div>
+          <div style={{ fontFamily: TP.sans, fontSize: 10, fontWeight: 600, color: TP.muted, textTransform: 'uppercase' }}>FROM</div>
+          <div style={{ fontFamily: TP.sans, fontWeight: 800, fontSize: 20, color: TP.ink }}>{moneyP(product.low)}</div>
+        </div>
+        <button onClick={() => {
+          app.toast({ title: 'Added to your wants', subtitle: product.name });
+        }} style={{
+          flex: 1, padding: '13px 16px', borderRadius: 10, border: 'none',
+          background: 'var(--gold)', color: '#fff', fontFamily: TP.sans, fontWeight: 700,
+          fontSize: 15, cursor: 'pointer',
+        }}>Add to my wants</button>
+      </div>
+
       <SheetP open={!!offerSheet} onClose={() => setOfferSheet(null)} title={offerSheet ? 'Offer to ' + offerSheet.seller : ''}>
         {offerSheet && (
           <div style={{ padding: '8px 0 20px' }}>
