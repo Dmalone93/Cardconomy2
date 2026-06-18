@@ -362,7 +362,7 @@ function HomeScreen({ app }) {
                 <div style={{ fontSize: 14, fontWeight: 700, color: T.ink }}>{p.title}</div>
                 <div style={{ fontSize: 12, color: T.muted, marginTop: 3, lineHeight: 1.5 }}>{p.desc}</div>
                 <div onClick={p.action} style={{ fontSize: 12, fontWeight: 700, color: p.color,
-                  marginTop: 6, cursor: 'pointer' }}>{p.cta} \u2192</div>
+                  marginTop: 6, cursor: 'pointer' }}>{p.cta} →</div>
               </div>
             </div>
           ))}
@@ -372,7 +372,7 @@ function HomeScreen({ app }) {
           background: 'linear-gradient(90deg, var(--up), var(--accent), var(--gold))' }} />
         <div style={{ textAlign: 'center' }}>
           <span onClick={() => app.nav.push('howitworks')} style={{ fontSize: 12, fontWeight: 600,
-            color: T.accent, cursor: 'pointer' }}>Learn how it works \u2192</span>
+            color: T.accent, cursor: 'pointer' }}>Learn how it works →</span>
         </div>
       </div>
 

@@ -9,7 +9,7 @@ const T = {
   line: 'var(--line)', line2: 'var(--line-2)',
   accent: 'var(--accent)', accentPress: 'var(--accent-press)', accentWash: 'var(--accent-wash)',
   up: 'var(--up)', upWash: 'var(--up-wash)', down: 'var(--down)', gold: 'var(--gold)',
-  sans: 'var(--sans)', mono: 'var(--mono)',
+  sans: 'var(--sans)', heading: 'var(--heading)', mono: 'var(--mono)',
 };
 
 // money formatter

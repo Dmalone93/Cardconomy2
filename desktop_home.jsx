@@ -87,7 +87,7 @@ function Row({ title, action, onAction, children }) {
   return (
     <section style={{ marginTop: 44 }}>
       <div className="wrap" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
-        <h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>{title}</h2>
+        <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>{title}</h2>
         {action && <button onClick={onAction} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--accent)' }}>{action} →</button>}
       </div>
       <div className="wrap">{children}</div>
@@ -118,7 +118,7 @@ function Hero({ app }) {
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg, rgba(8,10,16,0.78) 0%, rgba(8,10,16,0.4) 42%, transparent 72%)' }} />
             <div style={{ position: 'absolute', left: 48, top: '50%', transform: 'translateY(-50%)', color: '#fff', maxWidth: 460 }}>
               <div style={{ display: 'inline-block', fontSize: 12, fontWeight: 700, letterSpacing: 0.5, background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(6px)', borderRadius: 7, padding: '5px 11px', marginBottom: 14 }}>SPONSORED · {ad.tag}</div>
-              <div style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 38, letterSpacing: -1.2, lineHeight: 1.05, textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>{ad.head}</div>
+              <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 38, letterSpacing: -1.2, lineHeight: 1.05, textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>{ad.head}</div>
               <div style={{ fontSize: 16, opacity: 0.9, marginTop: 10, textShadow: '0 1px 6px rgba(0,0,0,0.4)' }}>{ad.sub}</div>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, marginTop: 20, background: '#fff', color: 'var(--ink)', borderRadius: 10, padding: '12px 22px', fontWeight: 700, fontSize: 15 }}>Shop now →</span>
             </div>
@@ -143,7 +143,7 @@ function DHome({ app }) {
       {/* ── Three Communities ── */}
       <section className="wrap" style={{ marginTop: 36, marginBottom: 12 }}>
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8,
+          <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 30, letterSpacing: -0.8,
             margin: '0 0 10px', color: TH.ink }}>
             Connecting the whole TCG community
           </h2>
@@ -164,7 +164,7 @@ function DHome({ app }) {
               <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, flex: 1 }}>{p.desc}</div>
               <button onClick={() => app.go(p.route)} style={{ marginTop: 14, padding: '10px 18px',
                 borderRadius: 10, border: 'none', background: p.color, color: '#fff',
-                fontWeight: 700, fontSize: 13.5, cursor: 'pointer', alignSelf: 'flex-start' }}>{p.cta} \u2192</button>
+                fontWeight: 700, fontSize: 13.5, cursor: 'pointer', alignSelf: 'flex-start' }}>{p.cta} →</button>
             </div>
           ))}
         </div>
@@ -172,7 +172,7 @@ function DHome({ app }) {
           background: 'linear-gradient(90deg, var(--up), var(--accent), var(--gold))' }} />
         <div style={{ textAlign: 'center' }}>
           <button onClick={() => app.go('howitworks')} style={{ fontSize: 14, fontWeight: 600,
-            color: 'var(--accent)', cursor: 'pointer' }}>Learn how it works \u2192</button>
+            color: 'var(--accent)', cursor: 'pointer' }}>Learn how it works →</button>
         </div>
       </section>
 
@@ -236,7 +236,7 @@ function DHome({ app }) {
 
       {/* shop by set band */}
       <section style={{ marginTop: 44 }}>
-        <div className="wrap"><h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.6, margin: '0 0 18px' }}>Shop by set</h2></div>
+        <div className="wrap"><h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 18px' }}>Shop by set</h2></div>
         <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
           {SETSH.filter(s => s.img).map(s => {
             const g = gameByIdH(s.game);
@@ -261,7 +261,7 @@ function DHome({ app }) {
       {/* graded spotlight */}
       <section style={{ marginTop: 44, background: 'var(--surface)', padding: '36px 0 40px', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
         <div className="wrap" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
-          <h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>Graded spotlight</h2>
+          <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>Graded spotlight</h2>
           <span style={{ fontSize: 14, color: 'var(--muted)', fontWeight: 600 }}>PSA · BGS · CGC</span>
         </div>
         <div className="wrap nos" style={{ display: 'flex', gap: 26, overflowX: 'auto', paddingBottom: 8 }}>
@@ -281,7 +281,7 @@ function DHome({ app }) {
       <section style={{ marginTop: 50, background: 'var(--accent)', padding: '48px 0', color: '#fff' }}>
         <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'center' }}>
           <div>
-            <h2 style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, margin: '0 0 14px' }}>
+            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 30, letterSpacing: -0.8, margin: '0 0 14px' }}>
               Built for the UK TCG community
             </h2>
             <p style={{ fontSize: 15, lineHeight: 1.7, opacity: 0.85, margin: '0 0 20px' }}>
@@ -293,7 +293,7 @@ function DHome({ app }) {
               cursor: 'pointer', transition: 'background 0.2s',
             }} onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.25)'}
                onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}>
-              Compare our fees \u2192
+              Compare our fees →
             </button>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
