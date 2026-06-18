@@ -4,7 +4,7 @@
 const { T: TL, money: moneyL, Slab: SlabL, CardArt: CardArtL, GradeChip: GradeChipL,
   Sparkline: SparkL, Delta: DeltaL, Stars: StarsL, Chip: ChipL, Icon: IconL, Sheet: SheetL } = window;
 const { byId: byIdL, setById: setByIdL, gameById: gameByIdL, gradeText: gradeTextL, LISTINGS: LISTINGS_L } = window;
-const { PRINTINGS: PRINTINGS_L } = window;
+// PRINTINGS accessed via window.PRINTINGS at render time
 
 function StatBox({ label, value, sub, color }) {
   return (
@@ -116,13 +116,13 @@ function ListingScreen({ app, params }) {
           </div>
 
           {/* See all printings */}
-          {PRINTINGS_L && PRINTINGS_L[item.name] && PRINTINGS_L[item.name].length > 1 && (
+          {window.PRINTINGS && window.PRINTINGS[item.name] && window.PRINTINGS[item.name].length > 1 && (
             <div onClick={() => setShowPrintings(true)} style={{
               marginTop: 8, padding: '6px 12px', borderRadius: 8, background: TL.surface2,
               fontSize: 13, fontWeight: 600, color: TL.accent, cursor: 'pointer',
               display: 'inline-flex', alignItems: 'center', gap: 4,
             }}>
-              <IconL name="grid" size={14} /> See all printings ({PRINTINGS_L[item.name].length})
+              <IconL name="grid" size={14} /> See all printings ({window.PRINTINGS[item.name].length})
             </div>
           )}
 
@@ -337,7 +337,7 @@ function ListingScreen({ app, params }) {
       {showPrintings && (
         <SheetL title="All Printings" onClose={() => setShowPrintings(false)}>
           <div style={{ padding: '0 16px 20px' }}>
-            {(PRINTINGS_L[item.name] || []).map((p, i) => {
+            {(window.PRINTINGS[item.name] || []).map((p, i) => {
               const s = setByIdL(p.set);
               return (
                 <div key={i} style={{ display: 'flex', justifyContent: 'space-between',

@@ -159,7 +159,7 @@ function MoverCard({ item, change, app }) {
 }
 
 // ── game tile (Browse by Game carousel) ──────────────────────
-function GameTile({ game, app }) {
+function GameBrowseTile({ game, app }) {
   return (
     <div onClick={() => app.nav.push('search', { game: game.id })} role="button" style={{
       flexShrink: 0, width: 110, cursor: 'pointer', textAlign: 'center',
@@ -348,7 +348,7 @@ function HomeScreen({ app }) {
         </div>
         <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px',
           WebkitOverflowScrolling: 'touch' }}>
-          {GAMES.map(g => <GameTile key={g.id} game={g} app={app} />)}
+          {GAMES.filter(g => g && g.id).map(g => <GameBrowseTile key={g.id} game={g} app={app} />)}
         </div>
       </div>
 
@@ -646,4 +646,4 @@ function SkeletonCard({ w }) {
   );
 }
 
-Object.assign(window, { ListCard, ListRow, LotRow, SectionHeader, SetTile, HomeScreen, ProductCard, GameTile, SkeletonCard });
+Object.assign(window, { ListCard, ListRow, LotRow, SectionHeader, SetTile, HomeScreen, ProductCard, SkeletonCard });
