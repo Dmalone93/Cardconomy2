@@ -339,34 +339,6 @@ function HomeScreen({ app }) {
       {/* sponsored ad carousel */}
       <AdCarousel app={app} />
 
-      {/* game chips — only games you follow, editable inline */}
-      <div className="noscroll" style={{ display: 'flex', gap: 8, padding: '14px 16px 2px', overflowX: 'auto', alignItems: 'center' }}>
-        <Chip active={game === 'all'} onClick={() => setGame('all')}>{app.allGamesSelected() ? 'All games' : 'My games'}</Chip>
-        {myGames.map(g => {
-          const logo = window.GAME_LOGOS[g.id];
-          const on = game === g.id;
-          if (logo) {
-            return (
-              <button key={g.id} onClick={() => setGame(g.id)} title={g.name} style={{
-                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, height: 38, padding: '0 16px',
-                borderRadius: 999, background: on ? '#fff' : T.surface,
-                boxShadow: on ? '0 0 0 1.5px var(--fill)' : 'inset 0 0 0 1px var(--line)', transition: 'box-shadow 0.15s' }}>
-                <img src={logo} alt={g.name} style={{ height: 19, width: 'auto', maxWidth: 84, objectFit: 'contain', display: 'block', filter: on ? 'none' : 'saturate(0.92)' }} />
-              </button>
-            );
-          }
-          return (
-            <Chip key={g.id} active={on} onClick={() => setGame(g.id)}
-              leading={<span style={{ width: 8, height: 8, borderRadius: 999, background: g.tint }} />}>{g.short}</Chip>
-          );
-        })}
-        <button onClick={() => setPrefsOpen(true)} title="Edit games" style={{ flexShrink: 0, width: 38, height: 38, borderRadius: 999, background: T.surface,
-          color: T.muted, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-          {Icon.filter ? Icon.filter({ width: 18, height: 18 }) : '⚙'}
-        </button>
-      </div>
-      {window.GamePrefsSheet && <window.GamePrefsSheet app={app} open={prefsOpen} onClose={() => setPrefsOpen(false)} games={GAMES} />}
-
       {/* ── Browse by Game ── */}
       <div style={{ marginTop: 20 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
