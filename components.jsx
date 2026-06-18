@@ -45,28 +45,23 @@ function CardArt({ item, w = 120, radius = 10, showFoil = true }) {
     return () => { alive = false; };
   }, [item.game, item.name, item.number]);
 
-  // While loading (no realUrl, not failed): show shimmer
-  const showShimmer = !realUrl && !failed;
-  // Show colored placeholder only as fallback when image fails
-  const showPlaceholder = failed || (realUrl && loaded);
-  // Show a minimal fallback (no hatching/name/set) when image failed
-  const showMinimalFallback = failed && !realUrl;
+  // Show skeleton shimmer until real image is loaded
+  const showSkeleton = !loaded;
 
   return (
     <div style={{
       width: w, maxWidth: '100%', height: h, borderRadius: radius, position: 'relative',
       overflow: 'hidden', flexShrink: 0, isolation: 'isolate',
       transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-      background: showShimmer ? 'transparent' : showMinimalFallback ? '#e5e7eb' : art,
-      boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.10), inset 0 0 0 ' + Math.round(w*0.05) + 'px rgba(0,0,0,0.0)',
+      background: '#e5e7eb',
     }}>
-      {/* shimmer while image is resolving */}
-      {showShimmer && (
+      {/* skeleton shimmer until image loads */}
+      {showSkeleton && (
         <div className="shimmer" style={{
           position: 'absolute', inset: 0, borderRadius: radius, zIndex: 1,
         }} />
       )}
-      {/* real card image (fades in over the placeholder once available) */}
+      {/* real card image (fades in once loaded) */}
       {realUrl && (
         <img src={realUrl} alt={item.name}
           onLoad={() => setLoaded(true)}
@@ -77,69 +72,12 @@ function CardArt({ item, w = 120, radius = 10, showFoil = true }) {
           }}
         />
       )}
-      {/* card border frame — only when showing colored placeholder (not minimal fallback) */}
-      {!showShimmer && !showMinimalFallback && (
+      {/* foil effect overlay — only on loaded foil cards */}
+      {loaded && showFoil && item.foil && (
         <div style={{
-          position: 'absolute', inset: Math.max(3, w*0.045), borderRadius: radius*0.6,
-          boxShadow: 'inset 0 0 0 1.5px rgba(255,255,255,0.22)',
+          position: 'absolute', inset: 0, zIndex: 4, pointerEvents: 'none',
+          background: 'linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.18) 47%, transparent 60%)',
         }} />
-      )}
-      {/* art window — hatch placeholder (only when showing full colored fallback) */}
-      {!showShimmer && !showMinimalFallback && (
-        <div style={{
-          position: 'absolute', left: w*0.10, right: w*0.10, top: w*0.13, height: h*0.46,
-          borderRadius: radius*0.4, overflow: 'hidden',
-          background: 'rgba(0,0,0,0.16)',
-          backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.07) 0 6px, transparent 6px 12px)',
-          boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.12)',
-        }}>
-          {showFoil && item.foil && (
-            <div style={{
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.28) 47%, transparent 60%)',
-            }} />
-          )}
-        </div>
-      )}
-      {/* name plate — minimal fallback shows centered, full fallback at 60% */}
-      {!showShimmer && (
-        <div style={{
-          position: 'absolute', left: w*0.10, right: w*0.10,
-          top: showMinimalFallback ? '50%' : h*0.60,
-          transform: showMinimalFallback ? 'translateY(-50%)' : 'none',
-          color: showMinimalFallback ? '#9ca3af' : '#fff',
-          textShadow: showMinimalFallback ? 'none' : '0 1px 2px rgba(0,0,0,0.4)',
-          textAlign: showMinimalFallback ? 'center' : 'left',
-        }}>
-          <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: Math.max(8, w * (showMinimalFallback ? 0.075 : 0.085)), lineHeight: 1.2, letterSpacing: -0.2 }}>
-            {item.name}
-          </div>
-        </div>
-      )}
-      {/* bottom strip: set / number — hide on minimal fallback */}
-      {!showShimmer && !showMinimalFallback && (
-        <div style={{
-          position: 'absolute', left: w*0.10, right: w*0.10, bottom: w*0.10,
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          color: 'rgba(255,255,255,0.82)', fontFamily: T.mono, fontSize: Math.max(6.5, w*0.055),
-        }}>
-          <span style={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', maxWidth: '64%' }}>
-            {set ? set.name.replace(/\s*\(.*\)/, '') : ''}
-          </span>
-          <span>{item.number || ''}</span>
-        </div>
-      )}
-      {/* game pip — hide on minimal fallback */}
-      {!showShimmer && !showMinimalFallback && g && (
-        <div style={{
-          position: 'absolute', top: w*0.085, right: w*0.085,
-          width: Math.max(14, w*0.14), height: Math.max(14, w*0.14), borderRadius: 999,
-          background: g.tint, boxShadow: '0 1px 3px rgba(0,0,0,0.35), inset 0 0 0 1.5px rgba(255,255,255,0.35)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          color: '#fff', fontFamily: T.sans, fontWeight: 800, fontSize: Math.max(7, w*0.075),
-        }}>
-          {g.name[0]}
-        </div>
       )}
     </div>
   );
