@@ -158,37 +158,47 @@ function MoverCard({ item, change, app }) {
   );
 }
 
+// ── game hero images for Browse by Game tiles ───────────────
+const GAME_HEROES = {
+  pkmn: 'logos/heroes/pkmn.jpg',
+  mtg: 'logos/heroes/mtg.jpg',
+  ygo: 'logos/heroes/ygo.jpg',
+  lor: 'logos/heroes/lor.webp',
+  digimon: 'logos/heroes/digimon.png',
+};
+
 // ── game tile (Browse by Game carousel — tall portrait style) ─
 function GameBrowseTile({ game, app }) {
   const logo = GAME_LOGOS && GAME_LOGOS[game.id];
+  const hero = GAME_HEROES[game.id];
   return (
     <div onClick={() => app.nav.push('search', { game: game.id })} role="button" style={{
-      flexShrink: 0, width: 130, height: 180, cursor: 'pointer', borderRadius: 12,
+      flexShrink: 0, width: 140, height: 200, cursor: 'pointer', borderRadius: 14,
       overflow: 'hidden', position: 'relative',
-      background: `linear-gradient(135deg, ${game.tint} 0%, ${game.tint}cc 40%, #16181d 100%)`,
-      boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+      background: game.tint,
+      boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
     }}>
-      {/* diagonal accent stripe */}
+      {/* hero art background */}
+      {hero && <img src={hero} alt="" style={{
+        position: 'absolute', inset: 0, width: '100%', height: '100%',
+        objectFit: 'cover', objectPosition: 'center top',
+      }} />}
+      {/* dark overlay for logo readability */}
       <div style={{ position: 'absolute', inset: 0,
-        background: `linear-gradient(160deg, transparent 30%, ${game.tint}44 50%, transparent 70%)`,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.75) 100%)',
       }} />
-      {/* logo or fallback text */}
+      {/* logo centred */}
       <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center', padding: 16, zIndex: 1 }}>
+        alignItems: 'center', justifyContent: 'flex-end', padding: '16px 12px', zIndex: 1 }}>
         {logo ? (
-          <img src={logo} alt={game.short} style={{ maxWidth: 90, maxHeight: 60,
+          <img src={logo} alt={game.short} style={{ maxWidth: 100, maxHeight: 44,
             objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.95 }} />
         ) : (
-          <span style={{ fontSize: 32, fontWeight: 800, color: '#fff', opacity: 0.9, letterSpacing: -1 }}>
-            {game.short.charAt(0)}
+          <span style={{ fontSize: 15, fontWeight: 800, color: '#fff' }}>
+            {game.short}
           </span>
         )}
-        <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.7)',
-          marginTop: 8, textTransform: 'uppercase', letterSpacing: 1 }}>{game.short}</div>
       </div>
-      {/* bottom gradient for depth */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%',
-        background: 'linear-gradient(to top, rgba(0,0,0,0.4), transparent)' }} />
     </div>
   );
 }
