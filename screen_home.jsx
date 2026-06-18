@@ -359,6 +359,38 @@ function SetTile({ set, onClick }) {
 }
 
 // ── HOME SCREEN ──────────────────────────────────────────────
+function WhatsHot({ app, trendingProducts }) {
+  const [hotTab, setHotTab] = React.useState('trending');
+  const dealItems = HOT_DEALS.map(d => { const item = byId(d.id); return item ? { ...item, _discount: d.discount } : null; }).filter(Boolean);
+  return (
+    <div style={{ paddingTop: 20 }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 14px', marginBottom: 10 }}>
+        <div style={{ display: 'flex', gap: 6 }}>
+          {[['trending', 'Trending'], ['deals', 'Hot Deals']].map(([k, l]) => (
+            <div key={k} onClick={() => setHotTab(k)} style={{
+              padding: '6px 12px', borderRadius: 20, fontSize: 13, fontWeight: 700, cursor: 'pointer',
+              background: hotTab === k ? T.accent : T.surface,
+              color: hotTab === k ? '#fff' : T.ink,
+              border: hotTab === k ? 'none' : '1px solid var(--line)',
+            }}>{l}</div>
+          ))}
+        </div>
+        <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: T.accent, cursor: 'pointer' }}>See all</div>
+      </div>
+      {hotTab === 'trending' ? (
+        <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
+          {trendingProducts.slice(0, 4).map(p => <ProductCard key={p.id} product={p} app={app} />)}
+        </div>
+      ) : (
+        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px',
+          scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
+          {dealItems.map(item => <DealCard key={item.id} item={item} discount={item._discount} app={app} />)}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function HomeScreen({ app }) {
   const [game, setGame] = React.useState('all');
   const [prefsOpen, setPrefsOpen] = React.useState(false);
@@ -457,184 +489,43 @@ function HomeScreen({ app }) {
         </div>
       </div>
 
-      {/* featured — swaps with the selected game */}
-      <div style={{ paddingTop: 20 }}>
-        <FeaturedRail app={app} game={game} onPick={(id) => setGame(id)} />
-      </div>
+      {/* ── What's hot (trending + deals merged) ── */}
+      <WhatsHot app={app} trendingProducts={trendingProducts} />
 
-      {/* trending grid */}
-      {trendingProducts.length > 0 && (
-        <div style={{ paddingTop: 20 }}>
-          <SectionHeader title="Trending now" action="See all" onAction={() => app.nav.setTab('search')} />
-          <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
-            {trendingProducts.slice(0, 6).map(p => <ProductCard key={p.id} product={p} app={app} />)}
+      {/* ── UK community banner ── */}
+      <div style={{ margin: '24px 14px', padding: '20px 16px', borderRadius: 14,
+        background: 'var(--accent)', color: '#fff' }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 18, marginBottom: 6 }}>
+          Built for the UK TCG community
+        </div>
+        <div style={{ fontSize: 13, lineHeight: 1.6, opacity: 0.9, marginBottom: 14 }}>
+          The lowest fees in the market. Real buyer protection. Local game shop support. No other platform connects the whole community like this.
+        </div>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <div style={{ flex: 1, background: 'rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>6%+30p</div>
+            <div style={{ fontSize: 10, opacity: 0.8 }}>Total fee</div>
+          </div>
+          <div style={{ flex: 1, background: 'rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>5</div>
+            <div style={{ fontSize: 10, opacity: 0.8 }}>Games</div>
+          </div>
+          <div style={{ flex: 1, background: 'rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>3</div>
+            <div style={{ fontSize: 10, opacity: 0.8 }}>Personas</div>
           </div>
         </div>
-      )}
-
-      {/* ── Hot Deals ── */}
-      <div style={{ marginTop: 20 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '0 14px', marginBottom: 8 }}>
-          <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Hot Deals</div>
-          <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600,
-            color: T.accent, cursor: 'pointer' }}>View all</div>
-        </div>
-        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px',
-          scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
-          {HOT_DEALS.map(d => {
-            const item = byId(d.id);
-            return item ? <DealCard key={d.id} item={item} discount={d.discount} app={app} /> : null;
-          })}
-        </div>
-      </div>
-
-      {/* ── Price Movers ── */}
-      <div style={{ marginTop: 20 }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '0 14px', marginBottom: 8 }}>
-          <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Daily Movers</div>
-          <div style={{ fontSize: 13, fontWeight: 600, color: T.accent, cursor: 'pointer' }}>View all</div>
-        </div>
-        <div style={{ display: 'flex', gap: 8, overflowX: 'auto', padding: '0 14px',
-          scrollSnapType: 'x mandatory', WebkitOverflowScrolling: 'touch' }}>
-          {PRICE_MOVERS.map(m => {
-            const item = byId(m.id);
-            return item ? <MoverCard key={m.id} item={item} change={m.change} app={app} /> : null;
-          })}
+        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+          <button onClick={() => app.nav.push('fees')} style={{ flex: 1, padding: '10px', borderRadius: 8,
+            background: 'rgba(255,255,255,0.2)', color: '#fff', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
+            Compare fees
+          </button>
+          <button onClick={() => app.nav.push('howitworks')} style={{ flex: 1, padding: '10px', borderRadius: 8,
+            background: '#fff', color: 'var(--accent)', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
+            How it works
+          </button>
         </div>
       </div>
-
-      {/* sponsored ad carousel */}
-      <AdCarousel app={app} />
-
-      {/* shop by set */}
-      {sets.length > 0 && (
-        <div style={{ paddingTop: 20 }}>
-          <SectionHeader title="Shop by set" action="Browse all" onAction={() => app.nav.setTab('search')} />
-          <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
-            {sets.map(s => <SetTile key={s.id} set={s} onClick={() => app.nav.push('search', { set: s.id })} />)}
-          </div>
-        </div>
-      )}
-
-      {/* graded spotlight */}
-      {graded.length > 0 && (
-        <div style={{ paddingTop: 20 }}>
-          <SectionHeader title="Graded spotlight" />
-          <div className="noscroll stagger" style={{ display: 'flex', gap: 12, padding: '4px 16px 8px', overflowX: 'auto' }}>
-            {graded.map(l => {
-              const gWatched = app.isWatched(l.id);
-              return (
-                <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} role="button" style={{
-                  flexShrink: 0, width: 168, textAlign: 'left', background: T.surface, cursor: 'pointer',
-                  borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
-                  boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
-                }}>
-                  <div style={{ position: 'relative', padding: '14px 14px 10px', display: 'flex', justifyContent: 'center', background: '#ffffff' }}>
-                    <Slab item={l} w={130} />
-                    <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(l.id); }} style={{
-                      position: 'absolute', top: 10, right: 10, width: 32, height: 32, borderRadius: 999,
-                      background: 'var(--glass)', backdropFilter: 'blur(6px)',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: gWatched ? T.down : T.muted, boxShadow: '0 1px 4px rgba(0,0,0,0.12)',
-                    }}>{Icon.heart({ width: 18, height: 18 }, gWatched)}</button>
-                    <div style={{ position: 'absolute', top: 12, left: 12 }}>
-                      <GradeChip grade={l.grade} />
-                    </div>
-                  </div>
-                  <div style={{ padding: '10px 12px 12px' }}>
-                    <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 14, lineHeight: 1.15, letterSpacing: -0.2,
-                      whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
-                    <div style={{ fontFamily: T.sans, fontSize: 11.5, color: T.muted, marginTop: 1, marginBottom: 8,
-                      whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.subtitle || l.condition}</div>
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
-                      <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 16, color: T.ink }}>{money(l.price)}</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 7,
-                      fontFamily: T.sans, fontSize: 11, color: T.muted, whiteSpace: 'nowrap', overflow: 'hidden' }}>
-                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-                        {Icon.bolt({ width: 11, height: 11, style: { color: T.accent } })}
-                        {l.shipping === 0 ? 'Free shipping' : money(l.shipping) + ' ship'}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* bulk lots */}
-      {lots.length > 0 && (
-        <div style={{ paddingTop: 20 }}>
-          <SectionHeader title="Bulk lots & collections" />
-          <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 10, padding: '0 16px' }}>
-            {lots.map(lot => <LotRow key={lot.id} lot={lot} app={app} />)}
-          </div>
-        </div>
-      )}
-
-      {/* collector's corner — help & education */}
-      <div style={{ paddingTop: 20 }}>
-        <SectionHeader title="Collector\'s corner" />
-        <div style={{ padding: '0 16px', marginTop: -2, marginBottom: 12 }}>
-          <div style={{ fontFamily: T.sans, fontSize: 13, color: T.muted, lineHeight: 1.45 }}>New to collecting, or want to protect what you own? Start here.</div>
-        </div>
-        <div className="noscroll" style={{ display: 'flex', gap: 12, padding: '0 16px', overflowX: 'auto' }}>
-          {GUIDES.map(gd => (
-            <button key={gd.id} onClick={() => setArticle(gd)} style={{ flexShrink: 0, width: 232, textAlign: 'left',
-              background: T.surface, borderRadius: 4, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05), 0 6px 16px rgba(20,24,40,0.05)',
-              position: 'relative', height: 218, display: 'block' }}>
-              <img src={gd.src} alt={gd.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.05) 0%, transparent 28%, rgba(0,0,0,0.35) 62%, rgba(0,0,0,0.85) 100%)' }} />
-              <span style={{ position: 'absolute', top: 11, left: 11, fontFamily: T.sans, fontWeight: 700, fontSize: 9.5, letterSpacing: 0.4,
-                color: T.accent, background: '#fff', borderRadius: 6, padding: '3px 8px' }}>{gd.tag}</span>
-              <div style={{ position: 'absolute', left: 13, bottom: 13, right: 13 }}>
-                <div style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 16, color: '#fff', letterSpacing: -0.3, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{gd.title}</div>
-                <div style={{ fontFamily: T.sans, fontSize: 12, color: 'rgba(255,255,255,0.88)', lineHeight: 1.4, marginTop: 4, textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>{gd.desc}</div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, marginTop: 9, fontFamily: T.sans, fontWeight: 700, fontSize: 12.5, color: '#fff' }}>
-                  {gd.cta} <span>→</span>
-                </div>
-              </div>
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* article overlay */}
-      {article && (
-        <div style={{ position: 'absolute', inset: 0, zIndex: 50, background: T.bg, display: 'flex', flexDirection: 'column', animation: 'ccPushIn 0.26s ease' }}>
-          <div style={{ display: 'flex', alignItems: 'center', padding: '14px 12px 10px', gap: 10 }}>
-            <button onClick={() => setArticle(null)} style={{ width: 38, height: 38, borderRadius: 999, background: T.surface, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)' }}>{Icon.back({})}</button>
-            <div style={{ flex: 1, fontFamily: T.sans, fontWeight: 700, fontSize: 16 }}>Back</div>
-          </div>
-          <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 40 }}>
-            <div style={{ height: 160, position: 'relative', overflow: 'hidden' }}>
-              <img src={article.src} alt={article.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.7) 100%)' }} />
-              <span style={{ position: 'absolute', top: 12, left: 14, fontFamily: T.sans, fontWeight: 700, fontSize: 10, letterSpacing: 0.4, color: T.accent, background: '#fff', borderRadius: 6, padding: '3px 8px' }}>{article.tag}</span>
-              <div style={{ position: 'absolute', bottom: 14, left: 14, right: 14 }}>
-                <div style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 22, color: '#fff', letterSpacing: -0.4, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{article.title}</div>
-              </div>
-            </div>
-            <div style={{ padding: '20px 16px' }}>
-              {(article.body || '').split('\n\n').map((para, i) => {
-                if (para.startsWith('**') && para.endsWith('**')) {
-                  return <h3 key={i} style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 16, margin: '20px 0 8px', letterSpacing: -0.2 }}>{para.replace(/\*\*/g, '')}</h3>;
-                }
-                const parts = para.split(/(\*\*[^*]+\*\*)/g);
-                return (
-                  <p key={i} style={{ fontFamily: T.sans, fontSize: 14, color: T.ink2, lineHeight: 1.6, margin: '0 0 14px' }}>
-                    {parts.map((part, j) => part.startsWith('**') ? <strong key={j} style={{ fontWeight: 700, color: T.ink }}>{part.replace(/\*\*/g, '')}</strong> : part)}
-                  </p>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
