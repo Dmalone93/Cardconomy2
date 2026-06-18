@@ -1299,10 +1299,44 @@ function offersForProduct(id) { const p = PRODUCTS.find(p => p.id === id); retur
 function sellerByName(name) { return SELLERS.find(s => s.name === name); }
 function listingsBySeller(name) { return LISTINGS.filter(l => l.seller === name); }
 
+// ── Hot Deals: listings priced below market value ──
+const HOT_DEALS = [
+  { id: 'l02', discount: 18 },
+  { id: 'l05', discount: 12 },
+  { id: 'l09', discount: 22 },
+  { id: 'l07', discount: 8 },
+  { id: 'l14', discount: 15 },
+  { id: 'l03', discount: 11 },
+];
+
+// ── Price Movers: biggest 24h changes ──
+const PRICE_MOVERS = [
+  { id: 'l01', change: 8.3 },
+  { id: 'l06', change: -12.1 },
+  { id: 'l10', change: 15.7 },
+  { id: 'l04', change: -6.4 },
+  { id: 'l08', change: 22.0 },
+  { id: 'l13', change: -9.8 },
+];
+
+// ── Cross-set printings (same card name across sets) ──
+const PRINTINGS = {
+  'Charizard ex': [
+    { set: 's151', number: '199/165', price: 432.00 },
+    { set: 'cpa', number: '079/073', price: 185.00 },
+  ],
+  'Pikachu': [
+    { set: 's151', number: '025/165', price: 28.50 },
+    { set: 'base', number: '058/102', price: 42.00 },
+    { set: 'evs', number: '049/203', price: 12.00 },
+  ],
+};
+
 Object.assign(window, {
   GAMES, SETS, ART, GRADERS, gradeText, LISTINGS, LOTS, byId, setById, gameById,
   SHOP, SUBMISSION, SUB_CARDS, BULK_RATES, subStats, SCAN_POOL,
   SHOPS, TRADERS, OWNED_REFS, traderById, shopById,
   TRADE_POSTS, postById, GAME_LOGOS,
   PRODUCTS, productById, offersForProduct, SELLERS, COND_SHORT, sellerByName, listingsBySeller,
+  HOT_DEALS, PRICE_MOVERS, PRINTINGS,
 });
