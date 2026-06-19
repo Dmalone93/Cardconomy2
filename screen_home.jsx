@@ -34,11 +34,7 @@ function CardFan({ app }) {
 
   return (
     <div style={{ position: 'relative', height: 220, display: 'flex', alignItems: 'center',
-      justifyContent: 'center', overflow: 'hidden',
-      background: 'linear-gradient(180deg, var(--fill) 0%, var(--fill) 50%, var(--bg) 100%)' }}>
-      {/* emerald radial glow */}
-      <div style={{ position: 'absolute', inset: 0,
-        background: 'radial-gradient(ellipse at 50% 60%, var(--accent) 0%, transparent 55%)', opacity: 0.12 }} />
+      justifyContent: 'center', overflow: 'hidden', background: 'var(--bg)' }}>
       {/* fanned cards */}
       {cards.slice(0, 3).map((card, i) => {
         const layout = FAN_LAYOUT[i] || FAN_LAYOUT[0];
@@ -49,8 +45,8 @@ function CardFan({ app }) {
               position: 'absolute', width: 110, height: 154, borderRadius: 14, cursor: 'pointer',
               transform: `translate(${layout.x}px, ${layout.y + drift}px) rotate(${layout.rotate}deg)`,
               zIndex: layout.z, transition: reduceMotion.current ? 'none' : 'transform 0.1s linear',
-              boxShadow: '0 8px 30px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)',
-              border: '1px solid rgba(255,255,255,0.12)',
+              boxShadow: '0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08)',
+              border: '1px solid var(--line)',
               overflow: 'hidden',
             }}>
             <CardArt item={card} w={110} radius={14} />
@@ -62,9 +58,9 @@ function CardFan({ app }) {
         );
       })}
       {/* tagline overlay */}
-      <div style={{ position: 'absolute', bottom: 16, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 15, color: '#fff',
-          letterSpacing: -0.3, textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>
+      <div style={{ position: 'absolute', bottom: 14, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 15, color: 'var(--ink)',
+          letterSpacing: -0.3 }}>
           The UK home for trading cards
         </div>
       </div>
@@ -439,39 +435,35 @@ function HomeScreen({ app }) {
       <CardFan app={app} />
 
       {/* ── Three Communities ── */}
-      <div style={{ padding: '24px 14px 8px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 16 }}>
-          <div style={{ fontSize: 19, fontWeight: 800, color: T.ink, lineHeight: 1.2, letterSpacing: -0.4 }}>
+      <div style={{ padding: '20px 14px 12px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 14 }}>
+          <div style={{ fontFamily: 'var(--heading)', fontSize: 18, fontWeight: 700, color: T.ink, letterSpacing: -0.4 }}>
             Connecting the whole TCG community
           </div>
-          <div style={{ fontSize: 13, color: T.muted, marginTop: 6, lineHeight: 1.5 }}>
-            The only marketplace where buyers, sellers, and local game shops trade together.
+          <div style={{ fontSize: 13, color: T.muted, marginTop: 4, lineHeight: 1.5 }}>
+            Buyers, sellers, and local game shops — one platform.
           </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {[
-            { icon: '\uD83D\uDCE6', title: 'Buyers & Collectors', desc: 'Find cards across every game, buy with protection, and build your collection.', cta: 'Start browsing', color: 'var(--up)', action: () => app.nav.setTab('search') },
-            { icon: '\uD83D\uDCB0', title: 'Individual Sellers', desc: 'List in seconds, sell at 4% \u2014 the lowest fee in the market \u2014 or trade card-for-card.', cta: 'List a card', color: 'var(--accent)', action: () => app.nav.setTab('sell') },
-            { icon: '\uD83C\uDFEA', title: 'Local Game Shops', desc: 'Get a digital storefront, receive cards from local sellers, and reach collectors nationwide.', cta: 'Enrol your shop', color: 'var(--gold)', action: () => app.nav.push('enroll_shop') },
+            { title: 'Buyers & Collectors', desc: 'Buy with protection and build your collection.', cta: 'Start browsing', action: () => app.nav.setTab('search') },
+            { title: 'Individual Sellers', desc: 'List in seconds. 4% fee — the lowest in the market.', cta: 'List a card', action: () => app.nav.setTab('sell') },
+            { title: 'Local Game Shops', desc: 'Digital storefront. Receive cards from local sellers.', cta: 'Enrol your shop', action: () => app.nav.push('enroll_shop') },
           ].map(p => (
-            <div key={p.title} style={{ display: 'flex', gap: 12, padding: '14px', background: T.surface,
-              borderRadius: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.04)', alignItems: 'flex-start' }}>
-              <div style={{ fontSize: 24, flexShrink: 0, marginTop: 2 }}>{p.icon}</div>
+            <div key={p.title} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+              padding: '12px 14px', background: T.surface, borderRadius: 10, border: '1px solid var(--line)' }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 700, color: T.ink }}>{p.title}</div>
-                <div style={{ fontSize: 12, color: T.muted, marginTop: 3, lineHeight: 1.5 }}>{p.desc}</div>
-                <div onClick={p.action} style={{ fontSize: 12, fontWeight: 700, color: p.color,
-                  marginTop: 6, cursor: 'pointer' }}>{p.cta} →</div>
+                <div style={{ fontSize: 12, color: T.muted, marginTop: 2 }}>{p.desc}</div>
               </div>
+              <div onClick={p.action} style={{ fontSize: 12, fontWeight: 700, color: T.accent,
+                cursor: 'pointer', flexShrink: 0, marginLeft: 10 }}>{p.cta} →</div>
             </div>
           ))}
         </div>
-        {/* connecting bar */}
-        <div style={{ height: 3, borderRadius: 2, margin: '14px 40px 4px',
-          background: 'linear-gradient(90deg, var(--up), var(--accent), var(--gold))' }} />
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', marginTop: 10 }}>
           <span onClick={() => app.nav.push('howitworks')} style={{ fontSize: 12, fontWeight: 600,
-            color: T.accent, cursor: 'pointer' }}>Learn how it works →</span>
+            color: T.accent, cursor: 'pointer' }}>How it works →</span>
         </div>
       </div>
 
@@ -493,38 +485,18 @@ function HomeScreen({ app }) {
       <WhatsHot app={app} trendingProducts={trendingProducts} />
 
       {/* ── UK community banner ── */}
-      <div style={{ margin: '24px 14px', padding: '20px 16px', borderRadius: 14,
-        background: 'var(--accent)', color: '#fff' }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 18, marginBottom: 6 }}>
+      {/* ── UK community banner ── */}
+      <div style={{ margin: '20px 14px', padding: '16px', borderRadius: 12, background: T.surface, border: '1px solid var(--line)' }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 16, color: T.ink, marginBottom: 4 }}>
           Built for the UK TCG community
         </div>
-        <div style={{ fontSize: 13, lineHeight: 1.6, opacity: 0.9, marginBottom: 14 }}>
-          The lowest fees in the market. Real buyer protection. Local game shop support. No other platform connects the whole community like this.
+        <div style={{ fontSize: 12, color: T.muted, lineHeight: 1.5, marginBottom: 12 }}>
+          6% + 30p total fees. Buyer protection on every order. Local game shop support built in.
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <div style={{ flex: 1, background: 'rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
-            <div style={{ fontSize: 18, fontWeight: 700 }}>6%+30p</div>
-            <div style={{ fontSize: 10, opacity: 0.8 }}>Total fee</div>
-          </div>
-          <div style={{ flex: 1, background: 'rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
-            <div style={{ fontSize: 18, fontWeight: 700 }}>5</div>
-            <div style={{ fontSize: 10, opacity: 0.8 }}>Games</div>
-          </div>
-          <div style={{ flex: 1, background: 'rgba(255,255,255,0.15)', borderRadius: 10, padding: '10px 12px', textAlign: 'center' }}>
-            <div style={{ fontSize: 18, fontWeight: 700 }}>3</div>
-            <div style={{ fontSize: 10, opacity: 0.8 }}>Personas</div>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-          <button onClick={() => app.nav.push('fees')} style={{ flex: 1, padding: '10px', borderRadius: 8,
-            background: 'rgba(255,255,255,0.2)', color: '#fff', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
-            Compare fees
-          </button>
-          <button onClick={() => app.nav.push('howitworks')} style={{ flex: 1, padding: '10px', borderRadius: 8,
-            background: '#fff', color: 'var(--accent)', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
-            How it works
-          </button>
-        </div>
+        <button onClick={() => app.nav.push('fees')} style={{
+          padding: '10px 18px', borderRadius: 8, border: 'none',
+          background: T.accent, color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer',
+        }}>Compare our fees →</button>
       </div>
     </div>
   );

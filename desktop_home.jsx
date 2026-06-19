@@ -178,11 +178,7 @@ function DHome({ app }) {
     <div style={{ paddingBottom: 30 }}>
       {/* ── Card Fan ── */}
       <div style={{ position: 'relative', height: 280, display: 'flex', alignItems: 'center',
-        justifyContent: 'center', overflow: 'hidden',
-        background: 'linear-gradient(180deg, var(--fill) 0%, var(--fill) 40%, var(--bg) 100%)',
-        marginTop: -1 }}>
-        <div style={{ position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at 50% 60%, var(--accent) 0%, transparent 50%)', opacity: 0.1 }} />
+        justifyContent: 'center', overflow: 'hidden', background: 'var(--bg)' }}>
         {(() => {
           const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03')].filter(Boolean);
           const layouts = [
@@ -196,23 +192,21 @@ function DHome({ app }) {
               <div key={card.id} onClick={() => app.go('listing', { id: card.id })} style={{
                 position: 'absolute', width: 150, height: 210, borderRadius: 14, cursor: 'pointer',
                 transform: `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`,
-                zIndex: l.z, boxShadow: '0 10px 40px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)',
-                border: '1px solid rgba(255,255,255,0.1)', overflow: 'hidden',
+                zIndex: l.z, boxShadow: '0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08)',
+                border: '1px solid var(--line)', overflow: 'hidden',
                 transition: 'transform 0.3s ease',
               }}
                 onMouseEnter={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y - 8}px) rotate(${l.rotate}deg) scale(1.04)`; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`; }}
               >
                 <CardArtH item={card} w={150} radius={14} />
-                <div style={{ position: 'absolute', inset: 0, borderRadius: 14, zIndex: 5, pointerEvents: 'none',
-                  background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 60%, transparent 75%)' }} />
               </div>
             );
           });
         })()}
         <div style={{ position: 'absolute', bottom: 20, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
-          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 20, color: '#fff',
-            letterSpacing: -0.4, textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 20, color: 'var(--ink)',
+            letterSpacing: -0.4 }}>
             The UK home for trading cards
           </div>
         </div>
@@ -231,26 +225,23 @@ function DHome({ app }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
           {[
-            { icon: '\uD83D\uDCE6', title: 'Buyers & Collectors', desc: 'Find cards across every game, buy with protection, and build your collection.', cta: 'Start browsing', color: 'var(--up)', route: 'search' },
-            { icon: '\uD83D\uDCB0', title: 'Individual Sellers', desc: 'List in seconds, sell at 4% \u2014 the lowest fee in the market \u2014 or trade card-for-card.', cta: 'List a card', color: 'var(--accent)', route: 'sell_single' },
-            { icon: '\uD83C\uDFEA', title: 'Local Game Shops', desc: 'Get a digital storefront, receive cards from local sellers, and reach collectors nationwide.', cta: 'Enrol your shop', color: 'var(--gold)', route: 'enroll' },
+            { title: 'Buyers & Collectors', desc: 'Buy with protection and build your collection across every game.', cta: 'Start browsing', route: 'search' },
+            { title: 'Individual Sellers', desc: 'List in seconds. 4% fee — the lowest in the market. Trade card-for-card.', cta: 'List a card', route: 'sell_single' },
+            { title: 'Local Game Shops', desc: 'Digital storefront. Receive cards from local sellers. Reach collectors nationwide.', cta: 'Enrol your shop', route: 'enroll' },
           ].map(p => (
-            <div key={p.title} style={{ background: 'var(--surface)', borderRadius: 16, padding: '24px 20px',
-              boxShadow: '0 1px 3px rgba(20,24,40,0.05)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontSize: 32, marginBottom: 12 }}>{p.icon}</div>
-              <div style={{ fontSize: 17, fontWeight: 800, color: TH.ink, marginBottom: 6 }}>{p.title}</div>
+            <div key={p.title} style={{ background: 'var(--surface)', borderRadius: 14, padding: '22px 20px',
+              border: '1px solid var(--line)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ fontSize: 17, fontWeight: 700, color: TH.ink, marginBottom: 6 }}>{p.title}</div>
               <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, flex: 1 }}>{p.desc}</div>
-              <button onClick={() => app.go(p.route)} style={{ marginTop: 14, padding: '10px 18px',
-                borderRadius: 10, border: 'none', background: p.color, color: '#fff',
-                fontWeight: 700, fontSize: 13.5, cursor: 'pointer', alignSelf: 'flex-start' }}>{p.cta} →</button>
+              <button onClick={() => app.go(p.route)} style={{ marginTop: 14,
+                fontWeight: 700, fontSize: 13.5, cursor: 'pointer', alignSelf: 'flex-start',
+                color: 'var(--accent)', background: 'none', padding: 0 }}>{p.cta} →</button>
             </div>
           ))}
         </div>
-        <div style={{ height: 3, borderRadius: 2, margin: '20px 120px 8px',
-          background: 'linear-gradient(90deg, var(--up), var(--accent), var(--gold))' }} />
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', marginTop: 14 }}>
           <button onClick={() => app.go('howitworks')} style={{ fontSize: 14, fontWeight: 600,
-            color: 'var(--accent)', cursor: 'pointer' }}>Learn how it works →</button>
+            color: 'var(--accent)', cursor: 'pointer' }}>How it works →</button>
         </div>
       </section>
 
@@ -264,36 +255,27 @@ function DHome({ app }) {
       {/* ── What's hot (trending + deals) ── */}
       <DWhatsHot app={app} trending={trending} />
 
-      {/* ── Why Cardconomy banner ── */}
-      <section style={{ marginTop: 50, background: 'var(--accent)', padding: '48px 0', color: '#fff' }}>
-        <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 40, alignItems: 'center' }}>
-          <div>
-            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 30, letterSpacing: -0.8, margin: '0 0 14px' }}>
+      {/* ── UK community banner ── */}
+      <section className="wrap" style={{ marginTop: 50 }}>
+        <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--line)', padding: '32px 28px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40 }}>
+          <div style={{ flex: 1 }}>
+            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 8px', color: TH.ink }}>
               Built for the UK TCG community
             </h2>
-            <p style={{ fontSize: 15, lineHeight: 1.7, opacity: 0.85, margin: '0 0 20px' }}>
-              Cardconomy is the only marketplace with local game shop integration, real card-for-card trading, and the lowest fees in the market. No hidden charges, no inflated prices.
+            <p style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, margin: '0 0 16px' }}>
+              6% + 30p total fees. Buyer protection on every order. Local game shop support built in.
             </p>
             <button onClick={() => app.go('fees')} style={{
-              padding: '12px 24px', borderRadius: 10, border: '2px solid rgba(255,255,255,0.4)',
-              background: 'rgba(255,255,255,0.15)', color: '#fff', fontWeight: 700, fontSize: 14,
-              cursor: 'pointer', transition: 'background 0.2s',
-            }} onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.25)'}
-               onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.15)'}>
-              Compare our fees →
-            </button>
+              padding: '10px 20px', borderRadius: 8, border: 'none',
+              background: 'var(--accent)', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer',
+            }}>Compare our fees →</button>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14 }}>
-            {[
-              ['6% + 30p', 'Total fee', 'The lowest in the TCG market'],
-              ['\u00A30', 'To list', 'Free to list any card for sale'],
-              ['3', 'Personas', 'Buyer, seller, and game shop flows'],
-              ['5', 'Games', 'Pok\u00E9mon, Magic, Yu-Gi-Oh!, One Piece, Digimon'],
-            ].map(([num, label, sub], i) => (
-              <div key={i} style={{ background: 'rgba(255,255,255,0.12)', borderRadius: 12, padding: '16px 14px' }}>
-                <div style={{ fontSize: 24, fontWeight: 800 }}>{num}</div>
-                <div style={{ fontSize: 13, fontWeight: 700, marginTop: 2 }}>{label}</div>
-                <div style={{ fontSize: 12, opacity: 0.7, marginTop: 4, lineHeight: 1.4 }}>{sub}</div>
+          <div style={{ display: 'flex', gap: 16 }}>
+            {[['6%+30p', 'Total fee'], ['5', 'Games'], ['3', 'Personas']].map(([num, label]) => (
+              <div key={label} style={{ textAlign: 'center' }}>
+                <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: TH.ink }}>{num}</div>
+                <div style={{ fontSize: 12, color: TH.muted, marginTop: 2 }}>{label}</div>
               </div>
             ))}
           </div>
