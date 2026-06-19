@@ -126,7 +126,7 @@ function ListingScreen({ app, params }) {
               fontSize: 13, fontWeight: 600, color: TL.accent, cursor: 'pointer',
               display: 'inline-flex', alignItems: 'center', gap: 4,
             }}>
-              <IconL name="grid" size={14} /> See all printings ({window.PRINTINGS[item.name].length})
+              ⊞ See all printings ({window.PRINTINGS[item.name].length})
             </div>
           )}
 
