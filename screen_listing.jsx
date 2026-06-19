@@ -96,6 +96,10 @@ function ListingScreen({ app, params }) {
           <div style={{ fontFamily: TL.sans, fontSize: 14, color: TL.muted, marginTop: 4 }}>
             {set ? set.name : ''}{item.number ? ' · ' + item.number : ''}{isLot ? '' : ' · ' + item.condition}
           </div>
+          {/* listing age */}
+          <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.faint, marginTop: 4 }}>
+            Listed {['2 hours', '5 hours', '1 day', '2 days', '3 days', '5 days', '1 week'][Math.abs(item.id.charCodeAt(2)) % 7]} ago
+          </div>
 
           {/* ── Finish tabs ── */}
           <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
@@ -139,8 +143,24 @@ function ListingScreen({ app, params }) {
             </div>
           )}
 
+          {/* seller description */}
+          {!isLot && (
+            <div style={{ marginTop: 18, padding: '14px 16px', background: TL.surface2, borderRadius: 12 }}>
+              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14, marginBottom: 6 }}>Seller notes</div>
+              <div style={{ fontFamily: TL.sans, fontSize: 13, color: TL.ink2, lineHeight: 1.6 }}>
+                {[
+                  'Pulled from a sealed booster and sleeved immediately. Never played, stored in a top loader in a smoke-free home.',
+                  'Beautiful card in excellent condition. Centering is near perfect. Happy to send additional close-up photos on request.',
+                  'Part of my personal collection. Selling to fund a different chase card. No trades on this one, firm on price.',
+                  'Pack-fresh condition. Will ship double-sleeved in a top loader with tracking. Same-day dispatch if ordered before 2pm.',
+                  'Slight whitening on the top-left corner, reflected in the price. Otherwise a gorgeous card. See photos for details.',
+                ][Math.abs(item.id.charCodeAt(2)) % 5]}
+              </div>
+            </div>
+          )}
+
           {/* buyer protection banner */}
-          <div style={{ marginTop: 18, padding: '12px 14px', background: TL.surface2, borderRadius: 4, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+          <div style={{ marginTop: 12, padding: '12px 14px', background: TL.surface2, borderRadius: 4, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
             <span style={{ fontSize: 18, flexShrink: 0, color: 'var(--accent)' }}>{IconL.shield ? IconL.shield({ width: 20, height: 20 }) : '🛡️'}</span>
             <div>
               <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Buyer Protection</div>
@@ -225,6 +245,36 @@ function ListingScreen({ app, params }) {
               <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13,
                 color: TL.accent, padding: '8px 12px', borderRadius: 10, boxShadow: 'inset 0 0 0 1px var(--accent)' }}>Store</button>
             </div>
+
+            {/* message seller */}
+            <button onClick={() => app.toast({ title: 'Message sent', subtitle: 'You started a conversation with ' + item.seller })}
+              style={{ width: '100%', marginTop: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                padding: '11px 14px', borderRadius: 10, background: TL.surface, border: '1px solid var(--line)',
+                fontFamily: TL.sans, fontWeight: 600, fontSize: 13.5, color: TL.ink, cursor: 'pointer' }}>
+              <span style={{ fontSize: 16 }}>💬</span> Message seller
+            </button>
+
+            {/* seller's other listings */}
+            {(() => {
+              const others = (window.listingsBySeller ? window.listingsBySeller(item.seller) : []).filter(l => l.id !== item.id).slice(0, 4);
+              if (others.length === 0) return null;
+              return (
+                <div style={{ marginTop: 12 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                    <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: TL.ink }}>More from {item.seller}</div>
+                    <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 12, color: TL.accent }}>View all →</button>
+                  </div>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
+                    {others.map(l => (
+                      <button key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{ textAlign: 'center' }}>
+                        <div style={{ borderRadius: 8, overflow: 'hidden' }}><CardArtL item={l} w={70} radius={8} /></div>
+                        <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11, marginTop: 4 }}>{moneyL(l.price)}</div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
           </div>
 
           {/* shipping / protection */}
