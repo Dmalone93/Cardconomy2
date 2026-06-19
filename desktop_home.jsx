@@ -132,9 +132,47 @@ function Hero({ app }) {
   );
 }
 
+function DWhatsHot({ app, trending }) {
+  const [tab, setTab] = React.useState('trending');
+  const dealItems = HOT_DEALS_H.map(d => { const item = byIdH(d.id); return item ? { ...item, _discount: d.discount } : null; }).filter(Boolean);
+  return (
+    <section style={{ marginTop: 44 }}>
+      <div className="wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+        <div style={{ display: 'flex', gap: 8 }}>
+          {[['trending', 'Trending'], ['deals', 'Hot Deals']].map(([k, l]) => (
+            <button key={k} onClick={() => setTab(k)} style={{
+              padding: '8px 18px', borderRadius: 20, fontSize: 14, fontWeight: 700, cursor: 'pointer',
+              background: tab === k ? 'var(--accent)' : 'var(--surface)',
+              color: tab === k ? '#fff' : TH.ink,
+              border: tab === k ? 'none' : '1px solid var(--line)',
+            }}>{l}</button>
+          ))}
+        </div>
+        <button onClick={() => app.go('search')} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--accent)' }}>See all →</button>
+      </div>
+      <div className="wrap">
+        {tab === 'trending' ? (
+          <div style={grid(210)}>{trending.slice(0, 8).map(l => <DCard key={l.id} item={l} app={app} />)}</div>
+        ) : (
+          <div style={grid(170)}>
+            {dealItems.map(item => (
+              <div key={item.id} style={{ position: 'relative' }}>
+                <DCard item={item} app={app} />
+                <div style={{ position: 'absolute', top: 8, left: 8, background: TH.down, color: '#fff',
+                  fontSize: 11, fontWeight: 700, borderRadius: 4, padding: '2px 6px' }}>
+                  {item._discount}% below market
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 function DHome({ app }) {
   const trending = LISTH.filter(l => l.type === 'buynow');
-  const graded = LISTH.filter(l => l.grade.company !== 'raw');
 
   return (
     <div style={{ paddingBottom: 30 }}>
@@ -223,102 +261,8 @@ function DHome({ app }) {
         </div>
       </Row>
 
-      <Row title="Trending now" action="See all" onAction={() => app.go('search', {})}>
-        <div style={grid(210)}>{trending.slice(0, 10).map(l => <DCard key={l.id} item={l} app={app} />)}</div>
-      </Row>
-
-      {/* ── Hot Deals ── */}
-      <Row title="Hot Deals" action="View all" onAction={() => app.go('search')}>
-        <div style={grid(170)}>
-          {HOT_DEALS_H.slice(0, 6).map(d => {
-            const item = byIdH(d.id);
-            if (!item) return null;
-            return (
-              <div key={d.id} style={{ position: 'relative' }}>
-                <DCard item={item} app={app} />
-                <div style={{ position: 'absolute', top: 8, left: 8, background: TH.down, color: '#fff',
-                  fontSize: 11, fontWeight: 700, borderRadius: 4, padding: '2px 6px' }}>
-                  {d.discount}% below market
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </Row>
-
-      {/* ── Daily Movers ── */}
-      <Row title="Daily Movers" action="View all">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 8 }}>
-          {PRICE_MOVERS_H.map(m => {
-            const item = byIdH(m.id);
-            if (!item) return null;
-            const up = m.change > 0;
-            return (
-              <div key={m.id} onClick={() => app.go('listing', { id: item.id })} style={{
-                display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px',
-                background: TH.surface, borderRadius: 8, cursor: 'pointer',
-              }}>
-                <CardArtH item={item} w={44} radius={4} />
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: TH.ink, overflow: 'hidden',
-                    textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.name}</div>
-                  <div style={{ fontSize: 12, color: TH.muted }}>{mH(item.price)}</div>
-                </div>
-                <div style={{ fontSize: 14, fontWeight: 700, fontFamily: TH.mono,
-                  color: up ? TH.up : TH.down }}>
-                  {up ? '\u25B2' : '\u25BC'} {Math.abs(m.change).toFixed(1)}%
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </Row>
-
-      {/* ── Sponsored hero carousel ── */}
-      <div style={{ marginTop: 32 }}><Hero app={app} /></div>
-
-      {/* shop by set band */}
-      <section style={{ marginTop: 44 }}>
-        <div className="wrap"><h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 18px' }}>Shop by set</h2></div>
-        <div className="wrap" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
-          {SETSH.filter(s => s.img).map(s => {
-            const g = gameByIdH(s.game);
-            return (
-              <button key={s.id} onClick={() => app.go('search', { game: s.game, set: s.id })} style={{ height: 120, borderRadius: 14, overflow: 'hidden', position: 'relative',
-                background: s.hue, color: '#fff', textAlign: 'left', padding: 16, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', boxShadow: '0 4px 14px rgba(20,24,40,0.12)' }}>
-                {s.img
-                  ? <React.Fragment>
-                      <img src={s.img} alt={s.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-                      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.15) 0%, transparent 32%, rgba(0,0,0,0.72) 100%)' }} />
-                    </React.Fragment>
-                  : <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 10px, transparent 10px 20px)' }} />}
-                <div style={{ position: 'absolute', top: 14, left: 16, fontSize: 11, fontWeight: 700, opacity: 0.9, textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{g.short.toUpperCase()}</div>
-                <div style={{ position: 'relative', fontWeight: 800, fontSize: 17, letterSpacing: -0.4, lineHeight: 1.1, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{s.name.replace(/\s*\(.*\)/, '')}</div>
-                <div style={{ position: 'relative', fontFamily: TH.mono, fontSize: 11.5, opacity: 0.9, marginTop: 3, textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>{s.cards} cards · {s.year}</div>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* graded spotlight */}
-      <section style={{ marginTop: 44, background: 'var(--surface)', padding: '36px 0 40px', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-        <div className="wrap" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
-          <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>Graded spotlight</h2>
-          <span style={{ fontSize: 14, color: 'var(--muted)', fontWeight: 600 }}>PSA · BGS · CGC</span>
-        </div>
-        <div className="wrap nos" style={{ display: 'flex', gap: 26, overflowX: 'auto', paddingBottom: 8 }}>
-          {graded.map(l => (
-            <button key={l.id} onClick={() => app.go('listing', { id: l.id })} style={{ flexShrink: 0, textAlign: 'left' }}>
-              <SlabH item={l} w={150} />
-              <div style={{ width: 150, marginTop: 10 }}>
-                <div style={{ fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
-                <div style={{ fontFamily: TH.mono, fontWeight: 700, fontSize: 15 }}>{mH(l.price)}</div>
-              </div>
-            </button>
-          ))}
-        </div>
-      </section>
+      {/* ── What's hot (trending + deals) ── */}
+      <DWhatsHot app={app} trending={trending} />
 
       {/* ── Why Cardconomy banner ── */}
       <section style={{ marginTop: 50, background: 'var(--accent)', padding: '48px 0', color: '#fff' }}>
