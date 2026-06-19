@@ -161,7 +161,7 @@ function ListingScreen({ app, params }) {
 
           {/* buyer protection banner */}
           <div style={{ marginTop: 12, padding: '12px 14px', background: TL.surface2, borderRadius: 4, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-            <span style={{ fontSize: 18, flexShrink: 0, color: 'var(--accent)' }}>{IconL.shield ? IconL.shield({ width: 20, height: 20 }) : '🛡️'}</span>
+            <span style={{ fontSize: 18, flexShrink: 0 }}>🛡️</span>
             <div>
               <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Buyer Protection</div>
               <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn't match the listing, get a full refund.</div>
@@ -192,8 +192,7 @@ function ListingScreen({ app, params }) {
                 ))}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 8, fontFamily: TL.sans, fontSize: 11.5, color: TL.muted }}>
-                {IconL.shield({ width: 14, height: 14, style: { color: TL.muted } })}
-                Photos are the seller's own. Graded slabs are authenticity-verified.
+                🛡️ Photos are the seller's own. Graded slabs are authenticity-verified.
               </div>
             </div>
           )}
@@ -279,27 +278,27 @@ function ListingScreen({ app, params }) {
 
           {/* shipping / protection */}
           <div style={{ marginTop: 18 }}>
-            <InfoRow icon={IconL.truck({})} title={item.shipping === 0 ? 'Free shipping' : moneyL(item.shipping) + ' shipping'} sub={'Ships from ' + item.loc} value={item.ships} />
+            <InfoRow icon="📦" title={item.shipping === 0 ? 'Free shipping' : moneyL(item.shipping) + ' shipping'} sub={'Ships from ' + item.loc} value={item.ships} />
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 0', borderBottom: '1px solid var(--line-2)' }}>
-              <div style={{ color: TL.muted }}>{IconL.truck ? IconL.truck({ width: 16, height: 16 }) : '📦'}</div>
+              <div style={{ color: TL.muted }}>📦</div>
               <div style={{ fontFamily: TL.sans, fontSize: 13, fontWeight: 600, color: TL.ink2 }}>
-                Estimated delivery: <span style={{ fontWeight: 700, color: TL.ink }}>{item.ships || '3–5 business days'}</span>
+                Estimated delivery: <span style={{ fontWeight: 700, color: TL.ink }}>{item.ships || '3\u20135 business days'}</span>
               </div>
             </div>
-            <InfoRow icon={IconL.shield({})} title="Cardonomy Buyer Protection" sub="Full refund if item not as described" />
-            <InfoRow icon={IconL.tag({})} title="Authenticity guarantee" sub={item.grade && item.grade.company!=='raw' ? gradeTextL(item.grade)+' verified slab' : 'Verified by seller'} />
+            <InfoRow icon="🛡️" title="Cardonomy Buyer Protection" sub="Full refund if item not as described" />
+            <InfoRow icon="✓" title="Authenticity guarantee" sub={item.grade && item.grade.company!=='raw' ? gradeTextL(item.grade)+' verified slab' : 'Verified by seller'} />
           </div>
 
           {/* card authentication — raw cards only */}
           {item.grade && item.grade.company === 'raw' && (
             <button onClick={() => app.nav.push('authcard', { id: item.id })} style={{ width: '100%', marginTop: 16, display: 'flex', alignItems: 'center', gap: 11, textAlign: 'left',
               background: 'var(--up-wash)', borderRadius: 13, padding: '13px 14px', boxShadow: 'inset 0 0 0 1.5px var(--up)' }}>
-              <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: 'var(--up)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.shield({ width: 18, height: 18 })}</span>
+              <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: 'var(--up)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🛡️</span>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--up)' }}>Get it Cardonomy Verified</div>
                 <div style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.ink2 }}>Authenticate this raw card — sells faster, for more.</div>
               </div>
-              {IconL.chevron({ style: { color: 'var(--up)' } })}
+              <span style={{ color: 'var(--up)', fontSize: 16 }}>→</span>
             </button>
           )}
 
@@ -379,7 +378,7 @@ function ListingScreen({ app, params }) {
         <button onClick={() => app.addToCart(item.id)} style={{ flex: 1.3, background: 'var(--fill)', color: '#fff', borderRadius: 4,
           padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-          {IconL.cart({width:16,height:16})} {app.cart.includes(item.id) ? 'In cart' : 'Add to cart'}
+          🛒 {app.cart.includes(item.id) ? 'In cart' : 'Add to cart'}
         </button>
       </div>
 
