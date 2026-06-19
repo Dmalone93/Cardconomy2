@@ -20,9 +20,9 @@ function CondBadge({ condition }) {
   );
 }
 
-function OfferCard({ offer, onBuy, onOffer, isLowest, onViewSeller }) {
+function OfferCard({ offer, onBuy, isLowest, onViewListing }) {
   return (
-    <div style={{ border: isLowest ? '1.5px solid var(--accent)' : '1px solid var(--line)', borderRadius: 4, padding: 14, marginBottom: 10, background: TP.surface, position: 'relative' }}>
+    <div style={{ border: isLowest ? '1.5px solid var(--accent)' : '1px solid var(--line)', borderRadius: 12, padding: 14, marginBottom: 10, background: TP.surface, position: 'relative' }}>
       {isLowest && (
         <span style={{ position: 'absolute', top: -9, left: 12, background: 'var(--accent)', color: '#fff',
           fontFamily: TP.sans, fontWeight: 700, fontSize: 10, padding: '2px 8px', borderRadius: 4, letterSpacing: 0.3 }}>Best price</span>
@@ -33,7 +33,7 @@ function OfferCard({ offer, onBuy, onOffer, isLowest, onViewSeller }) {
           <CondBadge condition={offer.condition} />
         </div>
         <button onClick={() => onBuy(offer)} style={{
-          background: 'var(--fill)', color: '#fff', padding: '8px 14px', borderRadius: 4,
+          background: 'var(--fill)', color: '#fff', padding: '8px 14px', borderRadius: 8,
           fontFamily: TP.sans, fontWeight: 700, fontSize: 12 }}>Add to cart</button>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: TP.muted }}>
@@ -43,7 +43,7 @@ function OfferCard({ offer, onBuy, onOffer, isLowest, onViewSeller }) {
           fontFamily: TP.sans, fontWeight: 700, fontSize: 12, flexShrink: 0,
         }}>{offer.seller.charAt(0)}</div>
         <div style={{ flex: 1 }}>
-          <button onClick={onViewSeller} style={{ fontFamily: TP.sans, fontWeight: 600, color: TP.ink, background: 'none', padding: 0, textDecoration: 'underline' }}>{offer.seller}</button>
+          <span style={{ fontFamily: TP.sans, fontWeight: 600, color: TP.ink }}>{offer.seller}</span>
           {offer.sellerRating >= 99 && (
             <span style={{ marginLeft: 5, background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 4,
               fontFamily: TP.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>
@@ -55,40 +55,14 @@ function OfferCard({ offer, onBuy, onOffer, isLowest, onViewSeller }) {
         <span>{offer.shipping === 0 ? '✓ Free shipping' : moneyP(offer.shipping) + ' shipping'}</span>
         <span>Ships {offer.ships}</span>
       </div>
-      {/* seller photos */}
-      {offer.images > 0 && (
-        <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-          {Array.from({ length: offer.images }, (_, i) => (
-            <div key={i} style={{
-              width: 52, height: 52, borderRadius: 4, background: TP.surface2,
-              boxShadow: 'inset 0 0 0 1px var(--line)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              overflow: 'hidden',
-            }}>
-              <div style={{
-                width: '100%', height: '100%',
-                backgroundImage: 'repeating-linear-gradient(135deg, rgba(0,0,0,0.03) 0 6px, transparent 6px 12px)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <span style={{ fontSize: 16, opacity: 0.3 }}>📷</span>
-              </div>
-            </div>
-          ))}
-          <span style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted, alignSelf: 'center', marginLeft: 2 }}>
-            {offer.images} photo{offer.images !== 1 ? 's' : ''}
-          </span>
-        </div>
-      )}
-      {offer.accepts_offers && (
-        <button onClick={() => onOffer(offer)} style={{
-          marginTop: offer.images > 0 ? 6 : 8, color: TP.accent, fontFamily: TP.sans, fontWeight: 600, fontSize: 12,
-          background: 'none', padding: 0 }}>Make an offer</button>
-      )}
-      {onViewSeller && (
-        <button onClick={onViewSeller} style={{
-          marginTop: 8, color: '#2563eb', fontFamily: TP.sans, fontWeight: 600, fontSize: 11,
-          background: 'none', padding: 0, display: 'flex', alignItems: 'center', gap: 3,
-        }}>View all {listingsBySellerP(offer.seller).length} listings from this seller →</button>
+      {/* view listing button */}
+      {onViewListing && (
+        <button onClick={onViewListing} style={{
+          width: '100%', marginTop: 10, padding: '9px 14px', borderRadius: 8,
+          background: TP.surface, border: '1px solid var(--line)',
+          fontFamily: TP.sans, fontWeight: 600, fontSize: 13, color: TP.accent,
+          cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+        }}>View full listing →</button>
       )}
     </div>
   );
@@ -165,9 +139,6 @@ function ProductScreen({ app, params }) {
   const s = setByIdP(product.set);
   const hist = product.history || [product.market, product.low];
   const up = hist.length >= 2 ? hist[hist.length - 1] >= hist[0] : true;
-  const finishes = [{ key: 'standard', label: 'Standard', price: product.foil ? product.market * 0.6 : product.market },
-    { key: 'foil', label: 'Foil', price: product.foil ? product.market : product.market * 1.8 }];
-  const [finish, setFinish] = React.useState(product.foil ? 'foil' : 'standard');
   const [ptf, setPtf] = React.useState('30D');
   const [chartOpen, setChartOpen] = React.useState(false);
   const vInfo = variantP ? variantP(product) : null;
@@ -199,23 +170,6 @@ function ProductScreen({ app, params }) {
             {vInfo && <span style={{ background: TP.accentWash, color: TP.accent, padding: '3px 10px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{vInfo.current}</span>}
           </div>
 
-          {/* ── Finish tabs ── */}
-          <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-            {finishes.map(f => (
-              <div key={f.key} onClick={() => setFinish(f.key)} style={{
-                flex: 1, padding: '8px 0', borderRadius: 10, textAlign: 'center', cursor: 'pointer',
-                background: finish === f.key ? TP.accentWash : TP.surface2,
-                border: finish === f.key ? '2px solid ' + TP.accent : '2px solid transparent',
-              }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: finish === f.key ? TP.accent : TP.muted }}>
-                  {f.label}
-                </div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: TP.ink, marginTop: 2 }}>
-                  {moneyP(f.price)}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
 
         {/* price stats */}
@@ -355,7 +309,10 @@ function ProductScreen({ app, params }) {
           </div>
           {product.offers.map((o, idx) => (
             <OfferCard key={o.id} offer={o} isLowest={idx === 0}
-              onViewSeller={() => app.nav.push('seller', { name: o.seller })}
+              onViewListing={() => {
+                const lid = o.listingId || (product.offers.find(x => x.listingId) || {}).listingId;
+                if (lid) app.nav.push('listing', { id: lid });
+              }}
               onBuy={(offer) => {
                 const lid = offer.listingId || (product.offers.find(o => o.listingId) || {}).listingId;
                 if (lid) {
@@ -364,7 +321,6 @@ function ProductScreen({ app, params }) {
                   app.toast('This listing is not available for purchase yet');
                 }
               }}
-              onOffer={(offer) => { setOfferSheet(offer); setOfferVal(''); }}
             />
           ))}
         </div>
