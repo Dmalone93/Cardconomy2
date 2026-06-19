@@ -177,35 +177,40 @@ function DHome({ app }) {
   return (
     <div style={{ paddingBottom: 30 }}>
       {/* ── Card Fan ── */}
-      <div style={{ position: 'relative', height: 280, display: 'flex', alignItems: 'center',
-        justifyContent: 'center', overflow: 'hidden', background: 'var(--bg)' }}>
+      <div style={{ position: 'relative', height: 300, display: 'flex', alignItems: 'center',
+        justifyContent: 'center', overflow: 'hidden',
+        background: 'linear-gradient(180deg, #1a1f2e 0%, #1a1f2e 55%, var(--bg) 100%)' }}>
+        <div style={{ position: 'absolute', inset: 0,
+          background: 'radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.05) 0%, transparent 60%)' }} />
         {(() => {
           const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03')].filter(Boolean);
           const layouts = [
-            { rotate: -14, x: -70, y: 20, z: 1 },
-            { rotate: 0, x: 0, y: -12, z: 3 },
-            { rotate: 15, x: 70, y: 20, z: 2 },
+            { rotate: -14, x: -90, y: 22, z: 1 },
+            { rotate: 0, x: 0, y: -14, z: 3 },
+            { rotate: 15, x: 90, y: 22, z: 2 },
           ];
           return fanCards.slice(0, 3).map((card, i) => {
             const l = layouts[i];
             return (
               <div key={card.id} onClick={() => app.go('listing', { id: card.id })} style={{
-                position: 'absolute', width: 150, height: 210, borderRadius: 14, cursor: 'pointer',
+                position: 'absolute', width: 160, height: 224, borderRadius: 4, cursor: 'pointer',
                 transform: `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`,
-                zIndex: l.z, boxShadow: '0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08)',
-                border: '1px solid var(--line)', overflow: 'hidden',
+                zIndex: l.z, boxShadow: '0 14px 40px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.15)',
+                border: '1px solid rgba(255,255,255,0.08)', overflow: 'hidden',
                 transition: 'transform 0.3s ease',
               }}
                 onMouseEnter={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y - 8}px) rotate(${l.rotate}deg) scale(1.04)`; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`; }}
               >
-                <CardArtH item={card} w={150} radius={14} />
+                <CardArtH item={card} w={160} radius={4} />
+                <div style={{ position: 'absolute', inset: 0, borderRadius: 4, zIndex: 5, pointerEvents: 'none',
+                  background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.15) 42%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.08) 58%, transparent 75%)' }} />
               </div>
             );
           });
         })()}
-        <div style={{ position: 'absolute', bottom: 20, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
-          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 20, color: 'var(--ink)',
+        <div style={{ position: 'absolute', bottom: 22, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
+          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, color: 'rgba(255,255,255,0.85)',
             letterSpacing: -0.4 }}>
             The UK home for trading cards
           </div>
@@ -225,17 +230,18 @@ function DHome({ app }) {
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
           {[
-            { title: 'Buyers & Collectors', desc: 'Buy with protection and build your collection across every game.', cta: 'Start browsing', route: 'search' },
-            { title: 'Individual Sellers', desc: 'List in seconds. 4% fee — the lowest in the market. Trade card-for-card.', cta: 'List a card', route: 'sell_single' },
-            { title: 'Local Game Shops', desc: 'Digital storefront. Receive cards from local sellers. Reach collectors nationwide.', cta: 'Enrol your shop', route: 'enroll' },
+            { title: 'Buyers & Collectors', desc: 'Buy with protection and build your collection across every game.', cta: 'Start browsing', tint: 'var(--accent)', route: 'search' },
+            { title: 'Individual Sellers', desc: 'List in seconds. 4% fee — the lowest in the market. Trade card-for-card.', cta: 'List a card', tint: 'var(--accent)', route: 'sell_single' },
+            { title: 'Local Game Shops', desc: 'Digital storefront. Receive cards from local sellers. Reach collectors nationwide.', cta: 'Enrol your shop', tint: 'var(--gold)', route: 'enroll' },
           ].map(p => (
-            <div key={p.title} style={{ background: 'var(--surface)', borderRadius: 14, padding: '22px 20px',
-              border: '1px solid var(--line)', display: 'flex', flexDirection: 'column' }}>
+            <div key={p.title} onClick={() => app.go(p.route)} style={{ background: 'var(--surface)', borderRadius: 14, padding: '22px 20px', cursor: 'pointer',
+              border: '1px solid var(--line)', borderTop: '3px solid ' + p.tint, display: 'flex', flexDirection: 'column',
+              transition: 'box-shadow 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
+              onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
               <div style={{ fontSize: 17, fontWeight: 700, color: TH.ink, marginBottom: 6 }}>{p.title}</div>
               <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, flex: 1 }}>{p.desc}</div>
-              <button onClick={() => app.go(p.route)} style={{ marginTop: 14,
-                fontWeight: 700, fontSize: 13.5, cursor: 'pointer', alignSelf: 'flex-start',
-                color: 'var(--accent)', background: 'none', padding: 0 }}>{p.cta} →</button>
+              <span style={{ marginTop: 14, fontWeight: 700, fontSize: 13.5, color: 'var(--accent)' }}>{p.cta} →</span>
             </div>
           ))}
         </div>
@@ -257,7 +263,7 @@ function DHome({ app }) {
 
       {/* ── UK community banner ── */}
       <section className="wrap" style={{ marginTop: 50 }}>
-        <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--line)', padding: '32px 28px',
+        <div style={{ background: 'var(--accent-wash)', borderRadius: 16, border: '1px solid rgba(5,150,105,0.2)', padding: '32px 28px',
           display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40 }}>
           <div style={{ flex: 1 }}>
             <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 8px', color: TH.ink }}>
@@ -271,10 +277,10 @@ function DHome({ app }) {
               background: 'var(--accent)', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer',
             }}>Compare our fees →</button>
           </div>
-          <div style={{ display: 'flex', gap: 16 }}>
+          <div style={{ display: 'flex', gap: 20 }}>
             {[['6%+30p', 'Total fee'], ['5', 'Games'], ['3', 'Personas']].map(([num, label]) => (
               <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: TH.ink }}>{num}</div>
+                <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: 'var(--accent)' }}>{num}</div>
                 <div style={{ fontSize: 12, color: TH.muted, marginTop: 2 }}>{label}</div>
               </div>
             ))}

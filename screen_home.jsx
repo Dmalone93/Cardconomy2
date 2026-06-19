@@ -33,8 +33,12 @@ function CardFan({ app }) {
   if (cards.length === 0) return null;
 
   return (
-    <div style={{ position: 'relative', height: 220, display: 'flex', alignItems: 'center',
-      justifyContent: 'center', overflow: 'hidden', background: 'var(--bg)' }}>
+    <div style={{ position: 'relative', height: 240, display: 'flex', alignItems: 'center',
+      justifyContent: 'center', overflow: 'hidden',
+      background: 'linear-gradient(180deg, #1a1f2e 0%, #1a1f2e 60%, var(--bg) 100%)' }}>
+      {/* subtle glow behind cards */}
+      <div style={{ position: 'absolute', inset: 0,
+        background: 'radial-gradient(ellipse at 50% 45%, rgba(255,255,255,0.06) 0%, transparent 60%)' }} />
       {/* fanned cards */}
       {cards.slice(0, 3).map((card, i) => {
         const layout = FAN_LAYOUT[i] || FAN_LAYOUT[0];
@@ -42,24 +46,24 @@ function CardFan({ app }) {
         return (
           <div key={card.id} onClick={() => app.nav.push('listing', { id: card.id })}
             style={{
-              position: 'absolute', width: 110, height: 154, borderRadius: 14, cursor: 'pointer',
+              position: 'absolute', width: 120, height: 168, borderRadius: 4, cursor: 'pointer',
               transform: `translate(${layout.x}px, ${layout.y + drift}px) rotate(${layout.rotate}deg)`,
               zIndex: layout.z, transition: reduceMotion.current ? 'none' : 'transform 0.1s linear',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.08)',
-              border: '1px solid var(--line)',
+              boxShadow: '0 12px 32px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.15)',
+              border: '1px solid rgba(255,255,255,0.08)',
               overflow: 'hidden',
             }}>
-            <CardArt item={card} w={110} radius={14} />
+            <CardArt item={card} w={120} radius={4} />
             {/* foil sheen overlay */}
-            <div style={{ position: 'absolute', inset: 0, borderRadius: 14, zIndex: 5, pointerEvents: 'none',
-              background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 40%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 60%, transparent 75%)',
+            <div style={{ position: 'absolute', inset: 0, borderRadius: 4, zIndex: 5, pointerEvents: 'none',
+              background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.15) 42%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.08) 58%, transparent 75%)',
             }} />
           </div>
         );
       })}
-      {/* tagline overlay */}
-      <div style={{ position: 'absolute', bottom: 14, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 15, color: 'var(--ink)',
+      {/* tagline */}
+      <div style={{ position: 'absolute', bottom: 16, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 16, color: 'rgba(255,255,255,0.85)',
           letterSpacing: -0.3 }}>
           The UK home for trading cards
         </div>
@@ -446,18 +450,18 @@ function HomeScreen({ app }) {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
           {[
-            { title: 'Buyers & Collectors', desc: 'Buy with protection and build your collection.', cta: 'Start browsing', action: () => app.nav.setTab('search') },
-            { title: 'Individual Sellers', desc: 'List in seconds. 4% fee — the lowest in the market.', cta: 'List a card', action: () => app.nav.setTab('sell') },
-            { title: 'Local Game Shops', desc: 'Digital storefront. Receive cards from local sellers.', cta: 'Enrol your shop', action: () => app.nav.push('enroll_shop') },
+            { title: 'Buyers & Collectors', desc: 'Buy with protection and build your collection.', cta: 'Start browsing', tint: 'var(--accent)', action: () => app.nav.setTab('search') },
+            { title: 'Individual Sellers', desc: 'List in seconds. 4% fee — the lowest in the market.', cta: 'List a card', tint: 'var(--accent)', action: () => app.nav.setTab('sell') },
+            { title: 'Local Game Shops', desc: 'Digital storefront. Receive cards from local sellers.', cta: 'Enrol your shop', tint: 'var(--gold)', action: () => app.nav.push('enroll_shop') },
           ].map(p => (
-            <div key={p.title} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-              padding: '12px 14px', background: T.surface, borderRadius: 10, border: '1px solid var(--line)' }}>
+            <div key={p.title} onClick={p.action} style={{ display: 'flex', alignItems: 'center', gap: 12,
+              padding: '14px 14px', background: T.surface, borderRadius: 12, cursor: 'pointer',
+              border: '1px solid var(--line)', borderLeft: '3px solid ' + p.tint }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 14, fontWeight: 700, color: T.ink }}>{p.title}</div>
                 <div style={{ fontSize: 12, color: T.muted, marginTop: 2 }}>{p.desc}</div>
               </div>
-              <div onClick={p.action} style={{ fontSize: 12, fontWeight: 700, color: T.accent,
-                cursor: 'pointer', flexShrink: 0, marginLeft: 10 }}>{p.cta} →</div>
+              <span style={{ fontSize: 13, fontWeight: 700, color: T.accent, flexShrink: 0 }}>→</span>
             </div>
           ))}
         </div>
@@ -486,12 +490,21 @@ function HomeScreen({ app }) {
 
       {/* ── UK community banner ── */}
       {/* ── UK community banner ── */}
-      <div style={{ margin: '20px 14px', padding: '16px', borderRadius: 12, background: T.surface, border: '1px solid var(--line)' }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 16, color: T.ink, marginBottom: 4 }}>
+      <div style={{ margin: '20px 14px', padding: '18px 16px', borderRadius: 14,
+        background: 'var(--accent-wash)', border: '1px solid var(--accent)', borderColor: 'rgba(5,150,105,0.2)' }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 17, color: T.ink, marginBottom: 6 }}>
           Built for the UK TCG community
         </div>
-        <div style={{ fontSize: 12, color: T.muted, lineHeight: 1.5, marginBottom: 12 }}>
+        <div style={{ fontSize: 13, color: T.muted, lineHeight: 1.5, marginBottom: 10 }}>
           6% + 30p total fees. Buyer protection on every order. Local game shop support built in.
+        </div>
+        <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
+          {[['6%+30p', 'Total fee'], ['5', 'Games'], ['3', 'Personas']].map(([num, label]) => (
+            <div key={label}>
+              <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 18, color: T.accent }}>{num}</div>
+              <div style={{ fontSize: 11, color: T.muted }}>{label}</div>
+            </div>
+          ))}
         </div>
         <button onClick={() => app.nav.push('fees')} style={{
           padding: '10px 18px', borderRadius: 8, border: 'none',
