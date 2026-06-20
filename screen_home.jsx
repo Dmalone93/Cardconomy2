@@ -229,9 +229,9 @@ function MoverCard({ item, change, app }) {
 const GAME_HEROES = {
   pkmn: 'logos/heroes/pkmn.avif',
   mtg: 'logos/heroes/mtg.jpg',
-  ygo: 'logos/heroes/ygo.jpg',
+  ygo: 'logos/heroes/ygo.jpg',  // Yugi + Dark Magician
   lor: 'logos/heroes/lor.webp',
-  digimon: 'logos/heroes/digimon.png',
+  digimon: 'logos/heroes/digimon.jpg',
 };
 
 // ── game tile (Browse by Game carousel — tall portrait style) ─

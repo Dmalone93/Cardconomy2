@@ -9,7 +9,7 @@ const { HOT_DEALS: HOT_DEALS_H, PRICE_MOVERS: PRICE_MOVERS_H, byId: byIdH } = wi
 const GAME_HEROES_H = {
   pkmn: 'logos/heroes/pkmn.avif', mtg: 'logos/heroes/mtg.jpg',
   ygo: 'logos/heroes/ygo.jpg', lor: 'logos/heroes/lor.webp',
-  digimon: 'logos/heroes/digimon.png',
+  digimon: 'logos/heroes/digimon.jpg',
 };
 
 function DGameTile({ game, app }) {
