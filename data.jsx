@@ -1101,7 +1101,7 @@ const shopById = (id) => SHOPS.find(s => s.id === id) || (SHOP.id === id ? SHOP 
 
 // real brand logos for game filters (transparent PNG/SVG)
 const GAME_LOGOS = {
-  pkmn: 'logos/pkmn.png', mtg: 'logos/mtg.svg', ygo: 'logos/ygo.png', lor: 'logos/lor.svg',
+  pkmn: 'logos/pkmn.png', mtg: 'logos/mtg.svg', ygo: 'logos/ygo.png', lor: 'logos/lor-white.svg',
   digimon: 'logos/digimon.svg',
 };
 
