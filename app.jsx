@@ -15,6 +15,7 @@ const { VerifyScreen } = window;
 const { AuthCardScreen } = window;
 const { Onboarding } = window;
 const { FeesScreen, HowItWorksScreen } = window;
+const { ChatScreen } = window;
 const { sellerByName: sellerByNameA, listingsBySeller: listingsBySellerA, byId: byIdA } = window;
 
 const ALL_GAME_IDS = (window.GAMES || []).map(g => g.id);
@@ -40,6 +41,7 @@ const SCREENS = {
   scan: ScanScreen,
   fees: FeesScreen,
   howitworks: HowItWorksScreen,
+  chat: ChatScreen,
 };
 
 function loadWatch() {

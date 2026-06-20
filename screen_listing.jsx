@@ -247,7 +247,7 @@ function ListingScreen({ app, params }) {
             </div>
 
             {/* message seller */}
-            <button onClick={() => app.toast({ title: 'Message sent', subtitle: 'You started a conversation with ' + item.seller })}
+            <button onClick={() => app.nav.push('chat', { seller: item.seller, about: item.id })}
               style={{ width: '100%', marginTop: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                 padding: '11px 14px', borderRadius: 10, background: TL.surface, border: '1px solid var(--line)',
                 fontFamily: TL.sans, fontWeight: 600, fontSize: 13.5, color: TL.ink, cursor: 'pointer' }}>
