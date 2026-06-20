@@ -179,9 +179,7 @@ function DHome({ app }) {
       {/* ── Card Fan ── */}
       <div style={{ position: 'relative', height: 300, display: 'flex', alignItems: 'center',
         justifyContent: 'center', overflow: 'hidden',
-        background: 'linear-gradient(180deg, #1a1f2e 0%, #1a1f2e 55%, var(--bg) 100%)' }}>
-        <div style={{ position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.05) 0%, transparent 60%)' }} />
+        background: 'linear-gradient(180deg, #e8eaee 0%, var(--bg) 100%)' }}>
         {(() => {
           const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03')].filter(Boolean);
           const layouts = [
@@ -195,8 +193,8 @@ function DHome({ app }) {
               <div key={card.id} onClick={() => app.go('listing', { id: card.id })} style={{
                 position: 'absolute', width: 160, height: 224, borderRadius: 4, cursor: 'pointer',
                 transform: `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`,
-                zIndex: l.z, boxShadow: '0 14px 40px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.15)',
-                border: '1px solid rgba(255,255,255,0.08)', overflow: 'hidden',
+                zIndex: l.z, boxShadow: '0 10px 30px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.08)',
+                border: '1px solid var(--line)', overflow: 'hidden',
                 transition: 'transform 0.3s ease',
               }}
                 onMouseEnter={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y - 8}px) rotate(${l.rotate}deg) scale(1.04)`; }}
@@ -210,7 +208,7 @@ function DHome({ app }) {
           });
         })()}
         <div style={{ position: 'absolute', bottom: 22, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
-          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, color: 'rgba(255,255,255,0.85)',
+          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, color: 'var(--ink)',
             letterSpacing: -0.4 }}>
             The UK home for trading cards
           </div>

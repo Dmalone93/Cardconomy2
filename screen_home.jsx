@@ -35,10 +35,7 @@ function CardFan({ app }) {
   return (
     <div style={{ position: 'relative', height: 240, display: 'flex', alignItems: 'center',
       justifyContent: 'center', overflow: 'hidden',
-      background: 'linear-gradient(180deg, #1a1f2e 0%, #1a1f2e 60%, var(--bg) 100%)' }}>
-      {/* subtle glow behind cards */}
-      <div style={{ position: 'absolute', inset: 0,
-        background: 'radial-gradient(ellipse at 50% 45%, rgba(255,255,255,0.06) 0%, transparent 60%)' }} />
+      background: 'linear-gradient(180deg, #e8eaee 0%, var(--bg) 100%)' }}>
       {/* fanned cards */}
       {cards.slice(0, 3).map((card, i) => {
         const layout = FAN_LAYOUT[i] || FAN_LAYOUT[0];
@@ -49,8 +46,8 @@ function CardFan({ app }) {
               position: 'absolute', width: 120, height: 168, borderRadius: 4, cursor: 'pointer',
               transform: `translate(${layout.x}px, ${layout.y + drift}px) rotate(${layout.rotate}deg)`,
               zIndex: layout.z, transition: reduceMotion.current ? 'none' : 'transform 0.1s linear',
-              boxShadow: '0 12px 32px rgba(0,0,0,0.3), 0 4px 10px rgba(0,0,0,0.15)',
-              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 10px 30px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.08)',
+              border: '1px solid var(--line)',
               overflow: 'hidden',
             }}>
             <CardArt item={card} w={120} radius={4} />
@@ -63,7 +60,7 @@ function CardFan({ app }) {
       })}
       {/* tagline */}
       <div style={{ position: 'absolute', bottom: 16, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 16, color: 'rgba(255,255,255,0.85)',
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 16, color: 'var(--ink)',
           letterSpacing: -0.3 }}>
           The UK home for trading cards
         </div>
