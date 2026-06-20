@@ -33,37 +33,48 @@ function CardFan({ app }) {
   if (cards.length === 0) return null;
 
   return (
-    <div style={{ position: 'relative', height: 240, display: 'flex', alignItems: 'center',
-      justifyContent: 'center', overflow: 'hidden',
-      background: 'linear-gradient(180deg, #e8eaee 0%, var(--bg) 100%)' }}>
-      {/* fanned cards */}
-      {cards.slice(0, 3).map((card, i) => {
-        const layout = FAN_LAYOUT[i] || FAN_LAYOUT[0];
-        const drift = reduceMotion.current ? 0 : scrollY * layout.parallax * -0.3;
-        return (
-          <div key={card.id} onClick={() => app.nav.push('listing', { id: card.id })}
-            style={{
-              position: 'absolute', width: 120, height: 168, borderRadius: 4, cursor: 'pointer',
-              transform: `translate(${layout.x}px, ${layout.y + drift}px) rotate(${layout.rotate}deg)`,
-              zIndex: layout.z, transition: reduceMotion.current ? 'none' : 'transform 0.1s linear',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.08)',
-              border: '1px solid var(--line)',
-              overflow: 'hidden',
-            }}>
-            <CardArt item={card} w={120} radius={4} />
-            {/* foil sheen overlay */}
-            <div style={{ position: 'absolute', inset: 0, borderRadius: 4, zIndex: 5, pointerEvents: 'none',
-              background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.15) 42%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.08) 58%, transparent 75%)',
-            }} />
-          </div>
-        );
-      })}
-      {/* tagline */}
-      <div style={{ position: 'absolute', bottom: 16, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 16, color: 'var(--ink)',
-          letterSpacing: -0.3 }}>
-          The UK home for trading cards
+    <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--fill)', padding: '24px 16px 20px' }}>
+      {/* text */}
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, color: '#fff',
+          letterSpacing: -0.5, lineHeight: 1.15 }}>
+          The UK home for<br/>trading cards
         </div>
+        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginTop: 8, maxWidth: 200 }}>
+          Buy, sell, and trade across every game. Lower fees than anyone.
+        </div>
+        <button onClick={() => app.nav.setTab('search')} style={{ marginTop: 12, padding: '9px 18px', borderRadius: 8,
+          background: 'var(--accent)', color: '#fff', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
+          Start browsing
+        </button>
+      </div>
+      {/* fanned cards — right side, zoomed, overlapping edge */}
+      <div style={{ position: 'absolute', right: -20, top: 0, bottom: 0, width: 240 }}>
+        {cards.slice(0, 3).map((card, i) => {
+          const layouts = [
+            { rotate: -10, x: 10, y: 30 },
+            { rotate: 3, x: 70, y: 10 },
+            { rotate: 16, x: 130, y: 40 },
+          ];
+          const layout = layouts[i] || layouts[0];
+          const drift = reduceMotion.current ? 0 : scrollY * FAN_LAYOUT[i].parallax * -0.25;
+          return (
+            <div key={card.id} onClick={() => app.nav.push('listing', { id: card.id })}
+              style={{
+                position: 'absolute', width: 110, height: 154, borderRadius: 4, cursor: 'pointer',
+                left: layout.x, top: layout.y + drift,
+                transform: `rotate(${layout.rotate}deg)`,
+                zIndex: i === 1 ? 3 : i + 1,
+                boxShadow: '0 10px 28px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.15)',
+                border: '1px solid rgba(255,255,255,0.08)',
+                overflow: 'hidden',
+              }}>
+              <CardArt item={card} w={110} radius={4} />
+              <div style={{ position: 'absolute', inset: 0, borderRadius: 4, zIndex: 5, pointerEvents: 'none',
+                background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 42%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 58%, transparent 75%)' }} />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
