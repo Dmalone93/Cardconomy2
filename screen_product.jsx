@@ -335,13 +335,29 @@ function ProductScreen({ app, params }) {
           <div style={{ fontFamily: TP.sans, fontSize: 10, fontWeight: 600, color: TP.muted, textTransform: 'uppercase' }}>FROM</div>
           <div style={{ fontFamily: TP.sans, fontWeight: 800, fontSize: 20, color: TP.ink }}>{moneyP(product.low)}</div>
         </div>
-        <button onClick={() => {
-          app.toast({ title: 'Added to your wants', subtitle: product.name });
-        }} style={{
-          flex: 1, padding: '13px 16px', borderRadius: 10, border: 'none',
-          background: 'var(--gold)', color: '#fff', fontFamily: TP.sans, fontWeight: 700,
-          fontSize: 15, cursor: 'pointer',
-        }}>Add to my wants</button>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: 6 }}>
+          <button onClick={() => {
+            const cheapest = product.offers && product.offers[0];
+            const lid = cheapest && cheapest.listingId;
+            if (lid) {
+              app.addToCart(lid);
+              app.toast({ title: 'Added to cart', subtitle: product.name });
+            } else {
+              app.toast('No listings available right now');
+            }
+          }} style={{
+            padding: '13px 16px', borderRadius: 10, border: 'none',
+            background: 'var(--accent)', color: '#fff', fontFamily: TP.sans, fontWeight: 700,
+            fontSize: 15, cursor: 'pointer',
+          }}>Buy now</button>
+          <button onClick={() => {
+            app.toast({ title: 'Added to want list', subtitle: product.name });
+          }} style={{
+            background: 'none', border: 'none', padding: '2px 0', cursor: 'pointer',
+            fontFamily: TP.sans, fontWeight: 600, fontSize: 13, color: 'var(--accent)',
+            textAlign: 'center',
+          }}>Add to want list</button>
+        </div>
       </div>
 
       <SheetP open={!!offerSheet} onClose={() => setOfferSheet(null)} title={offerSheet ? 'Offer to ' + offerSheet.seller : ''}>
