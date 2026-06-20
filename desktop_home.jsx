@@ -7,7 +7,7 @@ const { HOT_DEALS: HOT_DEALS_H, PRICE_MOVERS: PRICE_MOVERS_H, byId: byIdH } = wi
 
 // ── game hero images + tile for desktop ──────────────────────
 const GAME_HEROES_H = {
-  pkmn: 'logos/heroes/pkmn.jpg', mtg: 'logos/heroes/mtg.jpg',
+  pkmn: 'logos/heroes/pkmn.avif', mtg: 'logos/heroes/mtg.jpg',
   ygo: 'logos/heroes/ygo.jpg', lor: 'logos/heroes/lor.webp',
   digimon: 'logos/heroes/digimon.png',
 };

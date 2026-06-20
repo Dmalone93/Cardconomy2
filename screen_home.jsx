@@ -227,7 +227,7 @@ function MoverCard({ item, change, app }) {
 
 // ── game hero images for Browse by Game tiles ───────────────
 const GAME_HEROES = {
-  pkmn: 'logos/heroes/pkmn.jpg',
+  pkmn: 'logos/heroes/pkmn.avif',
   mtg: 'logos/heroes/mtg.jpg',
   ygo: 'logos/heroes/ygo.jpg',
   lor: 'logos/heroes/lor.webp',
