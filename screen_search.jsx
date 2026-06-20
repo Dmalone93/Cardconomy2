@@ -258,10 +258,23 @@ function SearchScreen({ app, params = {} }) {
             return (
               <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
                 {browseCount === 0 ? (
-                  <div style={{ textAlign: 'center', padding: '60px 20px', color: TS.muted, fontFamily: TS.sans }}>
-                    <div style={{ fontSize: 40, marginBottom: 8 }}>🔍</div>
-                    <div style={{ fontWeight: 700, fontSize: 16, color: TS.ink }}>No cards match</div>
-                    <div style={{ fontSize: 13.5, marginTop: 4 }}>Try removing a filter or widening your price.</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                    padding: '72px 32px', textAlign: 'center', fontFamily: TS.sans }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ color: TS.faint, marginBottom: 16 }}>
+                      <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M8 11h6M11 8v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                    <div style={{ fontWeight: 700, fontSize: 17, color: TS.ink, marginBottom: 6 }}>No cards match your filters</div>
+                    <div style={{ fontSize: 14, color: TS.muted, lineHeight: 1.5, marginBottom: 24 }}>Try adjusting your filters or browse all cards</div>
+                    <button onClick={() => {
+                      setGame('all'); setSetF('all'); setCond('Any grade');
+                      setMaxPrice(35000); setFreeShip(false); setListType('all'); setBrowseMode('buy');
+                    }} style={{
+                      background: TS.accent, color: '#fff', borderRadius: 12,
+                      padding: '11px 24px', fontFamily: TS.sans, fontWeight: 700, fontSize: 15,
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+                    }}>Clear filters</button>
                   </div>
                 ) : view === 'grid' ? (
                   <div className="stagger" style={{ display: 'grid', gridTemplateColumns: cols === 3 ? '1fr 1fr 1fr' : '1fr 1fr', gap: cols === 3 ? 8 : 12 }}>
