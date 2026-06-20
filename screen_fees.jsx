@@ -69,15 +69,16 @@ function FeesScreen({ app }) {
   const cardonomyFees = calcFees(platforms[0], salePrice, shipping);
 
   return (
-    <div style={{ minHeight: '100%', background: TFE.bg }}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: TFE.bg }}>
       {/* ── Header ── */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '12px 14px', gap: 10 }}>
-        <div onClick={() => app.nav.pop()} style={{ cursor: 'pointer' }}>
+      <div style={{ display: 'flex', alignItems: 'center', padding: '12px 14px', gap: 10, flexShrink: 0 }}>
+        <div onClick={() => app.nav.pop()} style={{ cursor: 'pointer', padding: 4 }}>
           <span style={{ fontSize: 20 }}>{FEE_ICONS.back}</span>
         </div>
         <div style={{ fontSize: 17, fontWeight: 700, color: TFE.ink }}>Fees</div>
       </div>
 
+      <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
       {/* ── Hero ── */}
       <div style={{ padding: '20px 14px 24px', textAlign: 'center' }}>
         <div style={{ fontSize: 22, fontWeight: 800, color: TFE.ink, lineHeight: 1.2 }}>
@@ -230,6 +231,7 @@ function FeesScreen({ app }) {
           border: '1px solid ' + TFE.line,
         }}>Browse the marketplace</button>
       </div>
+      </div>{/* end scroll wrapper */}
     </div>
   );
 }
