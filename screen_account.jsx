@@ -238,8 +238,8 @@ function BuylistEdit({ entry, onSave, onRemove }) {
         </div>
         <div style={{ display: 'flex', gap: 7 }}>
           {[0.8, 0.9, 1.0, 1.1].map(m => (
-            <button key={m} onClick={() => setMax(Math.round(entry.card.market * m))} style={{ flex: 1, padding: '7px 0', borderRadius: 8, fontFamily: TAC.sans, fontWeight: 700, fontSize: 12,
-              background: TAC.surface2, color: TAC.ink2 }}>{Math.round(m * 100)}%</button>
+            <button key={m} onClick={() => setMax(Math.round(entry.card.market * m))} style={{ flex: 1, padding: '7px 0', borderRadius: 8, fontFamily: TAC.sans, fontWeight: 700, fontSize: 11,
+              background: TAC.surface2, color: TAC.ink2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}><span>{Math.round(m * 100)}%</span><span style={{ fontSize: 10, fontWeight: 600 }}>{money0AC(Math.round(entry.card.market * m))}</span></button>
           ))}
         </div>
       </div>
