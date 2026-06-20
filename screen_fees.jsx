@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Fee comparison page
 // ─────────────────────────────────────────────────────────────
-const { T: TFE, money: moneyFE } = window;
+const { T: TFE, money: moneyFE, SliderInput: SliderInputFE } = window;
 const FEE_ICONS = { back: '\u2190', shield: '\u26E8', bolt: '\u26A1', check: '\u2713' };
 
 function FeesScreen({ app }) {
@@ -107,14 +107,9 @@ function FeesScreen({ app }) {
         <div style={{ fontSize: 15, fontWeight: 700, color: TFE.ink, marginBottom: 12 }}>
           Fee Calculator
         </div>
-        <div style={{ fontSize: 13, color: TFE.muted, marginBottom: 8 }}>Sale price</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-          <input type="range" min="1" max="500" value={salePrice}
-            onChange={e => setSalePrice(+e.target.value)}
-            style={{ flex: 1, accentColor: 'var(--accent)' }} />
-          <div style={{ fontSize: 18, fontWeight: 700, color: TFE.ink, minWidth: 70, textAlign: 'right' }}>
-            {moneyFE(salePrice)}
-          </div>
+        <div style={{ marginBottom: 12 }}>
+          <SliderInputFE value={salePrice} onChange={setSalePrice} min={1} max={500}
+            label="Sale price" format={v => moneyFE(v)} />
         </div>
 
         {/* ── Platform comparison cards ── */}

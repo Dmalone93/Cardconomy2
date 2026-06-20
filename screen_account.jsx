@@ -2,7 +2,8 @@
 // Account screens — buylist editor, purchases, selling, offers,
 // payments & payouts, notifications. All pushed from Profile.
 // ─────────────────────────────────────────────────────────────
-const { T: TAC, money: moneyAC, Icon: IconAC, CardArt: CardArtAC, GradeChip: GradeChipAC, Stars: StarsAC, Sheet: SheetAC, Sparkline: SparkAC } = window;
+const { T: TAC, money: moneyAC, Icon: IconAC, CardArt: CardArtAC, GradeChip: GradeChipAC, Stars: StarsAC, Sheet: SheetAC, Sparkline: SparkAC,
+  QtyInput: QtyInputAC, CurrencyInput: CurrencyInputAC } = window;
 const { LISTINGS: LST_AC, SUB_CARDS: SCAC, byId: byIdAC, setById: setByIdAC, gameById: gameByIdAC } = window;
 
 const money0AC = (n) => moneyAC(n, { cents: false });
@@ -224,24 +225,13 @@ function BuylistEdit({ entry, onSave, onRemove }) {
           <div style={{ fontFamily: TAC.sans, fontSize: 12, color: TAC.muted }}>{setByIdAC(entry.card.set)?.name} · market {money0AC(entry.card.market)}</div>
         </div>
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 0', borderTop: '1px solid var(--line-2)' }}>
-        <span style={{ fontFamily: TAC.sans, fontWeight: 600, fontSize: 14.5 }}>Quantity wanted</span>
-        <Stepper value={want} set={setWant} />
+      <div style={{ padding: '12px 0', borderTop: '1px solid var(--line-2)' }}>
+        <QtyInputAC value={want} onChange={setWant} label="Quantity wanted" />
       </div>
       <div style={{ padding: '12px 0', borderTop: '1px solid var(--line-2)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-          <span style={{ fontFamily: TAC.sans, fontWeight: 600, fontSize: 14.5 }}>Max price each</span>
-          <div style={{ display: 'flex', alignItems: 'center', background: TAC.surface2, borderRadius: 10, padding: '6px 11px' }}>
-            <span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, color: TAC.muted }}>£</span>
-            <input type="number" value={max} onChange={e => setMax(+e.target.value || 0)} style={{ width: 80, border: 'none', outline: 'none', background: 'transparent', fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, textAlign: 'right' }} />
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: 7 }}>
-          {[0.8, 0.9, 1.0, 1.1].map(m => (
-            <button key={m} onClick={() => setMax(Math.round(entry.card.market * m))} style={{ flex: 1, padding: '7px 0', borderRadius: 8, fontFamily: TAC.sans, fontWeight: 700, fontSize: 11,
-              background: TAC.surface2, color: TAC.ink2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1 }}><span>{Math.round(m * 100)}%</span><span style={{ fontSize: 10, fontWeight: 600 }}>{money0AC(Math.round(entry.card.market * m))}</span></button>
-          ))}
-        </div>
+        <CurrencyInputAC value={max} onChange={setMax} label="Max price each"
+          marketPrice={entry.card.market}
+          presets={[{ pct: 0.8 }, { pct: 0.9 }, { pct: 1.0 }, { pct: 1.1 }]} />
       </div>
       <button onClick={() => onSave(want, max)} style={{ width: '100%', marginTop: 14, background: TAC.accent, color: '#fff', borderRadius: 13, padding: 14, fontFamily: TAC.sans, fontWeight: 700, fontSize: 15.5 }}>Save</button>
       <button onClick={onRemove} style={{ width: '100%', marginTop: 9, color: 'var(--down)', fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, padding: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>{AIcon.trash({})} Remove from buylist</button>

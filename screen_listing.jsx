@@ -2,7 +2,8 @@
 // Listing detail
 // ─────────────────────────────────────────────────────────────
 const { T: TL, money: moneyL, Slab: SlabL, CardArt: CardArtL, GradeChip: GradeChipL,
-  Sparkline: SparkL, Delta: DeltaL, Stars: StarsL, Chip: ChipL, Icon: IconL, Sheet: SheetL } = window;
+  Sparkline: SparkL, Delta: DeltaL, Stars: StarsL, Chip: ChipL, Icon: IconL, Sheet: SheetL,
+  CurrencyInput: CurrencyInputL } = window;
 const { byId: byIdL, setById: setByIdL, gameById: gameByIdL, gradeText: gradeTextL, LISTINGS: LISTINGS_L } = window;
 // PRINTINGS accessed via window.PRINTINGS at render time
 
@@ -408,8 +409,10 @@ function ListingScreen({ app, params }) {
       {/* offer sheet */}
       <SheetL open={sheet==='offer'} onClose={() => setSheet(null)} title="Make an offer">
         <div style={{ fontFamily: TL.sans, fontSize: 13.5, color: TL.muted, marginBottom: 14 }}>Listed at {moneyL(item.price)} · market {moneyL(item.market)}. Sellers usually respond within a day.</div>
-        <OfferInput value={offer} setValue={setOffer} placeholder={moneyL(item.price * 0.9, {cents:false})} />
-        <div style={{ display: 'flex', gap: 8, margin: '12px 0' }}>
+        <CurrencyInputL value={+offer || 0} onChange={v => setOffer(String(v))}
+          marketPrice={item.price}
+          presets={[{ pct: 0.85 }, { pct: 0.9 }, { pct: 0.95 }]} />
+        <div style={{ display: 'none' }}>
           {[0.85, 0.9, 0.95].map(m => (
             <ChipL key={m} onClick={() => setOffer(String(Math.round(item.price*m)))}>{moneyL(item.price*m,{cents:false})}</ChipL>
           ))}

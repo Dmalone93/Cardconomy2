@@ -442,6 +442,84 @@ function SideMenu({ app, open, onClose }) {
   );
 }
 
+// ── Shared Input Components ─────────────────────────────────
+// Standardised inputs used across the app: stepper, currency, slider
+
+// Stepper: whole number increment/decrement (qty selectors)
+function QtyInput({ value, onChange, min = 1, max = 99, label }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      {label && <span style={{ fontFamily: T.sans, fontWeight: 600, fontSize: 14 }}>{label}</span>}
+      <div style={{ display: 'inline-flex', alignItems: 'center', gap: 0, background: T.surface2, borderRadius: 10, overflow: 'hidden', border: '1px solid var(--line)' }}>
+        <button onClick={() => onChange(Math.max(min, value - 1))} disabled={value <= min}
+          style={{ width: 36, height: 36, fontSize: 18, fontWeight: 700, color: value <= min ? T.faint : T.ink, cursor: 'pointer' }}>−</button>
+        <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 15, minWidth: 28, textAlign: 'center', color: T.ink }}>{value}</span>
+        <button onClick={() => onChange(Math.min(max, value + 1))} disabled={value >= max}
+          style={{ width: 36, height: 36, fontSize: 18, fontWeight: 700, color: value >= max ? T.faint : T.ink, cursor: 'pointer' }}>+</button>
+      </div>
+    </div>
+  );
+}
+
+// CurrencyInput: £ price input with optional quick-select preset buttons
+// presets: array of { label, value } or { pct, marketPrice } for percentage-based
+function CurrencyInput({ value, onChange, label, presets, marketPrice }) {
+  const resolvedPresets = presets ? presets.map(p => {
+    if (p.pct !== undefined && marketPrice) {
+      const val = Math.round(marketPrice * p.pct);
+      return { label: Math.round(p.pct * 100) + '%', sub: '\u00A3' + val, value: val };
+    }
+    return { label: p.label, sub: p.sub || '', value: p.value };
+  }) : null;
+
+  return (
+    <div>
+      {label && <div style={{ fontFamily: T.sans, fontWeight: 600, fontSize: 14, marginBottom: 8 }}>{label}</div>}
+      <div style={{ display: 'flex', alignItems: 'center', background: T.surface2, borderRadius: 10, padding: '8px 12px', border: '1px solid var(--line)' }}>
+        <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 18, color: T.muted, marginRight: 4 }}>\u00A3</span>
+        <input type="number" value={value} onChange={e => onChange(+e.target.value || 0)}
+          style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent',
+            fontFamily: T.mono, fontWeight: 700, fontSize: 18, color: T.ink, minWidth: 0, textAlign: 'right' }} />
+      </div>
+      {resolvedPresets && (
+        <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
+          {resolvedPresets.map((p, i) => (
+            <button key={i} onClick={() => onChange(p.value)} style={{
+              flex: 1, padding: '7px 4px', borderRadius: 8, cursor: 'pointer',
+              background: value === p.value ? 'var(--accent-wash)' : T.surface2,
+              border: value === p.value ? '1px solid var(--accent)' : '1px solid var(--line)',
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1,
+            }}>
+              <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 12,
+                color: value === p.value ? T.accent : T.ink }}>{p.label}</span>
+              {p.sub && <span style={{ fontFamily: T.sans, fontWeight: 600, fontSize: 10,
+                color: value === p.value ? T.accent : T.muted }}>{p.sub}</span>}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// SliderInput: range slider with label and value display
+function SliderInput({ value, onChange, min = 0, max = 100, step = 1, label, format }) {
+  const display = format ? format(value) : value;
+  return (
+    <div>
+      {label && (
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+          <span style={{ fontFamily: T.sans, fontWeight: 600, fontSize: 14, color: T.ink }}>{label}</span>
+          <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 15, color: T.accent }}>{display}</span>
+        </div>
+      )}
+      <input type="range" min={min} max={max} step={step} value={value}
+        onChange={e => onChange(+e.target.value)}
+        style={{ width: '100%', accentColor: 'var(--accent)', height: 6 }} />
+    </div>
+  );
+}
+
 // ── Native share utility ─────────────────────────────────────
 function shareCard(item) {
   const url = window.location.origin + '/#listing/' + item.id;
@@ -454,5 +532,5 @@ function shareCard(item) {
 }
 
 Object.assign(window, {
-  T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Badge, Icon, BottomNav, Sheet, Toast, Logo, SideMenu, shareCard,
+  T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Badge, Icon, BottomNav, Sheet, Toast, Logo, SideMenu, shareCard, QtyInput, CurrencyInput, SliderInput,
 });
