@@ -40,6 +40,7 @@ function ListingScreen({ app, params }) {
   const finishes = [{ key: 'standard', label: 'Standard', price: item.foil ? item.price * 0.6 : item.price },
     { key: 'foil', label: 'Foil', price: item.foil ? item.price : item.price * 1.8 }];
   const [finish, setFinish] = React.useState(item.foil ? 'foil' : 'standard');
+  const displayPrice = (finishes.find(f => f.key === finish) || finishes[0]).price;
   const watched = app.isWatched(item.id);
   const g = gameByIdL(item.game);
   const set = setByIdL(item.set);
@@ -132,7 +133,7 @@ function ListingScreen({ app, params }) {
 
           {/* price */}
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 16 }}>
-            <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 32, letterSpacing: -1, color: TL.ink, animation: 'ccCountUp 0.4s ease 0.15s both' }}>{moneyL(item.price)}</span>
+            <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 32, letterSpacing: -1, color: TL.ink, animation: 'ccCountUp 0.4s ease 0.15s both' }}>{moneyL(displayPrice)}</span>
             {item.market && <span style={{ fontFamily: TL.sans, fontSize: 13, color: TL.muted, paddingBottom: 6 }}>
               market <b style={{ color: TL.ink2, fontFamily: TL.sans }}>{moneyL(item.market)}</b>
             </span>}
@@ -378,7 +379,7 @@ function ListingScreen({ app, params }) {
         <button onClick={() => app.addToCart(item.id)} style={{ flex: 1.3, background: 'var(--fill)', color: '#fff', borderRadius: 4,
           padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-          🛒 {app.cart.includes(item.id) ? 'In cart' : 'Add to cart'}
+          🛒 {app.cart.includes(item.id) ? 'In cart' : 'Add to cart \u00b7 ' + moneyL(displayPrice)}
         </button>
       </div>
 
