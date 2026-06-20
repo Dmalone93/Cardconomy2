@@ -172,11 +172,32 @@ function App() {
 
   const showNav = stack.length === 0;
 
+  const cartTotal = cart.map(byIdA).filter(Boolean).reduce((s, x) => s + x.price, 0);
+
   return (
     <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: TA.bg, isolation: 'isolate' }}>
       <div key={viewKey} style={{ position: 'absolute', inset: 0 }}>
         <Comp app={app} params={params} />
       </div>
+      {showNav && cart.length > 0 && (
+        <button
+          onClick={() => nav.push('cart')}
+          style={{
+            position: 'fixed', bottom: 66, left: '50%', transform: 'translateX(-50%)',
+            display: 'flex', alignItems: 'center', gap: 6,
+            background: 'var(--accent)', color: '#fff',
+            border: 'none', borderRadius: 999,
+            padding: '8px 16px',
+            fontSize: 14, fontWeight: 600, fontFamily: 'var(--sans)',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.22)',
+            cursor: 'pointer', zIndex: 120,
+            animation: 'ccPop 0.3s ease',
+            whiteSpace: 'nowrap',
+          }}
+        >
+          {'\uD83D\uDED2'} {cart.length} \u00B7 {'\u00A3'}{cartTotal.toFixed(2)}
+        </button>
+      )}
       {showNav && <BottomNav tab={tab} setTab={nav.setTab} watchCount={watch.length} />}
       <SideMenu app={app} open={menuOpen} onClose={() => setMenuOpen(false)} />
       {!onboarded && Onboarding && <Onboarding app={app} games={window.GAMES || []} />}
