@@ -176,41 +176,63 @@ function DHome({ app }) {
 
   return (
     <div style={{ paddingBottom: 30 }}>
-      {/* ── Card Fan ── */}
-      <div style={{ position: 'relative', height: 300, display: 'flex', alignItems: 'center',
-        justifyContent: 'center', overflow: 'hidden',
-        background: 'linear-gradient(180deg, #e8eaee 0%, var(--bg) 100%)' }}>
-        {(() => {
-          const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03')].filter(Boolean);
-          const layouts = [
-            { rotate: -14, x: -90, y: 22, z: 1 },
-            { rotate: 0, x: 0, y: -14, z: 3 },
-            { rotate: 15, x: 90, y: 22, z: 2 },
-          ];
-          return fanCards.slice(0, 3).map((card, i) => {
-            const l = layouts[i];
-            return (
-              <div key={card.id} onClick={() => app.go('listing', { id: card.id })} style={{
-                position: 'absolute', width: 160, height: 224, borderRadius: 4, cursor: 'pointer',
-                transform: `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`,
-                zIndex: l.z, boxShadow: '0 10px 30px rgba(0,0,0,0.15), 0 4px 8px rgba(0,0,0,0.08)',
-                border: '1px solid var(--line)', overflow: 'hidden',
-                transition: 'transform 0.3s ease',
-              }}
-                onMouseEnter={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y - 8}px) rotate(${l.rotate}deg) scale(1.04)`; }}
-                onMouseLeave={e => { e.currentTarget.style.transform = `translate(${l.x}px, ${l.y}px) rotate(${l.rotate}deg)`; }}
-              >
-                <CardArtH item={card} w={160} radius={4} />
-                <div style={{ position: 'absolute', inset: 0, borderRadius: 4, zIndex: 5, pointerEvents: 'none',
-                  background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.15) 42%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0.08) 58%, transparent 75%)' }} />
-              </div>
-            );
-          });
-        })()}
-        <div style={{ position: 'absolute', bottom: 22, left: 0, right: 0, textAlign: 'center', zIndex: 10 }}>
-          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, color: 'var(--ink)',
-            letterSpacing: -0.4 }}>
-            The UK home for trading cards
+      {/* ── Hero Banner ── */}
+      <div className="wrap" style={{ marginTop: 28 }}>
+        <div style={{ display: 'flex', alignItems: 'center', background: 'var(--fill)', borderRadius: 20,
+          overflow: 'hidden', height: 320, position: 'relative' }}>
+          {/* left: text */}
+          <div style={{ flex: 1, padding: '0 48px', position: 'relative', zIndex: 2 }}>
+            <h1 style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 34, color: '#fff',
+              letterSpacing: -1, lineHeight: 1.1, margin: '0 0 12px' }}>
+              The UK home for<br/>trading cards
+            </h1>
+            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, margin: '0 0 20px', maxWidth: 360 }}>
+              Buy, sell, and trade across every game. Lower fees than anyone else, with real buyer protection and local game shop support.
+            </p>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <button onClick={() => app.go('search')} style={{ padding: '12px 22px', borderRadius: 10,
+                background: 'var(--accent)', color: '#fff', fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer' }}>
+                Start browsing
+              </button>
+              <button onClick={() => app.go('howitworks')} style={{ padding: '12px 22px', borderRadius: 10,
+                background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)', fontWeight: 700, fontSize: 14,
+                border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>
+                How it works
+              </button>
+            </div>
+          </div>
+          {/* right: card fan — zoomed in, clipped */}
+          <div style={{ width: 420, height: '100%', position: 'relative', flexShrink: 0 }}>
+            {(() => {
+              const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03')].filter(Boolean);
+              const layouts = [
+                { rotate: -12, x: 40, y: 50, z: 1 },
+                { rotate: 2, x: 170, y: 20, z: 3 },
+                { rotate: 16, x: 300, y: 60, z: 2 },
+              ];
+              return fanCards.slice(0, 3).map((card, i) => {
+                const l = layouts[i];
+                return (
+                  <div key={card.id} onClick={() => app.go('listing', { id: card.id })} style={{
+                    position: 'absolute', width: 170, height: 238, borderRadius: 6, cursor: 'pointer',
+                    left: l.x, top: l.y,
+                    transform: `rotate(${l.rotate}deg)`,
+                    zIndex: l.z, boxShadow: '0 12px 36px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.2)',
+                    border: '1px solid rgba(255,255,255,0.08)', overflow: 'hidden',
+                    transition: 'transform 0.3s ease',
+                  }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = `rotate(${l.rotate}deg) scale(1.05) translateY(-6px)`; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = `rotate(${l.rotate}deg)`; }}
+                  >
+                    <CardArtH item={card} w={170} radius={6} />
+                    <div style={{ position: 'absolute', inset: 0, borderRadius: 6, zIndex: 5, pointerEvents: 'none',
+                      background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 42%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 58%, transparent 75%)' }} />
+                  </div>
+                );
+              });
+            })()}
+            {/* subtle glow */}
+            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 60% 50%, rgba(255,255,255,0.04) 0%, transparent 60%)', pointerEvents: 'none' }} />
           </div>
         </div>
       </div>
