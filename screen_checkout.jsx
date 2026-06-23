@@ -36,7 +36,7 @@ function CheckoutScreen({ app, params }) {
       <div style={{ textAlign: 'center' }}>
         <div style={{ fontSize: 40, marginBottom: 12 }}>🛒</div>
         <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 18 }}>Item not found</div>
-        <button onClick={() => app.nav.pop()} style={{ marginTop: 16, color: TC.accent, fontFamily: TC.sans, fontWeight: 600 }}>Go back</button>
+        <button onClick={() => app.nav.pop()} style={{ marginTop: 16, color: 'var(--ink)', fontFamily: TC.sans, fontWeight: 600 }}>Go back</button>
       </div>
     </div>
   );
@@ -75,7 +75,7 @@ function CheckoutScreen({ app, params }) {
               <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 16, marginTop: 4 }}>{moneyC(total)}</div>
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--accent-wash)', color: TC.accent, borderRadius: 4, padding: '13px 14px', marginTop: 14, textAlign: 'left' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--accent-wash)', color: 'var(--ink)', borderRadius: 4, padding: '13px 14px', marginTop: 14, textAlign: 'left' }}>
             {IconC.truck({})}
             <span style={{ fontFamily: TC.sans, fontSize: 13.5, fontWeight: 600 }}>Arriving {ship==='express'?'Wed, Jun 11':'Mon, Jun 16'} · tracked & insured</span>
           </div>

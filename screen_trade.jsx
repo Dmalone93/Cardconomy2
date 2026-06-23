@@ -96,7 +96,7 @@ function TradeScreen({ app, params = {} }) {
         {phase === 'matches' && (
           <div style={{ padding: '18px 16px 30px' }}>
             <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 14px', marginBottom: 16 }}>
-              <span style={{ color: TT.accent, marginTop: 1 }}>{IconT.bolt({ width: 17, height: 17 })}</span>
+              <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconT.bolt({ width: 17, height: 17 })}</span>
               <span style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, lineHeight: 1.45 }}>
                 Swap cards directly — no cash needed. We match your <b>collection</b> with nearby collectors' <b>want lists</b> and suggest a shop to meet at.
               </span>
@@ -107,8 +107,8 @@ function TradeScreen({ app, params = {} }) {
                 <span style={{ fontFamily: TT.sans, fontSize: 11, color: TT.muted }}>{TRADE_POSTS_T.length} open trade posts</span>
               </button>
               <button onClick={() => setPhase('post')} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 13px', boxShadow: 'inset 0 0 0 1.5px var(--accent)' }}>
-                <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 13.5, color: TT.accent }}>+ Post a trade</span>
-                <span style={{ fontFamily: TT.sans, fontSize: 11, color: TT.accent, opacity: 0.8 }}>List a card, take offers</span>
+                <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>+ Post a trade</span>
+                <span style={{ fontFamily: TT.sans, fontSize: 11, color: 'var(--ink)', opacity: 0.8 }}>List a card, take offers</span>
               </button>
             </div>
             <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 14, color: TT.ink2, marginBottom: 10 }}>{TRADERS_T.length} matches near you</div>
@@ -134,7 +134,7 @@ function TradeScreen({ app, params = {} }) {
                       </div>
                       <div style={{ width: 1, background: 'var(--line-2)' }} />
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontFamily: TT.sans, fontSize: 10.5, fontWeight: 700, color: TT.accent, marginBottom: 5, letterSpacing: 0.2 }}>THEY WANT</div>
+                        <div style={{ fontFamily: TT.sans, fontSize: 10.5, fontWeight: 700, color: 'var(--ink)', marginBottom: 5, letterSpacing: 0.2 }}>THEY WANT</div>
                         <div style={{ display: 'flex', gap: 4 }}>{youGive.slice(0, 2).map(id => <MiniFace key={id} item={byIdT(id)} />)}</div>
                       </div>
                     </div>
@@ -149,7 +149,7 @@ function TradeScreen({ app, params = {} }) {
         {phase === 'board' && (
           <div style={{ padding: '18px 16px 30px' }}>
             <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 14px', marginBottom: 16 }}>
-              <span style={{ color: TT.accent, marginTop: 1 }}>{IconT.bolt({ width: 17, height: 17 })}</span>
+              <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconT.bolt({ width: 17, height: 17 })}</span>
               <span style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, lineHeight: 1.45 }}>
                 Collectors offering a card and <b>open to offers</b>. Tap one to propose something from your collection.
               </span>
@@ -185,7 +185,7 @@ function TradeScreen({ app, params = {} }) {
                     <div style={{ marginTop: 11 }}>
                       <div style={{ fontFamily: TT.sans, fontSize: 10.5, color: TT.muted, fontWeight: 700, letterSpacing: 0.2, marginBottom: 6 }}>{p.open ? 'LOOKING FOR · open' : 'LOOKING FOR'}</div>
                       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                        {!p.open && p.wants && p.wants.map(id => byIdT(id) && <span key={id} style={{ fontFamily: TT.sans, fontWeight: 600, fontSize: 11.5, color: TT.accent, background: 'var(--accent-wash)', borderRadius: 7, padding: '3px 9px' }}>{byIdT(id).name}</span>)}
+                        {!p.open && p.wants && p.wants.map(id => byIdT(id) && <span key={id} style={{ fontFamily: TT.sans, fontWeight: 600, fontSize: 11.5, color: 'var(--ink)', background: 'var(--accent-wash)', borderRadius: 7, padding: '3px 9px' }}>{byIdT(id).name}</span>)}
                         {chips.map((c, i) => <span key={i} style={{ fontFamily: TT.sans, fontWeight: 600, fontSize: 11.5, color: TT.ink2, background: TT.surface2, borderRadius: 7, padding: '3px 9px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>{c}</span>)}
                       </div>
                     </div>
@@ -317,7 +317,7 @@ function TradeScreen({ app, params = {} }) {
                 <div style={{ width: (100 - fairPct) + '%', background: 'var(--up)', transition: 'width 0.3s' }} />
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 6, fontFamily: TT.sans, fontSize: 11.5, fontWeight: 600 }}>
-                <span style={{ color: TT.accent }}>You {m0(giveVal)}</span>
+                <span style={{ color: 'var(--ink)' }}>You {m0(giveVal)}</span>
                 <span style={{ color: 'var(--up)', filter: 'brightness(0.85)' }}>{trader.name} {m0(getVal)}</span>
               </div>
 
@@ -325,11 +325,11 @@ function TradeScreen({ app, params = {} }) {
               {Math.abs(diff) > 10 && (
                 <button onClick={() => { setCash(suggestedCash); setCashWho(diff > 0 ? 'you' : 'them'); }} style={{ width: '100%', marginTop: 12, display: 'flex', alignItems: 'center', gap: 9,
                   background: 'var(--accent-wash)', borderRadius: 11, padding: '10px 12px', textAlign: 'left' }}>
-                  <span style={{ color: TT.accent }}>{IconT.tag({ width: 16, height: 16 })}</span>
+                  <span style={{ color: 'var(--ink)' }}>{IconT.tag({ width: 16, height: 16 })}</span>
                   <span style={{ flex: 1, fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2 }}>
                     Even it out: <b>{diff > 0 ? 'you add' : 'they add'} {m0(suggestedCash)}</b> cash
                   </span>
-                  <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 12.5, color: TT.accent }}>{cash > 0 ? '✓' : 'Add'}</span>
+                  <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 12.5, color: 'var(--ink)' }}>{cash > 0 ? '✓' : 'Add'}</span>
                 </button>
               )}
               {cash > 0 && (
@@ -344,10 +344,10 @@ function TradeScreen({ app, params = {} }) {
                 background: 'var(--accent-wash)', borderRadius: 14, padding: '14px 15px', boxShadow: 'inset 0 0 0 1.5px var(--accent)' }}>
                 <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconT.shield({ width: 18, height: 18 })}</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 13.5, color: TT.accent }}>Verify your identity to trade</div>
+                  <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>Verify your identity to trade</div>
                   <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.ink2 }}>In-person trades require both people verified. ~2 min.</div>
                 </div>
-                {IconT.chevron({ style: { color: TT.accent } })}
+                {IconT.chevron({ style: { color: 'var(--ink)' } })}
               </button>
             ) : (
               <button onClick={() => setPhase('meetup')} disabled={giveSel.length === 0 && getSel.length === 0}
@@ -376,7 +376,7 @@ function TradeScreen({ app, params = {} }) {
               ))}
             </div>
             <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: TT.surface2, borderRadius: 13, padding: '12px 14px', marginBottom: 16 }}>
-              <span style={{ color: TT.accent, marginTop: 1 }}>{IconT.shield({ width: 17, height: 17 })}</span>
+              <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconT.shield({ width: 17, height: 17 })}</span>
               <span style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, lineHeight: 1.45 }}>
                 Suggest where to meet — {trader.name} can accept it or counter with their own spot. A local shop is safest (neutral ground + authentication), but you can propose anywhere public.
               </span>
@@ -399,7 +399,7 @@ function TradeScreen({ app, params = {} }) {
                         {s.vault && <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 9.5, color: 'var(--gold)', background: 'oklch(0.95 0.06 85)', borderRadius: 5, padding: '1px 5px' }}>VAULT</span>}
                       </div>
                       <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.muted }}>{s.loc} · {s.hours}</div>
-                      <div style={{ fontFamily: TT.sans, fontSize: 11, color: TT.accent, fontWeight: 600, marginTop: 2 }}>~{mid} km midpoint · {s.dist} km you · {theirDist} km them</div>
+                      <div style={{ fontFamily: TT.sans, fontSize: 11, color: 'var(--ink)', fontWeight: 600, marginTop: 2 }}>~{mid} km midpoint · {s.dist} km you · {theirDist} km them</div>
                     </div>
                     <span style={{ width: 22, height: 22, borderRadius: 999, flexShrink: 0, boxShadow: sel ? 'none' : 'inset 0 0 0 2px var(--line)', background: sel ? 'var(--accent)' : 'transparent',
                       display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{sel && <span style={{ width: 8, height: 8, borderRadius: 999, background: '#fff' }} />}</span>
@@ -514,7 +514,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
         <div style={{ background: TT.surface, borderRadius: 16, padding: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ display: 'flex', gap: 10 }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: TT.sans, fontSize: 10.5, fontWeight: 700, color: TT.accent, marginBottom: 6 }}>YOU GIVE</div>
+              <div style={{ fontFamily: TT.sans, fontSize: 10.5, fontWeight: 700, color: 'var(--ink)', marginBottom: 6 }}>YOU GIVE</div>
               <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>{giveSel.map(id => <MiniFace key={id} item={byIdL(id)} />)}</div>
             </div>
             <div style={{ flex: 1 }}>

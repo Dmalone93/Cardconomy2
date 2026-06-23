@@ -74,7 +74,7 @@ function DSearch({ app, params = {} }) {
         <aside style={{ position: 'sticky', top: 130 }} className="srch-rail">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
             <span style={{ fontWeight: 800, fontSize: 16 }}>Filters</span>
-            <button onClick={reset} style={{ fontSize: 13, color: 'var(--accent)', fontWeight: 600 }}>Reset</button>
+            <button onClick={reset} style={{ fontSize: 13, color: 'var(--ink)', fontWeight: 600 }}>Reset</button>
           </div>
           <FilterGroup title="Game">
             <Check on={game === 'all'} onClick={() => setGame('all')} label="All games" count={LISTSS.length} />
@@ -114,7 +114,7 @@ function DSearch({ app, params = {} }) {
                   <div style={{ fontWeight: 700, fontSize: 15 }}>{setInfo.name}</div>
                   <div style={{ fontSize: 12.5, color: 'var(--muted)', marginTop: 2 }}>{setCards} card{setCards !== 1 ? 's' : ''}{setInfo.year ? ' · Released ' + setInfo.year : ''}</div>
                 </div>
-                <button onClick={() => setSetF('all')} style={{ color: 'var(--accent)', fontWeight: 700, fontSize: 13, padding: '6px 12px', borderRadius: 8, background: 'var(--surface)', boxShadow: 'inset 0 0 0 1px var(--line)' }}>Clear set</button>
+                <button onClick={() => setSetF('all')} style={{ color: 'var(--ink)', fontWeight: 700, fontSize: 13, padding: '6px 12px', borderRadius: 8, background: 'var(--surface)', boxShadow: 'inset 0 0 0 1px var(--line)' }}>Clear set</button>
               </div>
             );
           })()}
@@ -154,8 +154,8 @@ function DSearch({ app, params = {} }) {
 
 function Pill({ label, onX }) {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'var(--accent-wash)', color: 'var(--accent)', borderRadius: 999, padding: '6px 12px', fontSize: 13, fontWeight: 600 }}>
-      {label}<button onClick={onX} style={{ color: 'var(--accent)', fontSize: 15, lineHeight: 1, opacity: 0.7 }}>×</button>
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'var(--accent-wash)', color: 'var(--ink)', borderRadius: 999, padding: '6px 12px', fontSize: 13, fontWeight: 600 }}>
+      {label}<button onClick={onX} style={{ color: 'var(--ink)', fontSize: 15, lineHeight: 1, opacity: 0.7 }}>×</button>
     </span>
   );
 }

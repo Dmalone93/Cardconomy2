@@ -82,7 +82,7 @@ function SellBulkScreen({ app }) {
               <MethodRowB icon="📄" title="Import List" sub="Manabox · TCGplayer · CSV" time="instant" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TB.surface2, borderRadius: 4, padding: '12px 13px' }}>
-              <span style={{ color: TB.accent, marginTop: 1 }}>{IconB.tag({ width: 16, height: 16 })}</span>
+              <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconB.tag({ width: 16, height: 16 })}</span>
               <span style={{ fontFamily: TB.sans, fontSize: 12.5, color: TB.ink2, lineHeight: 1.45 }}>
                 After scanning, we price every card from live market data. You set one strategy for all, then tweak any before publishing.
               </span>

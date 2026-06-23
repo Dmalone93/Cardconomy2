@@ -275,7 +275,7 @@ function BottomNav({ tab, setTab, watchCount }) {
           <button key={t.id} onClick={() => setTab(t.id)} style={{
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
             flex: 1, paddingTop: 2, position: 'relative',
-            color: on ? T.accent : T.faint,
+            color: on ? T.ink : T.faint,
           }}>
             {t.primary ? (
               <div style={{
@@ -394,7 +394,7 @@ function SideMenu({ app, open, onClose }) {
         {/* header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '54px 18px 16px', borderBottom: '1px solid var(--line)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-            <Logo size={30} color={T.accent} />
+            <Logo size={30} color={T.ink} />
             <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 19, letterSpacing: 1.5, color: T.ink, lineHeight: 1, display: 'block' }}>CARDCONOMY</span>
           </div>
           <button onClick={onClose} style={{ width: 34, height: 34, borderRadius: 999, background: T.surface2, color: T.ink2,
@@ -525,7 +525,7 @@ function SliderInput({ value, onChange, min = 0, max = 100, step = 1, label, for
       {label && (
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
           <span style={{ fontFamily: T.sans, fontWeight: 600, fontSize: 14, color: T.ink }}>{label}</span>
-          <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 15, color: T.accent }}>{display}</span>
+          <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 15, color: 'var(--ink)' }}>{display}</span>
         </div>
       )}
       <input type="range" min={min} max={max} step={step} value={value}

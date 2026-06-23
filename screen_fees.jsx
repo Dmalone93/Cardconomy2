@@ -92,7 +92,7 @@ function FeesScreen({ app }) {
       {/* ── Big number ── */}
       <div style={{ margin: '0 14px', padding: '20px', borderRadius: 14,
         background: TFE.accentWash, border: '2px solid ' + TFE.accent, textAlign: 'center' }}>
-        <div style={{ fontSize: 36, fontWeight: 800, color: TFE.accent }}>6% + 30p</div>
+        <div style={{ fontSize: 36, fontWeight: 800, color: 'var(--ink)' }}>6% + 30p</div>
         <div style={{ fontSize: 13, color: TFE.ink, marginTop: 6 }}>
           4% seller fee + 2% buyer fee + 30p per transaction
         </div>
@@ -162,7 +162,7 @@ function FeesScreen({ app }) {
           <thead>
             <tr style={{ borderBottom: '2px solid ' + TFE.line }}>
               <th style={{ textAlign: 'left', padding: '6px 4px', color: TFE.muted, fontWeight: 600 }}></th>
-              <th style={{ textAlign: 'right', padding: '6px 4px', color: TFE.accent, fontWeight: 700 }}>Cardconomy</th>
+              <th style={{ textAlign: 'right', padding: '6px 4px', color: 'var(--ink)', fontWeight: 700 }}>Cardconomy</th>
               <th style={{ textAlign: 'right', padding: '6px 4px', color: TFE.muted, fontWeight: 600 }}>CardNexus</th>
               <th style={{ textAlign: 'right', padding: '6px 4px', color: TFE.muted, fontWeight: 600 }}>Cardmarket</th>
               <th style={{ textAlign: 'right', padding: '6px 4px', color: TFE.muted, fontWeight: 600 }}>eBay</th>
@@ -222,7 +222,7 @@ function FeesScreen({ app }) {
         }}>Start selling for less</button>
         <button onClick={() => app.nav.setTab('search')} style={{
           width: '100%', padding: '14px', borderRadius: 12,
-          background: TFE.surface, color: TFE.accent, fontSize: 15, fontWeight: 600, cursor: 'pointer',
+          background: TFE.surface, color: 'var(--ink)', fontSize: 15, fontWeight: 600, cursor: 'pointer',
           border: '1px solid ' + TFE.line,
         }}>Browse the marketplace</button>
       </div>

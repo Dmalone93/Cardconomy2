@@ -74,8 +74,8 @@ function DCard({ item, app }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 9 }}>
           <span style={{ fontSize: 11.5, color: 'var(--muted)' }}>{auction ? '🔨 ' + item.bids + ' bids · ' + item.timeLeft : (item.shipping === 0 ? 'Free shipping' : mH(item.shipping) + ' ship')}</span>
           {!auction && (
-            <button onClick={(e) => { e.stopPropagation(); app.addToCart(item.id); }} style={{ fontSize: 12, fontWeight: 700, color: app.inCart(item.id) ? 'var(--up)' : 'var(--accent)',
-              border: '1.5px solid ' + (app.inCart(item.id) ? 'var(--up)' : 'var(--accent)'), borderRadius: 8, padding: '4px 10px' }}>{app.inCart(item.id) ? '✓ In cart' : '+ Cart'}</button>
+            <button onClick={(e) => { e.stopPropagation(); app.addToCart(item.id); }} style={{ fontSize: 12, fontWeight: 700, color: app.inCart(item.id) ? 'var(--up)' : 'var(--ink)',
+              border: '1.5px solid ' + (app.inCart(item.id) ? 'var(--up)' : 'var(--ink)'), borderRadius: 8, padding: '4px 10px' }}>{app.inCart(item.id) ? '✓ In cart' : '+ Cart'}</button>
           )}
         </div>
       </div>
@@ -88,7 +88,7 @@ function Row({ title, action, onAction, children }) {
     <section style={{ marginTop: 44 }}>
       <div className="wrap" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
         <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>{title}</h2>
-        {action && <button onClick={onAction} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--accent)' }}>{action} →</button>}
+        {action && <button onClick={onAction} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--ink)' }}>{action} →</button>}
       </div>
       <div className="wrap">{children}</div>
     </section>
@@ -148,7 +148,7 @@ function DWhatsHot({ app, trending }) {
             }}>{l}</button>
           ))}
         </div>
-        <button onClick={() => app.go('search')} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--accent)' }}>See all →</button>
+        <button onClick={() => app.go('search')} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--ink)' }}>See all →</button>
       </div>
       <div className="wrap">
         {tab === 'trending' ? (
@@ -240,7 +240,7 @@ function DHome({ app }) {
       {/* ── How it works link ── */}
       <div className="wrap" style={{ textAlign: 'center', marginTop: 28, marginBottom: 8 }}>
         <span onClick={() => app.go('howitworks')} style={{ fontSize: 13, fontWeight: 600,
-          color: 'var(--accent)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
+          color: 'var(--ink)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
       </div>
 
       {/* ── Browse by Game (hero tiles) ── */}
@@ -272,7 +272,7 @@ function DHome({ app }) {
           <div style={{ display: 'flex', gap: 20 }}>
             {[['6%+30p', 'Total fee'], ['5', 'Games'], ['3', 'Personas']].map(([num, label]) => (
               <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: 'var(--accent)' }}>{num}</div>
+                <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: 'var(--ink)' }}>{num}</div>
                 <div style={{ fontSize: 12, color: TH.muted, marginTop: 2 }}>{label}</div>
               </div>
             ))}
@@ -287,7 +287,7 @@ function DHome({ app }) {
             [IconH.bolt, 'Verified sellers', 'Every shop and top seller is vetted, with transparent ratings.'],
             [IconH.tag, 'Real market pricing', 'Live price history and sold comps on every card.']].map(([ic, h, b], i) => (
             <div key={i} style={{ display: 'flex', gap: 14, background: 'var(--surface)', borderRadius: 16, padding: 22, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-              <span style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'var(--accent-wash)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{ic({ width: 22, height: 22 })}</span>
+              <span style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{ic({ width: 22, height: 22 })}</span>
               <div><div style={{ fontWeight: 800, fontSize: 16 }}>{h}</div><p style={{ color: 'var(--ink-2)', fontSize: 13.5, lineHeight: 1.5, margin: '4px 0 0' }}>{b}</p></div>
             </div>
           ))}

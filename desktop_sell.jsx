@@ -159,9 +159,9 @@ function DSellSingle({ app }) {
                 <input type="number" value={price} onChange={e => setPrice(e.target.value)} placeholder={String(suggested)} style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TSl.mono, fontWeight: 700, fontSize: 28, minWidth: 0 }} />
               </div>
               <button onClick={() => setPrice(String(suggested))} style={{ marginTop: 12, display: 'flex', alignItems: 'center', gap: 10, width: '100%', background: 'var(--accent-wash)', borderRadius: 12, padding: '13px 16px', textAlign: 'left' }}>
-                <span style={{ color: 'var(--accent)' }}>{IconSl.tag({ width: 18, height: 18 })}</span>
+                <span style={{ color: 'var(--ink)' }}>{IconSl.tag({ width: 18, height: 18 })}</span>
                 <span style={{ flex: 1, fontSize: 13.5, color: 'var(--ink-2)' }}>Suggested <b>{mSl(suggested)}</b> from recent {graded ? grader.toUpperCase() + ' ' + grade : 'raw'} sales</span>
-                <span style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--accent)' }}>Use</span>
+                <span style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>Use</span>
               </button>
             </div>
           )}
@@ -236,13 +236,13 @@ function DSellBulk({ app }) {
           <p style={{ color: 'var(--muted)', fontSize: 15.5, margin: '0 0 24px', maxWidth: 600 }}>Upload a collection export (CSV from Manabox, TCGplayer, Dragon Shield) or drop photos of your cards. We'll identify each one and price it at market.</p>
           <div onDragOver={e => { e.preventDefault(); setDragOver(true); }} onDragLeave={() => setDragOver(false)} onDrop={e => { e.preventDefault(); setDragOver(false); setPhase('review'); }} onClick={() => setPhase('review')}
             style={{ border: '2.5px dashed ' + (dragOver ? 'var(--accent)' : 'var(--line)'), background: dragOver ? 'var(--accent-wash)' : 'var(--surface)', borderRadius: 18, padding: '56px 24px', textAlign: 'center', cursor: 'pointer', transition: 'all 0.15s' }}>
-            <div style={{ width: 60, height: 60, margin: '0 auto 16px', borderRadius: 16, background: 'var(--accent-wash)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ width: 60, height: 60, margin: '0 auto 16px', borderRadius: 16, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M12 16V4M12 4L7 9M12 4l5 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
             </div>
             <div style={{ fontWeight: 700, fontSize: 18 }}>Drop your CSV or photos here</div>
-            <div style={{ color: 'var(--muted)', fontSize: 14, marginTop: 6 }}>or <span style={{ color: 'var(--accent)', fontWeight: 700 }}>browse files</span> · CSV, JPG, PNG up to 50MB</div>
+            <div style={{ color: 'var(--muted)', fontSize: 14, marginTop: 6 }}>or <span style={{ color: 'var(--ink)', fontWeight: 700 }}>browse files</span> · CSV, JPG, PNG up to 50MB</div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16, color: 'var(--muted)', fontSize: 13.5 }}>{IconSl.bolt({ width: 16, height: 16, style: { color: 'var(--accent)' } })} Demo: click the box to load a sample 10-card collection.</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16, color: 'var(--muted)', fontSize: 13.5 }}>{IconSl.bolt({ width: 16, height: 16, style: { color: 'var(--ink)' } })} Demo: click the box to load a sample 10-card collection.</div>
         </div>
       )}
 

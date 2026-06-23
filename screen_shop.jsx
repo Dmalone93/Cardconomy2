@@ -198,7 +198,7 @@ function ShopDashboard({ app, onCounter }) {
         <div style={sectionStyle}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
             <div style={sectionTitle}>Trades</div>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--accent-wash)', color: TSH.accent, borderRadius: 999, padding: '4px 10px', fontFamily: TSH.sans, fontWeight: 700, fontSize: 11 }}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4, background: 'var(--accent-wash)', color: 'var(--ink)', borderRadius: 999, padding: '4px 10px', fontFamily: TSH.sans, fontWeight: 700, fontSize: 11 }}>
               1 pending
             </span>
           </div>
@@ -410,7 +410,7 @@ function ShopScreen({ app }) {
         <div style={{ marginTop: 14, background: TSH.surface, borderRadius: 14, padding: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
             <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 14 }}>{SUB_SH.bulkCount.toLocaleString()} bulk · standing rates</span>
-            <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 15, color: TSH.accent }}>{moneySH(bulkPayout)}</span>
+            <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 15, color: 'var(--ink)' }}>{moneySH(bulkPayout)}</span>
           </div>
           {BR_SH.map(b => (
             <div key={b.id} style={{ display: 'flex', justifyContent: 'space-between', gap: 8, padding: '5px 0', fontFamily: TSH.sans, fontSize: 12.5, color: TSH.ink2 }}>
@@ -488,7 +488,7 @@ function ShopCardRow({ c, price, onClick, app }) {
           <div style={{ textAlign: 'right', flexShrink: 0 }}>
             {matched ? (
               <React.Fragment>
-                <div style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 11, color: TSH.accent, whiteSpace: 'nowrap' }}>★ WANT {c.buylist.want}</div>
+                <div style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 11, color: 'var(--ink)', whiteSpace: 'nowrap' }}>★ WANT {c.buylist.want}</div>
                 <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap' }}>{money0(c.buylist.buy)}<span style={{ fontFamily: TSH.sans, fontSize: 10, color: TSH.muted }}>/ea</span></div>
               </React.Fragment>
             ) : c.flag ? (
@@ -585,7 +585,7 @@ function PriceGuide({ card, onClose, onSet }) {
           {/* buy % */}
           <div style={{ marginTop: 18, background: 'var(--accent-wash)', borderRadius: 13, padding: 14 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, color: TSH.accent }}>Your buy %</span>
+              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>Your buy %</span>
               <div style={{ display: 'flex', gap: 6 }}>
                 {[60, 70, 80].map(p => (
                   <button key={p} onClick={() => setPct(p)} style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, padding: '4px 11px', borderRadius: 8,
@@ -596,7 +596,7 @@ function PriceGuide({ card, onClose, onSet }) {
             <input type="range" min="40" max="90" step="5" value={pct} onChange={e => setPct(+e.target.value)} style={{ width: '100%', accentColor: 'var(--accent)', marginTop: 12 }} />
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginTop: 4 }}>
               <span style={{ fontFamily: TSH.sans, fontSize: 12, color: TSH.ink2 }}>Buy price {card.qty > 1 ? '(×' + card.qty + ')' : ''}</span>
-              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 24, color: TSH.accent }}>{money0(buy * card.qty)}</span>
+              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 24, color: 'var(--ink)' }}>{money0(buy * card.qty)}</span>
             </div>
           </div>
 
@@ -645,7 +645,7 @@ function OfferComposer({ offer, cashTotal, onClose, onSend }) {
             </div>
             <input type="range" min="0" max="100" step="10" value={creditPct} onChange={e => setCreditPct(+e.target.value)} style={{ width: '100%', accentColor: 'var(--gold)', marginTop: 8 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: TSH.sans, fontSize: 12, fontWeight: 600 }}>
-              <span style={{ color: TSH.accent }}>{money0(Math.round(cashTotal * (100 - creditPct) / 100))} cash</span>
+              <span style={{ color: 'var(--ink)' }}>{money0(Math.round(cashTotal * (100 - creditPct) / 100))} cash</span>
               <span style={{ color: 'var(--gold)', filter: 'brightness(0.85)' }}>{money0(Math.round(creditTotal * creditPct / 100))} credit</span>
             </div>
           </div>
@@ -722,7 +722,7 @@ function ShopInbox({ app, onOpen, onDashboard }) {
           )}
           <div style={{ display: 'flex', gap: 8, marginTop: 13 }}>
             <div style={{ flex: 1, background: '#fff', borderRadius: 11, padding: '9px 11px' }}>
-              <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 17, color: TSH.accent }}>{stats.buylistCount}</div>
+              <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 17, color: 'var(--ink)' }}>{stats.buylistCount}</div>
               <div style={{ fontFamily: TSH.sans, fontSize: 10.5, color: TSH.muted }}>★ buylist hits</div>
             </div>
             <div style={{ flex: 1, background: '#fff', borderRadius: 11, padding: '9px 11px' }}>
@@ -782,7 +782,7 @@ function ShopSent({ app, offer, onInbox }) {
             </div>
           ))}
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--accent-wash)', color: TSH.accent, borderRadius: 12, padding: '13px 14px', marginTop: 14, textAlign: 'left' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--accent-wash)', color: 'var(--ink)', borderRadius: 12, padding: '13px 14px', marginTop: 14, textAlign: 'left' }}>
           {IconSH.shield({})}
           <span style={{ fontFamily: TSH.sans, fontSize: 13, fontWeight: 600 }}>Submission moves to "Awaiting pickup" in your queue.</span>
         </div>

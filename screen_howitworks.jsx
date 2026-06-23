@@ -114,7 +114,7 @@ function HowItWorksScreen({ app }) {
             ))}
           </div>
           <div style={{ height: 3, borderRadius: 2, background: 'linear-gradient(90deg, var(--up), var(--accent), var(--gold))', margin: '0 20px' }} />
-          <div style={{ textAlign: 'center', marginTop: 12, fontSize: 12, fontWeight: 600, color: THW.accent }}>
+          <div style={{ textAlign: 'center', marginTop: 12, fontSize: 12, fontWeight: 600, color: 'var(--ink)' }}>
             Connected on one platform
           </div>
         </div>
@@ -161,7 +161,7 @@ function HowItWorksScreen({ app }) {
               <div style={{ fontSize: 14, fontWeight: 700, color: THW.ink }}>{p.title}</div>
               <div style={{ fontSize: 12, color: THW.muted, marginTop: 2 }}>{p.desc}</div>
             </div>
-            <span style={{ fontSize: 13, fontWeight: 700, color: THW.accent, flexShrink: 0 }}>{'\u2192'}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', flexShrink: 0 }}>{'\u2192'}</span>
           </div>
         ))}
       </div>

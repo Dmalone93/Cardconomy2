@@ -49,7 +49,7 @@ function DTrade({ app }) {
                 </div>
                 <div style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 700, letterSpacing: 0.3, marginBottom: 7 }}>{p.open ? 'LOOKING FOR · open' : 'LOOKING FOR'}</div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 12 }}>
-                  {!p.open && p.wants && p.wants.map(id => byIdTr(id) && <span key={id} style={{ fontWeight: 600, fontSize: 11.5, color: 'var(--accent)', background: 'var(--accent-wash)', borderRadius: 7, padding: '3px 9px' }}>{byIdTr(id).name}</span>)}
+                  {!p.open && p.wants && p.wants.map(id => byIdTr(id) && <span key={id} style={{ fontWeight: 600, fontSize: 11.5, color: 'var(--ink)', background: 'var(--accent-wash)', borderRadius: 7, padding: '3px 9px' }}>{byIdTr(id).name}</span>)}
                   {chips.map((c, i) => <span key={i} style={{ fontWeight: 600, fontSize: 11.5, color: 'var(--ink-2)', background: 'var(--surface-2)', borderRadius: 7, padding: '3px 9px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>{c}</span>)}
                 </div>
                 <div style={{ fontSize: 12.5, color: 'var(--ink-2)', fontStyle: 'italic', marginBottom: 13, lineHeight: 1.4 }}>"{p.note}"</div>
@@ -74,7 +74,7 @@ function DTrade({ app }) {
                 <div style={{ display: 'flex', gap: 14 }}>
                   <div style={{ flex: 1 }}><div style={{ fontSize: 10.5, fontWeight: 700, color: 'var(--up)', marginBottom: 6, letterSpacing: 0.2 }}>YOU GET</div><div style={{ display: 'flex', gap: 5 }}>{youGet.slice(0, 2).map(id => <MiniFaceD key={id} id={id} />)}</div></div>
                   <div style={{ width: 1, background: 'var(--line-2)' }} />
-                  <div style={{ flex: 1 }}><div style={{ fontSize: 10.5, fontWeight: 700, color: 'var(--accent)', marginBottom: 6, letterSpacing: 0.2 }}>THEY WANT</div><div style={{ display: 'flex', gap: 5 }}>{youGive.slice(0, 2).map(id => <MiniFaceD key={id} id={id} />)}</div></div>
+                  <div style={{ flex: 1 }}><div style={{ fontSize: 10.5, fontWeight: 700, color: 'var(--ink)', marginBottom: 6, letterSpacing: 0.2 }}>THEY WANT</div><div style={{ display: 'flex', gap: 5 }}>{youGive.slice(0, 2).map(id => <MiniFaceD key={id} id={id} />)}</div></div>
                 </div>
                 <button onClick={() => app.toast('Open the mobile app to build this trade')} style={{ width: '100%', marginTop: 14, background: 'var(--ink)', color: '#fff', borderRadius: 11, padding: 12, fontWeight: 700, fontSize: 14 }}>Build this trade</button>
               </div>
@@ -206,12 +206,12 @@ function DShopDash({ app }) {
             </div>
             <span><GradeChipTr grade={c.grade} /></span>
             <span style={{ fontFamily: TTr.mono, fontSize: 13.5 }}>×{c.qty}</span>
-            <span>{c.buylist ? <span><b style={{ color: 'var(--accent)', fontFamily: TTr.mono }}>{m0Tr(c.buylist.buy)}</b> <span style={{ fontSize: 11, color: 'var(--muted)' }}>· want {c.buylist.want}</span></span> : c.flag ? <span style={{ color: 'var(--down)', fontSize: 12.5, fontWeight: 600 }}>inspect</span> : <span style={{ color: 'var(--muted)', fontSize: 12.5 }}>not listed</span>}</span>
+            <span>{c.buylist ? <span><b style={{ color: 'var(--ink)', fontFamily: TTr.mono }}>{m0Tr(c.buylist.buy)}</b> <span style={{ fontSize: 11, color: 'var(--muted)' }}>· want {c.buylist.want}</span></span> : c.flag ? <span style={{ color: 'var(--down)', fontSize: 12.5, fontWeight: 600 }}>inspect</span> : <span style={{ color: 'var(--muted)', fontSize: 12.5 }}>not listed</span>}</span>
           </div>
         ))}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 20px', background: 'var(--surface-2)' }}>
           <span style={{ fontWeight: 700, fontSize: 13.5 }}>{SUB_D.bulkCount.toLocaleString()} bulk · standing rates</span>
-          <span style={{ fontFamily: TTr.mono, fontWeight: 700, fontSize: 15, color: 'var(--accent)' }}>{mTr(SUB_D.bulkPayout)}</span>
+          <span style={{ fontFamily: TTr.mono, fontWeight: 700, fontSize: 15, color: 'var(--ink)' }}>{mTr(SUB_D.bulkPayout)}</span>
         </div>
       </div>
     </div>

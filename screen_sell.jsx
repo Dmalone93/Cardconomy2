@@ -113,7 +113,7 @@ function SellScreen({ app }) {
                       <div style={{ fontFamily: TSE.sans, fontSize: 10.5, color: TSE.muted }}>market</div>
                       <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13.5 }}>{moneySE(c.market)}</div>
                     </div>
-                    {sel && <div style={{ color: TSE.accent }}>{IconSE.check({})}</div>}
+                    {sel && <div style={{ color: 'var(--ink)' }}>{IconSE.check({})}</div>}
                   </button>
                 );
               })}
@@ -220,9 +220,9 @@ function SellScreen({ app }) {
             </div>
             <button onClick={() => setPrice(String(suggested))} style={{ marginTop: 10, display: 'flex', alignItems: 'center', gap: 8, width: '100%',
               background: 'var(--accent-wash)', borderRadius: 4, padding: '11px 14px', textAlign: 'left' }}>
-              <span style={{ color: TSE.accent }}>{IconSE.tag({})}</span>
+              <span style={{ color: 'var(--ink)' }}>{IconSE.tag({})}</span>
               <span style={{ flex: 1, fontFamily: TSE.sans, fontSize: 13, color: TSE.ink2 }}>Suggested: <b>{moneySE(suggested)}</b> based on recent {graded?grader.toUpperCase()+' '+grade:'raw'} sales</span>
-              <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13, color: TSE.accent }}>Use</span>
+              <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>Use</span>
             </button>
 
             {listType==='auction' && (

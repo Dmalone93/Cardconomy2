@@ -125,7 +125,7 @@ function ListingScreen({ app, params }) {
           {window.PRINTINGS && window.PRINTINGS[item.name] && window.PRINTINGS[item.name].length > 1 && (
             <div onClick={() => setShowPrintings(true)} style={{
               marginTop: 8, padding: '6px 12px', borderRadius: 8, background: TL.surface2,
-              fontSize: 13, fontWeight: 600, color: TL.accent, cursor: 'pointer',
+              fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer',
               display: 'inline-flex', alignItems: 'center', gap: 4,
             }}>
               ⊞ See all printings ({window.PRINTINGS[item.name].length})
@@ -244,7 +244,7 @@ function ListingScreen({ app, params }) {
                 </div>
               </div>
               <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13,
-                color: TL.accent, padding: '8px 12px', borderRadius: 10, boxShadow: 'inset 0 0 0 1px var(--accent)' }}>Store</button>
+                color: 'var(--ink)', padding: '8px 12px', borderRadius: 10, boxShadow: 'inset 0 0 0 1px var(--accent)' }}>Store</button>
             </div>
 
             {/* message seller */}
@@ -263,7 +263,7 @@ function ListingScreen({ app, params }) {
                 <div style={{ marginTop: 12 }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                     <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: TL.ink }}>More from {item.seller}</div>
-                    <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 12, color: TL.accent }}>View all →</button>
+                    <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 12, color: 'var(--ink)' }}>View all →</button>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
                     {others.map(l => (
@@ -312,7 +312,7 @@ function ListingScreen({ app, params }) {
                 background: TL.surface, borderRadius: 4, textAlign: 'left',
                 boxShadow: 'inset 0 0 0 1px var(--line)',
               }}>
-                <svg width="20" height="20" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: TL.accent }}><path d="M208,40H48A16,16,0,0,0,32,56V200a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Zm80,32H48V56H208V200ZM64,96V80A16,16,0,0,1,80,64H96a8,8,0,0,1,0,16H80V96a8,8,0,0,1-16,0Zm144,64v16a16,16,0,0,1-16,16H176a8,8,0,0,1,0-16h16V160a8,8,0,0,1,16,0Z" fill="currentColor"/></svg>
+                <svg width="20" height="20" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: 'var(--ink)' }}><path d="M208,40H48A16,16,0,0,0,32,56V200a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Zm80,32H48V56H208V200ZM64,96V80A16,16,0,0,1,80,64H96a8,8,0,0,1,0,16H80V96a8,8,0,0,1-16,0Zm144,64v16a16,16,0,0,1-16,16H176a8,8,0,0,1,0-16h16V160a8,8,0,0,1,16,0Z" fill="currentColor"/></svg>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: TL.ink }}>Authenticate this card</div>
                   <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginTop: 1 }}>Get an official verification seal</div>

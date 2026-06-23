@@ -42,10 +42,10 @@ function VerifyGate({ app, need = 1, action = 'do this', compact }) {
       background: 'var(--accent-wash)', borderRadius: 13, padding: compact ? '11px 13px' : '14px 15px', boxShadow: 'inset 0 0 0 1.5px var(--accent)' }}>
       <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconV.shield({ width: 18, height: 18 })}</span>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 13.5, color: TV.accent }}>Verify your identity to {action}</div>
+        <div style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>Verify your identity to {action}</div>
         <div style={{ fontFamily: TV.sans, fontSize: 11.5, color: TV.ink2 }}>A one-time check keeps the marketplace safe. ~2 minutes.</div>
       </div>
-      {IconV.chevron({ style: { color: TV.accent } })}
+      {IconV.chevron({ style: { color: 'var(--ink)' } })}
     </button>
   );
 }
@@ -96,7 +96,7 @@ function VerifyScreen({ app }) {
 
         {!allDone && (
           <div style={{ display: 'flex', gap: 9, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 14px', marginBottom: 16 }}>
-            <span style={{ color: TV.accent, marginTop: 1 }}>{IconV.shield({ width: 16, height: 16 })}</span>
+            <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconV.shield({ width: 16, height: 16 })}</span>
             <span style={{ fontFamily: TV.sans, fontSize: 12.5, color: TV.ink2, lineHeight: 1.45 }}>
               Cardonomy is <b>verified-only for selling, bidding, and trading</b>. One quick check unlocks all of it — and earns you a badge buyers trust.
             </span>

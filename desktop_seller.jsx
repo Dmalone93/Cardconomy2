@@ -12,7 +12,7 @@ function DSellerProfile({ app, params }) {
   if (!seller) return (
     <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
       <div style={{ fontWeight: 700, fontSize: 20 }}>Seller not found</div>
-      <button onClick={function(){ app.go('home'); }} style={{ marginTop: 16, color: 'var(--accent)', fontWeight: 600, fontSize: 14 }}>Back to home</button>
+      <button onClick={function(){ app.go('home'); }} style={{ marginTop: 16, color: 'var(--ink)', fontWeight: 600, fontSize: 14 }}>Back to home</button>
     </div>
   );
 
@@ -141,7 +141,7 @@ function DSellerProfile({ app, params }) {
       tab === 'policies' && React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 14 } },
         policies.map(function(p, i) {
           return React.createElement('div', { key: i, style: { background: 'var(--surface)', borderRadius: 14, padding: 20, display: 'flex', gap: 16, alignItems: 'flex-start', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' } },
-            React.createElement('div', { style: { width: 44, height: 44, borderRadius: 12, background: 'var(--accent-wash)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 } },
+            React.createElement('div', { style: { width: 44, height: 44, borderRadius: 12, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 } },
               IconSd.shield({ width: 20, height: 20 })
             ),
             React.createElement('div', { style: { flex: 1 } },

@@ -24,8 +24,8 @@ function NavBtn({ onClick, children, style: extra = {} }) {
   const [hover, setHover] = React.useState(false);
   return (
     <button onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-      style={{ padding: '0 13px', height: 46, color: hover ? 'var(--accent)' : 'var(--ink-2)',
-        borderBottom: hover ? '2px solid var(--accent)' : '2px solid transparent',
+      style={{ padding: '0 13px', height: 46, color: hover ? 'var(--ink)' : 'var(--ink-2)',
+        borderBottom: hover ? '2px solid var(--ink)' : '2px solid transparent',
         transition: 'color 0.15s, border-color 0.15s', ...extra }}>
       {children}
     </button>
@@ -89,7 +89,7 @@ function Header({ app, openMega, megaOpen }) {
           <NavBtn onClick={() => app.go('search', { cond: 'Graded only' })}>Graded</NavBtn>
           <NavBtn onClick={() => app.go('search', {})}>Bulk lots</NavBtn>
           <NavBtn onClick={() => app.go('trade')}>Trade</NavBtn>
-          <NavBtn onClick={() => app.toast('Price Guide coming soon')} style={{ marginLeft: 'auto', color: 'var(--accent)', fontWeight: 700 }}>Price Guide</NavBtn>
+          <NavBtn onClick={() => app.toast('Price Guide coming soon')} style={{ marginLeft: 'auto', color: 'var(--ink)', fontWeight: 700 }}>Price Guide</NavBtn>
         </div>
       </div>
     </header>
@@ -542,7 +542,7 @@ function DAccountSeller({ app }) {
           <div style={cardStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
               <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Collection</div>
-              <button onClick={function() { app.go('watch'); }} style={{ fontSize: 11, color: 'var(--accent)', fontWeight: 600, border: 'none', background: 'none', cursor: 'pointer' }}>View all {'\u2192'}</button>
+              <button onClick={function() { app.go('watch'); }} style={{ fontSize: 11, color: 'var(--ink)', fontWeight: 600, border: 'none', background: 'none', cursor: 'pointer' }}>View all {'\u2192'}</button>
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
               <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 26 }}>{money(2480)}</span>
@@ -643,7 +643,7 @@ function DAccountBuyer({ app }) {
             </div>
             <div style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 14 }}>42 cards across 2 collections</div>
             <button onClick={function() { app.toast('View collection'); }} style={{
-              background: 'transparent', color: 'var(--accent)', border: '1.5px solid var(--accent)',
+              background: 'transparent', color: 'var(--ink)', border: '1.5px solid var(--accent)',
               borderRadius: 10, padding: '10px 20px', fontWeight: 700, fontSize: 13, cursor: 'pointer',
             }}>View collection</button>
           </div>
@@ -720,7 +720,7 @@ function DAccountBuyer({ app }) {
             <div style={sectionLabel}>Needs Attention</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {[
-                { color: 'var(--accent)', title: '2 buylist matches at your price', sub: 'Blue-Eyes and Pikachu EX', btn: 'View' },
+                { color: 'var(--ink)', title: '2 buylist matches at your price', sub: 'Blue-Eyes and Pikachu EX', btn: 'View' },
                 { color: '#22c55e', title: 'Order arriving today', sub: 'Charizard EX from CardKing', btn: 'Track' },
                 { color: '#f59e0b', title: 'Price drop on watched card', sub: 'Dark Magician down 8%', btn: 'View' },
               ].map(function(item, i) {
@@ -896,7 +896,7 @@ function DAccountStore({ app }) {
             {[
               { val: '4', label: 'Submissions pending', sub: '2 new today', color: 'var(--ink)' },
               { val: '1', label: 'Bulk lots', sub: '1,420 cards', color: 'var(--ink)' },
-              { val: '12', label: 'Buylist hits', sub: 'today', color: 'var(--accent)' },
+              { val: '12', label: 'Buylist hits', sub: 'today', color: 'var(--ink)' },
             ].map(function(tile, i) {
               return (
                 <button key={i} onClick={function() { app.go('account'); }} style={Object.assign({}, cardStyle, { textAlign: 'center', cursor: 'pointer', border: 'none' })}>
@@ -954,7 +954,7 @@ function DAccountStore({ app }) {
             <div style={sectionLabel}>Buylist Performance</div>
             <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
               <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 28, color: 'var(--accent)' }}>12</div>
+                <div style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 28, color: 'var(--ink)' }}>12</div>
                 <div style={{ fontSize: 11, color: 'var(--muted)' }}>matched today</div>
               </div>
               <div style={{ width: 1, background: 'var(--line-2)' }} />

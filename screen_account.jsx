@@ -124,7 +124,7 @@ function BuylistScreen({ app }) {
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
         {/* explainer */}
         <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 14px', marginBottom: 14 }}>
-          <span style={{ color: TAC.accent, marginTop: 1 }}>{AIcon.star({ width: 18, height: 18 }, true)}</span>
+          <span style={{ color: 'var(--ink)', marginTop: 1 }}>{AIcon.star({ width: 18, height: 18 }, true)}</span>
           <span style={{ fontFamily: TAC.sans, fontSize: 12.5, color: TAC.ink2, lineHeight: 1.45 }}>
             Set the cards you're after and the max you\'ll pay. We alert you when a match is listed — and shops use it to price your trade-ins instantly.
           </span>
@@ -133,7 +133,7 @@ function BuylistScreen({ app }) {
         {/* summary */}
         <div style={{ display: 'flex', gap: 9, marginBottom: 16 }}>
           <div style={{ flex: 1, background: TAC.surface, borderRadius: 13, padding: '11px 13px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 20, color: TAC.accent }}>{matches.length}</div>
+            <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 20, color: 'var(--ink)' }}>{matches.length}</div>
             <div style={{ fontFamily: TAC.sans, fontSize: 11, color: TAC.muted }}>matches available now</div>
           </div>
           <div style={{ flex: 1, background: TAC.surface, borderRadius: 13, padding: '11px 13px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -171,7 +171,7 @@ function BuylistScreen({ app }) {
         )}
 
         {matches.length > 0 && (
-          <button onClick={() => app.nav.setTab('search')} style={{ width: '100%', marginTop: 16, background: TAC.surface, color: TAC.accent, borderRadius: 13, padding: 13,
+          <button onClick={() => app.nav.setTab('search')} style={{ width: '100%', marginTop: 16, background: TAC.surface, color: 'var(--ink)', borderRadius: 13, padding: 13,
             fontFamily: TAC.sans, fontWeight: 700, fontSize: 14.5, boxShadow: 'inset 0 0 0 1.5px var(--accent)' }}>
             View {matches.length} available match{matches.length !== 1 ? 'es' : ''} →
           </button>
@@ -203,7 +203,7 @@ function BuylistScreen({ app }) {
                 <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
                 <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>{setByIdAC(l.set)?.name?.replace(/\s*\(.*\)/, '')} · mkt {money0AC(l.market)}</div>
               </div>
-              <span style={{ color: TAC.accent }}>{AIcon.plus({})}</span>
+              <span style={{ color: 'var(--ink)' }}>{AIcon.plus({})}</span>
             </button>
           ))}
           {catalog.length === 0 && <div style={{ textAlign: 'center', padding: 24, fontFamily: TAC.sans, fontSize: 13.5, color: TAC.muted }}>No more cards to add.</div>}
@@ -274,7 +274,7 @@ function PurchasesScreen({ app }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--line-2)' }}>
                   <span style={{ color: TAC.muted }}>{IconAC.truck({ width: 16, height: 16 })}</span>
                   <span style={{ flex: 1, fontFamily: TAC.sans, fontSize: 12.5, color: TAC.ink2 }}>{p.track}</span>
-                  <button onClick={() => app.toast(p.status === 'Delivered' ? 'Review submitted — thank you!' : 'Tracking: your card is on the way')} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: TAC.accent }}>{p.status === 'Delivered' ? 'Review' : 'Track'}</button>
+                  <button onClick={() => app.toast(p.status === 'Delivered' ? 'Review submitted — thank you!' : 'Tracking: your card is on the way')} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: 'var(--ink)' }}>{p.status === 'Delivered' ? 'Review' : 'Track'}</button>
                 </div>
               </div>
             ))}
@@ -330,7 +330,7 @@ function SellingScreen({ app }) {
                       <div style={{ fontFamily: TAC.sans, fontSize: 10.5, color: TAC.muted }}>{k}</div>
                     </div>
                   ))}
-                  <button onClick={() => l.offers > 0 ? app.nav.push('offers') : app.toast('Opening listing editor')} style={{ alignSelf: 'center', fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: TAC.accent, padding: '6px 10px' }}>{l.offers > 0 ? 'Offers' : 'Edit'}</button>
+                  <button onClick={() => l.offers > 0 ? app.nav.push('offers') : app.toast('Opening listing editor')} style={{ alignSelf: 'center', fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: 'var(--ink)', padding: '6px 10px' }}>{l.offers > 0 ? 'Offers' : 'Edit'}</button>
                 </div>
               </div>
             ))}
@@ -421,7 +421,7 @@ function OffersScreen({ app }) {
                         <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>{o.card.name}</div>
                         <div style={{ fontFamily: TAC.sans, fontSize: 11.5, color: TAC.muted }}>{o.from} offered · listed {money0AC(o.list)}</div>
                       </div>
-                      <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, color: TAC.accent }}>{money0AC(o.amount)}</div>
+                      <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, color: 'var(--ink)' }}>{money0AC(o.amount)}</div>
                     </div>
                     <div style={{ marginTop: 10, paddingTop: 10, borderTop: '1px solid var(--line-2)' }}>
                       {a ? <div style={{ textAlign: 'center', fontFamily: TAC.sans, fontWeight: 700, fontSize: 13, color: a === 'accept' ? 'var(--up)' : a === 'decline' ? 'var(--down)' : TAC.accent }}>
@@ -495,7 +495,7 @@ function PaymentsScreen({ app }) {
               {def && <Pill label="Default" tone="blue" />}
             </div>
           ))}
-          <button onClick={() => app.toast('Payment method form would open here')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '13px 14px', borderTop: '1px solid var(--line-2)', color: TAC.accent }}>
+          <button onClick={() => app.toast('Payment method form would open here')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '13px 14px', borderTop: '1px solid var(--line-2)', color: 'var(--ink)' }}>
             {AIcon.plus({})}<span style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Add payment method</span>
           </button>
         </div>
@@ -541,7 +541,7 @@ function NotificationsScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TAC.bg }}>
       <AccHeader app={app} title="Notifications"
-        right={tab === 'activity' ? <button onClick={() => app.toast('All marked read')} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: TAC.accent }}>Mark read</button> : null} />
+        right={tab === 'activity' ? <button onClick={() => app.toast('All marked read')} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: 'var(--ink)' }}>Mark read</button> : null} />
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
         <Segmented tabs={[['activity', 'Activity'], ['settings', 'Settings']]} value={tab} onChange={setTab} />
 

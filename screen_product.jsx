@@ -60,7 +60,7 @@ function OfferCard({ offer, onBuy, isLowest, onViewListing }) {
         <button onClick={onViewListing} style={{
           width: '100%', marginTop: 10, padding: '9px 14px', borderRadius: 8,
           background: TP.surface, border: '1px solid var(--line)',
-          fontFamily: TP.sans, fontWeight: 600, fontSize: 13, color: TP.accent,
+          fontFamily: TP.sans, fontWeight: 600, fontSize: 13, color: 'var(--ink)',
           cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
         }}>View full listing →</button>
       )}
@@ -130,7 +130,7 @@ function ProductScreen({ app, params }) {
       <div style={{ textAlign: 'center' }}>
         <div style={{ fontSize: 40, marginBottom: 12 }}>🔍</div>
         <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 18 }}>Product not found</div>
-        <button onClick={() => app.nav.pop()} style={{ marginTop: 16, color: TP.accent, fontFamily: TP.sans, fontWeight: 600 }}>Go back</button>
+        <button onClick={() => app.nav.pop()} style={{ marginTop: 16, color: 'var(--ink)', fontFamily: TP.sans, fontWeight: 600 }}>Go back</button>
       </div>
     </div>
   );
@@ -184,7 +184,7 @@ function ProductScreen({ app, params }) {
           <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
             {g && <span style={{ background: g.tint + '1a', color: g.tint, padding: '2px 8px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{g.short}</span>}
             {product.foil && <span style={{ background: '#f5f3ff', color: '#7c3aed', padding: '2px 8px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>Foil</span>}
-            {vInfo && <span style={{ background: TP.accentWash, color: TP.accent, padding: '2px 8px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{vInfo.current}</span>}
+            {vInfo && <span style={{ background: TP.accentWash, color: 'var(--ink)', padding: '2px 8px', borderRadius: 4, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{vInfo.current}</span>}
           </div>
         </div>
 
@@ -263,7 +263,7 @@ function ProductScreen({ app, params }) {
           {/* variants */}
           {vInfo && vInfo.total > 1 && (
             <div style={{ padding: '0 16px', marginBottom: 16 }}>
-              <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 12, color: TP.accent,
+              <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 12, color: 'var(--ink)',
                 letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 4 }}>
                 Same Code · {product.number}
               </div>

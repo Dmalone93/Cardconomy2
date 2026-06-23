@@ -112,7 +112,7 @@ function ListCard({ item, app, w }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 7,
           fontFamily: T.sans, fontSize: 11, color: T.muted, whiteSpace: 'nowrap', overflow: 'hidden' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
-            {Icon.bolt({ width: 11, height: 11, style: { color: T.accent } })}
+            {Icon.bolt({ width: 11, height: 11, style: { color: 'var(--ink)' } })}
             {item.shipping === 0 ? 'Free shipping' : money(item.shipping) + ' ship'}
           </span>
         </div>
@@ -338,7 +338,7 @@ function SectionHeader({ title, action, onAction }) {
   return (
     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, padding: '0 16px 12px' }}>
       <h2 style={{ margin: 0, fontFamily: T.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3, whiteSpace: 'nowrap' }}>{title}</h2>
-      {action && <button onClick={onAction} style={{ fontFamily: T.sans, fontSize: 13.5, fontWeight: 600, color: T.accent, whiteSpace: 'nowrap', flexShrink: 0 }}>{action}</button>}
+      {action && <button onClick={onAction} style={{ fontFamily: T.sans, fontSize: 13.5, fontWeight: 600, color: 'var(--ink)', whiteSpace: 'nowrap', flexShrink: 0 }}>{action}</button>}
     </div>
   );
 }
@@ -377,13 +377,13 @@ function WhatsHot({ app, trendingProducts }) {
           {[['trending', 'Trending'], ['deals', 'Hot Deals']].map(([k, l]) => (
             <div key={k} onClick={() => setHotTab(k)} style={{
               padding: '6px 12px', borderRadius: 20, fontSize: 13, fontWeight: 700, cursor: 'pointer',
-              background: hotTab === k ? T.accent : T.surface,
+              background: hotTab === k ? T.ink : T.surface,
               color: hotTab === k ? '#fff' : T.ink,
               border: hotTab === k ? 'none' : '1px solid var(--line)',
             }}>{l}</div>
           ))}
         </div>
-        <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: T.accent, cursor: 'pointer' }}>See all</div>
+        <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>See all</div>
       </div>
       {hotTab === 'trending' ? (
         <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
@@ -422,7 +422,7 @@ function HomeScreen({ app }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 13, position: 'relative' }}>
           <button onClick={() => app.openMenu()} style={{ color: T.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{Icon.menu({})}</button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, position: 'absolute', left: '50%', transform: 'translateX(calc(-50% - 20px))', lineHeight: 1 }}>
-            <Logo size={32} color={T.accent} />
+            <Logo size={32} color={T.ink} />
             <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 20, letterSpacing: 1.5, color: T.ink, lineHeight: 1, display: 'block' }}>CARDCONOMY</span>
           </div>
           <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: T.surface2, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -449,7 +449,7 @@ function HomeScreen({ app }) {
       {/* ── How it works link ── */}
       <div style={{ textAlign: 'center', padding: '16px 14px 4px' }}>
         <span onClick={() => app.nav.push('howitworks')} style={{ fontSize: 13, fontWeight: 600,
-          color: T.accent, cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
+          color: 'var(--ink)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
       </div>
 
       {/* ── Browse by Game ── */}
@@ -458,7 +458,7 @@ function HomeScreen({ app }) {
           padding: '0 14px', marginBottom: 10 }}>
           <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Browse by Game</div>
           <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600,
-            color: T.accent, cursor: 'pointer' }}>Browse all</div>
+            color: 'var(--ink)', cursor: 'pointer' }}>Browse all</div>
         </div>
         <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px 4px',
           WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
@@ -482,7 +482,7 @@ function HomeScreen({ app }) {
         <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
           {[['6%+30p', 'Total fee'], ['5', 'Games'], ['3', 'Personas']].map(([num, label]) => (
             <div key={label}>
-              <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 18, color: T.accent }}>{num}</div>
+              <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 18, color: 'var(--ink)' }}>{num}</div>
               <div style={{ fontSize: 11, color: T.muted }}>{label}</div>
             </div>
           ))}

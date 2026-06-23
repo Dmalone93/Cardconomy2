@@ -190,7 +190,7 @@ function SellShopScreen({ app }) {
                 <span style={{ color: 'var(--gold)' }}>★★★★☆</span> {SHOP_SS.rating} · {SHOP_SS.loc}
               </div>
             </div>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'var(--accent-wash)', color: TSS.accent,
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'var(--accent-wash)', color: 'var(--ink)',
               borderRadius: 8, padding: '5px 10px', fontFamily: TSS.sans, fontWeight: 700, fontSize: 12, marginBottom: 14 }}>
               {IconSS.check({ width: 14, height: 14 })} Scanned in-store · ticket reserved
             </div>
@@ -200,7 +200,7 @@ function SellShopScreen({ app }) {
               <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                 {[[IconSS.bolt, 'Scan in minutes'], [IconSS.tag, 'Live price guide'], [IconSS.shield, 'In-person & safe']].map(([ic, l], i) => (
                   <div key={i} style={{ flex: 1, background: TSS.surface2, borderRadius: 11, padding: '10px 8px', textAlign: 'center' }}>
-                    <div style={{ color: TSS.accent, display: 'flex', justifyContent: 'center', marginBottom: 4 }}>{ic({ width: 17, height: 17 })}</div>
+                    <div style={{ color: 'var(--ink)', display: 'flex', justifyContent: 'center', marginBottom: 4 }}>{ic({ width: 17, height: 17 })}</div>
                     <div style={{ fontFamily: TSS.sans, fontSize: 10.5, fontWeight: 600, color: TSS.ink2, lineHeight: 1.2 }}>{l}</div>
                   </div>
                 ))}
@@ -270,7 +270,7 @@ function SellShopScreen({ app }) {
               <MethodRow icon="📄" title="Import List" sub="Manabox · TCGplayer · CSV" time="instant" onClick={() => app.toast('Use Live Sweep for this demo')} />
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TSS.surface2, borderRadius: 4, padding: '12px 13px' }}>
-              <span style={{ color: TSS.accent, marginTop: 1 }}>{IconSS.bolt({ width: 16, height: 16 })}</span>
+              <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconSS.bolt({ width: 16, height: 16 })}</span>
               <span style={{ fontFamily: TSS.sans, fontSize: 12.5, color: TSS.ink2, lineHeight: 1.45 }}>
                 Mix &amp; match — sweep the bulk now, then <b>Search &amp; Add</b> the few chase cards you want hand-verified.
               </span>
@@ -427,9 +427,9 @@ function Confirmation({ onThread, onHome, onShop }) {
         ))}
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 11, background: 'var(--accent-wash)', borderRadius: 4, padding: '13px 14px', marginTop: 12 }}>
-        <span style={{ width: 38, height: 38, borderRadius: 10, background: '#fff', color: TSS.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>🎫</span>
+        <span style={{ width: 38, height: 38, borderRadius: 10, background: '#fff', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>🎫</span>
         <div style={{ textAlign: 'left', flex: 1 }}>
-          <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 13.5, color: TSS.accent }}>Counter ticket #{SUB_SS.ticket}</div>
+          <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>Counter ticket #{SUB_SS.ticket}</div>
           <div style={{ fontFamily: TSS.sans, fontSize: 11.5, color: TSS.ink2 }}>Show this with your stack to finish at the counter.</div>
         </div>
       </div>

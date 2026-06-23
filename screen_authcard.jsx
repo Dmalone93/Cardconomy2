@@ -83,7 +83,7 @@ function AuthCardScreen({ app, params = {} }) {
                 <button key={id} onClick={() => setMethod(id)} style={{ width: '100%', textAlign: 'left', display: 'flex', gap: 13, alignItems: 'flex-start', background: sel ? 'var(--accent-wash)' : TAU.surface, borderRadius: 14, padding: 15, marginBottom: 11, boxShadow: sel ? 'inset 0 0 0 2px var(--accent)' : 'var(--shadow-1)' }}>
                   <span style={{ fontSize: 24 }}>{e}</span>
                   <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}><span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 15 }}>{t}</span><span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 10, color: TAU.accent, background: '#fff', borderRadius: 6, padding: '2px 7px' }}>{tag}</span></div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}><span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 15 }}>{t}</span><span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 10, color: 'var(--ink)', background: '#fff', borderRadius: 6, padding: '2px 7px' }}>{tag}</span></div>
                     <div style={{ fontFamily: TAU.sans, fontSize: 12.5, color: TAU.muted, lineHeight: 1.45, marginTop: 3 }}>{d}</div>
                   </div>
                 </button>
@@ -98,7 +98,7 @@ function AuthCardScreen({ app, params = {} }) {
         {phase === 'submitted' && (
           <div>
             <div style={{ textAlign: 'center', padding: '8px 0 18px' }}>
-              <div style={{ width: 76, height: 76, margin: '0 auto 12px', borderRadius: 999, background: 'var(--accent-wash)', color: TAU.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconAU.check({ width: 40, height: 40 })}</div>
+              <div style={{ width: 76, height: 76, margin: '0 auto 12px', borderRadius: 999, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconAU.check({ width: 40, height: 40 })}</div>
               <h1 style={{ margin: 0, fontFamily: TAU.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.5 }}>Submitted for authentication</h1>
               <p style={{ fontFamily: TAU.sans, fontSize: 13.5, color: TAU.muted, lineHeight: 1.5, margin: '8px auto 0', maxWidth: 300 }}>
                 {method === 'shop' ? 'Take the card to Gnome Games (ticket #AC-2231). We\u2019ll text when it\u2019s sealed.' : 'Your prepaid label is in Notifications. Pack the card and drop it off — tracking starts automatically.'}

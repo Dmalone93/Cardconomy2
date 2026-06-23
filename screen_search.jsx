@@ -226,7 +226,7 @@ function SearchScreen({ app, params = {} }) {
               <b style={{ color: TS.ink }}>{totalResults}</b> result{totalResults!==1?'s':''}
             </span>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-              <button onClick={() => setSheet('sort')} style={{ fontFamily: TS.sans, fontSize: 13, fontWeight: 600, color: TS.accent, padding: '4px 6px' }}>{sort} ▾</button>
+              <button onClick={() => setSheet('sort')} style={{ fontFamily: TS.sans, fontSize: 13, fontWeight: 600, color: 'var(--ink)', padding: '4px 6px' }}>{sort} ▾</button>
               {view === 'grid' && (
                 <button onClick={() => setCols(cols === 2 ? 3 : 2)} style={{ color: TS.ink, padding: 4 }}>
                   {cols === 2 ? (
@@ -353,7 +353,7 @@ function SearchScreen({ app, params = {} }) {
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               padding: '15px 4px', borderBottom: '1px solid var(--line-2)',
               fontFamily: TS.sans, fontSize: 16, fontWeight: sort===s?700:500, color: sort===s?TS.accent:TS.ink, textAlign: 'left' }}>
-              {s} {sort===s && IconS.check({ style: { color: TS.accent } })}
+              {s} {sort===s && IconS.check({ style: { color: 'var(--ink)' } })}
             </button>
           ))}
         </div>

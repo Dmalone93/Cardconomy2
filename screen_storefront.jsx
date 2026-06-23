@@ -65,7 +65,7 @@ function StorefrontScreen({ app, params = {} }) {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 22 }}>
             {services.map(([title, sub, icon, onClick], i) => (
               <button key={i} onClick={onClick} style={{ textAlign: 'left', background: TF.surface, borderRadius: 14, padding: 13, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <span style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--accent-wash)', color: TF.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>{icon({ width: 18, height: 18 })}</span>
+                <span style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>{icon({ width: 18, height: 18 })}</span>
                 <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 13.5 }}>{title}</div>
                 <div style={{ fontFamily: TF.sans, fontSize: 11.5, color: TF.muted, lineHeight: 1.3, marginTop: 1 }}>{sub}</div>
               </button>
@@ -77,7 +77,7 @@ function StorefrontScreen({ app, params = {} }) {
             <React.Fragment>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 10 }}>
                 <span style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 16 }}>In stock now</span>
-                <button onClick={() => app.nav.push('search')} style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.accent }}>See all</button>
+                <button onClick={() => app.nav.push('search')} style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: 'var(--ink)' }}>See all</button>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 11, marginBottom: 8 }}>
                 {inv.slice(0, 4).map(l => (
@@ -618,7 +618,7 @@ function Step4({ form, set }) {
           ))}
           <button onClick={() => setWizardOpen(true)}
             style={{ width: '100%', padding: 12, borderRadius: 4, fontFamily: TF.sans, fontWeight: 700, fontSize: 14, marginTop: 8,
-              background: 'transparent', color: TF.accent, boxShadow: '0 0 0 2px ' + TF.accent }}>
+              background: 'transparent', color: 'var(--ink)', boxShadow: '0 0 0 2px ' + TF.accent }}>
             Edit buylist
           </button>
         </div>
@@ -628,7 +628,7 @@ function Step4({ form, set }) {
       {form.wantedCards.length === 0 && (
         <button onClick={() => setWizardOpen(true)}
           style={{ width: '100%', padding: 14, borderRadius: 4, fontFamily: TF.sans, fontWeight: 700, fontSize: 14,
-            background: 'transparent', color: TF.accent, boxShadow: '0 0 0 2px ' + TF.accent }}>
+            background: 'transparent', color: 'var(--ink)', boxShadow: '0 0 0 2px ' + TF.accent }}>
           Add to buylist
         </button>
       )}
@@ -803,7 +803,7 @@ function EnrollShopScreen({ app }) {
           <div style={{ padding: '6px 16px 0', display: 'flex', flexDirection: 'column', gap: 11 }}>
             {props.map(([icon, title, body], i) => (
               <div key={i} style={{ display: 'flex', gap: 13, background: TF.surface, borderRadius: 14, padding: 15, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <span style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, background: 'var(--accent-wash)', color: TF.accent, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon({ width: 20, height: 20 })}</span>
+                <span style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon({ width: 20, height: 20 })}</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 15, letterSpacing: -0.2 }}>{title}</div>
                   <div style={{ fontFamily: TF.sans, fontSize: 13, color: TF.ink2, lineHeight: 1.45, marginTop: 2 }}>{body}</div>
@@ -943,7 +943,7 @@ function EnrollShopScreen({ app }) {
                   }}>
                     {logo ? <img src={logo} alt={g.name} style={{ height: 22, objectFit: 'contain' }} />
                       : <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 13 }}>{g.short}</span>}
-                    {on && <span style={{ fontSize: 10, fontWeight: 700, color: TF.accent }}>Selected</span>}
+                    {on && <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--ink)' }}>Selected</span>}
                   </button>
                 );
               })}

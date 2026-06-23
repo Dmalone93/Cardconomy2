@@ -75,7 +75,7 @@ function SellHubScreen({ app }) {
           {[[IconH.bolt, 'Scan in minutes'], [IconH.shield, 'Verified shops'], [IconH.truck, 'No shipping hassle']].map(([ic, label], i) => (
             <div key={i} style={{ flex: 1, background: TH.surface, borderRadius: 13, padding: '12px 10px', textAlign: 'center',
               boxShadow: '0 1px 3px rgba(20,24,40,0.04)' }}>
-              <div style={{ color: TH.accent, display: 'flex', justifyContent: 'center', marginBottom: 5 }}>{ic({ width: 18, height: 18 })}</div>
+              <div style={{ color: 'var(--ink)', display: 'flex', justifyContent: 'center', marginBottom: 5 }}>{ic({ width: 18, height: 18 })}</div>
               <div style={{ fontFamily: TH.sans, fontSize: 11, color: TH.ink2, fontWeight: 600, lineHeight: 1.2 }}>{label}</div>
             </div>
           ))}
@@ -141,7 +141,7 @@ function SellMarketScreen({ app }) {
           />
         </div>
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TH.surface2, borderRadius: 12, padding: '12px 13px' }}>
-          <span style={{ color: TH.accent, marginTop: 1 }}>{IconH.bolt({ width: 16, height: 16 })}</span>
+          <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconH.bolt({ width: 16, height: 16 })}</span>
           <span style={{ fontFamily: TH.sans, fontSize: 12.5, color: TH.ink2, lineHeight: 1.45 }}>
             Bulk uses the <b>same Live Sweep scan</b> as selling to a shop — the difference is each card becomes its own marketplace listing instead of one offer.
           </span>

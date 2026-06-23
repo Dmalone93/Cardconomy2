@@ -40,7 +40,7 @@ function GamePrefsSheet({ app, open, onClose, games }) {
       <p style={{ fontFamily: TOB.sans, fontSize: 13.5, color: TOB.muted, margin: '0 0 14px', lineHeight: 1.45 }}>
         We'll tailor your home feed, search and alerts to these games. Change anytime.
       </p>
-      <button onClick={() => setSel(all ? [games[0].id] : games.map(g => g.id))} style={{ marginBottom: 12, fontFamily: TOB.sans, fontWeight: 700, fontSize: 13, color: TOB.accent }}>
+      <button onClick={() => setSel(all ? [games[0].id] : games.map(g => g.id))} style={{ marginBottom: 12, fontFamily: TOB.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>
         {all ? 'Clear all' : 'Follow all games'}
       </button>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
@@ -106,7 +106,7 @@ function Onboarding({ app, games }) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
               {games.map(g => <GameTile key={g.id} g={g} on={sel.includes(g.id)} onClick={() => toggle(g.id)} />)}
             </div>
-            <button onClick={() => setSel(sel.length >= games.length ? [] : games.map(g => g.id))} style={{ marginTop: 14, fontFamily: TOB.sans, fontWeight: 700, fontSize: 13.5, color: TOB.accent }}>
+            <button onClick={() => setSel(sel.length >= games.length ? [] : games.map(g => g.id))} style={{ marginTop: 14, fontFamily: TOB.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>
               {sel.length >= games.length ? 'Clear all' : 'I collect a bit of everything →'}
             </button>
           </div>

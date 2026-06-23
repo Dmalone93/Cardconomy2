@@ -85,7 +85,7 @@ function DListing({ app, params }) {
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ fontWeight: 700, fontSize: 15.5 }}>{item.seller}</span>{window.TrustBadge && <window.TrustBadge tier={item.sellerRating >= 99 ? 2 : 1} />}</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 2 }}><StarsLi rating={item.sellerRating} /><span style={{ fontFamily: TLi.mono, fontSize: 12.5, color: 'var(--muted)' }}>{item.sellerRating}% · {item.sellerSales.toLocaleString()} sales</span></div>
             </div>
-            <button onClick={() => app.go('seller', { name: item.seller })} style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--accent)', border: '1.5px solid var(--accent)', borderRadius: 10, padding: '9px 16px' }}>Visit store</button>
+            <button onClick={() => app.go('seller', { name: item.seller })} style={{ fontWeight: 700, fontSize: 13.5, color: 'var(--ink)', border: '1.5px solid var(--accent)', borderRadius: 10, padding: '9px 16px' }}>Visit store</button>
           </div>
 
           {/* info rows */}
@@ -108,7 +108,7 @@ function DListing({ app, params }) {
               <div style={{ marginBottom: 14 }}>
                 <div style={{ fontSize: 12.5, color: 'var(--muted)' }}>Current bid · {item.bids} bids</div>
                 <div style={{ fontFamily: TLi.mono, fontWeight: 700, fontSize: 32, letterSpacing: -1 }}>{mLi(item.price)}</div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 8, background: 'var(--accent-wash)', color: 'var(--accent)', borderRadius: 8, padding: '6px 11px', fontWeight: 700, fontSize: 13 }}>⏱ Ends in {item.timeLeft}</div>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 8, background: 'var(--accent-wash)', color: 'var(--ink)', borderRadius: 8, padding: '6px 11px', fontWeight: 700, fontSize: 13 }}>⏱ Ends in {item.timeLeft}</div>
               </div>
             ) : (
               <div style={{ marginBottom: 14 }}>
