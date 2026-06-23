@@ -39,6 +39,13 @@ function SearchScreen({ app, params = {} }) {
     timer = setTimeout(tick, 400);
     return () => clearTimeout(timer);
   }, []);
+  React.useEffect(() => {
+    const el = scrollRefS.current;
+    if (!el) return;
+    const onScroll = () => setShowTopS(el.scrollTop > 300);
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  });
   const [game, setGame] = React.useState(params.game || 'all');
   const [setF, setSetF] = React.useState(params.set || 'all');
   const [cond, setCond] = React.useState('Any grade');
@@ -51,6 +58,10 @@ function SearchScreen({ app, params = {} }) {
   const [sheet, setSheet] = React.useState(null); // 'filters' | 'sort'
   const [focused, setFocused] = React.useState(false);
   const [browseMode, setBrowseMode] = React.useState('buy');
+  const RECENT_SEARCHES = ['Charizard EX', 'PSA 10 Pikachu', 'MTG Black Lotus', 'Umbreon VMAX alt art'];
+  const [showRecent, setShowRecent] = React.useState(true);
+  const [showTopS, setShowTopS] = React.useState(false);
+  const scrollRefS = React.useRef(null);
 
   // product results (raw cards grouped)
   const productResults = (cond === 'Graded only' || cond === 'PSA 10') ? [] : PRODUCTS_S.filter(p => {
@@ -119,7 +130,27 @@ function SearchScreen({ app, params = {} }) {
 
       {/* suggestions overlay when focused + empty */}
       {focused && !q && (
-        <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 96px' }}>
+        <div ref={scrollRefS} className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 96px' }}>
+          {/* recent searches */}
+          {showRecent && (
+            <div style={{ marginBottom: 24 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+                <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, letterSpacing: 0.2 }}>RECENT SEARCHES</div>
+                <button onClick={() => setShowRecent(false)} style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 12, color: TS.muted, background: 'none', padding: '2px 4px' }}>Clear</button>
+              </div>
+              {RECENT_SEARCHES.map(s => (
+                <button key={s} onClick={() => { setQ(s); setFocused(false); }} style={{
+                  display: 'flex', alignItems: 'center', gap: 10, width: '100%', textAlign: 'left',
+                  padding: '10px 0', borderBottom: '1px solid var(--line-2)', background: 'none',
+                  fontFamily: TS.sans, fontSize: 14, fontWeight: 500, color: TS.ink,
+                }}>
+                  <span style={{ fontSize: 16, flexShrink: 0 }}>{'\ud83d\udd50'}</span>
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+
           <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, marginBottom: 10, letterSpacing: 0.2 }}>POPULAR SEARCHES</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
             {popular.map(p => <ChipS key={p} onClick={() => { setQ(p); setFocused(false); }}>{p}</ChipS>)}
@@ -256,7 +287,7 @@ function SearchScreen({ app, params = {} }) {
             }
             const browseCount = browsed.length;
             return (
-              <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
+              <div ref={scrollRefS} className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
                 {browseCount === 0 ? (
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                     padding: '72px 32px', textAlign: 'center', fontFamily: TS.sans }}>
@@ -296,6 +327,15 @@ function SearchScreen({ app, params = {} }) {
           })()}
         </React.Fragment>
       )}
+
+      {/* back to top */}
+      <button onClick={() => scrollRefS.current && scrollRefS.current.scrollTo({ top: 0, behavior: 'smooth' })}
+        style={{ position: 'fixed', bottom: 80, right: 16, width: 40, height: 40, borderRadius: 999,
+          background: 'var(--ink)', color: '#fff', fontSize: 18, display: 'flex', alignItems: 'center',
+          justifyContent: 'center', border: 'none', cursor: 'pointer', zIndex: 40,
+          opacity: showTopS ? 1 : 0, pointerEvents: showTopS ? 'auto' : 'none',
+          transition: 'opacity 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.18)' }}
+        aria-label="Back to top">{'\u2191'}</button>
 
       {/* FILTERS sheet */}
       <SheetS open={sheet==='filters'} onClose={() => setSheet(null)} title="Filters">

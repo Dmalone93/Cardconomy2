@@ -38,6 +38,15 @@ function ListingScreen({ app, params }) {
   const [offer, setOffer] = React.useState('');
   const [showPrintings, setShowPrintings] = React.useState(false);
   const [offerSent, setOfferSent] = React.useState(null);
+  const [showTopL, setShowTopL] = React.useState(false);
+  const scrollRefL = React.useRef(null);
+  React.useEffect(() => {
+    const el = scrollRefL.current;
+    if (!el) return;
+    const onScroll = () => setShowTopL(el.scrollTop > 300);
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  }, []);
   const finishes = [{ key: 'standard', label: 'Standard', price: item.foil ? item.price * 0.6 : item.price },
     { key: 'foil', label: 'Foil', price: item.foil ? item.price : item.price * 1.8 }];
   const [finish, setFinish] = React.useState(item.foil ? 'foil' : 'standard');
@@ -66,7 +75,7 @@ function ListingScreen({ app, params }) {
         </div>
       </div>
 
-      <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 110 }}>
+      <div ref={scrollRefL} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 110 }}>
         {/* hero */}
         <div style={{ background: 'radial-gradient(120% 90% at 50% 0%, ' + (item.art) + '22, ' + TL.surface + ' 70%)',
           paddingTop: 96, paddingBottom: 24, display: 'flex', justifyContent: 'center' }}>
@@ -383,6 +392,15 @@ function ListingScreen({ app, params }) {
           🛒 {app.cart.includes(item.id) ? 'In cart' : 'Add to cart \u00b7 ' + moneyL(displayPrice)}
         </button>
       </div>
+
+      {/* back to top */}
+      <button onClick={() => scrollRefL.current && scrollRefL.current.scrollTo({ top: 0, behavior: 'smooth' })}
+        style={{ position: 'fixed', bottom: 80, right: 16, width: 40, height: 40, borderRadius: 999,
+          background: 'var(--ink)', color: '#fff', fontSize: 18, display: 'flex', alignItems: 'center',
+          justifyContent: 'center', border: 'none', cursor: 'pointer', zIndex: 40,
+          opacity: showTopL ? 1 : 0, pointerEvents: showTopL ? 'auto' : 'none',
+          transition: 'opacity 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.18)' }}
+        aria-label="Back to top">{'\u2191'}</button>
 
       {/* printings sheet */}
       {showPrintings && (

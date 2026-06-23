@@ -125,6 +125,15 @@ function ProductScreen({ app, params }) {
   const product = productByIdP(params.id);
   const [offerSheet, setOfferSheet] = React.useState(null);
   const [offerVal, setOfferVal] = React.useState('');
+  const [showTop, setShowTop] = React.useState(false);
+  const scrollRefP = React.useRef(null);
+  React.useEffect(() => {
+    const el = scrollRefP.current;
+    if (!el) return;
+    const onScroll = () => setShowTop(el.scrollTop > 300);
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => el.removeEventListener('scroll', onScroll);
+  }, []);
   if (!product) return (
     <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <div style={{ textAlign: 'center' }}>
@@ -152,7 +161,7 @@ function ProductScreen({ app, params }) {
         <div style={{ flex: 1, fontFamily: TP.sans, fontWeight: 700, fontSize: 16, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>Back</div>
       </div>
 
-      <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
+      <div ref={scrollRefP} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
         {/* ── 1. Card image (big, clean) ── */}
         <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0 20px', background: '#ffffff' }}>
           <CardArtP item={product} w={200} radius={4} />
@@ -353,12 +362,21 @@ function ProductScreen({ app, params }) {
           <button onClick={() => {
             app.toast({ title: 'Added to want list', subtitle: product.name });
           }} style={{
-            background: 'none', border: 'none', padding: '2px 0', cursor: 'pointer',
-            fontFamily: TP.sans, fontWeight: 600, fontSize: 13, color: 'var(--accent)',
+            background: 'none', border: '1.5px solid var(--line)', borderRadius: 10, padding: '10px 16px', cursor: 'pointer',
+            fontFamily: TP.sans, fontWeight: 700, fontSize: 14, color: 'var(--ink)',
             textAlign: 'center',
           }}>Add to want list</button>
         </div>
       </div>
+
+      {/* back to top */}
+      <button onClick={() => scrollRefP.current && scrollRefP.current.scrollTo({ top: 0, behavior: 'smooth' })}
+        style={{ position: 'fixed', bottom: 80, right: 16, width: 40, height: 40, borderRadius: 999,
+          background: 'var(--ink)', color: '#fff', fontSize: 18, display: 'flex', alignItems: 'center',
+          justifyContent: 'center', border: 'none', cursor: 'pointer', zIndex: 40,
+          opacity: showTop ? 1 : 0, pointerEvents: showTop ? 'auto' : 'none',
+          transition: 'opacity 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.18)' }}
+        aria-label="Back to top">{'\u2191'}</button>
 
       <SheetP open={!!offerSheet} onClose={() => setOfferSheet(null)} title={offerSheet ? 'Offer to ' + offerSheet.seller : ''}>
         {offerSheet && (
