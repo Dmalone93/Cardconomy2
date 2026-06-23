@@ -109,6 +109,28 @@ function HeaderBtn({ icon, label, onClick, count, accent }) {
   );
 }
 
+// ── mega menu item with hover ────────────────────────────────
+function MegaGameBtn({ onClick, tint, name }) {
+  var ref = React.useState(false), hover = ref[0], setHover = ref[1];
+  return (
+    <button onClick={onClick} onMouseEnter={function() { setHover(true); }} onMouseLeave={function() { setHover(false); }}
+      style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, padding: '6px 8px', borderRadius: 8,
+        background: hover ? 'var(--bg)' : 'transparent', transition: 'background 0.15s' }}>
+      <span style={{ width: 11, height: 11, borderRadius: 999, background: tint }} />
+      <span style={{ fontWeight: 800, fontSize: 15.5, color: hover ? 'var(--ink)' : 'var(--ink)' }}>{name}</span>
+    </button>
+  );
+}
+function MegaSetBtn({ onClick, name }) {
+  var ref = React.useState(false), hover = ref[0], setHover = ref[1];
+  return (
+    <button onClick={onClick} onMouseEnter={function() { setHover(true); }} onMouseLeave={function() { setHover(false); }}
+      style={{ textAlign: 'left', fontSize: 13.5, padding: '5px 8px', borderRadius: 6,
+        color: hover ? 'var(--ink)' : 'var(--muted)', background: hover ? 'var(--bg)' : 'transparent',
+        transition: 'color 0.15s, background 0.15s' }}>{name}</button>
+  );
+}
+
 // ── mega menu (games + sets) ─────────────────────────────────
 function MegaMenu({ app, open, close }) {
   if (!open) return null;
@@ -120,14 +142,11 @@ function MegaMenu({ app, open, close }) {
           const sets = SETS.filter(s => s.game === g.id);
           return (
             <div key={g.id}>
-              <button onClick={() => { app.go('search', { game: g.id }); close(); }} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                <span style={{ width: 11, height: 11, borderRadius: 999, background: g.tint }} />
-                <span style={{ fontWeight: 800, fontSize: 15.5 }}>{g.name}</span>
-              </button>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <MegaGameBtn onClick={() => { app.go('search', { game: g.id }); close(); }} tint={g.tint} name={g.name} />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {sets.length ? sets.map(s => (
-                  <button key={s.id} onClick={() => { app.go('search', { game: g.id, set: s.id }); close(); }} style={{ textAlign: 'left', fontSize: 13.5, color: 'var(--muted)' }}>{s.name}</button>
-                )) : <span style={{ fontSize: 13, color: 'var(--faint)' }}>Browse all →</span>}
+                  <MegaSetBtn key={s.id} onClick={() => { app.go('search', { game: g.id, set: s.id }); close(); }} name={s.name} />
+                )) : <span style={{ fontSize: 13, color: 'var(--faint)', padding: '5px 8px' }}>Browse all →</span>}
               </div>
             </div>
           );
