@@ -4,6 +4,12 @@
 const { T: TC, money: moneyC, CardArt: CardArtC, GradeChip: GradeChipC, Icon: IconC, Sheet: SheetC } = window;
 const { byId: byIdC, setById: setByIdC } = window;
 
+const SAVED_ADDRESSES = [
+  { name: 'Declan Malone', line1: '14 Maple Drive', city: 'Manchester', postcode: 'M1 4FN', isDefault: true },
+  { name: 'Declan Malone', line1: 'Unit 7 Northern Quarter', city: 'Manchester', postcode: 'M4 1HQ', label: 'Work' },
+  { name: 'Card Cave Manchester', line1: '22 High Street', city: 'Salford', postcode: 'M3 5BQ', label: 'Friend' },
+];
+
 function Radio({ on }) {
   return (
     <div style={{ width: 22, height: 22, borderRadius: 999, flexShrink: 0,
@@ -44,8 +50,9 @@ function CheckoutScreen({ app, params }) {
   const [ship, setShip] = React.useState('standard');
   const [placed, setPlaced] = React.useState(false);
   const [working, setWorking] = React.useState(false);
-  const [editAddr, setEditAddr] = React.useState(false);
-  const [addr, setAddr] = React.useState({ name: 'Alex Rivera', line1: '14 Harbour Lane', city: 'Bristol', postcode: 'BS1 4RW' });
+  const [selectedAddrIdx, setSelectedAddrIdx] = React.useState(0);
+  const [showAddrBook, setShowAddrBook] = React.useState(false);
+  const addr = SAVED_ADDRESSES[selectedAddrIdx];
 
   const shipCost = item.shipping || 0;
   const expedited = ship === 'express' ? 9.99 : shipCost;
@@ -109,10 +116,13 @@ function CheckoutScreen({ app, params }) {
 
         {/* address */}
         <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 800, fontSize: 14, color: TC.ink2 }}>Ship to</div>
-        <button onClick={() => setEditAddr(true)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TC.surface, borderRadius: 4, padding: '13px 14px', textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+        <button onClick={() => setShowAddrBook(true)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TC.surface, borderRadius: 4, padding: '13px 14px', textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TC.sans, fontWeight: 800, flexShrink: 0 }}>{addr.name[0]}</div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14.5 }}>{addr.name}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14.5 }}>{addr.name}</span>
+              {addr.isDefault && <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 10, color: 'var(--ink)', background: 'var(--accent-wash)', borderRadius: 4, padding: '2px 6px' }}>Default</span>}
+            </div>
             <div style={{ fontFamily: TC.sans, fontSize: 12.5, color: TC.muted }}>{addr.line1}, {addr.city}, {addr.postcode}</div>
           </div>
           {IconC.chevron({ style: { color: TC.faint } })}
@@ -166,27 +176,35 @@ function CheckoutScreen({ app, params }) {
         </button>
       </div>
 
-      <SheetC open={editAddr} onClose={() => setEditAddr(false)} title="Delivery address">
-        <div style={{ padding: '8px 0 20px' }}>
-          <div style={{ marginBottom: 12 }}>
-            <div style={{ fontFamily: TC.sans, fontWeight: 600, fontSize: 12, color: TC.ink2, marginBottom: 4 }}>Full name</div>
-            <input value={addr.name} onChange={e => setAddr(a => ({...a, name: e.target.value}))} style={{ width: '100%', padding: '10px 12px', borderRadius: 4, border: 'none', background: TC.surface2, fontFamily: TC.sans, fontSize: 14, color: TC.ink, outline: 'none', boxShadow: 'inset 0 0 0 1px var(--line)' }} />
-          </div>
-          <div style={{ marginBottom: 12 }}>
-            <div style={{ fontFamily: TC.sans, fontWeight: 600, fontSize: 12, color: TC.ink2, marginBottom: 4 }}>Address</div>
-            <input value={addr.line1} onChange={e => setAddr(a => ({...a, line1: e.target.value}))} style={{ width: '100%', padding: '10px 12px', borderRadius: 4, border: 'none', background: TC.surface2, fontFamily: TC.sans, fontSize: 14, color: TC.ink, outline: 'none', boxShadow: 'inset 0 0 0 1px var(--line)' }} />
-          </div>
-          <div style={{ display: 'flex', gap: 10 }}>
-            <div style={{ flex: 2, marginBottom: 12 }}>
-              <div style={{ fontFamily: TC.sans, fontWeight: 600, fontSize: 12, color: TC.ink2, marginBottom: 4 }}>City</div>
-              <input value={addr.city} onChange={e => setAddr(a => ({...a, city: e.target.value}))} style={{ width: '100%', padding: '10px 12px', borderRadius: 4, border: 'none', background: TC.surface2, fontFamily: TC.sans, fontSize: 14, color: TC.ink, outline: 'none', boxShadow: 'inset 0 0 0 1px var(--line)' }} />
-            </div>
-            <div style={{ flex: 1, marginBottom: 12 }}>
-              <div style={{ fontFamily: TC.sans, fontWeight: 600, fontSize: 12, color: TC.ink2, marginBottom: 4 }}>Postcode</div>
-              <input value={addr.postcode} onChange={e => setAddr(a => ({...a, postcode: e.target.value}))} style={{ width: '100%', padding: '10px 12px', borderRadius: 4, border: 'none', background: TC.surface2, fontFamily: TC.sans, fontSize: 14, color: TC.ink, outline: 'none', boxShadow: 'inset 0 0 0 1px var(--line)' }} />
-            </div>
-          </div>
-          <button onClick={() => setEditAddr(false)} style={{ width: '100%', marginTop: 8, background: 'var(--fill)', color: '#fff', borderRadius: 4, padding: 14, fontFamily: TC.sans, fontWeight: 700, fontSize: 15 }}>Save address</button>
+      <SheetC open={showAddrBook} onClose={() => setShowAddrBook(false)} title="Delivery address">
+        <div style={{ padding: '8px 0 20px', display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {SAVED_ADDRESSES.map((a, i) => (
+            <button key={i} onClick={() => { setSelectedAddrIdx(i); setShowAddrBook(false); }}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, textAlign: 'left',
+                padding: '13px 14px', background: 'var(--surface)', borderRadius: 4,
+                boxShadow: selectedAddrIdx === i ? 'inset 0 0 0 2px var(--accent)' : 'inset 0 0 0 1px var(--line)' }}>
+              <div style={{ width: 22, height: 22, borderRadius: 999, flexShrink: 0,
+                background: selectedAddrIdx === i ? 'var(--accent)' : 'transparent',
+                boxShadow: selectedAddrIdx === i ? 'none' : 'inset 0 0 0 2px var(--line)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {selectedAddrIdx === i && <div style={{ width: 8, height: 8, borderRadius: 999, background: '#fff' }} />}
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14.5 }}>{a.name}</span>
+                  {a.isDefault && <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 10, color: 'var(--ink)', background: 'var(--accent-wash)', borderRadius: 4, padding: '2px 6px' }}>Default</span>}
+                </div>
+                <div style={{ fontFamily: TC.sans, fontSize: 12.5, color: TC.muted, marginTop: 1 }}>{a.line1}, {a.city}, {a.postcode}</div>
+              </div>
+              {selectedAddrIdx === i && <span style={{ color: 'var(--accent)', flexShrink: 0 }}>{IconC.check({ width: 20, height: 20 })}</span>}
+            </button>
+          ))}
+          <button onClick={() => { setShowAddrBook(false); app.toast('Address form coming soon'); }}
+            style={{ width: '100%', padding: '13px 14px', borderRadius: 4, background: 'transparent',
+              boxShadow: 'inset 0 0 0 1px var(--line)', fontFamily: TC.sans, fontWeight: 700,
+              fontSize: 14, color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+            + Add new address
+          </button>
         </div>
       </SheetC>
     </div>
