@@ -378,7 +378,7 @@
         <div style="position: relative; z-index: 2;">
           <div style="width: 100px; height: 6px; background: #000; border-radius: 0 0 10px 10px; margin: 0 auto;"></div>
         </div>
-        <iframe id="preview-frame" src="about:blank" style="width: 300px; height: 620px; border: none; border-radius: 28px; background: #f2f2f2;" sandbox="allow-scripts allow-same-origin"></iframe>
+        <iframe id="preview-frame" src="about:blank" style="width: 300px; height: 620px; border: none; border-radius: 28px; background: #f2f2f2;"></iframe>
       </div>
       <div style="text-align: center; margin-top: 14px;">
         <button onclick="previewScreen('')" style="font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer;">Reset to Home</button>
@@ -536,9 +536,7 @@ function show(id) {
   window.scrollTo(0, 0);
 }
 
-var BASE_URL = window.location.protocol === 'file:'
-  ? '../index.html?forcemobile'
-  : 'https://cardconomyy.vercel.app?forcemobile';
+var BASE_URL = 'https://cardconomyy.vercel.app/index.html?forcemobile';
 
 var previewReady = false;
 
