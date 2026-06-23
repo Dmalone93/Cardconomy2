@@ -21,7 +21,7 @@ function DGameTile({ game, app }) {
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       role="button" style={{
       cursor: 'pointer', borderRadius: 14, overflow: 'hidden', position: 'relative',
-      aspectRatio: '3/4', maxHeight: 280, background: game.tint,
+      width: 280, height: 370, flexShrink: 0, background: game.tint,
       boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
       transform: hover ? 'scale(1.03)' : 'scale(1)',
       transition: 'transform 0.2s',
@@ -31,19 +31,65 @@ function DGameTile({ game, app }) {
         objectFit: 'cover', objectPosition: 'center top',
       }} />}
       <div style={{ position: 'absolute', inset: 0,
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0.75) 100%)',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.8) 100%)',
       }} />
       <div style={{ position: 'absolute', inset: 0, display: 'flex',
-        alignItems: 'flex-end', justifyContent: 'center', padding: '16px 12px', zIndex: 1 }}>
+        flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', padding: '20px 16px', zIndex: 1 }}>
         {logo ? (
-          <img src={logo} alt={game.short} style={{ maxWidth: 120, maxHeight: 50,
-            objectFit: 'contain', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.6))' }} />
+          <img src={logo} alt={game.short} style={{ maxWidth: 160, maxHeight: 60,
+            objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))' }} />
         ) : (
-          <span style={{ fontSize: 16, fontWeight: 800, color: '#fff',
+          <span style={{ fontSize: 20, fontWeight: 800, color: '#fff',
             textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>{game.short}</span>
         )}
+        <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 8, fontWeight: 600 }}>Browse {game.name}</span>
       </div>
     </div>
+  );
+}
+
+// ── game carousel with scroll arrows ─────────────────────────
+function GameCarousel({ app }) {
+  const scrollRef = React.useRef(null);
+  const [canLeft, setCanLeft] = React.useState(false);
+  const [canRight, setCanRight] = React.useState(true);
+  function updateArrows() {
+    var el = scrollRef.current; if (!el) return;
+    setCanLeft(el.scrollLeft > 10);
+    setCanRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  }
+  function scrollBy(dir) {
+    var el = scrollRef.current; if (!el) return;
+    el.scrollBy({ left: dir * 320, behavior: 'smooth' });
+  }
+  React.useEffect(function() { updateArrows(); }, []);
+  var arrowStyle = function(show) { return {
+    position: 'absolute', top: '50%', transform: 'translateY(-50%)', zIndex: 3,
+    width: 44, height: 44, borderRadius: 999, background: 'var(--surface)',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center',
+    justifyContent: 'center', cursor: 'pointer', fontSize: 20, color: 'var(--ink)',
+    opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', transition: 'opacity 0.2s',
+  }; };
+  return (
+    <section style={{ marginTop: 44 }}>
+      <div className="wrap" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
+        <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>Browse by Game</h2>
+        <button onClick={function() { app.go('search'); }} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--ink)' }}>Browse all →</button>
+      </div>
+      <div className="wrap" style={{ position: 'relative' }}>
+        <button onClick={function() { scrollBy(-1); }} style={Object.assign({}, arrowStyle(canLeft), { left: -22 })}>←</button>
+        <button onClick={function() { scrollBy(1); }} style={Object.assign({}, arrowStyle(canRight), { right: -22 })}>→</button>
+        <div ref={scrollRef} onScroll={updateArrows} style={{
+          display: 'flex', gap: 18, overflowX: 'auto', scrollSnapType: 'x mandatory',
+          scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', padding: '4px 0',
+        }}>
+          <style dangerouslySetInnerHTML={{ __html: '.game-carousel::-webkit-scrollbar{display:none}' }} />
+          {GAMESH.filter(function(g) { return g && g.id; }).map(function(g) {
+            return <div key={g.id} style={{ scrollSnapAlign: 'start' }}><DGameTile game={g} app={app} /></div>;
+          })}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -243,12 +289,8 @@ function DHome({ app }) {
           color: 'var(--ink)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
       </div>
 
-      {/* ── Browse by Game (hero tiles) ── */}
-      <Row title="Browse by Game" action="Browse all" onAction={() => app.go('search')}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 16 }}>
-          {GAMESH.filter(g => g && g.id).map(g => <DGameTile key={g.id} game={g} app={app} />)}
-        </div>
-      </Row>
+      {/* ── Browse by Game (carousel) ── */}
+      <GameCarousel app={app} />
 
       {/* ── What's hot (trending + deals) ── */}
       <DWhatsHot app={app} trending={trending} />
