@@ -65,8 +65,8 @@ function loadJSON(key, fallback) {
 }
 // seed collections (named buckets of owned cards)
 const DEFAULT_COLLECTIONS = [
-  { id: 'c1', name: 'Main Binder', icon: '📒', cards: ['l03', 'l09', 'l02', 'l12'] },
-  { id: 'c2', name: 'Graded Vault', icon: '🏆', cards: ['l07', 'l04'] },
+  { id: 'c1', name: 'Main Binder', icon: null, cards: ['l03', 'l09', 'l02', 'l12'] },
+  { id: 'c2', name: 'Graded Vault', icon: null, cards: ['l07', 'l04'] },
 ];
 
 function parseHash() {
@@ -90,6 +90,38 @@ function App() {
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [toast, setToastState] = React.useState(null);
   const toastTimer = React.useRef(null);
+
+  // ── hash-based deep linking ──
+  // Update URL hash when navigation changes
+  React.useEffect(() => {
+    if (stack.length > 0) {
+      const top = stack[stack.length - 1];
+      const id = top.params && (top.params.id || top.params.name);
+      location.hash = id ? top.screen + '/' + id : top.screen;
+    } else {
+      location.hash = tab === 'home' ? '' : tab;
+    }
+  }, [tab, stack]);
+
+  // Listen for hash changes (back/forward, external links)
+  React.useEffect(() => {
+    function onHashChange() {
+      var parsed = parseHash();
+      if (!parsed) { setStack([]); setTab('home'); return; }
+      // If it's a tab root, switch tab
+      if (TAB_ROOT[parsed.screen] && !parsed.id) {
+        setStack([]); setTab(parsed.screen); return;
+      }
+      // If it's a known screen, push it
+      if (SCREENS[parsed.screen]) {
+        var params = parsed.id ? { id: parsed.id } : {};
+        setStack([{ screen: parsed.screen, params: params }]);
+        setTab('home');
+      }
+    }
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
 
   React.useEffect(() => { localStorage.setItem('cc_watch', JSON.stringify(watch)); }, [watch]);
   React.useEffect(() => { localStorage.setItem('cc_cart', JSON.stringify(cart)); }, [cart]);
@@ -149,7 +181,7 @@ function App() {
           return newCart;
         }
       }
-      showToast('Added to cart 🛒');
+      showToast('Added to cart');
       return newCart;
     }),
     removeFromCart: (id) => setCart(c => c.filter(x => x !== id)),
