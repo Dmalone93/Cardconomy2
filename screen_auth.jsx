@@ -17,7 +17,7 @@ const authLogo = {
 
 const authWordmark = {
   fontFamily: 'var(--wordmark)', fontSize: 22, fontWeight: 800,
-  letterSpacing: 2, color: TA2.ink,
+  letterSpacing: 2, color: TA2.ink, lineHeight: 1, transform: 'translateY(2px)',
 };
 
 const authInput = {

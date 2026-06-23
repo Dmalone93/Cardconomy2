@@ -59,7 +59,7 @@ function Header({ app, openMega, megaOpen }) {
       <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 24, height: 72 }}>
         <button onClick={() => app.go('home')} style={{ display: 'flex', alignItems: 'center', gap: 11, flexShrink: 0, lineHeight: 1 }}>
           <Logo size={36} color="var(--ink)" />
-          <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 24, letterSpacing: 1.5, color: 'var(--ink)', lineHeight: 1, display: 'block' }}>CARDCONOMY</span>
+          <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 24, letterSpacing: 1.5, color: 'var(--ink)', lineHeight: 1, display: 'block', transform: 'translateY(2px)' }}>CARDCONOMY</span>
         </button>
         <form onSubmit={submit} style={{ flex: 1, maxWidth: 560, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-2)',
           borderRadius: 11, padding: '0 8px 0 14px', height: 46, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
@@ -151,7 +151,7 @@ function Footer({ app }) {
       <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1.4fr repeat(4, 1fr)', gap: 32, padding: '46px 24px 36px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 12 }}>
-            <Logo size={32} color="#fff" /><span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 22, letterSpacing: 1.5, color: '#fff' }}>CARDCONOMY</span>
+            <Logo size={32} color="#fff" /><span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 22, letterSpacing: 1.5, color: '#fff', lineHeight: 1, transform: 'translateY(2px)' }}>CARDCONOMY</span>
           </div>
           <p style={{ fontSize: 13, opacity: 0.6, lineHeight: 1.6, maxWidth: 240 }}>The community marketplace for trading cards — buy, sell, and trade with collectors and local game shops.</p>
         </div>
