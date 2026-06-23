@@ -17,6 +17,8 @@ const { Onboarding } = window;
 const { FeesScreen, HowItWorksScreen } = window;
 const { ChatScreen } = window;
 const { TrackingScreen } = window;
+const { DisputeScreen } = window;
+const { SignInScreen, SignUpScreen, ForgotPasswordScreen } = window;
 const { sellerByName: sellerByNameA, listingsBySeller: listingsBySellerA, byId: byIdA } = window;
 
 const ALL_GAME_IDS = (window.GAMES || []).map(g => g.id);
@@ -44,6 +46,9 @@ const SCREENS = {
   howitworks: HowItWorksScreen,
   chat: ChatScreen,
   tracking: TrackingScreen,
+  signin: SignInScreen,
+  signup: SignUpScreen,
+  forgot_password: ForgotPasswordScreen,
 };
 
 function loadWatch() {
