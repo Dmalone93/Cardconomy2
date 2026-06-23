@@ -46,7 +46,7 @@ function Header({ app, openMega, megaOpen }) {
       <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 24, height: 72 }}>
         <button onClick={() => app.go('home')} style={{ display: 'flex', alignItems: 'center', gap: 11, flexShrink: 0 }}>
           <Logo size={30} color="var(--ink)" />
-          <img src="brand/wordmark.png" alt="CARDONOMY" style={{ height: 19, width: 'auto', display: 'block', filter: 'var(--logo-invert, none)' }} />
+          <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 20, letterSpacing: 1.5, color: 'var(--ink)' }}>CARDCONOMY</span>
         </button>
         <form onSubmit={submit} style={{ flex: 1, maxWidth: 560, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-2)',
           borderRadius: 11, padding: '0 8px 0 14px', height: 46, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
@@ -138,7 +138,7 @@ function Footer({ app }) {
       <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1.4fr repeat(4, 1fr)', gap: 32, padding: '46px 24px 36px' }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 12 }}>
-            <Logo size={26} color="#fff" /><img src="brand/wordmark.png" alt="CARDONOMY" style={{ height: 17, width: 'auto', display: 'block', filter: 'invert(1)' }} />
+            <Logo size={26} color="#fff" /><span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 18, letterSpacing: 1.5, color: '#fff' }}>CARDCONOMY</span>
           </div>
           <p style={{ fontSize: 13, opacity: 0.6, lineHeight: 1.6, maxWidth: 240 }}>The community marketplace for trading cards — buy, sell, and trade with collectors and local game shops.</p>
         </div>

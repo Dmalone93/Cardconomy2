@@ -423,7 +423,7 @@ function HomeScreen({ app }) {
           <button onClick={() => app.openMenu()} style={{ color: T.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{Icon.menu({})}</button>
           <div style={{ display: 'flex', alignItems: 'center', gap: 7, position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
             <Logo size={26} color={T.accent} />
-            <img src="brand/wordmark.png" alt="CARDONOMY" style={{ height: 16, width: 'auto', display: 'block', filter: 'var(--logo-invert, none)' }} />
+            <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 16, letterSpacing: 1.5, color: T.ink }}>CARDCONOMY</span>
           </div>
           <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: T.surface2, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             {Icon.cart({ width: 20, height: 20 })}

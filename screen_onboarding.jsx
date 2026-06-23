@@ -65,7 +65,7 @@ function Onboarding({ app, games }) {
       {/* brand header */}
       <div style={{ padding: '14px 24px 8px', display: 'flex', alignItems: 'center', gap: 10 }}>
         <LogoOB size={26} color={TOB.ink} />
-        <span style={{ fontFamily: TOB.sans, fontWeight: 800, fontSize: 19, letterSpacing: -0.5 }}>CARDONOMY</span>
+        <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 19, letterSpacing: 1.5 }}>CARDCONOMY</span>
       </div>
       {/* progress */}
       <div style={{ display: 'flex', gap: 6, padding: '10px 24px 0' }}>

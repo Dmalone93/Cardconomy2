@@ -32,6 +32,7 @@
     --sans: 'Inter', -apple-system, system-ui, sans-serif;
     --heading: 'Space Grotesk', -apple-system, system-ui, sans-serif;
     --mono: 'Geist Mono', ui-monospace, 'SF Mono', monospace;
+    --wordmark: 'Reglo', 'Space Grotesk', sans-serif;
     /* Radix-style scales */
     --radius-1: 4px; --radius-2: 4px; --radius-3: 4px; --radius-4: 4px; --radius-5: 4px;
     --shadow-1: 0 1px 2px rgba(20,24,40,0.06), 0 1px 3px rgba(20,24,40,0.05);
@@ -39,6 +40,7 @@
     --shadow-3: 0 8px 26px rgba(20,24,40,0.13);
     --focus-ring: 0 0 0 3px color-mix(in oklch, var(--accent) 35%, transparent);
   }
+  @font-face { font-family: 'Reglo'; src: url('brand/Reglo-Bold.otf') format('opentype'); font-weight: 700; font-style: normal; font-display: swap; }
   /* Radix-grade keyboard focus — visible only for keyboard users */
   :focus { outline: none; }
   button:focus-visible, a:focus-visible, input:focus-visible, [role="button"]:focus-visible, select:focus-visible {
@@ -110,7 +112,7 @@
       <path d="M2.05237 0.866828L25.3958 14.3542H9.93751C9.3277 14.3542 8.83334 14.8485 8.83334 15.4583V36.4375C8.83334 37.0473 9.32769 37.5417 9.93751 37.5417H25.3958L2.05237 51.029C1.3857 51.4142 0.552094 50.9331 0.552094 50.1631V1.73269C0.552094 0.962749 1.38571 0.481643 2.05237 0.866828Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.10417"/>
       <path d="M52.0518 51.0289L28.7083 37.5415L44.1667 37.5415C44.7765 37.5415 45.2708 37.0472 45.2708 36.4374L45.2708 15.4582C45.2708 14.8484 44.7765 14.354 44.1667 14.354L28.7083 14.354L52.0518 0.866684C52.7185 0.481499 53.5521 0.962608 53.5521 1.73255L53.5521 50.163C53.5521 50.9329 52.7185 51.414 52.0518 51.0289Z" fill="#ffffff" stroke="#ffffff" stroke-width="1.10417"/>
     </g>
-    <text x="600" y="660" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="58" letter-spacing="2" fill="#ffffff">CARDONOMY</text>
+    <text x="600" y="660" text-anchor="middle" font-family="Reglo, Space Grotesk, sans-serif" font-weight="700" font-size="58" letter-spacing="2" fill="#ffffff">CARDCONOMY</text>
   </svg>
 </template>
 <script>
