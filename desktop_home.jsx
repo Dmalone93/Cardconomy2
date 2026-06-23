@@ -391,12 +391,86 @@ function DHome({ app }) {
         </div>
       </section>
 
-      {/* ── Graded slabs ── */}
-      <Row title="Graded Slabs" action="Shop graded" onAction={() => app.go('search', { cond: 'Graded only' })}>
-        <div style={grid(210)}>
-          {LISTH.filter(l => l.grade && l.grade.company !== 'raw').slice(0, 4).map(l => <DCard key={l.id} item={l} app={app} />)}
+      {/* ── Graded slabs (visual slab display) ── */}
+      <section style={{ marginTop: 50, background: 'var(--fill)', padding: '44px 0 50px', borderRadius: 20 }}>
+        <div className="wrap">
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 24 }}>
+            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0, color: '#fff' }}>Graded Slabs</h2>
+            <button onClick={() => app.go('search', { cond: 'Graded only' })} style={{ fontSize: 14.5, fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Shop graded →</button>
+          </div>
+          <div style={{ display: 'flex', gap: 28, justifyContent: 'center', flexWrap: 'wrap' }}>
+            {LISTH.filter(l => l.grade && l.grade.company !== 'raw').slice(0, 4).map(l => (
+              <div key={l.id} onClick={() => app.go('listing', { id: l.id })} style={{ cursor: 'pointer', textAlign: 'center',
+                transition: 'transform 0.2s' }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-6px)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'none'}>
+                <SlabH item={l} w={140} />
+                <div style={{ marginTop: 12, color: '#fff' }}>
+                  <div style={{ fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 140 }}>{l.name}</div>
+                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}><GradeChipH grade={l.grade} /></div>
+                  <div style={{ fontFamily: TH.mono, fontWeight: 700, fontSize: 18, marginTop: 6 }}>{mH(l.price)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </Row>
+      </section>
+
+      {/* ── Bulk lots ── */}
+      <section style={{ marginTop: 50 }}>
+        <div className="wrap">
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
+            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>Bulk Lots</h2>
+            <button onClick={() => app.go('search')} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--ink)' }}>Browse all →</button>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 16 }}>
+            {LOTSH.map(lot => {
+              var g = gameByIdH(lot.game);
+              return (
+                <div key={lot.id} onClick={() => app.go('listing', { id: lot.id })} style={{
+                  background: 'var(--surface)', borderRadius: 16, overflow: 'hidden', cursor: 'pointer',
+                  display: 'flex', boxShadow: '0 1px 3px rgba(20,24,40,0.06)',
+                  transition: 'box-shadow 0.2s, transform 0.2s' }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 8px 24px rgba(20,24,40,0.12)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(20,24,40,0.06)'; e.currentTarget.style.transform = 'none'; }}>
+                  {/* stack visual */}
+                  <div style={{ width: 140, height: 160, flexShrink: 0, position: 'relative', background: lot.art || 'var(--fill)', overflow: 'hidden' }}>
+                    {lot.img ? (
+                      <img src={lot.img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      /* fallback: stacked card silhouettes */
+                      React.createElement('div', { style: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' } },
+                        [0, 1, 2].map(i => React.createElement('div', { key: i, style: {
+                          position: 'absolute', width: 60, height: 84, borderRadius: 6,
+                          background: 'rgba(255,255,255,' + (0.08 + i * 0.04) + ')',
+                          border: '1px solid rgba(255,255,255,0.12)',
+                          transform: 'rotate(' + (i * 8 - 8) + 'deg) translateY(' + (i * -4) + 'px)',
+                        }}))
+                      )
+                    )}
+                    <div style={{ position: 'absolute', bottom: 8, left: 8, background: 'rgba(0,0,0,0.65)', color: '#fff',
+                      fontSize: 11, fontWeight: 700, borderRadius: 6, padding: '3px 8px', backdropFilter: 'blur(4px)' }}>
+                      {lot.count} cards
+                    </div>
+                  </div>
+                  {/* info */}
+                  <div style={{ flex: 1, padding: '16px 18px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <div style={{ fontWeight: 700, fontSize: 15, letterSpacing: -0.2, marginBottom: 4 }}>{lot.name}</div>
+                    <div style={{ fontSize: 12.5, color: TH.muted, lineHeight: 1.5, marginBottom: 8 }}>{lot.note}</div>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
+                      <span style={{ fontFamily: TH.mono, fontWeight: 700, fontSize: 20 }}>{mH(lot.price)}</span>
+                      {lot.market && <span style={{ fontSize: 12, color: TH.muted, textDecoration: 'line-through' }}>{mH(lot.market)}</span>}
+                    </div>
+                    <div style={{ fontSize: 12, color: TH.muted, marginTop: 6 }}>
+                      {lot.seller} · {lot.sellerRating}% · {lot.shipping === 0 ? 'Free shipping' : mH(lot.shipping) + ' ship'}
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* ── Find a local shop CTA ── */}
       <section className="wrap" style={{ marginTop: 50 }}>
