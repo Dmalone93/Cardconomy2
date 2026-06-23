@@ -113,6 +113,19 @@ function SellHubScreen({ app }) {
           </span>
           {IconH.chevron({ style: { color: TH.faint } })}
         </button>
+
+        {/* why sell on Cardconomy */}
+        <button onClick={() => app.nav.push('pitch_seller')} style={{ marginTop: 6, display: 'flex', alignItems: 'center', gap: 10,
+          background: 'var(--ink)', borderRadius: 13, padding: '14px 14px', textAlign: 'left', border: 'none', cursor: 'pointer' }}>
+          <span style={{ width: 30, height: 30, borderRadius: 9, background: 'rgba(255,255,255,0.15)', color: '#fff', display: 'flex',
+            alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 2l2.09 6.26L20.18 9l-5 4.27L16.82 20 12 16.77 7.18 20l1.64-6.73L3.82 9l6.09-.74L12 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/></svg>
+          </span>
+          <span style={{ flex: 1, fontFamily: TH.sans, fontSize: 13, color: '#fff', fontWeight: 600 }}>
+            Why sell on Cardconomy?
+          </span>
+          {IconH.chevron({ style: { color: 'rgba(255,255,255,0.5)' } })}
+        </button>
       </div>
     </div>
   );

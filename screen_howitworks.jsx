@@ -153,6 +153,7 @@ function HowItWorksScreen({ app }) {
           { title: 'Start browsing', desc: 'Find your next card across every game.', tint: 'var(--accent)', action: () => app.nav.setTab('search') },
           { title: 'List a card', desc: 'Sell in seconds with the lowest fees.', tint: 'var(--accent)', action: () => app.nav.setTab('sell') },
           { title: 'Enrol your shop', desc: 'Set up your digital storefront for free.', tint: 'var(--gold)', action: () => app.nav.push('enroll_shop') },
+          { title: 'Why list your shop?', desc: 'See how Cardconomy helps local game shops.', tint: 'var(--gold)', action: () => app.nav.push('pitch_lgs') },
         ].map(p => (
           <div key={p.title} onClick={p.action} style={{ display: 'flex', alignItems: 'center', gap: 12,
             padding: '14px 14px', background: THW.surface, borderRadius: 12, cursor: 'pointer',

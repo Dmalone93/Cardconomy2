@@ -21,6 +21,7 @@ const { DisputeScreen } = window;
 const { SignInScreen, SignUpScreen, ForgotPasswordScreen } = window;
 const { ShippingScreen } = window;
 const { BatchListScreen } = window;
+const { SellerPitchScreen, LGSPitchScreen } = window;
 const { sellerByName: sellerByNameA, listingsBySeller: listingsBySellerA, byId: byIdA } = window;
 
 const ALL_GAME_IDS = (window.GAMES || []).map(g => g.id);
@@ -54,6 +55,8 @@ const SCREENS = {
   forgot_password: ForgotPasswordScreen,
   shipping: ShippingScreen,
   batchlist: BatchListScreen,
+  pitch_seller: SellerPitchScreen,
+  pitch_lgs: LGSPitchScreen,
 };
 
 function loadWatch() {
