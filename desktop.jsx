@@ -38,12 +38,12 @@ function UtilityBar({ go }) {
     <div style={{ background: 'var(--fill)', color: '#fff', fontSize: 12.5, fontFamily: T.sans }}>
       <div className="wrap" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 38 }}>
         <span style={{ opacity: 0.85, display: 'flex', alignItems: 'center', gap: 7 }}>
-          {Icon.shield({ width: 14, height: 14, style: { color: '#7fe7a4' } })} Buyer Protection on every order · Free returns on graded slabs
+          {Icon.shield({ width: 14, height: 14, style: { color: '#7fe7a4' } })} Buyer Protection on every order · 6% + 30p total fees · UK-based marketplace
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          <a href="index.html" style={{ opacity: 0.85, display: 'flex', alignItems: 'center', gap: 6 }}>{DIcon.phone()} Get the app</a>
-          <button onClick={() => go('sell')} style={{ opacity: 0.85, color: '#fff' }}>Sell on Cardonomy</button>
-          <span style={{ opacity: 0.85 }}>Help</span>
+          <button onClick={() => go('howitworks')} style={{ opacity: 0.85, color: '#fff' }}>How it works</button>
+          <button onClick={() => go('sell')} style={{ opacity: 0.85, color: '#fff' }}>Sell on Cardconomy</button>
+          <button onClick={() => go('fees')} style={{ opacity: 0.85, color: '#fff' }}>Compare fees</button>
         </div>
       </div>
     </div>

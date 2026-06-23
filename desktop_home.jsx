@@ -295,6 +295,106 @@ function DHome({ app }) {
       {/* ── What's hot (trending + deals) ── */}
       <DWhatsHot app={app} trending={trending} />
 
+      {/* ── Auctions ending soon ── */}
+      <Row title="Auctions Ending Soon" action="All auctions" onAction={() => app.go('search', { type: 'auction' })}>
+        <div style={grid(210)}>
+          {LISTH.filter(l => l.type === 'auction').slice(0, 4).map(l => <DCard key={l.id} item={l} app={app} />)}
+        </div>
+      </Row>
+
+      {/* ── Sell your cards CTA ── */}
+      <section className="wrap" style={{ marginTop: 50 }}>
+        <div style={{ display: 'flex', gap: 20 }}>
+          <div onClick={() => app.go('sell_single')} style={{ flex: 1, background: 'var(--surface)', borderRadius: 16, padding: '28px 24px', cursor: 'pointer',
+            border: '1px solid var(--line)', transition: 'box-shadow 0.2s' }}
+            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
+            onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
+            <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 20, marginBottom: 6 }}>Sell a single card</div>
+            <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, marginBottom: 14 }}>List in seconds with our 5-step wizard. Set your price using live market data.</div>
+            <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>List now →</span>
+          </div>
+          <div onClick={() => app.go('sell')} style={{ flex: 1, background: 'var(--surface)', borderRadius: 16, padding: '28px 24px', cursor: 'pointer',
+            border: '1px solid var(--line)', transition: 'box-shadow 0.2s' }}
+            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
+            onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
+            <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 20, marginBottom: 6 }}>Bulk list your collection</div>
+            <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, marginBottom: 14 }}>Upload a CSV or scan cards. We auto-price everything at market rates.</div>
+            <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>Bulk list →</span>
+          </div>
+          <div onClick={() => app.go('trade')} style={{ flex: 1, background: 'var(--surface)', borderRadius: 16, padding: '28px 24px', cursor: 'pointer',
+            border: '1px solid var(--line)', transition: 'box-shadow 0.2s' }}
+            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
+            onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
+            <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 20, marginBottom: 6 }}>Trade with collectors</div>
+            <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, marginBottom: 14 }}>Swap card-for-card with nearby collectors. No cash needed.</div>
+            <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>Find trades →</span>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Graded slabs ── */}
+      <Row title="Graded Slabs" action="Shop graded" onAction={() => app.go('search', { cond: 'Graded only' })}>
+        <div style={grid(210)}>
+          {LISTH.filter(l => l.grade && l.grade.company !== 'raw').slice(0, 4).map(l => <DCard key={l.id} item={l} app={app} />)}
+        </div>
+      </Row>
+
+      {/* ── Recently sold (social proof) ── */}
+      <section className="wrap" style={{ marginTop: 50 }}>
+        <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 18px' }}>Recently Sold</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 14 }}>
+          {[
+            { name: 'Charizard ex 223/165', price: 142, buyer: 'James T.', time: '2 hours ago', game: 'pkmn' },
+            { name: 'Black Lotus (HP)', price: 4200, buyer: 'Sarah K.', time: '5 hours ago', game: 'mtg' },
+            { name: 'Blue-Eyes White Dragon LOB', price: 89, buyer: 'Ryan M.', time: '8 hours ago', game: 'ygo' },
+            { name: 'Pikachu VMAX Alt Art', price: 67, buyer: 'Emily W.', time: '12 hours ago', game: 'pkmn' },
+          ].map((s, i) => {
+            var g = gameByIdH(s.game);
+            return (
+              <div key={i} style={{ background: 'var(--surface)', borderRadius: 12, padding: '16px 18px',
+                display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: g ? g.tint : 'var(--faint)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 16, flexShrink: 0 }}>
+                  {s.buyer[0]}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</div>
+                  <div style={{ fontSize: 12, color: TH.muted }}>{s.buyer} bought · {s.time}</div>
+                </div>
+                <div style={{ fontFamily: TH.mono, fontWeight: 700, fontSize: 16, flexShrink: 0 }}>{mH(s.price)}</div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ── Find a local shop CTA ── */}
+      <section className="wrap" style={{ marginTop: 50 }}>
+        <div style={{ background: 'var(--fill)', borderRadius: 16, padding: '36px 32px', color: '#fff',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40 }}>
+          <div style={{ flex: 1 }}>
+            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 8px' }}>
+              Find a local game shop
+            </h2>
+            <p style={{ fontSize: 14, opacity: 0.75, lineHeight: 1.6, margin: '0 0 18px', maxWidth: 460 }}>
+              Browse verified shops near you. Sell cards in person, pick up online orders, or meet for trades at a safe location.
+            </p>
+            <button onClick={() => app.go('storefront')} style={{
+              padding: '12px 22px', borderRadius: 10, border: 'none',
+              background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 14, cursor: 'pointer',
+            }}>Find shops near you →</button>
+          </div>
+          <div style={{ display: 'flex', gap: 16 }}>
+            {[['12', 'Verified shops'], ['4.8', 'Avg rating'], ['Free', 'During early access']].map(([num, label]) => (
+              <div key={label} style={{ textAlign: 'center' }}>
+                <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22 }}>{num}</div>
+                <div style={{ fontSize: 12, opacity: 0.65, marginTop: 2 }}>{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── UK community banner ── */}
       <section className="wrap" style={{ marginTop: 50 }}>
         <div style={{ background: 'var(--accent-wash)', borderRadius: 16, border: '1px solid rgba(5,150,105,0.2)', padding: '32px 28px',
