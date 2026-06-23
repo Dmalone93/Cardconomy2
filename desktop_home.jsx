@@ -304,30 +304,92 @@ function DHome({ app }) {
 
       {/* ── Sell your cards CTA ── */}
       <section className="wrap" style={{ marginTop: 50 }}>
-        <div style={{ display: 'flex', gap: 20 }}>
-          <div onClick={() => app.go('sell_single')} style={{ flex: 1, background: 'var(--surface)', borderRadius: 16, padding: '28px 24px', cursor: 'pointer',
-            border: '1px solid var(--line)', transition: 'box-shadow 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
-            <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 20, marginBottom: 6 }}>Sell a single card</div>
-            <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, marginBottom: 14 }}>List in seconds with our 5-step wizard. Set your price using live market data.</div>
-            <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>List now →</span>
+        <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 18px' }}>Start selling</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 18 }}>
+          {/* Single card */}
+          <div onClick={() => app.go('sell_single')} style={{ position: 'relative', borderRadius: 18, overflow: 'hidden', cursor: 'pointer',
+            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)', height: 260,
+            transition: 'transform 0.2s, box-shadow 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.2)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}>
+            {/* decorative card stack */}
+            <div style={{ position: 'absolute', right: -10, top: 20, width: 120, height: 168, borderRadius: 8,
+              background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.1)',
+              transform: 'rotate(12deg)', boxShadow: '0 8px 24px rgba(0,0,0,0.3)' }} />
+            <div style={{ position: 'absolute', right: 10, top: 30, width: 120, height: 168, borderRadius: 8,
+              background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.15)',
+              transform: 'rotate(4deg)', boxShadow: '0 8px 24px rgba(0,0,0,0.3)' }}>
+              <svg viewBox="0 0 120 168" style={{ width: '100%', height: '100%', opacity: 0.3 }}>
+                <rect x="15" y="12" width="90" height="60" rx="4" fill="rgba(255,255,255,0.2)" />
+                <rect x="15" y="80" width="70" height="6" rx="3" fill="rgba(255,255,255,0.15)" />
+                <rect x="15" y="92" width="50" height="6" rx="3" fill="rgba(255,255,255,0.1)" />
+                <rect x="15" y="110" width="90" height="40" rx="4" fill="rgba(255,255,255,0.08)" />
+              </svg>
+            </div>
+            {/* text */}
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 24px', zIndex: 2,
+              background: 'linear-gradient(transparent, rgba(0,0,0,0.4))' }}>
+              <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: '#fff', marginBottom: 6 }}>Sell a single card</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5, marginBottom: 12 }}>5-step wizard with live market pricing</div>
+              <span style={{ display: 'inline-block', padding: '8px 18px', borderRadius: 8, background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13 }}>List now →</span>
+            </div>
           </div>
-          <div onClick={() => app.go('sell')} style={{ flex: 1, background: 'var(--surface)', borderRadius: 16, padding: '28px 24px', cursor: 'pointer',
-            border: '1px solid var(--line)', transition: 'box-shadow 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
-            <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 20, marginBottom: 6 }}>Bulk list your collection</div>
-            <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, marginBottom: 14 }}>Upload a CSV or scan cards. We auto-price everything at market rates.</div>
-            <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>Bulk list →</span>
+
+          {/* Bulk list */}
+          <div onClick={() => app.go('sell')} style={{ position: 'relative', borderRadius: 18, overflow: 'hidden', cursor: 'pointer',
+            background: 'linear-gradient(135deg, #1b2838 0%, #2a3f5f 50%, #3a5a8c 100%)', height: 260,
+            transition: 'transform 0.2s, box-shadow 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.2)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}>
+            {/* decorative grid of mini cards */}
+            <div style={{ position: 'absolute', right: 12, top: 16, display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6,
+              transform: 'rotate(6deg)', opacity: 0.5 }}>
+              {Array.from({ length: 9 }).map((_, i) => (
+                <div key={i} style={{ width: 36, height: 50, borderRadius: 4, background: 'rgba(255,255,255,' + (0.06 + i * 0.02) + ')',
+                  border: '1px solid rgba(255,255,255,0.1)' }} />
+              ))}
+            </div>
+            {/* upload arrow */}
+            <div style={{ position: 'absolute', right: 40, top: 60, opacity: 0.2 }}>
+              <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5">
+                <path d="M12 16V4M12 4L7 9M12 4l5 5" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M4 15v3a2 2 0 002 2h12a2 2 0 002-2v-3" strokeLinecap="round"/>
+              </svg>
+            </div>
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 24px', zIndex: 2,
+              background: 'linear-gradient(transparent, rgba(0,0,0,0.4))' }}>
+              <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: '#fff', marginBottom: 6 }}>Bulk list your collection</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5, marginBottom: 12 }}>CSV upload or scan. Auto-priced at market</div>
+              <span style={{ display: 'inline-block', padding: '8px 18px', borderRadius: 8, background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13 }}>Bulk list →</span>
+            </div>
           </div>
-          <div onClick={() => app.go('trade')} style={{ flex: 1, background: 'var(--surface)', borderRadius: 16, padding: '28px 24px', cursor: 'pointer',
-            border: '1px solid var(--line)', transition: 'box-shadow 0.2s' }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
-            <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 20, marginBottom: 6 }}>Trade with collectors</div>
-            <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, marginBottom: 14 }}>Swap card-for-card with nearby collectors. No cash needed.</div>
-            <span style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>Find trades →</span>
+
+          {/* Trade */}
+          <div onClick={() => app.go('trade')} style={{ position: 'relative', borderRadius: 18, overflow: 'hidden', cursor: 'pointer',
+            background: 'linear-gradient(135deg, #1a2e1a 0%, #1e3a2f 50%, #2d5a3f 100%)', height: 260,
+            transition: 'transform 0.2s, box-shadow 0.2s' }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.2)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = 'none'; }}>
+            {/* decorative swap arrows */}
+            <div style={{ position: 'absolute', right: 20, top: 24, opacity: 0.15 }}>
+              <svg width="100" height="100" viewBox="0 0 100 100" fill="none" stroke="#fff" strokeWidth="2">
+                <path d="M20 35h55M60 20l15 15-15 15" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d="M80 65H25M40 50L25 65l15 15" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+            {/* two overlapping card silhouettes */}
+            <div style={{ position: 'absolute', right: 30, top: 50, width: 70, height: 98, borderRadius: 6,
+              background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
+              transform: 'rotate(-8deg)' }} />
+            <div style={{ position: 'absolute', right: 50, top: 45, width: 70, height: 98, borderRadius: 6,
+              background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.12)',
+              transform: 'rotate(8deg)' }} />
+            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '24px 24px', zIndex: 2,
+              background: 'linear-gradient(transparent, rgba(0,0,0,0.4))' }}>
+              <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: '#fff', marginBottom: 6 }}>Trade with collectors</div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5, marginBottom: 12 }}>Card-for-card swaps. No cash needed</div>
+              <span style={{ display: 'inline-block', padding: '8px 18px', borderRadius: 8, background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13 }}>Find trades →</span>
+            </div>
           </div>
         </div>
       </section>
