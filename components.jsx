@@ -482,7 +482,7 @@ function CurrencyInput({ value, onChange, label, presets, marketPrice }) {
   const resolvedPresets = presets ? presets.map(p => {
     if (p.pct !== undefined && marketPrice) {
       const val = Math.round(marketPrice * p.pct);
-      return { label: Math.round(p.pct * 100) + '%', sub: '\u00A3' + val, value: val };
+      return { label: Math.round(p.pct * 100) + '%', sub: money(val, { cents: false }), value: val };
     }
     return { label: p.label, sub: p.sub || '', value: p.value };
   }) : null;
@@ -503,12 +503,12 @@ function CurrencyInput({ value, onChange, label, presets, marketPrice }) {
               flex: 1, padding: '7px 4px', borderRadius: 8, cursor: 'pointer',
               background: value === p.value ? 'var(--accent-wash)' : T.surface2,
               border: value === p.value ? '1px solid var(--accent)' : '1px solid var(--line)',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1,
+              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
             }}>
               <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 12,
                 color: value === p.value ? T.accent : T.ink }}>{p.label}</span>
-              {p.sub && <span style={{ fontFamily: T.sans, fontWeight: 600, fontSize: 10,
-                color: value === p.value ? T.accent : T.muted }}>{p.sub}</span>}
+              {p.sub && <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 11,
+                color: value === p.value ? T.accent : T.ink }}>{p.sub}</span>}
             </button>
           ))}
         </div>
