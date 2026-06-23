@@ -21,7 +21,7 @@ function DGameTile({ game, app }) {
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       role="button" style={{
       cursor: 'pointer', borderRadius: 14, overflow: 'hidden', position: 'relative',
-      width: 280, height: 370, flexShrink: 0, background: game.tint,
+      width: 260, height: 320, flexShrink: 0, background: game.tint,
       boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
       transform: hover ? 'scale(1.03)' : 'scale(1)',
       transition: 'transform 0.2s',
@@ -79,7 +79,7 @@ function GameCarousel({ app }) {
       <div className="wrap" style={{ position: 'relative' }}>
         <button onClick={function() { scrollBy(-1); }} style={Object.assign({}, arrowStyle(canLeft), { left: -22 })}>←</button>
         <button onClick={function() { scrollBy(1); }} style={Object.assign({}, arrowStyle(canRight), { right: -22 })}>→</button>
-        <div ref={scrollRef} onScroll={updateArrows} style={{
+        <div ref={scrollRef} onScroll={updateArrows} className="game-carousel" style={{
           display: 'flex', gap: 18, overflowX: 'auto', scrollSnapType: 'x mandatory',
           scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', padding: '4px 0',
         }}>
