@@ -79,7 +79,7 @@ function parseHash() {
 function App() {
   const init = parseHash();
   const [tab, setTab] = React.useState(init && TAB_ROOT[init.screen] && !init.id ? init.screen : 'home');
-  const [stack, setStack] = React.useState(init && init.id ? [{ screen: init.screen, params: { id: init.id } }] : []); // [{screen, params}]
+  const [stack, setStack] = React.useState(init ? (init.id ? [{ screen: init.screen, params: { id: init.id } }] : (SCREENS[init.screen] ? [{ screen: init.screen, params: {} }] : [])) : []); // [{screen, params}]
   const [watch, setWatch] = React.useState(loadWatch);
   const [cart, setCart] = React.useState(loadCart);
   const [tier, setTier] = React.useState(() => { try { return JSON.parse(localStorage.getItem('cc_tier') || '0'); } catch (e) { return 0; } });

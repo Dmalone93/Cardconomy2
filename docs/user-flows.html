@@ -68,6 +68,7 @@
     font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .arrow { color: var(--faint); font-size: 18px; flex-shrink: 0; }
   .step-detail { font-size: 11.5px; color: var(--muted); font-weight: 400; margin-left: 4px; }
+  .step a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 6px; }
 
   /* ── tab bar diagram ── */
   .tab-bar { display: flex; gap: 4px; background: var(--surface); border-radius: 14px; padding: 14px;
@@ -152,31 +153,31 @@
 
     <h2>Bottom Tab Navigation</h2>
     <div class="tab-bar">
-      <div class="tab-item"><div class="icon">🏠</div><div class="label">Browse</div><div class="screen">HomeScreen</div></div>
-      <div class="tab-item"><div class="icon">🔍</div><div class="label">Search</div><div class="screen">SearchScreen</div></div>
-      <div class="tab-item primary"><div class="icon">💰</div><div class="label">Sell</div><div class="screen">SellHubScreen</div></div>
-      <div class="tab-item"><div class="icon">❤️</div><div class="label">Watching</div><div class="screen">WatchScreen</div></div>
-      <div class="tab-item"><div class="icon">👤</div><div class="label">You</div><div class="screen">DashboardScreen</div></div>
+      <div class="tab-item"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4h4v4a1 1 0 001 1h3a1 1 0 001-1V10"/></svg></div><div class="label">Browse</div><div class="screen">HomeScreen</div></div>
+      <div class="tab-item"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div class="label">Search</div><div class="screen">SearchScreen</div></div>
+      <div class="tab-item primary"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div><div class="label">Sell</div><div class="screen">SellHubScreen</div></div>
+      <div class="tab-item"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg></div><div class="label">Watching</div><div class="screen">WatchScreen</div></div>
+      <div class="tab-item"><div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="label">You</div><div class="screen">DashboardScreen</div></div>
     </div>
 
     <h2>Three Personas</h2>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px;">
       <div class="card" style="border-top: 3px solid var(--buyer);">
-        <h3>📦 Buyers & Collectors</h3>
+        <h3>Buyers & Collectors</h3>
         <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Discover, purchase, track, and collect cards. Portfolio management, watchlists, and buylists.</p>
         <div style="font-size: 12px; color: var(--ink2);">
           <strong>Dashboard:</strong> Portfolio value, needs attention, watchlist movements, buylist matches, recent orders
         </div>
       </div>
       <div class="card" style="border-top: 3px solid var(--seller);">
-        <h3>💰 Individual Sellers</h3>
+        <h3>Individual Sellers</h3>
         <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">List cards, manage offers, ship orders, track earnings. Single and bulk listing flows.</p>
         <div style="font-size: 12px; color: var(--ink2);">
           <strong>Dashboard:</strong> Balance, active listings, pending offers, to ship, activity feed, collection + buylist
         </div>
       </div>
       <div class="card" style="border-top: 3px solid var(--store);">
-        <h3>🏪 Local Game Shops</h3>
+        <h3>Local Game Shops</h3>
         <p style="font-size: 13px; color: var(--muted); margin-bottom: 12px;">Manage walk-in submissions, bulk intake, buylist performance, and daily revenue.</p>
         <div style="font-size: 12px; color: var(--ink2);">
           <strong>Dashboard:</strong> Revenue, submissions pending, bulk lots, buylist hits, submission queue, buylist performance
@@ -290,13 +291,13 @@
     <div class="journey">
       <div class="title"><div class="dot" style="background: var(--buyer);"></div> Journey 1: Buyer finds and buys a card</div>
       <div class="flow-steps">
-        <div class="step"><div class="num">1</div> Home</div><span class="arrow">→</span>
-        <div class="step"><div class="num">2</div> Search <span class="step-detail">filter by game/set/price</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">3</div> Product Page <span class="step-detail">compare sellers</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">4</div> Listing <span class="step-detail">view photos, price history</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">5</div> Add to Cart</div><span class="arrow">→</span>
-        <div class="step"><div class="num">6</div> Cart <span class="step-detail">review items + totals</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">7</div> Checkout <span class="step-detail">address, shipping, payment</span></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Home</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#search" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Search <span class="step-detail">filter by game/set/price</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#product" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Product Page <span class="step-detail">compare sellers</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#listing/l01" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Listing <span class="step-detail">view photos, price history</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#listing/l01" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Add to Cart</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#cart" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Cart <span class="step-detail">review items + totals</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#checkout" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">7</div> Checkout <span class="step-detail">address, shipping, payment</span></a></div><span class="arrow">→</span>
         <div class="step" style="background: var(--buyer); color: #fff;"><div class="num" style="background: #fff; color: var(--buyer);">✓</div> Order confirmed</div>
       </div>
     </div>
@@ -304,11 +305,11 @@
     <div class="journey">
       <div class="title"><div class="dot" style="background: var(--buyer);"></div> Journey 2: Buyer builds a want list</div>
       <div class="flow-steps">
-        <div class="step"><div class="num">1</div> You tab</div><span class="arrow">→</span>
-        <div class="step"><div class="num">2</div> Buyer Dashboard</div><span class="arrow">→</span>
-        <div class="step"><div class="num">3</div> Buylist <span class="step-detail">+ Add button</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">4</div> Search catalog</div><span class="arrow">→</span>
-        <div class="step"><div class="num">5</div> Set condition + max price + qty</div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> You tab</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Buyer Dashboard</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#buylist" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Buylist <span class="step-detail">+ Add button</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#search" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Search catalog</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#buylist" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Set condition + max price + qty</a></div><span class="arrow">→</span>
         <div class="step" style="background: var(--buyer); color: #fff;"><div class="num" style="background: #fff; color: var(--buyer);">✓</div> Added to buylist</div>
       </div>
     </div>
@@ -316,13 +317,13 @@
     <div class="journey">
       <div class="title"><div class="dot" style="background: var(--seller);"></div> Journey 3: Seller lists a card</div>
       <div class="flow-steps">
-        <div class="step"><div class="num">1</div> Sell tab</div><span class="arrow">→</span>
-        <div class="step"><div class="num">2</div> Sell Hub <span class="step-detail">marketplace</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">3</div> Pick card <span class="step-detail">search or scan</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">4</div> Condition <span class="step-detail">raw or graded</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">5</div> Photos <span class="step-detail">4 slots</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">6</div> Price <span class="step-detail">BIN or auction</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">7</div> Review</div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Sell tab</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Sell Hub <span class="step-detail">marketplace</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Pick card <span class="step-detail">search or scan</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Condition <span class="step-detail">raw or graded</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Photos <span class="step-detail">4 slots</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Price <span class="step-detail">BIN or auction</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">7</div> Review</a></div><span class="arrow">→</span>
         <div class="step" style="background: var(--seller); color: #fff;"><div class="num" style="background: #fff; color: var(--seller);">✓</div> Card is live!</div>
       </div>
     </div>
@@ -330,12 +331,12 @@
     <div class="journey">
       <div class="title"><div class="dot" style="background: var(--seller);"></div> Journey 4: Seller sells to local shop</div>
       <div class="flow-steps">
-        <div class="step"><div class="num">1</div> Sell Hub</div><span class="arrow">→</span>
-        <div class="step"><div class="num">2</div> Sell to shop</div><span class="arrow">→</span>
-        <div class="step"><div class="num">3</div> Search/scan cards</div><span class="arrow">→</span>
-        <div class="step"><div class="num">4</div> Set conditions</div><span class="arrow">→</span>
-        <div class="step"><div class="num">5</div> Select shop</div><span class="arrow">→</span>
-        <div class="step"><div class="num">6</div> Submit</div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Sell Hub</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Sell to shop</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Search/scan cards</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Set conditions</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Select shop</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Submit</a></div><span class="arrow">→</span>
         <div class="step" style="background: var(--seller); color: #fff;"><div class="num" style="background: #fff; color: var(--seller);">✓</div> Shop reviews + sends offer</div>
       </div>
     </div>
@@ -343,12 +344,12 @@
     <div class="journey">
       <div class="title"><div class="dot" style="background: var(--seller);"></div> Journey 5: Two collectors trade cards</div>
       <div class="flow-steps">
-        <div class="step"><div class="num">1</div> Trade screen</div><span class="arrow">→</span>
-        <div class="step"><div class="num">2</div> Browse matches</div><span class="arrow">→</span>
-        <div class="step"><div class="num">3</div> Build trade <span class="step-detail">select give/get cards</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">4</div> Check fairness %</div><span class="arrow">→</span>
-        <div class="step"><div class="num">5</div> Choose meetup <span class="step-detail">shop or public</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">6</div> Send offer</div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Trade screen</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Browse matches</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Build trade <span class="step-detail">select give/get cards</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Check fairness %</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Choose meetup <span class="step-detail">shop or public</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Send offer</a></div><span class="arrow">→</span>
         <div class="step" style="background: var(--seller); color: #fff;"><div class="num" style="background: #fff; color: var(--seller);">✓</div> Meet + swap</div>
       </div>
     </div>
@@ -356,9 +357,9 @@
     <div class="journey">
       <div class="title"><div class="dot" style="background: var(--store);"></div> Journey 6: Shop enrols on platform</div>
       <div class="flow-steps">
-        <div class="step"><div class="num">1</div> Enrol screen <span class="step-detail">value props</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">2</div> Step 1 <span class="step-detail">name + postcode</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">3</div> Step 2 <span class="step-detail">games + condition pref</span></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#enroll_shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Enrol screen <span class="step-detail">value props</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#enroll_shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Step 1 <span class="step-detail">name + postcode</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#enroll_shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Step 2 <span class="step-detail">games + condition pref</span></a></div><span class="arrow">→</span>
         <div class="step" style="background: var(--store); color: #fff;"><div class="num" style="background: #fff; color: var(--store);">✓</div> Application in review</div>
       </div>
     </div>
@@ -366,12 +367,12 @@
     <div class="journey">
       <div class="title"><div class="dot" style="background: var(--store);"></div> Journey 7: Shop processes a submission</div>
       <div class="flow-steps">
-        <div class="step"><div class="num">1</div> Store Dashboard</div><span class="arrow">→</span>
-        <div class="step"><div class="num">2</div> Counter tab <span class="step-detail">inbox</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">3</div> Review cards <span class="step-detail">grade + price</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">4</div> Flag questionable</div><span class="arrow">→</span>
-        <div class="step"><div class="num">5</div> Build offer <span class="step-detail">cash/credit split</span></div><span class="arrow">→</span>
-        <div class="step"><div class="num">6</div> Send offer</div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Store Dashboard</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Counter tab <span class="step-detail">inbox</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Review cards <span class="step-detail">grade + price</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Flag questionable</a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Build offer <span class="step-detail">cash/credit split</span></a></div><span class="arrow">→</span>
+        <div class="step"><a href="../index.html#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Send offer</a></div><span class="arrow">→</span>
         <div class="step" style="background: var(--store); color: #fff;"><div class="num" style="background: #fff; color: var(--store);">✓</div> Awaiting seller response</div>
       </div>
     </div>
