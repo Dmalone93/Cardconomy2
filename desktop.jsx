@@ -57,9 +57,8 @@ function Header({ app, openMega, megaOpen }) {
   return (
     <header style={{ background: 'var(--surface)', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 60 }}>
       <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 24, height: 72 }}>
-        <button onClick={() => app.go('home')} style={{ display: 'flex', alignItems: 'center', gap: 11, flexShrink: 0, lineHeight: 1 }}>
-          <Logo size={36} color="var(--ink)" />
-          <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 24, letterSpacing: 1.5, color: 'var(--ink)', lineHeight: 0, display: 'flex', alignItems: 'center', height: 36 }}>CARDCONOMY</span>
+        <button onClick={() => app.go('home')} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+          <img src="brand/logo-wordmark.svg" alt="CARDCONOMY" style={{ height: 32, width: 'auto', display: 'block', filter: 'var(--logo-invert, none)' }} />
         </button>
         <form onSubmit={submit} style={{ flex: 1, maxWidth: 560, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-2)',
           borderRadius: 11, padding: '0 8px 0 14px', height: 46, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
@@ -150,8 +149,8 @@ function Footer({ app }) {
     <footer style={{ background: 'var(--fill)', color: '#fff', marginTop: 60 }}>
       <div className="wrap" style={{ display: 'grid', gridTemplateColumns: '1.4fr repeat(4, 1fr)', gap: 32, padding: '46px 24px 36px' }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 12 }}>
-            <Logo size={32} color="#fff" /><span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 22, letterSpacing: 1.5, color: '#fff', lineHeight: 0, display: 'flex', alignItems: 'center', height: 32 }}>CARDCONOMY</span>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
+            <img src="brand/logo-wordmark.svg" alt="CARDCONOMY" style={{ height: 28, width: 'auto', display: 'block', filter: 'invert(1)' }} />
           </div>
           <p style={{ fontSize: 13, opacity: 0.6, lineHeight: 1.6, maxWidth: 240 }}>The community marketplace for trading cards — buy, sell, and trade with collectors and local game shops.</p>
         </div>
