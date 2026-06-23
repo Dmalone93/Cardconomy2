@@ -2,7 +2,7 @@
 // Batch List — list multiple cards at once
 // ─────────────────────────────────────────────────────────────
 const { T: TBL, money: moneyBL, CardArt: CardArtBL, Icon: IconBL } = window;
-const { byId: byIdBL, setById: setByIdBL } = window;
+const { byId: byIdBL, setById: setByIdBL, LISTINGS: LISTINGS_BL } = window;
 const { ToggleSwitch: ToggleSwitchBL } = window;
 
 const CONDITIONS_BL = ['Near Mint', 'Lightly Played', 'Moderately Played', 'Heavily Played', 'Damaged'];
@@ -37,8 +37,31 @@ function BatchListScreen({ app, params }) {
   const [cardCondIdx, setCardCondIdx] = React.useState(null); // index of card whose condition is being edited
   const [done, setDone] = React.useState(false);
   const [priceTransition, setPriceTransition] = React.useState(false);
+  const [searchQ, setSearchQ] = React.useState('');
+  const [showSearch, setShowSearch] = React.useState(false);
 
   const currentPct = STRATEGIES_BL.find(s => s.id === strategy)?.pct || 1;
+
+  const searchResults = React.useMemo(() => {
+    if (!searchQ || searchQ.length < 2) return [];
+    const q = searchQ.toLowerCase();
+    const existing = new Set(cards.map(c => c.id));
+    return (LISTINGS_BL || [])
+      .filter(l => !existing.has(l.id) && (l.name.toLowerCase().includes(q) || (l.subtitle || '').toLowerCase().includes(q)))
+      .slice(0, 6);
+  }, [searchQ, cards]);
+
+  function addCard(item) {
+    const market = item.market || item.price || 0;
+    const pct = STRATEGIES_BL.find(s => s.id === strategy)?.pct || 1;
+    setCards(prev => [...prev, { id: item.id, item, market, price: +(market * pct).toFixed(2), condition: 'Near Mint', custom: false }]);
+    setSearchQ('');
+    setShowSearch(false);
+  }
+
+  function removeCard(idx) {
+    setCards(prev => prev.filter((_, i) => i !== idx));
+  }
 
   function applyStrategy(stratId) {
     const pct = STRATEGIES_BL.find(s => s.id === stratId)?.pct || 1;
@@ -94,6 +117,8 @@ function BatchListScreen({ app, params }) {
       <div style={{ padding: '14px 14px 12px', background: TBL.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TBL.ink }}>{IconBL.back({})}</button>
         <span style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 18, flex: 1 }}>List {cards.length} card{cards.length !== 1 ? 's' : ''}</span>
+        <button onClick={() => setShowSearch(!showSearch)} style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)',
+          background: TBL.surface2, borderRadius: 8, padding: '6px 12px' }}>+ Add</button>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 180px' }}>
@@ -120,13 +145,56 @@ function BatchListScreen({ app, params }) {
           </div>
         </div>
 
-        {/* card list */}
-        <div style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TBL.muted, textTransform: 'uppercase', marginBottom: 8 }}>Cards</div>
+        {/* card list header + add card */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+          <div style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TBL.muted, textTransform: 'uppercase' }}>Cards ({cards.length})</div>
+          <button onClick={() => setShowSearch(!showSearch)} style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)', display: 'flex', alignItems: 'center', gap: 5 }}>
+            {showSearch ? 'Close' : '+ Add card'}
+          </button>
+        </div>
+
+        {showSearch && (
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: TBL.surface, borderRadius: 10, padding: '8px 12px', border: '1px solid var(--line)', marginBottom: 6 }}>
+              {IconBL.search({ width: 16, height: 16, style: { color: TBL.faint, flexShrink: 0 } })}
+              <input value={searchQ} onChange={e => setSearchQ(e.target.value)} placeholder="Search cards to add..."
+                autoFocus style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TBL.sans, fontSize: 14, color: TBL.ink }} />
+              {searchQ && <button onClick={() => setSearchQ('')} style={{ color: TBL.faint, fontSize: 18, lineHeight: 1 }}>{'\u00D7'}</button>}
+            </div>
+            {searchResults.length > 0 && (
+              <div style={{ background: TBL.surface, borderRadius: 12, border: '1px solid var(--line)', overflow: 'hidden' }}>
+                {searchResults.map((item, i) => {
+                  var setName = setByIdBL(item.set)?.name?.replace(/\s*\(.*\)/, '') || '';
+                  return (
+                    <button key={item.id} onClick={() => addCard(item)} style={{
+                      width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', textAlign: 'left',
+                      borderTop: i > 0 ? '1px solid var(--line)' : 'none', background: 'transparent' }}>
+                      <div style={{ background: TBL.surface2, borderRadius: 6, padding: 3, flexShrink: 0 }}>
+                        <CardArtBL item={item} w={32} radius={4} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
+                        <div style={{ fontFamily: TBL.sans, fontSize: 11, color: TBL.muted }}>{setName}</div>
+                      </div>
+                      <div style={{ fontFamily: TBL.mono, fontWeight: 700, fontSize: 13, color: TBL.ink, flexShrink: 0 }}>{moneyBL(item.market || item.price)}</div>
+                      <span style={{ color: 'var(--up)', fontWeight: 700, fontSize: 18, flexShrink: 0 }}>+</span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            {searchQ.length >= 2 && searchResults.length === 0 && (
+              <div style={{ textAlign: 'center', padding: '16px 0', fontFamily: TBL.sans, fontSize: 13, color: TBL.muted }}>No cards found for "{searchQ}"</div>
+            )}
+          </div>
+        )}
         <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 18 }}>
           {cards.map((c, idx) => {
             const setName = setByIdBL(c.item.set)?.name?.replace(/\s*\(.*\)/, '') || '';
             return (
-              <div key={c.id} style={{ background: 'var(--surface)', borderRadius: 14, padding: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+              <div key={c.id} style={{ background: 'var(--surface)', borderRadius: 14, padding: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)', position: 'relative' }}>
+                <button onClick={() => removeCard(idx)} style={{ position: 'absolute', top: 6, right: 6, width: 22, height: 22, borderRadius: 999,
+                  background: 'var(--surface-2)', color: TBL.faint, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 1 }}>{'\u00D7'}</button>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                   <div style={{ background: TBL.surface2, borderRadius: 9, padding: 5 }}>
                     <CardArtBL item={c.item} w={44} radius={6} />
