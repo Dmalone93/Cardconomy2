@@ -19,6 +19,19 @@ const DIcon = {
 
 const MENU_GAMES = ['pkmn', 'mtg', 'ygo', 'lor'];
 
+// ── category nav button with hover ───────────────────────────
+function NavBtn({ onClick, children, style: extra = {} }) {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <button onClick={onClick} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
+      style={{ padding: '0 13px', height: 46, color: hover ? 'var(--accent)' : 'var(--ink-2)',
+        borderBottom: hover ? '2px solid var(--accent)' : '2px solid transparent',
+        transition: 'color 0.15s, border-color 0.15s', ...extra }}>
+      {children}
+    </button>
+  );
+}
+
 // ── top utility bar ──────────────────────────────────────────
 function UtilityBar({ go }) {
   return (
@@ -69,14 +82,14 @@ function Header({ app, openMega, megaOpen }) {
             ☰ Shop by game {DIcon.chevron({ style: { transform: megaOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' } })}
           </button>
           {GAMES.slice(0, 4).map(g => (
-            <button key={g.id} onClick={() => app.go('search', { game: g.id })} style={{ padding: '0 13px', height: 46, color: 'var(--ink-2)' }}>{g.short}</button>
+            <NavBtn key={g.id} onClick={() => app.go('search', { game: g.id })}>{g.short}</NavBtn>
           ))}
           <span style={{ width: 1, height: 20, background: 'var(--line)', margin: '0 8px' }} />
-          <button onClick={() => app.go('search', { type: 'auction' })} style={{ padding: '0 13px', height: 46, color: 'var(--ink-2)' }}>Auctions</button>
-          <button onClick={() => app.go('search', { cond: 'Graded only' })} style={{ padding: '0 13px', height: 46, color: 'var(--ink-2)' }}>Graded</button>
-          <button onClick={() => app.go('search', {})} style={{ padding: '0 13px', height: 46, color: 'var(--ink-2)' }}>Bulk lots</button>
-          <button onClick={() => app.go('trade')} style={{ padding: '0 13px', height: 46, color: 'var(--ink-2)' }}>Trade</button>
-          <button onClick={() => app.toast('Price Guide coming soon')} style={{ marginLeft: 'auto', padding: '0 13px', height: 46, color: 'var(--accent)', fontWeight: 700 }}>Price Guide</button>
+          <NavBtn onClick={() => app.go('search', { type: 'auction' })}>Auctions</NavBtn>
+          <NavBtn onClick={() => app.go('search', { cond: 'Graded only' })}>Graded</NavBtn>
+          <NavBtn onClick={() => app.go('search', {})}>Bulk lots</NavBtn>
+          <NavBtn onClick={() => app.go('trade')}>Trade</NavBtn>
+          <NavBtn onClick={() => app.toast('Price Guide coming soon')} style={{ marginLeft: 'auto', color: 'var(--accent)', fontWeight: 700 }}>Price Guide</NavBtn>
         </div>
       </div>
     </header>
