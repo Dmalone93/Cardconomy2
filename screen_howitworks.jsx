@@ -147,6 +147,25 @@ function HowItWorksScreen({ app }) {
         </div>
       ))}
 
+      {/* ── Quick actions ── */}
+      <div style={{ padding: '0 14px 24px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {[
+          { title: 'Start browsing', desc: 'Find your next card across every game.', tint: 'var(--accent)', action: () => app.nav.setTab('search') },
+          { title: 'List a card', desc: 'Sell in seconds with the lowest fees.', tint: 'var(--accent)', action: () => app.nav.setTab('sell') },
+          { title: 'Enrol your shop', desc: 'Set up your digital storefront for free.', tint: 'var(--gold)', action: () => app.nav.push('enroll_shop') },
+        ].map(p => (
+          <div key={p.title} onClick={p.action} style={{ display: 'flex', alignItems: 'center', gap: 12,
+            padding: '14px 14px', background: THW.surface, borderRadius: 12, cursor: 'pointer',
+            border: '1px solid var(--line)', borderLeft: '3px solid ' + p.tint }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 14, fontWeight: 700, color: THW.ink }}>{p.title}</div>
+              <div style={{ fontSize: 12, color: THW.muted, marginTop: 2 }}>{p.desc}</div>
+            </div>
+            <span style={{ fontSize: 13, fontWeight: 700, color: THW.accent, flexShrink: 0 }}>{'\u2192'}</span>
+          </div>
+        ))}
+      </div>
+
       {/* ── The Bridge section ── */}
       <div style={{ margin: '0 14px 24px', padding: '20px 16px', borderRadius: 14,
         background: THW.accent, color: '#fff' }}>

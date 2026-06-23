@@ -446,37 +446,10 @@ function HomeScreen({ app }) {
       {/* ── Card Fan hero ── */}
       <CardFan app={app} />
 
-      {/* ── Three Communities ── */}
-      <div style={{ padding: '20px 14px 12px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 14 }}>
-          <div style={{ fontFamily: 'var(--heading)', fontSize: 18, fontWeight: 700, color: T.ink, letterSpacing: -0.4 }}>
-            Connecting the whole TCG community
-          </div>
-          <div style={{ fontSize: 13, color: T.muted, marginTop: 4, lineHeight: 1.5 }}>
-            Buyers, sellers, and local game shops — one platform.
-          </div>
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {[
-            { title: 'Buyers & Collectors', desc: 'Buy with protection and build your collection.', cta: 'Start browsing', tint: 'var(--accent)', action: () => app.nav.setTab('search') },
-            { title: 'Individual Sellers', desc: 'List in seconds. 4% fee — the lowest in the market.', cta: 'List a card', tint: 'var(--accent)', action: () => app.nav.setTab('sell') },
-            { title: 'Local Game Shops', desc: 'Digital storefront. Receive cards from local sellers.', cta: 'Enrol your shop', tint: 'var(--gold)', action: () => app.nav.push('enroll_shop') },
-          ].map(p => (
-            <div key={p.title} onClick={p.action} style={{ display: 'flex', alignItems: 'center', gap: 12,
-              padding: '14px 14px', background: T.surface, borderRadius: 12, cursor: 'pointer',
-              border: '1px solid var(--line)', borderLeft: '3px solid ' + p.tint }}>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: T.ink }}>{p.title}</div>
-                <div style={{ fontSize: 12, color: T.muted, marginTop: 2 }}>{p.desc}</div>
-              </div>
-              <span style={{ fontSize: 13, fontWeight: 700, color: T.accent, flexShrink: 0 }}>→</span>
-            </div>
-          ))}
-        </div>
-        <div style={{ textAlign: 'center', marginTop: 10 }}>
-          <span onClick={() => app.nav.push('howitworks')} style={{ fontSize: 12, fontWeight: 600,
-            color: T.accent, cursor: 'pointer' }}>How it works →</span>
-        </div>
+      {/* ── How it works link ── */}
+      <div style={{ textAlign: 'center', padding: '16px 14px 4px' }}>
+        <span onClick={() => app.nav.push('howitworks')} style={{ fontSize: 13, fontWeight: 600,
+          color: T.accent, cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
       </div>
 
       {/* ── Browse by Game ── */}

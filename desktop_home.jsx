@@ -237,39 +237,11 @@ function DHome({ app }) {
         </div>
       </div>
 
-      {/* ── Three Communities ── */}
-      <section className="wrap" style={{ marginTop: 36, marginBottom: 12 }}>
-        <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 30, letterSpacing: -0.8,
-            margin: '0 0 10px', color: TH.ink }}>
-            Connecting the whole TCG community
-          </h2>
-          <p style={{ fontSize: 15, color: TH.muted, lineHeight: 1.5, maxWidth: 560, margin: '0 auto' }}>
-            The only marketplace where buyers, sellers, and local game shops trade together. One platform. Lower fees. Real community.
-          </p>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-          {[
-            { title: 'Buyers & Collectors', desc: 'Buy with protection and build your collection across every game.', cta: 'Start browsing', tint: 'var(--accent)', route: 'search' },
-            { title: 'Individual Sellers', desc: 'List in seconds. 4% fee — the lowest in the market. Trade card-for-card.', cta: 'List a card', tint: 'var(--accent)', route: 'sell_single' },
-            { title: 'Local Game Shops', desc: 'Digital storefront. Receive cards from local sellers. Reach collectors nationwide.', cta: 'Enrol your shop', tint: 'var(--gold)', route: 'enroll' },
-          ].map(p => (
-            <div key={p.title} onClick={() => app.go(p.route)} style={{ background: 'var(--surface)', borderRadius: 14, padding: '22px 20px', cursor: 'pointer',
-              border: '1px solid var(--line)', borderTop: '3px solid ' + p.tint, display: 'flex', flexDirection: 'column',
-              transition: 'box-shadow 0.2s' }}
-              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.08)'}
-              onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
-              <div style={{ fontSize: 17, fontWeight: 700, color: TH.ink, marginBottom: 6 }}>{p.title}</div>
-              <div style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, flex: 1 }}>{p.desc}</div>
-              <span style={{ marginTop: 14, fontWeight: 700, fontSize: 13.5, color: 'var(--accent)' }}>{p.cta} →</span>
-            </div>
-          ))}
-        </div>
-        <div style={{ textAlign: 'center', marginTop: 14 }}>
-          <button onClick={() => app.go('howitworks')} style={{ fontSize: 14, fontWeight: 600,
-            color: 'var(--accent)', cursor: 'pointer' }}>How it works →</button>
-        </div>
-      </section>
+      {/* ── How it works link ── */}
+      <div className="wrap" style={{ textAlign: 'center', marginTop: 28, marginBottom: 8 }}>
+        <button onClick={() => app.go('howitworks')} style={{ fontSize: 15, fontWeight: 600,
+          color: 'var(--accent)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</button>
+      </div>
 
       {/* ── Browse by Game (hero tiles) ── */}
       <Row title="Browse by Game" action="Browse all" onAction={() => app.go('search')}>
