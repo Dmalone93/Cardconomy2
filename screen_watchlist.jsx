@@ -122,23 +122,73 @@ function WatchScreen({ app }) {
 
 function WatchRow({ item, app }) {
   const then = item.history ? item.history[item.history.length-3] : item.price;
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const [alertPrice, setAlertPrice] = React.useState('');
+  const [alertSet, setAlertSet] = React.useState(null); // null or target price number
   return (
-    <div style={{ background: TW.surface, borderRadius: 14, padding: 10, display: 'flex', gap: 12, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-      <button onClick={() => app.nav.push('listing', { id: item.id })} style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, minWidth: 0, textAlign: 'left' }}>
-        <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={48} radius={6} /></div>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ marginBottom: 3, display: 'flex', alignItems: 'center', gap: 6 }}>
-            <GradeChipW grade={item.grade} />
+    <div style={{ background: TW.surface, borderRadius: 14, padding: 10, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+      <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+        <button onClick={() => app.nav.push('listing', { id: item.id })} style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, minWidth: 0, textAlign: 'left' }}>
+          <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={48} radius={6} /></div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ marginBottom: 3, display: 'flex', alignItems: 'center', gap: 6 }}>
+              <GradeChipW grade={item.grade} />
+            </div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
+            <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>Buy It Now</div>
           </div>
-          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-          <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>Buy It Now</div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{moneyW(item.price)}</div>
+            <DeltaW from={then} to={item.price} style={{ fontSize: 11 }} />
+          </div>
+        </button>
+        <button onClick={() => setAlertOpen(!alertOpen)} style={{ color: alertSet ? TW.accent : TW.faint, padding: 4, flexShrink: 0 }} title="Set price alert">
+          <span style={{ fontSize: 18 }}>{alertSet ? '\uD83D\uDD14' : '\uD83D\uDD15'}</span>
+        </button>
+        <button onClick={() => app.toggleWatch(item.id)} style={{ color: TW.down, padding: 4, flexShrink: 0 }}>{IconW.heart({ width: 20, height: 20 }, true)}</button>
+      </div>
+      {alertSet && !alertOpen && (
+        <div style={{ marginTop: 6, marginLeft: 66, fontFamily: TW.sans, fontSize: 11.5, color: TW.accent, fontWeight: 600 }}>
+          {'\uD83D\uDD14'} Alert when below {moneyW(alertSet)}
         </div>
-        <div style={{ textAlign: 'right' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{moneyW(item.price)}</div>
-          <DeltaW from={then} to={item.price} style={{ fontSize: 11 }} />
+      )}
+      {alertOpen && (
+        <div style={{ marginTop: 8, marginLeft: 66, display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted, whiteSpace: 'nowrap' }}>Alert when below \u00A3</span>
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            value={alertPrice}
+            onChange={(e) => setAlertPrice(e.target.value)}
+            placeholder={item.price.toFixed(2)}
+            style={{
+              width: 80, padding: '6px 8px', borderRadius: 8, border: '1px solid var(--line)',
+              fontFamily: TW.sans, fontSize: 13, fontWeight: 600, background: TW.surface2, color: TW.ink,
+            }}
+          />
+          <button
+            onClick={() => {
+              const val = parseFloat(alertPrice);
+              if (!val || val <= 0) return;
+              setAlertSet(val);
+              setAlertOpen(false);
+              setAlertPrice('');
+              app.toast('Price alert set for \u00A3' + val.toFixed(2));
+            }}
+            style={{
+              background: 'var(--ink)', color: '#fff', borderRadius: 8, padding: '6px 12px',
+              fontFamily: TW.sans, fontWeight: 700, fontSize: 12,
+            }}
+          >Set</button>
+          {alertSet && (
+            <button
+              onClick={() => { setAlertSet(null); setAlertOpen(false); app.toast('Price alert removed'); }}
+              style={{ fontFamily: TW.sans, fontSize: 12, color: TW.down, fontWeight: 600 }}
+            >Clear</button>
+          )}
         </div>
-      </button>
-      <button onClick={() => app.toggleWatch(item.id)} style={{ color: TW.down, padding: 4, flexShrink: 0 }}>{IconW.heart({ width: 20, height: 20 }, true)}</button>
+      )}
     </div>
   );
 }
@@ -378,14 +428,19 @@ function BuyerDash({ app, header }) {
           <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Orders</div>
           {ORDERS.map(function(o, i) {
             return (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
+              <button key={i} onClick={function() { app.nav.push('tracking'); }} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
                 <div style={{ width: 28, height: 28, borderRadius: 7, background: o.color, flexShrink: 0 }} />
                 <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 600, fontSize: 13 }}>{o.name}</span>
                 <span style={{ background: o.statusColor + '22', color: o.statusColor, borderRadius: 999, padding: '2px 8px', fontFamily: TW.sans, fontWeight: 700, fontSize: 11 }}>{o.status}</span>
                 <span style={{ fontFamily: TW.sans, fontSize: 11, color: TW.faint, flexShrink: 0 }}>{o.time}</span>
-              </div>
+                {IconW.chevron({ style: { color: TW.faint } })}
+              </button>
             );
           })}
+          <button onClick={function() { app.nav.push('dispute'); }} style={{ marginTop: 10, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            background: TW.surface2, borderRadius: 10, padding: '10px 14px', fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: TW.down }}>
+            <span style={{ fontSize: 15 }}>{'\u26A0\uFE0F'}</span> Report an issue
+          </button>
         </div>
 
       </div>
