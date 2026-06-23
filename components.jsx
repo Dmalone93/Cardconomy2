@@ -415,6 +415,22 @@ function SideMenu({ app, open, onClose }) {
           ))}
         </div>
 
+        {/* three communities */}
+        <div style={{ borderTop: '1px solid var(--line)', padding: '10px 0' }}>
+          <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 11.5, letterSpacing: 0.6, color: T.faint, padding: '8px 20px 6px' }}>THE COMMUNITY</div>
+          {[
+            ['Buyers & Collectors', 'var(--accent)', () => go(() => app.nav.setTab('search'))],
+            ['Individual Sellers', 'var(--accent)', () => go(() => app.nav.setTab('sell'))],
+            ['Local Game Shops', 'var(--gold)', () => go(() => app.nav.push('enroll_shop'))],
+          ].map(([label, tint, onClick]) => (
+            <button key={label} onClick={onClick} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 13, padding: '13px 20px', textAlign: 'left', background: 'transparent' }}>
+              <span style={{ width: 10, height: 10, borderRadius: 999, background: tint, flexShrink: 0 }} />
+              <span style={{ flex: 1, fontFamily: T.sans, fontWeight: 600, fontSize: 15.5 }}>{label}</span>
+              {Icon.chevron({ style: { color: T.faint } })}
+            </button>
+          ))}
+        </div>
+
         {/* quick links */}
         <div style={{ borderTop: '1px solid var(--line)', padding: '10px 0' }}>
           <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 11.5, letterSpacing: 0.6, color: T.faint, padding: '8px 20px 6px' }}>QUICK LINKS</div>

@@ -239,8 +239,8 @@ function DHome({ app }) {
 
       {/* ── How it works link ── */}
       <div className="wrap" style={{ textAlign: 'center', marginTop: 28, marginBottom: 8 }}>
-        <button onClick={() => app.go('howitworks')} style={{ fontSize: 15, fontWeight: 600,
-          color: 'var(--accent)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</button>
+        <span onClick={() => app.go('howitworks')} style={{ fontSize: 13, fontWeight: 600,
+          color: 'var(--accent)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
       </div>
 
       {/* ── Browse by Game (hero tiles) ── */}
