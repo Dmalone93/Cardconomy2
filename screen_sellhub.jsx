@@ -44,6 +44,15 @@ function SellHubScreen({ app }) {
       <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
         {window.VerifyGate && <window.VerifyGate app={app} need={1} action="sell or trade" />}
         <BigChoice
+          icon={IconH.grid ? IconH.grid({ width: 26, height: 26 }) : IconH.tag({ width: 26, height: 26 })}
+          tint="var(--ink)"
+          title="List from your collection"
+          meta="Multi-select · auto-priced · fastest way to list"
+          badge="New"
+          desc="Select cards from your collection or watchlist, choose a pricing strategy, and list them all at once."
+          onClick={() => app.nav.setTab('watch')}
+        />
+        <BigChoice
           icon={IconH.tag({ width: 26, height: 26 })}
           tint={TH.accent}
           title="Sell on the marketplace"
