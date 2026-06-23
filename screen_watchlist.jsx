@@ -278,7 +278,7 @@ function SellerDash({ app, header }) {
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Pending offers</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#f59e0b', marginTop: 4 }}>{'Respond \u2192'}</div>
           </button>
-          <button onClick={() => app.nav.push('selling')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+          <button onClick={() => app.nav.push('shipping')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>To ship</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#22c55e', marginTop: 4 }}>{'Print label \u2192'}</div>

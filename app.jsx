@@ -46,6 +46,7 @@ const SCREENS = {
   howitworks: HowItWorksScreen,
   chat: ChatScreen,
   tracking: TrackingScreen,
+  dispute: DisputeScreen,
   signin: SignInScreen,
   signup: SignUpScreen,
   forgot_password: ForgotPasswordScreen,
