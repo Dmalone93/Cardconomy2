@@ -24,9 +24,20 @@ function valueOf(ids) {
 function WatchScreen({ app }) {
   const [tab, setTab] = React.useState('watch');
   const watched = app.watch.map(id => byIdW(id)).filter(Boolean);
+  const [selectMode, setSelectMode] = React.useState(false);
+  const [selected, setSelected] = React.useState([]);
 
   // overall portfolio = union of all collection cards
   const port = valueOf(app.ownedIds());
+
+  function toggleSel(id) {
+    setSelected(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
+  }
+  function toggleSelectAll() {
+    if (selected.length === watched.length) setSelected([]);
+    else setSelected(watched.map(w => w.id));
+  }
+  function exitSelect() { setSelectMode(false); setSelected([]); }
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
@@ -34,14 +45,21 @@ function WatchScreen({ app }) {
       <div style={{ padding: '14px 16px 0', background: TW.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '0 0 4px' }}>
           <button onClick={() => app.openMenu()} style={{ color: TW.ink, padding: '2px 2px 2px 0', display: 'flex' }}>{IconW.menu({})}</button>
-          <h1 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 800, fontSize: 26, letterSpacing: -0.6 }}>Your cards</h1>
+          <h1 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 800, fontSize: 26, letterSpacing: -0.6, flex: 1 }}>Your cards</h1>
+          {tab === 'watch' && watched.length > 0 && (
+            <button onClick={() => selectMode ? exitSelect() : setSelectMode(true)} style={{
+              fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: selectMode ? 'var(--down)' : 'var(--ink)', padding: '4px 8px',
+            }}>
+              {selectMode ? 'Cancel' : 'Select'}
+            </button>
+          )}
         </div>
         <p style={{ fontFamily: TW.sans, fontSize: 14.5, color: TW.muted, margin: '0 0 14px', lineHeight: 1.45 }}>
-          Track prices on cards you're watching and the value of your collection.
+          Track prices on cards you{'\u2019'}re watching and the value of your collection.
         </p>
         <div style={{ display: 'flex', gap: 22 }}>
           {[['watch', 'Watching ' + watched.length], ['collection', 'Collection']].map(([id, label]) => (
-            <button key={id} onClick={() => setTab(id)} style={{ paddingBottom: 11, position: 'relative',
+            <button key={id} onClick={() => { setTab(id); if (id !== 'watch') exitSelect(); }} style={{ paddingBottom: 11, position: 'relative',
               fontFamily: TW.sans, fontWeight: tab===id?700:600, fontSize: 15.5, color: tab===id?TW.ink:TW.faint }}>
               {label}
               {tab===id && <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, borderRadius: 999, background: TW.accent }} />}
@@ -58,7 +76,39 @@ function WatchScreen({ app }) {
               cta="Browse cards" onCta={() => app.nav.setTab('home')} />
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {watched.map(item => <WatchRow key={item.id} item={item} app={app} />)}
+              {watched.map(item => (
+                selectMode ? (
+                  <button key={item.id} onClick={() => toggleSel(item.id)} style={{
+                    width: '100%', textAlign: 'left', position: 'relative',
+                    background: TW.surface, borderRadius: 14, padding: 10,
+                    boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
+                    border: selected.includes(item.id) ? '2px solid var(--accent)' : '2px solid transparent',
+                  }}>
+                    {/* checkbox overlay */}
+                    <div style={{
+                      position: 'absolute', top: 6, left: 6, zIndex: 5,
+                      width: 22, height: 22, borderRadius: 6,
+                      background: selected.includes(item.id) ? 'var(--accent)' : TW.surface2,
+                      border: selected.includes(item.id) ? 'none' : '2px solid var(--line)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    }}>
+                      {selected.includes(item.id) && IconW.check ? IconW.check({ width: 14, height: 14, style: { color: '#fff' } }) : null}
+                    </div>
+                    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                      <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={48} radius={6} /></div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
+                        <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>Buy It Now</div>
+                      </div>
+                      <div style={{ textAlign: 'right' }}>
+                        <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{moneyW(item.price)}</div>
+                      </div>
+                    </div>
+                  </button>
+                ) : (
+                  <WatchRow key={item.id} item={item} app={app} />
+                )
+              ))}
             </div>
           )
         ) : (
@@ -116,6 +166,32 @@ function WatchScreen({ app }) {
           </div>
         )}
       </div>
+
+      {/* floating selection bar */}
+      {selectMode && selected.length > 0 && (
+        <div style={{
+          position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 50,
+          background: 'var(--glass)', backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          borderTop: '1px solid var(--line)', padding: '12px 16px 30px',
+          display: 'flex', alignItems: 'center', gap: 10, animation: 'ccSlideUp 0.2s ease',
+        }}>
+          <button onClick={toggleSelectAll} style={{
+            fontFamily: TW.sans, fontWeight: 600, fontSize: 13, color: TW.muted, whiteSpace: 'nowrap',
+          }}>
+            {selected.length === watched.length ? 'Deselect all' : 'Select all'}
+          </button>
+          <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 700, fontSize: 14, textAlign: 'center' }}>
+            {selected.length} selected
+          </span>
+          <button onClick={() => { app.nav.push('batchlist', { ids: selected }); }} style={{
+            background: 'var(--ink)', color: '#fff', borderRadius: 10, padding: '10px 18px',
+            fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap',
+          }}>
+            List all
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -679,43 +755,69 @@ function SettingsScreen({ app }) {
 function CollectionDetailScreen({ app, params }) {
   const col = app.collections.find(c => c.id === params.cid);
   const [addOpen, setAddOpen] = React.useState(false);
+  const [selectMode, setSelectMode] = React.useState(false);
+  const [selected, setSelected] = React.useState([]);
+
   if (!col) {
     return (
       <div style={{ height: '100%', background: TW.bg, paddingTop: 90, textAlign: 'center', fontFamily: TW.sans, color: TW.muted }}>
-        <button onClick={() => app.nav.pop()} style={{ color: 'var(--ink)', fontWeight: 700 }}>← Back</button>
+        <button onClick={() => app.nav.pop()} style={{ color: 'var(--ink)', fontWeight: 700 }}>{'\u2190'} Back</button>
         <p>Collection not found.</p>
       </div>
     );
   }
+
+  function toggleSel(id) {
+    setSelected(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
+  }
+  function toggleSelectAll() {
+    if (selected.length === col.cards.length) setSelected([]);
+    else setSelected([...col.cards]);
+  }
+  function exitSelect() { setSelectMode(false); setSelected([]); }
+
   const v = valueOf(col.cards);
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
-      {/* header (back chevron — pushed screen) */}
+      {/* header (back chevron -- pushed screen) */}
       <div style={{ padding: '14px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
-        <button onClick={() => app.nav.pop()} style={{ color: TW.ink }}>{IconW.back({})}</button>
+        <button onClick={() => selectMode ? exitSelect() : app.nav.pop()} style={{ color: TW.ink }}>{IconW.back({})}</button>
         <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 16, flex: 1, display: 'flex', alignItems: 'center', gap: 7 }}>
-          <span style={{ color: TW.muted }}>{col.icon || IconW.tag({ width: 18, height: 18 })}</span>{col.name}
+          {selectMode ? 'Select cards' : <React.Fragment><span style={{ color: TW.muted }}>{col.icon || IconW.tag({ width: 18, height: 18 })}</span>{col.name}</React.Fragment>}
         </span>
-        <button onClick={() => { const n = window.prompt && window.prompt('Rename collection', col.name); if (n && n.trim()) app.renameCollection(col.id, n.trim()); }}
-          style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)', padding: '4px 6px' }}>Rename</button>
+        {col.cards.length > 0 && (
+          <button onClick={() => selectMode ? exitSelect() : setSelectMode(true)} style={{
+            fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: selectMode ? 'var(--down)' : 'var(--ink)', padding: '4px 6px',
+          }}>
+            {selectMode ? 'Cancel' : 'Select'}
+          </button>
+        )}
+        {!selectMode && (
+          <button onClick={() => { const n = window.prompt && window.prompt('Rename collection', col.name); if (n && n.trim()) app.renameCollection(col.id, n.trim()); }}
+            style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)', padding: '4px 6px' }}>Rename</button>
+        )}
       </div>
 
-      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 30px' }}>
+      <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: selectMode && selected.length > 0 ? '16px 16px 120px' : '16px 16px 30px' }}>
         {/* per-collection value */}
-        <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff', marginBottom: 16 }}>
-          <div style={{ fontFamily: TW.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Collection value</div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 4 }}>
-            <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.5 }}>{moneyW(v.now)}</span>
-            <DeltaW from={v.then} to={v.now} style={{ fontSize: 13, color: v.now>=v.then?'#7fe7a4':'#ff9b8a' }} />
+        {!selectMode && (
+          <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff', marginBottom: 16 }}>
+            <div style={{ fontFamily: TW.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Collection value</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 4 }}>
+              <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.5 }}>{moneyW(v.now)}</span>
+              <DeltaW from={v.then} to={v.now} style={{ fontSize: 13, color: v.now>=v.then?'#7fe7a4':'#ff9b8a' }} />
+            </div>
+            {v.series.length > 1 && <div style={{ marginTop: 12, marginLeft: -4 }}><SparkW data={v.series} w={320} h={50} up={v.now>=v.then} dots /></div>}
+            <div style={{ marginTop: 8, fontFamily: TW.sans, fontSize: 11.5, opacity: 0.7 }}>{col.cards.length} card{col.cards.length!==1?'s':''}</div>
           </div>
-          {v.series.length > 1 && <div style={{ marginTop: 12, marginLeft: -4 }}><SparkW data={v.series} w={320} h={50} up={v.now>=v.then} dots /></div>}
-          <div style={{ marginTop: 8, fontFamily: TW.sans, fontSize: 11.5, opacity: 0.7 }}>{col.cards.length} card{col.cards.length!==1?'s':''}</div>
-        </div>
+        )}
 
-        <button onClick={() => setAddOpen(true)} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: 14,
-          fontFamily: TW.sans, fontWeight: 700, fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
-          {IconW.plus({ width: 19, height: 19 })} Add cards
-        </button>
+        {!selectMode && (
+          <button onClick={() => setAddOpen(true)} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: 14,
+            fontFamily: TW.sans, fontWeight: 700, fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
+            {IconW.plus({ width: 19, height: 19 })} Add cards
+          </button>
+        )}
 
         {col.cards.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px 24px', color: TW.muted, fontFamily: TW.sans, fontSize: 14, lineHeight: 1.5 }}>
@@ -729,13 +831,40 @@ function CollectionDetailScreen({ app, params }) {
               const gainAbs = currentVal - purchaseVal;
               const gainPct = purchaseVal > 0 ? ((gainAbs / purchaseVal) * 100).toFixed(0) : 0;
               const gainUp = gainAbs >= 0;
-              return (
+              const isSel = selected.includes(item.id);
+              return selectMode ? (
+                <button key={item.id} onClick={() => toggleSel(item.id)} style={{
+                  width: '100%', textAlign: 'left', position: 'relative',
+                  background: TW.surface, borderRadius: 14, padding: 10, display: 'flex', gap: 12, alignItems: 'center',
+                  boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
+                  border: isSel ? '2px solid var(--accent)' : '2px solid transparent',
+                }}>
+                  {/* checkbox overlay */}
+                  <div style={{
+                    position: 'absolute', top: 6, left: 6, zIndex: 5,
+                    width: 22, height: 22, borderRadius: 6,
+                    background: isSel ? 'var(--accent)' : TW.surface2,
+                    border: isSel ? 'none' : '2px solid var(--line)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    {isSel && IconW.check ? IconW.check({ width: 14, height: 14, style: { color: '#fff' } }) : null}
+                  </div>
+                  <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={44} radius={6} /></div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
+                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} {'\u00B7'} <GradeInline grade={item.grade} /></div>
+                  </div>
+                  <div style={{ textAlign: 'right', minWidth: 58 }}>
+                    <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(currentVal)}</div>
+                  </div>
+                </button>
+              ) : (
               <div key={item.id} style={{ background: TW.surface, borderRadius: 14, padding: 10, display: 'flex', gap: 12, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 <button onClick={() => app.nav.push('listing', { id: item.id })} style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, minWidth: 0, textAlign: 'left' }}>
                   <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={44} radius={6} /></div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} · <GradeInline grade={item.grade} /></div>
+                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} {'\u00B7'} <GradeInline grade={item.grade} /></div>
                   </div>
                   <div style={{ textAlign: 'right', minWidth: 58 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(currentVal)}</div>
@@ -752,11 +881,37 @@ function CollectionDetailScreen({ app, params }) {
           </div>
         )}
 
-        {app.collections.length > 1 && (
+        {!selectMode && app.collections.length > 1 && (
           <button onClick={() => { if (!window.confirm || window.confirm('Delete this collection? Cards stay in your other collections.')) { app.deleteCollection(col.id); app.nav.pop(); } }}
             style={{ width: '100%', marginTop: 22, color: TW.down, fontFamily: TW.sans, fontWeight: 700, fontSize: 13.5, padding: 10 }}>Delete collection</button>
         )}
       </div>
+
+      {/* floating selection bar */}
+      {selectMode && selected.length > 0 && (
+        <div style={{
+          position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 50,
+          background: 'var(--glass)', backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          borderTop: '1px solid var(--line)', padding: '12px 16px 30px',
+          display: 'flex', alignItems: 'center', gap: 10, animation: 'ccSlideUp 0.2s ease',
+        }}>
+          <button onClick={toggleSelectAll} style={{
+            fontFamily: TW.sans, fontWeight: 600, fontSize: 13, color: TW.muted, whiteSpace: 'nowrap',
+          }}>
+            {selected.length === col.cards.length ? 'Deselect all' : 'Select all'}
+          </button>
+          <span style={{ flex: 1, fontFamily: TW.sans, fontWeight: 700, fontSize: 14, textAlign: 'center' }}>
+            {selected.length} selected
+          </span>
+          <button onClick={() => { app.nav.push('batchlist', { ids: selected }); }} style={{
+            background: 'var(--ink)', color: '#fff', borderRadius: 10, padding: '10px 18px',
+            fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap',
+          }}>
+            List all
+          </button>
+        </div>
+      )}
 
       {addOpen && <AddCardsSheet app={app} col={col} onClose={() => setAddOpen(false)} />}
     </div>
