@@ -295,10 +295,10 @@ function DHome({ app }) {
       {/* ── What's hot (trending + deals) ── */}
       <DWhatsHot app={app} trending={trending} />
 
-      {/* ── Auctions ending soon ── */}
-      <Row title="Auctions Ending Soon" action="All auctions" onAction={() => app.go('search', { type: 'auction' })}>
+      {/* ── Under £100 ── */}
+      <Row title="Under \u00A3100" action="Shop budget" onAction={() => app.go('search')}>
         <div style={grid(210)}>
-          {LISTH.filter(l => l.type === 'auction').slice(0, 4).map(l => <DCard key={l.id} item={l} app={app} />)}
+          {LISTH.filter(l => l.type === 'buynow' && l.price < 100).slice(0, 8).map(l => <DCard key={l.id} item={l} app={app} />)}
         </div>
       </Row>
 
