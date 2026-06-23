@@ -394,8 +394,8 @@ function SideMenu({ app, open, onClose }) {
         {/* header */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '54px 18px 16px', borderBottom: '1px solid var(--line)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-            <Logo size={24} color={T.accent} />
-            <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 15, letterSpacing: 1.5, color: T.ink }}>CARDCONOMY</span>
+            <Logo size={30} color={T.accent} />
+            <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 19, letterSpacing: 1.5, color: T.ink }}>CARDCONOMY</span>
           </div>
           <button onClick={onClose} style={{ width: 34, height: 34, borderRadius: 999, background: T.surface2, color: T.ink2,
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, lineHeight: 1 }}>×</button>
