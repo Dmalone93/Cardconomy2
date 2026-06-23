@@ -68,7 +68,13 @@
     font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .arrow { color: var(--faint); font-size: 18px; flex-shrink: 0; }
   .step-detail { font-size: 11.5px; color: var(--muted); font-weight: 400; margin-left: 4px; }
-  .step a { color: inherit; text-decoration: none; display: flex; align-items: center; gap: 6px; }
+  .step[onclick] { cursor: pointer; transition: background 0.15s, box-shadow 0.15s; }
+  .step[onclick]:hover { background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .step.active-step { background: var(--ink) !important; color: #fff !important; }
+  .step.active-step .num { background: #fff !important; color: var(--ink) !important; }
+  .step.active-step .step-detail { color: rgba(255,255,255,0.6) !important; }
+  #phone-preview { display: none; }
+  @media (min-width: 1000px) { #phone-preview { display: block; } }
 
   /* ── tab bar diagram ── */
   .tab-bar { display: flex; gap: 4px; background: var(--surface); border-radius: 14px; padding: 14px;
@@ -284,96 +290,98 @@
 <!-- JOURNEYS                                                -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <section id="journeys">
-  <div class="wrap">
+  <div class="wrap" style="display: flex; gap: 32; align-items: flex-start;">
+    <!-- left: journey list -->
+    <div style="flex: 1; min-width: 0;">
     <h1>End-to-End Journeys</h1>
-    <p class="sub">Seven complete user journeys showing how each persona moves through the app from start to finish.</p>
+    <p class="sub">Click any step to preview that screen in the phone frame. Seven complete journeys across all three personas.</p>
 
-    <div class="journey">
+    <div class="journey" data-journey="1">
       <div class="title"><div class="dot" style="background: var(--buyer);"></div> Journey 1: Buyer finds and buys a card</div>
       <div class="flow-steps">
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Home</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#search" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Search <span class="step-detail">filter by game/set/price</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#product" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Product Page <span class="step-detail">compare sellers</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#listing/l01" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Listing <span class="step-detail">view photos, price history</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#listing/l01" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Add to Cart</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#cart" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Cart <span class="step-detail">review items + totals</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#checkout" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">7</div> Checkout <span class="step-detail">address, shipping, payment</span></a></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('')"><div class="num">1</div> Home</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('search')"><div class="num">2</div> Search <span class="step-detail">filter by game/set/price</span></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('product')"><div class="num">3</div> Product Page <span class="step-detail">compare sellers</span></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('listing/l01')"><div class="num">4</div> Listing <span class="step-detail">view photos, price history</span></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('cart')"><div class="num">5</div> Cart <span class="step-detail">review items + totals</span></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('checkout')"><div class="num">6</div> Checkout <span class="step-detail">address, shipping, payment</span></div><span class="arrow">→</span>
         <div class="step" style="background: var(--buyer); color: #fff;"><div class="num" style="background: #fff; color: var(--buyer);">✓</div> Order confirmed</div>
       </div>
     </div>
 
-    <div class="journey">
+    <div class="journey" data-journey="2">
       <div class="title"><div class="dot" style="background: var(--buyer);"></div> Journey 2: Buyer builds a want list</div>
       <div class="flow-steps">
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> You tab</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Buyer Dashboard</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#buylist" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Buylist <span class="step-detail">+ Add button</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#search" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Search catalog</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#buylist" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Set condition + max price + qty</a></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('')"><div class="num">1</div> You tab</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('buylist')"><div class="num">2</div> Buylist <span class="step-detail">+ Add button</span></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('search')"><div class="num">3</div> Search catalog</div><span class="arrow">→</span>
         <div class="step" style="background: var(--buyer); color: #fff;"><div class="num" style="background: #fff; color: var(--buyer);">✓</div> Added to buylist</div>
       </div>
     </div>
 
-    <div class="journey">
+    <div class="journey" data-journey="3">
       <div class="title"><div class="dot" style="background: var(--seller);"></div> Journey 3: Seller lists a card</div>
       <div class="flow-steps">
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Sell tab</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Sell Hub <span class="step-detail">marketplace</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Pick card <span class="step-detail">search or scan</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Condition <span class="step-detail">raw or graded</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Photos <span class="step-detail">4 slots</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Price <span class="step-detail">BIN or auction</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sell_single" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">7</div> Review</a></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('')"><div class="num">1</div> Sell Hub</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('sell_single')"><div class="num">2</div> Pick card <span class="step-detail">search or scan</span></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('sell_single')"><div class="num">3</div> Condition + Photos + Price</div><span class="arrow">→</span>
         <div class="step" style="background: var(--seller); color: #fff;"><div class="num" style="background: #fff; color: var(--seller);">✓</div> Card is live!</div>
       </div>
     </div>
 
-    <div class="journey">
+    <div class="journey" data-journey="4">
       <div class="title"><div class="dot" style="background: var(--seller);"></div> Journey 4: Seller sells to local shop</div>
       <div class="flow-steps">
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Sell Hub</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Sell to shop</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Search/scan cards</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Set conditions</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Select shop</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#sellshop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Submit</a></div><span class="arrow">→</span>
-        <div class="step" style="background: var(--seller); color: #fff;"><div class="num" style="background: #fff; color: var(--seller);">✓</div> Shop reviews + sends offer</div>
+        <div class="step" onclick="previewScreen('sellshop')"><div class="num">1</div> Sell to shop</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('sellshop')"><div class="num">2</div> Scan cards</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('storefront')"><div class="num">3</div> Select shop</div><span class="arrow">→</span>
+        <div class="step" style="background: var(--seller); color: #fff;"><div class="num" style="background: #fff; color: var(--seller);">✓</div> Shop sends offer</div>
       </div>
     </div>
 
-    <div class="journey">
+    <div class="journey" data-journey="5">
       <div class="title"><div class="dot" style="background: var(--seller);"></div> Journey 5: Two collectors trade cards</div>
       <div class="flow-steps">
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Trade screen</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Browse matches</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Build trade <span class="step-detail">select give/get cards</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Check fairness %</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Choose meetup <span class="step-detail">shop or public</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#trade" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Send offer</a></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('trade')"><div class="num">1</div> Trade screen</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('trade')"><div class="num">2</div> Build trade <span class="step-detail">select give/get cards</span></div><span class="arrow">→</span>
         <div class="step" style="background: var(--seller); color: #fff;"><div class="num" style="background: #fff; color: var(--seller);">✓</div> Meet + swap</div>
       </div>
     </div>
 
-    <div class="journey">
+    <div class="journey" data-journey="6">
       <div class="title"><div class="dot" style="background: var(--store);"></div> Journey 6: Shop enrols on platform</div>
       <div class="flow-steps">
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#enroll_shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Enrol screen <span class="step-detail">value props</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#enroll_shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Step 1 <span class="step-detail">name + postcode</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#enroll_shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Step 2 <span class="step-detail">games + condition pref</span></a></div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('enroll_shop')"><div class="num">1</div> Enrol screen</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('enroll_shop')"><div class="num">2</div> Name + postcode</div><span class="arrow">→</span>
         <div class="step" style="background: var(--store); color: #fff;"><div class="num" style="background: #fff; color: var(--store);">✓</div> Application in review</div>
       </div>
     </div>
 
-    <div class="journey">
+    <div class="journey" data-journey="7">
       <div class="title"><div class="dot" style="background: var(--store);"></div> Journey 7: Shop processes a submission</div>
       <div class="flow-steps">
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">1</div> Store Dashboard</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">2</div> Counter tab <span class="step-detail">inbox</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">3</div> Review cards <span class="step-detail">grade + price</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">4</div> Flag questionable</a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">5</div> Build offer <span class="step-detail">cash/credit split</span></a></div><span class="arrow">→</span>
-        <div class="step"><a href="https://cardconomyy.vercel.app?forcemobile#shop" target="_blank" style="color: inherit; text-decoration: none;"><div class="num">6</div> Send offer</a></div><span class="arrow">→</span>
-        <div class="step" style="background: var(--store); color: #fff;"><div class="num" style="background: #fff; color: var(--store);">✓</div> Awaiting seller response</div>
+        <div class="step" onclick="previewScreen('shop')"><div class="num">1</div> Counter view</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('shop')"><div class="num">2</div> Grade + price cards</div><span class="arrow">→</span>
+        <div class="step" onclick="previewScreen('chat')"><div class="num">3</div> Send offer</div><span class="arrow">→</span>
+        <div class="step" style="background: var(--store); color: #fff;"><div class="num" style="background: #fff; color: var(--store);">✓</div> Awaiting response</div>
+      </div>
+    </div>
+    </div>
+
+    <!-- right: phone preview -->
+    <div id="phone-preview" style="position: sticky; top: 80px; flex-shrink: 0;">
+      <div style="text-align: center; margin-bottom: 12px;">
+        <span id="preview-label" style="font-size: 12px; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase;">Click a step to preview</span>
+      </div>
+      <div style="width: 320px; height: 640px; border-radius: 36px; background: #000; padding: 10px; box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.1);">
+        <!-- notch -->
+        <div style="position: relative; z-index: 2;">
+          <div style="width: 100px; height: 6px; background: #000; border-radius: 0 0 10px 10px; margin: 0 auto;"></div>
+        </div>
+        <iframe id="preview-frame" src="about:blank" style="width: 300px; height: 620px; border: none; border-radius: 28px; background: #f2f2f2;" sandbox="allow-scripts allow-same-origin"></iframe>
+      </div>
+      <div style="text-align: center; margin-top: 14px;">
+        <button onclick="previewScreen('')" style="font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer;">Reset to Home</button>
       </div>
     </div>
   </div>
@@ -526,6 +534,40 @@ function show(id) {
   document.querySelectorAll('nav .tabs button').forEach(b => b.classList.remove('on'));
   event.target.classList.add('on');
   window.scrollTo(0, 0);
+}
+
+var BASE_URL = window.location.protocol === 'file:'
+  ? '../index.html?forcemobile'
+  : 'https://cardconomyy.vercel.app?forcemobile';
+
+var previewReady = false;
+
+function previewScreen(hash) {
+  var frame = document.getElementById('preview-frame');
+  var label = document.getElementById('preview-label');
+  var url = BASE_URL + (hash ? '#' + hash : '');
+
+  // highlight active step
+  document.querySelectorAll('.step.active-step').forEach(function(el) { el.classList.remove('active-step'); });
+  if (event && event.currentTarget) event.currentTarget.classList.add('active-step');
+
+  // update label
+  var screenName = hash ? hash.split('/')[0] : 'home';
+  label.textContent = screenName.replace(/_/g, ' ');
+
+  // load or update iframe
+  if (!previewReady) {
+    frame.src = url;
+    previewReady = true;
+  } else {
+    // just change the hash on the existing iframe to avoid full reload
+    try {
+      frame.contentWindow.location.hash = hash || '';
+      frame.contentWindow.location.reload();
+    } catch(e) {
+      frame.src = url;
+    }
+  }
 }
 </script>
 
