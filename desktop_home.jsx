@@ -71,7 +71,7 @@ function GameCarousel({ app }) {
     opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', transition: 'opacity 0.2s',
   }; };
   return (
-    <section style={{ marginTop: 44 }}>
+    <section style={{ marginTop: 44, background: '#fff', padding: '32px 0 28px', borderRadius: 20 }}>
       <div className="wrap" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
         <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>Browse by Game</h2>
         <button onClick={function() { app.go('search'); }} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--ink)' }}>Browse all →</button>
