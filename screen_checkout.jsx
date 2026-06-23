@@ -81,7 +81,7 @@ function CheckoutScreen({ app, params }) {
           </div>
         </div>
         <div style={{ padding: '12px 16px 30px', borderTop: '1px solid var(--line)', background: TC.surface }}>
-          <button onClick={() => { app.nav.setTab('home'); }} style={{ width: '100%', background: TC.accent, color: '#fff', borderRadius: 4, padding: 16, fontFamily: TC.sans, fontWeight: 700, fontSize: 16 }}>Keep browsing</button>
+          <button onClick={() => { app.nav.setTab('home'); }} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 4, padding: 16, fontFamily: TC.sans, fontWeight: 700, fontSize: 16 }}>Keep browsing</button>
         </div>
       </div>
     );
@@ -110,7 +110,7 @@ function CheckoutScreen({ app, params }) {
         {/* address */}
         <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 800, fontSize: 14, color: TC.ink2 }}>Ship to</div>
         <button onClick={() => setEditAddr(true)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TC.surface, borderRadius: 4, padding: '13px 14px', textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: TC.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TC.sans, fontWeight: 800, flexShrink: 0 }}>{addr.name[0]}</div>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TC.sans, fontWeight: 800, flexShrink: 0 }}>{addr.name[0]}</div>
           <div style={{ flex: 1 }}>
             <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14.5 }}>{addr.name}</div>
             <div style={{ fontFamily: TC.sans, fontSize: 12.5, color: TC.muted }}>{addr.line1}, {addr.city}, {addr.postcode}</div>

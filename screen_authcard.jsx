@@ -68,7 +68,7 @@ function AuthCardScreen({ app, params = {} }) {
                 <span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 18 }}>{moneyAU(fee)}</span>
               </div>
             </div>
-            <button onClick={() => setPhase('method')} style={{ width: '100%', marginTop: 16, background: TAU.accent, color: '#fff', borderRadius: 14, padding: 16, fontFamily: TAU.sans, fontWeight: 700, fontSize: 16, boxShadow: 'var(--shadow-2)' }}>Start authentication</button>
+            <button onClick={() => setPhase('method')} style={{ width: '100%', marginTop: 16, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 16, fontFamily: TAU.sans, fontWeight: 700, fontSize: 16, boxShadow: 'var(--shadow-2)' }}>Start authentication</button>
           </div>
         )}
 
@@ -89,7 +89,7 @@ function AuthCardScreen({ app, params = {} }) {
                 </button>
               );
             })}
-            <button onClick={() => { setPhase('submitted'); setStage(0); }} disabled={!method} style={{ width: '100%', marginTop: 6, background: TAU.accent, color: '#fff', borderRadius: 14, padding: 16, fontFamily: TAU.sans, fontWeight: 700, fontSize: 16, opacity: method ? 1 : 0.45, boxShadow: 'var(--shadow-2)' }}>
+            <button onClick={() => { setPhase('submitted'); setStage(0); }} disabled={!method} style={{ width: '100%', marginTop: 6, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 16, fontFamily: TAU.sans, fontWeight: 700, fontSize: 16, opacity: method ? 1 : 0.45, boxShadow: 'var(--shadow-2)' }}>
               {method === 'shop' ? 'Find a shop & submit' : method === 'mail' ? 'Get my prepaid label' : 'Choose a method'}
             </button>
           </div>
@@ -130,7 +130,7 @@ function AuthCardScreen({ app, params = {} }) {
                 <div style={{ marginBottom: 8 }}><AuthSeal size="lg" /></div>
                 <div style={{ fontFamily: TAU.sans, fontWeight: 800, fontSize: 16, color: 'var(--up)' }}>Card verified &amp; sealed</div>
                 <p style={{ fontFamily: TAU.sans, fontSize: 12.5, color: TAU.ink2, lineHeight: 1.45, margin: '6px auto 14px', maxWidth: 280 }}>Your listing now shows the Cardonomy Verified seal. Serial #AC-2231-CHZ.</p>
-                <button onClick={() => app.nav.pop()} style={{ background: TAU.accent, color: '#fff', borderRadius: 12, padding: '12px 26px', fontFamily: TAU.sans, fontWeight: 700, fontSize: 15 }}>Done</button>
+                <button onClick={() => app.nav.pop()} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '12px 26px', fontFamily: TAU.sans, fontWeight: 700, fontSize: 15 }}>Done</button>
               </div>
             )}
           </div>

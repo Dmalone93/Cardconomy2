@@ -428,7 +428,7 @@ function ShopScreen({ app }) {
           <div style={{ fontFamily: TSH.sans, fontSize: 11, color: TSH.muted }}>Offer total (cash)</div>
           <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 22 }}>{money0(cashTotal)}</div>
         </div>
-        <button onClick={() => setOffer({ creditPct: 60, cash: cashTotal })} style={{ flex: 1.3, background: TSH.accent, color: '#fff', borderRadius: 14,
+        <button onClick={() => setOffer({ creditPct: 60, cash: cashTotal })} style={{ flex: 1.3, background: 'var(--ink)', color: '#fff', borderRadius: 14,
           padding: '15px 12px', fontFamily: TSH.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>Build offer →</button>
       </div>
 
@@ -589,7 +589,7 @@ function PriceGuide({ card, onClose, onSet }) {
               <div style={{ display: 'flex', gap: 6 }}>
                 {[60, 70, 80].map(p => (
                   <button key={p} onClick={() => setPct(p)} style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, padding: '4px 11px', borderRadius: 8,
-                    background: pct === p ? TSH.accent : '#fff', color: pct === p ? '#fff' : TSH.ink2 }}>{p}%</button>
+                    background: pct === p ? TSH.ink : '#fff', color: pct === p ? '#fff' : TSH.ink2 }}>{p}%</button>
                 ))}
               </div>
             </div>
@@ -600,7 +600,7 @@ function PriceGuide({ card, onClose, onSet }) {
             </div>
           </div>
 
-          <button onClick={() => onSet(buy * card.qty)} style={{ width: '100%', marginTop: 14, background: TSH.accent, color: '#fff', borderRadius: 14,
+          <button onClick={() => onSet(buy * card.qty)} style={{ width: '100%', marginTop: 14, background: 'var(--ink)', color: '#fff', borderRadius: 14,
             padding: 15, fontFamily: TSH.sans, fontWeight: 700, fontSize: 16 }}>Add {money0(buy * card.qty)} to offer</button>
         </div>
       </div>
@@ -660,7 +660,7 @@ function OfferComposer({ offer, cashTotal, onClose, onSend }) {
           </div>
           <div style={{ background: TSH.surface2, borderRadius: 12, padding: '11px 13px', fontFamily: TSH.sans, fontSize: 13.5, color: TSH.ink, boxShadow: 'inset 0 0 0 1px var(--line)' }}>{msg}</div>
 
-          <button onClick={onSend} style={{ width: '100%', marginTop: 16, background: TSH.accent, color: '#fff', borderRadius: 14, padding: 15,
+          <button onClick={onSend} style={{ width: '100%', marginTop: 16, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 15,
             fontFamily: TSH.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>Send offer →</button>
           <div style={{ textAlign: 'center', marginTop: 10, fontFamily: TSH.sans, fontSize: 12, color: TSH.muted }}>Cards & payment exchange in person at the counter.</div>
         </div>
@@ -734,7 +734,7 @@ function ShopInbox({ app, onOpen, onDashboard }) {
               <div style={{ fontFamily: TSH.sans, fontSize: 10.5, color: TSH.muted }}>market val</div>
             </div>
           </div>
-          <div style={{ marginTop: 13, background: TSH.accent, color: '#fff', borderRadius: 11, padding: '11px 0', textAlign: 'center', fontFamily: TSH.sans, fontWeight: 700, fontSize: 14.5 }}>Review submission →</div>
+          <div style={{ marginTop: 13, background: 'var(--ink)', color: '#fff', borderRadius: 11, padding: '11px 0', textAlign: 'center', fontFamily: TSH.sans, fontWeight: 700, fontSize: 14.5 }}>Review submission →</div>
         </button>
 
         {/* other queue items */}
@@ -789,7 +789,7 @@ function ShopSent({ app, offer, onInbox }) {
       </div>
       <div style={{ padding: '12px 16px 30px', borderTop: '1px solid var(--line)', background: TSH.surface, display: 'flex', gap: 10 }}>
         <button onClick={onInbox} style={{ flex: 1, background: TSH.surface2, color: TSH.ink, borderRadius: 14, padding: 15, fontFamily: TSH.sans, fontWeight: 700, fontSize: 15, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Back to inbox</button>
-        <button onClick={() => app.nav.setTab('home')} style={{ flex: 1, background: TSH.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TSH.sans, fontWeight: 700, fontSize: 15 }}>Done</button>
+        <button onClick={() => app.nav.setTab('home')} style={{ flex: 1, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 15, fontFamily: TSH.sans, fontWeight: 700, fontSize: 15 }}>Done</button>
       </div>
     </div>
   );

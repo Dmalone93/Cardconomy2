@@ -54,7 +54,7 @@ function StorefrontScreen({ app, params = {} }) {
 
           {/* primary CTAs */}
           <div style={{ display: 'flex', gap: 10, marginBottom: 20 }}>
-            <button onClick={() => app.nav.push('sellshop')} style={{ flex: 1, background: TF.accent, color: '#fff', borderRadius: 13, padding: 14, fontFamily: TF.sans, fontWeight: 700, fontSize: 14.5,
+            <button onClick={() => app.nav.push('sellshop')} style={{ flex: 1, background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: 14, fontFamily: TF.sans, fontWeight: 700, fontSize: 14.5,
               display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.3)' }}>{IconF.bolt({ width: 16, height: 16 })} Sell to shop</button>
             <button onClick={() => app.nav.push('trade')} style={{ flex: 1, background: TF.surface, color: TF.ink, borderRadius: 13, padding: 14, fontFamily: TF.sans, fontWeight: 700, fontSize: 14.5,
               boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Trade here</button>
@@ -483,7 +483,7 @@ function BuylistWizard({ open, cards, onDone, onClose }) {
               {items.length} card{items.length !== 1 ? 's' : ''} added
             </span>
             <button onClick={() => setView('review')}
-              style={{ padding: '12px 20px', borderRadius: 4, background: TF.accent, color: '#fff',
+              style={{ padding: '12px 20px', borderRadius: 4, background: 'var(--ink)', color: '#fff',
                 fontFamily: TF.sans, fontWeight: 700, fontSize: 14 }}>
               Review →
             </button>
@@ -861,7 +861,7 @@ function EnrollShopScreen({ app }) {
           </div>
         </div>
 
-        <button onClick={() => app.nav.push('storefront', { shop: 'gnome' })} style={{ marginTop: 24, background: TF.accent, color: '#fff', borderRadius: 4, padding: '14px 26px', fontFamily: TF.sans, fontWeight: 700, fontSize: 15.5 }}>Preview your storefront</button>
+        <button onClick={() => app.nav.push('storefront', { shop: 'gnome' })} style={{ marginTop: 24, background: 'var(--ink)', color: '#fff', borderRadius: 4, padding: '14px 26px', fontFamily: TF.sans, fontWeight: 700, fontSize: 15.5 }}>Preview your storefront</button>
         <button onClick={() => app.nav.pop()} style={{ marginTop: 10, color: TF.muted, fontFamily: TF.sans, fontWeight: 600, fontSize: 14 }}>Back to home</button>
       </div>
     );

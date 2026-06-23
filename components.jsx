@@ -280,9 +280,9 @@ function BottomNav({ tab, setTab, watchCount }) {
             {t.primary ? (
               <div style={{
                 width: 46, height: 30, marginTop: -2, borderRadius: 11,
-                background: T.accent, color: '#fff',
+                background: 'var(--ink)', color: '#fff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 4px 12px oklch(0.52 0.2 264 / 0.4)',
+                boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
               }}>{t.icon({ width: 22, height: 22 })}</div>
             ) : t.icon({})}
             {t.badge ? (

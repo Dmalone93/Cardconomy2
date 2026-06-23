@@ -142,7 +142,7 @@ function DWhatsHot({ app, trending }) {
           {[['trending', 'Trending'], ['deals', 'Hot Deals']].map(([k, l]) => (
             <button key={k} onClick={() => setTab(k)} style={{
               padding: '8px 18px', borderRadius: 20, fontSize: 14, fontWeight: 700, cursor: 'pointer',
-              background: tab === k ? 'var(--accent)' : 'var(--surface)',
+              background: tab === k ? 'var(--ink)' : 'var(--surface)',
               color: tab === k ? '#fff' : TH.ink,
               border: tab === k ? 'none' : '1px solid var(--line)',
             }}>{l}</button>
@@ -191,7 +191,7 @@ function DHome({ app }) {
             </p>
             <div style={{ display: 'flex', gap: 10 }}>
               <button onClick={() => app.go('search')} style={{ padding: '12px 22px', borderRadius: 10,
-                background: 'var(--accent)', color: '#fff', fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer' }}>
+                background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer' }}>
                 Start browsing
               </button>
               <button onClick={() => app.go('howitworks')} style={{ padding: '12px 22px', borderRadius: 10,
@@ -266,7 +266,7 @@ function DHome({ app }) {
             </p>
             <button onClick={() => app.go('fees')} style={{
               padding: '10px 20px', borderRadius: 8, border: 'none',
-              background: 'var(--accent)', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer',
+              background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer',
             }}>Compare our fees →</button>
           </div>
           <div style={{ display: 'flex', gap: 20 }}>

@@ -82,7 +82,7 @@ function LiveSweep({ onDone }) {
         {/* live recognition tag */}
         {last && (
           <div key={'tag'+count} style={{ position: 'absolute', top: '20%', left: '50%', transform: 'translateX(-50%)',
-            background: last.match ? 'var(--gold)' : 'var(--accent)', color: last.match ? '#2a2000' : '#fff',
+            background: last.match ? 'var(--gold)' : 'var(--ink)', color: last.match ? '#2a2000' : '#fff',
             fontFamily: TSS.sans, fontWeight: 700, fontSize: 12.5, padding: '4px 10px', borderRadius: 8, whiteSpace: 'nowrap',
             animation: 'ccFade 0.3s ease', boxShadow: '0 4px 12px rgba(0,0,0,0.4)' }}>
             {last.match ? '★ Buylist match · ' : '✓ '}{last.name}
@@ -115,7 +115,7 @@ function LiveSweep({ onDone }) {
           padding: 15, fontFamily: TSS.sans, fontWeight: 700, fontSize: 15.5, backdropFilter: 'blur(8px)' }}>
           {running ? 'Pause' : 'Resume'}
         </button>
-        <button onClick={() => onDone(Math.max(count, 1))} style={{ flex: 1.3, background: TSS.accent, color: '#fff', borderRadius: 4,
+        <button onClick={() => onDone(Math.max(count, 1))} style={{ flex: 1.3, background: 'var(--ink)', color: '#fff', borderRadius: 4,
           padding: 15, fontFamily: TSS.sans, fontWeight: 700, fontSize: 15.5, boxShadow: '0 4px 16px oklch(0.52 0.2 264 / 0.5)' }}>
           Done · review →
         </button>
@@ -206,7 +206,7 @@ function SellShopScreen({ app }) {
                 ))}
               </div>
             </div>
-            <button onClick={() => setPhase('identity')} style={{ width: '100%', marginTop: 16, background: TSS.accent, color: '#fff',
+            <button onClick={() => setPhase('identity')} style={{ width: '100%', marginTop: 16, background: 'var(--ink)', color: '#fff',
               borderRadius: 4, padding: 16, fontFamily: TSS.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
               Start a submission →
             </button>
@@ -252,7 +252,7 @@ function SellShopScreen({ app }) {
               </div>
             )}
 
-            <button onClick={() => setPhase('method')} style={{ width: '100%', marginTop: 22, background: TSS.accent, color: '#fff',
+            <button onClick={() => setPhase('method')} style={{ width: '100%', marginTop: 22, background: 'var(--ink)', color: '#fff',
               borderRadius: 4, padding: 16, fontFamily: TSS.sans, fontWeight: 700, fontSize: 16 }}>Continue →</button>
           </div>
         )}
@@ -297,7 +297,7 @@ function SellShopScreen({ app }) {
       {/* footers */}
       {phase === 'review' && (
         <div style={{ padding: '12px 16px 30px', background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)' }}>
-          <button onClick={() => setPhase('done')} style={{ width: '100%', background: TSS.accent, color: '#fff', borderRadius: 4,
+          <button onClick={() => setPhase('done')} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 4,
             padding: 16, fontFamily: TSS.sans, fontWeight: 700, fontSize: 16, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
             Send to {SHOP_SS.name} →
           </button>
@@ -433,7 +433,7 @@ function Confirmation({ onThread, onHome, onShop }) {
           <div style={{ fontFamily: TSS.sans, fontSize: 11.5, color: TSS.ink2 }}>Show this with your stack to finish at the counter.</div>
         </div>
       </div>
-      <button onClick={onThread} style={{ width: '100%', marginTop: 18, background: TSS.accent, color: '#fff', borderRadius: 4,
+      <button onClick={onThread} style={{ width: '100%', marginTop: 18, background: 'var(--ink)', color: '#fff', borderRadius: 4,
         padding: 15, fontFamily: TSS.sans, fontWeight: 700, fontSize: 15.5 }}>View message thread</button>
       <button onClick={onShop} style={{ width: '100%', marginTop: 9, background: TSS.surface, color: TSS.ink, borderRadius: 4,
         padding: 13, fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Demo: see the shop's side →</button>
@@ -506,7 +506,7 @@ function Bubble({ who, children }) {
   const me = who === 'me';
   return (
     <div style={{ alignSelf: me ? 'flex-end' : 'flex-start', maxWidth: '85%',
-      background: me ? TSS.accent : TSS.surface, color: me ? '#fff' : TSS.ink,
+      background: me ? TSS.ink : TSS.surface, color: me ? '#fff' : TSS.ink,
       borderRadius: me ? '16px 16px 4px 16px' : '16px 16px 16px 4px', padding: '10px 13px',
       fontFamily: TSS.sans, fontSize: 13.5, lineHeight: 1.4, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
       {children}
@@ -517,7 +517,7 @@ function Bubble({ who, children }) {
 function QuickReply({ label, primary, onClick }) {
   return (
     <button onClick={onClick} style={{ whiteSpace: 'nowrap', flexShrink: 0, fontFamily: TSS.sans, fontWeight: 700, fontSize: 13.5,
-      padding: '11px 16px', borderRadius: 999, background: primary ? TSS.accent : TSS.surface, color: primary ? '#fff' : TSS.ink2,
+      padding: '11px 16px', borderRadius: 999, background: primary ? TSS.ink : TSS.surface, color: primary ? '#fff' : TSS.ink2,
       boxShadow: primary ? '0 3px 10px oklch(0.52 0.2 264 / 0.3)' : 'inset 0 0 0 1.5px var(--line)' }}>{label}</button>
   );
 }

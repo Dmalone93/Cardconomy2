@@ -177,7 +177,7 @@ function SearchScreen({ app, params = {} }) {
             <button onClick={() => setSheet('filters')} style={{
               display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', flexShrink: 0,
               fontFamily: TS.sans, fontWeight: 700, fontSize: 13.5, padding: '8px 14px', borderRadius: 999,
-              background: activeFilters ? TS.accent : TS.surface, color: activeFilters ? '#fff' : TS.ink2,
+              background: activeFilters ? TS.ink : TS.surface, color: activeFilters ? '#fff' : TS.ink2,
               boxShadow: activeFilters ? 'none' : 'inset 0 0 0 1px var(--line)' }}>
               {IconS.filter({ width: 16, height: 16 })} Filters{activeFilters ? ' · ' + activeFilters : ''}
             </button>
@@ -271,7 +271,7 @@ function SearchScreen({ app, params = {} }) {
                       setGame('all'); setSetF('all'); setCond('Any grade');
                       setMaxPrice(35000); setFreeShip(false); setListType('all'); setBrowseMode('buy');
                     }} style={{
-                      background: TS.accent, color: '#fff', borderRadius: 12,
+                      background: 'var(--ink)', color: '#fff', borderRadius: 12,
                       padding: '11px 24px', fontFamily: TS.sans, fontWeight: 700, fontSize: 15,
                       boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
                     }}>Clear filters</button>
@@ -337,7 +337,7 @@ function SearchScreen({ app, params = {} }) {
           <ToggleSwitch on={freeShip} onClick={() => setFreeShip(!freeShip)} />
         </label>
         <button onClick={() => setSheet(null)} style={{
-          width: '100%', marginTop: 14, background: TS.accent, color: '#fff', borderRadius: 14,
+          width: '100%', marginTop: 14, background: 'var(--ink)', color: '#fff', borderRadius: 14,
           padding: 15, fontFamily: TS.sans, fontWeight: 700, fontSize: 16 }}>
           Show {totalResults} result{totalResults!==1?'s':''}
         </button>

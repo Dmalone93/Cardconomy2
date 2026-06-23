@@ -119,7 +119,7 @@ function BuylistScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TAC.bg }}>
       <AccHeader app={app} title="My buylist" sub={activeCount + ' active · cards you want to buy'}
-        right={<button onClick={() => { setAdding(true); setQ(''); }} style={{ width: 36, height: 36, borderRadius: 999, background: TAC.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{AIcon.plus({})}</button>} />
+        right={<button onClick={() => { setAdding(true); setQ(''); }} style={{ width: 36, height: 36, borderRadius: 999, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{AIcon.plus({})}</button>} />
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
         {/* explainer */}
@@ -233,7 +233,7 @@ function BuylistEdit({ entry, onSave, onRemove }) {
           marketPrice={entry.card.market}
           presets={[{ pct: 0.8 }, { pct: 0.9 }, { pct: 1.0 }, { pct: 1.1 }]} />
       </div>
-      <button onClick={() => onSave(want, max)} style={{ width: '100%', marginTop: 14, background: TAC.accent, color: '#fff', borderRadius: 13, padding: 14, fontFamily: TAC.sans, fontWeight: 700, fontSize: 15.5 }}>Save</button>
+      <button onClick={() => onSave(want, max)} style={{ width: '100%', marginTop: 14, background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: 14, fontFamily: TAC.sans, fontWeight: 700, fontSize: 15.5 }}>Save</button>
       <button onClick={onRemove} style={{ width: '100%', marginTop: 9, color: 'var(--down)', fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, padding: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>{AIcon.trash({})} Remove from buylist</button>
     </div>
   );
@@ -304,7 +304,7 @@ function SellingScreen({ app }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TAC.bg }}>
       <AccHeader app={app} title="Selling" sub={active.length + ' active · ' + sold.length + ' sold'}
-        right={<button onClick={() => app.nav.setTab('sell')} style={{ width: 36, height: 36, borderRadius: 999, background: TAC.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{AIcon.plus({})}</button>} />
+        right={<button onClick={() => app.nav.setTab('sell')} style={{ width: 36, height: 36, borderRadius: 999, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{AIcon.plus({})}</button>} />
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
         <Segmented tabs={[['active', 'Active ' + active.length], ['sold', 'Sold ' + sold.length], ['drafts', 'Drafts']]} value={tab} onChange={setTab} />
 
@@ -430,7 +430,7 @@ function OffersScreen({ app }) {
                         <div style={{ display: 'flex', gap: 8 }}>
                           <button onClick={() => { setActed(s => ({ ...s, [i]: 'decline' })); app.toast('Offer declined'); }} style={{ flex: 1, padding: '9px 0', borderRadius: 10, fontFamily: TAC.sans, fontWeight: 700, fontSize: 13, background: TAC.surface2, color: TAC.ink2 }}>Decline</button>
                           <button onClick={() => { setActed(s => ({ ...s, [i]: 'counter' })); app.toast('Counter sent'); }} style={{ flex: 1, padding: '9px 0', borderRadius: 10, fontFamily: TAC.sans, fontWeight: 700, fontSize: 13, background: TAC.surface2, color: TAC.ink2 }}>Counter</button>
-                          <button onClick={() => { setActed(s => ({ ...s, [i]: 'accept' })); app.toast('Offer accepted ✓'); }} style={{ flex: 1.2, padding: '9px 0', borderRadius: 10, fontFamily: TAC.sans, fontWeight: 700, fontSize: 13, background: TAC.accent, color: '#fff' }}>Accept</button>
+                          <button onClick={() => { setActed(s => ({ ...s, [i]: 'accept' })); app.toast('Offer accepted ✓'); }} style={{ flex: 1.2, padding: '9px 0', borderRadius: 10, fontFamily: TAC.sans, fontWeight: 700, fontSize: 13, background: 'var(--ink)', color: '#fff' }}>Accept</button>
                         </div>
                       )}
                     </div>

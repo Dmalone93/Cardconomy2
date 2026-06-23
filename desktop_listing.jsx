@@ -80,7 +80,7 @@ function DListing({ app, params }) {
 
           {/* seller */}
           <div style={{ marginTop: 20, background: 'var(--surface)', borderRadius: 16, padding: 18, display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-            <span style={{ width: 48, height: 48, borderRadius: 13, background: 'var(--accent)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 20 }}>{item.seller[0]}</span>
+            <span style={{ width: 48, height: 48, borderRadius: 13, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 20 }}>{item.seller[0]}</span>
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ fontWeight: 700, fontSize: 15.5 }}>{item.seller}</span>{window.TrustBadge && <window.TrustBadge tier={item.sellerRating >= 99 ? 2 : 1} />}</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 2 }}><StarsLi rating={item.sellerRating} /><span style={{ fontFamily: TLi.mono, fontSize: 12.5, color: 'var(--muted)' }}>{item.sellerRating}% · {item.sellerSales.toLocaleString()} sales</span></div>
@@ -202,7 +202,7 @@ function DListing({ app, params }) {
   );
 }
 
-const primaryBtn = { width: '100%', background: 'var(--accent)', color: '#fff', borderRadius: 12, padding: '14px', fontFamily: TLi.sans, fontWeight: 700, fontSize: 15.5 };
+const primaryBtn = { width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '14px', fontFamily: TLi.sans, fontWeight: 700, fontSize: 15.5 };
 const ghostBtn = { width: '100%', background: 'var(--surface)', color: 'var(--ink)', borderRadius: 12, padding: '13px', fontFamily: TLi.sans, fontWeight: 700, fontSize: 14.5, boxShadow: 'inset 0 0 0 1.5px var(--line)' };
 
 Object.assign(window, { DListing });

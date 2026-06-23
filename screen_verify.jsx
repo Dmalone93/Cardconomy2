@@ -40,7 +40,7 @@ function VerifyGate({ app, need = 1, action = 'do this', compact }) {
   return (
     <button onClick={() => app.nav.push('verify')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 11, textAlign: 'left',
       background: 'var(--accent-wash)', borderRadius: 13, padding: compact ? '11px 13px' : '14px 15px', boxShadow: 'inset 0 0 0 1.5px var(--accent)' }}>
-      <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: TV.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconV.shield({ width: 18, height: 18 })}</span>
+      <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconV.shield({ width: 18, height: 18 })}</span>
       <div style={{ flex: 1, minWidth: 0 }}>
         <div style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 13.5, color: TV.accent }}>Verify your identity to {action}</div>
         <div style={{ fontFamily: TV.sans, fontSize: 11.5, color: TV.ink2 }}>A one-time check keeps the marketplace safe. ~2 minutes.</div>
@@ -124,7 +124,7 @@ function VerifyScreen({ app }) {
                 {active && (
                   <div style={{ marginTop: 12 }}>
                     <div style={{ fontFamily: TV.sans, fontSize: 13, color: TV.ink2, lineHeight: 1.5, marginBottom: 12 }}>{s.blurb}</div>
-                    <button onClick={() => runStep(i)} disabled={busy} style={{ width: '100%', background: TV.accent, color: '#fff', borderRadius: 12, padding: 13, fontFamily: TV.sans, fontWeight: 700, fontSize: 15 }}>
+                    <button onClick={() => runStep(i)} disabled={busy} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: 13, fontFamily: TV.sans, fontWeight: 700, fontSize: 15 }}>
                       {busy ? 'Verifying…' : s.cta}
                     </button>
                   </div>
@@ -140,7 +140,7 @@ function VerifyScreen({ app }) {
             <p style={{ fontFamily: TV.sans, fontSize: 13.5, color: TV.muted, lineHeight: 1.5, margin: '6px auto 16px', maxWidth: 290 }}>
               You can now sell, bid, and trade. Build a track record to reach <b>Trusted Seller</b> and unlock higher limits.
             </p>
-            <button onClick={() => app.nav.pop()} style={{ background: TV.accent, color: '#fff', borderRadius: 12, padding: '13px 28px', fontFamily: TV.sans, fontWeight: 700, fontSize: 15 }}>Done</button>
+            <button onClick={() => app.nav.pop()} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontFamily: TV.sans, fontWeight: 700, fontSize: 15 }}>Done</button>
           </div>
         )}
 

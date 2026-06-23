@@ -24,7 +24,7 @@ function OfferCard({ offer, onBuy, isLowest, onViewListing }) {
   return (
     <div style={{ border: isLowest ? '1.5px solid var(--accent)' : '1px solid var(--line)', borderRadius: 12, padding: 14, marginBottom: 10, background: TP.surface, position: 'relative' }}>
       {isLowest && (
-        <span style={{ position: 'absolute', top: -9, left: 12, background: 'var(--accent)', color: '#fff',
+        <span style={{ position: 'absolute', top: -9, left: 12, background: 'var(--ink)', color: '#fff',
           fontFamily: TP.sans, fontWeight: 700, fontSize: 10, padding: '2px 8px', borderRadius: 4, letterSpacing: 0.3 }}>Best price</span>
       )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
@@ -38,7 +38,7 @@ function OfferCard({ offer, onBuy, isLowest, onViewListing }) {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 12, color: TP.muted }}>
         <div style={{
-          width: 28, height: 28, borderRadius: 999, background: TP.accent, color: '#fff',
+          width: 28, height: 28, borderRadius: 999, background: 'var(--ink)', color: '#fff',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontFamily: TP.sans, fontWeight: 700, fontSize: 12, flexShrink: 0,
         }}>{offer.seller.charAt(0)}</div>
@@ -279,7 +279,7 @@ function ProductScreen({ app, params }) {
                       border: isCurrent ? '2px solid ' + TP.accent : '1px solid ' + TP.line }}>
                       <div style={{ height: 90, background: v.art || '#e5e7eb', position: 'relative', overflow: 'hidden' }}>
                         <CardArtP item={{ ...product, art: v.art }} w={110} radius={0} />
-                        {isCurrent && <div style={{ position: 'absolute', bottom: 4, left: 4, background: TP.accent, color: '#fff', fontSize: 9, fontWeight: 700, borderRadius: 4, padding: '2px 6px' }}>Current</div>}
+                        {isCurrent && <div style={{ position: 'absolute', bottom: 4, left: 4, background: 'var(--ink)', color: '#fff', fontSize: 9, fontWeight: 700, borderRadius: 4, padding: '2px 6px' }}>Current</div>}
                       </div>
                       <div style={{ padding: '8px 10px' }}>
                         <div style={{ fontSize: 12, fontWeight: 700, color: isCurrent ? TP.accent : TP.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.variant}</div>
@@ -317,7 +317,7 @@ function ProductScreen({ app, params }) {
                   <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
                     {['7D', '30D', '90D', '1Y'].map(t => (
                       <div key={t} onClick={() => setPtf(t)} style={{ padding: '3px 8px', borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: 'pointer',
-                        background: ptf === t ? TP.accent : TP.surface2, color: ptf === t ? '#fff' : TP.muted }}>{t}</div>
+                        background: ptf === t ? 'var(--ink)' : TP.surface2, color: ptf === t ? '#fff' : TP.muted }}>{t}</div>
                     ))}
                   </div>
                   <SparkP data={h2} w={320} h={100} up={up2} fill dots />
@@ -347,7 +347,7 @@ function ProductScreen({ app, params }) {
             }
           }} style={{
             padding: '13px 16px', borderRadius: 10, border: 'none',
-            background: 'var(--accent)', color: '#fff', fontFamily: TP.sans, fontWeight: 700,
+            background: 'var(--ink)', color: '#fff', fontFamily: TP.sans, fontWeight: 700,
             fontSize: 15, cursor: 'pointer',
           }}>Buy now</button>
           <button onClick={() => {

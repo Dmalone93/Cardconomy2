@@ -229,7 +229,7 @@ function ListingScreen({ app, params }) {
           <div style={{ marginTop: 22 }}>
             <div style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17, marginBottom: 10 }}>Seller</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: TL.surface2, borderRadius: 14, padding: 14 }}>
-              <div style={{ width: 46, height: 46, borderRadius: 12, background: TL.accent, color: '#fff', display: 'flex',
+              <div style={{ width: 46, height: 46, borderRadius: 12, background: 'var(--ink)', color: '#fff', display: 'flex',
                 alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 800, fontSize: 20, flexShrink: 0 }}>{item.seller[0]}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
@@ -351,7 +351,7 @@ function ListingScreen({ app, params }) {
               {/* seller reply */}
               <div style={{ background: TL.surface, borderRadius: 4, padding: 14, marginBottom: 10, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: 4, background: TL.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{offerSent.seller[0]}</div>
+                  <div style={{ width: 28, height: 28, borderRadius: 4, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{offerSent.seller[0]}</div>
                   <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{offerSent.seller}</span>
                   <span style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginLeft: 'auto' }}>Just now</span>
                 </div>
@@ -362,7 +362,7 @@ function ListingScreen({ app, params }) {
               {/* reply input (mock) */}
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                 <input readOnly placeholder="Reply..." style={{ flex: 1, padding: '12px 14px', borderRadius: 4, border: 'none', background: TL.surface2, boxShadow: 'inset 0 0 0 1px var(--line)', fontFamily: TL.sans, fontSize: 14, color: TL.ink, outline: 'none' }} />
-                <button style={{ padding: '12px 16px', borderRadius: 4, background: TL.accent, color: '#fff', fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Send</button>
+                <button style={{ padding: '12px 16px', borderRadius: 4, background: 'var(--ink)', color: '#fff', fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Send</button>
               </div>
             </div>
           )}
@@ -418,7 +418,7 @@ function ListingScreen({ app, params }) {
           ))}
         </div>
         <button onClick={() => { const amt = parseFloat(offer); setOfferSent({ amount: amt, seller: item.seller }); setSheet(null); setOffer(''); app.toast('Offer sent to ' + item.seller); }} style={{
-          width: '100%', background: TL.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
+          width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 15, fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
           opacity: offer ? 1 : 0.5 }} disabled={!offer}>Send offer</button>
       </SheetL>
 

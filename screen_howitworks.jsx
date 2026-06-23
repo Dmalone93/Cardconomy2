@@ -168,7 +168,7 @@ function HowItWorksScreen({ app }) {
 
       {/* ── The Bridge section ── */}
       <div style={{ margin: '0 14px 24px', padding: '20px 16px', borderRadius: 14,
-        background: THW.accent, color: '#fff' }}>
+        background: 'var(--ink)', color: '#fff' }}>
         <div style={{ fontSize: 18, fontWeight: 800, marginBottom: 8 }}>
           Why this matters
         </div>
@@ -214,11 +214,11 @@ function HowItWorksScreen({ app }) {
       <div style={{ padding: '0 14px 30px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <button onClick={() => app.nav.setTab('search')} style={{
           width: '100%', padding: '14px', borderRadius: 12, border: 'none',
-          background: THW.accent, color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer',
+          background: 'var(--ink)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer',
         }}>Start browsing</button>
         <button onClick={() => app.nav.setTab('sell')} style={{
           width: '100%', padding: '14px', borderRadius: 12,
-          background: THW.surface, color: THW.accent, fontSize: 15, fontWeight: 600, cursor: 'pointer',
+          background: THW.surface, color: 'var(--ink)', fontSize: 15, fontWeight: 600, cursor: 'pointer',
           border: '1px solid var(--line)',
         }}>List a card for sale</button>
       </div>

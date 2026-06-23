@@ -44,7 +44,7 @@ function CardFan({ app }) {
           Buy, sell, and trade across every game. Lower fees than anyone.
         </div>
         <button onClick={() => app.nav.setTab('search')} style={{ marginTop: 12, padding: '9px 18px', borderRadius: 8,
-          background: 'var(--accent)', color: '#fff', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
+          background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
           Start browsing
         </button>
       </div>
@@ -489,7 +489,7 @@ function HomeScreen({ app }) {
         </div>
         <button onClick={() => app.nav.push('fees')} style={{
           padding: '10px 18px', borderRadius: 8, border: 'none',
-          background: T.accent, color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer',
+          background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer',
         }}>Compare our fees →</button>
       </div>
     </div>

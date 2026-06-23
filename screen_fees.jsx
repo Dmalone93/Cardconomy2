@@ -218,7 +218,7 @@ function FeesScreen({ app }) {
       <div style={{ padding: '0 14px 30px', display: 'flex', flexDirection: 'column', gap: 10 }}>
         <button onClick={() => app.nav.setTab('sell')} style={{
           width: '100%', padding: '14px', borderRadius: 12, border: 'none',
-          background: TFE.accent, color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer',
+          background: 'var(--ink)', color: '#fff', fontSize: 15, fontWeight: 700, cursor: 'pointer',
         }}>Start selling for less</button>
         <button onClick={() => app.nav.setTab('search')} style={{
           width: '100%', padding: '14px', borderRadius: 12,

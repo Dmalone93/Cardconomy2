@@ -174,7 +174,7 @@ function EmptyState({ icon, title, body, cta, onCta }) {
         display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>{icon}</div>
       <h3 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 800, fontSize: 19 }}>{title}</h3>
       <p style={{ fontFamily: TW.sans, fontSize: 14, color: TW.muted, lineHeight: 1.5, margin: '8px auto 18px', maxWidth: 270 }}>{body}</p>
-      <button onClick={onCta} style={{ background: TW.accent, color: '#fff', borderRadius: 12, padding: '12px 24px', fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{cta}</button>
+      <button onClick={onCta} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '12px 24px', fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{cta}</button>
     </div>
   );
 }
@@ -358,7 +358,7 @@ function BuyerDash({ app, header }) {
         <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
             <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase' }}>Buylist</span>
-            <span style={{ background: TW.accent, color: '#fff', borderRadius: 999, padding: '1px 7px', fontFamily: TW.sans, fontWeight: 700, fontSize: 11 }}>{BUYLIST_MATCHES.length}</span>
+            <span style={{ background: 'var(--ink)', color: '#fff', borderRadius: 999, padding: '1px 7px', fontFamily: TW.sans, fontWeight: 700, fontSize: 11 }}>{BUYLIST_MATCHES.length}</span>
           </div>
           {BUYLIST_MATCHES.map(function(m, i) {
             var good = m.available <= m.max;
@@ -539,7 +539,7 @@ function DashboardScreen({ app }) {
   var header = (
     <div style={{ padding: '14px 16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div style={{ width: 30, height: 30, borderRadius: 10, background: TW.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 14 }}>A</div>
+        <div style={{ width: 30, height: 30, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 14 }}>A</div>
         <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 17 }}>Alex</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
@@ -580,7 +580,7 @@ function SettingsScreen({ app }) {
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
         {/* identity card */}
         <div style={{ background: TW.surface, borderRadius: 16, padding: 16, marginBottom: 14, display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ width: 52, height: 52, borderRadius: 15, background: TW.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 24, flexShrink: 0 }}>A</div>
+          <div style={{ width: 52, height: 52, borderRadius: 15, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 24, flexShrink: 0 }}>A</div>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>Alex Rivera</div>
             <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, marginTop: 2 }}>{ACCT_EMOJI[app.acct] || '\uD83C\uDCCF'} {ACCT_LABEL[app.acct] || 'Collector'}</div>
@@ -657,7 +657,7 @@ function CollectionDetailScreen({ app, params }) {
           <div style={{ marginTop: 8, fontFamily: TW.sans, fontSize: 11.5, opacity: 0.7 }}>{col.cards.length} card{col.cards.length!==1?'s':''}</div>
         </div>
 
-        <button onClick={() => setAddOpen(true)} style={{ width: '100%', background: TW.accent, color: '#fff', borderRadius: 13, padding: 14,
+        <button onClick={() => setAddOpen(true)} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: 14,
           fontFamily: TW.sans, fontWeight: 700, fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
           {IconW.plus({ width: 19, height: 19 })} Add cards
         </button>

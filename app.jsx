@@ -187,7 +187,7 @@ function App() {
           style={{
             position: 'fixed', bottom: 66, left: '50%', transform: 'translateX(-50%)',
             display: 'flex', alignItems: 'center', gap: 6,
-            background: 'var(--accent)', color: '#fff',
+            background: 'var(--ink)', color: '#fff',
             border: 'none', borderRadius: 999,
             padding: '8px 16px',
             fontSize: 14, fontWeight: 600, fontFamily: 'var(--sans)',

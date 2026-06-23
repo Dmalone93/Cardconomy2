@@ -63,7 +63,7 @@ function DSellSingle({ app }) {
       <h1 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 30, margin: '20px 0 6px' }}>Your card is live!</h1>
       <p style={{ color: 'var(--muted)', fontSize: 16, maxWidth: 400, margin: '0 auto 8px' }}>{card.name} is listed for {mSl(+price)}. We'll notify you on every offer and sale.</p>
       <div style={{ margin: '20px auto', display: 'inline-block', background: 'var(--surface)', borderRadius: 14, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}><CardArtSl item={{ ...card, grade: gradeObj }} w={120} /></div>
-      <div><button onClick={() => app.go('home')} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Back to browse</button></div>
+      <div><button onClick={() => app.go('home')} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Back to browse</button></div>
     </div>
   );
 
@@ -179,7 +179,7 @@ function DSellSingle({ app }) {
           )}
 
           <div style={{ marginTop: 26 }}>
-            <button onClick={() => step < 4 ? setStep(step + 1) : setDone(true)} disabled={!canNext} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 12, padding: '14px 30px', fontWeight: 700, fontSize: 16, opacity: canNext ? 1 : 0.45 }}>
+            <button onClick={() => step < 4 ? setStep(step + 1) : setDone(true)} disabled={!canNext} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '14px 30px', fontWeight: 700, fontSize: 16, opacity: canNext ? 1 : 0.45 }}>
               {step < 4 ? 'Continue' : 'List it for ' + mSl(+price || suggested)}
             </button>
           </div>
@@ -222,7 +222,7 @@ function DSellBulk({ app }) {
       <div style={{ width: 88, height: 88, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'dPop 0.4s ease' }}>{IconSl.check({ width: 46, height: 46 })}</div>
       <h1 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 30, margin: '20px 0 6px' }}>{included.length} cards listed!</h1>
       <p style={{ color: 'var(--muted)', fontSize: 16, maxWidth: 420, margin: '0 auto' }}>Your cards are live on the marketplace. You'll be notified on every sale and offer.</p>
-      <button onClick={() => app.go('home')} style={{ marginTop: 24, background: 'var(--accent)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Back to browse</button>
+      <button onClick={() => app.go('home')} style={{ marginTop: 24, background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Back to browse</button>
     </div>
   );
 
@@ -255,7 +255,7 @@ function DSellBulk({ app }) {
             ))}
             <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 14, fontSize: 14 }}>
               <span style={{ color: 'var(--muted)' }}>{included.length} listing · gross <b style={{ color: 'var(--ink)', fontFamily: TSl.mono }}>{mSl(gross)}</b></span>
-              <button onClick={() => setPhase('done')} disabled={!included.length} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 11, padding: '12px 22px', fontWeight: 700, fontSize: 15, opacity: included.length ? 1 : 0.45 }}>Publish {included.length}</button>
+              <button onClick={() => setPhase('done')} disabled={!included.length} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 11, padding: '12px 22px', fontWeight: 700, fontSize: 15, opacity: included.length ? 1 : 0.45 }}>Publish {included.length}</button>
             </div>
           </div>
           <div style={{ background: 'var(--surface)', borderRadius: 16, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -273,7 +273,7 @@ function DSellBulk({ app }) {
                   <span><GradeChipSl grade={c.grade} /></span>
                   <span style={{ fontFamily: TSl.mono, fontSize: 13.5 }}>×{c.qty}</span>
                   <span style={{ fontFamily: TSl.mono, fontWeight: 700, fontSize: 14, textDecoration: ex ? 'line-through' : 'none' }}>{mSl(priceEach(c), { cents: false })}</span>
-                  <button onClick={() => setExcluded(e => ({ ...e, [c.id]: !e[c.id] }))} style={{ width: 26, height: 26, borderRadius: 999, justifySelf: 'start', background: ex ? 'var(--surface-2)' : 'var(--accent)', color: ex ? 'var(--muted)' : '#fff', boxShadow: ex ? 'inset 0 0 0 1.5px var(--line)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>{ex ? '+' : '✓'}</button>
+                  <button onClick={() => setExcluded(e => ({ ...e, [c.id]: !e[c.id] }))} style={{ width: 26, height: 26, borderRadius: 999, justifySelf: 'start', background: ex ? 'var(--surface-2)' : 'var(--ink)', color: ex ? 'var(--muted)' : '#fff', boxShadow: ex ? 'inset 0 0 0 1.5px var(--line)' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14 }}>{ex ? '+' : '✓'}</button>
                 </div>
               );
             })}
@@ -290,7 +290,7 @@ function DSellBulk({ app }) {
 function Label({ children }) { return <div style={{ fontWeight: 700, fontSize: 14, margin: '0 0 10px' }}>{children}</div>; }
 function ChipRow({ opts, val, set, fmt }) {
   return <div style={{ display: 'flex', flexWrap: 'wrap', gap: 9, marginBottom: 20 }}>{opts.map(o => (
-    <button key={o} onClick={() => set(o)} style={{ padding: '9px 16px', borderRadius: 10, fontWeight: 700, fontSize: 14, background: val === o ? 'var(--accent)' : 'var(--surface)', color: val === o ? '#fff' : 'var(--ink-2)', boxShadow: val === o ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{fmt ? fmt(o) : o}</button>
+    <button key={o} onClick={() => set(o)} style={{ padding: '9px 16px', borderRadius: 10, fontWeight: 700, fontSize: 14, background: val === o ? 'var(--ink)' : 'var(--surface)', color: val === o ? '#fff' : 'var(--ink-2)', boxShadow: val === o ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{fmt ? fmt(o) : o}</button>
   ))}</div>;
 }
 function Toggle({ on, onClick }) {

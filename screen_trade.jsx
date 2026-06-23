@@ -23,7 +23,7 @@ function TradeCardChip({ item, dimmed, onToggle, mode }) {
       <div style={{ background: TT.surface2, borderRadius: 10, padding: 7, display: 'flex', justifyContent: 'center', position: 'relative' }}>
         <CardArtT item={item} w={58} />
         <span style={{ position: 'absolute', top: 4, right: 4, width: 20, height: 20, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center',
-          background: dimmed ? 'rgba(255,255,255,0.9)' : (mode === 'give' ? 'var(--accent)' : 'var(--up)'), color: dimmed ? TT.muted : '#fff',
+          background: dimmed ? 'rgba(255,255,255,0.9)' : (mode === 'give' ? 'var(--ink)' : 'var(--ink)'), color: dimmed ? TT.muted : '#fff',
           fontSize: 13, fontWeight: 800, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>{dimmed ? '+' : '✓'}</span>
       </div>
       <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 11, marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
@@ -154,7 +154,7 @@ function TradeScreen({ app, params = {} }) {
                 Collectors offering a card and <b>open to offers</b>. Tap one to propose something from your collection.
               </span>
             </div>
-            <button onClick={() => setPhase('post')} style={{ width: '100%', marginBottom: 14, background: TT.accent, color: '#fff', borderRadius: 13, padding: 13, fontFamily: TT.sans, fontWeight: 700, fontSize: 14.5 }}>+ Post your own trade</button>
+            <button onClick={() => setPhase('post')} style={{ width: '100%', marginBottom: 14, background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: 13, fontFamily: TT.sans, fontWeight: 700, fontSize: 14.5 }}>+ Post your own trade</button>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {TRADE_POSTS_T.map(p => {
                 const t = traderByIdT(p.trader); const card = byIdT(p.offer);
@@ -190,7 +190,7 @@ function TradeScreen({ app, params = {} }) {
                       </div>
                     </div>
                     <div style={{ fontFamily: TT.sans, fontSize: 12.5, color: TT.ink2, fontStyle: 'italic', margin: '11px 0 12px', lineHeight: 1.4 }}>"{p.note}"</div>
-                    <button onClick={() => { setBoardOffer(p.offer); setTraderId(p.trader); setPhase('build'); }} style={{ width: '100%', background: TT.accent, color: '#fff', borderRadius: 11, padding: 12, fontFamily: TT.sans, fontWeight: 700, fontSize: 14 }}>Make an offer</button>
+                    <button onClick={() => { setBoardOffer(p.offer); setTraderId(p.trader); setPhase('build'); }} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 11, padding: 12, fontFamily: TT.sans, fontWeight: 700, fontSize: 14 }}>Make an offer</button>
                   </div>
                 );
               })}
@@ -244,7 +244,7 @@ function TradeScreen({ app, params = {} }) {
               {SLAB_OPTS.map(s => <PrefChip key={s} on={prefSlab === s} onClick={() => setPrefSlab(s)}>{s}</PrefChip>)}
             </PrefRow>
 
-            <button onClick={() => setPhase('posted')} disabled={!offerCard} style={{ width: '100%', marginTop: 18, background: TT.accent, color: '#fff', borderRadius: 14, padding: 16, fontFamily: TT.sans, fontWeight: 700, fontSize: 16, opacity: offerCard ? 1 : 0.45, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
+            <button onClick={() => setPhase('posted')} disabled={!offerCard} style={{ width: '100%', marginTop: 18, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 16, fontFamily: TT.sans, fontWeight: 700, fontSize: 16, opacity: offerCard ? 1 : 0.45, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
               Post to the board
             </button>
           </div>
@@ -267,7 +267,7 @@ function TradeScreen({ app, params = {} }) {
               {prefCond !== 'Any' && <span style={{ fontFamily: TT.sans, fontWeight: 600, fontSize: 11.5, color: TT.ink2, background: TT.surface2, borderRadius: 7, padding: '3px 9px' }}>{prefCond}</span>}
               {prefSlab !== 'Any' && <span style={{ fontFamily: TT.sans, fontWeight: 600, fontSize: 11.5, color: TT.ink2, background: TT.surface2, borderRadius: 7, padding: '3px 9px' }}>{prefSlab}</span>}
             </div>
-            <button onClick={() => setPhase('board')} style={{ width: '100%', marginTop: 24, background: TT.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TT.sans, fontWeight: 700, fontSize: 15.5 }}>View the board</button>
+            <button onClick={() => setPhase('board')} style={{ width: '100%', marginTop: 24, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 15, fontFamily: TT.sans, fontWeight: 700, fontSize: 15.5 }}>View the board</button>
             <button onClick={() => app.nav.setTab('home')} style={{ marginTop: 10, color: TT.muted, fontFamily: TT.sans, fontWeight: 600, fontSize: 14 }}>Back to browse</button>
           </div>
         )}
@@ -342,7 +342,7 @@ function TradeScreen({ app, params = {} }) {
             {!app.isVerified() ? (
               <button onClick={() => app.nav.push('verify')} style={{ width: '100%', marginTop: 16, display: 'flex', alignItems: 'center', gap: 11, textAlign: 'left',
                 background: 'var(--accent-wash)', borderRadius: 14, padding: '14px 15px', boxShadow: 'inset 0 0 0 1.5px var(--accent)' }}>
-                <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: TT.accent, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconT.shield({ width: 18, height: 18 })}</span>
+                <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconT.shield({ width: 18, height: 18 })}</span>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 13.5, color: TT.accent }}>Verify your identity to trade</div>
                   <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.ink2 }}>In-person trades require both people verified. ~2 min.</div>
@@ -351,7 +351,7 @@ function TradeScreen({ app, params = {} }) {
               </button>
             ) : (
               <button onClick={() => setPhase('meetup')} disabled={giveSel.length === 0 && getSel.length === 0}
-                style={{ width: '100%', marginTop: 16, background: TT.accent, color: '#fff', borderRadius: 14, padding: 16, fontFamily: TT.sans, fontWeight: 700, fontSize: 16,
+                style={{ width: '100%', marginTop: 16, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 16, fontFamily: TT.sans, fontWeight: 700, fontSize: 16,
                   opacity: (giveSel.length === 0 && getSel.length === 0) ? 0.45 : 1, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
                 Choose where to meet →
               </button>
@@ -422,7 +422,7 @@ function TradeScreen({ app, params = {} }) {
                       <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 14.5 }}>{p.name}</div>
                       <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.muted }}>{p.sub}</div>
                     </div>
-                    <span style={{ width: 22, height: 22, borderRadius: 999, flexShrink: 0, boxShadow: sel ? 'none' : 'inset 0 0 0 2px var(--line)', background: sel ? 'var(--accent)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{sel && <span style={{ width: 8, height: 8, borderRadius: 999, background: '#fff' }} />}</span>
+                    <span style={{ width: 22, height: 22, borderRadius: 999, flexShrink: 0, boxShadow: sel ? 'none' : 'inset 0 0 0 2px var(--line)', background: sel ? 'var(--ink)' : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{sel && <span style={{ width: 8, height: 8, borderRadius: 999, background: '#fff' }} />}</span>
                   </button>
                 );
               })}
@@ -435,7 +435,7 @@ function TradeScreen({ app, params = {} }) {
                 placeholder="e.g. Eastgate Park pavilion, Sat morning" style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TT.sans, fontSize: 14.5, minWidth: 0 }} />
             </div>
 
-            <button onClick={() => setPhase('sent')} disabled={!place} style={{ width: '100%', marginTop: 18, background: TT.accent, color: '#fff', borderRadius: 14, padding: 16,
+            <button onClick={() => setPhase('sent')} disabled={!place} style={{ width: '100%', marginTop: 18, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 16,
               fontFamily: TT.sans, fontWeight: 700, fontSize: 16, opacity: place ? 1 : 0.45, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
               {place ? 'Propose ' + (place.name.length > 22 ? 'this spot' : place.name) + ' →' : 'Pick a meetup spot'}
             </button>
@@ -466,7 +466,7 @@ function PrefRow({ label, children }) {
 function PrefChip({ on, onClick, children }) {
   return (
     <button onClick={onClick} style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 13, padding: '7px 13px', borderRadius: 999,
-      background: on ? TT.accent : TT.surface, color: on ? '#fff' : TT.ink2, boxShadow: on ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{children}</button>
+      background: on ? TT.ink : TT.surface, color: on ? '#fff' : TT.ink2, boxShadow: on ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{children}</button>
   );
 }
 
@@ -559,11 +559,11 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
         {stage === 'countered' && (
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={() => setStage('agreed')} style={{ flex: 1, background: TT.surface, color: TT.ink, borderRadius: 14, padding: 14, fontFamily: TT.sans, fontWeight: 700, fontSize: 14.5, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Keep my spot</button>
-            <button onClick={() => setStage('accepted-counter')} style={{ flex: 1.3, background: TT.accent, color: '#fff', borderRadius: 14, padding: 14, fontFamily: TT.sans, fontWeight: 700, fontSize: 14.5 }}>Accept their spot</button>
+            <button onClick={() => setStage('accepted-counter')} style={{ flex: 1.3, background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 14, fontFamily: TT.sans, fontWeight: 700, fontSize: 14.5 }}>Accept their spot</button>
           </div>
         )}
         {(stage === 'agreed' || stage === 'accepted-counter') && (
-          <button onClick={() => app.nav.setTab('home')} style={{ width: '100%', background: TT.accent, color: '#fff', borderRadius: 14, padding: 15, fontFamily: TT.sans, fontWeight: 700, fontSize: 15.5 }}>Done · add to calendar</button>
+          <button onClick={() => app.nav.setTab('home')} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 15, fontFamily: TT.sans, fontWeight: 700, fontSize: 15.5 }}>Done · add to calendar</button>
         )}
         <button onClick={() => app.nav.setTab('home')} style={{ width: '100%', marginTop: 9, color: TT.muted, fontFamily: TT.sans, fontWeight: 600, fontSize: 14 }}>Back to browse</button>
       </div>

@@ -66,7 +66,7 @@ function Header({ app, openMega, megaOpen }) {
           {DIcon.search({ style: { color: 'var(--faint)', flexShrink: 0 } })}
           <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search 2M+ cards, sets, sealed product…"
             style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 15, color: 'var(--ink)', minWidth: 0 }} />
-          <button type="submit" style={{ background: 'var(--accent)', color: '#fff', borderRadius: 8, height: 34, padding: '0 18px', fontWeight: 700, fontSize: 14 }}>Search</button>
+          <button type="submit" style={{ background: 'var(--ink)', color: '#fff', borderRadius: 8, height: 34, padding: '0 18px', fontWeight: 700, fontSize: 14 }}>Search</button>
         </form>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
           <HeaderBtn icon={DIcon.heart()} label="Watching" onClick={() => app.go('watch')} count={app.watch.length} />
@@ -99,7 +99,7 @@ function Header({ app, openMega, megaOpen }) {
 function HeaderBtn({ icon, label, onClick, count, accent }) {
   return (
     <button onClick={onClick} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 1, padding: '6px 12px',
-      borderRadius: 10, color: accent ? 'var(--accent)' : 'var(--ink-2)', position: 'relative' }}>
+      borderRadius: 10, color: accent ? 'var(--ink)' : 'var(--ink-2)', position: 'relative' }}>
       <span style={{ position: 'relative' }}>
         {icon}
         {count > 0 && <span style={{ position: 'absolute', top: -5, right: -8, minWidth: 16, height: 16, borderRadius: 999, background: 'var(--down)', color: '#fff',
@@ -425,7 +425,7 @@ function DAccountSeller({ app }) {
                 <div style={{ fontWeight: 600, fontSize: 14 }}>2 buylist matches available</div>
                 <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Blue-Eyes White Dragon and Pikachu EX at your price</div>
               </div>
-              <button onClick={function() { app.toast('Viewing buylist'); }} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>View</button>
+              <button onClick={function() { app.toast('Viewing buylist'); }} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>View</button>
             </div>
           </div>
 
@@ -570,7 +570,7 @@ function DAccountSeller({ app }) {
           <div style={cardStyle}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Buylist</div>
-              <span style={{ background: 'var(--accent)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>2 matches</span>
+              <span style={{ background: 'var(--ink)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>2 matches</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {buylistMatches.map(function(m, i) {
@@ -753,7 +753,7 @@ function DAccountBuyer({ app }) {
           <div style={cardStyle}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Buylist</div>
-              <span style={{ background: 'var(--accent)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>2 matches</span>
+              <span style={{ background: 'var(--ink)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>2 matches</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               {buylistMatches.map(function(m, i) {
@@ -853,7 +853,7 @@ function DAccountStore({ app }) {
                 <div style={{ fontWeight: 600, fontSize: 14 }}>Buylist restock needed</div>
                 <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>5 high-demand cards below threshold</div>
               </div>
-              <button onClick={function() { app.toast('Opening buylist restock'); app.go('account'); }} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Restock</button>
+              <button onClick={function() { app.toast('Opening buylist restock'); app.go('account'); }} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Restock</button>
             </div>
           </div>
 
@@ -916,7 +916,7 @@ function DAccountStore({ app }) {
           <div style={cardStyle}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
               <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Submission Queue</div>
-              <span style={{ background: 'var(--accent)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>4 active</span>
+              <span style={{ background: 'var(--ink)', color: '#fff', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 10 }}>4 active</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
               {submissions.map(function(s, i) {
@@ -1026,7 +1026,7 @@ function DCart({ app }) {
       <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'dPop 0.4s ease' }}>{Icon.check({ width: 44, height: 44 })}</div>
       <h1 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 28, margin: '20px 0 6px' }}>Order confirmed</h1>
       <p style={{ color: 'var(--muted)', fontSize: 15 }}>{items.length} card(s) on the way · {money(total)}</p>
-      <button onClick={() => { app.clearCart(); app.go('home'); }} style={{ marginTop: 22, background: 'var(--accent)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Keep browsing</button>
+      <button onClick={() => { app.clearCart(); app.go('home'); }} style={{ marginTop: 22, background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Keep browsing</button>
     </div>
   );
   return (
@@ -1053,7 +1053,7 @@ function DCart({ app }) {
             ))}
             <div style={{ height: 1, background: 'var(--line-2)', margin: '10px 0' }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 16 }}><span style={{ fontWeight: 800, fontSize: 17 }}>Total</span><span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 24 }}>{money(total)}</span></div>
-            <button onClick={() => setDone(true)} style={{ width: '100%', background: 'var(--accent)', color: '#fff', borderRadius: 12, padding: 15, fontWeight: 700, fontSize: 16 }}>Checkout</button>
+            <button onClick={() => setDone(true)} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: 15, fontWeight: 700, fontSize: 16 }}>Checkout</button>
           </div>
         </div>
       )}
@@ -1090,7 +1090,7 @@ function Empty({ label, sub, app }) {
     <div style={{ textAlign: 'center', padding: '70px 20px', background: 'var(--surface)', borderRadius: 18 }}>
       <h3 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 20, margin: 0 }}>{label}</h3>
       <p style={{ color: 'var(--muted)', fontSize: 14.5, margin: '8px 0 18px' }}>{sub}</p>
-      <button onClick={() => app.go('home')} style={{ background: 'var(--accent)', color: '#fff', borderRadius: 12, padding: '12px 26px', fontWeight: 700, fontSize: 15 }}>Browse cards</button>
+      <button onClick={() => app.go('home')} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '12px 26px', fontWeight: 700, fontSize: 15 }}>Browse cards</button>
     </div>
   );
 }

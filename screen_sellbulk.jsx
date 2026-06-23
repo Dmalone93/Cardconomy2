@@ -176,7 +176,7 @@ function SellBulkScreen({ app }) {
                 </div>
               ))}
             </div>
-            <button onClick={() => app.nav.setTab('watch')} style={{ width: '100%', marginTop: 22, background: TB.accent, color: '#fff', borderRadius: 4,
+            <button onClick={() => app.nav.setTab('watch')} style={{ width: '100%', marginTop: 22, background: 'var(--ink)', color: '#fff', borderRadius: 4,
               padding: 15, fontFamily: TB.sans, fontWeight: 700, fontSize: 15.5 }}>Manage my listings</button>
             <button onClick={() => app.nav.setTab('home')} style={{ marginTop: 10, color: TB.muted, fontFamily: TB.sans, fontWeight: 600, fontSize: 14 }}>Back to browse</button>
           </div>
@@ -186,7 +186,7 @@ function SellBulkScreen({ app }) {
       {/* footer */}
       {phase === 'price' && (
         <div style={{ padding: '12px 16px 30px', background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)' }}>
-          <button onClick={() => setPhase('done')} disabled={listed === 0} style={{ width: '100%', background: TB.accent, color: '#fff', borderRadius: 4,
+          <button onClick={() => setPhase('done')} disabled={listed === 0} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 4,
             padding: 16, fontFamily: TB.sans, fontWeight: 700, fontSize: 16, opacity: listed === 0 ? 0.45 : 1, boxShadow: '0 4px 14px oklch(0.52 0.2 264 / 0.35)' }}>
             Publish {listed} listing{listed !== 1 ? 's' : ''} · {moneyB(gross)}
           </button>
@@ -228,7 +228,7 @@ function BulkPriceRow({ c, price, listType, excluded, onToggle }) {
         <div style={{ fontFamily: TB.sans, fontSize: 10, color: TB.muted }}>{listType === 'auction' ? 'start bid' : 'list price'}</div>
       </div>
       <button onClick={onToggle} style={{ width: 26, height: 26, borderRadius: 999, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: excluded ? TB.surface2 : 'var(--accent)', color: excluded ? TB.muted : '#fff',
+        background: excluded ? TB.surface2 : 'var(--ink)', color: excluded ? TB.muted : '#fff',
         boxShadow: excluded ? 'inset 0 0 0 1.5px var(--line)' : 'none' }}>
         {excluded ? '+' : IconB.check({ width: 16, height: 16 })}
       </button>

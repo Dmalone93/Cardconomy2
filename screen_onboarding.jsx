@@ -22,7 +22,7 @@ function GameTile({ g, on, onClick }) {
         ? <img src={logo} alt={g.name} style={{ height: 26, maxWidth: '78%', objectFit: 'contain', filter: on ? 'none' : 'saturate(0.9) opacity(0.85)' }} />
         : <span style={{ width: 26, height: 26, borderRadius: 999, background: g.tint }} />}
       <span style={{ fontFamily: TOB.sans, fontWeight: 700, fontSize: 11.5, color: on ? TOB.ink : TOB.muted }}>{g.short}</span>
-      {on && <span style={{ position: 'absolute', top: 7, right: 7, width: 18, height: 18, borderRadius: 999, background: 'var(--accent)', color: '#fff',
+      {on && <span style={{ position: 'absolute', top: 7, right: 7, width: 18, height: 18, borderRadius: 999, background: 'var(--ink)', color: '#fff',
         display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconOB.check ? IconOB.check({ width: 12, height: 12 }) : '✓'}</span>}
     </button>
   );
@@ -121,7 +121,7 @@ function Onboarding({ app, games }) {
         ) : (
           <div style={{ display: 'flex', gap: 10 }}>
             <button onClick={() => setStep(0)} style={{ background: TOB.surface2, color: TOB.ink, borderRadius: 14, padding: '16px 20px', fontFamily: TOB.sans, fontWeight: 700, fontSize: 16 }}>Back</button>
-            <button onClick={() => app.finishOnboarding({ acct, prefs: sel.length ? sel : games.map(g => g.id) })} style={{ flex: 1, background: TOB.accent, color: '#fff', borderRadius: 14, padding: 16,
+            <button onClick={() => app.finishOnboarding({ acct, prefs: sel.length ? sel : games.map(g => g.id) })} style={{ flex: 1, background: TOB.ink, color: '#fff', borderRadius: 14, padding: 16,
               fontFamily: TOB.sans, fontWeight: 700, fontSize: 16 }}>{sel.length ? `Start with ${sel.length} game${sel.length !== 1 ? 's' : ''}` : 'Browse everything'}</button>
           </div>
         )}

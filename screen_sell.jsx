@@ -60,7 +60,7 @@ function SellScreen({ app }) {
           {card.name} is now listed for {moneySE(+price)}. We'll notify you when it sells or gets an offer.
         </p>
         <div style={{ marginTop: 20 }}><CardArtSE item={{ ...card, grade: gradeObj }} w={110} /></div>
-        <button onClick={reset} style={{ marginTop: 26, background: TSE.accent, color: '#fff', borderRadius: 4, padding: '14px 28px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 16 }}>List another card</button>
+        <button onClick={reset} style={{ marginTop: 26, background: 'var(--ink)', color: '#fff', borderRadius: 4, padding: '14px 28px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 16 }}>List another card</button>
         <button onClick={() => { reset(); app.nav.pop(); }} style={{ marginTop: 10, color: TSE.muted, fontFamily: TSE.sans, fontWeight: 600, fontSize: 14 }}>Back to selling</button>
       </div>
     );
@@ -276,7 +276,7 @@ function SellScreen({ app }) {
       {/* footer */}
       <div style={{ padding: '12px 16px 30px', background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)' }}>
         <button onClick={() => step < 4 ? setStep(step+1) : setDone(true)} disabled={!canNext} style={{
-          width: '100%', background: TSE.accent, color: '#fff', borderRadius: 4, padding: 16, fontFamily: TSE.sans, fontWeight: 700, fontSize: 16,
+          width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 4, padding: 16, fontFamily: TSE.sans, fontWeight: 700, fontSize: 16,
           opacity: canNext ? 1 : 0.45, boxShadow: canNext ? '0 4px 14px oklch(0.52 0.2 264 / 0.35)' : 'none' }}>
           {step < 4 ? 'Continue' : 'List it for ' + (price ? moneySE(+price) : '')}
         </button>
