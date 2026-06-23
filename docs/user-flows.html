@@ -437,36 +437,36 @@
     <h2>Critical Gaps</h2>
     <div class="gap-grid">
       <div class="gap fixed"><div class="tag">Fixed</div><div class="label">No messaging system</div><div class="body">Chat/messaging screen added with mock conversation flow.</div></div>
-      <div class="gap critical"><div class="tag">Critical</div><div class="label">No order tracking screen</div><div class="body">Purchases screen shows status badges but no dedicated tracking view with timeline/map.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">No order tracking screen</div><div class="body">TrackingScreen added with 6-step visual timeline, shipping details, and item card. Orders are now tappable.</div></div>
       <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Cart not easily accessible</div><div class="body">Floating cart pill now appears above tab bar when cart has items.</div></div>
-      <div class="gap critical"><div class="tag">Critical</div><div class="label">No auth/login flow</div><div class="body">Everything assumes a logged-in user. No sign up, sign in, forgot password screens.</div></div>
-      <div class="gap critical"><div class="tag">Critical</div><div class="label">No address book</div><div class="body">Checkout has one hardcoded address. No saved addresses or address selection.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">No auth/login flow</div><div class="body">SignInScreen, SignUpScreen, and ForgotPasswordScreen added with full UI flows.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">No address book</div><div class="body">Checkout now has 3 saved addresses with radio selection and "Add new address" option.</div></div>
     </div>
 
     <h2>UX Issues</h2>
     <div class="gap-grid">
-      <div class="gap ux"><div class="tag">UX</div><div class="label">"Add to my wants" is confusing</div><div class="body">Gold button on product page looks like a buy button. Should be "Add to want list" or a secondary action.</div></div>
-      <div class="gap ux"><div class="tag">UX</div><div class="label">Buylist % buttons have no preview</div><div class="body">Quick % buttons (80/90/100/110%) don't show what price they calculate to until tapped.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">"Add to my wants" renamed</div><div class="body">Renamed to "Add to want list" with secondary outline style so it no longer looks like a buy button.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Buylist % buttons now show preview</div><div class="body">CurrencyInput presets now display the calculated price (e.g. £12.40) below the percentage label.</div></div>
       <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Inconsistent quantity selectors</div><div class="body">Shared QtyInput, CurrencyInput, and SliderInput components now standardise all inputs.</div></div>
       <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Search had no empty state</div><div class="body">Empty state with "clear filters" button now shown when no results match.</div></div>
-      <div class="gap ux"><div class="tag">UX</div><div class="label">No "back to top" on long pages</div><div class="body">Product, listing, and search pages can get very long with no quick scroll-back.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Back to top on long pages</div><div class="body">Floating scroll-to-top button appears on product, listing, and search pages after scrolling 300px.</div></div>
     </div>
 
     <h2>Missing Features</h2>
     <div class="gap-grid">
-      <div class="gap missing"><div class="tag">Missing</div><div class="label">No saved/recent searches</div><div class="body">Search shows hardcoded examples but doesn't persist actual user searches.</div></div>
-      <div class="gap missing"><div class="tag">Missing</div><div class="label">No price alerts</div><div class="body">Users can watch cards but can't set "notify me when below X" alerts.</div></div>
-      <div class="gap missing"><div class="tag">Missing</div><div class="label">No return/dispute flow</div><div class="body">Buyer protection is mentioned but there's no screen to file a claim.</div></div>
-      <div class="gap missing"><div class="tag">Missing</div><div class="label">No shipping label generation</div><div class="body">Sellers see "to ship" count but no flow to print labels.</div></div>
-      <div class="gap missing"><div class="tag">Missing</div><div class="label">No multi-currency support</div><div class="body">GBP only, no conversion for international buyers.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Saved/recent searches</div><div class="body">Recent searches section with clock icons shown above suggestions, with clear button.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Price alerts</div><div class="body">Bell icon on watched cards toggles inline alert input. Set a target price and get notified.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Return/dispute flow</div><div class="body">DisputeScreen with issue type selection, description, photo upload, resolution preference, and claim submission.</div></div>
+      <div class="gap fixed"><div class="tag">Fixed</div><div class="label">Shipping label generation</div><div class="body">ShippingScreen with item selection, shipping method, package size, and mock label preview with print/download.</div></div>
+      <div class="gap missing"><div class="tag">Remaining</div><div class="label">No multi-currency support</div><div class="body">GBP only. Currency conversion requires deeper architectural changes (locale detection, exchange rates).</div></div>
     </div>
 
     <h2>Priority Ranking</h2>
     <div class="card">
       <div style="font-size: 13.5px; line-height: 2;">
-        <strong>P0 (Ship-blocking):</strong> Fix "Add to my wants" label, buylist % preview<br>
-        <strong>P1 (Important UX):</strong> <s>Shared input components</s> ✓, <s>Cart badge</s> ✓, <s>Search empty state</s> ✓<br>
-        <strong>P2 (Nice to have):</strong> <s>Messaging inbox</s> ✓, Order tracking timeline, Price alerts, Unified seller/store profiles
+        <strong>P0 (Ship-blocking):</strong> <s>Fix "Add to my wants" label</s> ✓, <s>Buylist % preview</s> ✓<br>
+        <strong>P1 (Important UX):</strong> <s>Shared input components</s> ✓, <s>Cart badge</s> ✓, <s>Search empty state</s> ✓, <s>Back to top</s> ✓, <s>Saved searches</s> ✓<br>
+        <strong>P2 (Nice to have):</strong> <s>Messaging inbox</s> ✓, <s>Order tracking</s> ✓, <s>Price alerts</s> ✓, <s>Auth flow</s> ✓, <s>Address book</s> ✓, <s>Dispute flow</s> ✓, <s>Shipping labels</s> ✓
       </div>
     </div>
   </div>
