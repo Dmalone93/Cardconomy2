@@ -293,7 +293,7 @@ function DHome({ app }) {
       <DWhatsHot app={app} trending={trending} />
 
       {/* ── Under £100 ── */}
-      <Row title="Under \u00A3100" action="Shop budget" onAction={() => app.go('search')}>
+      <Row title={"Under \u00A3100"} action="Shop budget" onAction={() => app.go('search')}>
         <div style={grid(210)}>
           {LISTH.filter(l => l.type === 'buynow' && l.price < 100).slice(0, 8).map(l => <DCard key={l.id} item={l} app={app} />)}
         </div>
