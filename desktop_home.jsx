@@ -339,35 +339,6 @@ function DHome({ app }) {
         </div>
       </Row>
 
-      {/* ── Recently sold (social proof) ── */}
-      <section className="wrap" style={{ marginTop: 50 }}>
-        <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 18px' }}>Recently Sold</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 14 }}>
-          {[
-            { name: 'Charizard ex 223/165', price: 142, buyer: 'James T.', time: '2 hours ago', game: 'pkmn' },
-            { name: 'Black Lotus (HP)', price: 4200, buyer: 'Sarah K.', time: '5 hours ago', game: 'mtg' },
-            { name: 'Blue-Eyes White Dragon LOB', price: 89, buyer: 'Ryan M.', time: '8 hours ago', game: 'ygo' },
-            { name: 'Pikachu VMAX Alt Art', price: 67, buyer: 'Emily W.', time: '12 hours ago', game: 'pkmn' },
-          ].map((s, i) => {
-            var g = gameByIdH(s.game);
-            return (
-              <div key={i} style={{ background: 'var(--surface)', borderRadius: 12, padding: '16px 18px',
-                display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <div style={{ width: 40, height: 40, borderRadius: 10, background: g ? g.tint : 'var(--faint)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontWeight: 800, fontSize: 16, flexShrink: 0 }}>
-                  {s.buyer[0]}
-                </div>
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</div>
-                  <div style={{ fontSize: 12, color: TH.muted }}>{s.buyer} bought · {s.time}</div>
-                </div>
-                <div style={{ fontFamily: TH.mono, fontWeight: 700, fontSize: 16, flexShrink: 0 }}>{mH(s.price)}</div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
       {/* ── Find a local shop CTA ── */}
       <section className="wrap" style={{ marginTop: 50 }}>
         <div style={{ background: 'var(--fill)', borderRadius: 16, padding: '36px 32px', color: '#fff',
