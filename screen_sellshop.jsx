@@ -263,11 +263,11 @@ function SellShopScreen({ app }) {
             <h1 style={{ margin: '0 0 2px', fontFamily: TSS.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Add your cards</h1>
             <p style={{ fontFamily: TSS.sans, fontSize: 13.5, color: TSS.muted, margin: '0 0 16px' }}>Big stack? Start with Live Sweep. You can mix methods.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <MethodRow hero icon="📷" title="Live Sweep Scan" sub="Flip the stack — we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
-              <MethodRow icon="🃏" title="Batch Fan Photo" sub="9–12 cards per snap" time="~25 min" onClick={() => app.toast('Use Live Sweep for this demo')} />
-              <MethodRow icon="☑" title="Set Checklist" sub="Tap cards off a set grid" time="varies" onClick={() => app.toast('Use Live Sweep for this demo')} />
-              <MethodRow icon="🔍" title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Use Live Sweep for this demo')} />
-              <MethodRow icon="📄" title="Import List" sub="Manabox · TCGplayer · CSV" time="instant" onClick={() => app.toast('Use Live Sweep for this demo')} />
+              <MethodRow hero icon={IconSS.camera({ width: 22, height: 22 })} title="Live Sweep Scan" sub="Flip the stack \u2014 we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
+              <MethodRow icon={IconSS.grid({ width: 22, height: 22 })} title="Batch Fan Photo" sub="9\u201312 cards per snap" time="~25 min" onClick={() => app.toast('Use Live Sweep for this demo')} />
+              <MethodRow icon={IconSS.check({ width: 22, height: 22 })} title="Set Checklist" sub="Tap cards off a set grid" time="varies" onClick={() => app.toast('Use Live Sweep for this demo')} />
+              <MethodRow icon={IconSS.search({ width: 22, height: 22 })} title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Use Live Sweep for this demo')} />
+              <MethodRow icon={<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M14 2v6h6M10 13h4M10 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>} title="Import List" sub="Manabox \u00b7 TCGplayer \u00b7 CSV" time="instant" onClick={() => app.toast('Use Live Sweep for this demo')} />
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TSS.surface2, borderRadius: 4, padding: '12px 13px' }}>
               <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconSS.bolt({ width: 16, height: 16 })}</span>
@@ -427,7 +427,7 @@ function Confirmation({ onThread, onHome, onShop }) {
         ))}
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 11, background: 'var(--accent-wash)', borderRadius: 4, padding: '13px 14px', marginTop: 12 }}>
-        <span style={{ width: 38, height: 38, borderRadius: 10, background: '#fff', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>🎫</span>
+        <span style={{ width: 38, height: 38, borderRadius: 10, background: '#fff', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{IconSS.tag({ width: 20, height: 20 })}</span>
         <div style={{ textAlign: 'left', flex: 1 }}>
           <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>Counter ticket #{SUB_SS.ticket}</div>
           <div style={{ fontFamily: TSS.sans, fontSize: 11.5, color: TSS.ink2 }}>Show this with your stack to finish at the counter.</div>
@@ -459,7 +459,7 @@ function SellerThread({ app, onShop }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 14px', background: TSS.bg, display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <Bubble who="shop">Hey Jordan! Went through your submission — thanks for the detail 🙌</Bubble>
+        <Bubble who="shop">Hey Jordan! Went through your submission — thanks for the detail</Bubble>
         {/* offer card */}
         <div style={{ alignSelf: 'flex-start', maxWidth: '92%', background: TSS.surface, borderRadius: '4px 16px 16px 16px', padding: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.08)' }}>
           <div style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 14, marginBottom: 9 }}>Your offer</div>
@@ -471,26 +471,26 @@ function SellerThread({ app, onShop }) {
           <div style={{ height: 1, background: 'var(--line-2)', margin: '8px 0' }} />
           <div style={{ display: 'flex', gap: 8 }}>
             <div style={{ flex: 1, background: TSS.surface2, borderRadius: 11, padding: '9px 11px' }}>
-              <div style={{ fontFamily: TSS.sans, fontSize: 11, color: TSS.muted, fontWeight: 600 }}>💵 Cash</div>
+              <div style={{ fontFamily: TSS.sans, fontSize: 11, color: TSS.muted, fontWeight: 600 }}>Cash</div>
               <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 19 }}>{moneySS(cash, { cents: false })}</div>
             </div>
             <div style={{ flex: 1, background: 'var(--up-wash)', borderRadius: 11, padding: '9px 11px', boxShadow: 'inset 0 0 0 1.5px var(--up)' }}>
-              <div style={{ fontFamily: TSS.sans, fontSize: 11, color: 'var(--up)', fontWeight: 700 }}>🎁 Store credit +20%</div>
+              <div style={{ fontFamily: TSS.sans, fontSize: 11, color: 'var(--up)', fontWeight: 700 }}>Store credit +20%</div>
               <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 19, color: 'var(--up)' }}>{moneySS(credit, { cents: false })}</div>
             </div>
           </div>
         </div>
         <Bubble who="shop">Swing by today to finish? Bring the stack + ticket #{SUB_SS.ticket}.</Bubble>
         {reply && <Bubble who="me">{reply}</Bubble>}
-        {reply && <Bubble who="shop">Perfect — see you then! We'll have it ready. 👋</Bubble>}
+        {reply && <Bubble who="shop">Perfect \u2014 see you then! We will have it ready.</Bubble>}
       </div>
 
       {/* quick replies */}
       <div style={{ padding: '10px 14px 30px', background: TSS.surface, borderTop: '1px solid var(--line)' }}>
         {!reply ? (
           <div className="noscroll" style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
-            <QuickReply label={'Accept credit · ' + moneySS(credit, { cents: false })} primary onClick={() => { setReply('Accept store credit 🎁 — coming by after 5pm 👍'); app.toast('Offer accepted'); }} />
-            <QuickReply label={'Take cash · ' + moneySS(cash, { cents: false })} onClick={() => { setReply('Cash works — I\'ll come by after 5pm 👍'); app.toast('Offer accepted'); }} />
+            <QuickReply label={'Accept credit \u00b7 ' + moneySS(credit, { cents: false })} primary onClick={() => { setReply('Accept store credit \u2014 coming by after 5pm'); app.toast('Offer accepted'); }} />
+            <QuickReply label={'Take cash \u00b7 ' + moneySS(cash, { cents: false })} onClick={() => { setReply('Cash works \u2014 I\'ll come by after 5pm'); app.toast('Offer accepted'); }} />
             <QuickReply label="Pick a time" onClick={() => setReply("What times work today? I'm flexible.")} />
           </div>
         ) : (

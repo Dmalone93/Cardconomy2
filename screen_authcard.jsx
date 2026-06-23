@@ -55,11 +55,11 @@ function AuthCardScreen({ app, params = {} }) {
               </p>
             </div>
             <div style={{ background: TAU.surface, borderRadius: 14, padding: 15, boxShadow: 'var(--shadow-1)' }}>
-              {[['🔬', 'Expert examination', 'Centering, edges, surface, and print checked against a reference DB'],
-                ['🏷️', 'Tamper-evident seal', 'A serialized Cardonomy Verified mark links the card to its listing'],
-                ['📈', 'Sells ~20% higher', 'Verified raw cards convert faster and at better prices']].map(([e, t, d]) => (
+              {[[IconAU.search({ width: 20, height: 20 }), 'Expert examination', 'Centering, edges, surface, and print checked against a reference DB'],
+                [IconAU.tag({ width: 20, height: 20 }), 'Tamper-evident seal', 'A serialized Cardonomy Verified mark links the card to its listing'],
+                [<svg key="chart" width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 20l6-6 4 4 8-10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>, 'Sells ~20% higher', 'Verified raw cards convert faster and at better prices']].map(([e, t, d]) => (
                 <div key={t} style={{ display: 'flex', gap: 12, padding: '9px 0', borderBottom: '1px solid var(--line-2)' }}>
-                  <span style={{ fontSize: 20 }}>{e}</span>
+                  <span style={{ color: TAU.muted, flexShrink: 0 }}>{e}</span>
                   <div><div style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 13.5 }}>{t}</div><div style={{ fontFamily: TAU.sans, fontSize: 12, color: TAU.muted, lineHeight: 1.4 }}>{d}</div></div>
                 </div>
               ))}
@@ -76,12 +76,12 @@ function AuthCardScreen({ app, params = {} }) {
           <div>
             <h2 style={{ fontFamily: TAU.sans, fontWeight: 800, fontSize: 19, letterSpacing: -0.4, margin: '0 0 4px' }}>How do you want to verify?</h2>
             <p style={{ fontFamily: TAU.sans, fontSize: 13, color: TAU.muted, margin: '0 0 16px' }}>Both end in the same Cardonomy Verified seal.</p>
-            {[['shop', '🏪', 'Verify at a local shop', 'Drop it at an enrolled LGS — examined on-site, often same day. No shipping.', 'Fastest · in person'],
-              ['mail', '📦', 'Mail-in to Cardonomy', 'Ship with a prepaid, insured label. Examined and sealed at our facility, then returned or vaulted.', '5–7 days']].map(([id, e, t, d, tag]) => {
+            {[['shop', IconAU.shield({ width: 22, height: 22 }), 'Verify at a local shop', 'Drop it at an enrolled LGS \u2014 examined on-site, often same day. No shipping.', 'Fastest \u00b7 in person'],
+              ['mail', IconAU.truck({ width: 22, height: 22 }), 'Mail-in to Cardonomy', 'Ship with a prepaid, insured label. Examined and sealed at our facility, then returned or vaulted.', '5\u20137 days']].map(([id, e, t, d, tag]) => {
               const sel = method === id;
               return (
                 <button key={id} onClick={() => setMethod(id)} style={{ width: '100%', textAlign: 'left', display: 'flex', gap: 13, alignItems: 'flex-start', background: sel ? 'var(--accent-wash)' : TAU.surface, borderRadius: 14, padding: 15, marginBottom: 11, boxShadow: sel ? 'inset 0 0 0 2px var(--accent)' : 'var(--shadow-1)' }}>
-                  <span style={{ fontSize: 24 }}>{e}</span>
+                  <span style={{ color: sel ? 'var(--accent)' : TAU.muted }}>{e}</span>
                   <div style={{ flex: 1 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}><span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 15 }}>{t}</span><span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 10, color: 'var(--ink)', background: '#fff', borderRadius: 6, padding: '2px 7px' }}>{tag}</span></div>
                     <div style={{ fontFamily: TAU.sans, fontSize: 12.5, color: TAU.muted, lineHeight: 1.45, marginTop: 3 }}>{d}</div>

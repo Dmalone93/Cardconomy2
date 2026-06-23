@@ -135,7 +135,7 @@ function DSearch({ app, params = {} }) {
           </div>
           {res.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '80px 20px', background: 'var(--surface)', borderRadius: 16 }}>
-              <div style={{ fontSize: 40, marginBottom: 8 }}>🔍</div>
+              <div style={{ marginBottom: 8, color: 'var(--muted)' }}><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg></div>
               <div style={{ fontWeight: 700, fontSize: 18 }}>No cards match</div>
               <div style={{ color: 'var(--muted)', fontSize: 14, marginTop: 4 }}>Try removing a filter or widening your price.</div>
             </div>

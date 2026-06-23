@@ -611,11 +611,11 @@ function PriceGuide({ card, onClose, onSet }) {
 // ── offer composer ───────────────────────────────────────────
 function OfferComposer({ offer, cashTotal, onClose, onSend }) {
   const [creditPct, setCreditPct] = React.useState(60);
-  const [msg, setMsg] = React.useState("Offer\'s ready — come on in 👍");
-  React.useEffect(() => { if (offer) { setCreditPct(60); setMsg("Offer\'s ready — come on in 👍"); } }, [offer]);
+  const [msg, setMsg] = React.useState("Offer\'s ready — come on in ");
+  React.useEffect(() => { if (offer) { setCreditPct(60); setMsg("Offer\'s ready — come on in "); } }, [offer]);
   if (!offer || offer.sent) return null;
   const creditTotal = Math.round(cashTotal * (1 + SHOP_SH.creditBonus));
-  const templates = ["Offer\'s ready — come on in 👍", 'Can you bring these back to inspect?', "We\'ll pass on bulk — singles only", "What\'s your availability this week?"];
+  const templates = ["Offer\'s ready — come on in ", 'Can you bring these back to inspect?', "We\'ll pass on bulk — singles only", "What\'s your availability this week?"];
   return (
     <div style={{ position: 'absolute', inset: 0, zIndex: 85 }}>
       <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(10,12,18,0.4)', animation: 'ccScrim 0.2s ease' }} />
@@ -628,11 +628,11 @@ function OfferComposer({ offer, cashTotal, onClose, onSend }) {
           {/* cash / credit split */}
           <div style={{ marginTop: 14, display: 'flex', gap: 9 }}>
             <div style={{ flex: 1, background: TSH.surface2, borderRadius: 13, padding: '12px 13px' }}>
-              <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.muted, fontWeight: 600 }}>💵 Cash</div>
+              <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.muted, fontWeight: 600 }}>Cash</div>
               <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 22 }}>{money0(cashTotal)}</div>
             </div>
             <div style={{ flex: 1, background: 'var(--up-wash)', borderRadius: 13, padding: '12px 13px', boxShadow: 'inset 0 0 0 1.5px var(--up)' }}>
-              <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: 'var(--up)', fontWeight: 700 }}>🎁 Credit +20%</div>
+              <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: 'var(--up)', fontWeight: 700 }}>Credit +20%</div>
               <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 22, color: 'var(--up)' }}>{money0(creditTotal)}</div>
             </div>
           </div>

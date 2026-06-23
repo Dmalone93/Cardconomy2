@@ -95,7 +95,7 @@ function WatchScreen({ app }) {
                 return (
                   <button key={col.id} onClick={() => app.nav.push('collection', { cid: col.id })} style={{ width: '100%', textAlign: 'left',
                     background: TW.surface, borderRadius: 16, padding: 14, display: 'flex', gap: 13, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                    <span style={{ width: 46, height: 46, borderRadius: 13, background: TW.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0 }}>{col.icon || '🃏'}</span>
+                    <span style={{ width: 46, height: 46, borderRadius: 13, background: TW.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: TW.muted }}>{col.icon || IconW.tag({ width: 22, height: 22 })}</span>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{col.name}</div>
                       <div style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>{col.cards.length} card{col.cards.length!==1?'s':''}</div>
@@ -694,7 +694,7 @@ function CollectionDetailScreen({ app, params }) {
       <div style={{ padding: '14px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TW.ink }}>{IconW.back({})}</button>
         <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 16, flex: 1, display: 'flex', alignItems: 'center', gap: 7 }}>
-          <span>{col.icon || '🃏'}</span>{col.name}
+          <span style={{ color: TW.muted }}>{col.icon || IconW.tag({ width: 18, height: 18 })}</span>{col.name}
         </span>
         <button onClick={() => { const n = window.prompt && window.prompt('Rename collection', col.name); if (n && n.trim()) app.renameCollection(col.id, n.trim()); }}
           style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)', padding: '4px 6px' }}>Rename</button>

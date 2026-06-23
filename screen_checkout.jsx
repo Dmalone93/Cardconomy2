@@ -40,7 +40,7 @@ function CheckoutScreen({ app, params }) {
   if (!item) return (
     <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 40, marginBottom: 12 }}>🛒</div>
+        <div style={{ marginBottom: 12, color: TC.muted }}>{IconC.cart({ width: 40, height: 40 })}</div>
         <div style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 18 }}>Item not found</div>
         <button onClick={() => app.nav.pop()} style={{ marginTop: 16, color: 'var(--ink)', fontFamily: TC.sans, fontWeight: 600 }}>Go back</button>
       </div>

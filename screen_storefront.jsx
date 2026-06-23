@@ -47,7 +47,7 @@ function StorefrontScreen({ app, params = {} }) {
             </div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontFamily: TF.sans, fontSize: 12.5, color: TF.ink2, marginBottom: 12 }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>📍 {shop.loc} · {shop.dist} km</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg> {shop.loc} · {shop.dist} km</span>
             <span style={{ color: 'var(--up)', fontWeight: 700 }}>● {shop.hours}</span>
           </div>
           <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.ink2, lineHeight: 1.5, margin: '0 0 16px' }}>{shop.blurb}</p>
@@ -250,7 +250,7 @@ function Step2({ form, set }) {
       }}>
         {form.uploaded
           ? <React.Fragment>{IconF.check({ width: 28, height: 28 })}<span style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13 }}>Photo uploaded</span></React.Fragment>
-          : <React.Fragment>{IconF.camera ? IconF.camera({ width: 28, height: 28 }) : <span style={{ fontSize: 28 }}>📷</span>}<span style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13 }}>Tap to upload</span></React.Fragment>
+          : <React.Fragment>{IconF.camera({ width: 28, height: 28 })}<span style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13 }}>Tap to upload</span></React.Fragment>
         }
       </button>
     </div>
@@ -692,7 +692,7 @@ function Step6({ form, set }) {
       }}>
         {form.logo
           ? <span style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 28 }}>{(form.shopName || 'S').charAt(0).toUpperCase()}</span>
-          : <span style={{ fontSize: 24 }}>📷</span>
+          : IconF.camera({ width: 24, height: 24 })
         }
       </button>
 

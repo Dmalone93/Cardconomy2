@@ -4,9 +4,9 @@
 const { T: TOB, Icon: IconOB, Logo: LogoOB } = window;
 
 const ACCT_TYPES = [
-  { id: 'buyer',  title: "I\'m a collector",  sub: 'Buy, bid, track & trade cards for my collection', emoji: '🎴' },
-  { id: 'seller', title: "I\'m an individual seller", sub: 'Sell singles & lots, plus everything buyers can do', emoji: '💸' },
-  { id: 'store',  title: "I run a game shop", sub: 'Storefront, buylist intake, local vault & trade hub', emoji: '🏪' },
+  { id: 'buyer',  title: "I\'m a collector",  sub: 'Buy, bid, track & trade cards for my collection', tint: 'var(--up)' },
+  { id: 'seller', title: "I\'m an individual seller", sub: 'Sell singles & lots, plus everything buyers can do', tint: 'var(--accent)' },
+  { id: 'store',  title: "I run a game shop", sub: 'Storefront, buylist intake, local vault & trade hub', tint: 'var(--gold)' },
 ];
 
 // ── reusable game tile (used in onboarding + prefs sheet) ─────
@@ -75,7 +75,7 @@ function Onboarding({ app, games }) {
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '22px 24px 12px' }}>
         {step === 0 ? (
           <div>
-            <h1 style={{ fontFamily: TOB.sans, fontWeight: 800, fontSize: 27, letterSpacing: -0.7, margin: '0 0 6px' }}>Welcome 👋</h1>
+            <h1 style={{ fontFamily: TOB.sans, fontWeight: 800, fontSize: 27, letterSpacing: -0.7, margin: '0 0 6px' }}>Welcome</h1>
             <p style={{ fontFamily: TOB.sans, fontSize: 15, color: TOB.muted, margin: '0 0 22px', lineHeight: 1.5 }}>How do you want to use Cardonomy? You can always change this later.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {ACCT_TYPES.map(t => {
@@ -84,7 +84,11 @@ function Onboarding({ app, games }) {
                   <button key={t.id} onClick={() => setAcct(t.id)} style={{ display: 'flex', alignItems: 'center', gap: 14, textAlign: 'left',
                     background: on ? '#fff' : TOB.surface, borderRadius: 16, padding: 16,
                     boxShadow: on ? '0 0 0 2.5px var(--accent)' : 'inset 0 0 0 1px var(--line)', transition: 'box-shadow 0.15s' }}>
-                    <span style={{ fontSize: 26, width: 46, height: 46, borderRadius: 13, background: TOB.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{t.emoji}</span>
+                    <span style={{ width: 46, height: 46, borderRadius: 13, background: TOB.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: t.tint }}>
+                      {t.id === 'buyer' && IconOB.heart({ width: 22, height: 22 })}
+                      {t.id === 'seller' && IconOB.tag({ width: 22, height: 22 })}
+                      {t.id === 'store' && IconOB.shield({ width: 22, height: 22 })}
+                    </span>
                     <span style={{ flex: 1 }}>
                       <span style={{ display: 'block', fontFamily: TOB.sans, fontWeight: 800, fontSize: 16 }}>{t.title}</span>
                       <span style={{ display: 'block', fontFamily: TOB.sans, fontSize: 12.5, color: TOB.muted, marginTop: 2, lineHeight: 1.4 }}>{t.sub}</span>

@@ -103,7 +103,7 @@ function TradeScreen({ app, params = {} }) {
             </div>
             <div style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
               <button onClick={() => setPhase('board')} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'flex-start', background: TT.surface, borderRadius: 13, padding: '12px 13px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 13.5 }}>🔥 Open to Offers</span>
+                <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 13.5 }}>{IconT.bolt({ width: 14, height: 14 })} Open to Offers</span>
                 <span style={{ fontFamily: TT.sans, fontSize: 11, color: TT.muted }}>{TRADE_POSTS_T.length} open trade posts</span>
               </button>
               <button onClick={() => setPhase('post')} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 13px', boxShadow: 'inset 0 0 0 1.5px var(--accent)' }}>
@@ -410,14 +410,14 @@ function TradeScreen({ app, params = {} }) {
 
             <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 13.5, color: TT.ink2, margin: '20px 2px 9px' }}>Public meetup spots</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {[{ id: 'lib', name: 'Central Library — café', sub: '1.6 km midpoint · busy, well-lit', emoji: '📚' },
-                { id: 'mall', name: 'Riverside Mall food court', sub: '2.1 km midpoint · public & central', emoji: '🛍️' },
-                { id: 'cafe', name: 'Grounds Coffee on Main', sub: '1.2 km midpoint · cameras, seating', emoji: '☕' }].map(p => {
+              {[{ id: 'lib', name: 'Central Library \u2014 caf\u00e9', sub: '1.6 km midpoint \u00b7 busy, well-lit', initial: 'L' },
+                { id: 'mall', name: 'Riverside Mall food court', sub: '2.1 km midpoint \u00b7 public & central', initial: 'R' },
+                { id: 'cafe', name: 'Grounds Coffee on Main', sub: '1.2 km midpoint \u00b7 cameras, seating', initial: 'G' }].map(p => {
                 const sel = place && place.id === p.id;
                 return (
-                  <button key={p.id} onClick={() => setPlace({ id: p.id, name: p.name, sub: p.sub, kind: 'public', tint: 'var(--muted)', initial: p.emoji })} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 12,
+                  <button key={p.id} onClick={() => setPlace({ id: p.id, name: p.name, sub: p.sub, kind: 'public', tint: 'var(--muted)', initial: p.initial })} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 12,
                     background: sel ? 'var(--accent-wash)' : TT.surface, borderRadius: 14, padding: 13, boxShadow: sel ? 'inset 0 0 0 2px var(--accent)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
-                    <span style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, background: TT.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20 }}>{p.emoji}</span>
+                    <span style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, background: TT.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TT.sans, fontWeight: 800, fontSize: 16, color: TT.muted }}>{p.initial}</span>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 14.5 }}>{p.name}</div>
                       <div style={{ fontFamily: TT.sans, fontSize: 11.5, color: TT.muted }}>{p.sub}</div>
@@ -430,8 +430,8 @@ function TradeScreen({ app, params = {} }) {
 
             <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 13.5, color: TT.ink2, margin: '20px 2px 9px' }}>Or propose your own</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: TT.surface, borderRadius: 13, padding: '12px 14px', boxShadow: place && place.id === 'custom' ? 'inset 0 0 0 2px var(--accent)' : 'inset 0 0 0 1px var(--line)' }}>
-              <span style={{ fontSize: 18 }}>📍</span>
-              <input value={customSpot} onChange={e => { setCustomSpot(e.target.value); setPlace(e.target.value.trim() ? { id: 'custom', name: e.target.value.trim(), sub: 'Proposed by you · pending agreement', kind: 'custom', tint: 'var(--accent)', initial: '📍' } : null); }}
+              <span style={{ color: TT.muted }}><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg></span>
+              <input value={customSpot} onChange={e => { setCustomSpot(e.target.value); setPlace(e.target.value.trim() ? { id: 'custom', name: e.target.value.trim(), sub: 'Proposed by you \u00b7 pending agreement', kind: 'custom', tint: 'var(--accent)', initial: '\u25CF' } : null); }}
                 placeholder="e.g. Eastgate Park pavilion, Sat morning" style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TT.sans, fontSize: 14.5, minWidth: 0 }} />
             </div>
 
@@ -501,7 +501,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
       <div style={{ padding: '70px 24px 18px', textAlign: 'center' }}>
         <div style={{ width: 80, height: 80, margin: '0 auto', borderRadius: 999, background: stage === 'proposed' ? 'var(--accent-wash)' : 'var(--up-wash)', color: stage === 'proposed' ? 'var(--accent)' : 'var(--up)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{stage === 'proposed' ? IconT.gavel({ width: 38, height: 38 }) : IconT.check({ width: 42, height: 42 })}</div>
-        <h1 style={{ margin: '18px 0 4px', fontFamily: TT.sans, fontWeight: 800, fontSize: 23, letterSpacing: -0.5 }}>{stage === 'proposed' ? 'Trade proposed!' : 'Trade & spot agreed! 🎉'}</h1>
+        <h1 style={{ margin: '18px 0 4px', fontFamily: TT.sans, fontWeight: 800, fontSize: 23, letterSpacing: -0.5 }}>{stage === 'proposed' ? 'Trade proposed!' : 'Trade & spot agreed!'}</h1>
         <p style={{ fontFamily: TT.sans, fontSize: 14, color: TT.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 290 }}>
           {stage === 'proposed'
             ? <span>{trader.name} got your offer and your suggested spot, <b style={{ color: TT.ink }}>{place.name}</b>. Waiting for them to confirm the location…</span>
@@ -529,7 +529,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
         {/* location negotiation card */}
         <div style={{ marginTop: 12, background: TT.surface, borderRadius: 16, padding: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ fontFamily: TT.sans, fontWeight: 800, fontSize: 13.5, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 6 }}>
-            📍 Meetup location {stage !== 'proposed' && <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 10, color: 'var(--up)', background: 'var(--up-wash)', borderRadius: 6, padding: '2px 7px' }}>AGREED</span>}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg> Meetup location {stage !== 'proposed' && <span style={{ fontFamily: TT.sans, fontWeight: 700, fontSize: 10, color: 'var(--up)', background: 'var(--up-wash)', borderRadius: 6, padding: '2px 7px' }}>AGREED</span>}
           </div>
           {/* your proposed spot */}
           <PlaceLine place={place} byWho="You proposed" active={stage !== 'accepted-counter'} agreed={stage === 'agreed'} />
@@ -546,7 +546,7 @@ function TradeSent({ app, trader, giveSel, getSel, cash, cashWho, place, setPhas
           <div style={{ marginTop: 12, background: TT.surface, borderRadius: 14, padding: 12, display: 'flex', gap: 10, alignItems: 'flex-start', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <Avatar who={trader} size={34} />
             <div style={{ flex: 1, fontFamily: TT.sans, fontSize: 13, color: TT.ink, lineHeight: 1.45 }}>
-              <b>{trader.name}:</b> {stage === 'countered' ? 'Accepted the trade! Any chance we meet at Northside Collectibles instead? It\u2019s right by me. 🙏' : stage === 'agreed' ? 'Perfect, see you there! 🎉' : 'Works for me — see you at ' + counterSpot.name + '! 🎉'}
+              <b>{trader.name}:</b> {stage === 'countered' ? 'Accepted the trade! Any chance we meet at Northside Collectibles instead? It\u2019s right by me.' : stage === 'agreed' ? 'Perfect, see you there!' : 'Works for me \u2014 see you at ' + counterSpot.name + '!'}
             </div>
           </div>
         )}

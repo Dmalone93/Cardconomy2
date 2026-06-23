@@ -232,7 +232,7 @@ function App() {
     removeFromCart: (id) => setCart(c => c.filter(x => x !== id)),
     clearCart: () => setCart([]),
     isBidding: (id) => bids[id] != null,
-    placeBid: (item, amt) => { setBids(b => ({ ...b, [item.id]: amt })); setWatch(w => w.includes(item.id) ? w : [...w, item.id]); showToast("You're the high bidder! 🎉"); },
+    placeBid: (item, amt) => { setBids(b => ({ ...b, [item.id]: amt })); setWatch(w => w.includes(item.id) ? w : [...w, item.id]); showToast("You\u2019re the high bidder!"); },
     toast: showToast,
   };
 

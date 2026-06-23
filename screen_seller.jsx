@@ -11,7 +11,7 @@ function SellerScreen({ app, params = {} }) {
   if (!seller) return (
     <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 40, marginBottom: 12 }}>🔍</div>
+        <div style={{ marginBottom: 12, color: TS.muted }}>{IconS.search({ width: 40, height: 40 })}</div>
         <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 18 }}>Seller not found</div>
         <button onClick={() => app.nav.pop()} style={{ marginTop: 16, color: TS.accent, fontFamily: TS.sans, fontWeight: 600 }}>Go back</button>
       </div>

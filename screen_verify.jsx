@@ -52,9 +52,9 @@ function VerifyGate({ app, need = 1, action = 'do this', compact }) {
 
 // ── verification flow ────────────────────────────────────────
 const STEPS_V = [
-  { id: 'phone', icon: '📱', title: 'Confirm your phone', blurb: 'We text a 6-digit code. Used for login and offer alerts.', cta: 'Send code' },
-  { id: 'id', icon: '🪪', title: 'Government ID + selfie', blurb: 'Snap your ID and a selfie. Matched automatically by our verification partner — we never store the raw images.', cta: 'Scan my ID' },
-  { id: 'payout', icon: '🏦', title: 'Payout & tax details', blurb: 'Link a bank for payouts and confirm tax info (required to receive money). KYC/AML compliant.', cta: 'Link payout' },
+  { id: 'phone', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="6" y="2" width="12" height="20" rx="2" stroke="currentColor" strokeWidth="2"/><circle cx="12" cy="18" r="1" fill="currentColor"/></svg>, title: 'Confirm your phone', blurb: 'We text a 6-digit code. Used for login and offer alerts.', cta: 'Send code' },
+  { id: 'id', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="2"/><circle cx="9" cy="11" r="2" stroke="currentColor" strokeWidth="1.5"/><path d="M6 17c0-1.5 1.3-2.5 3-2.5s3 1 3 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><path d="M15 9h3M15 12h3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Government ID + selfie', blurb: 'Snap your ID and a selfie. Matched automatically by our verification partner — we never store the raw images.', cta: 'Scan my ID' },
+  { id: 'payout', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" strokeWidth="2"/><path d="M3 4h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/><path d="M8 14h8M8 17h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>, title: 'Payout & tax details', blurb: 'Link a bank for payouts and confirm tax info (required to receive money). KYC/AML compliant.', cta: 'Link payout' },
 ];
 
 function VerifyScreen({ app }) {

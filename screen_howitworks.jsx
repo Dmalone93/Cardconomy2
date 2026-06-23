@@ -11,7 +11,7 @@ function HowItWorksScreen({ app }) {
       id: 'buyer',
       label: 'Buyers & Collectors',
       color: 'var(--up)',
-      icon: '\uD83D\uDCE6',
+      icon: null,
       tagline: 'Find your next grail',
       steps: [
         { num: '1', title: 'Search & discover', desc: 'Browse every game, filter by set, rarity, condition, or price. Check live market data and price history before you buy.' },
@@ -23,7 +23,7 @@ function HowItWorksScreen({ app }) {
       id: 'seller',
       label: 'Individual Sellers',
       color: 'var(--accent)',
-      icon: '\uD83D\uDCB0',
+      icon: null,
       tagline: 'List it, sell it, get paid',
       steps: [
         { num: '1', title: 'List in seconds', desc: 'Snap photos, set your price using our market data, and go live. Bulk scan to list hundreds of cards at once.' },
@@ -35,7 +35,7 @@ function HowItWorksScreen({ app }) {
       id: 'store',
       label: 'Local Game Shops',
       color: 'var(--gold)',
-      icon: '\uD83C\uDFEA',
+      icon: null,
       tagline: 'Your shop, online',
       steps: [
         { num: '1', title: 'Enrol your shop', desc: 'Set up your storefront in minutes. List your inventory, set grading policies, and define your buying preferences.' },
@@ -108,7 +108,7 @@ function HowItWorksScreen({ app }) {
           <div style={{ display: 'flex', justifyContent: 'space-around', textAlign: 'center', marginBottom: 16 }}>
             {personas.map(p => (
               <div key={p.id} style={{ flex: 1 }}>
-                <div style={{ fontSize: 28 }}>{p.icon}</div>
+                <div style={{ width: 28, height: 28, borderRadius: 999, background: p.color }} />
                 <div style={{ fontSize: 11, fontWeight: 700, color: THW.ink, marginTop: 4 }}>{p.label}</div>
               </div>
             ))}
@@ -124,7 +124,7 @@ function HowItWorksScreen({ app }) {
       {personas.map(p => (
         <div key={p.id} style={{ padding: '0 14px', marginBottom: 24 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-            <span style={{ fontSize: 22 }}>{p.icon}</span>
+            <span style={{ width: 22, height: 22, borderRadius: 999, background: p.color, display: 'inline-block', flexShrink: 0 }} />
             <div>
               <div style={{ fontSize: 17, fontWeight: 800, color: THW.ink }}>{p.label}</div>
               <div style={{ fontSize: 13, color: THW.muted }}>{p.tagline}</div>

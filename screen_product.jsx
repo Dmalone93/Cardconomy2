@@ -137,7 +137,7 @@ function ProductScreen({ app, params }) {
   if (!product) return (
     <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontSize: 40, marginBottom: 12 }}>🔍</div>
+        <div style={{ marginBottom: 12, color: TP.muted }}>{IconP.search({ width: 40, height: 40 })}</div>
         <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 18 }}>Product not found</div>
         <button onClick={() => app.nav.pop()} style={{ marginTop: 16, color: 'var(--ink)', fontFamily: TP.sans, fontWeight: 600 }}>Go back</button>
       </div>
@@ -199,9 +199,14 @@ function ProductScreen({ app, params }) {
 
         {/* ── 5. Trust strip ── */}
         <div style={{ display: 'flex', justifyContent: 'space-around', padding: '12px 16px', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-          {[['🛡️', 'Protected'], ['✓', 'Verified'], ['🔒', 'Secure'], ['📦', 'Tracked']].map(([icon, label]) => (
-            <div key={label} style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 20 }}>{icon}</div>
+          {[
+            [IconP.shield({ width: 20, height: 20 }), 'Protected'],
+            [IconP.check({ width: 20, height: 20 }), 'Verified'],
+            [<svg key="lock" width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="2"/><path d="M8 11V7a4 4 0 118 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>, 'Secure'],
+            [IconP.truck({ width: 20, height: 20 }), 'Tracked'],
+          ].map(([icon, label]) => (
+            <div key={label} style={{ textAlign: 'center', color: TP.muted }}>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>{icon}</div>
               <div style={{ fontFamily: TP.sans, fontSize: 10, fontWeight: 600, color: TP.muted, marginTop: 2 }}>{label}</div>
             </div>
           ))}

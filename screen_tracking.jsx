@@ -167,7 +167,7 @@ function TrackingScreen({ app }) {
               width: 56, height: 56, borderRadius: 12, background: TK.surface2 || 'var(--surface-2)',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontSize: 28, flexShrink: 0,
-            }}>{'\uD83C\uDCCF'}</div>
+            }}>{IconTK.tag({ width: 24, height: 24, style: { color: TK.muted } })}</div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{order.item.name}</div>
               <div style={{ fontFamily: TK.sans, fontSize: 12, color: TK.muted, marginTop: 2 }}>

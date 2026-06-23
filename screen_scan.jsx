@@ -82,7 +82,7 @@ function ScanScreen({ app, params = {} }) {
           </button>
           <span style={{ flex: 1, color: '#fff', fontWeight: 700, fontSize: 17 }}>Scan card</span>
           <button onClick={function () { setTorch(function (t) { return !t; }); }} style={{ fontSize: 22, background: 'none', border: 'none', color: torch ? '#f5c542' : '#fff', opacity: torch ? 1 : 0.6 }}>
-            {"⚡"}
+            {IconSC.bolt({ width: 20, height: 20 })}
           </button>
         </div>
 

@@ -76,10 +76,10 @@ function SellBulkScreen({ app }) {
             <h1 style={{ margin: '0 0 2px', fontFamily: TB.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Add cards to list</h1>
             <p style={{ fontFamily: TB.sans, fontSize: 13.5, color: TB.muted, margin: '0 0 16px' }}>Scan your pile — each card becomes its own listing, auto-priced at market.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <MethodRowB hero icon="📷" title="Live Sweep Scan" sub="Flip the stack — we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
-              <MethodRowB icon="🃏" title="Batch Fan Photo" sub="9–12 cards per snap" time="~25 min" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
-              <MethodRowB icon="🔍" title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
-              <MethodRowB icon="📄" title="Import List" sub="Manabox · TCGplayer · CSV" time="instant" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
+              <MethodRowB hero icon={IconB.camera({ width: 22, height: 22 })} title="Live Sweep Scan" sub="Flip the stack — we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
+              <MethodRowB icon={IconB.grid({ width: 22, height: 22 })} title="Batch Fan Photo" sub="9\u201312 cards per snap" time="~25 min" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
+              <MethodRowB icon={IconB.search({ width: 22, height: 22 })} title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
+              <MethodRowB icon={<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M14 2v6h6M10 13h4M10 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>} title="Import List" sub="Manabox \u00b7 TCGplayer \u00b7 CSV" time="instant" onClick={() => app.toast('Live Sweep is wired up for this demo')} />
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TB.surface2, borderRadius: 4, padding: '12px 13px' }}>
               <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconB.tag({ width: 16, height: 16 })}</span>
