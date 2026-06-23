@@ -10,7 +10,6 @@ function DListing({ app, params }) {
   const [tf, setTf] = React.useState('90D');
   const [tab, setTab] = React.useState('front');
   if (!item) return <div className="wrap" style={{ padding: 60 }}>Listing not found.</div>;
-  const auction = item.type === 'auction';
   const g = gameByIdLi(item.game);
   const set = setByIdLi(item.set);
   const hist = item.history || [item.market, item.price];
@@ -104,13 +103,6 @@ function DListing({ app, params }) {
         {/* buy box */}
         <div style={{ position: 'sticky', top: 130 }} className="lst-buybox">
           <div style={{ background: 'var(--surface)', borderRadius: 16, padding: 22, boxShadow: '0 4px 20px rgba(20,24,40,0.08)' }}>
-            {auction ? (
-              <div style={{ marginBottom: 14 }}>
-                <div style={{ fontSize: 12.5, color: 'var(--muted)' }}>Current bid · {item.bids} bids</div>
-                <div style={{ fontFamily: TLi.mono, fontWeight: 700, fontSize: 32, letterSpacing: -1 }}>{mLi(item.price)}</div>
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 8, background: 'var(--accent-wash)', color: 'var(--ink)', borderRadius: 8, padding: '6px 11px', fontWeight: 700, fontSize: 13 }}>⏱ Ends in {item.timeLeft}</div>
-              </div>
-            ) : (
               <div style={{ marginBottom: 14 }}>
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
                   <span style={{ fontFamily: TLi.mono, fontWeight: 700, fontSize: 34, letterSpacing: -1.2 }}>{mLi(item.price)}</span>
@@ -118,22 +110,12 @@ function DListing({ app, params }) {
                 </div>
                 <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 2 }}>Market {mLi(item.market)} · {item.shipping === 0 ? 'Free shipping' : mLi(item.shipping) + ' shipping'}</div>
               </div>
-            )}
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              {auction ? (
-                <React.Fragment>
-                  <button onClick={() => app.placeBid(item, +(item.price * 1.05).toFixed(2))} style={primaryBtn}>Place bid · {mLi(item.price * 1.05)}</button>
-                  <button onClick={() => app.toggleWatch(item.id)} style={ghostBtn}>{watched ? '♥ Watching' : '♡ Watch this auction'}</button>
-                </React.Fragment>
-              ) : (
-                <React.Fragment>
-                  <button onClick={() => app.addToCart(item.id)} style={primaryBtn}>{app.inCart(item.id) ? '✓ Added — view cart' : 'Add to cart'}</button>
-                  <button onClick={() => { app.addToCart(item.id); app.go('cart'); }} style={{ ...primaryBtn, background: 'var(--fill)' }}>Buy it now</button>
-                  {item.accepts_offers && <button onClick={() => app.toast('Offer sent to ' + item.seller)} style={ghostBtn}>Make an offer</button>}
-                </React.Fragment>
-              )}
-              <button onClick={() => app.toggleWatch(item.id)} style={{ display: auction ? 'none' : 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, padding: '11px', fontWeight: 600, fontSize: 14, color: watched ? 'var(--down)' : 'var(--ink-2)' }}>
+                <button onClick={() => app.addToCart(item.id)} style={primaryBtn}>{app.inCart(item.id) ? '✓ Added — view cart' : 'Add to cart'}</button>
+                <button onClick={() => { app.addToCart(item.id); app.go('cart'); }} style={{ ...primaryBtn, background: 'var(--fill)' }}>Buy it now</button>
+                {item.accepts_offers && <button onClick={() => app.toast('Offer sent to ' + item.seller)} style={ghostBtn}>Make an offer</button>}
+              <button onClick={() => app.toggleWatch(item.id)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, padding: '11px', fontWeight: 600, fontSize: 14, color: watched ? 'var(--down)' : 'var(--ink-2)' }}>
                 {window.DIcon.heart({ width: 18, height: 18 }, watched)} {watched ? 'In your Watching' : 'Add to Watching'}
               </button>
             </div>

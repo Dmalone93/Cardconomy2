@@ -36,7 +36,6 @@ function SellScreen({ app }) {
   const [listType, setListType] = React.useState('buynow');
   const [price, setPrice] = React.useState('');
   const [freeShip, setFreeShip] = React.useState(true);
-  const [days, setDays] = React.useState(7);
 
   const matches = CATALOG.filter(c => !q || (c.name + ' ' + (setByIdSE(c.set)?.name||'')).toLowerCase().includes(q.toLowerCase()));
   const photoCount = photos.filter(Boolean).length;
@@ -197,22 +196,7 @@ function SellScreen({ app }) {
         {step === 3 && (
           <div>
             <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Set your price</h2>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-              <button onClick={() => setListType('buynow')} style={{ flex: 1, padding: 14, borderRadius: 4, textAlign: 'left',
-                background: listType==='buynow'?'var(--accent-wash)':TSE.surface, boxShadow: listType==='buynow'?'inset 0 0 0 2px var(--accent)':'inset 0 0 0 1px var(--line)' }}>
-                <div style={{ color: listType==='buynow'?TSE.accent:TSE.muted, marginBottom: 4 }}>{IconSE.bolt({width:18,height:18})}</div>
-                <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 14.5 }}>Buy It Now</div>
-                <div style={{ fontFamily: TSE.sans, fontSize: 11.5, color: TSE.muted }}>Fixed price</div>
-              </button>
-              <button onClick={() => setListType('auction')} style={{ flex: 1, padding: 14, borderRadius: 4, textAlign: 'left',
-                background: listType==='auction'?'var(--accent-wash)':TSE.surface, boxShadow: listType==='auction'?'inset 0 0 0 2px var(--accent)':'inset 0 0 0 1px var(--line)' }}>
-                <div style={{ color: listType==='auction'?TSE.accent:TSE.muted, marginBottom: 4 }}>{IconSE.gavel({width:18,height:18})}</div>
-                <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 14.5 }}>Auction</div>
-                <div style={{ fontFamily: TSE.sans, fontSize: 11.5, color: TSE.muted }}>Let buyers bid</div>
-              </button>
-            </div>
-
-            <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>{listType==='auction'?'Starting bid':'Your price'}</div>
+            <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>Your price</div>
             <div style={{ display: 'flex', alignItems: 'center', background: TSE.surface, borderRadius: 4, padding: '14px 16px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
               <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 28, color: TSE.muted, marginRight: 4 }}>£</span>
               <input type="number" value={price} onChange={e => setPrice(e.target.value)} placeholder={String(suggested)}
@@ -224,13 +208,6 @@ function SellScreen({ app }) {
               <span style={{ flex: 1, fontFamily: TSE.sans, fontSize: 13, color: TSE.ink2 }}>Suggested: <b>{moneySE(suggested)}</b> based on recent {graded?grader.toUpperCase()+' '+grade:'raw'} sales</span>
               <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>Use</span>
             </button>
-
-            {listType==='auction' && (
-              <div style={{ marginTop: 18 }}>
-                <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13.5, marginBottom: 9 }}>Duration</div>
-                <div style={{ display: 'flex', gap: 8 }}>{[3,5,7,10].map(d => <ChipSE key={d} active={days===d} onClick={() => setDays(d)}>{d} days</ChipSE>)}</div>
-              </div>
-            )}
 
             <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 18, background: TSE.surface, borderRadius: 4, padding: '14px 16px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <span style={{ fontFamily: TSE.sans, fontWeight: 600, fontSize: 14.5 }}>Offer free postage</span>
@@ -254,7 +231,7 @@ function SellScreen({ app }) {
                 </div>
               </div>
               <div style={{ marginTop: 8 }}>
-                {[['Format', listType==='auction'?days+'-day auction':'Buy It Now'],
+                {[['Format', 'Buy It Now'],
                   ['Condition', graded ? grader.toUpperCase()+' '+grade : cond],
                   ['Photos', photoCount + ' added'],
                   ['Postage', freeShip ? 'Free Royal Mail (you pay)' : 'Buyer pays'],

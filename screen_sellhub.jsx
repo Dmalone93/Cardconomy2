@@ -126,7 +126,7 @@ function SellMarketScreen({ app }) {
             icon={IconH.tag({ width: 26, height: 26 })}
             tint={TH.accent}
             title="List a single card"
-            meta="Buy It Now or auction · full control"
+            meta="Buy It Now · full control"
             desc="Search the catalog, set condition, photos and price for one card. Best for high-value singles."
             onClick={() => app.nav.push('sell_single')}
           />

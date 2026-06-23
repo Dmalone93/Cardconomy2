@@ -112,15 +112,6 @@ function SellBulkScreen({ app }) {
               ))}
             </div>
 
-            {/* listing format */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
-              <button onClick={() => setListType('buynow')} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '11px 0', borderRadius: 4,
-                fontFamily: TB.sans, fontWeight: 700, fontSize: 13.5, background: listType === 'buynow' ? 'var(--fill)' : TB.surface, color: listType === 'buynow' ? '#fff' : TB.ink2,
-                boxShadow: listType === 'buynow' ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{IconB.bolt({ width: 14, height: 14 })} Buy It Now</button>
-              <button onClick={() => setListType('auction')} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '11px 0', borderRadius: 4,
-                fontFamily: TB.sans, fontWeight: 700, fontSize: 13.5, background: listType === 'auction' ? 'var(--fill)' : TB.surface, color: listType === 'auction' ? '#fff' : TB.ink2,
-                boxShadow: listType === 'auction' ? 'none' : 'inset 0 0 0 1px var(--line)' }}>{IconB.gavel({ width: 14, height: 14 })} Auction</button>
-            </div>
 
             {/* toggles */}
             <div style={{ background: TB.surface, borderRadius: 4, padding: '4px 14px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -164,7 +155,7 @@ function SellBulkScreen({ app }) {
               display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconB.check({ width: 44, height: 44 })}</div>
             <h1 style={{ margin: '20px 0 4px', fontFamily: TB.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>{listed} cards listed!</h1>
             <p style={{ fontFamily: TB.sans, fontSize: 14, color: TB.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 290 }}>
-              Your cards are live on the marketplace{listType === 'auction' ? ' as 7-day auctions' : ''}. We'll notify you on every sale and offer.
+              Your cards are live on the marketplace. We'll notify you on every sale and offer.
             </p>
             {/* mini grid of what went live */}
             <div className="noscroll" style={{ display: 'flex', gap: 8, overflowX: 'auto', margin: '20px -24px 0', padding: '0 24px 6px' }}>
@@ -225,7 +216,7 @@ function BulkPriceRow({ c, price, listType, excluded, onToggle }) {
       </div>
       <div style={{ textAlign: 'right', flexShrink: 0 }}>
         <div style={{ fontFamily: TB.sans, fontWeight: 700, fontSize: 14, color: excluded ? TB.faint : TB.ink, textDecoration: excluded ? 'line-through' : 'none' }}>{moneyB(price, { cents: false })}</div>
-        <div style={{ fontFamily: TB.sans, fontSize: 10, color: TB.muted }}>{listType === 'auction' ? 'start bid' : 'list price'}</div>
+        <div style={{ fontFamily: TB.sans, fontSize: 10, color: TB.muted }}>list price</div>
       </div>
       <button onClick={onToggle} style={{ width: 26, height: 26, borderRadius: 999, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
         background: excluded ? TB.surface2 : 'var(--ink)', color: excluded ? TB.muted : '#fff',

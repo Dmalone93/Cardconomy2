@@ -84,7 +84,6 @@ function Header({ app, openMega, megaOpen }) {
             <NavBtn key={g.id} onClick={() => app.go('search', { game: g.id })}>{g.short}</NavBtn>
           ))}
           <span style={{ width: 1, height: 20, background: 'var(--line)', margin: '0 8px' }} />
-          <NavBtn onClick={() => app.go('search', { type: 'auction' })}>Auctions</NavBtn>
           <NavBtn onClick={() => app.go('search', { cond: 'Graded only' })}>Graded</NavBtn>
           <NavBtn onClick={() => app.go('search', {})}>Bulk lots</NavBtn>
           <NavBtn onClick={() => app.go('trade')}>Trade</NavBtn>
@@ -159,7 +158,7 @@ function MegaMenu({ app, open, close }) {
 // ── footer ───────────────────────────────────────────────────
 function Footer({ app }) {
   const cols = [
-    ['Buy', ['Browse all', 'Auctions', 'Graded slabs', 'Bulk lots', 'Price guide']],
+    ['Buy', ['Browse all', 'Graded slabs', 'Bulk lots', 'Price guide']],
     ['Sell', ['List a card', 'Sell to a shop', 'Trade cards', 'Seller fees', 'Bulk tools']],
     ['Local shops', ['Find a shop', 'Enroll your shop', 'The Vault', 'Trade hubs', 'Shop dashboard (demo)']],
     ['Company', ['About', 'How it works', 'Buyer Protection', 'Authentication', 'Help center']],
@@ -178,7 +177,7 @@ function Footer({ app }) {
             <div style={{ fontWeight: 700, fontSize: 13.5, marginBottom: 12 }}>{h}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
               {items.map(i => <button key={i} onClick={() => {
-                const r = { 'Find a shop': ['storefront', { shop: 'gnome' }], 'Enroll your shop': ['enroll'], 'The Vault': ['storefront', { shop: 'gnome' }], 'Trade hubs': ['trade'], 'List a card': ['sell_single'], 'Sell to a shop': ['sell'], 'Trade cards': ['trade'], 'Browse all': ['search', {}], 'Auctions': ['search', { type: 'auction' }], 'Graded slabs': ['search', { cond: 'Graded only' }], 'Bulk lots': ['search', {}], 'Shop dashboard (demo)': ['shop_dash'], 'Seller fees': ['fees'], 'How it works': ['howitworks'] }[i];
+                const r = { 'Find a shop': ['storefront', { shop: 'gnome' }], 'Enroll your shop': ['enroll'], 'The Vault': ['storefront', { shop: 'gnome' }], 'Trade hubs': ['trade'], 'List a card': ['sell_single'], 'Sell to a shop': ['sell'], 'Trade cards': ['trade'], 'Browse all': ['search', {}], 'Graded slabs': ['search', { cond: 'Graded only' }], 'Bulk lots': ['search', {}], 'Shop dashboard (demo)': ['shop_dash'], 'Seller fees': ['fees'], 'How it works': ['howitworks'] }[i];
                 if (r) app.go(r[0], r[1] || {}); else app.toast(i);
               }} style={{ textAlign: 'left', fontSize: 13, color: 'rgba(255,255,255,0.6)' }}>{i}</button>)}
             </div>

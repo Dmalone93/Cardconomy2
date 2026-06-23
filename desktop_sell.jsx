@@ -10,7 +10,7 @@ const CATALOG_SL = LISTINGS.map(l => ({ name: l.name, subtitle: l.subtitle, game
 // ── SELL HUB ─────────────────────────────────────────────────
 function DSell({ app }) {
   const opts = [
-    { k: 'single', tint: 'var(--accent)', icon: IconSl.tag, title: 'List a single card', meta: 'Buy It Now or auction', desc: 'Search the catalog, set condition, add photos and price one card with full control.', go: () => app.go('sell_single') },
+    { k: 'single', tint: 'var(--accent)', icon: IconSl.tag, title: 'List a single card', meta: 'Buy It Now · full control', desc: 'Search the catalog, set condition, add photos and price one card with full control.', go: () => app.go('sell_single') },
     { k: 'bulk', tint: 'var(--gold)', icon: IconSl.bolt, title: 'Bulk list a stack', meta: 'Upload · auto-priced', desc: 'Drop a CSV or photos of many cards. We auto-price each at market — review and publish them all at once.', go: () => app.go('sell_bulk') },
     { k: 'shop', tint: '#2f8f5b', icon: IconSl.shield, title: 'Sell to a local shop', meta: 'In-person · cash or credit', desc: 'Got hundreds of cards? Start a submission and finish at the counter. Best on your phone.', go: () => app.toast('Continue on the Cardonomy app →') },
     { k: 'trade', tint: '#7c3aed', icon: IconSl.gavel, title: 'Trade with collectors', meta: 'Card-for-card', desc: 'Swap directly with nearby collectors and meet at a local shop. Available in the app.', go: () => app.toast('Continue on the Cardonomy app →') },
@@ -145,15 +145,7 @@ function DSellSingle({ app }) {
           {step === 3 && (
             <div>
               <h2 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 24, margin: '0 0 18px' }}>Set your price</h2>
-              <div style={{ display: 'flex', gap: 12, marginBottom: 18 }}>
-                {[['buynow', IconSl.bolt, 'Buy It Now', 'Fixed price'], ['auction', IconSl.gavel, 'Auction', 'Let buyers bid']].map(([v, ic, t, s]) => (
-                  <button key={v} onClick={() => setListType(v)} style={{ flex: 1, textAlign: 'left', padding: 16, borderRadius: 14, background: listType === v ? 'var(--accent-wash)' : 'var(--surface)', boxShadow: listType === v ? 'inset 0 0 0 2px var(--accent)' : 'inset 0 0 0 1px var(--line)' }}>
-                    <div style={{ color: listType === v ? 'var(--accent)' : 'var(--muted)', marginBottom: 6 }}>{ic({ width: 20, height: 20 })}</div>
-                    <div style={{ fontWeight: 700, fontSize: 15 }}>{t}</div><div style={{ fontSize: 12.5, color: 'var(--muted)' }}>{s}</div>
-                  </button>
-                ))}
-              </div>
-              <Label>{listType === 'auction' ? 'Starting bid' : 'Your price'}</Label>
+              <Label>Your price</Label>
               <div style={{ display: 'flex', alignItems: 'center', background: 'var(--surface)', borderRadius: 14, padding: '14px 18px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
                 <span style={{ fontFamily: TSl.mono, fontWeight: 700, fontSize: 28, color: 'var(--muted)', marginRight: 6 }}>£</span>
                 <input type="number" value={price} onChange={e => setPrice(e.target.value)} placeholder={String(suggested)} style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TSl.mono, fontWeight: 700, fontSize: 28, minWidth: 0 }} />
@@ -170,7 +162,7 @@ function DSellSingle({ app }) {
             <div>
               <h2 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 24, margin: '0 0 18px' }}>Review listing</h2>
               <div style={{ background: 'var(--surface)', borderRadius: 16, padding: 20, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                {[['Format', listType === 'auction' ? 'Auction' : 'Buy It Now'], ['Condition', graded ? grader.toUpperCase() + ' ' + grade : cond], ['Photos', photoCount + ' added'], ['List price', mSl(+price || suggested)], ['Seller fee', mSl((+price || suggested) * 0.09) + ' (9%)']].map(([k, v], i) => (
+                {[['Format', 'Buy It Now'], ['Condition', graded ? grader.toUpperCase() + ' ' + grade : cond], ['Photos', photoCount + ' added'], ['List price', mSl(+price || suggested)], ['Seller fee', mSl((+price || suggested) * 0.09) + ' (9%)']].map(([k, v], i) => (
                   <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--line-2)', fontSize: 14.5 }}><span style={{ color: 'var(--muted)' }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span></div>
                 ))}
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 14 }}><span style={{ fontWeight: 700, fontSize: 16 }}>You earn</span><span style={{ fontFamily: TSl.mono, fontWeight: 700, fontSize: 20, color: 'var(--up)' }}>{mSl((+price || suggested) * 0.91)}</span></div>

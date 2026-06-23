@@ -97,7 +97,6 @@ function GameCarousel({ app }) {
 function DCard({ item, app }) {
   const [hover, setHover] = React.useState(false);
   const watched = app.isWatched(item.id);
-  const auction = item.type === 'auction';
   return (
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       onClick={() => app.go('listing', { id: item.id })} style={{ background: 'var(--surface)', borderRadius: 14, overflow: 'hidden', cursor: 'pointer',
@@ -118,11 +117,9 @@ function DCard({ item, app }) {
           {item.market ? <DeltaH from={item.history ? item.history[0] : item.market} to={item.price} /> : null}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 9 }}>
-          <span style={{ fontSize: 11.5, color: 'var(--muted)' }}>{auction ? item.bids + ' bids \u00b7 ' + item.timeLeft : (item.shipping === 0 ? 'Free shipping' : mH(item.shipping) + ' ship')}</span>
-          {!auction && (
+          <span style={{ fontSize: 11.5, color: 'var(--muted)' }}>{item.shipping === 0 ? 'Free shipping' : mH(item.shipping) + ' ship'}</span>
             <button onClick={(e) => { e.stopPropagation(); app.addToCart(item.id); }} style={{ fontSize: 12, fontWeight: 700, color: app.inCart(item.id) ? 'var(--up)' : 'var(--ink)',
               border: '1.5px solid ' + (app.inCart(item.id) ? 'var(--up)' : 'var(--ink)'), borderRadius: 8, padding: '4px 10px' }}>{app.inCart(item.id) ? '✓ In cart' : '+ Cart'}</button>
-          )}
         </div>
       </div>
     </div>

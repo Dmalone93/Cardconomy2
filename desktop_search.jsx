@@ -5,7 +5,7 @@ const { T: TSe, money: mSe } = window;
 const { GAMES: GAMESS, SETS: SETSS, LISTINGS: LISTSS, setById: setByIdSS } = window;
 const { DCard: DCardS } = window;
 
-const SORTS_D = ['Best match', 'Price: low to high', 'Price: high to low', 'Ending soonest', 'Biggest discount'];
+const SORTS_D = ['Best match', 'Price: low to high', 'Price: high to low', 'Biggest discount'];
 
 function FilterGroup({ title, children, open = true }) {
   const [o, setO] = React.useState(open);
@@ -55,7 +55,6 @@ function DSearch({ app, params = {} }) {
   });
   if (sort === 'Price: low to high') res = [...res].sort((a, b) => a.price - b.price);
   if (sort === 'Price: high to low') res = [...res].sort((a, b) => b.price - a.price);
-  if (sort === 'Ending soonest') res = [...res].sort((a, b) => (a.type === 'auction' ? 0 : 1) - (b.type === 'auction' ? 0 : 1));
   if (sort === 'Biggest discount') res = [...res].sort((a, b) => (a.price / a.market) - (b.price / b.market));
 
   const title = q ? '"' + q + '"' : setF !== 'all' ? setByIdSS(setF).name : game !== 'all' ? (GAMESS.find(g => g.id === game)?.name || 'All cards') : 'All cards';
@@ -90,7 +89,7 @@ function DSearch({ app, params = {} }) {
             {['Any grade', 'Graded only', 'PSA 10', 'Raw / Ungraded'].map(c => <Check key={c} on={cond === c} onClick={() => setCond(c)} label={c} />)}
           </FilterGroup>
           <FilterGroup title="Listing type">
-            {[['all', 'All listings'], ['buynow', 'Buy It Now'], ['auction', 'Auctions']].map(([v, l]) => <Check key={v} on={type === v} onClick={() => setType(v)} label={l} />)}
+            {[['all', 'All listings'], ['buynow', 'Buy It Now']].map(([v, l]) => <Check key={v} on={type === v} onClick={() => setType(v)} label={l} />)}
           </FilterGroup>
           <FilterGroup title="Max price">
             <input type="range" min="10" max="35000" step="10" value={maxPrice} onChange={e => setMaxPrice(+e.target.value)} style={{ width: '100%', accentColor: 'var(--accent)' }} />
@@ -123,7 +122,7 @@ function DSearch({ app, params = {} }) {
               {game !== 'all' && <Pill label={GAMESS.find(g => g.id === game)?.short} onX={() => { setGame('all'); setSetF('all'); }} />}
               {setF !== 'all' && <Pill label={setByIdSS(setF).name.replace(/\s*\(.*\)/, '')} onX={() => setSetF('all')} />}
               {cond !== 'Any grade' && <Pill label={cond} onX={() => setCond('Any grade')} />}
-              {type !== 'all' && <Pill label={type === 'auction' ? 'Auctions' : 'Buy It Now'} onX={() => setType('all')} />}
+              {type !== 'all' && <Pill label="Buy It Now" onX={() => setType('all')} />}
               {freeShip && <Pill label="Free shipping" onX={() => setFreeShip(false)} />}
             </div>
             <label style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
