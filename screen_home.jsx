@@ -421,9 +421,9 @@ function HomeScreen({ app }) {
       <div style={{ padding: '14px 16px 10px', background: T.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 13, position: 'relative' }}>
           <button onClick={() => app.openMenu()} style={{ color: T.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{Icon.menu({})}</button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 7, position: 'absolute', left: '50%', transform: 'translateX(calc(-50% - 20px))' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 7, position: 'absolute', left: '50%', transform: 'translateX(calc(-50% - 20px))', lineHeight: 1 }}>
             <Logo size={32} color={T.accent} />
-            <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 20, letterSpacing: 1.5, color: T.ink }}>CARDCONOMY</span>
+            <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 20, letterSpacing: 1.5, color: T.ink, lineHeight: 1, display: 'block' }}>CARDCONOMY</span>
           </div>
           <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: T.surface2, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
             {Icon.cart({ width: 20, height: 20 })}

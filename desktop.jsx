@@ -57,9 +57,9 @@ function Header({ app, openMega, megaOpen }) {
   return (
     <header style={{ background: 'var(--surface)', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 60 }}>
       <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 24, height: 72 }}>
-        <button onClick={() => app.go('home')} style={{ display: 'flex', alignItems: 'center', gap: 11, flexShrink: 0 }}>
+        <button onClick={() => app.go('home')} style={{ display: 'flex', alignItems: 'center', gap: 11, flexShrink: 0, lineHeight: 1 }}>
           <Logo size={36} color="var(--ink)" />
-          <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 24, letterSpacing: 1.5, color: 'var(--ink)' }}>CARDCONOMY</span>
+          <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 24, letterSpacing: 1.5, color: 'var(--ink)', lineHeight: 1, display: 'block' }}>CARDCONOMY</span>
         </button>
         <form onSubmit={submit} style={{ flex: 1, maxWidth: 560, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-2)',
           borderRadius: 11, padding: '0 8px 0 14px', height: 46, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
