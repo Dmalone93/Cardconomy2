@@ -80,7 +80,7 @@ function LGSPitchScreen({ app }) {
   const shopStats = [
     { value: '12', label: 'shops enrolled' },
     { value: '4.8', label: 'avg rating' },
-    { value: '\u00A30', label: 'platform fees' },
+    { value: '\xA30', label: 'platform fees' },
   ];
 
   return (
