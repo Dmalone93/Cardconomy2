@@ -18,7 +18,7 @@ function SearchScreen({ app, params = {} }) {
     'Surging Sparks booster box', 'Pikachu Illustration Rare', 'Ragavan, Nimble Pilferer', 'Victor Wembanyama Prizm',
     'Scarlet & Violet 151', 'Dark Magician', 'Umbreon VMAX alt art', 'Monkey D. Luffy leader', 'PSA 10 graded slabs',
     'Modern Horizons 3', 'Omnimon alt art', 'Mewtwo 1st edition'];
-  const [typed, setTyped] = React.useState('');
+  const [typed, setTyped] = React.useState(SEARCH_EX[0]);
   React.useEffect(() => {
     let idx = 0, ch = 0, mode = 'type', timer;
     const tick = () => {
