@@ -791,7 +791,7 @@ function EnrollShopScreen({ app }) {
 
           {/* stat strip */}
           <div style={{ display: 'flex', gap: 10, padding: 16, marginTop: -2 }}>
-            {[['£0', 'to enroll'], ['2 min', 'to sign up'], ['4%', 'seller fee']].map(([v, k]) => (
+            {[['£0', 'to enroll'], ['2 min', 'to sign up'], ['6%+30p', 'total fee']].map(([v, k]) => (
               <div key={k} style={{ flex: 1, background: TF.surface, borderRadius: 13, padding: '12px 10px', textAlign: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 18 }}>{v}</div>
                 <div style={{ fontFamily: TF.sans, fontSize: 10.5, color: TF.muted }}>{k}</div>

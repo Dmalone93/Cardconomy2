@@ -27,7 +27,7 @@ function HowItWorksScreen({ app }) {
       tagline: 'List it, sell it, get paid',
       steps: [
         { num: '1', title: 'List in seconds', desc: 'Snap photos, set your price using our market data, and go live. Bulk scan to list hundreds of cards at once.' },
-        { num: '2', title: 'Sell on your terms', desc: 'Accept offers, bundle shipping, and connect directly with buyers. Just 4% seller fee \u2014 the lowest in the market.' },
+        { num: '2', title: 'Sell on your terms', desc: 'Accept offers, bundle shipping, and connect directly with buyers. Just 6% + 30p total fee \u2014 the lowest in the market.' },
         { num: '3', title: 'Cash out fast', desc: 'Ship your cards, confirm delivery, and get your payout. Or sell directly to a local game shop for instant cash.' },
       ],
     },

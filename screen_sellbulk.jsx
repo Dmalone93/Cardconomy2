@@ -46,7 +46,7 @@ function SellBulkScreen({ app }) {
   const listed = included.length;
   const grossEach = (c) => Math.round(c.market * mult * (c.qty || 1));
   const gross = included.reduce((s, c) => s + grossEach(c), 0);
-  const fee = Math.round(gross * 0.09);
+  const fee = Math.round(gross * 0.06 + included.length * 0.30);
   const net = gross - fee - (freeShip ? included.length * 1 : 0);
 
   const goBack = () => {
@@ -134,7 +134,7 @@ function SellBulkScreen({ app }) {
 
             {/* payout summary */}
             <div style={{ marginTop: 16, background: 'var(--fill)', borderRadius: 4, padding: 16, color: '#fff' }}>
-              {[['List price total', moneyB(gross)], ['Seller fee (9%)', '–' + moneyB(fee)]].map(([k, v]) => (
+              {[['List price total', moneyB(gross)], ['Seller fee (6% + 30p)', '\u2013' + moneyB(fee)]].map(([k, v]) => (
                 <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '4px 0', fontFamily: TB.sans, fontSize: 13.5, color: 'rgba(255,255,255,0.75)' }}>
                   <span>{k}</span><span style={{ fontFamily: TB.sans, fontWeight: 600 }}>{v}</span>
                 </div>

@@ -162,10 +162,10 @@ function DSellSingle({ app }) {
             <div>
               <h2 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 24, margin: '0 0 18px' }}>Review listing</h2>
               <div style={{ background: 'var(--surface)', borderRadius: 16, padding: 20, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                {[['Format', 'Buy It Now'], ['Condition', graded ? grader.toUpperCase() + ' ' + grade : cond], ['Photos', photoCount + ' added'], ['List price', mSl(+price || suggested)], ['Seller fee', mSl((+price || suggested) * 0.09) + ' (9%)']].map(([k, v], i) => (
+                {[['Format', 'Buy It Now'], ['Condition', graded ? grader.toUpperCase() + ' ' + grade : cond], ['Photos', photoCount + ' added'], ['List price', mSl(+price || suggested)], ['Seller fee', mSl((+price || suggested) * 0.06 + 0.30) + ' (6% + 30p)']].map(([k, v], i) => (
                   <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--line-2)', fontSize: 14.5 }}><span style={{ color: 'var(--muted)' }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span></div>
                 ))}
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 14 }}><span style={{ fontWeight: 700, fontSize: 16 }}>You earn</span><span style={{ fontFamily: TSl.mono, fontWeight: 700, fontSize: 20, color: 'var(--up)' }}>{mSl((+price || suggested) * 0.91)}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 14 }}><span style={{ fontWeight: 700, fontSize: 16 }}>You earn</span><span style={{ fontFamily: TSl.mono, fontWeight: 700, fontSize: 20, color: 'var(--up)' }}>{mSl((+price || suggested) * 0.94 - 0.30)}</span></div>
               </div>
             </div>
           )}
@@ -207,7 +207,7 @@ function DSellBulk({ app }) {
   const included = detected.filter(c => !excluded[c.id]);
   const priceEach = (c) => Math.round(c.market * mult * (c.qty || 1));
   const gross = included.reduce((s, c) => s + priceEach(c), 0);
-  const net = Math.round(gross * 0.91);
+  const net = Math.round(gross * 0.94 - included.length * 0.30);
 
   if (phase === 'done') return (
     <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
@@ -271,7 +271,7 @@ function DSellBulk({ app }) {
             })}
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 26, marginTop: 16, fontSize: 15 }}>
-            <span style={{ color: 'var(--muted)' }}>You earn after 9% fee: <b style={{ color: 'var(--up)', fontFamily: TSl.mono, fontSize: 17 }}>{mSl(net)}</b></span>
+            <span style={{ color: 'var(--muted)' }}>You earn after 6% + 30p fee: <b style={{ color: 'var(--up)', fontFamily: TSl.mono, fontSize: 17 }}>{mSl(net)}</b></span>
           </div>
         </div>
       )}

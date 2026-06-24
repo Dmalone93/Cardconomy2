@@ -235,14 +235,14 @@ function SellScreen({ app }) {
                   ['Condition', graded ? grader.toUpperCase()+' '+grade : cond],
                   ['Photos', photoCount + ' added'],
                   ['Postage', freeShip ? 'Free Royal Mail (you pay)' : 'Buyer pays'],
-                  ['Seller fee', moneySE(+price * 0.09) + ' (9%)']].map(([k,v]) => (
+                  ['Seller fee', moneySE(+price * 0.06 + 0.30) + ' (6% + 30p)']].map(([k,v]) => (
                   <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', borderBottom: '1px solid var(--line-2)', fontFamily: TSE.sans, fontSize: 14 }}>
                     <span style={{ color: TSE.muted }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span>
                   </div>
                 ))}
                 <div style={{ display: 'flex', justifyContent: 'space-between', paddingTop: 12, fontFamily: TSE.sans }}>
                   <span style={{ fontWeight: 700, fontSize: 15 }}>You earn</span>
-                  <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 18, color: TSE.up }}>{moneySE(+price * 0.91 + (freeShip?-4:0))}</span>
+                  <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 18, color: TSE.up }}>{moneySE(+price * 0.94 - 0.30 + (freeShip?-4:0))}</span>
                 </div>
               </div>
             </div>
