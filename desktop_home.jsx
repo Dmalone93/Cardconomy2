@@ -222,60 +222,77 @@ function DHome({ app }) {
       {/* ── Hero Banner ── */}
       <div className="wrap" style={{ marginTop: 28 }}>
         <div style={{ display: 'flex', alignItems: 'center', background: 'var(--fill)', borderRadius: 20,
-          overflow: 'hidden', height: 320, position: 'relative' }}>
+          overflow: 'hidden', height: 380, position: 'relative' }}>
           {/* left: text */}
           <div style={{ flex: 1, padding: '0 48px', position: 'relative', zIndex: 2 }}>
-            <h1 style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 34, color: '#fff',
-              letterSpacing: -1, lineHeight: 1.1, margin: '0 0 12px' }}>
+            <h1 style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 38, color: '#fff',
+              letterSpacing: -1.2, lineHeight: 1.08, margin: '0 0 14px' }}>
               The UK home for<br/>trading cards
             </h1>
-            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, margin: '0 0 20px', maxWidth: 360 }}>
+            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, margin: '0 0 22px', maxWidth: 380 }}>
               Buy, sell, and trade across every game. Lower fees than anyone else, with real buyer protection and local game shop support.
             </p>
-            <div style={{ display: 'flex', gap: 10 }}>
-              <button onClick={() => app.go('search')} style={{ padding: '12px 22px', borderRadius: 10,
+            <div style={{ display: 'flex', gap: 10, marginBottom: 24 }}>
+              <button onClick={() => app.go('search')} style={{ padding: '13px 24px', borderRadius: 10,
                 background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer' }}>
                 Start browsing
               </button>
-              <button onClick={() => app.go('howitworks')} style={{ padding: '12px 22px', borderRadius: 10,
+              <button onClick={() => app.go('pitch_seller')} style={{ padding: '13px 24px', borderRadius: 10,
                 background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)', fontWeight: 700, fontSize: 14,
                 border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>
-                How it works
+                Start selling
               </button>
             </div>
+            {/* trust strip */}
+            <div style={{ display: 'flex', gap: 20 }}>
+              {[
+                [IconH.shield, 'Buyer Protection'],
+                [IconH.tag, '6% + 30p fees'],
+                [IconH.bolt, '5 games supported'],
+              ].map(([ic, label], i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.5)', fontSize: 12.5, fontWeight: 600 }}>
+                  {ic({ width: 14, height: 14 })}
+                  <span>{label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          {/* right: card fan — zoomed in, clipped */}
-          <div style={{ width: 420, height: '100%', position: 'relative', flexShrink: 0 }}>
+          {/* right: tight card fan with 5 cards */}
+          <div style={{ width: 460, height: '100%', position: 'relative', flexShrink: 0 }}>
             {(() => {
-              const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03')].filter(Boolean);
+              const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03'), byIdH('l02'), byIdH('l09')].filter(Boolean);
               const layouts = [
-                { rotate: -12, x: 40, y: 50, z: 1 },
-                { rotate: 2, x: 170, y: 20, z: 3 },
-                { rotate: 16, x: 300, y: 60, z: 2 },
+                { rotate: -16, x: 20,  y: 80, z: 1 },
+                { rotate: -6,  x: 100, y: 40, z: 2 },
+                { rotate: 3,   x: 180, y: 20, z: 5 },
+                { rotate: 12,  x: 260, y: 45, z: 3 },
+                { rotate: 20,  x: 330, y: 85, z: 1 },
               ];
-              return fanCards.slice(0, 3).map((card, i) => {
+              return fanCards.slice(0, 5).map((card, i) => {
                 const l = layouts[i];
+                const isFront = l.z === 5;
                 return (
                   <div key={card.id} onClick={() => app.go('listing', { id: card.id })} style={{
-                    position: 'absolute', width: 170, height: 238, borderRadius: 6, cursor: 'pointer',
+                    position: 'absolute', width: isFront ? 180 : 155, height: isFront ? 252 : 217, borderRadius: 8, cursor: 'pointer',
                     left: l.x, top: l.y,
                     transform: `rotate(${l.rotate}deg)`,
-                    zIndex: l.z, boxShadow: '0 12px 36px rgba(0,0,0,0.35), 0 4px 10px rgba(0,0,0,0.2)',
+                    zIndex: l.z,
+                    boxShadow: isFront ? '0 16px 48px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.25)' : '0 8px 24px rgba(0,0,0,0.3)',
                     border: '1px solid rgba(255,255,255,0.08)', overflow: 'hidden',
                     transition: 'transform 0.3s ease',
+                    filter: isFront ? 'none' : 'brightness(0.85)',
                   }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = `rotate(${l.rotate}deg) scale(1.05) translateY(-6px)`; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = `rotate(${l.rotate}deg)`; }}
+                    onMouseEnter={e => { e.currentTarget.style.transform = `rotate(${l.rotate}deg) scale(1.06) translateY(-8px)`; e.currentTarget.style.filter = 'none'; }}
+                    onMouseLeave={e => { e.currentTarget.style.transform = `rotate(${l.rotate}deg)`; e.currentTarget.style.filter = isFront ? 'none' : 'brightness(0.85)'; }}
                   >
-                    <CardArtH item={card} w={170} radius={6} />
-                    <div style={{ position: 'absolute', inset: 0, borderRadius: 6, zIndex: 5, pointerEvents: 'none',
+                    <CardArtH item={card} w={isFront ? 180 : 155} radius={8} />
+                    <div style={{ position: 'absolute', inset: 0, borderRadius: 8, zIndex: 5, pointerEvents: 'none',
                       background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 42%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 58%, transparent 75%)' }} />
                   </div>
                 );
               });
             })()}
-            {/* subtle glow */}
-            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 60% 50%, rgba(255,255,255,0.04) 0%, transparent 60%)', pointerEvents: 'none' }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 55% 45%, rgba(255,255,255,0.06) 0%, transparent 55%)', pointerEvents: 'none' }} />
           </div>
         </div>
       </div>
