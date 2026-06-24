@@ -171,7 +171,7 @@ function VerifyScreen({ app }) {
             })}
             {tier < 2 && (
               <button onClick={() => app.setTier(2)} style={{ width: '100%', marginTop: 6, background: TV.surface2, color: TV.ink, borderRadius: 11, padding: 12, fontFamily: TV.sans, fontWeight: 700, fontSize: 13.5, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-                Simulate reaching the milestone →
+                Preview Trusted Seller status →
               </button>
             )}
           </div>

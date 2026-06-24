@@ -148,7 +148,7 @@ function FeesScreen({ app }) {
         </div>
         <div style={{ fontSize: 11, color: TFE.faint, marginTop: 10, lineHeight: 1.4 }}>
           Assumes card payment. Cardmarket includes Instant Credit (5%) + Trustee (1%).
-          CardNexus fees converted from EUR at approximate rate. Shipping: \u00A3{shipping.toFixed(2)}.
+          CardNexus fees converted from EUR at approximate rate. Shipping: £{shipping.toFixed(2)}.
         </div>
       </div>
 

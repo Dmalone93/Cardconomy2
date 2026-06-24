@@ -234,7 +234,7 @@ function DSellBulk({ app }) {
             <div style={{ fontWeight: 700, fontSize: 18 }}>Drop your CSV or photos here</div>
             <div style={{ color: 'var(--muted)', fontSize: 14, marginTop: 6 }}>or <span style={{ color: 'var(--ink)', fontWeight: 700 }}>browse files</span> · CSV, JPG, PNG up to 50MB</div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16, color: 'var(--muted)', fontSize: 13.5 }}>{IconSl.bolt({ width: 16, height: 16, style: { color: 'var(--ink)' } })} Demo: click the box to load a sample 10-card collection.</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16, color: 'var(--muted)', fontSize: 13.5 }}>{IconSl.bolt({ width: 16, height: 16, style: { color: 'var(--ink)' } })} Click the box above to load a sample collection.</div>
         </div>
       )}
 

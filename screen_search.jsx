@@ -8,6 +8,7 @@ const { ProductCard: ProductCardS } = window;
 const { HOT_DEALS: HOT_DEALS_S } = window;
 
 const CONDITIONS = ['Any grade', 'Graded only', 'PSA 10', 'Raw / Ungraded'];
+const COND_LABELS = { 'Any grade': 'Any grade', 'Graded only': 'Graded only', 'PSA 10': 'PSA 10', 'Raw / Ungraded': 'Raw (ungraded)' };
 const SORTS = ['Best match', 'Price: low to high', 'Price: high to low'];
 
 function SearchScreen({ app, params = {} }) {
@@ -356,6 +357,9 @@ function SearchScreen({ app, params = {} }) {
         <FilterGroup label="Condition">
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {CONDITIONS.map(c => <ChipS key={c} active={cond===c} onClick={() => setCond(c)}>{c}</ChipS>)}
+          </div>
+          <div style={{ marginTop: 10, fontSize: 11, color: TS.faint, lineHeight: 1.6, fontFamily: TS.sans }}>
+            <b style={{ color: TS.muted }}>Condition guide:</b> NM = Near Mint (like new) · LP = Lightly Played (minor edge wear) · MP = Moderately Played (visible wear) · HP = Heavily Played (heavy wear). Graded cards are professionally assessed by PSA, BGS, or CGC.
           </div>
         </FilterGroup>
         <FilterGroup label={'Max price · ' + moneyS(maxPrice, {cents:false})}>

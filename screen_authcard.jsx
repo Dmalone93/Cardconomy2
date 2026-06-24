@@ -124,7 +124,7 @@ function AuthCardScreen({ app, params = {} }) {
               })}
             </div>
             {stage < AUTH_STEPS.length - 1 ? (
-              <button onClick={() => setStage(stage + 1)} style={{ width: '100%', marginTop: 16, background: TAU.surface2, color: TAU.ink, borderRadius: 14, padding: 14, fontFamily: TAU.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1px var(--line)' }}>Advance status (demo) →</button>
+              <button onClick={() => setStage(stage + 1)} style={{ width: '100%', marginTop: 16, background: TAU.surface2, color: TAU.ink, borderRadius: 14, padding: 14, fontFamily: TAU.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1px var(--line)' }}>Check authentication progress →</button>
             ) : (
               <div style={{ marginTop: 16, textAlign: 'center', background: 'var(--up-wash)', borderRadius: 14, padding: 18 }}>
                 <div style={{ marginBottom: 8 }}><AuthSeal size="lg" /></div>

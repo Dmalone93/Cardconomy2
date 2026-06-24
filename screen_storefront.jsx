@@ -918,7 +918,7 @@ function EnrollShopScreen({ app }) {
               <div>
                 <label style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink, display: 'block', marginBottom: 6 }}>One-line description</label>
                 <input value={form.bio} onChange={e => set('bio', e.target.value)}
-                  placeholder="e.g. Manchester\u2019s friendliest card shop" style={inputStyle} />
+                  placeholder="e.g. Manchester&#x2019;s friendliest card shop" style={inputStyle} />
               </div>
             </div>
           </div>

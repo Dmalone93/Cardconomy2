@@ -160,7 +160,7 @@ function Footer({ app }) {
   const cols = [
     ['Buy', ['Browse all', 'Graded slabs', 'Bulk lots', 'Price guide']],
     ['Sell', ['List a card', 'Sell to a shop', 'Trade cards', 'Seller fees', 'Bulk tools']],
-    ['Local shops', ['Find a shop', 'Enroll your shop', 'The Vault', 'Trade hubs', 'Shop dashboard (demo)']],
+    ['Local shops', ['Find a shop', 'Enroll your shop', 'The Vault', 'Trade hubs', 'Shop dashboard']],
     ['Company', ['About', 'How it works', 'Buyer Protection', 'Authentication', 'Help center']],
   ];
   return (
@@ -177,7 +177,7 @@ function Footer({ app }) {
             <div style={{ fontWeight: 700, fontSize: 13.5, marginBottom: 12 }}>{h}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
               {items.map(i => <button key={i} onClick={() => {
-                const r = { 'Find a shop': ['storefront', { shop: 'gnome' }], 'Enroll your shop': ['enroll'], 'The Vault': ['storefront', { shop: 'gnome' }], 'Trade hubs': ['trade'], 'List a card': ['sell_single'], 'Sell to a shop': ['sell'], 'Trade cards': ['trade'], 'Browse all': ['search', {}], 'Graded slabs': ['search', { cond: 'Graded only' }], 'Bulk lots': ['search', {}], 'Shop dashboard (demo)': ['shop_dash'], 'Seller fees': ['fees'], 'How it works': ['howitworks'] }[i];
+                const r = { 'Find a shop': ['storefront', { shop: 'gnome' }], 'Enroll your shop': ['enroll'], 'The Vault': ['storefront', { shop: 'gnome' }], 'Trade hubs': ['trade'], 'List a card': ['sell_single'], 'Sell to a shop': ['sell'], 'Trade cards': ['trade'], 'Browse all': ['search', {}], 'Graded slabs': ['search', { cond: 'Graded only' }], 'Bulk lots': ['search', {}], 'Shop dashboard': ['shop_dash'], 'Seller fees': ['fees'], 'How it works': ['howitworks'] }[i];
                 if (r) app.go(r[0], r[1] || {}); else app.toast(i);
               }} style={{ textAlign: 'left', fontSize: 13, color: 'rgba(255,255,255,0.6)' }}>{i}</button>)}
             </div>

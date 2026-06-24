@@ -264,10 +264,10 @@ function SellShopScreen({ app }) {
             <p style={{ fontFamily: TSS.sans, fontSize: 13.5, color: TSS.muted, margin: '0 0 16px' }}>Big stack? Start with Live Sweep. You can mix methods.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <MethodRow hero icon={IconSS.camera({ width: 22, height: 22 })} title="Live Sweep Scan" sub="Flip the stack \u2014 we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
-              <MethodRow icon={IconSS.grid({ width: 22, height: 22 })} title="Batch Fan Photo" sub="9\u201312 cards per snap" time="~25 min" onClick={() => app.toast('Use Live Sweep for this demo')} />
-              <MethodRow icon={IconSS.check({ width: 22, height: 22 })} title="Set Checklist" sub="Tap cards off a set grid" time="varies" onClick={() => app.toast('Use Live Sweep for this demo')} />
-              <MethodRow icon={IconSS.search({ width: 22, height: 22 })} title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Use Live Sweep for this demo')} />
-              <MethodRow icon={<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M14 2v6h6M10 13h4M10 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>} title="Import List" sub="Manabox \u00b7 TCGplayer \u00b7 CSV" time="instant" onClick={() => app.toast('Use Live Sweep for this demo')} />
+              <MethodRow icon={IconSS.grid({ width: 22, height: 22 })} title="Batch Fan Photo" sub="9\u201312 cards per snap" time="~25 min" onClick={() => app.toast('Coming soon \u2014 use Live Sweep for now')} />
+              <MethodRow icon={IconSS.check({ width: 22, height: 22 })} title="Set Checklist" sub="Tap cards off a set grid" time="varies" onClick={() => app.toast('Coming soon \u2014 use Live Sweep for now')} />
+              <MethodRow icon={IconSS.search({ width: 22, height: 22 })} title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Coming soon \u2014 use Live Sweep for now')} />
+              <MethodRow icon={<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M14 2v6h6M10 13h4M10 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>} title="Import List" sub="Manabox \u00b7 TCGplayer \u00b7 CSV" time="instant" onClick={() => app.toast('Coming soon \u2014 use Live Sweep for now')} />
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TSS.surface2, borderRadius: 4, padding: '12px 13px' }}>
               <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconSS.bolt({ width: 16, height: 16 })}</span>
@@ -436,7 +436,7 @@ function Confirmation({ onThread, onHome, onShop }) {
       <button onClick={onThread} style={{ width: '100%', marginTop: 18, background: 'var(--ink)', color: '#fff', borderRadius: 4,
         padding: 15, fontFamily: TSS.sans, fontWeight: 700, fontSize: 15.5 }}>View message thread</button>
       <button onClick={onShop} style={{ width: '100%', marginTop: 9, background: TSS.surface, color: TSS.ink, borderRadius: 4,
-        padding: 13, fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Demo: see the shop's side →</button>
+        padding: 13, fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>See how the shop reviews your cards →</button>
       <button onClick={onHome} style={{ marginTop: 10, color: TSS.muted, fontFamily: TSS.sans, fontWeight: 600, fontSize: 14 }}>Back to browse</button>
     </div>
   );
@@ -495,7 +495,7 @@ function SellerThread({ app, onShop }) {
           </div>
         ) : (
           <button onClick={onShop} style={{ width: '100%', background: TSS.surface2, color: TSS.ink, borderRadius: 4, padding: 13,
-            fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Demo: see the shop's side →</button>
+            fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>See how the shop reviews your cards →</button>
         )}
       </div>
     </div>

@@ -445,8 +445,18 @@ function HomeScreen({ app }) {
       {/* ── Card Fan hero ── */}
       <CardFan app={app} />
 
+      {/* ── Social proof strip ── */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 24, padding: '14px 14px 0' }}>
+        {[['2,400+', 'cards listed'], ['180+', 'verified sellers'], ['12', 'local shops']].map(([num, label]) => (
+          <div key={label} style={{ textAlign: 'center' }}>
+            <div style={{ fontFamily: 'var(--heading)', fontWeight: 800, fontSize: 16, color: T.ink }}>{num}</div>
+            <div style={{ fontSize: 10.5, color: T.faint, fontFamily: T.sans }}>{label}</div>
+          </div>
+        ))}
+      </div>
+
       {/* ── How it works link ── */}
-      <div style={{ textAlign: 'center', padding: '16px 14px 4px' }}>
+      <div style={{ textAlign: 'center', padding: '10px 14px 4px' }}>
         <span onClick={() => app.nav.push('howitworks')} style={{ fontSize: 13, fontWeight: 600,
           color: 'var(--ink)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
       </div>
@@ -479,7 +489,7 @@ function HomeScreen({ app }) {
           6% + 30p total fees. Buyer protection on every order. Local game shop support built in.
         </div>
         <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
-          {[['6%+30p', 'Total fee'], ['5', 'Games'], ['3', 'Personas']].map(([num, label]) => (
+          {[['6%+30p', 'Total fee'], ['5', 'Games'], ['12', 'Local shops']].map(([num, label]) => (
             <div key={label}>
               <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 18, color: 'var(--ink)' }}>{num}</div>
               <div style={{ fontSize: 11, color: T.muted }}>{label}</div>

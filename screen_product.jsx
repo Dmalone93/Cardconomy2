@@ -149,7 +149,7 @@ function ProductScreen({ app, params }) {
   const hist = product.history || [product.market, product.low];
   const up = hist.length >= 2 ? hist[hist.length - 1] >= hist[0] : true;
   const [ptf, setPtf] = React.useState('30D');
-  const [chartOpen, setChartOpen] = React.useState(false);
+  const [chartOpen, setChartOpen] = React.useState(true);
   const vInfo = variantP ? variantP(product) : null;
   const demand = demandP ? demandP(product) : null;
 

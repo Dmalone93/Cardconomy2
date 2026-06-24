@@ -82,7 +82,7 @@ function ShopDashboard({ app, onCounter }) {
       {/* header */}
       <div style={{ padding: '50px 16px 0', background: TSH.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <button onClick={() => app.nav.pop()} style={{ color: TSH.ink, display: 'flex', alignItems: 'center', gap: 4, fontFamily: TSH.sans, fontSize: 14.5, fontWeight: 600 }}>{IconSH.back({ width: 18, height: 18 })} Exit demo</button>
+          <button onClick={() => app.nav.pop()} style={{ color: TSH.ink, display: 'flex', alignItems: 'center', gap: 4, fontFamily: TSH.sans, fontSize: 14.5, fontWeight: 600 }}>{IconSH.back({ width: 18, height: 18 })} Back</button>
           <span style={{ fontFamily: TSH.sans, fontSize: 10.5, fontWeight: 700, color: SHOP_SH.tint, background: 'var(--up-wash)', borderRadius: 7, padding: '4px 8px' }}>SHOP VIEW</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 12 }}>
@@ -676,7 +676,7 @@ function ShopInbox({ app, onOpen, onDashboard }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TSH.bg }}>
       <div style={{ padding: '50px 16px 0', background: TSH.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <button onClick={() => app.nav.pop()} style={{ color: TSH.ink, display: 'flex', alignItems: 'center', gap: 4, fontFamily: TSH.sans, fontSize: 14.5, fontWeight: 600 }}>{IconSH.back({ width: 18, height: 18 })} Exit demo</button>
+          <button onClick={() => app.nav.pop()} style={{ color: TSH.ink, display: 'flex', alignItems: 'center', gap: 4, fontFamily: TSH.sans, fontSize: 14.5, fontWeight: 600 }}>{IconSH.back({ width: 18, height: 18 })} Back</button>
           <span style={{ fontFamily: TSH.sans, fontSize: 10.5, fontWeight: 700, color: SHOP_SH.tint, background: 'var(--up-wash)', borderRadius: 7, padding: '4px 8px' }}>SHOP VIEW</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 12 }}>
@@ -740,9 +740,9 @@ function ShopInbox({ app, onOpen, onDashboard }) {
         {/* other queue items */}
         <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 12.5, color: TSH.muted, margin: '4px 0 9px', letterSpacing: 0.2 }}>EARLIER</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-          <QueueRow initial="S" name="Sam R." cards="64 cards" meta="18 min ago" tag="12 hits" tagColor={TSH.accent} onClick={() => app.toast('Demo focuses on Jordan\u2019s submission')} />
-          <QueueRow initial="D" name="Dana P." cards="310 cards" meta="1 hr ago · offer sent" tag="replied" tagColor="var(--up)" onClick={() => app.toast('Demo focuses on Jordan\u2019s submission')} />
-          <QueueRow initial="M" name="Miguel A." cards="1,420 cards" meta="3 hr ago · completed" tag="paid" tagColor={TSH.muted} onClick={() => app.toast('Demo focuses on Jordan\u2019s submission')} />
+          <QueueRow initial="S" name="Sam R." cards="64 cards" meta="18 min ago" tag="12 hits" tagColor={TSH.accent} onClick={() => app.toast('Tap Jordan\u2019s submission to review')} />
+          <QueueRow initial="D" name="Dana P." cards="310 cards" meta="1 hr ago · offer sent" tag="replied" tagColor="var(--up)" onClick={() => app.toast('Tap Jordan\u2019s submission to review')} />
+          <QueueRow initial="M" name="Miguel A." cards="1,420 cards" meta="3 hr ago · completed" tag="paid" tagColor={TSH.muted} onClick={() => app.toast('Tap Jordan\u2019s submission to review')} />
         </div>
       </div>
     </div>

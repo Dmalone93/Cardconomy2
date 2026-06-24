@@ -90,13 +90,13 @@ function SellHubScreen({ app }) {
           ))}
         </div>
 
-        {/* shop demo hint */}
+        {/* shop counter peek */}
         <button onClick={() => app.nav.push('shop')} style={{ marginTop: 4, display: 'flex', alignItems: 'center', gap: 10,
           background: 'transparent', border: '1.5px dashed var(--line)', borderRadius: 13, padding: '12px 14px', textAlign: 'left' }}>
           <span style={{ width: 30, height: 30, borderRadius: 9, background: SHOP_H.tint, color: '#fff', display: 'flex',
             alignItems: 'center', justifyContent: 'center', fontFamily: TH.sans, fontWeight: 800, fontSize: 14, flexShrink: 0 }}>{SHOP_H.initial}</span>
           <span style={{ flex: 1, fontFamily: TH.sans, fontSize: 12.5, color: TH.muted }}>
-            <b style={{ color: TH.ink2 }}>Demo:</b> peek at the shop\'s counter view
+            <b style={{ color: TH.ink2 }}>Shop counter</b> See how shops process your cards
           </span>
           {IconH.chevron({ style: { color: TH.faint } })}
         </button>
