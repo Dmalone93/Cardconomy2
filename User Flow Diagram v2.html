@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardconomy — User Flow Diagram v2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f1f5f9;
+    --surface: #ffffff;
+    --surface-2: #f8fafc;
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --muted: #64748b;
+    --faint: #94a3b8;
+    --line: #e2e8f0;
+    --emerald: #059669;
+    --emerald-wash: #ecfdf5;
+    --emerald-line: #6ee7b7;
+    --amber: #d97706;
+    --amber-wash: #fffbeb;
+    --amber-line: #fcd34d;
+    --navy: #0f172a;
+    --navy-wash: #f1f5f9;
+    --navy-line: #cbd5e1;
+    --red: #dc2626;
+    --red-wash: #fef2f2;
+    --blue: #2563eb;
+    --blue-wash: #eff6ff;
+    --blue-line: #93c5fd;
+    --heading: 'Space Grotesk', system-ui, sans-serif;
+    --body: 'Inter', system-ui, sans-serif;
+    --mono: 'Geist Mono', monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); color: var(--ink); font-family: var(--body); }
+  .page { max-width: 1500px; margin: 0 auto; padding: 48px 40px 96px; }
+
+  /* Header */
+  .header { margin-bottom: 36px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .brand svg { width: 28px; height: 28px; }
+  .brand span { font-family: var(--heading); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; }
+  .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--emerald); font-weight: 600; margin-bottom: 8px; }
+  h1 { font-family: var(--heading); font-size: 40px; font-weight: 700; letter-spacing: -1.2px; line-height: 1.1; }
+  .sub { margin-top: 10px; font-size: 15px; color: var(--muted); max-width: 700px; line-height: 1.6; }
+
+  /* Legend */
+  .legend { display: flex; gap: 10px; margin: 24px 0 12px; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; }
+  .leg .sw { width: 28px; height: 24px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; }
+  .leg .sw.entry { background: var(--navy); border-radius: 999px; }
+  .leg .sw.screen { background: var(--surface); border: 1.5px solid var(--line); }
+  .leg .sw.action { background: var(--emerald-wash); border: 1.5px solid var(--emerald-line); }
+  .leg .sw.decision { background: var(--amber-wash); border: 1.5px solid var(--amber-line); transform: rotate(0deg); }
+  .leg .sw.unlock { background: var(--blue-wash); border: 1.5px solid var(--blue-line); border-radius: 999px; }
+  .leg b { font-size: 11.5px; font-weight: 600; color: var(--ink-2); }
+  .leg small { font-size: 10.5px; color: var(--muted); }
+
+  /* Lanes */
+  .lane { background: var(--surface); border-radius: 18px; margin-top: 20px; box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.06); overflow: hidden; }
+  .lane-head { display: flex; align-items: center; gap: 12px; padding: 16px 24px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+  .lane-head .ic { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; font-size: 16px; }
+  .lane-head h2 { font-family: var(--heading); font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+  .lane-head .lh-sub { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+  .lane-head .badge { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); font-weight: 500; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; }
+
+  .lane-body { padding: 24px; overflow-x: auto; }
+
+  /* Flow rows */
+  .flow { display: flex; align-items: center; gap: 0; flex-wrap: nowrap; min-width: max-content; }
+  .flow + .flow { margin-top: 16px; }
+
+  /* Nodes */
+  .node { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
+  .node .box { display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px 16px; border-radius: 10px; font-size: 12px; font-weight: 600; line-height: 1.3; min-width: 110px; max-width: 160px; min-height: 44px; position: relative; }
+  .node .detail { font-size: 10px; color: var(--muted); max-width: 140px; text-align: center; line-height: 1.35; }
+
+  .node .box.entry { background: var(--navy); color: #fff; border-radius: 999px; min-width: 90px; }
+  .node .box.screen { background: var(--surface); border: 1.5px solid var(--line); color: var(--ink-2); }
+  .node .box.action { background: var(--emerald-wash); border: 1.5px solid var(--emerald-line); color: var(--emerald); }
+  .node .box.decision { background: var(--amber-wash); border: 1.5px solid var(--amber-line); color: var(--amber); }
+  .node .box.unlock { background: var(--blue-wash); border: 1.5px solid var(--blue-line); color: var(--blue); border-radius: 999px; }
+  .node .box.terminal { background: var(--emerald); color: #fff; border-radius: 999px; min-width: 90px; }
+
+  /* Arrows */
+  .arrow { display: flex; align-items: center; flex-shrink: 0; padding: 0 2px; }
+  .arrow .line { width: 32px; height: 1.5px; background: var(--line); position: relative; }
+  .arrow .line::after { content: ''; position: absolute; right: -1px; top: -4px; border: 5px solid transparent; border-left: 6px solid var(--line); }
+  .arrow.down { flex-direction: column; padding: 2px 0; }
+  .arrow.down .line { width: 1.5px; height: 24px; }
+  .arrow.down .line::after { right: auto; top: auto; bottom: -1px; left: -4px; border: 5px solid transparent; border-top: 6px solid var(--line); }
+
+  .arrow .label { font-size: 9px; color: var(--faint); font-weight: 500; white-space: nowrap; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); }
+  .arrow .line { position: relative; }
+
+  /* Branch container */
+  .branch { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+
+  /* Section dividers */
+  .divider { display: flex; align-items: center; gap: 12px; margin: 28px 0 8px; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .divider span { font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint); font-weight: 500; white-space: nowrap; }
+
+  /* Capability badge */
+  .cap-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
+  .cap-badge.browse { background: var(--navy-wash); color: var(--navy); border: 1px solid var(--navy-line); }
+  .cap-badge.sell { background: var(--emerald-wash); color: var(--emerald); border: 1px solid var(--emerald-line); }
+  .cap-badge.shop { background: var(--amber-wash); color: var(--amber); border: 1px solid var(--amber-line); }
+
+  /* Notes */
+  .note { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin-top: 16px; font-size: 12px; color: var(--ink-2); line-height: 1.5; }
+  .note strong { color: var(--ink); }
+
+  @media print {
+    .page { padding: 20px; }
+    .lane { break-inside: avoid; box-shadow: none; border: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <svg viewBox="0 0 52 52" fill="none"><rect x="4" y="12" width="24" height="34" rx="3" fill="#059669" opacity="0.3" transform="rotate(-8 16 29)"/><rect x="14" y="8" width="24" height="34" rx="3" fill="#059669" opacity="0.6" transform="rotate(-2 26 25)"/><rect x="22" y="6" width="24" height="34" rx="3" fill="#059669"/></svg>
+      <span>CARDCONOMY</span>
+    </div>
+    <div class="kicker">User Flow Diagram</div>
+    <h1>Progressive User Journey</h1>
+    <p class="sub">Everyone starts as a buyer. Capabilities unlock naturally through actions. No persona selection — the platform grows with the user.</p>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="leg"><div class="sw entry"></div><div><b>Entry Point</b></div></div>
+    <div class="leg"><div class="sw screen"></div><div><b>Screen</b></div></div>
+    <div class="leg"><div class="sw action"></div><div><b>User Action</b></div></div>
+    <div class="leg"><div class="sw decision"></div><div><b>Decision</b></div></div>
+    <div class="leg"><div class="sw unlock"></div><div><b>Capability Unlock</b></div></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LANE 1: ONBOARDING -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="lane">
+    <div class="lane-head">
+      <div class="ic" style="background:var(--navy);">1</div>
+      <div>
+        <h2>Onboarding</h2>
+        <div class="lh-sub">Sign up and start browsing in 3 taps</div>
+      </div>
+      <div class="badge">ALL USERS</div>
+    </div>
+    <div class="lane-body">
+      <div class="flow">
+        <div class="node"><div class="box entry">New User</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Sign Up</div><div class="detail">Email or social (Google, Apple)</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Verify Email</div><div class="detail">Clerk handles this</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Pick Games</div><div class="detail">What do you play? Multi-select, skippable</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box unlock">Browse & Buy Unlocked</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box terminal">Home Feed</div><div class="detail">Personalised by game prefs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LANE 2: BROWSE & BUY -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="lane">
+    <div class="lane-head">
+      <div class="ic" style="background:var(--navy);">2</div>
+      <div>
+        <h2>Browse & Buy</h2>
+        <div class="lh-sub">Discover, compare, and purchase cards</div>
+      </div>
+      <div class="badge"><span class="cap-badge browse">BUYER</span></div>
+    </div>
+    <div class="lane-body">
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Home</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Game Carousel</div><div class="detail">Pokemon, MTG, Yu-Gi-Oh, One Piece, Lorcana</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Hot Deals</div><div class="detail">Below market price</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Daily Movers</div><div class="detail">Biggest price changes</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Trending</div><div class="detail">Most watched cards</div></div>
+      </div>
+
+      <div class="divider"><span>Search & Discovery</span></div>
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Search</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Apply Filters</div><div class="detail">Game, set, condition, price, finish, rarity, seller type</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Results</div><div class="detail">Grid or list view, Buy / Just Listed / Deals tabs</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Product Page</div><div class="detail">All sellers for one card, finish tabs, demand indicator</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Listing Detail</div><div class="detail">Seller photos, price history, condition, buyer protection</div></div>
+      </div>
+
+      <div class="divider"><span>Purchase Flow</span></div>
+
+      <div class="flow">
+        <div class="node"><div class="box screen">Listing Detail</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box decision">Buy or Offer?</div></div>
+        <div class="arrow"><div class="line"><span class="label">Buy now</span></div></div>
+        <div class="node"><div class="box action">Add to Cart</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Cart</div><div class="detail">Items, subtotal, shipping, protection fee</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Checkout</div><div class="detail">Address, shipping, payment</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box terminal">Order Confirmed</div></div>
+      </div>
+
+      <div class="flow" style="margin-left: 310px;">
+        <div class="node"><div class="box decision" style="visibility:hidden;"></div></div>
+        <div class="arrow"><div class="line"><span class="label">Make offer</span></div></div>
+        <div class="node"><div class="box action">Set Price</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Offer Sent</div><div class="detail">Wait for accept / counter / decline</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box decision">Response?</div></div>
+        <div class="arrow"><div class="line"><span class="label">Accepted</span></div></div>
+        <div class="node"><div class="box action">Add to Cart</div></div>
+      </div>
+
+      <div class="divider"><span>Collection Management</span></div>
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Profile</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Watchlist</div><div class="detail">Tracked cards with live price deltas</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Collections</div><div class="detail">Named groups, portfolio value, gain/loss</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Buylist</div><div class="detail">Want cards + max price, auto-matched</div></div>
+      </div>
+
+      <div class="flow" style="margin-left: 0;">
+        <div class="node"><div class="box entry">Scan</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Camera Scan</div><div class="detail">AI card identification</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Result Sheet</div><div class="detail">Grade, market price, add to collection / view listing</div></div>
+      </div>
+
+      <div class="note">
+        <strong>Buyer Dashboard:</strong> Portfolio value hero, watchlist movements, buylist matches, recent orders, needs attention (orders arriving, price drops)
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LANE 3: SELLER ACTIVATION -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="lane">
+    <div class="lane-head">
+      <div class="ic" style="background:var(--emerald);">3</div>
+      <div>
+        <h2>Sell Activation</h2>
+        <div class="lh-sub">First tap on "Sell" triggers verification — unlocks selling capabilities</div>
+      </div>
+      <div class="badge"><span class="cap-badge sell">SELLER UNLOCK</span></div>
+    </div>
+    <div class="lane-body">
+      <div class="flow">
+        <div class="node"><div class="box entry">Tap Sell</div><div class="detail">First time only</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Seller Pitch</div><div class="detail">Benefits, fee transparency: 4% seller fee</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">ID Verification</div><div class="detail">Passport or driving licence + selfie</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Payout Setup</div><div class="detail">Bank details or Stripe Connect</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Accept Terms</div><div class="detail">Seller terms of service</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box unlock">Sell Unlocked</div><div class="detail">Verified Seller badge appears</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LANE 4: SELLING -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="lane">
+    <div class="lane-head">
+      <div class="ic" style="background:var(--emerald);">4</div>
+      <div>
+        <h2>Selling</h2>
+        <div class="lh-sub">List cards, manage offers, ship orders, track earnings</div>
+      </div>
+      <div class="badge"><span class="cap-badge sell">SELLER</span></div>
+    </div>
+    <div class="lane-body">
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Sell Hub</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box decision">How to sell?</div></div>
+        <div class="arrow"><div class="line"><span class="label">Single card</span></div></div>
+        <div class="node"><div class="box screen">Pick Card</div><div class="detail">Search or scan</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Condition</div><div class="detail">Grade, condition notes</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Photos</div><div class="detail">Front, back, close-ups</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Price</div><div class="detail">BIN price, market comparison</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Review</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box terminal">Listed</div></div>
+      </div>
+
+      <div class="flow" style="margin-left: 194px;">
+        <div class="node"><div class="box decision" style="visibility:hidden;"></div></div>
+        <div class="arrow"><div class="line"><span class="label">Bulk list</span></div></div>
+        <div class="node"><div class="box screen">Choose Method</div><div class="detail">LiveSweep / batch / search / import</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Scan Cards</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Pricing Strategy</div><div class="detail">Market / undercut / quick sell</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box terminal">Published</div></div>
+      </div>
+
+      <div class="flow" style="margin-left: 194px;">
+        <div class="node"><div class="box decision" style="visibility:hidden;"></div></div>
+        <div class="arrow"><div class="line"><span class="label">Sell to shop</span></div></div>
+        <div class="node"><div class="box screen">Find Shop</div><div class="detail">Browse local shops</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Select Cards</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Shop Quote</div><div class="detail">Shop buylist prices</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box decision">Accept?</div></div>
+        <div class="arrow"><div class="line"><span class="label">Yes</span></div></div>
+        <div class="node"><div class="box terminal">Submitted</div></div>
+      </div>
+
+      <div class="flow" style="margin-left: 194px;">
+        <div class="node"><div class="box decision" style="visibility:hidden;"></div></div>
+        <div class="arrow"><div class="line"><span class="label">Trade</span></div></div>
+        <div class="node"><div class="box screen">Trade Matches</div><div class="detail">Cards others want that you have</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Build Proposal</div><div class="detail">Your cards + their cards</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box terminal">Proposal Sent</div></div>
+      </div>
+
+      <div class="divider"><span>Post-Sale</span></div>
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Item Sold</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Print Label</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Ship Item</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Tracking</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box terminal">Delivered</div><div class="detail">Funds released to balance</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Withdraw</div></div>
+      </div>
+
+      <div class="note">
+        <strong>Seller Dashboard (additive):</strong> All buyer sections PLUS balance card with sparkline, status tiles (listings/offers/to ship), activity feed, needs attention (expiring offers, items to ship)
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LANE 5: SHOP REGISTRATION -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="lane">
+    <div class="lane-head">
+      <div class="ic" style="background:var(--amber);">5</div>
+      <div>
+        <h2>Shop Registration</h2>
+        <div class="lh-sub">Register as a Local Game Store — verified business with physical premises</div>
+      </div>
+      <div class="badge"><span class="cap-badge shop">SHOP UNLOCK</span></div>
+    </div>
+    <div class="lane-body">
+      <div class="flow">
+        <div class="node"><div class="box entry">Register Shop</div><div class="detail">Settings or CTA</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">LGS Pitch</div><div class="detail">Free for early adopters, tool overview</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Business Details</div><div class="detail">Name, company number, address</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Proof of Premises</div><div class="detail">Photo or utility bill</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Games Stocked</div><div class="detail">Which games they trade</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Review</div><div class="detail">Verify within 48 hours</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box unlock">Shop Unlocked</div><div class="detail">Verified Shop badge</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LANE 6: SHOP TOOLS -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="lane">
+    <div class="lane-head">
+      <div class="ic" style="background:var(--amber);">6</div>
+      <div>
+        <h2>Shop Tools</h2>
+        <div class="lh-sub">Storefront, submissions, grading, bulk intake, buylist management</div>
+      </div>
+      <div class="badge"><span class="cap-badge shop">SHOP</span></div>
+    </div>
+    <div class="lane-body">
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Shop Counter</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Submission Queue</div><div class="detail">Pending / graded / ready, status pills</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Grade Card</div><div class="detail">Assess condition, set price</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box terminal">Listed in Storefront</div></div>
+      </div>
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Storefront</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Shop Profile</div><div class="detail">Banner, hours, location, games, description</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Inventory Grid</div><div class="detail">All listed cards from this shop</div></div>
+      </div>
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Bulk Intake</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Receive Lot</div><div class="detail">Seller submits bulk cards</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Sort & Grade</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Price & List</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box terminal">Inventory Updated</div></div>
+      </div>
+
+      <div class="flow">
+        <div class="node"><div class="box entry">Buylist</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box action">Set Buy Prices</div><div class="detail">Cards the shop wants to buy</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box screen">Incoming Matches</div><div class="detail">Sellers offering cards at your price</div></div>
+        <div class="arrow"><div class="line"></div></div>
+        <div class="node"><div class="box decision">Accept?</div></div>
+        <div class="arrow"><div class="line"><span class="label">Yes</span></div></div>
+        <div class="node"><div class="box terminal">Purchased</div></div>
+      </div>
+
+      <div class="note">
+        <strong>Shop Dashboard (additive):</strong> All buyer + seller sections PLUS revenue card with date range, queue stats, submission queue, buylist performance, restock alerts
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- LANE 7: TRUST & VERIFICATION -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="lane">
+    <div class="lane-head">
+      <div class="ic" style="background:linear-gradient(135deg, var(--emerald), var(--amber));">&#x2605;</div>
+      <div>
+        <h2>Trust & Verification Badges</h2>
+        <div class="lh-sub">Progressive trust — badges are visible to all other users</div>
+      </div>
+    </div>
+    <div class="lane-body">
+      <div class="flow">
+        <div class="node"><div class="box screen" style="min-width:140px;">No Badge</div><div class="detail">Browser / buyer only</div></div>
+        <div class="arrow"><div class="line"><span class="label">ID verify</span></div></div>
+        <div class="node"><div class="box action" style="min-width:140px;">Verified Seller</div><div class="detail">ID + payout confirmed</div></div>
+        <div class="arrow"><div class="line"><span class="label">Track record</span></div></div>
+        <div class="node"><div class="box" style="min-width:140px; background: linear-gradient(135deg, var(--emerald-wash), var(--amber-wash)); border: 1.5px solid var(--emerald-line); color: var(--emerald);">Trusted Seller</div><div class="detail">Earned: X sales, Y% positive, Z months</div></div>
+        <div class="arrow"><div class="line"><span class="label">Business verify</span></div></div>
+        <div class="node"><div class="box" style="min-width:140px; background: var(--amber-wash); border: 1.5px solid var(--amber-line); color: var(--amber);">Verified Shop</div><div class="detail">Business + premises confirmed</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════ -->
+  <!-- SUMMARY -->
+  <!-- ═══════════════════════════════════════ -->
+  <div class="lane" style="margin-top: 28px;">
+    <div class="lane-head" style="background: var(--navy); border: none;">
+      <div class="ic" style="background: var(--emerald);">&#x2713;</div>
+      <div>
+        <h2 style="color: #fff;">Key Principle: Additive Capabilities</h2>
+        <div class="lh-sub" style="color: var(--faint);">The dashboard grows with the user. Nothing is replaced — new sections are added.</div>
+      </div>
+    </div>
+    <div class="lane-body" style="display: flex; gap: 16px; flex-wrap: wrap;">
+      <div style="flex:1; min-width: 200px; background: var(--navy-wash); border-radius: 12px; padding: 16px;">
+        <div style="font-family: var(--heading); font-weight: 700; font-size: 14px; margin-bottom: 6px;">Buyer Only</div>
+        <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Portfolio value, watchlist, buylist, orders</div>
+      </div>
+      <div style="flex:1; min-width: 200px; background: var(--emerald-wash); border-radius: 12px; padding: 16px;">
+        <div style="font-family: var(--heading); font-weight: 700; font-size: 14px; color: var(--emerald); margin-bottom: 6px;">+ Seller</div>
+        <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Balance card, active listings, pending offers, to ship, activity feed</div>
+      </div>
+      <div style="flex:1; min-width: 200px; background: var(--amber-wash); border-radius: 12px; padding: 16px;">
+        <div style="font-family: var(--heading); font-weight: 700; font-size: 14px; color: var(--amber); margin-bottom: 6px;">+ Shop</div>
+        <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Revenue metrics, submission queue, bulk lot alerts, buylist performance</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
