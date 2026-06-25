@@ -18,6 +18,7 @@
     --faint: #94a3b8;
     --line: #e2e8f0;
     --emerald: #059669;
+    --emerald-dark: #047857;
     --emerald-wash: #ecfdf5;
     --emerald-line: #6ee7b7;
     --amber: #d97706;
@@ -28,6 +29,7 @@
     --navy-line: #cbd5e1;
     --red: #dc2626;
     --red-wash: #fef2f2;
+    --red-line: #fca5a5;
     --blue: #2563eb;
     --blue-wash: #eff6ff;
     --blue-line: #93c5fd;
@@ -36,84 +38,110 @@
     --mono: 'Geist Mono', monospace;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg); color: var(--ink); font-family: var(--body); }
-  .page { max-width: 1500px; margin: 0 auto; padding: 48px 40px 96px; }
+  html, body { background: var(--bg); color: var(--ink); font-family: var(--body); -webkit-font-smoothing: antialiased; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 48px 32px 96px; }
 
   /* Header */
-  .header { margin-bottom: 36px; }
-  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .header { margin-bottom: 40px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
   .brand svg { width: 28px; height: 28px; }
   .brand span { font-family: var(--heading); font-weight: 700; font-size: 18px; letter-spacing: -0.5px; }
   .kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--emerald); font-weight: 600; margin-bottom: 8px; }
-  h1 { font-family: var(--heading); font-size: 40px; font-weight: 700; letter-spacing: -1.2px; line-height: 1.1; }
+  h1 { font-family: var(--heading); font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; }
   .sub { margin-top: 10px; font-size: 15px; color: var(--muted); max-width: 700px; line-height: 1.6; }
 
   /* Legend */
-  .legend { display: flex; gap: 10px; margin: 24px 0 12px; flex-wrap: wrap; }
-  .leg { display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; }
-  .leg .sw { width: 28px; height: 24px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; }
-  .leg .sw.entry { background: var(--navy); border-radius: 999px; }
+  .legend { display: flex; gap: 8px; margin: 28px 0 8px; flex-wrap: wrap; }
+  .leg { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
+  .leg .sw { width: 22px; height: 22px; border-radius: 5px; flex-shrink: 0; }
+  .leg .sw.start { background: var(--navy); border-radius: 999px; }
   .leg .sw.screen { background: var(--surface); border: 1.5px solid var(--line); }
   .leg .sw.action { background: var(--emerald-wash); border: 1.5px solid var(--emerald-line); }
-  .leg .sw.decision { background: var(--amber-wash); border: 1.5px solid var(--amber-line); transform: rotate(0deg); }
-  .leg .sw.unlock { background: var(--blue-wash); border: 1.5px solid var(--blue-line); border-radius: 999px; }
-  .leg b { font-size: 11.5px; font-weight: 600; color: var(--ink-2); }
-  .leg small { font-size: 10.5px; color: var(--muted); }
+  .leg .sw.decision { background: var(--amber-wash); border: 1.5px solid var(--amber-line); }
+  .leg .sw.gate { background: var(--red-wash); border: 1.5px solid var(--red-line); }
+  .leg .sw.done { background: var(--emerald); border-radius: 999px; }
+  .leg b { font-size: 11px; font-weight: 600; color: var(--ink-2); }
 
   /* Lanes */
-  .lane { background: var(--surface); border-radius: 18px; margin-top: 20px; box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 8px 24px rgba(15,23,42,0.06); overflow: hidden; }
-  .lane-head { display: flex; align-items: center; gap: 12px; padding: 16px 24px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
-  .lane-head .ic { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; font-size: 16px; }
-  .lane-head h2 { font-family: var(--heading); font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
-  .lane-head .lh-sub { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
-  .lane-head .badge { margin-left: auto; font-family: var(--mono); font-size: 11px; color: var(--faint); font-weight: 500; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 3px 8px; }
+  .lane { background: var(--surface); border-radius: 16px; margin-top: 24px; box-shadow: 0 1px 3px rgba(15,23,42,0.04), 0 6px 20px rgba(15,23,42,0.05); overflow: hidden; }
+  .lane-head { display: flex; align-items: flex-start; gap: 14px; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+  .lane-head .num { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0; font-family: var(--heading); font-size: 15px; font-weight: 700; margin-top: 2px; }
+  .lane-head .text { flex: 1; }
+  .lane-head h2 { font-family: var(--heading); font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+  .lane-head .lh-sub { font-size: 13px; color: var(--muted); margin-top: 3px; line-height: 1.45; }
+  .lane-head .cap { font-family: var(--mono); font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; margin-top: 4px; }
+  .lane-head .cap.all { background: var(--navy-wash); color: var(--ink-2); border: 1px solid var(--navy-line); }
+  .lane-head .cap.buyer { background: var(--navy-wash); color: var(--navy); border: 1px solid var(--navy-line); }
+  .lane-head .cap.seller { background: var(--emerald-wash); color: var(--emerald); border: 1px solid var(--emerald-line); }
+  .lane-head .cap.shop { background: var(--amber-wash); color: var(--amber); border: 1px solid var(--amber-line); }
 
-  .lane-body { padding: 24px; overflow-x: auto; }
+  .lane-body { padding: 0; }
 
-  /* Flow rows */
-  .flow { display: flex; align-items: center; gap: 0; flex-wrap: nowrap; min-width: max-content; }
-  .flow + .flow { margin-top: 16px; }
+  /* Steps */
+  .step { display: flex; align-items: stretch; border-bottom: 1px solid var(--line); }
+  .step:last-child { border-bottom: none; }
 
-  /* Nodes */
-  .node { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; }
-  .node .box { display: flex; align-items: center; justify-content: center; text-align: center; padding: 10px 16px; border-radius: 10px; font-size: 12px; font-weight: 600; line-height: 1.3; min-width: 110px; max-width: 160px; min-height: 44px; position: relative; }
-  .node .detail { font-size: 10px; color: var(--muted); max-width: 140px; text-align: center; line-height: 1.35; }
+  .step-num { width: 56px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--faint); background: var(--surface-2); border-right: 1px solid var(--line); }
 
-  .node .box.entry { background: var(--navy); color: #fff; border-radius: 999px; min-width: 90px; }
-  .node .box.screen { background: var(--surface); border: 1.5px solid var(--line); color: var(--ink-2); }
-  .node .box.action { background: var(--emerald-wash); border: 1.5px solid var(--emerald-line); color: var(--emerald); }
-  .node .box.decision { background: var(--amber-wash); border: 1.5px solid var(--amber-line); color: var(--amber); }
-  .node .box.unlock { background: var(--blue-wash); border: 1.5px solid var(--blue-line); color: var(--blue); border-radius: 999px; }
-  .node .box.terminal { background: var(--emerald); color: #fff; border-radius: 999px; min-width: 90px; }
+  .step-node { width: 160px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding: 16px 12px; border-right: 1px solid var(--line); }
+  .step-node .box { display: flex; align-items: center; justify-content: center; text-align: center; padding: 8px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; line-height: 1.3; width: 100%; min-height: 38px; }
+  .step-node .box.start { background: var(--navy); color: #fff; border-radius: 999px; }
+  .step-node .box.screen { background: var(--surface); border: 1.5px solid var(--line); color: var(--ink-2); }
+  .step-node .box.action { background: var(--emerald-wash); border: 1.5px solid var(--emerald-line); color: var(--emerald-dark); }
+  .step-node .box.decision { background: var(--amber-wash); border: 1.5px solid var(--amber-line); color: var(--amber); }
+  .step-node .box.gate { background: var(--red-wash); border: 1.5px solid var(--red-line); color: var(--red); }
+  .step-node .box.done { background: var(--emerald); color: #fff; border-radius: 999px; }
 
-  /* Arrows */
-  .arrow { display: flex; align-items: center; flex-shrink: 0; padding: 0 2px; }
-  .arrow .line { width: 32px; height: 1.5px; background: var(--line); position: relative; }
-  .arrow .line::after { content: ''; position: absolute; right: -1px; top: -4px; border: 5px solid transparent; border-left: 6px solid var(--line); }
-  .arrow.down { flex-direction: column; padding: 2px 0; }
-  .arrow.down .line { width: 1.5px; height: 24px; }
-  .arrow.down .line::after { right: auto; top: auto; bottom: -1px; left: -4px; border: 5px solid transparent; border-top: 6px solid var(--line); }
+  .step-detail { flex: 1; padding: 16px 20px; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
+  .step-detail .what { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  .step-detail .why { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .step-detail .problem { font-size: 11px; color: var(--emerald-dark); line-height: 1.4; margin-top: 2px; font-weight: 500; }
 
-  .arrow .label { font-size: 9px; color: var(--faint); font-weight: 500; white-space: nowrap; position: absolute; top: -14px; left: 50%; transform: translateX(-50%); }
-  .arrow .line { position: relative; }
+  /* Section breaks within lane */
+  .section-break { display: flex; align-items: center; gap: 10px; padding: 10px 24px; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+  .section-break span { font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint); font-weight: 600; }
+  .section-break::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 
-  /* Branch container */
-  .branch { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  /* Branch indicator */
+  .branch-label { display: inline-flex; align-items: center; gap: 4px; font-family: var(--mono); font-size: 10px; font-weight: 600; color: var(--amber); background: var(--amber-wash); border: 1px solid var(--amber-line); border-radius: 4px; padding: 1px 6px; margin-left: 4px; }
 
-  /* Section dividers */
-  .divider { display: flex; align-items: center; gap: 12px; margin: 28px 0 8px; }
-  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
-  .divider span { font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint); font-weight: 500; white-space: nowrap; }
+  /* Insight boxes */
+  .insight { margin: 0; padding: 16px 24px; background: var(--surface-2); border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: flex-start; }
+  .insight:last-child { border-bottom: none; }
+  .insight .icon { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+  .insight .icon.question { background: var(--amber-wash); border: 1px solid var(--amber-line); }
+  .insight .icon.key { background: var(--emerald-wash); border: 1px solid var(--emerald-line); }
+  .insight .icon.warn { background: var(--red-wash); border: 1px solid var(--red-line); }
+  .insight .body { flex: 1; }
+  .insight .body strong { font-size: 12px; color: var(--ink); display: block; margin-bottom: 2px; }
+  .insight .body p { font-size: 12px; color: var(--muted); line-height: 1.5; }
 
-  /* Capability badge */
-  .cap-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 999px; }
-  .cap-badge.browse { background: var(--navy-wash); color: var(--navy); border: 1px solid var(--navy-line); }
-  .cap-badge.sell { background: var(--emerald-wash); color: var(--emerald); border: 1px solid var(--emerald-line); }
-  .cap-badge.shop { background: var(--amber-wash); color: var(--amber); border: 1px solid var(--amber-line); }
+  /* Complexity meter */
+  .complexity { display: flex; align-items: center; gap: 6px; margin-top: 4px; }
+  .complexity .dots { display: flex; gap: 3px; }
+  .complexity .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--line); }
+  .complexity .dot.filled { background: var(--amber); }
+  .complexity .dot.filled.low { background: var(--emerald); }
+  .complexity .dot.filled.high { background: var(--red); }
+  .complexity label { font-size: 10px; color: var(--faint); font-weight: 500; }
 
-  /* Notes */
-  .note { background: var(--surface-2); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin-top: 16px; font-size: 12px; color: var(--ink-2); line-height: 1.5; }
-  .note strong { color: var(--ink); }
+  /* Summary cards */
+  .summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; padding: 24px; }
+  .summary-card { background: var(--surface-2); border-radius: 12px; padding: 20px; border: 1px solid var(--line); }
+  .summary-card h3 { font-family: var(--heading); font-size: 15px; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .summary-card h3 .dot { width: 10px; height: 10px; border-radius: 999px; }
+  .summary-card ul { list-style: none; padding: 0; }
+  .summary-card li { font-size: 12px; color: var(--muted); line-height: 1.5; padding: 3px 0; padding-left: 16px; position: relative; }
+  .summary-card li::before { content: '\2022'; position: absolute; left: 0; color: var(--faint); }
+
+  @media (max-width: 768px) {
+    .page { padding: 24px 16px 64px; }
+    h1 { font-size: 28px; }
+    .step { flex-direction: column; }
+    .step-num { width: 100%; height: 32px; border-right: none; border-bottom: 1px solid var(--line); }
+    .step-node { width: 100%; border-right: none; border-bottom: 1px solid var(--line); }
+    .summary-grid { grid-template-columns: 1fr; }
+  }
 
   @media print {
     .page { padding: 20px; }
@@ -131,401 +159,758 @@
       <span>CARDCONOMY</span>
     </div>
     <div class="kicker">User Flow Diagram</div>
-    <h1>Progressive User Journey</h1>
-    <p class="sub">Everyone starts as a buyer. Capabilities unlock naturally through actions. No persona selection — the platform grows with the user.</p>
+    <h1>Complete User Journey</h1>
+    <p class="sub">Every step a user takes, the problem it solves, and why it exists. Use this to identify what to simplify, what to cut, and where to focus.</p>
   </div>
 
   <!-- Legend -->
   <div class="legend">
-    <div class="leg"><div class="sw entry"></div><div><b>Entry Point</b></div></div>
-    <div class="leg"><div class="sw screen"></div><div><b>Screen</b></div></div>
-    <div class="leg"><div class="sw action"></div><div><b>User Action</b></div></div>
-    <div class="leg"><div class="sw decision"></div><div><b>Decision</b></div></div>
-    <div class="leg"><div class="sw unlock"></div><div><b>Capability Unlock</b></div></div>
+    <div class="leg"><div class="sw start"></div><b>Entry Point</b></div>
+    <div class="leg"><div class="sw screen"></div><b>Screen / View</b></div>
+    <div class="leg"><div class="sw action"></div><b>User Action</b></div>
+    <div class="leg"><div class="sw decision"></div><b>Decision Point</b></div>
+    <div class="leg"><div class="sw gate"></div><b>Verification Gate</b></div>
+    <div class="leg"><div class="sw done"></div><b>Outcome</b></div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LANE 1: ONBOARDING -->
-  <!-- ═══════════════════════════════════════ -->
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- FLOW 1: ONBOARDING -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <div class="lane">
     <div class="lane-head">
-      <div class="ic" style="background:var(--navy);">1</div>
-      <div>
+      <div class="num" style="background:var(--navy);">1</div>
+      <div class="text">
         <h2>Onboarding</h2>
-        <div class="lh-sub">Sign up and start browsing in 3 taps</div>
+        <div class="lh-sub">A new user goes from stranger to browsing a personalised home feed. The entire flow is designed to be completable in under 60 seconds. There is no persona selection, no account type choice, no complexity. Everyone starts the same way.</div>
       </div>
-      <div class="badge">ALL USERS</div>
+      <div class="cap all">ALL USERS</div>
     </div>
     <div class="lane-body">
-      <div class="flow">
-        <div class="node"><div class="box entry">New User</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Sign Up</div><div class="detail">Email or social (Google, Apple)</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Verify Email</div><div class="detail">Clerk handles this</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Pick Games</div><div class="detail">What do you play? Multi-select, skippable</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box unlock">Browse & Buy Unlocked</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box terminal">Home Feed</div><div class="detail">Personalised by game prefs</div></div>
+      <div class="step">
+        <div class="step-num">1.1</div>
+        <div class="step-node"><div class="box start">New User</div></div>
+        <div class="step-detail">
+          <div class="what">User arrives at Cardconomy for the first time</div>
+          <div class="why">They have heard about the platform through a trade show, social media, a friend, or a shop recommendation. They want to see what cards are available and at what prices.</div>
+          <div class="problem">Problem: UK collectors have no dedicated marketplace. They use eBay (expensive), Cardmarket (EU friction post-Brexit), or Facebook groups (no protection).</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">1.2</div>
+        <div class="step-node"><div class="box screen">Sign Up</div></div>
+        <div class="step-detail">
+          <div class="what">Email address + password, or one-tap social login (Google, Apple)</div>
+          <div class="why">Minimal friction. No phone number required yet. Social login means one tap on mobile. We collect only what we need to create an account.</div>
+          <div class="problem">Problem: Many marketplace signups ask for too much upfront (address, phone, preferences) and lose users. We defer everything non-essential.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">1.3</div>
+        <div class="step-node"><div class="box screen">Verify Email</div></div>
+        <div class="step-detail">
+          <div class="what">Clerk sends a verification email. User clicks the link or enters a code.</div>
+          <div class="why">Required for account security and to prevent spam accounts. Clerk handles this entirely -- no custom code needed.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">1.4</div>
+        <div class="step-node"><div class="box action">Pick Games</div></div>
+        <div class="step-detail">
+          <div class="what">Multi-select tiles: Pokemon, Magic, Yu-Gi-Oh, One Piece, Lorcana. Skippable.</div>
+          <div class="why">Personalises the home feed immediately. A Pokemon-only collector should not see Magic cards on their first visit. If skipped, we show everything.</div>
+          <div class="problem">Problem: Generic marketplaces show everything to everyone. TCG collectors are tribal -- they care deeply about their game and are annoyed by irrelevant results.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">1.5</div>
+        <div class="step-node"><div class="box done">Home Feed</div></div>
+        <div class="step-detail">
+          <div class="what">Personalised browse feed. User has full Browse and Buy capability.</div>
+          <div class="why">The user is now inside the marketplace. They can search, watch, buy, build collections, and set buylists. No further setup required to use the core product.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="icon key">&#x2713;</div>
+      <div class="body">
+        <strong>Design principle: Zero setup to value</strong>
+        <p>The user sees cards they care about within 60 seconds of arriving. Everything else (selling, shop tools, verification) is deferred until the moment they need it. This is the opposite of Cardmarket, which requires address and payment setup before you can even browse.</p>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LANE 2: BROWSE & BUY -->
-  <!-- ═══════════════════════════════════════ -->
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- FLOW 2: DISCOVER & BUY -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <div class="lane">
     <div class="lane-head">
-      <div class="ic" style="background:var(--navy);">2</div>
-      <div>
-        <h2>Browse & Buy</h2>
-        <div class="lh-sub">Discover, compare, and purchase cards</div>
+      <div class="num" style="background:var(--navy);">2</div>
+      <div class="text">
+        <h2>Discover & Buy</h2>
+        <div class="lh-sub">The core marketplace loop: find a card, compare sellers, buy it. This is the flow that must work flawlessly before anything else matters. If people cannot find and buy cards quickly, nothing else in the platform has value.</div>
       </div>
-      <div class="badge"><span class="cap-badge browse">BUYER</span></div>
+      <div class="cap buyer">BUYER</div>
     </div>
     <div class="lane-body">
 
-      <div class="flow">
-        <div class="node"><div class="box entry">Home</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Game Carousel</div><div class="detail">Pokemon, MTG, Yu-Gi-Oh, One Piece, Lorcana</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Hot Deals</div><div class="detail">Below market price</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Daily Movers</div><div class="detail">Biggest price changes</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Trending</div><div class="detail">Most watched cards</div></div>
+      <div class="section-break"><span>Finding Cards</span></div>
+
+      <div class="step">
+        <div class="step-num">2.1</div>
+        <div class="step-node"><div class="box start">Home Feed</div></div>
+        <div class="step-detail">
+          <div class="what">Curated discovery: game carousel, hot deals (below market), daily movers (biggest price shifts), trending (most watched)</div>
+          <div class="why">Not everyone knows exactly what they want. Hot Deals answers "what is underpriced right now?" Daily Movers answers "what is changing?" Trending answers "what are other people interested in?"</div>
+          <div class="problem">Problem: eBay has no TCG-specific discovery. Cardmarket is search-only. There is no browse-for-inspiration experience in the UK market.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2.2</div>
+        <div class="step-node"><div class="box screen">Search + Filters</div></div>
+        <div class="step-detail">
+          <div class="what">Text search with filters: game, set, condition (NM/LP/MP/HP/DMG), price range, finish (standard/foil), rarity, seller type (individual/verified/shop). Sort by price, recency, popularity, best deal.</div>
+          <div class="why">TCG buyers are specific. They want "Near Mint Charizard ex from SV 151, foil, under 400 pounds." The filter system must handle this precision without being overwhelming.</div>
+          <div class="problem">Problem: eBay search is keyword-based and full of junk listings. Collectors want structured data, not free-text guessing.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2.3</div>
+        <div class="step-node"><div class="box screen">Product Page</div></div>
+        <div class="step-detail">
+          <div class="what">One page per card identity. Shows card art, set info, market price, demand indicator ("X buyers want this"), all sellers offering this card sorted by price. Finish tabs (standard/foil) with separate pricing.</div>
+          <div class="why">This is the key innovation vs eBay. On eBay, the same card has 50 separate listings you must check individually. Here, one page shows every seller so you can compare price, condition, seller rating, and shipping speed at a glance.</div>
+          <div class="problem">Problem: Price comparison for TCG singles is painful. Buyers open 10 tabs on eBay to compare the same card. The product page eliminates this entirely.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2.4</div>
+        <div class="step-node"><div class="box screen">Listing Detail</div></div>
+        <div class="step-detail">
+          <div class="what">A specific seller's listing. Their photos (front/back/close-up), condition notes, price with market comparison ("X% below market"), seller profile (rating, sales count, location, trust badge), buyer protection info.</div>
+          <div class="why">This is where the buyer decides to commit. They need to trust the seller and the card condition. Photos and seller reputation are the two biggest factors in TCG purchasing decisions.</div>
+        </div>
       </div>
 
-      <div class="divider"><span>Search & Discovery</span></div>
+      <div class="section-break"><span>Purchasing</span></div>
 
-      <div class="flow">
-        <div class="node"><div class="box entry">Search</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Apply Filters</div><div class="detail">Game, set, condition, price, finish, rarity, seller type</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Results</div><div class="detail">Grid or list view, Buy / Just Listed / Deals tabs</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Product Page</div><div class="detail">All sellers for one card, finish tabs, demand indicator</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Listing Detail</div><div class="detail">Seller photos, price history, condition, buyer protection</div></div>
+      <div class="step">
+        <div class="step-num">2.5</div>
+        <div class="step-node"><div class="box decision">Buy or Offer?</div></div>
+        <div class="step-detail">
+          <div class="what">Two paths: "Add to Cart" (buy at listed price) or "Make Offer" (propose a lower price). Not all listings accept offers -- the seller controls this.</div>
+          <div class="why">Fixed pricing is simpler and faster. Offers add negotiation but increase conversion for sellers on stale inventory. Supporting both covers the two dominant buying patterns in TCG.</div>
+        </div>
       </div>
-
-      <div class="divider"><span>Purchase Flow</span></div>
-
-      <div class="flow">
-        <div class="node"><div class="box screen">Listing Detail</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box decision">Buy or Offer?</div></div>
-        <div class="arrow"><div class="line"><span class="label">Buy now</span></div></div>
-        <div class="node"><div class="box action">Add to Cart</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Cart</div><div class="detail">Items, subtotal, shipping, protection fee</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Checkout</div><div class="detail">Address, shipping, payment</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box terminal">Order Confirmed</div></div>
+      <div class="step">
+        <div class="step-num">2.6a</div>
+        <div class="step-node"><div class="box action">Add to Cart</div></div>
+        <div class="step-detail">
+          <div class="what">Card goes into cart. User can continue shopping (multi-seller cart) or proceed to checkout.</div>
+          <div class="why">Cart supports buying from multiple sellers in one session. Each seller ships separately but the buyer pays once.</div>
+        </div>
       </div>
-
-      <div class="flow" style="margin-left: 310px;">
-        <div class="node"><div class="box decision" style="visibility:hidden;"></div></div>
-        <div class="arrow"><div class="line"><span class="label">Make offer</span></div></div>
-        <div class="node"><div class="box action">Set Price</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Offer Sent</div><div class="detail">Wait for accept / counter / decline</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box decision">Response?</div></div>
-        <div class="arrow"><div class="line"><span class="label">Accepted</span></div></div>
-        <div class="node"><div class="box action">Add to Cart</div></div>
+      <div class="step">
+        <div class="step-num">2.6b</div>
+        <div class="step-node"><div class="box action">Make Offer</div></div>
+        <div class="step-detail">
+          <div class="what">Buyer sets a price. Seller can accept, decline, or counter. Offers expire after a set period (e.g. 48 hours).</div>
+          <div class="why">Negotiation is culturally embedded in TCG trading. Many collectors expect to offer below asking. Counter-offers keep both parties engaged rather than losing the sale.</div>
+        </div>
       </div>
-
-      <div class="divider"><span>Collection Management</span></div>
-
-      <div class="flow">
-        <div class="node"><div class="box entry">Profile</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Watchlist</div><div class="detail">Tracked cards with live price deltas</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Collections</div><div class="detail">Named groups, portfolio value, gain/loss</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Buylist</div><div class="detail">Want cards + max price, auto-matched</div></div>
+      <div class="step">
+        <div class="step-num">2.7</div>
+        <div class="step-node"><div class="box screen">Cart</div></div>
+        <div class="step-detail">
+          <div class="what">All items, grouped by seller. Shows subtotal, shipping per seller, buyer protection fee (2% + 30p).</div>
+          <div class="why">Transparency. No surprise fees at checkout. The buyer sees exactly what they will pay before they commit.</div>
+        </div>
       </div>
-
-      <div class="flow" style="margin-left: 0;">
-        <div class="node"><div class="box entry">Scan</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Camera Scan</div><div class="detail">AI card identification</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Result Sheet</div><div class="detail">Grade, market price, add to collection / view listing</div></div>
+      <div class="step">
+        <div class="step-num">2.8</div>
+        <div class="step-node"><div class="box screen">Checkout</div></div>
+        <div class="step-detail">
+          <div class="what">Delivery address, shipping method (standard/express), payment method. Order confirmation.</div>
+          <div class="why">Standard e-commerce checkout. Payment processing handled by Stripe. Keep it simple -- TCG buyers are used to eBay checkout so do not reinvent this.</div>
+        </div>
       </div>
+      <div class="step">
+        <div class="step-num">2.9</div>
+        <div class="step-node"><div class="box done">Order Confirmed</div></div>
+        <div class="step-detail">
+          <div class="what">Order placed. Seller notified. Tracking provided when shipped. Funds held in escrow until delivered.</div>
+          <div class="why">Escrow protects both parties. Buyer knows their money is safe. Seller knows they will be paid once delivery is confirmed.</div>
+        </div>
+      </div>
+    </div>
 
-      <div class="note">
-        <strong>Buyer Dashboard:</strong> Portfolio value hero, watchlist movements, buylist matches, recent orders, needs attention (orders arriving, price drops)
+    <div class="insight">
+      <div class="icon question">?</div>
+      <div class="body">
+        <strong>Question: Is the offer system essential for launch?</strong>
+        <p>Offers add complexity (counter-offers, expiry, notifications, dispute potential). Fixed pricing is simpler and covers 70%+ of transactions on Cardmarket. Consider launching with Buy Now only, adding offers in v2 based on seller demand.</p>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LANE 3: SELLER ACTIVATION -->
-  <!-- ═══════════════════════════════════════ -->
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- FLOW 3: TRACK & COLLECT -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <div class="lane">
     <div class="lane-head">
-      <div class="ic" style="background:var(--emerald);">3</div>
-      <div>
-        <h2>Sell Activation</h2>
-        <div class="lh-sub">First tap on "Sell" triggers verification — unlocks selling capabilities</div>
+      <div class="num" style="background:var(--navy);">3</div>
+      <div class="text">
+        <h2>Track & Collect</h2>
+        <div class="lh-sub">Tools that keep users coming back even when they are not buying. Watchlists, collections, and buylists create daily engagement and feed the marketplace with demand signals that help sellers price correctly.</div>
       </div>
-      <div class="badge"><span class="cap-badge sell">SELLER UNLOCK</span></div>
+      <div class="cap buyer">BUYER</div>
     </div>
     <div class="lane-body">
-      <div class="flow">
-        <div class="node"><div class="box entry">Tap Sell</div><div class="detail">First time only</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Seller Pitch</div><div class="detail">Benefits, fee transparency: 4% seller fee</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">ID Verification</div><div class="detail">Passport or driving licence + selfie</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Payout Setup</div><div class="detail">Bank details or Stripe Connect</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Accept Terms</div><div class="detail">Seller terms of service</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box unlock">Sell Unlocked</div><div class="detail">Verified Seller badge appears</div></div>
+      <div class="step">
+        <div class="step-num">3.1</div>
+        <div class="step-node"><div class="box screen">Watchlist</div></div>
+        <div class="step-detail">
+          <div class="what">Track specific cards with live price deltas. See when prices rise or drop. Heart icon on any listing to add.</div>
+          <div class="why">Creates a reason to open the app daily. Price alerts convert watchers into buyers when prices drop. Also signals demand to sellers.</div>
+          <div class="problem">Problem: On eBay, "watching" an item only tracks that one listing. Here, you watch the card itself across all sellers.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3.2</div>
+        <div class="step-node"><div class="box screen">Collections</div></div>
+        <div class="step-detail">
+          <div class="what">Named groups of cards the user owns. Portfolio value tracking with gain/loss per card. Add cards via search or scan.</div>
+          <div class="why">Collectors want to know what their collection is worth. This is the "portfolio tracker" that creates ongoing engagement. Users who track collections are 3-4x more likely to transact.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3.3</div>
+        <div class="step-node"><div class="box screen">Buylist</div></div>
+        <div class="step-detail">
+          <div class="what">Set cards you want + the max price you will pay. System automatically matches you with sellers who list at or below your price.</div>
+          <div class="why">Passive buying. Set it and forget it. When a seller lists a card you want at a price you are willing to pay, you get notified. This is how shops source inventory -- now individual collectors can do it too.</div>
+          <div class="problem">Problem: No consumer marketplace offers automatic buy matching. This is a feature borrowed from the B2B card trade (shop buylists) and democratised for collectors.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3.4</div>
+        <div class="step-node"><div class="box action">Scan Card</div></div>
+        <div class="step-detail">
+          <div class="what">Point camera at a card. AI identifies it, suggests a grade, shows market price. From there: add to collection, view listings, or price check.</div>
+          <div class="why">Bridge between physical cards and the digital marketplace. Useful at trade nights, when sorting a collection, or when you find cards at a car boot sale and want to know their value instantly.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="icon question">?</div>
+      <div class="body">
+        <strong>Question: What is the MVP for Track & Collect?</strong>
+        <p>Watchlist is essential (drives return visits). Collections are high-value but complex (portfolio tracking needs price data). Buylist is powerful but needs critical mass to be useful. Scan requires AI integration. Consider: Watchlist for launch, Collections in v2, Buylist and Scan in v3.</p>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LANE 4: SELLING -->
-  <!-- ═══════════════════════════════════════ -->
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- FLOW 4: BECOME A SELLER -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <div class="lane">
     <div class="lane-head">
-      <div class="ic" style="background:var(--emerald);">4</div>
-      <div>
-        <h2>Selling</h2>
-        <div class="lh-sub">List cards, manage offers, ship orders, track earnings</div>
+      <div class="num" style="background:var(--emerald);">4</div>
+      <div class="text">
+        <h2>Become a Seller</h2>
+        <div class="lh-sub">When a buyer decides to sell their first card, they hit a one-time verification gate. This is the only friction in the entire platform -- and it exists because trust is the currency of a marketplace. Verified sellers get a badge visible to all buyers.</div>
       </div>
-      <div class="badge"><span class="cap-badge sell">SELLER</span></div>
+      <div class="cap seller">SELLER UNLOCK</div>
     </div>
     <div class="lane-body">
-
-      <div class="flow">
-        <div class="node"><div class="box entry">Sell Hub</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box decision">How to sell?</div></div>
-        <div class="arrow"><div class="line"><span class="label">Single card</span></div></div>
-        <div class="node"><div class="box screen">Pick Card</div><div class="detail">Search or scan</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Condition</div><div class="detail">Grade, condition notes</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Photos</div><div class="detail">Front, back, close-ups</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Price</div><div class="detail">BIN price, market comparison</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Review</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box terminal">Listed</div></div>
+      <div class="step">
+        <div class="step-num">4.1</div>
+        <div class="step-node"><div class="box start">Tap "Sell"</div></div>
+        <div class="step-detail">
+          <div class="what">User taps the Sell tab for the first time. Instead of the sell hub, they see the seller activation flow.</div>
+          <div class="why">The trigger is natural -- they wanted to sell something. The activation flow is presented as "here is what you need to do to get started" not "you are not allowed to do this."</div>
+        </div>
       </div>
-
-      <div class="flow" style="margin-left: 194px;">
-        <div class="node"><div class="box decision" style="visibility:hidden;"></div></div>
-        <div class="arrow"><div class="line"><span class="label">Bulk list</span></div></div>
-        <div class="node"><div class="box screen">Choose Method</div><div class="detail">LiveSweep / batch / search / import</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Scan Cards</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Pricing Strategy</div><div class="detail">Market / undercut / quick sell</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box terminal">Published</div></div>
+      <div class="step">
+        <div class="step-num">4.2</div>
+        <div class="step-node"><div class="box screen">Seller Pitch</div></div>
+        <div class="step-detail">
+          <div class="what">Benefits of selling on Cardconomy. Fee comparison: "4% seller fee -- the lowest in TCG." How it works. Single CTA: "Get verified to sell."</div>
+          <div class="why">Reframes verification as a benefit, not a barrier. Shows the fee advantage immediately. The user should feel excited, not annoyed.</div>
+          <div class="problem">Problem: Sellers on eBay pay 12-15%. On Cardmarket they deal with EU shipping. We lead with the fee advantage because it is our strongest differentiator.</div>
+        </div>
       </div>
-
-      <div class="flow" style="margin-left: 194px;">
-        <div class="node"><div class="box decision" style="visibility:hidden;"></div></div>
-        <div class="arrow"><div class="line"><span class="label">Sell to shop</span></div></div>
-        <div class="node"><div class="box screen">Find Shop</div><div class="detail">Browse local shops</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Select Cards</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Shop Quote</div><div class="detail">Shop buylist prices</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box decision">Accept?</div></div>
-        <div class="arrow"><div class="line"><span class="label">Yes</span></div></div>
-        <div class="node"><div class="box terminal">Submitted</div></div>
+      <div class="step">
+        <div class="step-num">4.3</div>
+        <div class="step-node"><div class="box gate">ID Verification</div></div>
+        <div class="step-detail">
+          <div class="what">Photo of passport or UK driving licence + selfie match. Handled by Stripe Identity (or Onfido). Takes 2-3 minutes.</div>
+          <div class="why">Prevents fraud, fake accounts, and counterfeit sellers. This is the minimum bar for marketplace trust. Every serious marketplace requires this. Buyers will not spend 400 pounds on a card from an unverified stranger.</div>
+          <div class="problem">Problem: 125% increase in counterfeit cards in 2025. ID verification is the first line of defence against bad actors entering the seller pool.</div>
+        </div>
       </div>
-
-      <div class="flow" style="margin-left: 194px;">
-        <div class="node"><div class="box decision" style="visibility:hidden;"></div></div>
-        <div class="arrow"><div class="line"><span class="label">Trade</span></div></div>
-        <div class="node"><div class="box screen">Trade Matches</div><div class="detail">Cards others want that you have</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Build Proposal</div><div class="detail">Your cards + their cards</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box terminal">Proposal Sent</div></div>
+      <div class="step">
+        <div class="step-num">4.4</div>
+        <div class="step-node"><div class="box gate">Payout Setup</div></div>
+        <div class="step-detail">
+          <div class="what">UK bank account details or Stripe Connect onboarding. This is where the seller's earnings will be sent.</div>
+          <div class="why">Required before they can receive money. Stripe Connect handles KYC/AML compliance. Setting this up now means instant payouts when they make their first sale.</div>
+        </div>
       </div>
-
-      <div class="divider"><span>Post-Sale</span></div>
-
-      <div class="flow">
-        <div class="node"><div class="box entry">Item Sold</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Print Label</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Ship Item</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Tracking</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box terminal">Delivered</div><div class="detail">Funds released to balance</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Withdraw</div></div>
+      <div class="step">
+        <div class="step-num">4.5</div>
+        <div class="step-node"><div class="box action">Accept Terms</div></div>
+        <div class="step-detail">
+          <div class="what">Agree to seller terms of service: shipping timelines, condition accuracy, return policy, fee structure.</div>
+          <div class="why">Legal requirement. Sets expectations upfront. The terms are the contract between the seller and Cardconomy.</div>
+        </div>
       </div>
+      <div class="step">
+        <div class="step-num">4.6</div>
+        <div class="step-node"><div class="box done">Verified Seller</div></div>
+        <div class="step-detail">
+          <div class="what">Sell hub unlocks. "Verified Seller" badge appears on their profile, visible to all buyers. Dashboard gains seller sections (balance, listings, activity).</div>
+          <div class="why">The badge is the reward. It is social proof that this person has been verified. Buyers see it and trust more. The seller sees it and feels invested in the platform.</div>
+        </div>
+      </div>
+    </div>
 
-      <div class="note">
-        <strong>Seller Dashboard (additive):</strong> All buyer sections PLUS balance card with sparkline, status tiles (listings/offers/to ship), activity feed, needs attention (expiring offers, items to ship)
+    <div class="insight">
+      <div class="icon key">&#x2713;</div>
+      <div class="body">
+        <strong>This is intentionally the hardest part of the platform</strong>
+        <p>4 steps, 3-5 minutes. Every other flow is simpler than this. The friction is deliberate -- it filters out casual users who would list low-quality or fraudulent items. The result is a seller pool that buyers can trust.</p>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LANE 5: SHOP REGISTRATION -->
-  <!-- ═══════════════════════════════════════ -->
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- FLOW 5: LIST & SELL -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <div class="lane">
     <div class="lane-head">
-      <div class="ic" style="background:var(--amber);">5</div>
-      <div>
-        <h2>Shop Registration</h2>
-        <div class="lh-sub">Register as a Local Game Store — verified business with physical premises</div>
+      <div class="num" style="background:var(--emerald);">5</div>
+      <div class="text">
+        <h2>List & Sell</h2>
+        <div class="lh-sub">Four ways to sell cards, from listing a single card to trading with another collector. The sell hub is the entry point for all of them. Each path is optimised for a different scenario.</div>
       </div>
-      <div class="badge"><span class="cap-badge shop">SHOP UNLOCK</span></div>
+      <div class="cap seller">SELLER</div>
     </div>
     <div class="lane-body">
-      <div class="flow">
-        <div class="node"><div class="box entry">Register Shop</div><div class="detail">Settings or CTA</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">LGS Pitch</div><div class="detail">Free for early adopters, tool overview</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Business Details</div><div class="detail">Name, company number, address</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Proof of Premises</div><div class="detail">Photo or utility bill</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Games Stocked</div><div class="detail">Which games they trade</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Review</div><div class="detail">Verify within 48 hours</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box unlock">Shop Unlocked</div><div class="detail">Verified Shop badge</div></div>
+
+      <div class="section-break"><span>Path A: Single Card Listing</span></div>
+
+      <div class="step">
+        <div class="step-num">5.1</div>
+        <div class="step-node"><div class="box start">Sell Hub</div></div>
+        <div class="step-detail">
+          <div class="what">Choose how to sell: Single Card, Bulk List, Sell to Shop, or Trade. Each path has a different icon and one-line description.</div>
+          <div class="why">Four distinct seller needs. A user listing one valuable card has different needs from someone offloading 200 commons. The hub routes them to the right tool.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5.2</div>
+        <div class="step-node"><div class="box screen">Pick Card</div></div>
+        <div class="step-detail">
+          <div class="what">Search the card catalog by name, set, or number. Or scan the physical card with the camera to identify it automatically.</div>
+          <div class="why">Search works for sellers who know exactly what they have. Scan works for sellers who are not sure of the exact set or variant. Both paths converge on the same card identity.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5.3</div>
+        <div class="step-node"><div class="box screen">Condition</div></div>
+        <div class="step-detail">
+          <div class="what">Select condition (NM/LP/MP/HP/DMG) or enter grading company + grade (PSA 10, BGS 9.5, etc.). Add condition notes ("light whitening on back corners").</div>
+          <div class="why">Condition is the single biggest factor in card pricing. A PSA 10 Charizard is worth 10x a raw Near Mint copy. Getting this right prevents disputes and returns.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5.4</div>
+        <div class="step-node"><div class="box action">Photos</div></div>
+        <div class="step-detail">
+          <div class="what">Upload front, back, and optional close-up photos. Guided framing with card outline overlay.</div>
+          <div class="why">Photos are the buyer's primary way to verify condition claims. Good photos = faster sales, fewer disputes. The guided frame ensures consistent quality.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5.5</div>
+        <div class="step-node"><div class="box screen">Set Price</div></div>
+        <div class="step-detail">
+          <div class="what">Enter a Buy It Now price. See market comparison: current market price, recent sales, price range. Toggle "Accept Offers" on/off. See fee breakdown (4% seller fee on this price).</div>
+          <div class="why">Data-informed pricing. The seller sees what others charge and what cards actually sell for. The fee preview means no surprises. This transparency is a direct response to eBay hiding total fees until after listing.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5.6</div>
+        <div class="step-node"><div class="box screen">Review & List</div></div>
+        <div class="step-detail">
+          <div class="what">Summary: card, condition, photos, price, fees, estimated payout. One tap to publish.</div>
+          <div class="why">Final check before going live. Shows exactly what the buyer will see. No edits after this point without re-reviewing.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5.7</div>
+        <div class="step-node"><div class="box done">Listed</div></div>
+        <div class="step-detail">
+          <div class="what">Card is live on the marketplace. Appears in search results and on the product page alongside other sellers.</div>
+        </div>
+      </div>
+
+      <div class="section-break"><span>Path B: Bulk Listing</span></div>
+
+      <div class="step">
+        <div class="step-num">5.8</div>
+        <div class="step-node"><div class="box screen">Bulk List</div></div>
+        <div class="step-detail">
+          <div class="what">Choose method: LiveSweep (rapid camera scanning), batch entry (spreadsheet-style), catalog search (add from database), or CSV import. Scan or add cards, then choose pricing strategy: match market, undercut by X%, or quick sell (lowest price).</div>
+          <div class="why">Serious sellers have hundreds of cards. Listing them one by one is not viable. Bulk tools are what keep high-volume sellers on a platform. LiveSweep scanning is the fastest path -- scan, confirm, price, publish.</div>
+          <div class="problem">Problem: On eBay, listing 100 cards takes hours of manual entry. Bulk listing tools are the #1 feature request from TCG sellers switching platforms.</div>
+        </div>
+      </div>
+
+      <div class="section-break"><span>Path C: Sell to a Local Shop</span></div>
+
+      <div class="step">
+        <div class="step-num">5.9</div>
+        <div class="step-node"><div class="box screen">Sell to Shop</div></div>
+        <div class="step-detail">
+          <div class="what">Browse registered shops. Select cards to sell. See the shop's buylist prices for each card. Submit for the shop to review and accept.</div>
+          <div class="why">This is the bridge between online sellers and physical shops. A seller can offload cards they do not want to list individually. The shop gets inventory at buylist prices without the seller needing to visit in person.</div>
+          <div class="problem">Problem: Currently, selling to a shop requires physically going there. This digitises the process -- the seller submits online, ships (or drops off), and gets paid.</div>
+        </div>
+      </div>
+
+      <div class="section-break"><span>Path D: Trade</span></div>
+
+      <div class="step">
+        <div class="step-num">5.10</div>
+        <div class="step-node"><div class="box screen">Trade</div></div>
+        <div class="step-detail">
+          <div class="what">Browse trade matches: cards other users want that you have, and cards you want that they have. Build a proposal: your cards + their cards, balanced by market value. Send for approval.</div>
+          <div class="why">Card-for-card trading is fundamental to TCG culture. No major platform supports it. Collectors at trade nights do this in person -- Cardconomy enables it online with value balancing and protection.</div>
+          <div class="problem">Problem: Zero online platforms offer real card-for-card trading with value matching and buyer protection. This is a gap every collector complains about.</div>
+        </div>
+      </div>
+
+      <div class="section-break"><span>After a Sale</span></div>
+
+      <div class="step">
+        <div class="step-num">5.11</div>
+        <div class="step-node"><div class="box action">Ship & Track</div></div>
+        <div class="step-detail">
+          <div class="what">Seller receives "Item Sold" notification. Prints shipping label. Ships within the required timeframe. Tracking number provided to buyer. Funds held in escrow until delivery confirmed.</div>
+          <div class="why">The post-sale flow is where most marketplace friction occurs. Clear timelines, tracking, and escrow protect both parties. The seller dashboard shows "To Ship" items with countdown timers.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">5.12</div>
+        <div class="step-node"><div class="box done">Funds Released</div></div>
+        <div class="step-detail">
+          <div class="what">Delivery confirmed. Funds released from escrow to seller balance. Seller can withdraw to their bank account at any time.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="icon question">?</div>
+      <div class="body">
+        <strong>Question: Which sell paths are essential for launch?</strong>
+        <p>Single card listing is mandatory -- it is the core product. Bulk listing is critical for attracting serious sellers (they will not come without it). Sell-to-shop and Trade are differentiators but could launch later. Consider: Single + Bulk for v1, Sell-to-Shop in v2, Trade in v3.</p>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LANE 6: SHOP TOOLS -->
-  <!-- ═══════════════════════════════════════ -->
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- FLOW 6: REGISTER A SHOP -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <div class="lane">
     <div class="lane-head">
-      <div class="ic" style="background:var(--amber);">6</div>
-      <div>
-        <h2>Shop Tools</h2>
-        <div class="lh-sub">Storefront, submissions, grading, bulk intake, buylist management</div>
+      <div class="num" style="background:var(--amber);">6</div>
+      <div class="text">
+        <h2>Register a Shop</h2>
+        <div class="lh-sub">A verified seller who runs a physical local game store can register their business. This is a heavier verification than individual sellers because a "Verified Shop" badge carries more weight -- buyers expect professional service, accurate grading, and fast shipping from shops.</div>
       </div>
-      <div class="badge"><span class="cap-badge shop">SHOP</span></div>
+      <div class="cap shop">SHOP UNLOCK</div>
     </div>
     <div class="lane-body">
-
-      <div class="flow">
-        <div class="node"><div class="box entry">Shop Counter</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Submission Queue</div><div class="detail">Pending / graded / ready, status pills</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Grade Card</div><div class="detail">Assess condition, set price</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box terminal">Listed in Storefront</div></div>
+      <div class="step">
+        <div class="step-num">6.1</div>
+        <div class="step-node"><div class="box start">Register Shop</div></div>
+        <div class="step-detail">
+          <div class="what">Accessible from settings or from a "Register your shop" CTA on the LGS pitch page.</div>
+          <div class="why">Shops will find this through direct outreach (trade show demos, partnerships), not by accident. The CTA is prominent but not in the way of regular users.</div>
+        </div>
       </div>
-
-      <div class="flow">
-        <div class="node"><div class="box entry">Storefront</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Shop Profile</div><div class="detail">Banner, hours, location, games, description</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Inventory Grid</div><div class="detail">All listed cards from this shop</div></div>
+      <div class="step">
+        <div class="step-num">6.2</div>
+        <div class="step-node"><div class="box screen">LGS Pitch</div></div>
+        <div class="step-detail">
+          <div class="what">Benefits for local game stores: free for early adopters, digital storefront, online sales channel, buylist tools, submission queue for grading. Tool overview with screenshots.</div>
+          <div class="why">Shops need to understand what they get. "Free for early adopters" removes the financial risk. The pitch focuses on solving real shop problems: getting inventory online, managing buy prices, and reaching customers beyond their physical location.</div>
+        </div>
       </div>
-
-      <div class="flow">
-        <div class="node"><div class="box entry">Bulk Intake</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Receive Lot</div><div class="detail">Seller submits bulk cards</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Sort & Grade</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Price & List</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box terminal">Inventory Updated</div></div>
+      <div class="step">
+        <div class="step-num">6.3</div>
+        <div class="step-node"><div class="box gate">Business Verification</div></div>
+        <div class="step-detail">
+          <div class="what">Business name, Companies House number, registered address, contact details. Upload: photo of shopfront or utility bill at business address.</div>
+          <div class="why">Proves this is a real business with physical premises. Prevents individuals from claiming shop status for the badge. Companies House number can be verified programmatically.</div>
+        </div>
       </div>
-
-      <div class="flow">
-        <div class="node"><div class="box entry">Buylist</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box action">Set Buy Prices</div><div class="detail">Cards the shop wants to buy</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box screen">Incoming Matches</div><div class="detail">Sellers offering cards at your price</div></div>
-        <div class="arrow"><div class="line"></div></div>
-        <div class="node"><div class="box decision">Accept?</div></div>
-        <div class="arrow"><div class="line"><span class="label">Yes</span></div></div>
-        <div class="node"><div class="box terminal">Purchased</div></div>
+      <div class="step">
+        <div class="step-num">6.4</div>
+        <div class="step-node"><div class="box action">Games Stocked</div></div>
+        <div class="step-detail">
+          <div class="what">Select which TCGs the shop buys and sells. This determines what appears in their storefront and what buylist categories they manage.</div>
+          <div class="why">A shop that only deals in Pokemon should not receive Yu-Gi-Oh submissions. This filters their tools to show only relevant content.</div>
+        </div>
       </div>
+      <div class="step">
+        <div class="step-num">6.5</div>
+        <div class="step-node"><div class="box screen">Under Review</div></div>
+        <div class="step-detail">
+          <div class="what">"We will verify your shop within 48 hours." Manual review of submitted documents. Approval or rejection with feedback.</div>
+          <div class="why">Manual review is intentional. A bad shop damages the entire platform's reputation. 48 hours is fast enough to not lose the shop's interest, slow enough to verify properly.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">6.6</div>
+        <div class="step-node"><div class="box done">Verified Shop</div></div>
+        <div class="step-detail">
+          <div class="what">Shop counter unlocks. Storefront builder unlocks. "Verified Shop" badge appears. Dashboard gains shop sections (revenue, queue, buylist performance).</div>
+        </div>
+      </div>
+    </div>
 
-      <div class="note">
-        <strong>Shop Dashboard (additive):</strong> All buyer + seller sections PLUS revenue card with date range, queue stats, submission queue, buylist performance, restock alerts
+    <div class="insight">
+      <div class="icon warn">!</div>
+      <div class="body">
+        <strong>Risk: Shop onboarding is chicken-and-egg</strong>
+        <p>Shops will not join without buyers. Buyers will not come without inventory. The "free for early adopters" pitch and direct outreach at trade shows is the plan to break this cycle. Consider launching with 10-20 hand-onboarded shops before opening self-registration.</p>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- LANE 7: TRUST & VERIFICATION -->
-  <!-- ═══════════════════════════════════════ -->
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- FLOW 7: SHOP TOOLS -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
   <div class="lane">
     <div class="lane-head">
-      <div class="ic" style="background:linear-gradient(135deg, var(--emerald), var(--amber));">&#x2605;</div>
-      <div>
-        <h2>Trust & Verification Badges</h2>
-        <div class="lh-sub">Progressive trust — badges are visible to all other users</div>
+      <div class="num" style="background:var(--amber);">7</div>
+      <div class="text">
+        <h2>Shop Operations</h2>
+        <div class="lh-sub">The tools a registered shop uses daily: managing their storefront, processing card submissions from sellers, grading and listing inventory, and setting buylist prices. These tools replace the pen-and-paper or spreadsheet systems most UK shops currently use.</div>
       </div>
+      <div class="cap shop">SHOP</div>
     </div>
     <div class="lane-body">
-      <div class="flow">
-        <div class="node"><div class="box screen" style="min-width:140px;">No Badge</div><div class="detail">Browser / buyer only</div></div>
-        <div class="arrow"><div class="line"><span class="label">ID verify</span></div></div>
-        <div class="node"><div class="box action" style="min-width:140px;">Verified Seller</div><div class="detail">ID + payout confirmed</div></div>
-        <div class="arrow"><div class="line"><span class="label">Track record</span></div></div>
-        <div class="node"><div class="box" style="min-width:140px; background: linear-gradient(135deg, var(--emerald-wash), var(--amber-wash)); border: 1.5px solid var(--emerald-line); color: var(--emerald);">Trusted Seller</div><div class="detail">Earned: X sales, Y% positive, Z months</div></div>
-        <div class="arrow"><div class="line"><span class="label">Business verify</span></div></div>
-        <div class="node"><div class="box" style="min-width:140px; background: var(--amber-wash); border: 1.5px solid var(--amber-line); color: var(--amber);">Verified Shop</div><div class="detail">Business + premises confirmed</div></div>
+      <div class="step">
+        <div class="step-num">7.1</div>
+        <div class="step-node"><div class="box screen">Storefront</div></div>
+        <div class="step-detail">
+          <div class="what">Public shop page: banner image, shop name, location, opening hours, games stocked, description. Below: all cards currently listed by this shop in a searchable/filterable grid.</div>
+          <div class="why">The shop's digital presence. Customers can browse their inventory online, see prices, and buy without visiting in person. This extends the shop's reach beyond its physical catchment area.</div>
+          <div class="problem">Problem: Most UK LGS have no online presence beyond a Facebook page. No way to browse or buy their inventory remotely.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7.2</div>
+        <div class="step-node"><div class="box screen">Submission Queue</div></div>
+        <div class="step-detail">
+          <div class="what">Incoming cards from sellers who chose "Sell to Shop." Each submission shows: card details, seller's claimed condition, seller's asking price vs shop buylist price. Status: Pending, Graded, Ready, Listed.</div>
+          <div class="why">Digitises the walk-in experience. Instead of a seller bringing cards to the counter, they submit online. The shop reviews, accepts or rejects, and processes at their own pace.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7.3</div>
+        <div class="step-node"><div class="box action">Grade & Price</div></div>
+        <div class="step-detail">
+          <div class="what">Shop staff assess the physical card (once received), confirm or adjust the condition grade, set the retail price, and list it in their storefront.</div>
+          <div class="why">The shop adds value by grading accurately and pricing for retail. Their expertise is the service -- a seller gets convenience, the shop gets inventory at wholesale.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7.4</div>
+        <div class="step-node"><div class="box screen">Buylist Manager</div></div>
+        <div class="step-detail">
+          <div class="what">Set buy prices for cards the shop wants. When a seller lists a matching card at or below the buylist price, the shop gets notified. Accept or pass on each match.</div>
+          <div class="why">Automated sourcing. Instead of hoping the right cards walk through the door, the shop broadcasts what they want and at what price. Matches come to them.</div>
+          <div class="problem">Problem: Shop buylists are currently managed on spreadsheets or third-party websites (Crystal Commerce, BinderPOS). No integration with where sellers actually list cards.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">7.5</div>
+        <div class="step-node"><div class="box action">Bulk Intake</div></div>
+        <div class="step-detail">
+          <div class="what">Process a large lot of cards submitted by a seller: receive the physical lot, sort by game/set, grade each card, set prices, list everything to storefront in one batch.</div>
+          <div class="why">Shops frequently buy entire collections. Processing them efficiently is critical. The bulk intake tool tracks the lot from receipt through grading to listing, with per-card and per-lot accounting.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="icon question">?</div>
+      <div class="body">
+        <strong>Question: Which shop tools are essential for launch?</strong>
+        <p>Storefront is the minimum -- shops need a page and inventory display. Buylist Manager is the most differentiated feature (no competitor has this). Submission Queue and Bulk Intake are operational tools that can be manual initially. Consider: Storefront + Buylist for launch, Queue + Bulk Intake in v2.</p>
       </div>
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════ -->
-  <!-- SUMMARY -->
-  <!-- ═══════════════════════════════════════ -->
-  <div class="lane" style="margin-top: 28px;">
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- TRUST LADDER -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <div class="lane">
+    <div class="lane-head">
+      <div class="num" style="background: linear-gradient(135deg, var(--emerald), var(--amber));">&#x2605;</div>
+      <div class="text">
+        <h2>Trust Ladder</h2>
+        <div class="lh-sub">Trust is earned progressively. Each level is visible to buyers and increases conversion rates. The ladder incentivises good behaviour -- sellers who ship fast, grade accurately, and resolve issues earn higher trust over time.</div>
+      </div>
+    </div>
+    <div class="lane-body">
+      <div class="step">
+        <div class="step-num">T1</div>
+        <div class="step-node"><div class="box screen">New Buyer</div></div>
+        <div class="step-detail">
+          <div class="what">No badge. Can browse and buy. Email verified only.</div>
+          <div class="why">The default state. No friction to get here. Can transact as a buyer with full buyer protection.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">T2</div>
+        <div class="step-node"><div class="box action">Verified Seller</div></div>
+        <div class="step-detail">
+          <div class="what">ID verified + payout confirmed. Badge visible on all listings and profile.</div>
+          <div class="why">Buyers see "Verified Seller" and know this is a real person with a confirmed identity. Significantly increases buyer confidence, especially on higher-value cards.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">T3</div>
+        <div class="step-node"><div class="box" style="background: linear-gradient(135deg, var(--emerald-wash), #fff8e1); border: 1.5px solid var(--emerald-line); color: var(--emerald-dark); border-radius: 8px; font-size: 12px; font-weight: 600; padding: 8px 12px; width: 100%; min-height: 38px; display:flex; align-items:center; justify-content:center;">Trusted Seller</div></div>
+        <div class="step-detail">
+          <div class="what">Earned automatically: X completed sales + Y% positive feedback + Z months on platform. Not applied for -- earned through consistent good behaviour.</div>
+          <div class="why">The aspirational tier. Trusted Sellers get premium placement in search results and higher visibility on product pages. This incentivises long-term engagement and quality service.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">T4</div>
+        <div class="step-node"><div class="box" style="background: var(--amber-wash); border: 1.5px solid var(--amber-line); color: var(--amber); border-radius: 8px; font-size: 12px; font-weight: 600; padding: 8px 12px; width: 100%; min-height: 38px; display:flex; align-items:center; justify-content:center;">Verified Shop</div></div>
+        <div class="step-detail">
+          <div class="what">Business verified with physical premises. Highest trust tier. Buyers expect professional service, accurate grading, fast shipping, and easy returns.</div>
+          <div class="why">Shops are the backbone of the TCG ecosystem. Their presence on the platform gives buyers confidence that the marketplace is legitimate and well-stocked.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- DASHBOARD SUMMARY -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <div class="lane" style="margin-top: 32px;">
     <div class="lane-head" style="background: var(--navy); border: none;">
-      <div class="ic" style="background: var(--emerald);">&#x2713;</div>
-      <div>
-        <h2 style="color: #fff;">Key Principle: Additive Capabilities</h2>
-        <div class="lh-sub" style="color: var(--faint);">The dashboard grows with the user. Nothing is replaced — new sections are added.</div>
+      <div class="num" style="background: var(--emerald);">&#x2713;</div>
+      <div class="text">
+        <h2 style="color: #fff;">Additive Dashboard Model</h2>
+        <div class="lh-sub" style="color: var(--faint);">The dashboard grows with the user. Nothing is replaced. A shop owner who collects personally sees buyer + seller + shop sections all at once.</div>
       </div>
     </div>
-    <div class="lane-body" style="display: flex; gap: 16px; flex-wrap: wrap;">
-      <div style="flex:1; min-width: 200px; background: var(--navy-wash); border-radius: 12px; padding: 16px;">
-        <div style="font-family: var(--heading); font-weight: 700; font-size: 14px; margin-bottom: 6px;">Buyer Only</div>
-        <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Portfolio value, watchlist, buylist, orders</div>
+    <div class="summary-grid">
+      <div class="summary-card">
+        <h3><span class="dot" style="background: var(--navy);"></span> Buyer</h3>
+        <ul>
+          <li>Portfolio value with trend sparkline</li>
+          <li>Watchlist price movements</li>
+          <li>Buylist matches at your max price</li>
+          <li>Recent orders with status tracking</li>
+          <li>Needs attention: arriving orders, price drops</li>
+        </ul>
       </div>
-      <div style="flex:1; min-width: 200px; background: var(--emerald-wash); border-radius: 12px; padding: 16px;">
-        <div style="font-family: var(--heading); font-weight: 700; font-size: 14px; color: var(--emerald); margin-bottom: 6px;">+ Seller</div>
-        <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Balance card, active listings, pending offers, to ship, activity feed</div>
+      <div class="summary-card" style="border-color: var(--emerald-line);">
+        <h3><span class="dot" style="background: var(--emerald);"></span> + Seller</h3>
+        <ul>
+          <li>Balance card with withdrawable amount</li>
+          <li>Status tiles: active listings, pending offers, to ship</li>
+          <li>Activity feed: sales, views, offers received</li>
+          <li>Needs attention: expiring offers, items to ship</li>
+          <li>Earnings trend with weekly/monthly view</li>
+        </ul>
       </div>
-      <div style="flex:1; min-width: 200px; background: var(--amber-wash); border-radius: 12px; padding: 16px;">
-        <div style="font-family: var(--heading); font-weight: 700; font-size: 14px; color: var(--amber); margin-bottom: 6px;">+ Shop</div>
-        <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Revenue metrics, submission queue, bulk lot alerts, buylist performance</div>
+      <div class="summary-card" style="border-color: var(--amber-line);">
+        <h3><span class="dot" style="background: var(--amber);"></span> + Shop</h3>
+        <ul>
+          <li>Revenue card with date range selector</li>
+          <li>Submission queue stats and status</li>
+          <li>Buylist performance (fill rate, demand)</li>
+          <li>Needs attention: submissions to grade, restock alerts</li>
+          <li>Bulk lot processing status</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <!-- LAUNCH PRIORITY -->
+  <!-- ════════════════════════════════════════════════════════════════ -->
+  <div class="lane" style="margin-top: 32px;">
+    <div class="lane-head">
+      <div class="num" style="background: var(--emerald);">&#x21E8;</div>
+      <div class="text">
+        <h2>Suggested Launch Priority</h2>
+        <div class="lh-sub">Based on the flows above, here is one way to think about what to build first. The core question: what is the minimum that makes this a usable marketplace?</div>
+      </div>
+    </div>
+    <div class="summary-grid">
+      <div class="summary-card" style="border-color: var(--emerald-line); border-width: 2px;">
+        <h3 style="color: var(--emerald);">V1: Core Marketplace</h3>
+        <ul>
+          <li><strong>Onboarding</strong> (Flow 1 -- all steps)</li>
+          <li><strong>Search & Buy</strong> (Flow 2 -- Buy Now only, no offers)</li>
+          <li><strong>Watchlist</strong> (Flow 3 -- step 3.1 only)</li>
+          <li><strong>Seller Verification</strong> (Flow 4 -- all steps)</li>
+          <li><strong>Single Card Listing</strong> (Flow 5 -- path A only)</li>
+          <li><strong>Ship & Track</strong> (Flow 5 -- steps 5.11-5.12)</li>
+        </ul>
+      </div>
+      <div class="summary-card">
+        <h3 style="color: var(--amber);">V2: Scale & Differentiate</h3>
+        <ul>
+          <li><strong>Offers</strong> (Flow 2 -- step 2.6b)</li>
+          <li><strong>Bulk Listing</strong> (Flow 5 -- path B)</li>
+          <li><strong>Collections</strong> (Flow 3 -- step 3.2)</li>
+          <li><strong>Shop Registration</strong> (Flow 6 -- all steps)</li>
+          <li><strong>Storefront</strong> (Flow 7 -- step 7.1)</li>
+          <li><strong>Sell to Shop</strong> (Flow 5 -- path C)</li>
+        </ul>
+      </div>
+      <div class="summary-card">
+        <h3 style="color: var(--ink-2);">V3: Full Vision</h3>
+        <ul>
+          <li><strong>Buylist + Matching</strong> (Flow 3 -- step 3.3)</li>
+          <li><strong>Card Scanning</strong> (Flow 3 -- step 3.4)</li>
+          <li><strong>Trading</strong> (Flow 5 -- path D)</li>
+          <li><strong>Shop Queue + Bulk Intake</strong> (Flow 7 -- steps 7.2-7.5)</li>
+          <li><strong>Trusted Seller tier</strong> (Trust ladder -- T3)</li>
+          <li><strong>Buylist Manager for shops</strong> (Flow 7 -- step 7.4)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="insight">
+      <div class="icon key">&#x2713;</div>
+      <div class="body">
+        <strong>The core problem V1 solves</strong>
+        <p>UK TCG collectors have no domestic marketplace. V1 gives them one: search for cards, compare sellers, buy with protection, and list their own cards to sell. Everything else -- collections, trading, shop tools, scanning -- makes the platform stickier and more differentiated, but the marketplace itself is the foundation that must work first.</p>
       </div>
     </div>
   </div>
