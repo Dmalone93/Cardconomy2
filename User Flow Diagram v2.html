@@ -143,9 +143,56 @@
     .summary-grid { grid-template-columns: 1fr; }
   }
 
+  /* ══════════════════════════════════════ */
+  /* VIEW TOGGLE                          */
+  /* ══════════════════════════════════════ */
+  .view-toggle { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; width: fit-content; margin: 20px 0 4px; }
+  .view-toggle button { font-family: var(--body); font-size: 13px; font-weight: 600; padding: 8px 20px; border: none; background: none; color: var(--muted); cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+  .view-toggle button.active { background: var(--navy); color: #fff; }
+  .view-toggle button:not(.active):hover { background: var(--surface-2); }
+  .view-toggle button svg { width: 16px; height: 16px; }
+
+  /* ══════════════════════════════════════ */
+  /* FLOW VIEW                             */
+  /* ══════════════════════════════════════ */
+  body.flow-mode .step { display: none; }
+  body.flow-mode .section-break { display: none; }
+  body.flow-mode .insight { display: none; }
+
+  .flow-view { display: none; padding: 24px; overflow-x: auto; }
+  body.flow-mode .flow-view { display: block; }
+  body.flow-mode .lane-body { padding: 0; }
+  body.flow-mode .lane-head .lh-sub { display: none; }
+
+  .flow-row { display: flex; align-items: center; gap: 0; min-width: max-content; padding: 4px 0; }
+  .flow-row + .flow-row { margin-top: 6px; }
+  .flow-row.indented { margin-left: 156px; }
+
+  .flow-label { font-family: var(--mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--faint); font-weight: 600; padding: 12px 0 4px; }
+
+  .fnode { display: flex; flex-direction: column; align-items: center; gap: 3px; flex-shrink: 0; }
+  .fnode .fb { display: flex; align-items: center; justify-content: center; text-align: center; padding: 7px 14px; border-radius: 8px; font-size: 11px; font-weight: 600; line-height: 1.25; min-width: 100px; max-width: 140px; min-height: 36px; white-space: nowrap; }
+  .fnode .fb.start { background: var(--navy); color: #fff; border-radius: 999px; }
+  .fnode .fb.screen { background: var(--surface); border: 1.5px solid var(--line); color: var(--ink-2); }
+  .fnode .fb.action { background: var(--emerald-wash); border: 1.5px solid var(--emerald-line); color: var(--emerald-dark); }
+  .fnode .fb.decision { background: var(--amber-wash); border: 1.5px solid var(--amber-line); color: var(--amber); }
+  .fnode .fb.gate { background: var(--red-wash); border: 1.5px solid var(--red-line); color: var(--red); }
+  .fnode .fb.done { background: var(--emerald); color: #fff; border-radius: 999px; }
+  .fnode .fsub { font-size: 9px; color: var(--faint); max-width: 120px; text-align: center; line-height: 1.3; }
+
+  .farrow { display: flex; align-items: center; flex-shrink: 0; padding: 0 1px; }
+  .farrow .fline { width: 28px; height: 1.5px; background: var(--line); position: relative; }
+  .farrow .fline::after { content: ''; position: absolute; right: -1px; top: -3.5px; border: 4px solid transparent; border-left: 5px solid var(--line); }
+  .farrow .flabel { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); font-size: 8px; color: var(--faint); font-weight: 500; white-space: nowrap; font-family: var(--mono); }
+  .farrow .fline { position: relative; }
+
+  .flow-section-label { font-family: var(--mono); font-size: 9px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--faint); font-weight: 600; margin: 14px 0 4px; display: flex; align-items: center; gap: 8px; }
+  .flow-section-label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+
   @media print {
     .page { padding: 20px; }
     .lane { break-inside: avoid; box-shadow: none; border: 1px solid var(--line); }
+    .view-toggle { display: none; }
   }
 </style>
 </head>
@@ -171,6 +218,18 @@
     <div class="leg"><div class="sw decision"></div><b>Decision Point</b></div>
     <div class="leg"><div class="sw gate"></div><b>Verification Gate</b></div>
     <div class="leg"><div class="sw done"></div><b>Outcome</b></div>
+  </div>
+
+  <!-- View Toggle -->
+  <div class="view-toggle" id="viewToggle">
+    <button class="active" data-view="detail" onclick="setView('detail')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      Detail View
+    </button>
+    <button data-view="flow" onclick="setView('flow')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      Flow View
+    </button>
   </div>
 
 
@@ -237,6 +296,19 @@
       <div class="body">
         <strong>Design principle: Zero setup to value</strong>
         <p>The user sees cards they care about within 60 seconds of arriving. Everything else (selling, shop tools, verification) is deferred until the moment they need it. This is the opposite of Cardmarket, which requires address and payment setup before you can even browse.</p>
+      </div>
+    </div>
+    <div class="flow-view">
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">New User</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Sign Up</div><div class="fsub">Email or social</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Verify Email</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Pick Games</div><div class="fsub">Skippable</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Home Feed</div><div class="fsub">Browse & Buy unlocked</div></div>
       </div>
     </div>
   </div>
@@ -353,6 +425,42 @@
         <p>Offers add complexity (counter-offers, expiry, notifications, dispute potential). Fixed pricing is simpler and covers 70%+ of transactions on Cardmarket. Consider launching with Buy Now only, adding offers in v2 based on seller demand.</p>
       </div>
     </div>
+    <div class="flow-view">
+      <div class="flow-section-label">Finding Cards</div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Home Feed</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Search + Filters</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Product Page</div><div class="fsub">All sellers, one card</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Listing Detail</div><div class="fsub">One seller's offer</div></div>
+      </div>
+      <div class="flow-section-label">Purchasing</div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb screen">Listing Detail</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb decision">Buy or Offer?</div></div>
+        <div class="farrow"><div class="fline"><span class="flabel">Buy now</span></div></div>
+        <div class="fnode"><div class="fb action">Add to Cart</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Cart</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Checkout</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Order Confirmed</div></div>
+      </div>
+      <div class="flow-row indented">
+        <div class="farrow"><div class="fline"><span class="flabel">Make offer</span></div></div>
+        <div class="fnode"><div class="fb action">Set Price</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Offer Sent</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb decision">Response?</div></div>
+        <div class="farrow"><div class="fline"><span class="flabel">Accepted</span></div></div>
+        <div class="fnode"><div class="fb action">Add to Cart</div></div>
+      </div>
+    </div>
   </div>
 
 
@@ -410,6 +518,24 @@
       <div class="body">
         <strong>Question: What is the MVP for Track & Collect?</strong>
         <p>Watchlist is essential (drives return visits). Collections are high-value but complex (portfolio tracking needs price data). Buylist is powerful but needs critical mass to be useful. Scan requires AI integration. Consider: Watchlist for launch, Collections in v2, Buylist and Scan in v3.</p>
+      </div>
+    </div>
+    <div class="flow-view">
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Profile</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Watchlist</div><div class="fsub">Live price deltas</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Collections</div><div class="fsub">Portfolio tracking</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Buylist</div><div class="fsub">Auto-matching</div></div>
+      </div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Camera</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Scan Card</div><div class="fsub">AI identification</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Result</div><div class="fsub">Grade, price, actions</div></div>
       </div>
     </div>
   </div>
@@ -485,6 +611,21 @@
       <div class="body">
         <strong>This is intentionally the hardest part of the platform</strong>
         <p>4 steps, 3-5 minutes. Every other flow is simpler than this. The friction is deliberate -- it filters out casual users who would list low-quality or fraudulent items. The result is a seller pool that buyers can trust.</p>
+      </div>
+    </div>
+    <div class="flow-view">
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Tap Sell</div><div class="fsub">First time</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Seller Pitch</div><div class="fsub">4% fee, benefits</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb gate">ID Verification</div><div class="fsub">Passport + selfie</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb gate">Payout Setup</div><div class="fsub">Bank / Stripe</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Accept Terms</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Verified Seller</div><div class="fsub">Badge + sell hub</div></div>
       </div>
     </div>
   </div>
@@ -624,6 +765,74 @@
         <p>Single card listing is mandatory -- it is the core product. Bulk listing is critical for attracting serious sellers (they will not come without it). Sell-to-shop and Trade are differentiators but could launch later. Consider: Single + Bulk for v1, Sell-to-Shop in v2, Trade in v3.</p>
       </div>
     </div>
+    <div class="flow-view">
+      <div class="flow-section-label">Path A: Single Card</div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Sell Hub</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Pick Card</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Condition</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Photos</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Set Price</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Review</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Listed</div></div>
+      </div>
+      <div class="flow-section-label">Path B: Bulk</div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Sell Hub</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Choose Method</div><div class="fsub">Sweep / batch / CSV</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Scan Cards</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Pricing Strategy</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Published</div></div>
+      </div>
+      <div class="flow-section-label">Path C: Sell to Shop</div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Sell Hub</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Find Shop</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Select Cards</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Shop Quote</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb decision">Accept?</div></div>
+        <div class="farrow"><div class="fline"><span class="flabel">Yes</span></div></div>
+        <div class="fnode"><div class="fb done">Submitted</div></div>
+      </div>
+      <div class="flow-section-label">Path D: Trade</div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Sell Hub</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Trade Matches</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Build Proposal</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Proposal Sent</div></div>
+      </div>
+      <div class="flow-section-label">After a Sale</div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Item Sold</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Print Label</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Ship</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Tracking</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Funds Released</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Withdraw</div></div>
+      </div>
+    </div>
   </div>
 
 
@@ -696,6 +905,23 @@
         <p>Shops will not join without buyers. Buyers will not come without inventory. The "free for early adopters" pitch and direct outreach at trade shows is the plan to break this cycle. Consider launching with 10-20 hand-onboarded shops before opening self-registration.</p>
       </div>
     </div>
+    <div class="flow-view">
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Register Shop</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">LGS Pitch</div><div class="fsub">Free for early adopters</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb gate">Business Details</div><div class="fsub">Company number</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb gate">Proof of Premises</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Games Stocked</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Under Review</div><div class="fsub">48 hours</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Verified Shop</div></div>
+      </div>
+    </div>
   </div>
 
 
@@ -763,6 +989,46 @@
         <p>Storefront is the minimum -- shops need a page and inventory display. Buylist Manager is the most differentiated feature (no competitor has this). Submission Queue and Bulk Intake are operational tools that can be manual initially. Consider: Storefront + Buylist for launch, Queue + Bulk Intake in v2.</p>
       </div>
     </div>
+    <div class="flow-view">
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Storefront</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Shop Profile</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Inventory Grid</div></div>
+      </div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Shop Counter</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Submission Queue</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Grade & Price</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Listed</div></div>
+      </div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Buylist Mgr</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Set Buy Prices</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Matches</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb decision">Accept?</div></div>
+        <div class="farrow"><div class="fline"><span class="flabel">Yes</span></div></div>
+        <div class="fnode"><div class="fb done">Purchased</div></div>
+      </div>
+      <div class="flow-row">
+        <div class="fnode"><div class="fb start">Bulk Intake</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Receive Lot</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb action">Sort & Grade</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb screen">Price & List</div></div>
+        <div class="farrow"><div class="fline"></div></div>
+        <div class="fnode"><div class="fb done">Inventory Updated</div></div>
+      </div>
+    </div>
   </div>
 
 
@@ -809,6 +1075,17 @@
           <div class="what">Business verified with physical premises. Highest trust tier. Buyers expect professional service, accurate grading, fast shipping, and easy returns.</div>
           <div class="why">Shops are the backbone of the TCG ecosystem. Their presence on the platform gives buyers confidence that the marketplace is legitimate and well-stocked.</div>
         </div>
+      </div>
+    </div>
+    <div class="flow-view">
+      <div class="flow-row">
+        <div class="fnode"><div class="fb screen">New Buyer</div><div class="fsub">No badge</div></div>
+        <div class="farrow"><div class="fline"><span class="flabel">ID verify</span></div></div>
+        <div class="fnode"><div class="fb action">Verified Seller</div></div>
+        <div class="farrow"><div class="fline"><span class="flabel">Track record</span></div></div>
+        <div class="fnode" style="position:relative;"><div class="fb" style="background: linear-gradient(135deg, var(--emerald-wash), #fff8e1); border: 1.5px solid var(--emerald-line); color: var(--emerald-dark); border-radius: 8px; font-size: 11px; font-weight: 600; padding: 7px 14px; min-width: 100px; min-height: 36px; display:flex; align-items:center; justify-content:center;">Trusted Seller</div><div class="fsub">Earned over time</div></div>
+        <div class="farrow"><div class="fline"><span class="flabel">Business verify</span></div></div>
+        <div class="fnode"><div class="fb" style="background: var(--amber-wash); border: 1.5px solid var(--amber-line); color: var(--amber); border-radius: 8px; font-size: 11px; font-weight: 600; padding: 7px 14px; min-width: 100px; min-height: 36px; display:flex; align-items:center; justify-content:center;">Verified Shop</div></div>
       </div>
     </div>
   </div>
@@ -916,5 +1193,14 @@
   </div>
 
 </div>
+
+<script>
+function setView(mode) {
+  document.body.classList.toggle('flow-mode', mode === 'flow');
+  document.querySelectorAll('.view-toggle button').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.view === mode);
+  });
+}
+</script>
 </body>
 </html>
