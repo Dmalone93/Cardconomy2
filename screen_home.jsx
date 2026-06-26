@@ -104,8 +104,8 @@ function ListCard({ item, app, w }) {
       borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
       boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
     }}>
-      <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#ffffff' }}>
-        {item.grade && item.grade.company !== 'raw' ? <Slab item={item} w={90} /> : <CardArt item={item} w={140} />}
+      <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#ffffff', height: 210 }}>
+        {item.grade && item.grade.company !== 'raw' ? <Slab item={item} w={100} /> : <CardArt item={item} w={140} />}
         <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(item.id); }} style={{
           position: 'absolute', top: 10, right: 10, width: 32, height: 32, borderRadius: 999,
           background: 'var(--glass)', backdropFilter: 'blur(6px)',
