@@ -514,27 +514,6 @@ function HomeScreen({ app }) {
         </div>
       </div>
 
-      {/* ── Graded slabs ── */}
-      {graded.length > 0 && (
-        <div style={{ margin: '20px 0', padding: '24px 0', background: 'var(--fill)', borderRadius: 0 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 14px', marginBottom: 14 }}>
-            <div style={{ fontSize: 16, fontWeight: 700, color: '#fff' }}>Graded Slabs</div>
-            <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>Shop graded</div>
-          </div>
-          <div style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '0 14px', WebkitOverflowScrolling: 'touch' }}>
-            {graded.slice(0, 4).map(item => (
-              <div key={item.id} onClick={() => app.nav.push('listing', { id: item.id })} style={{ flexShrink: 0, textAlign: 'center', cursor: 'pointer' }}>
-                <Slab item={item} w={100} />
-                <div style={{ marginTop: 8, maxWidth: 100 }}>
-                  <div style={{ fontWeight: 700, fontSize: 11.5, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-                  <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 14, color: '#fff', marginTop: 3 }}>{money(item.price)}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* ── Find a local shop ── */}
       <div style={{ margin: '0 14px 20px', padding: '20px 16px', borderRadius: 14, background: 'var(--fill)', color: '#fff' }}>
         <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 17, marginBottom: 6 }}>Find a local game shop</div>

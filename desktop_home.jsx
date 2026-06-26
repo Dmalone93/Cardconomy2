@@ -408,31 +408,6 @@ function DHome({ app }) {
         </div>
       </section>
 
-      {/* ── Graded slabs (visual slab display) ── */}
-      <section style={{ marginTop: 50, background: 'var(--fill)', padding: '44px 0 50px', borderRadius: 20 }}>
-        <div className="wrap">
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 24 }}>
-            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0, color: '#fff' }}>Graded Slabs</h2>
-            <button onClick={() => app.go('search', { cond: 'Graded only' })} style={{ fontSize: 14.5, fontWeight: 600, color: 'rgba(255,255,255,0.7)' }}>Shop graded →</button>
-          </div>
-          <div style={{ display: 'flex', gap: 28, justifyContent: 'center', flexWrap: 'wrap' }}>
-            {LISTH.filter(l => l.grade && l.grade.company !== 'raw').slice(0, 4).map(l => (
-              <div key={l.id} onClick={() => app.go('listing', { id: l.id })} style={{ cursor: 'pointer', textAlign: 'center',
-                transition: 'transform 0.2s' }}
-                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-6px)'}
-                onMouseLeave={e => e.currentTarget.style.transform = 'none'}>
-                <SlabH item={l} w={140} />
-                <div style={{ marginTop: 12, color: '#fff' }}>
-                  <div style={{ fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: 140 }}>{l.name}</div>
-                  <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)', marginTop: 2 }}><GradeChipH grade={l.grade} /></div>
-                  <div style={{ fontFamily: TH.mono, fontWeight: 700, fontSize: 18, marginTop: 6 }}>{mH(l.price)}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── Bulk lots ── */}
       <section style={{ marginTop: 50 }}>
         <div className="wrap">
