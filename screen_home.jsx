@@ -532,9 +532,8 @@ function HomeScreen({ app }) {
         </div>
       </div>
 
-
       {/* ── Compare fees CTA ── */}
-      <div style={{ margin: '0 14px 24px' }}>
+      <div style={{ margin: '12px 14px 24px' }}>
         <button onClick={() => app.nav.push('fees')} style={{
           width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '16px 18px', borderRadius: 12, border: '1px solid var(--line)', background: T.surface, cursor: 'pointer' }}>
