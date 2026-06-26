@@ -93,7 +93,9 @@ function Slab({ item, w = 150 }) {
       </div>
     );
   }
+  const isBGS = grd.company === 'bgs';
   const caseW = w, caseH = Math.round(w * 1.698); // matches slab image aspect (574×975)
+  const bgsLabel = isBGS ? (grd.grade >= 9.5 ? 'ads/bgs-label-10.svg' : 'ads/bgs-label-8.svg') : null;
   return (
     <div style={{ width: caseW, height: caseH, position: 'relative', filter: 'drop-shadow(0 12px 26px rgba(0,0,0,0.22))' }}>
       {/* card sits in the slab window */}
@@ -106,8 +108,12 @@ function Slab({ item, w = 150 }) {
             background: 'linear-gradient(118deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 22%, transparent 42%, transparent 70%, rgba(255,255,255,0.12) 100%)' }} />
         </div>
       </div>
-      {/* the PSA case frame on top (label + plastic edges) */}
+      {/* the case frame on top */}
       <img src="ads/psa-slab.webp" alt="Graded slab" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'fill', pointerEvents: 'none', zIndex: 5 }} />
+      {/* BGS label overlay — replaces the PSA label area at the top */}
+      {bgsLabel && (
+        <img src={bgsLabel} alt="BGS label" style={{ position: 'absolute', top: '1%', left: '5%', width: '90%', height: '18%', objectFit: 'contain', objectPosition: 'center', pointerEvents: 'none', zIndex: 6 }} />
+      )}
     </div>
   );
 }
