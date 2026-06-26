@@ -20,8 +20,8 @@ function DGameTile({ game, app }) {
     <div onClick={() => app.go('search', { game: game.id })}
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       role="button" style={{
-      cursor: 'pointer', borderRadius: 16, overflow: 'hidden', position: 'relative',
-      width: 280, height: 320, flexShrink: 0, background: game.tint,
+      cursor: 'pointer', borderRadius: 8, overflow: 'hidden', position: 'relative',
+      width: 280, height: 380, flexShrink: 0, background: game.tint,
       boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
       transform: hover ? 'scale(1.03)' : 'scale(1)',
       transition: 'transform 0.2s',
