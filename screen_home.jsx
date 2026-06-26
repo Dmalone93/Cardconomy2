@@ -494,16 +494,16 @@ function HomeScreen({ app }) {
       <WhatsHot app={app} trendingProducts={trendingProducts} />
 
       {/* ── Sell your cards ── */}
-      <div style={{ padding: '20px 14px 0' }}>
-        <div style={{ fontSize: 16, fontWeight: 700, color: T.ink, marginBottom: 10 }}>Start selling</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      <div style={{ padding: '24px 14px 0' }}>
+        <div style={{ fontSize: 16, fontWeight: 700, color: T.ink, marginBottom: 12 }}>Start selling</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {[
             { title: 'List from collection', desc: 'Multi-select, auto-price, list in seconds', bg: 'linear-gradient(135deg, #1a1a2e, #0f3460)', action: () => app.nav.setTab('watch') },
             { title: 'Sell to a local shop', desc: 'Walk cards in, walk out with cash', bg: 'linear-gradient(135deg, #1a2e1a, #2d5a3f)', action: () => app.nav.push('sellshop') },
             { title: 'Trade card-for-card', desc: 'Swap with collectors near you', bg: 'linear-gradient(135deg, #1b2838, #3a5a8c)', action: () => app.nav.push('trade') },
           ].map(c => (
             <button key={c.title} onClick={c.action} style={{ display: 'flex', alignItems: 'center', gap: 14,
-              background: c.bg, borderRadius: 14, padding: '16px 16px', textAlign: 'left', border: 'none', cursor: 'pointer' }}>
+              background: c.bg, borderRadius: 12, padding: '14px 16px', textAlign: 'left', border: 'none', cursor: 'pointer' }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 700, fontSize: 14, color: '#fff' }}>{c.title}</div>
                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{c.desc}</div>
@@ -514,52 +514,37 @@ function HomeScreen({ app }) {
         </div>
       </div>
 
-      {/* ── Find a local shop ── */}
-      <div style={{ margin: '0 14px 20px', padding: '20px 16px', borderRadius: 14, background: 'var(--fill)', color: '#fff' }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 17, marginBottom: 6 }}>Find a local game shop</div>
-        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5, marginBottom: 14 }}>
-          Browse verified shops near you. Sell cards in person or meet for trades.
-        </div>
-        <button onClick={() => app.nav.push('storefront')} style={{
-          padding: '10px 18px', borderRadius: 8, border: 'none',
-          background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13, cursor: 'pointer',
-        }}>Find shops →</button>
-      </div>
-
-      {/* ── UK community banner ── */}
-      <div style={{ margin: '0 14px 20px', padding: '18px 16px', borderRadius: 14,
-        background: T.surface, border: '1px solid var(--line)' }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 17, color: T.ink, marginBottom: 6 }}>
-          Built for the UK TCG community
-        </div>
-        <div style={{ fontSize: 13, color: T.muted, lineHeight: 1.5, marginBottom: 10 }}>
-          The lowest fees in the market. Buyer protection on every order.
-        </div>
-        <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
-          {[['6%+30p', 'Total fee'], ['5', 'Games'], ['12', 'Local shops']].map(([num, label]) => (
-            <div key={label}>
-              <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 18, color: 'var(--ink)' }}>{num}</div>
-              <div style={{ fontSize: 11, color: T.muted }}>{label}</div>
+      {/* ── Scrolling trust marquee ── */}
+      <div style={{ margin: '24px 0', overflow: 'hidden', background: 'var(--fill)', padding: '10px 0' }}>
+        <style dangerouslySetInnerHTML={{ __html: '@keyframes ccMarquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}' }} />
+        <div style={{ display: 'flex', animation: 'ccMarquee 20s linear infinite', whiteSpace: 'nowrap', willChange: 'transform' }}>
+          {[0, 1].map(dup => (
+            <div key={dup} style={{ display: 'flex', gap: 32, paddingRight: 32, flexShrink: 0 }}>
+              {['Buyer Protection on every order', '6% + 30p total fees', '5 games supported',
+                'Verified sellers', 'Live market pricing', 'UK-based marketplace',
+                'Sell to local shops', 'Trade card-for-card'].map((msg, i) => (
+                <span key={i} style={{ fontFamily: T.sans, fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.7)',
+                  display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ width: 4, height: 4, borderRadius: 999, background: 'rgba(255,255,255,0.35)', flexShrink: 0 }} />
+                  {msg}
+                </span>
+              ))}
             </div>
           ))}
         </div>
-        <button onClick={() => app.nav.push('fees')} style={{
-          padding: '10px 18px', borderRadius: 8, border: 'none',
-          background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer',
-        }}>Compare our fees →</button>
       </div>
 
-      {/* ── Trust band ── */}
-      <div style={{ padding: '0 14px 20px', display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {[[Icon.shield, 'Buyer Protection', 'Full refund if not as described'],
-          [Icon.bolt, 'Verified sellers', 'Transparent ratings on every seller'],
-          [Icon.tag, 'Market pricing', 'Live price history on every card']].map(([ic, h, b], i) => (
-          <div key={i} style={{ display: 'flex', gap: 12, background: T.surface, borderRadius: 12, padding: '14px 14px', border: '1px solid var(--line)' }}>
-            <span style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: 'var(--surface-2)', color: 'var(--ink)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{ic({ width: 18, height: 18 })}</span>
-            <div><div style={{ fontWeight: 700, fontSize: 13.5 }}>{h}</div><div style={{ fontSize: 12, color: T.muted, marginTop: 1 }}>{b}</div></div>
+      {/* ── Compare fees CTA ── */}
+      <div style={{ margin: '0 14px 24px' }}>
+        <button onClick={() => app.nav.push('fees')} style={{
+          width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '16px 18px', borderRadius: 12, border: '1px solid var(--line)', background: T.surface, cursor: 'pointer' }}>
+          <div>
+            <div style={{ fontWeight: 700, fontSize: 15, color: T.ink }}>Compare our fees</div>
+            <div style={{ fontSize: 12, color: T.muted, marginTop: 2 }}>6% + 30p total — the lowest in the UK</div>
           </div>
-        ))}
+          <span style={{ color: T.faint, fontSize: 18 }}>→</span>
+        </button>
       </div>
     </div>
   );
