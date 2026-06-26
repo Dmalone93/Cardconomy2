@@ -101,8 +101,8 @@ function DCard({ item, app }) {
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       onClick={() => app.go('listing', { id: item.id })} style={{ background: 'var(--surface)', borderRadius: 14, overflow: 'hidden', cursor: 'pointer',
       boxShadow: hover ? '0 8px 26px rgba(20,24,40,0.13)' : '0 1px 3px rgba(20,24,40,0.06)', transform: hover ? 'translateY(-3px)' : 'none', transition: 'all 0.18s ease' }}>
-      <div style={{ position: 'relative', background: 'var(--surface-2)', padding: '16px 16px 10px', display: 'flex', justifyContent: 'center' }}>
-        <CardArtH item={item} w={150} />
+      <div style={{ position: 'relative', background: 'var(--surface-2)', padding: '18px 18px 12px', display: 'flex', justifyContent: 'center' }}>
+        <CardArtH item={item} w={180} />
         <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(item.id); }} style={{ position: 'absolute', top: 12, right: 12, width: 34, height: 34, borderRadius: 999,
           background: 'rgba(255,255,255,0.92)', color: watched ? 'var(--down)' : 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.12)' }}>
           {window.DIcon.heart({ width: 18, height: 18 }, watched)}
@@ -126,6 +126,8 @@ function DCard({ item, app }) {
   );
 }
 
+var RELIABLE_GAMES_H = new Set(['pkmn', 'mtg', 'ygo', 'lor']);
+
 function Row({ title, action, onAction, children }) {
   return (
     <section style={{ marginTop: 44 }}>
@@ -139,6 +141,58 @@ function Row({ title, action, onAction, children }) {
 }
 
 function grid(n) { return { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(' + n + 'px, 1fr))', gap: 18 }; }
+
+// ── card carousel with scroll arrows ─────────────────────────
+function CardCarousel({ title, action, onAction, items, app, badge }) {
+  var scrollRef = React.useRef(null);
+  var r1 = React.useState(false), canLeft = r1[0], setCanLeft = r1[1];
+  var r2 = React.useState(true), canRight = r2[0], setCanRight = r2[1];
+  function updateArrows() {
+    var el = scrollRef.current; if (!el) return;
+    setCanLeft(el.scrollLeft > 10);
+    setCanRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
+  }
+  function scroll(dir) {
+    var el = scrollRef.current; if (!el) return;
+    el.scrollBy({ left: dir * 340, behavior: 'smooth' });
+  }
+  React.useEffect(function() { updateArrows(); }, []);
+  var arrowBtn = function(show, side) { return {
+    position: 'absolute', top: '40%', transform: 'translateY(-50%)', zIndex: 3,
+    width: 40, height: 40, borderRadius: 999, background: 'var(--surface)',
+    boxShadow: '0 2px 10px rgba(0,0,0,0.12)', display: 'flex', alignItems: 'center',
+    justifyContent: 'center', cursor: 'pointer', fontSize: 18, color: 'var(--ink)',
+    opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', transition: 'opacity 0.2s',
+    [side]: -20,
+  }; };
+  return (
+    <section style={{ marginTop: 44 }}>
+      <div className="wrap" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>{title}</h2>
+          {badge && <span style={{ fontSize: 11, fontWeight: 700, background: 'var(--ink)', color: '#fff', borderRadius: 6, padding: '2px 8px' }}>{badge}</span>}
+        </div>
+        {action && <button onClick={onAction} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--ink)' }}>{action} →</button>}
+      </div>
+      <div className="wrap" style={{ position: 'relative' }}>
+        <button onClick={function() { scroll(-1); }} style={arrowBtn(canLeft, 'left')}>{'←'}</button>
+        <button onClick={function() { scroll(1); }} style={arrowBtn(canRight, 'right')}>{'→'}</button>
+        <div ref={scrollRef} onScroll={updateArrows} className="game-carousel" style={{
+          display: 'flex', gap: 16, overflowX: 'auto', scrollSnapType: 'x mandatory',
+          scrollbarWidth: 'none', padding: '4px 0',
+        }}>
+          {items.map(function(item) {
+            return (
+              <div key={item.id} style={{ width: 240, flexShrink: 0, scrollSnapAlign: 'start' }}>
+                <DCard item={item} app={app} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 // ── hero ad banner ───────────────────────────────────────────
 const HERO_ADS = [
@@ -215,7 +269,8 @@ function DWhatsHot({ app, trending }) {
 }
 
 function DHome({ app }) {
-  const trending = LISTH.filter(l => l.type === 'buynow');
+  const trending = LISTH.filter(l => l.type === 'buynow' && RELIABLE_GAMES_H.has(l.game));
+  const under100 = LISTH.filter(l => l.type === 'buynow' && l.price < 100 && RELIABLE_GAMES_H.has(l.game));
 
   return (
     <div style={{ paddingBottom: 30 }}>
@@ -306,22 +361,20 @@ function DHome({ app }) {
       {/* ── Browse by Game (carousel) ── */}
       <GameCarousel app={app} />
 
-      {/* ── What's hot (trending + deals) ── */}
-      <DWhatsHot app={app} trending={trending} />
+      {/* ── Trending ── */}
+      <CardCarousel title="Trending" action="See all" onAction={() => app.go('search')} items={trending.slice(0, 15)} app={app} />
+
+      {/* ── Hot deals ── */}
+      {(() => {
+        var dealItems = HOT_DEALS_H.map(d => { var item = byIdH(d.id); return item && RELIABLE_GAMES_H.has(item.game) ? Object.assign({}, item, { _discount: d.discount }) : null; }).filter(Boolean);
+        return dealItems.length > 0 ? <CardCarousel title="Hot Deals" action="See all" onAction={() => app.go('search')} items={dealItems} app={app} badge={dealItems.length + ' deals'} /> : null;
+      })()}
 
       {/* ── Just listed ── */}
-      <Row title="Just listed" action="See all" onAction={() => app.go('search')}>
-        <div style={grid(210)}>
-          {trending.slice(10, 20).map(l => <DCard key={l.id} item={l} app={app} />)}
-        </div>
-      </Row>
+      <CardCarousel title="Just Listed" action="See all" onAction={() => app.go('search')} items={trending.slice(15, 30)} app={app} badge="New" />
 
       {/* ── Under £100 ── */}
-      <Row title={"Under £100"} action="Shop budget" onAction={() => app.go('search')}>
-        <div style={grid(210)}>
-          {LISTH.filter(l => l.type === 'buynow' && l.price < 100).slice(0, 10).map(l => <DCard key={l.id} item={l} app={app} />)}
-        </div>
-      </Row>
+      <CardCarousel title={"Under \u00A3100"} action="Shop budget" onAction={() => app.go('search')} items={under100.slice(0, 15)} app={app} />
 
       {/* ── Sell your cards CTA ── */}
       <section className="wrap" style={{ marginTop: 50 }}>
