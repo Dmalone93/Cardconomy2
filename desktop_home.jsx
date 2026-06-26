@@ -97,6 +97,13 @@ function GameCarousel({ app }) {
 function DCard({ item, app }) {
   const [hover, setHover] = React.useState(false);
   const watched = app.isWatched(item.id);
+  const [imgFailed, setImgFailed] = React.useState(false);
+  React.useEffect(function() {
+    if (window.CardImg) {
+      window.CardImg.get(item, function(url) { if (!url) setImgFailed(true); });
+    }
+  }, [item.name]);
+  if (imgFailed) return null;
   return (
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       onClick={() => app.go('listing', { id: item.id })} style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', cursor: 'pointer',

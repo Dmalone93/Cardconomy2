@@ -98,6 +98,13 @@ function CardFan({ app }) {
 // ── shared: grid tile ────────────────────────────────────────
 function ListCard({ item, app, w }) {
   const watched = app.isWatched(item.id);
+  const [imgFailed, setImgFailed] = React.useState(false);
+  React.useEffect(() => {
+    if (window.CardImg) {
+      window.CardImg.get(item, (url) => { if (!url) setImgFailed(true); });
+    }
+  }, [item.name]);
+  if (imgFailed) return null;
   return (
     <div onClick={() => app.nav.push('listing', { id: item.id })} role="button" style={{
       width: w || '100%', textAlign: 'left', background: '#fff', cursor: 'pointer',
@@ -141,6 +148,13 @@ function ListCard({ item, app, w }) {
 // ── shared: product grid tile ────────────────────────────────
 function ProductCard({ product, app, w }) {
   const g = gameById(product.game);
+  const [imgFailed, setImgFailed] = React.useState(false);
+  React.useEffect(() => {
+    if (window.CardImg) {
+      window.CardImg.get(product, (url) => { if (!url) setImgFailed(true); });
+    }
+  }, [product.name]);
+  if (imgFailed) return null;
   return (
     <div onClick={() => app.nav.push('product', { id: product.id })} role="button" style={{
       width: w || '100%', textAlign: 'left', background: '#fff', cursor: 'pointer',
