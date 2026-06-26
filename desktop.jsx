@@ -53,19 +53,66 @@ function UtilityBar({ go }) {
 // ── header (logo, search, account, cart) ─────────────────────
 function Header({ app, openMega, megaOpen }) {
   const [q, setQ] = React.useState('');
-  const submit = (e) => { e.preventDefault(); app.go('search', { q }); };
+  const [sFocused, setSFocused] = React.useState(false);
+  const submit = (e) => { e.preventDefault(); setSFocused(false); app.go('search', { q }); };
+  const qLow = q.trim().toLowerCase();
+  const sCards = qLow.length > 0 ? (window.LISTINGS || []).filter(c => c.name.toLowerCase().includes(qLow) || (c.subtitle || '').toLowerCase().includes(qLow)) : [];
+  const sSeen = {};
+  const sUnique = sCards.filter(c => { if (sSeen[c.name]) return false; sSeen[c.name] = true; return true; }).slice(0, 5);
+  const sSets = qLow.length > 0 ? (window.SETS || []).filter(s => s.name.toLowerCase().includes(qLow)).slice(0, 3) : [];
+  const sShow = sFocused && qLow.length > 0 && (sUnique.length > 0 || sSets.length > 0);
   return (
     <header style={{ background: 'var(--surface)', borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 60 }}>
       <div className="wrap" style={{ display: 'flex', alignItems: 'center', gap: 24, height: 72 }}>
         <button onClick={() => app.go('home')} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
           <img src="brand/logo-wordmark.svg" alt="CARDCONOMY" style={{ height: 32, width: 'auto', display: 'block', filter: 'var(--logo-invert, none)' }} />
         </button>
-        <form onSubmit={submit} style={{ flex: 1, maxWidth: 560, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-2)',
+        <form onSubmit={submit} style={{ flex: 1, maxWidth: 560, margin: '0 auto', position: 'relative', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-2)',
           borderRadius: 11, padding: '0 8px 0 14px', height: 46, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
           {DIcon.search({ style: { color: 'var(--faint)', flexShrink: 0 } })}
-          <input value={q} onChange={e => setQ(e.target.value)} placeholder="Search 2M+ cards, sets, sealed product…"
+          <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setSFocused(true)} onBlur={() => setTimeout(() => setSFocused(false), 200)} placeholder="Search 2M+ cards, sets, sealed product\u2026"
             style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 15, color: 'var(--ink)', minWidth: 0 }} />
           <button type="submit" style={{ background: 'var(--ink)', color: '#fff', borderRadius: 8, height: 34, padding: '0 18px', fontWeight: 700, fontSize: 14 }}>Search</button>
+          {sShow && (
+            <div style={{ position: 'absolute', top: '100%', left: 0, right: 0, marginTop: 6, background: 'var(--surface)', borderRadius: 14, boxShadow: '0 8px 32px rgba(20,24,40,0.15)', border: '1px solid var(--line)', overflow: 'hidden', zIndex: 90 }}>
+              {sUnique.length > 0 && (
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--muted)', letterSpacing: 0.4, padding: '12px 16px 4px' }}>CARDS</div>
+                  {sUnique.map(c => (
+                    <button key={c.id} onMouseDown={e => e.preventDefault()} onClick={() => { setQ(''); setSFocused(false); app.go('listing', { id: c.id }); }}
+                      style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', textAlign: 'left', padding: '8px 16px', background: 'none', borderBottom: '1px solid var(--line-2)' }}>
+                      <div style={{ width: 32, height: 44, borderRadius: 4, overflow: 'hidden', flexShrink: 0, background: 'var(--surface-2)' }}>
+                        {window.CardArt && React.createElement(window.CardArt, { item: c, w: 32, radius: 4 })}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
+                        <div style={{ fontSize: 12, color: 'var(--muted)' }}>{c.subtitle || ''}</div>
+                      </div>
+                      <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)', flexShrink: 0 }}>{window.money ? window.money(c.price) : '\u00A3' + c.price}</div>
+                    </button>
+                  ))}
+                </div>
+              )}
+              {sSets.length > 0 && (
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--muted)', letterSpacing: 0.4, padding: '12px 16px 4px' }}>SETS</div>
+                  {sSets.map(s => (
+                    <button key={s.id} onMouseDown={e => e.preventDefault()} onClick={() => { setQ(''); setSFocused(false); app.go('search', { set: s.id }); }}
+                      style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', textAlign: 'left', padding: '8px 16px', background: 'none', borderBottom: '1px solid var(--line-2)' }}>
+                      <span style={{ width: 10, height: 10, borderRadius: 999, background: (window.gameById ? (window.gameById(s.game) || {}) : {}).tint || 'var(--faint)', flexShrink: 0 }} />
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)' }}>{s.name}</div>
+                        <div style={{ fontSize: 12, color: 'var(--muted)' }}>{s.total ? s.total + ' cards' : ''}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+              <button onMouseDown={e => e.preventDefault()} onClick={submit} style={{ width: '100%', padding: '12px 16px', fontWeight: 700, fontSize: 13, color: 'var(--accent)', textAlign: 'center', borderTop: '1px solid var(--line-2)' }}>
+                See all results for \u201c{q}\u201d
+              </button>
+            </div>
+          )}
         </form>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
           <HeaderBtn icon={DIcon.heart()} label="Watching" onClick={() => app.go('watch')} count={app.watch.length} />

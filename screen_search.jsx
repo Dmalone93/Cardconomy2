@@ -202,6 +202,60 @@ function SearchScreen({ app, params = {} }) {
         </div>
       )}
 
+      {/* ── Live suggestions dropdown (while typing) ── */}
+      {focused && q.trim().length > 0 && (() => {
+        const qLow = q.trim().toLowerCase();
+        const cardHits = [...PRODUCTS_S, ...LISTINGS_S].filter(c => c.name.toLowerCase().includes(qLow) || (c.subtitle||'').toLowerCase().includes(qLow));
+        const seen = {};
+        const uniqueCards = cardHits.filter(c => { if (seen[c.name]) return false; seen[c.name] = true; return true; }).slice(0, 5);
+        const setHits = SETS_S.filter(s => s.name.toLowerCase().includes(qLow)).slice(0, 3);
+        const hasResults = uniqueCards.length > 0 || setHits.length > 0;
+        return hasResults ? (
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 56, zIndex: 80, background: TS.bg, borderBottom: '1px solid var(--line)', maxHeight: 380, overflow: 'auto', boxShadow: '0 8px 24px rgba(20,24,40,0.12)' }}>
+            {uniqueCards.length > 0 && (
+              <div>
+                <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 11, color: TS.muted, letterSpacing: 0.4, padding: '12px 16px 6px' }}>CARDS</div>
+                {uniqueCards.map(c => {
+                  const isProduct = !!c.sellers;
+                  return (
+                    <button key={c.id} onClick={() => { setQ(''); setFocused(false); app.nav.push(isProduct ? 'product' : 'listing', { id: c.id }); }}
+                      style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', textAlign: 'left', padding: '10px 16px', background: 'none', borderBottom: '1px solid var(--line-2)' }}>
+                      <div style={{ width: 36, height: 50, borderRadius: 4, overflow: 'hidden', flexShrink: 0, background: 'var(--surface-2)' }}>
+                        <CardArtS item={c} w={36} radius={4} />
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 14, color: TS.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
+                        <div style={{ fontFamily: TS.sans, fontSize: 12, color: TS.muted }}>{c.subtitle || (c.grade && c.grade.company !== 'raw' ? c.grade.company.toUpperCase() + ' ' + c.grade.grade : 'Raw')}</div>
+                      </div>
+                      <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 14, color: TS.ink, flexShrink: 0 }}>{moneyS(c.price || c.market)}</div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+            {setHits.length > 0 && (
+              <div>
+                <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 11, color: TS.muted, letterSpacing: 0.4, padding: '12px 16px 6px' }}>SETS</div>
+                {setHits.map(s => (
+                  <button key={s.id} onClick={() => { setQ(''); setSetF(s.id); setFocused(false); }}
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', textAlign: 'left', padding: '10px 16px', background: 'none', borderBottom: '1px solid var(--line-2)' }}>
+                    <span style={{ width: 10, height: 10, borderRadius: 999, background: (gameByIdS(s.game)||{}).tint || TS.faint, flexShrink: 0 }} />
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 14, color: TS.ink }}>{s.name}</div>
+                      <div style={{ fontFamily: TS.sans, fontSize: 12, color: TS.muted }}>{s.total ? s.total + ' cards' : (gameByIdS(s.game)||{}).name || ''}</div>
+                    </div>
+                    {IconS.chevron({ style: { color: TS.faint } })}
+                  </button>
+                ))}
+              </div>
+            )}
+            <button onClick={() => setFocused(false)} style={{ width: '100%', padding: '12px 16px', fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.accent, textAlign: 'center' }}>
+              See all {totalResults} result{totalResults !== 1 ? 's' : ''} for \u201c{q}\u201d
+            </button>
+          </div>
+        ) : null;
+      })()}
+
       {!(focused && !q) && (
         <React.Fragment>
           {/* filter bar */}
