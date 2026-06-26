@@ -116,7 +116,7 @@ function SearchScreen({ app, params = {} }) {
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: TS.surface2,
             borderRadius: 11, padding: '9px 12px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
             {IconS.search({ width: 18, height: 18, style: { color: TS.faint } })}
-            <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
+            <input ref={el => { if (el && !params.game && !params.set) el.focus(); }} value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
               placeholder={'Try "' + typed + '"'} style={{
               flex: 1, border: 'none', outline: 'none', background: 'transparent',
               fontFamily: TS.sans, fontSize: 15, color: TS.ink, minWidth: 0,
@@ -134,69 +134,32 @@ function SearchScreen({ app, params = {} }) {
         <div ref={scrollRefS} className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 96px' }}>
           {/* recent searches */}
           {showRecent && (
-            <div style={{ marginBottom: 24 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
-                <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, letterSpacing: 0.2 }}>RECENT SEARCHES</div>
-                <button onClick={() => setShowRecent(false)} style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 12, color: TS.muted, background: 'none', padding: '2px 4px' }}>Clear</button>
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+                <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 12, color: TS.muted, letterSpacing: 0.3 }}>RECENT</div>
+                <button onClick={() => setShowRecent(false)} style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 12, color: TS.faint, background: 'none', padding: '2px 4px' }}>Clear</button>
               </div>
-              {RECENT_SEARCHES.map(s => (
-                <button key={s} onClick={() => { setQ(s); setFocused(false); }} style={{
-                  display: 'flex', alignItems: 'center', gap: 10, width: '100%', textAlign: 'left',
-                  padding: '10px 0', borderBottom: '1px solid var(--line-2)', background: 'none',
-                  fontFamily: TS.sans, fontSize: 14, fontWeight: 500, color: TS.ink,
-                }}>
-                  <span style={{ fontSize: 16, flexShrink: 0 }}>{'\ud83d\udd50'}</span>
-                  {s}
-                </button>
-              ))}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                {RECENT_SEARCHES.map(s => (
+                  <button key={s} onClick={() => { setQ(s); setFocused(false); }} style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: TS.sans, fontWeight: 600, fontSize: 13.5,
+                    padding: '8px 14px', borderRadius: 20, background: TS.surface, color: TS.ink,
+                    border: '1px solid var(--line)',
+                  }}>
+                    {IconS.search({ width: 13, height: 13, style: { color: TS.faint } })} {s}
+                  </button>
+                ))}
+              </div>
             </div>
           )}
 
-          <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, marginBottom: 10, letterSpacing: 0.2 }}>POPULAR SEARCHES</div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
-            {popular.map(p => <ChipS key={p} onClick={() => { setQ(p); setFocused(false); }}>{p}</ChipS>)}
-          </div>
-
-          {/* recently viewed */}
-          <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, marginBottom: 10, letterSpacing: 0.2 }}>RECENTLY VIEWED</div>
-          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', marginBottom: 24, paddingBottom: 4 }}>
-            {['l01', 'l06', 'l09', 'l07'].map(lid => {
-              const card = byIdS(lid);
-              if (!card) return null;
-              return (
-                <button key={lid} onClick={() => app.nav.push('listing', { id: lid })} style={{ flexShrink: 0, width: 80, textAlign: 'center', background: 'none', padding: 0 }}>
-                  <div style={{ background: TS.surface, borderRadius: 10, padding: 6, marginBottom: 4, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                    <CardArtS item={card} w={68} radius={6} />
-                  </div>
-                  <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 11, color: TS.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{card.name}</div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* saved searches */}
-          <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, marginBottom: 10, letterSpacing: 0.2 }}>SAVED SEARCHES</div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
-            {['Charizard NM', 'PSA 10 Pokemon', 'Modern Horizons 3'].map(s => (
-              <button key={s} onClick={() => { setQ(s); setFocused(false); }} style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: TS.sans, fontWeight: 600, fontSize: 13.5,
-                padding: '8px 14px', borderRadius: 4, background: TS.surface, color: TS.ink,
-                boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-                {IconS.search({ width: 14, height: 14, style: { color: TS.faint } })} {s}
-              </button>
-            ))}
-          </div>
-
-          <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.muted, marginBottom: 10, letterSpacing: 0.2 }}>BROWSE BY GAME</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {GAMES_S.map(g => (
-              <button key={g.id} onClick={() => { setGame(g.id); setFocused(false); }} style={{
-                display: 'flex', alignItems: 'center', gap: 12, background: TS.surface, borderRadius: 12,
-                padding: '13px 14px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)', textAlign: 'left' }}>
-                <span style={{ width: 12, height: 12, borderRadius: 999, background: g.tint }} />
-                <span style={{ flex: 1, fontFamily: TS.sans, fontWeight: 600, fontSize: 15 }}>{g.name}</span>
-                {IconS.chevron({ style: { color: TS.faint } })}
-              </button>
+          <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 12, color: TS.muted, marginBottom: 8, letterSpacing: 0.3 }}>POPULAR</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {popular.map(p => (
+              <button key={p} onClick={() => { setQ(p); setFocused(false); }} style={{
+                fontFamily: TS.sans, fontWeight: 600, fontSize: 13.5, padding: '8px 14px', borderRadius: 20,
+                background: 'var(--ink)', color: '#fff', border: 'none',
+              }}>{p}</button>
             ))}
           </div>
         </div>
