@@ -126,5 +126,19 @@ window.CardImg = (function () {
     }, delay);
   }
 
-  return { get: get, key: key };
+  // Check if an item's image lookup has completed and returned null (failed)
+  function hasFailed(item) {
+    if (!item) return true;
+    var k = key(item);
+    return cache[k] === null;
+  }
+
+  // Check if an item has a cached successful image URL
+  function hasUrl(item) {
+    if (!item) return false;
+    var k = key(item);
+    return typeof cache[k] === 'string' && cache[k].length > 0;
+  }
+
+  return { get: get, key: key, hasFailed: hasFailed, hasUrl: hasUrl };
 })();

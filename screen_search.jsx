@@ -74,6 +74,7 @@ function SearchScreen({ app, params = {} }) {
     }
     if (p.price > maxPrice) return false;
     if (freeShip && !(p.shipping === 0)) return false;
+    if (window.CardImg && window.CardImg.hasFailed(p)) return false;
     return true;
   });
 
@@ -93,6 +94,7 @@ function SearchScreen({ app, params = {} }) {
     if (l.price > maxPrice) return false;
     if (freeShip && !(l.shipping === 0)) return false;
     if (listType !== 'all' && l.type !== listType) return false;
+    if (window.CardImg && window.CardImg.hasFailed(l)) return false;
     return true;
   });
   if (sort === 'Price: low to high') listingResults = [...listingResults].sort((a,b)=>a.price-b.price);

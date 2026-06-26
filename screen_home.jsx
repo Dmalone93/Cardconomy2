@@ -422,9 +422,9 @@ function HomeScreen({ app }) {
   // if the active chip leaves prefs, snap back to "all"
   React.useEffect(() => { if (game !== 'all' && !app.inPrefs(game)) setGame('all'); }, [app.prefs]);
   const RELIABLE_IMG = new Set(['pkmn', 'mtg', 'ygo', 'lor']);
-  const hasImage = (x) => RELIABLE_IMG.has(x.game);
-  const inFeed = (x) => app.inPrefs(x.game) && hasImage(x);
-  const filt = (arr) => (game === 'all' ? arr.filter(inFeed) : arr.filter(x => x.game === game && hasImage(x)));
+  const imgOk = (x) => RELIABLE_IMG.has(x.game) && !(window.CardImg && window.CardImg.hasFailed(x));
+  const inFeed = (x) => app.inPrefs(x.game) && imgOk(x);
+  const filt = (arr) => (game === 'all' ? arr.filter(inFeed) : arr.filter(x => x.game === game && imgOk(x)));
   const trendingProducts = filt(PRODUCTS);
   const sets = filt(SETS).filter(s => s.img);
   const graded = filt(LISTINGS.filter(l => l.grade.company !== 'raw'));
