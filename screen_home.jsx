@@ -415,18 +415,25 @@ function WhatsHot({ app, trendingProducts }) {
 }
 
 var ANNOUNCE_MSGS = [
-  'Buyer Protection on every order',
-  '6% + 30p total fees \u2014 the lowest in the UK',
-  '5 games supported',
-  'Verified sellers with transparent ratings',
-  'Live market pricing on every card',
-  'UK-based marketplace',
+  { icon: Icon.shield, text: 'Buyer Protection on every order' },
+  { icon: Icon.tag, text: '6% + 30p total fees \u2014 the lowest in the UK' },
+  { icon: function(p) { return React.createElement('svg', { width: p.width || 13, height: p.height || 13, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+    React.createElement('rect', { x: '2', y: '3', width: '20', height: '14', rx: '2' }),
+    React.createElement('path', { d: 'M8 21h8M12 17v4' })); }, text: '5 games supported' },
+  { icon: Icon.bolt, text: 'Verified sellers with transparent ratings' },
+  { icon: function(p) { return React.createElement('svg', { width: p.width || 13, height: p.height || 13, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+    React.createElement('polyline', { points: '22,12 18,12 15,21 9,3 6,12 2,12' })); }, text: 'Live market pricing on every card' },
+  { icon: function(p) { return React.createElement('svg', { width: p.width || 13, height: p.height || 13, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2' },
+    React.createElement('circle', { cx: '12', cy: '12', r: '10' }),
+    React.createElement('path', { d: 'M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z' })); }, text: 'UK-based marketplace' },
 ];
 
 function AnnouncementRotator() {
   var r1 = React.useState(0), idx = r1[0], setIdx = r1[1];
   var r2 = React.useState(true), vis = r2[0], setVis = r2[1];
+  var r3 = React.useState(false), paused = r3[0], setPaused = r3[1];
   React.useEffect(function() {
+    if (paused) return;
     var t = setInterval(function() {
       setVis(false);
       setTimeout(function() {
@@ -435,13 +442,27 @@ function AnnouncementRotator() {
       }, 300);
     }, 3000);
     return function() { clearInterval(t); };
-  }, []);
+  }, [paused]);
+  var msg = ANNOUNCE_MSGS[idx];
   return (
-    <div style={{ background: 'var(--fill)', padding: '8px 16px', textAlign: 'center' }}>
-      <span style={{ fontFamily: T.sans, fontSize: 11.5, fontWeight: 600, color: 'rgba(255,255,255,0.75)',
-        transition: 'opacity 0.3s', opacity: vis ? 1 : 0, display: 'inline-block' }}>
-        {ANNOUNCE_MSGS[idx]}
-      </span>
+    <div style={{ background: 'var(--fill)', padding: '7px 12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0 }}>
+      <div style={{ flex: 1, textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+        <span style={{ color: 'rgba(255,255,255,0.5)', flexShrink: 0, transition: 'opacity 0.3s', opacity: vis ? 1 : 0 }}>
+          {msg.icon({ width: 13, height: 13 })}
+        </span>
+        <span style={{ fontFamily: T.sans, fontSize: 11.5, fontWeight: 600, color: 'rgba(255,255,255,0.75)',
+          transition: 'opacity 0.3s', opacity: vis ? 1 : 0, display: 'inline-block' }}>
+          {msg.text}
+        </span>
+      </div>
+      <button onClick={function() { setPaused(!paused); }} style={{ color: 'rgba(255,255,255,0.4)', flexShrink: 0, padding: 4,
+        display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {paused ? (
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        ) : (
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+        )}
+      </button>
     </div>
   );
 }
