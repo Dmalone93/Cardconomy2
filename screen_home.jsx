@@ -414,6 +414,38 @@ function WhatsHot({ app, trendingProducts }) {
   );
 }
 
+var ANNOUNCE_MSGS = [
+  'Buyer Protection on every order',
+  '6% + 30p total fees \u2014 the lowest in the UK',
+  '5 games supported',
+  'Verified sellers with transparent ratings',
+  'Live market pricing on every card',
+  'UK-based marketplace',
+];
+
+function AnnouncementRotator() {
+  var r1 = React.useState(0), idx = r1[0], setIdx = r1[1];
+  var r2 = React.useState(true), vis = r2[0], setVis = r2[1];
+  React.useEffect(function() {
+    var t = setInterval(function() {
+      setVis(false);
+      setTimeout(function() {
+        setIdx(function(i) { return (i + 1) % ANNOUNCE_MSGS.length; });
+        setVis(true);
+      }, 300);
+    }, 3000);
+    return function() { clearInterval(t); };
+  }, []);
+  return (
+    <div style={{ background: 'var(--fill)', padding: '8px 16px', textAlign: 'center' }}>
+      <span style={{ fontFamily: T.sans, fontSize: 11.5, fontWeight: 600, color: 'rgba(255,255,255,0.75)',
+        transition: 'opacity 0.3s', opacity: vis ? 1 : 0, display: 'inline-block' }}>
+        {ANNOUNCE_MSGS[idx]}
+      </span>
+    </div>
+  );
+}
+
 function HomeScreen({ app }) {
   const [game, setGame] = React.useState('all');
   const [prefsOpen, setPrefsOpen] = React.useState(false);
@@ -432,24 +464,8 @@ function HomeScreen({ app }) {
 
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: T.bg, paddingBottom: 96 }}>
-      {/* announcement marquee */}
-      <div style={{ overflow: 'hidden', background: 'var(--fill)', padding: '7px 0' }}>
-        <style dangerouslySetInnerHTML={{ __html: '@keyframes ccMarquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}' }} />
-        <div style={{ display: 'flex', animation: 'ccMarquee 22s linear infinite', whiteSpace: 'nowrap', willChange: 'transform' }}>
-          {[0, 1].map(dup => (
-            <div key={dup} style={{ display: 'flex', gap: 28, paddingRight: 28, flexShrink: 0 }}>
-              {['Buyer Protection on every order', '6% + 30p total fees', '5 games supported',
-                'Verified sellers', 'Live market pricing', 'UK-based marketplace'].map((msg, i) => (
-                <span key={i} style={{ fontFamily: T.sans, fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.7)',
-                  display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ width: 3, height: 3, borderRadius: 999, background: 'rgba(255,255,255,0.35)', flexShrink: 0 }} />
-                  {msg}
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* announcement bar — one statement at a time */}
+      <AnnouncementRotator />
       {/* top bar */}
       <div style={{ padding: '14px 16px 10px', background: T.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 13, position: 'relative' }}>
