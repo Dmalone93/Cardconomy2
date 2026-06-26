@@ -100,9 +100,9 @@ function ListCard({ item, app, w }) {
   const watched = app.isWatched(item.id);
   return (
     <div onClick={() => app.nav.push('listing', { id: item.id })} role="button" style={{
-      width: w || '100%', textAlign: 'left', background: T.surface, cursor: 'pointer',
+      width: w || '100%', textAlign: 'left', background: '#fff', cursor: 'pointer',
       borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
-      boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
+      border: '1px solid var(--line)',
     }}>
       <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#ffffff' }}>
         {item.grade && item.grade.company !== 'raw' ? <Slab item={item} w={Math.round(140 * 1.4 / 1.698)} /> : <CardArt item={item} w={140} />}
@@ -141,9 +141,9 @@ function ProductCard({ product, app, w }) {
   const g = gameById(product.game);
   return (
     <div onClick={() => app.nav.push('product', { id: product.id })} role="button" style={{
-      width: w || '100%', textAlign: 'left', background: T.surface, cursor: 'pointer',
+      width: w || '100%', textAlign: 'left', background: '#fff', cursor: 'pointer',
       borderRadius: 4, overflow: 'hidden', display: 'flex', flexDirection: 'column',
-      boxShadow: '0 1px 3px rgba(20,24,40,0.04), 0 4px 14px rgba(20,24,40,0.05)',
+      border: '1px solid var(--line)',
     }}>
       <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#ffffff', overflow: 'hidden' }}>
         <CardArt item={product} w={140} />

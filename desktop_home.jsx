@@ -99,8 +99,8 @@ function DCard({ item, app }) {
   const watched = app.isWatched(item.id);
   return (
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
-      onClick={() => app.go('listing', { id: item.id })} style={{ background: 'var(--surface)', borderRadius: 14, overflow: 'hidden', cursor: 'pointer',
-      boxShadow: hover ? '0 8px 26px rgba(20,24,40,0.13)' : '0 1px 3px rgba(20,24,40,0.06)', transform: hover ? 'translateY(-3px)' : 'none', transition: 'all 0.18s ease' }}>
+      onClick={() => app.go('listing', { id: item.id })} style={{ background: '#fff', borderRadius: 14, overflow: 'hidden', cursor: 'pointer',
+      border: '1px solid var(--line)', boxShadow: hover ? '0 8px 26px rgba(20,24,40,0.13)' : 'none', transform: hover ? 'translateY(-3px)' : 'none', transition: 'all 0.18s ease' }}>
       <div style={{ position: 'relative', background: 'var(--surface-2)', padding: '18px 18px 12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
         {item.grade && item.grade.company !== 'raw' ? <SlabH item={item} w={Math.round(180 * 1.4 / 1.698)} /> : <CardArtH item={item} w={180} />}
         <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(item.id); }} style={{ position: 'absolute', top: 12, right: 12, width: 34, height: 34, borderRadius: 999,

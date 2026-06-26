@@ -96,6 +96,34 @@ function Slab({ item, w = 150 }) {
   const isBGS = grd.company === 'bgs';
   const caseW = w, caseH = Math.round(w * 1.698); // matches slab image aspect (574×975)
   const bgsLabel = isBGS ? (grd.grade >= 9.5 ? 'ads/bgs-label-10.svg' : 'ads/bgs-label-8.svg') : null;
+
+  if (isBGS) {
+    // BGS slab — CSS case with BGS label
+    return (
+      <div style={{ width: caseW, height: caseH, position: 'relative', filter: 'drop-shadow(0 12px 26px rgba(0,0,0,0.22))',
+        background: '#1e293b', borderRadius: Math.round(caseW * 0.06), overflow: 'hidden',
+        border: '2px solid #334155' }}>
+        {/* BGS label at top */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '18%', zIndex: 5 }}>
+          <img src={bgsLabel} alt="BGS label" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+        </div>
+        {/* card window */}
+        <div style={{ position: 'absolute', left: '10%', top: '22%', width: '80%', height: '72%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
+          background: 'rgba(255,255,255,0.04)', borderRadius: Math.round(caseW * 0.03) }}>
+          <div style={{ position: 'relative' }}>
+            <CardArt item={item} w={caseW * 0.78} radius={4} showFoil={true} />
+            <div style={{ position: 'absolute', inset: 0, borderRadius: 4, pointerEvents: 'none',
+              background: 'linear-gradient(118deg, rgba(255,255,255,0.18) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.1) 100%)' }} />
+          </div>
+        </div>
+        {/* plastic edge sheen */}
+        <div style={{ position: 'absolute', inset: 0, borderRadius: Math.round(caseW * 0.06), pointerEvents: 'none',
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.3)', zIndex: 6 }} />
+      </div>
+    );
+  }
+
   return (
     <div style={{ width: caseW, height: caseH, position: 'relative', filter: 'drop-shadow(0 12px 26px rgba(0,0,0,0.22))' }}>
       {/* card sits in the slab window */}
@@ -108,12 +136,8 @@ function Slab({ item, w = 150 }) {
             background: 'linear-gradient(118deg, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.04) 22%, transparent 42%, transparent 70%, rgba(255,255,255,0.12) 100%)' }} />
         </div>
       </div>
-      {/* the case frame on top */}
+      {/* the PSA/CGC case frame on top */}
       <img src="ads/psa-slab.webp" alt="Graded slab" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'fill', pointerEvents: 'none', zIndex: 5 }} />
-      {/* BGS label overlay — replaces the PSA label area at the top */}
-      {bgsLabel && (
-        <img src={bgsLabel} alt="BGS label" style={{ position: 'absolute', top: '1%', left: '5%', width: '90%', height: '18%', objectFit: 'contain', objectPosition: 'center', pointerEvents: 'none', zIndex: 6 }} />
-      )}
     </div>
   );
 }
