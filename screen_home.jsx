@@ -43,10 +43,25 @@ function CardFan({ app }) {
         <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginTop: 8, maxWidth: 200 }}>
           Buy, sell, and trade across every game. Lower fees than anyone.
         </div>
-        <button onClick={() => app.nav.setTab('search')} style={{ marginTop: 12, padding: '9px 18px', borderRadius: 8,
-          background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
-          Start browsing
-        </button>
+        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+          <button onClick={() => app.nav.setTab('search')} style={{ padding: '9px 16px', borderRadius: 8,
+            background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
+            Start browsing
+          </button>
+          <button onClick={() => app.nav.push('pitch_seller')} style={{ padding: '9px 16px', borderRadius: 8,
+            background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.8)', fontWeight: 700, fontSize: 13,
+            border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>
+            Start selling
+          </button>
+        </div>
+        <div style={{ display: 'flex', gap: 14, marginTop: 14 }}>
+          {[[Icon.shield, 'Protected'], [Icon.tag, '6%+30p']].map(([ic, label], i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: 600 }}>
+              {ic({ width: 11, height: 11 })}
+              <span>{label}</span>
+            </div>
+          ))}
+        </div>
       </div>
       {/* fanned cards — right side, zoomed, overlapping edge */}
       <div style={{ position: 'absolute', right: -20, top: 0, bottom: 0, width: 240 }}>
@@ -478,15 +493,68 @@ function HomeScreen({ app }) {
       {/* ── What's hot (trending + deals merged) ── */}
       <WhatsHot app={app} trendingProducts={trendingProducts} />
 
+      {/* ── Sell your cards ── */}
+      <div style={{ padding: '20px 14px 0' }}>
+        <div style={{ fontSize: 16, fontWeight: 700, color: T.ink, marginBottom: 10 }}>Start selling</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {[
+            { title: 'List from collection', desc: 'Multi-select, auto-price, list in seconds', bg: 'linear-gradient(135deg, #1a1a2e, #0f3460)', action: () => app.nav.setTab('watch') },
+            { title: 'Sell to a local shop', desc: 'Walk cards in, walk out with cash', bg: 'linear-gradient(135deg, #1a2e1a, #2d5a3f)', action: () => app.nav.push('sellshop') },
+            { title: 'Trade card-for-card', desc: 'Swap with collectors near you', bg: 'linear-gradient(135deg, #1b2838, #3a5a8c)', action: () => app.nav.push('trade') },
+          ].map(c => (
+            <button key={c.title} onClick={c.action} style={{ display: 'flex', alignItems: 'center', gap: 14,
+              background: c.bg, borderRadius: 14, padding: '16px 16px', textAlign: 'left', border: 'none', cursor: 'pointer' }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 700, fontSize: 14, color: '#fff' }}>{c.title}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}>{c.desc}</div>
+              </div>
+              <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 18 }}>→</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Graded slabs ── */}
+      {graded.length > 0 && (
+        <div style={{ margin: '20px 0', padding: '24px 0', background: 'var(--fill)', borderRadius: 0 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 14px', marginBottom: 14 }}>
+            <div style={{ fontSize: 16, fontWeight: 700, color: '#fff' }}>Graded Slabs</div>
+            <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'rgba(255,255,255,0.6)', cursor: 'pointer' }}>Shop graded</div>
+          </div>
+          <div style={{ display: 'flex', gap: 16, overflowX: 'auto', padding: '0 14px', WebkitOverflowScrolling: 'touch' }}>
+            {graded.slice(0, 4).map(item => (
+              <div key={item.id} onClick={() => app.nav.push('listing', { id: item.id })} style={{ flexShrink: 0, textAlign: 'center', cursor: 'pointer' }}>
+                <Slab item={item} w={100} />
+                <div style={{ marginTop: 8, maxWidth: 100 }}>
+                  <div style={{ fontWeight: 700, fontSize: 11.5, color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
+                  <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 14, color: '#fff', marginTop: 3 }}>{money(item.price)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Find a local shop ── */}
+      <div style={{ margin: '0 14px 20px', padding: '20px 16px', borderRadius: 14, background: 'var(--fill)', color: '#fff' }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 17, marginBottom: 6 }}>Find a local game shop</div>
+        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', lineHeight: 1.5, marginBottom: 14 }}>
+          Browse verified shops near you. Sell cards in person or meet for trades.
+        </div>
+        <button onClick={() => app.nav.push('storefront')} style={{
+          padding: '10px 18px', borderRadius: 8, border: 'none',
+          background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13, cursor: 'pointer',
+        }}>Find shops →</button>
+      </div>
+
       {/* ── UK community banner ── */}
-      {/* ── UK community banner ── */}
-      <div style={{ margin: '20px 14px', padding: '18px 16px', borderRadius: 14,
-        background: 'var(--accent-wash)', border: '1px solid var(--accent)', borderColor: 'rgba(5,150,105,0.2)' }}>
+      <div style={{ margin: '0 14px 20px', padding: '18px 16px', borderRadius: 14,
+        background: T.surface, border: '1px solid var(--line)' }}>
         <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 17, color: T.ink, marginBottom: 6 }}>
           Built for the UK TCG community
         </div>
         <div style={{ fontSize: 13, color: T.muted, lineHeight: 1.5, marginBottom: 10 }}>
-          6% + 30p total fees. Buyer protection on every order. Local game shop support built in.
+          The lowest fees in the market. Buyer protection on every order.
         </div>
         <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
           {[['6%+30p', 'Total fee'], ['5', 'Games'], ['12', 'Local shops']].map(([num, label]) => (
@@ -500,6 +568,19 @@ function HomeScreen({ app }) {
           padding: '10px 18px', borderRadius: 8, border: 'none',
           background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 13, cursor: 'pointer',
         }}>Compare our fees →</button>
+      </div>
+
+      {/* ── Trust band ── */}
+      <div style={{ padding: '0 14px 20px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {[[Icon.shield, 'Buyer Protection', 'Full refund if not as described'],
+          [Icon.bolt, 'Verified sellers', 'Transparent ratings on every seller'],
+          [Icon.tag, 'Market pricing', 'Live price history on every card']].map(([ic, h, b], i) => (
+          <div key={i} style={{ display: 'flex', gap: 12, background: T.surface, borderRadius: 12, padding: '14px 14px', border: '1px solid var(--line)' }}>
+            <span style={{ width: 36, height: 36, borderRadius: 10, flexShrink: 0, background: 'var(--surface-2)', color: 'var(--ink)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{ic({ width: 18, height: 18 })}</span>
+            <div><div style={{ fontWeight: 700, fontSize: 13.5 }}>{h}</div><div style={{ fontSize: 12, color: T.muted, marginTop: 1 }}>{b}</div></div>
+          </div>
+        ))}
       </div>
     </div>
   );
