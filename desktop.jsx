@@ -109,7 +109,7 @@ function Header({ app, openMega, megaOpen }) {
                 </div>
               )}
               <button onMouseDown={e => e.preventDefault()} onClick={submit} style={{ width: '100%', padding: '12px 16px', fontWeight: 700, fontSize: 13, color: 'var(--accent)', textAlign: 'center', borderTop: '1px solid var(--line-2)' }}>
-                See all results for \u201c{q}\u201d
+                See all results for {'\u201c'}{q}{'\u201d'}
               </button>
             </div>
           )}

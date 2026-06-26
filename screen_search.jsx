@@ -250,7 +250,7 @@ function SearchScreen({ app, params = {} }) {
               </div>
             )}
             <button onClick={() => setFocused(false)} style={{ width: '100%', padding: '12px 16px', fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.accent, textAlign: 'center' }}>
-              See all {totalResults} result{totalResults !== 1 ? 's' : ''} for \u201c{q}\u201d
+              See all {totalResults} result{totalResults !== 1 ? 's' : ''} for {'\u201c'}{q}{'\u201d'}
             </button>
           </div>
         ) : null;
