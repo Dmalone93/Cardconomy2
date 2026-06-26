@@ -102,7 +102,7 @@ function DCard({ item, app }) {
       onClick={() => app.go('listing', { id: item.id })} style={{ background: 'var(--surface)', borderRadius: 14, overflow: 'hidden', cursor: 'pointer',
       boxShadow: hover ? '0 8px 26px rgba(20,24,40,0.13)' : '0 1px 3px rgba(20,24,40,0.06)', transform: hover ? 'translateY(-3px)' : 'none', transition: 'all 0.18s ease' }}>
       <div style={{ position: 'relative', background: 'var(--surface-2)', padding: '18px 18px 12px', display: 'flex', justifyContent: 'center' }}>
-        <CardArtH item={item} w={180} />
+        {item.grade && item.grade.company !== 'raw' ? <SlabH item={item} w={120} /> : <CardArtH item={item} w={180} />}
         <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(item.id); }} style={{ position: 'absolute', top: 12, right: 12, width: 34, height: 34, borderRadius: 999,
           background: 'rgba(255,255,255,0.92)', color: watched ? 'var(--down)' : 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.12)' }}>
           {window.DIcon.heart({ width: 18, height: 18 }, watched)}
@@ -524,71 +524,49 @@ function DHome({ app }) {
         </div>
       </section>
 
-      {/* ── Find a local shop CTA ── */}
+      {/* ── Local shops + UK community (side by side) ── */}
       <section className="wrap" style={{ marginTop: 50 }}>
-        <div style={{ background: 'var(--fill)', borderRadius: 16, padding: '36px 32px', color: '#fff',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40 }}>
-          <div style={{ flex: 1 }}>
-            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 8px' }}>
-              Find a local game shop
-            </h2>
-            <p style={{ fontSize: 14, opacity: 0.75, lineHeight: 1.6, margin: '0 0 18px', maxWidth: 460 }}>
-              Browse verified shops near you. Sell cards in person, pick up online orders, or meet for trades at a safe location.
-            </p>
-            <button onClick={() => app.go('storefront')} style={{
-              padding: '12px 22px', borderRadius: 10, border: 'none',
-              background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 14, cursor: 'pointer',
-            }}>Find shops near you →</button>
-          </div>
-          <div style={{ display: 'flex', gap: 16 }}>
-            {[['12', 'Verified shops'], ['4.8', 'Avg rating'], ['Free', 'During early access']].map(([num, label]) => (
-              <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22 }}>{num}</div>
-                <div style={{ fontSize: 12, opacity: 0.65, marginTop: 2 }}>{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── UK community banner ── */}
-      <section className="wrap" style={{ marginTop: 50 }}>
-        <div style={{ background: 'var(--accent-wash)', borderRadius: 16, border: '1px solid rgba(5,150,105,0.2)', padding: '32px 28px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40 }}>
-          <div style={{ flex: 1 }}>
-            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: '0 0 8px', color: TH.ink }}>
-              Built for the UK TCG community
-            </h2>
-            <p style={{ fontSize: 14, color: TH.muted, lineHeight: 1.6, margin: '0 0 16px' }}>
-              6% + 30p total fees. Buyer protection on every order. Local game shop support built in.
-            </p>
-            <button onClick={() => app.go('fees')} style={{
-              padding: '10px 20px', borderRadius: 8, border: 'none',
-              background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 14, cursor: 'pointer',
-            }}>Compare our fees →</button>
-          </div>
-          <div style={{ display: 'flex', gap: 20 }}>
-            {[['6%+30p', 'Total fee'], ['5', 'Games'], ['3', 'Personas']].map(([num, label]) => (
-              <div key={label} style={{ textAlign: 'center' }}>
-                <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, color: 'var(--ink)' }}>{num}</div>
-                <div style={{ fontSize: 12, color: TH.muted, marginTop: 2 }}>{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* trust band */}
-      <section className="wrap" style={{ marginTop: 50 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
-          {[[IconH.shield, 'Buyer Protection', 'Full refund if an item never arrives or isn’t as described.'],
-            [IconH.bolt, 'Verified sellers', 'Every shop and top seller is vetted, with transparent ratings.'],
-            [IconH.tag, 'Real market pricing', 'Live price history and sold comps on every card.']].map(([ic, h, b], i) => (
-            <div key={i} style={{ display: 'flex', gap: 14, background: 'var(--surface)', borderRadius: 16, padding: 22, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-              <span style={{ width: 44, height: 44, borderRadius: 12, flexShrink: 0, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{ic({ width: 22, height: 22 })}</span>
-              <div><div style={{ fontWeight: 800, fontSize: 16 }}>{h}</div><p style={{ color: 'var(--ink-2)', fontSize: 13.5, lineHeight: 1.5, margin: '4px 0 0' }}>{b}</p></div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+          {/* Left: Find a local game shop */}
+          <div style={{ background: 'var(--fill)', borderRadius: 16, padding: '32px 28px', color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, letterSpacing: -0.5, margin: '0 0 8px' }}>Find a local game shop</h2>
+              <p style={{ fontSize: 13.5, opacity: 0.75, lineHeight: 1.6, margin: '0 0 18px' }}>Browse verified shops near you. Sell cards in person, pick up online orders, or meet for trades at a safe location.</p>
             </div>
-          ))}
+            <div>
+              <div style={{ display: 'flex', gap: 16, marginBottom: 18 }}>
+                {[['12', 'Verified shops'], ['4.8', 'Avg rating'], ['Free', 'Early access']].map(([num, label]) => (
+                  <div key={label} style={{ textAlign: 'center' }}>
+                    <div style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 20 }}>{num}</div>
+                    <div style={{ fontSize: 11, opacity: 0.6, marginTop: 2 }}>{label}</div>
+                  </div>
+                ))}
+              </div>
+              <button onClick={() => app.go('storefront')} style={{ padding: '11px 20px', borderRadius: 10, border: 'none', background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13.5, cursor: 'pointer' }}>Find shops near you →</button>
+            </div>
+          </div>
+
+          {/* Right: UK community + trust features */}
+          <div style={{ background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--line)', padding: '28px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+            <div>
+              <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 22, letterSpacing: -0.5, margin: '0 0 6px', color: TH.ink }}>Built for the UK TCG community</h2>
+              <p style={{ fontSize: 13, color: TH.muted, lineHeight: 1.5, margin: '0 0 16px' }}>6% + 30p total fees. Buyer protection on every order. Local game shop support built in.</p>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 16 }}>
+              {[[IconH.shield, 'Buyer Protection', 'Full refund if your card does not arrive or match the listing.'],
+                [IconH.bolt, 'Verified sellers', 'Every shop and top seller is vetted with transparent ratings.'],
+                [IconH.tag, 'Real market pricing', 'Live price history and sold comps on every card.']].map(([ic, h, b], i) => (
+                <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                  <span style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{ic({ width: 16, height: 16 })}</span>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: 13.5, color: TH.ink }}>{h}</div>
+                    <div style={{ fontSize: 12, color: TH.muted, lineHeight: 1.4, marginTop: 1 }}>{b}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <button onClick={() => app.go('fees')} style={{ padding: '10px 18px', borderRadius: 8, border: 'none', background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 13.5, cursor: 'pointer', alignSelf: 'flex-start' }}>Compare our fees →</button>
+          </div>
         </div>
       </section>
     </div>

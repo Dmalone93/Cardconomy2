@@ -38,7 +38,7 @@ function DisputeScreen({ app }) {
             Reference: <strong>{claimRef}</strong>
           </p>
           <p style={{ fontFamily: TD.sans, fontSize: 14, color: TD.muted, lineHeight: 1.5, margin: '0 0 24px' }}>
-            {"We’ll review within 48 hours and keep you updated via notifications."}
+            {"We'll review within 48 hours and keep you updated via notifications."}
           </p>
           <button onClick={() => app.nav.pop()} style={{
             background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: '13px 32px',

@@ -175,11 +175,11 @@ function ListingScreen({ app, params }) {
             <span style={{ flexShrink: 0, color: TL.muted }}>{IconL.shield({ width: 18, height: 18 })}</span>
             <div>
               <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Buyer Protection</div>
-              <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn't match the listing, get a full refund.</div>
+              <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn\'t match the listing, get a full refund.</div>
             </div>
           </div>
 
-          {/* seller's real photos */}
+          {/* seller\'s real photos */}
           {!isLot && (
             <div style={{ marginTop: 22 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
@@ -264,7 +264,7 @@ function ListingScreen({ app, params }) {
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/></svg> Message seller
             </button>
 
-            {/* seller's other listings */}
+            {/* seller\'s other listings */}
             {(() => {
               const others = (window.listingsBySeller ? window.listingsBySeller(item.seller) : []).filter(l => l.id !== item.id).slice(0, 4);
               if (others.length === 0) return null;

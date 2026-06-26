@@ -99,7 +99,7 @@ function BatchListScreen({ app, params }) {
           {cards.length} card{cards.length !== 1 ? 's are' : ' is'} now live!
         </h2>
         <p style={{ fontFamily: TBL.sans, fontSize: 14.5, color: TBL.muted, lineHeight: 1.5, marginTop: 10, maxWidth: 280 }}>
-          {"We’ll notify you when they sell or receive offers."}
+          {"We'll notify you when they sell or receive offers."}
         </p>
         <p style={{ fontFamily: TBL.sans, fontSize: 13, color: TBL.muted, marginTop: 6 }}>
           Total listing value: {moneyBL(total)}

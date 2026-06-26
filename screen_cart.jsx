@@ -70,7 +70,7 @@ function CartScreen({ app }) {
             {sellers.length > 1 && (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 12, background: 'var(--accent-wash)', borderRadius: 4, padding: '11px 13px' }}>
                 <span style={{ color: TCart.accent }}>{IconCart.truck({ width: 16, height: 16 })}</span>
-                <span style={{ fontFamily: TCart.sans, fontSize: 12.5, color: TCart.ink2, lineHeight: 1.4 }}>Items ship from {sellers.length} sellers — you'll get separate tracking for each.</span>
+                <span style={{ fontFamily: TCart.sans, fontSize: 12.5, color: TCart.ink2, lineHeight: 1.4 }}>Items ship from {sellers.length} sellers — you\'ll get separate tracking for each.</span>
               </div>
             )}
 

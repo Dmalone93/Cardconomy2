@@ -109,7 +109,7 @@ function Header({ app, openMega, megaOpen }) {
                 </div>
               )}
               <button onMouseDown={e => e.preventDefault()} onClick={submit} style={{ width: '100%', padding: '12px 16px', fontWeight: 700, fontSize: 13, color: 'var(--accent)', textAlign: 'center', borderTop: '1px solid var(--line-2)' }}>
-                See all results for {'“'}{q}{'”'}
+                See all results for {'"'}{q}{'"'}
               </button>
             </div>
           )}
@@ -296,7 +296,7 @@ function App() {
     removeFromCart: (id) => setCart(c => c.filter(x => x !== id)),
     clearCart: () => setCart([]),
     isBidding: (id) => bids[id] != null,
-    placeBid: (item, amt) => { setBids(b => ({ ...b, [item.id]: amt })); setWatch(w => w.includes(item.id) ? w : [...w, item.id]); showToast("You’re the high bidder!"); },
+    placeBid: (item, amt) => { setBids(b => ({ ...b, [item.id]: amt })); setWatch(w => w.includes(item.id) ? w : [...w, item.id]); showToast("You're the high bidder!"); },
     toast: showToast,
   };
 

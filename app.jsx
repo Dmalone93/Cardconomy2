@@ -117,7 +117,7 @@ function App() {
       if (TAB_ROOT[parsed.screen] && !parsed.id) {
         setStack([]); setTab(parsed.screen); return;
       }
-      // If it's a known screen, push it
+      // If it\'s a known screen, push it
       if (SCREENS[parsed.screen]) {
         var params = parsed.id ? { id: parsed.id } : {};
         setStack([{ screen: parsed.screen, params: params }]);

@@ -500,7 +500,7 @@ function ShopCardRow({ c, price, onClick, app }) {
               </React.Fragment>
             )}
           </div>
-          <button onClick={(e) => { e.stopPropagation(); setFlagged(!flagged); app && app.toast(flagged ? 'Flag removed' : 'Card flagged — added to seller’s record'); }}
+          <button onClick={(e) => { e.stopPropagation(); setFlagged(!flagged); app && app.toast(flagged ? 'Flag removed' : 'Card flagged — added to seller\'s record'); }}
             style={{ width: 28, height: 28, borderRadius: 4,
               background: flagged ? '#dc2626' : highValue ? '#fef2f2' : 'transparent',
               color: flagged ? '#fff' : highValue ? '#dc2626' : TSH.faint,
@@ -740,9 +740,9 @@ function ShopInbox({ app, onOpen, onDashboard }) {
         {/* other queue items */}
         <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 12.5, color: TSH.muted, margin: '4px 0 9px', letterSpacing: 0.2 }}>EARLIER</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-          <QueueRow initial="S" name="Sam R." cards="64 cards" meta="18 min ago" tag="12 hits" tagColor={TSH.accent} onClick={() => app.toast('Tap Jordan’s submission to review')} />
-          <QueueRow initial="D" name="Dana P." cards="310 cards" meta="1 hr ago · offer sent" tag="replied" tagColor="var(--up)" onClick={() => app.toast('Tap Jordan’s submission to review')} />
-          <QueueRow initial="M" name="Miguel A." cards="1,420 cards" meta="3 hr ago · completed" tag="paid" tagColor={TSH.muted} onClick={() => app.toast('Tap Jordan’s submission to review')} />
+          <QueueRow initial="S" name="Sam R." cards="64 cards" meta="18 min ago" tag="12 hits" tagColor={TSH.accent} onClick={() => app.toast('Tap Jordan\'s submission to review')} />
+          <QueueRow initial="D" name="Dana P." cards="310 cards" meta="1 hr ago · offer sent" tag="replied" tagColor="var(--up)" onClick={() => app.toast('Tap Jordan\'s submission to review')} />
+          <QueueRow initial="M" name="Miguel A." cards="1,420 cards" meta="3 hr ago · completed" tag="paid" tagColor={TSH.muted} onClick={() => app.toast('Tap Jordan\'s submission to review')} />
         </div>
       </div>
     </div>

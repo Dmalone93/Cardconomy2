@@ -188,10 +188,10 @@ function FeesScreen({ app }) {
         </table>
       </div>
 
-      {/* ── What’s included ── */}
+      {/* ── What's included ── */}
       <div style={{ margin: '0 14px 20px' }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: TFE.ink, marginBottom: 10 }}>
-          What’s included
+          What's included
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {[

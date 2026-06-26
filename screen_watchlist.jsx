@@ -55,7 +55,7 @@ function WatchScreen({ app }) {
           )}
         </div>
         <p style={{ fontFamily: TW.sans, fontSize: 14.5, color: TW.muted, margin: '0 0 14px', lineHeight: 1.45 }}>
-          Track prices on cards you{'’'}re watching and the value of your collection.
+          Track prices on cards you{"'"}re watching and the value of your collection.
         </p>
         <div style={{ display: 'flex', gap: 22 }}>
           {[['watch', 'Watching ' + watched.length], ['collection', 'Collection']].map(([id, label]) => (
@@ -576,7 +576,7 @@ function StoreDash({ app, header }) {
 
         {/* 2. Revenue card */}
         <div style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', borderRadius: 20, padding: 20, color: '#fff', marginBottom: 14 }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, opacity: 0.65, textTransform: 'uppercase' }}>{"Today’s Revenue"}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, opacity: 0.65, textTransform: 'uppercase' }}>{"Today's Revenue"}</div>
           <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 34, letterSpacing: -1, marginTop: 4 }}>{moneyW(1247)}</div>
           <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: '#7fe7a4', marginTop: 4 }}>&#9650; up 23% vs last week</div>
           {/* date range pills */}

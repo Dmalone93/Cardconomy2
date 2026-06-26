@@ -122,7 +122,7 @@ function DListing({ app, params }) {
 
             <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid var(--line-2)', display: 'flex', alignItems: 'flex-start', gap: 9 }}>
               {IconLi.shield({ width: 18, height: 18, style: { color: 'var(--up)', flexShrink: 0, marginTop: 1 } })}
-              <span style={{ fontSize: 12.5, color: 'var(--ink-2)', lineHeight: 1.45 }}><b>Protected purchase.</b> Full refund if it doesn't arrive or isn\'t as described.</span>
+              <span style={{ fontSize: 12.5, color: 'var(--ink-2)', lineHeight: 1.45 }}><b>Protected purchase.</b> Full refund if it doesn\'t arrive or isn\'t as described.</span>
             </div>
           </div>
         </div>
