@@ -113,7 +113,7 @@ function ListCard({ item, app, w }) {
     }}>
       <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#ffffff' }}>
         {item.grade && item.grade.company !== 'raw'
-          ? <Slab item={item} w={Math.round(140 * 1.4 / (item.grade.company === 'bgs' ? 2.09 : 1.698))} />
+          ? <Slab item={item} w={115} />
           : <CardArt item={item} w={140} />}
         <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(item.id); }} style={{
           position: 'absolute', top: 10, right: 10, width: 32, height: 32, borderRadius: 999,
