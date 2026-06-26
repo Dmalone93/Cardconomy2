@@ -21,7 +21,7 @@ function DGameTile({ game, app }) {
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       role="button" style={{
       cursor: 'pointer', borderRadius: 14, overflow: 'hidden', position: 'relative',
-      width: 260, height: 320, flexShrink: 0, background: game.tint,
+      width: 220, height: 240, flexShrink: 0, background: game.tint,
       boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
       transform: hover ? 'scale(1.03)' : 'scale(1)',
       transition: 'transform 0.2s',
