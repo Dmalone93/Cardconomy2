@@ -20,8 +20,8 @@ function DGameTile({ game, app }) {
     <div onClick={() => app.go('search', { game: game.id })}
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       role="button" style={{
-      cursor: 'pointer', borderRadius: 14, overflow: 'hidden', position: 'relative',
-      width: 220, height: 240, flexShrink: 0, background: game.tint,
+      cursor: 'pointer', borderRadius: 16, overflow: 'hidden', position: 'relative',
+      width: 280, height: 320, flexShrink: 0, background: game.tint,
       boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
       transform: hover ? 'scale(1.03)' : 'scale(1)',
       transition: 'transform 0.2s',
@@ -36,13 +36,13 @@ function DGameTile({ game, app }) {
       <div style={{ position: 'absolute', inset: 0, display: 'flex',
         flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-end', padding: '20px 16px', zIndex: 1 }}>
         {logo ? (
-          <img src={logo} alt={game.short} style={{ maxWidth: 160, maxHeight: 60,
+          <img src={logo} alt={game.short} style={{ maxWidth: 200, maxHeight: 70,
             objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))' }} />
         ) : (
-          <span style={{ fontSize: 20, fontWeight: 800, color: '#fff',
+          <span style={{ fontSize: 24, fontWeight: 800, color: '#fff',
             textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>{game.short}</span>
         )}
-        <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', marginTop: 8, fontWeight: 600 }}>Browse {game.name}</span>
+        <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginTop: 10, fontWeight: 600 }}>Browse {game.name}</span>
       </div>
     </div>
   );
@@ -60,7 +60,7 @@ function GameCarousel({ app }) {
   }
   function scrollBy(dir) {
     var el = scrollRef.current; if (!el) return;
-    el.scrollBy({ left: dir * 320, behavior: 'smooth' });
+    el.scrollBy({ left: dir * 400, behavior: 'smooth' });
   }
   React.useEffect(function() { updateArrows(); }, []);
   var arrowStyle = function(show) { return {
@@ -71,7 +71,7 @@ function GameCarousel({ app }) {
     opacity: show ? 1 : 0, pointerEvents: show ? 'auto' : 'none', transition: 'opacity 0.2s',
   }; };
   return (
-    <section style={{ marginTop: 44, background: '#fff', padding: '32px 0 28px', borderRadius: 20 }}>
+    <section style={{ marginTop: 44, background: '#fff', padding: '32px 0 28px' }}>
       <div className="wrap" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
         <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>Browse by Game</h2>
         <button onClick={function() { app.go('search'); }} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--ink)' }}>Browse all →</button>
