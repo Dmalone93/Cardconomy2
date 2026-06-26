@@ -76,8 +76,8 @@ function AuthCardScreen({ app, params = {} }) {
           <div>
             <h2 style={{ fontFamily: TAU.sans, fontWeight: 800, fontSize: 19, letterSpacing: -0.4, margin: '0 0 4px' }}>How do you want to verify?</h2>
             <p style={{ fontFamily: TAU.sans, fontSize: 13, color: TAU.muted, margin: '0 0 16px' }}>Both end in the same Cardonomy Verified seal.</p>
-            {[['shop', IconAU.shield({ width: 22, height: 22 }), 'Verify at a local shop', 'Drop it at an enrolled LGS \u2014 examined on-site, often same day. No shipping.', 'Fastest \u00b7 in person'],
-              ['mail', IconAU.truck({ width: 22, height: 22 }), 'Mail-in to Cardonomy', 'Ship with a prepaid, insured label. Examined and sealed at our facility, then returned or vaulted.', '5\u20137 days']].map(([id, e, t, d, tag]) => {
+            {[['shop', IconAU.shield({ width: 22, height: 22 }), 'Verify at a local shop', 'Drop it at an enrolled LGS — examined on-site, often same day. No shipping.', 'Fastest · in person'],
+              ['mail', IconAU.truck({ width: 22, height: 22 }), 'Mail-in to Cardonomy', 'Ship with a prepaid, insured label. Examined and sealed at our facility, then returned or vaulted.', '5–7 days']].map(([id, e, t, d, tag]) => {
               const sel = method === id;
               return (
                 <button key={id} onClick={() => setMethod(id)} style={{ width: '100%', textAlign: 'left', display: 'flex', gap: 13, alignItems: 'flex-start', background: sel ? 'var(--accent-wash)' : TAU.surface, borderRadius: 14, padding: 15, marginBottom: 11, boxShadow: sel ? 'inset 0 0 0 2px var(--accent)' : 'var(--shadow-1)' }}>
@@ -101,7 +101,7 @@ function AuthCardScreen({ app, params = {} }) {
               <div style={{ width: 76, height: 76, margin: '0 auto 12px', borderRadius: 999, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconAU.check({ width: 40, height: 40 })}</div>
               <h1 style={{ margin: 0, fontFamily: TAU.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.5 }}>Submitted for authentication</h1>
               <p style={{ fontFamily: TAU.sans, fontSize: 13.5, color: TAU.muted, lineHeight: 1.5, margin: '8px auto 0', maxWidth: 300 }}>
-                {method === 'shop' ? 'Take the card to Gnome Games (ticket #AC-2231). We\u2019ll text when it\u2019s sealed.' : 'Your prepaid label is in Notifications. Pack the card and drop it off — tracking starts automatically.'}
+                {method === 'shop' ? 'Take the card to Gnome Games (ticket #AC-2231). We’ll text when it’s sealed.' : 'Your prepaid label is in Notifications. Pack the card and drop it off — tracking starts automatically.'}
               </p>
             </div>
             {/* status tracker */}

@@ -110,7 +110,7 @@ function SignInScreen({ app }) {
         </div>
         <div>
           <div style={authLabel}>Password</div>
-          <input type="password" placeholder="\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022" value={pass}
+          <input type="password" placeholder="••••••••" value={pass}
             onChange={e => setPass(e.target.value)}
             style={authInput} />
         </div>
@@ -146,7 +146,7 @@ function SignInScreen({ app }) {
       {/* Sign up link */}
       <div style={{ textAlign: 'center', marginTop: 'auto', paddingTop: 32 }}>
         <span style={{ fontFamily: TA2.sans, fontSize: 14, color: TA2.muted }}>
-          Don\u2019t have an account?{' '}
+          Don’t have an account?{' '}
         </span>
         <button onClick={() => app.nav.push('signup')} style={authLink}>Sign up</button>
       </div>
@@ -253,7 +253,7 @@ function ForgotPasswordScreen({ app }) {
             Check your email
           </div>
           <p style={{ fontFamily: TA2.sans, fontSize: 14, color: TA2.muted, lineHeight: 1.5, maxWidth: 260 }}>
-            We\u2019ve sent a password reset link to <span style={{ fontWeight: 700, color: TA2.ink }}>{email}</span>. Check your inbox and spam folder.
+            We’ve sent a password reset link to <span style={{ fontWeight: 700, color: TA2.ink }}>{email}</span>. Check your inbox and spam folder.
           </p>
           <button onClick={() => app.nav.pop()} style={{ ...authLink, marginTop: 12, fontSize: 15 }}>
             Back to sign in
@@ -277,7 +277,7 @@ function ForgotPasswordScreen({ app }) {
 
       {/* Description */}
       <p style={{ fontFamily: TA2.sans, fontSize: 14.5, color: TA2.muted, lineHeight: 1.5, margin: '16px 0 24px' }}>
-        Enter your email address and we\u2019ll send you a link to reset your password.
+        Enter your email address and we’ll send you a link to reset your password.
       </p>
 
       {/* Email input */}

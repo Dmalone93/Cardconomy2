@@ -263,11 +263,11 @@ function SellShopScreen({ app }) {
             <h1 style={{ margin: '0 0 2px', fontFamily: TSS.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Add your cards</h1>
             <p style={{ fontFamily: TSS.sans, fontSize: 13.5, color: TSS.muted, margin: '0 0 16px' }}>Big stack? Start with Live Sweep. You can mix methods.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-              <MethodRow hero icon={IconSS.camera({ width: 22, height: 22 })} title="Live Sweep Scan" sub="Flip the stack \u2014 we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
-              <MethodRow icon={IconSS.grid({ width: 22, height: 22 })} title="Batch Fan Photo" sub="9\u201312 cards per snap" time="~25 min" onClick={() => app.toast('Coming soon \u2014 use Live Sweep for now')} />
-              <MethodRow icon={IconSS.check({ width: 22, height: 22 })} title="Set Checklist" sub="Tap cards off a set grid" time="varies" onClick={() => app.toast('Coming soon \u2014 use Live Sweep for now')} />
-              <MethodRow icon={IconSS.search({ width: 22, height: 22 })} title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Coming soon \u2014 use Live Sweep for now')} />
-              <MethodRow icon={<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M14 2v6h6M10 13h4M10 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>} title="Import List" sub="Manabox \u00b7 TCGplayer \u00b7 CSV" time="instant" onClick={() => app.toast('Coming soon \u2014 use Live Sweep for now')} />
+              <MethodRow hero icon={IconSS.camera({ width: 22, height: 22 })} title="Live Sweep Scan" sub="Flip the stack — we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
+              <MethodRow icon={IconSS.grid({ width: 22, height: 22 })} title="Batch Fan Photo" sub="9–12 cards per snap" time="~25 min" onClick={() => app.toast('Coming soon — use Live Sweep for now')} />
+              <MethodRow icon={IconSS.check({ width: 22, height: 22 })} title="Set Checklist" sub="Tap cards off a set grid" time="varies" onClick={() => app.toast('Coming soon — use Live Sweep for now')} />
+              <MethodRow icon={IconSS.search({ width: 22, height: 22 })} title="Search & Add" sub="Verify high-value singles" time="precise" onClick={() => app.toast('Coming soon — use Live Sweep for now')} />
+              <MethodRow icon={<svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><path d="M14 2v6h6M10 13h4M10 17h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>} title="Import List" sub="Manabox · TCGplayer · CSV" time="instant" onClick={() => app.toast('Coming soon — use Live Sweep for now')} />
             </div>
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginTop: 16, background: TSS.surface2, borderRadius: 4, padding: '12px 13px' }}>
               <span style={{ color: 'var(--ink)', marginTop: 1 }}>{IconSS.bolt({ width: 16, height: 16 })}</span>
@@ -345,7 +345,7 @@ function ReviewBody({ scanned, stats, cond, setCond, bulkChoice, setBulkChoice, 
       <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 9 }}>
         <TriageCard color="var(--down)" icon="⚠" title={flagged.length + ' flagged for damage'} sub="Creasing / whitening — tap to review" onClick={() => app.toast('Flagged cards highlighted below')} accent />
         <TriageCard color="var(--gold)" icon="★" title={stats.buylistCount + ' match the buylist'} sub="Auto-priced at the shop\'s buy rate" onClick={() => app.toast('Buylist matches highlighted below')} />
-        <TriageCard color="var(--accent)" icon="◎" title={stats.singles + ' singles \u2265 \u00a35'} sub="Priced from the live guide" onClick={() => app.toast('Notable singles highlighted below')} />
+        <TriageCard color="var(--accent)" icon="◎" title={stats.singles + ' singles ≥ £5'} sub="Priced from the live guide" onClick={() => app.toast('Notable singles highlighted below')} />
         <TriageCard color="var(--muted)" icon="≈" title={(SUB_SS.bulkCount).toLocaleString() + ' bulk commons'} sub={'Auto ' + cond + ' · standing bulk rate'} muted />
       </div>
 
@@ -482,15 +482,15 @@ function SellerThread({ app, onShop }) {
         </div>
         <Bubble who="shop">Swing by today to finish? Bring the stack + ticket #{SUB_SS.ticket}.</Bubble>
         {reply && <Bubble who="me">{reply}</Bubble>}
-        {reply && <Bubble who="shop">Perfect \u2014 see you then! We will have it ready.</Bubble>}
+        {reply && <Bubble who="shop">Perfect — see you then! We will have it ready.</Bubble>}
       </div>
 
       {/* quick replies */}
       <div style={{ padding: '10px 14px 30px', background: TSS.surface, borderTop: '1px solid var(--line)' }}>
         {!reply ? (
           <div className="noscroll" style={{ display: 'flex', gap: 8, overflowX: 'auto' }}>
-            <QuickReply label={'Accept credit \u00b7 ' + moneySS(credit, { cents: false })} primary onClick={() => { setReply('Accept store credit \u2014 coming by after 5pm'); app.toast('Offer accepted'); }} />
-            <QuickReply label={'Take cash \u00b7 ' + moneySS(cash, { cents: false })} onClick={() => { setReply('Cash works \u2014 I\'ll come by after 5pm'); app.toast('Offer accepted'); }} />
+            <QuickReply label={'Accept credit · ' + moneySS(credit, { cents: false })} primary onClick={() => { setReply('Accept store credit — coming by after 5pm'); app.toast('Offer accepted'); }} />
+            <QuickReply label={'Take cash · ' + moneySS(cash, { cents: false })} onClick={() => { setReply('Cash works — I\'ll come by after 5pm'); app.toast('Offer accepted'); }} />
             <QuickReply label="Pick a time" onClick={() => setReply("What times work today? I'm flexible.")} />
           </div>
         ) : (

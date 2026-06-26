@@ -293,7 +293,7 @@ function ListingScreen({ app, params }) {
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 0', borderBottom: '1px solid var(--line-2)' }}>
               <div style={{ color: TL.muted }}>{IconL.truck({ width: 16, height: 16 })}</div>
               <div style={{ fontFamily: TL.sans, fontSize: 13, fontWeight: 600, color: TL.ink2 }}>
-                Estimated delivery: <span style={{ fontWeight: 700, color: TL.ink }}>{item.ships || '3\u20135 business days'}</span>
+                Estimated delivery: <span style={{ fontWeight: 700, color: TL.ink }}>{item.ships || '3–5 business days'}</span>
               </div>
             </div>
             <InfoRow icon={IconL.shield({ width: 16, height: 16 })} title="Cardonomy Buyer Protection" sub="Full refund if item not as described" />
@@ -389,7 +389,7 @@ function ListingScreen({ app, params }) {
         <button onClick={() => app.addToCart(item.id)} style={{ flex: 1.3, background: 'var(--fill)', color: '#fff', borderRadius: 4,
           padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-          {IconL.cart({ width: 18, height: 18 })} {app.cart.includes(item.id) ? 'In cart' : 'Add to cart \u00b7 ' + moneyL(displayPrice)}
+          {IconL.cart({ width: 18, height: 18 })} {app.cart.includes(item.id) ? 'In cart' : 'Add to cart · ' + moneyL(displayPrice)}
         </button>
       </div>
 
@@ -400,7 +400,7 @@ function ListingScreen({ app, params }) {
           justifyContent: 'center', border: 'none', cursor: 'pointer', zIndex: 40,
           opacity: showTopL ? 1 : 0, pointerEvents: showTopL ? 'auto' : 'none',
           transition: 'opacity 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.18)' }}
-        aria-label="Back to top">{'\u2191'}</button>
+        aria-label="Back to top">{'↑'}</button>
 
       {/* printings sheet */}
       {showPrintings && (

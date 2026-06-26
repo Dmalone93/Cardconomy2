@@ -47,7 +47,7 @@ function ShippingScreen({ app }) {
         <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '20px 16px 100px' }}>
           {/* success banner */}
           <div style={{ textAlign: 'center', marginBottom: 20 }}>
-            <div style={{ width: 64, height: 64, borderRadius: 999, background: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', fontSize: 32 }}>{'\u2713'}</div>
+            <div style={{ width: 64, height: 64, borderRadius: 999, background: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', fontSize: 32 }}>{'✓'}</div>
             <h2 style={{ margin: 0, fontFamily: TSP.sans, fontWeight: 800, fontSize: 20 }}>Label generated</h2>
             <p style={{ fontFamily: TSP.sans, fontSize: 13, color: TSP.muted, margin: '6px 0 0' }}>{selectedCount} item{selectedCount !== 1 ? 's' : ''} ready to ship</p>
           </div>
@@ -88,7 +88,7 @@ function ShippingScreen({ app }) {
           </div>
 
           {/* action buttons */}
-          <button onClick={function() { app.toast('Sending to printer\u2026'); }} style={{
+          <button onClick={function() { app.toast('Sending to printer…'); }} style={{
             width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: 14,
             fontFamily: TSP.sans, fontWeight: 700, fontSize: 15, marginBottom: 10,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -133,11 +133,11 @@ function ShippingScreen({ app }) {
                   width: 22, height: 22, borderRadius: 6, border: item.selected ? 'none' : '2px solid var(--faint)',
                   background: item.selected ? 'var(--ink)' : 'transparent', color: '#fff', flexShrink: 0,
                   display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700,
-                }}>{item.selected ? '\u2713' : ''}</div>
+                }}>{item.selected ? '✓' : ''}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
                   <div style={{ fontFamily: TSP.sans, fontSize: 12, color: TSP.muted, marginTop: 2 }}>
-                    {item.buyer} {'\u00B7'} {item.date}
+                    {item.buyer} {'·'} {item.date}
                   </div>
                 </div>
                 <span style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{moneySP(item.price)}</span>
@@ -204,7 +204,7 @@ function ShippingScreen({ app }) {
           </div>
           {freeShipping && (
             <div style={{ background: '#dcfce7', borderRadius: 8, padding: '8px 12px', fontFamily: TSP.sans, fontSize: 12, color: '#16a34a', fontWeight: 600 }}>
-              {'\u2713'} Cardconomy covers shipping on orders over {moneySP(20)}
+              {'✓'} Cardconomy covers shipping on orders over {moneySP(20)}
             </div>
           )}
           {!freeShipping && (

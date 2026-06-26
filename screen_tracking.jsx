@@ -56,7 +56,7 @@ function TrackingScreen({ app }) {
             <div>
               <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 15 }}>{order.orderNumber}</div>
               <div style={{ fontFamily: TK.sans, fontSize: 13, color: TK.muted, marginTop: 2 }}>
-                {order.date} {'\u00B7'} {order.itemCount} item{order.itemCount !== 1 ? 's' : ''}
+                {order.date} {'·'} {order.itemCount} item{order.itemCount !== 1 ? 's' : ''}
               </div>
             </div>
             <span style={{
@@ -120,7 +120,7 @@ function TrackingScreen({ app }) {
                     marginTop: step.current ? -2 : 0,
                   }}>
                     {step.label}
-                    {step.done && !step.current && ' \u2713'}
+                    {step.done && !step.current && ' ✓'}
                   </div>
                   {step.detail && (
                     <div style={{
@@ -171,7 +171,7 @@ function TrackingScreen({ app }) {
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 15, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{order.item.name}</div>
               <div style={{ fontFamily: TK.sans, fontSize: 12, color: TK.muted, marginTop: 2 }}>
-                {order.item.set} {'\u00B7'} {order.item.condition}
+                {order.item.set} {'·'} {order.item.condition}
               </div>
               <div style={{ fontFamily: TK.sans, fontSize: 12, color: TK.muted, marginTop: 1 }}>
                 Sold by {order.item.seller}

@@ -70,7 +70,7 @@ function Header({ app, openMega, megaOpen }) {
         <form onSubmit={submit} style={{ flex: 1, maxWidth: 560, margin: '0 auto', position: 'relative', display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface-2)',
           borderRadius: 11, padding: '0 8px 0 14px', height: 46, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
           {DIcon.search({ style: { color: 'var(--faint)', flexShrink: 0 } })}
-          <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setSFocused(true)} onBlur={() => setTimeout(() => setSFocused(false), 200)} placeholder="Search 2M+ cards, sets, sealed product\u2026"
+          <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setSFocused(true)} onBlur={() => setTimeout(() => setSFocused(false), 200)} placeholder="Search 2M+ cards, sets, sealed product…"
             style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontSize: 15, color: 'var(--ink)', minWidth: 0 }} />
           <button type="submit" style={{ background: 'var(--ink)', color: '#fff', borderRadius: 8, height: 34, padding: '0 18px', fontWeight: 700, fontSize: 14 }}>Search</button>
           {sShow && (
@@ -88,7 +88,7 @@ function Header({ app, openMega, megaOpen }) {
                         <div style={{ fontWeight: 600, fontSize: 14, color: 'var(--ink)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
                         <div style={{ fontSize: 12, color: 'var(--muted)' }}>{c.subtitle || ''}</div>
                       </div>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)', flexShrink: 0 }}>{window.money ? window.money(c.price) : '\u00A3' + c.price}</div>
+                      <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)', flexShrink: 0 }}>{window.money ? window.money(c.price) : '£' + c.price}</div>
                     </button>
                   ))}
                 </div>
@@ -109,7 +109,7 @@ function Header({ app, openMega, megaOpen }) {
                 </div>
               )}
               <button onMouseDown={e => e.preventDefault()} onClick={submit} style={{ width: '100%', padding: '12px 16px', fontWeight: 700, fontSize: 13, color: 'var(--accent)', textAlign: 'center', borderTop: '1px solid var(--line-2)' }}>
-                See all results for {'\u201c'}{q}{'\u201d'}
+                See all results for {'“'}{q}{'”'}
               </button>
             </div>
           )}
@@ -287,7 +287,7 @@ function App() {
         const remaining = seller.freeShipMin - sellerTotal;
         const otherListings = window.listingsBySeller(seller.name).filter(l => !newCart.includes(l.id));
         if (remaining > 0 && otherListings.length > 0) {
-          showToast('Added to cart \u2014 add \u00a3' + remaining.toFixed(2) + ' more from ' + seller.name + ' for free shipping');
+          showToast('Added to cart — add £' + remaining.toFixed(2) + ' more from ' + seller.name + ' for free shipping');
           return;
         }
       }
@@ -296,7 +296,7 @@ function App() {
     removeFromCart: (id) => setCart(c => c.filter(x => x !== id)),
     clearCart: () => setCart([]),
     isBidding: (id) => bids[id] != null,
-    placeBid: (item, amt) => { setBids(b => ({ ...b, [item.id]: amt })); setWatch(w => w.includes(item.id) ? w : [...w, item.id]); showToast("You\u2019re the high bidder!"); },
+    placeBid: (item, amt) => { setBids(b => ({ ...b, [item.id]: amt })); setWatch(w => w.includes(item.id) ? w : [...w, item.id]); showToast("You’re the high bidder!"); },
     toast: showToast,
   };
 
@@ -418,20 +418,20 @@ function DAccountSeller({ app }) {
   var setBalanceRange = rangeState[1];
 
   var activityData = [
-    { dot: 'var(--up)', text: 'Sold Charizard EX', amt: '+\u00a384', time: '2 hours ago', cardId: 'l01' },
-    { dot: 'var(--accent)', text: 'New offer on Dark Magician', amt: '\u00a342', time: '5 hours ago', cardId: 'l04' },
+    { dot: 'var(--up)', text: 'Sold Charizard EX', amt: '+£84', time: '2 hours ago', cardId: 'l01' },
+    { dot: 'var(--accent)', text: 'New offer on Dark Magician', amt: '£42', time: '5 hours ago', cardId: 'l04' },
     { dot: 'var(--faint)', text: 'Order #1847 delivered', amt: null, time: '1 day ago', cardId: null },
     { dot: 'var(--up)', text: 'Trade completed with Jamie', amt: null, time: '1 day ago', cardId: null },
     { dot: 'var(--accent)', text: 'Listing viewed 12 times', amt: null, time: '2 days ago', cardId: null },
-    { dot: 'var(--up)', text: 'Sold Moonbreon VMAX', amt: '+\u00a3156', time: '3 days ago', cardId: 'l05' },
+    { dot: 'var(--up)', text: 'Sold Moonbreon VMAX', amt: '+£156', time: '3 days ago', cardId: 'l05' },
     { dot: 'var(--faint)', text: 'Buylist match: Blue-Eyes', amt: null, time: '3 days ago', cardId: null },
     { dot: 'var(--accent)', text: 'New watcher on Pikachu EX', amt: null, time: '4 days ago', cardId: null },
   ];
 
   var openItems = [
-    { color: '#3b82f6', wash: 'rgba(59,130,246,0.1)', label: '2 active listings', sub: '24 views \u00b7 3 watchers' },
-    { color: '#f59e0b', wash: 'rgba(245,158,11,0.1)', label: '1 pending offer', sub: 'Dark Magician \u00b7 \u00a342 \u00b7 18h left' },
-    { color: '#22c55e', wash: 'rgba(34,197,94,0.1)', label: '1 ready to ship', sub: 'Charizard EX \u00b7 Sam R.' },
+    { color: '#3b82f6', wash: 'rgba(59,130,246,0.1)', label: '2 active listings', sub: '24 views · 3 watchers' },
+    { color: '#f59e0b', wash: 'rgba(245,158,11,0.1)', label: '1 pending offer', sub: 'Dark Magician · £42 · 18h left' },
+    { color: '#22c55e', wash: 'rgba(34,197,94,0.1)', label: '1 ready to ship', sub: 'Charizard EX · Sam R.' },
     { color: '#8b5cf6', wash: 'rgba(139,92,246,0.1)', label: '3 purchases', sub: '1 in transit' },
   ];
 
@@ -465,7 +465,7 @@ function DAccountSeller({ app }) {
               boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 600, fontSize: 14 }}>Offer expiring soon</div>
-                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Dark Magician {'\u00b7'} {money(42)} from @buyer_jane {'\u00b7'} 18h left</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Dark Magician {'·'} {money(42)} from @buyer_jane {'·'} 18h left</div>
               </div>
               <button onClick={function() { app.toast('Reviewing offer'); }} style={{ background: '#f59e0b', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Review</button>
             </div>
@@ -476,7 +476,7 @@ function DAccountSeller({ app }) {
               boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div style={{ flex: 1 }}>
                 <div style={{ fontWeight: 600, fontSize: 14 }}>Ship your sold card</div>
-                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Charizard EX to Sam R. {'\u00b7'} Sold 2h ago</div>
+                <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>Charizard EX to Sam R. {'·'} Sold 2h ago</div>
               </div>
               <button onClick={function() { app.toast('Printing label'); }} style={{ background: '#22c55e', color: '#fff', borderRadius: 8, padding: '8px 16px', fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Print label</button>
             </div>
@@ -501,7 +501,7 @@ function DAccountSeller({ app }) {
             <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, opacity: 0.45, marginBottom: 6 }}>Available Balance</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
               <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(248.47)}</span>
-              <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'\u25b2'} {money(84)} this week</span>
+              <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'▲'} {money(84)} this week</span>
             </div>
             <div style={{ display: 'flex', gap: 6, margin: '12px 0 4px' }} onClick={function(e) { e.stopPropagation(); }}>
               {['7d', '30d', '90d'].map(function(r) {
@@ -532,9 +532,9 @@ function DAccountSeller({ app }) {
           {/* Status tiles */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 14 }}>
             {[
-              { val: '2', label: 'Active listings', sub: '24 views \u00b7 3 watchers', color: 'var(--ink)' },
-              { val: '1', label: 'Pending offers', sub: 'Respond \u2192', color: '#f59e0b' },
-              { val: '1', label: 'To ship', sub: 'Print label \u2192', color: '#22c55e' },
+              { val: '2', label: 'Active listings', sub: '24 views · 3 watchers', color: 'var(--ink)' },
+              { val: '1', label: 'Pending offers', sub: 'Respond →', color: '#f59e0b' },
+              { val: '1', label: 'To ship', sub: 'Print label →', color: '#22c55e' },
             ].map(function(tile, i) {
               return (
                 <button key={i} onClick={function() { app.go('account'); }} style={Object.assign({}, cardStyle, { textAlign: 'center', cursor: 'pointer', border: 'none' })}>
@@ -567,7 +567,7 @@ function DAccountSeller({ app }) {
                       <div style={{ fontWeight: 600, fontSize: 14 }}>{item.label}</div>
                       <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{item.sub}</div>
                     </div>
-                    <span style={{ color: 'var(--faint)', fontSize: 18 }}>{'\u203a'}</span>
+                    <span style={{ color: 'var(--faint)', fontSize: 18 }}>{'›'}</span>
                   </button>
                 );
               })}
@@ -606,7 +606,7 @@ function DAccountSeller({ app }) {
           <div style={cardStyle}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
               <div style={Object.assign({}, sectionLabel, { margin: 0 })}>Collection</div>
-              <button onClick={function() { app.go('watch'); }} style={{ fontSize: 11, color: 'var(--ink)', fontWeight: 600, border: 'none', background: 'none', cursor: 'pointer' }}>View all {'\u2192'}</button>
+              <button onClick={function() { app.go('watch'); }} style={{ fontSize: 11, color: 'var(--ink)', fontWeight: 600, border: 'none', background: 'none', cursor: 'pointer' }}>View all {'→'}</button>
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
               <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 26 }}>{money(2480)}</span>
@@ -929,7 +929,7 @@ function DAccountStore({ app }) {
             <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, opacity: 0.45, marginBottom: 6 }}>{"Today's Revenue"}</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
               <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(1247)}</span>
-              <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'\u25b2'} 23% vs last week</span>
+              <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'▲'} 23% vs last week</span>
             </div>
             <div style={{ display: 'flex', gap: 6, margin: '12px 0 4px' }} onClick={function(e) { e.stopPropagation(); }}>
               {['today', '7d', '30d'].map(function(r) {
@@ -1000,13 +1000,13 @@ function DAccountStore({ app }) {
                     }}>{s.init}</div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: 13, fontWeight: 600 }}>{s.name}</div>
-                      <div style={{ fontSize: 11, color: 'var(--muted)' }}>{s.cards} {'\u00b7'} {s.time}</div>
+                      <div style={{ fontSize: 11, color: 'var(--muted)' }}>{s.cards} {'·'} {s.time}</div>
                     </div>
                     <span style={{
                       padding: '3px 8px', borderRadius: 6, fontWeight: 600, fontSize: 10,
                       background: s.statusColor, color: '#fff',
                     }}>{s.status}</span>
-                    <span style={{ color: 'var(--faint)', fontSize: 18 }}>{'\u203a'}</span>
+                    <span style={{ color: 'var(--faint)', fontSize: 18 }}>{'›'}</span>
                   </button>
                 );
               })}

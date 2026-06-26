@@ -15,9 +15,17 @@ for (const file of jsxFiles) {
     presets: ['@babel/preset-react'],
   });
   const outName = file.replace(/\.jsx$/, '.js');
+  // Babel escapes non-ASCII in JSX attributes to \uXXXX — convert
+  // them back to real UTF-8 so they survive the IIFE wrapping
+  const decoded = result.code.replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) => {
+    const code = parseInt(hex, 16);
+    // Preserve surrogate pairs as-is (they need to stay escaped)
+    if (code >= 0xD800 && code <= 0xDFFF) return '\\u' + hex;
+    return String.fromCharCode(code);
+  });
   // Wrap in IIFE to replicate Babel standalone's eval scoping —
   // without this, const/let declarations conflict across files
-  const wrapped = `(function(){\n${result.code}\n}).call(this);`;
+  const wrapped = `(function(){\n${decoded}\n}).call(this);`;
   fs.writeFileSync(path.join(DIST, outName), wrapped);
   console.log(`  ${file} → ${outName}`);
 }

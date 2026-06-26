@@ -227,7 +227,7 @@ function MoverCard({ item, change, app }) {
       </div>
       <div style={{ fontSize: 14, fontWeight: 700, fontFamily: T.mono,
         color: up ? T.up : T.down }}>
-        {up ? '\u25B2' : '\u25BC'} {Math.abs(change).toFixed(1)}%
+        {up ? '▲' : '▼'} {Math.abs(change).toFixed(1)}%
       </div>
     </div>
   );

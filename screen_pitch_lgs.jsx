@@ -61,7 +61,7 @@ function LGSPitchScreen({ app }) {
     {
       icon: iconStorefront,
       title: 'Digital storefront',
-      desc: 'Your shop profile, inventory, reviews, and buylist \u2014 visible to every collector in your area.',
+      desc: 'Your shop profile, inventory, reviews, and buylist — visible to every collector in your area.',
     },
     {
       icon: iconFree,
@@ -194,7 +194,7 @@ function LGSPitchScreen({ app }) {
               margin: '0 0 14px', fontFamily: TPL.sans, fontSize: 14.5, fontStyle: 'italic',
               color: TPL.ink, lineHeight: 1.6, position: 'relative',
             }}>
-              {"We\u2019ve had 40 card submissions in our first week. The app brings sellers straight to our counter."}
+              {"We’ve had 40 card submissions in our first week. The app brings sellers straight to our counter."}
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <div style={{
@@ -203,7 +203,7 @@ function LGSPitchScreen({ app }) {
                 fontFamily: TPL.sans, fontWeight: 800, fontSize: 15,
               }}>G</div>
               <div>
-                <div style={{ fontFamily: TPL.sans, fontWeight: 700, fontSize: 13, color: TPL.ink }}>{"The Gnome\u2019s Grotto"}</div>
+                <div style={{ fontFamily: TPL.sans, fontWeight: 700, fontSize: 13, color: TPL.ink }}>{"The Gnome’s Grotto"}</div>
                 <div style={{ fontFamily: TPL.sans, fontSize: 12, color: TPL.muted }}>Manchester</div>
               </div>
             </div>
@@ -222,7 +222,7 @@ function LGSPitchScreen({ app }) {
             width: '100%', maxWidth: 320, padding: '15px 24px', borderRadius: 12, border: 'none',
             background: 'var(--ink)', color: '#fff', fontFamily: TPL.sans,
             fontWeight: 700, fontSize: 15, cursor: 'pointer',
-          }}>{"Enrol your shop \u2014 it\u2019s free"}</button>
+          }}>{"Enrol your shop — it’s free"}</button>
         </div>
 
       </div>

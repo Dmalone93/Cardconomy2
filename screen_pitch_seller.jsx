@@ -165,7 +165,7 @@ function SellerPitchScreen({ app }) {
                 <path d="M12 2l2.09 6.26L20.18 9l-5 4.27L16.82 20 12 16.77 7.18 20l1.64-6.73L3.82 9l6.09-.74L12 2z" fill="var(--accent)" />
               </svg>
               <span style={{ fontFamily: TPS.sans, fontSize: 13, fontWeight: 700, color: TPS.ink }}>
-                {"Save \u00A36.50 on every \u00A3100"}
+                {"Save £6.50 on every £100"}
               </span>
             </div>
           </div>

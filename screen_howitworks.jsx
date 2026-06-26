@@ -27,7 +27,7 @@ function HowItWorksScreen({ app }) {
       tagline: 'List it, sell it, get paid',
       steps: [
         { num: '1', title: 'List in seconds', desc: 'Snap photos, set your price using our market data, and go live. Bulk scan to list hundreds of cards at once.' },
-        { num: '2', title: 'Sell on your terms', desc: 'Accept offers, bundle shipping, and connect directly with buyers. Just 6% + 30p total fee \u2014 the lowest in the market.' },
+        { num: '2', title: 'Sell on your terms', desc: 'Accept offers, bundle shipping, and connect directly with buyers. Just 6% + 30p total fee — the lowest in the market.' },
         { num: '3', title: 'Cash out fast', desc: 'Ship your cards, confirm delivery, and get your payout. Or sell directly to a local game shop for instant cash.' },
       ],
     },
@@ -48,19 +48,19 @@ function HowItWorksScreen({ app }) {
   const faqs = [
     {
       q: 'What makes Cardconomy different from eBay or Cardmarket?',
-      a: 'We connect three communities that other platforms ignore: buyers, individual sellers, and local game shops. Our LGS tools let shops receive cards from sellers, grade them, and resell \u2014 all in one platform. Plus, our 6% + 30p total fee is the lowest in the market, and we are built specifically for UK collectors.',
+      a: 'We connect three communities that other platforms ignore: buyers, individual sellers, and local game shops. Our LGS tools let shops receive cards from sellers, grade them, and resell — all in one platform. Plus, our 6% + 30p total fee is the lowest in the market, and we are built specifically for UK collectors.',
     },
     {
       q: 'Which games are supported?',
-      a: 'We support all major TCGs: Pok\u00E9mon, Magic: The Gathering, Yu-Gi-Oh!, One Piece TCG, and Digimon Card Game. More games are added based on community demand.',
+      a: 'We support all major TCGs: Pokémon, Magic: The Gathering, Yu-Gi-Oh!, One Piece TCG, and Digimon Card Game. More games are added based on community demand.',
     },
     {
       q: 'How do fees work?',
-      a: 'Sellers pay 4% on each sale. Buyers pay 2% + 30p per transaction. That is it \u2014 no hidden payment processing fees, no trustee charges, no surprise surcharges. Card payments are included. Our total take rate of 6% + 30p is lower than CardNexus (7.5%), Cardmarket (11%), and eBay (12.8%).',
+      a: 'Sellers pay 4% on each sale. Buyers pay 2% + 30p per transaction. That is it — no hidden payment processing fees, no trustee charges, no surprise surcharges. Card payments are included. Our total take rate of 6% + 30p is lower than CardNexus (7.5%), Cardmarket (11%), and eBay (12.8%).',
     },
     {
       q: 'How does selling to a local game shop work?',
-      a: 'Find a participating shop near you, select the cards you want to sell, and submit them through the app. The shop receives your cards, grades them, and pays you based on their buying rates. No shipping \u2014 just walk in and hand them over.',
+      a: 'Find a participating shop near you, select the cards you want to sell, and submit them through the app. The shop receives your cards, grades them, and pays you based on their buying rates. No shipping — just walk in and hand them over.',
     },
     {
       q: 'Can I trade cards instead of buying?',
@@ -68,7 +68,7 @@ function HowItWorksScreen({ app }) {
     },
     {
       q: 'Is there buyer protection?',
-      a: 'Every purchase is covered. If a card never arrives, arrives damaged, or does not match the listing, you get a full refund. The buyer protection fee is included in the 2% + 30p buyer fee \u2014 no extra charges.',
+      a: 'Every purchase is covered. If a card never arrives, arrives damaged, or does not match the listing, you get a full refund. The buyer protection fee is included in the 2% + 30p buyer fee — no extra charges.',
     },
     {
       q: 'I run a game shop. Why should I join?',
@@ -85,7 +85,7 @@ function HowItWorksScreen({ app }) {
       {/* ── Header ── */}
       <div style={{ display: 'flex', alignItems: 'center', padding: '12px 14px', gap: 10, flexShrink: 0 }}>
         <div onClick={() => app.nav.pop()} style={{ cursor: 'pointer', padding: 4 }}>
-          <span style={{ fontSize: 20 }}>{'\u2190'}</span>
+          <span style={{ fontSize: 20 }}>{'←'}</span>
         </div>
         <div style={{ fontSize: 17, fontWeight: 700, color: THW.ink }}>How It Works</div>
       </div>
@@ -162,7 +162,7 @@ function HowItWorksScreen({ app }) {
               <div style={{ fontSize: 14, fontWeight: 700, color: THW.ink }}>{p.title}</div>
               <div style={{ fontSize: 12, color: THW.muted, marginTop: 2 }}>{p.desc}</div>
             </div>
-            <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', flexShrink: 0 }}>{'\u2192'}</span>
+            <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', flexShrink: 0 }}>{'→'}</span>
           </div>
         ))}
       </div>
@@ -177,7 +177,7 @@ function HowItWorksScreen({ app }) {
           Right now, if you want to sell cards in the UK you are stuck with eBay (12.8% fees), Cardmarket (EU-focused, euro-only), or Facebook groups (no protection). Local game shops have no way to reach online buyers. And traders have no platform at all.
         </div>
         <div style={{ fontSize: 13, lineHeight: 1.7, opacity: 0.9, marginTop: 10 }}>
-          Cardconomy fixes this. A seller can list online, sell to a local shop, or trade \u2014 all from one app. A shop can accept walk-in cards and sell them to collectors nationwide. A buyer gets lower prices because sellers pay less in fees.
+          Cardconomy fixes this. A seller can list online, sell to a local shop, or trade — all from one app. A shop can accept walk-in cards and sell them to collectors nationwide. A buyer gets lower prices because sellers pay less in fees.
         </div>
         <div style={{ fontSize: 13, lineHeight: 1.7, opacity: 0.9, marginTop: 10, fontWeight: 700 }}>
           Everyone wins when the whole community is connected.

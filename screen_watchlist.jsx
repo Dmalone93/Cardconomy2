@@ -55,7 +55,7 @@ function WatchScreen({ app }) {
           )}
         </div>
         <p style={{ fontFamily: TW.sans, fontSize: 14.5, color: TW.muted, margin: '0 0 14px', lineHeight: 1.45 }}>
-          Track prices on cards you{'\u2019'}re watching and the value of your collection.
+          Track prices on cards you{'’'}re watching and the value of your collection.
         </p>
         <div style={{ display: 'flex', gap: 22 }}>
           {[['watch', 'Watching ' + watched.length], ['collection', 'Collection']].map(([id, label]) => (
@@ -230,7 +230,7 @@ function WatchRow({ item, app }) {
       )}
       {alertOpen && (
         <div style={{ marginTop: 8, marginLeft: 66, display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted, whiteSpace: 'nowrap' }}>Alert when below \u00A3</span>
+          <span style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted, whiteSpace: 'nowrap' }}>Alert when below £</span>
           <input
             type="number"
             step="0.01"
@@ -250,7 +250,7 @@ function WatchRow({ item, app }) {
               setAlertSet(val);
               setAlertOpen(false);
               setAlertPrice('');
-              app.toast('Price alert set for \u00A3' + val.toFixed(2));
+              app.toast('Price alert set for £' + val.toFixed(2));
             }}
             style={{
               background: 'var(--ink)', color: '#fff', borderRadius: 8, padding: '6px 12px',
@@ -321,7 +321,7 @@ function MiniSpark({ data, color, w, h }) {
 function SellerDash({ app, header }) {
   const port = valueOf(app.ownedIds());
   const ACTIVITY = [
-    ['#22c55e', 'Sold Charizard ex for \u00A338.50', '2h ago'],
+    ['#22c55e', 'Sold Charizard ex for £38.50', '2h ago'],
     ['#3b82f6', 'New offer on Ragavan', '4h ago'],
     ['#a855f7', 'Completed trade with Marcus T.', 'Yesterday'],
     ['#f59e0b', 'Added 3 cards to Main Binder', '2d ago'],
@@ -352,12 +352,12 @@ function SellerDash({ app, header }) {
           <button onClick={() => app.nav.push('offers')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Pending offers</div>
-            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#f59e0b', marginTop: 4 }}>{'Respond \u2192'}</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#f59e0b', marginTop: 4 }}>{'Respond →'}</div>
           </button>
           <button onClick={() => app.nav.push('shipping')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>To ship</div>
-            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#22c55e', marginTop: 4 }}>{'Print label \u2192'}</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#22c55e', marginTop: 4 }}>{'Print label →'}</div>
           </button>
         </div>
 
@@ -382,7 +382,7 @@ function SellerDash({ app, header }) {
             <div style={{ position: 'absolute', left: 20, top: 0, width: 28, height: 28, borderRadius: 6, background: '#ef4444' }} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{'Collection \u00B7 '}{moneyW(port.now)}</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{'Collection · '}{moneyW(port.now)}</div>
           </div>
           {IconW.chevron({ style: { color: TW.faint } })}
         </button>
@@ -395,7 +395,7 @@ function SellerDash({ app, header }) {
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 17l-5.3 2.6 1.1-6L3.4 9.4l6-.8L12 3z"/></svg>
           </span>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{'Buylist \u00B7 2 matches'}</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{'Buylist · 2 matches'}</div>
           </div>
           {IconW.chevron({ style: { color: TW.faint } })}
         </button>
@@ -442,7 +442,7 @@ function BuyerDash({ app, header }) {
             <MiniSpark data={sparkData} color="#22c55e" h={34} />
           </div>
           <div style={{ marginTop: 8, fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>
-            {app.ownedIds().length} cards {'\u00B7'} {app.collections.length} collection{app.collections.length !== 1 ? 's' : ''}
+            {app.ownedIds().length} cards {'·'} {app.collections.length} collection{app.collections.length !== 1 ? 's' : ''}
           </div>
         </button>
 
@@ -468,7 +468,7 @@ function BuyerDash({ app, header }) {
           {watched.length === 0 && <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, padding: '8px 0' }}>No watched cards yet.</div>}
           {watched.map(function(item, i) {
             var price = item.market || item.price;
-            var arrow = item.history ? (price >= item.history[0] ? '\u25B2' : '\u25BC') : '';
+            var arrow = item.history ? (price >= item.history[0] ? '▲' : '▼') : '';
             var arrowColor = item.history ? (price >= item.history[0] ? '#22c55e' : '#ef4444') : TW.muted;
             return (
               <button key={item.id} onClick={function() { app.nav.push('listing', { id: item.id }); }} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 8, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
@@ -496,7 +496,7 @@ function BuyerDash({ app, header }) {
               </div>
             );
           })}
-          <button onClick={function() { app.nav.push('buylist'); }} style={{ marginTop: 8, fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>{'View all \u2192'}</button>
+          <button onClick={function() { app.nav.push('buylist'); }} style={{ marginTop: 8, fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>{'View all →'}</button>
         </div>
 
         {/* 5. Recent purchases */}
@@ -515,7 +515,7 @@ function BuyerDash({ app, header }) {
           })}
           <button onClick={function() { app.nav.push('dispute'); }} style={{ marginTop: 10, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             background: TW.surface2, borderRadius: 10, padding: '10px 14px', fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: TW.down }}>
-            <span style={{ fontSize: 15 }}>{'\u26A0\uFE0F'}</span> Report an issue
+            <span style={{ fontSize: 15 }}>{'⚠️'}</span> Report an issue
           </button>
         </div>
 
@@ -576,7 +576,7 @@ function StoreDash({ app, header }) {
 
         {/* 2. Revenue card */}
         <div style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', borderRadius: 20, padding: 20, color: '#fff', marginBottom: 14 }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, opacity: 0.65, textTransform: 'uppercase' }}>{"Today\u2019s Revenue"}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, opacity: 0.65, textTransform: 'uppercase' }}>{"Today’s Revenue"}</div>
           <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 34, letterSpacing: -1, marginTop: 4 }}>{moneyW(1247)}</div>
           <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: '#7fe7a4', marginTop: 4 }}>&#9650; up 23% vs last week</div>
           {/* date range pills */}
@@ -629,7 +629,7 @@ function StoreDash({ app, header }) {
                 <div style={{ width: 28, height: 28, borderRadius: 999, background: q.color + '22', color: q.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{q.init}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>{q.name}</div>
-                  <div style={{ fontFamily: TW.sans, fontSize: 11, color: TW.muted }}>{q.cards + ' \u00B7 ' + q.time}</div>
+                  <div style={{ fontFamily: TW.sans, fontSize: 11, color: TW.muted }}>{q.cards + ' · ' + q.time}</div>
                 </div>
                 <span style={{ background: q.color + '22', color: q.color, borderRadius: 999, padding: '2px 8px', fontFamily: TW.sans, fontWeight: 700, fontSize: 11 }}>{q.status}</span>
               </button>
@@ -761,7 +761,7 @@ function CollectionDetailScreen({ app, params }) {
   if (!col) {
     return (
       <div style={{ height: '100%', background: TW.bg, paddingTop: 90, textAlign: 'center', fontFamily: TW.sans, color: TW.muted }}>
-        <button onClick={() => app.nav.pop()} style={{ color: 'var(--ink)', fontWeight: 700 }}>{'\u2190'} Back</button>
+        <button onClick={() => app.nav.pop()} style={{ color: 'var(--ink)', fontWeight: 700 }}>{'←'} Back</button>
         <p>Collection not found.</p>
       </div>
     );
@@ -852,7 +852,7 @@ function CollectionDetailScreen({ app, params }) {
                   <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={44} radius={6} /></div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} {'\u00B7'} <GradeInline grade={item.grade} /></div>
+                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} {'·'} <GradeInline grade={item.grade} /></div>
                   </div>
                   <div style={{ textAlign: 'right', minWidth: 58 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(currentVal)}</div>
@@ -864,7 +864,7 @@ function CollectionDetailScreen({ app, params }) {
                   <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={44} radius={6} /></div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} {'\u00B7'} <GradeInline grade={item.grade} /></div>
+                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} {'·'} <GradeInline grade={item.grade} /></div>
                   </div>
                   <div style={{ textAlign: 'right', minWidth: 58 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(currentVal)}</div>

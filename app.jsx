@@ -244,7 +244,7 @@ function App() {
             whiteSpace: 'nowrap',
           }}
         >
-          {'\uD83D\uDED2'} {cart.length} \u00B7 {'\u00A3'}{cartTotal.toFixed(2)}
+          {'\uD83D\uDED2'} {cart.length} · {'£'}{cartTotal.toFixed(2)}
         </button>
       )}
       {showNav && <BottomNav tab={tab} setTab={nav.setTab} watchCount={watch.length} />}

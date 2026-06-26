@@ -142,7 +142,7 @@ function BuylistScreen({ app }) {
           </div>
         </div>
 
-        {entries.length === 0 ? emptyBlock(AIcon.star({ width: 30, height: 30 }), 'No cards yet', 'Tap + to add cards you want to buy and the price you\u2019ll pay.') : (
+        {entries.length === 0 ? emptyBlock(AIcon.star({ width: 30, height: 30 }), 'No cards yet', 'Tap + to add cards you want to buy and the price you’ll pay.') : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
             {entries.map(e => {
               const isMatch = e.active && e.card.price <= e.max;
@@ -359,7 +359,7 @@ function SellingScreen({ app }) {
           </div>
         )}
 
-        {tab === 'drafts' && emptyBlock(IconAC.tag({ width: 28, height: 28 }), 'No drafts', 'Start a listing and save it for later — it\u2019ll wait here.')}
+        {tab === 'drafts' && emptyBlock(IconAC.tag({ width: 28, height: 28 }), 'No drafts', 'Start a listing and save it for later — it’ll wait here.')}
       </div>
     </div>
   );
@@ -466,7 +466,7 @@ function PaymentsScreen({ app }) {
           <div style={{ fontFamily: TAC.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Available to withdraw</div>
           <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 34, letterSpacing: -0.5, marginTop: 2 }}>{moneyAC(balance)}</div>
           <div style={{ display: 'flex', gap: 9, marginTop: 14 }}>
-            <button onClick={() => app.toast('Withdrawal of \u00A3248.47 initiated to \u2022\u20226789')} style={{ flex: 1, background: '#fff', color: TAC.ink, borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Withdraw</button>
+            <button onClick={() => app.toast('Withdrawal of £248.47 initiated to ••6789')} style={{ flex: 1, background: '#fff', color: TAC.ink, borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Withdraw</button>
             <button onClick={() => app.toast('Top up your balance to buy cards')} style={{ flex: 1, background: 'rgba(255,255,255,0.15)', color: '#fff', borderRadius: 12, padding: 12, fontFamily: TAC.sans, fontWeight: 700, fontSize: 14 }}>Top up</button>
           </div>
         </div>

@@ -490,7 +490,7 @@ function CurrencyInput({ value, onChange, label, presets, marketPrice }) {
     <div>
       {label && <div style={{ fontFamily: T.sans, fontWeight: 600, fontSize: 14, marginBottom: 8 }}>{label}</div>}
       <div style={{ display: 'flex', alignItems: 'center', background: T.surface2, borderRadius: 10, padding: '8px 12px', border: '1px solid var(--line)' }}>
-        <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 18, color: T.muted, marginRight: 4 }}>\u00A3</span>
+        <span style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 18, color: T.muted, marginRight: 4 }}>£</span>
         <input type="number" value={value} onChange={e => onChange(+e.target.value || 0)}
           style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent',
             fontFamily: T.mono, fontWeight: 700, fontSize: 18, color: T.ink, minWidth: 0, textAlign: 'right' }} />
@@ -537,7 +537,7 @@ function SliderInput({ value, onChange, min = 0, max = 100, step = 1, label, for
 // ── Native share utility ─────────────────────────────────────
 function shareCard(item) {
   const url = window.location.origin + '/#listing/' + item.id;
-  const text = item.name + (item.subtitle ? ' \u2014 ' + item.subtitle : '');
+  const text = item.name + (item.subtitle ? ' — ' + item.subtitle : '');
   if (navigator.share) {
     navigator.share({ title: item.name, text: text, url: url }).catch(() => {});
   } else if (navigator.clipboard) {

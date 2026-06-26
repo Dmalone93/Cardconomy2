@@ -13,19 +13,19 @@ function buildMockMessages(seller, item) {
     [
       { from: 'seller', text: 'Hi there! Thanks for your interest in ' + cardName + '. Happy to answer any questions.', time: '8m ago' },
       { from: 'buyer', text: 'Hi! Could you confirm the condition? The photos look great but I want to make sure before buying.', time: '6m ago' },
-      { from: 'seller', text: 'Of course \u2014 it\u2019s genuinely ' + condition + '. No visible whitening on edges and the surface is clean. I grade conservatively.', time: '5m ago' },
-      { from: 'buyer', text: 'Perfect, and how do you ship? I\u2019m happy to pay for tracked if needed.', time: '2m ago' },
+      { from: 'seller', text: 'Of course — it’s genuinely ' + condition + '. No visible whitening on edges and the surface is clean. I grade conservatively.', time: '5m ago' },
+      { from: 'buyer', text: 'Perfect, and how do you ship? I’m happy to pay for tracked if needed.', time: '2m ago' },
     ],
     [
       { from: 'buyer', text: 'Hey, is ' + cardName + ' still available?', time: '10m ago' },
-      { from: 'seller', text: 'Yes, still available! It\u2019s been sitting in a top loader since I pulled it.', time: '8m ago' },
+      { from: 'seller', text: 'Yes, still available! It’s been sitting in a top loader since I pulled it.', time: '8m ago' },
       { from: 'buyer', text: 'Great. Any flexibility on the price' + (price ? ' of ' + price : '') + '?', time: '5m ago' },
-      { from: 'seller', text: 'I\u2019m fairly firm \u2014 it\u2019s priced below market. But I can do free shipping if you go straight to Buy Now.', time: '2m ago' },
+      { from: 'seller', text: 'I’m fairly firm — it’s priced below market. But I can do free shipping if you go straight to Buy Now.', time: '2m ago' },
     ],
     [
-      { from: 'seller', text: 'Hey! Just to let you know \u2014 this one has very slight edge wear on the bottom-left. Reflected in the price though.', time: '12m ago' },
-      { from: 'buyer', text: 'Appreciate the heads up. Would you say it\u2019s closer to ' + condition + ' or one grade below?', time: '9m ago' },
-      { from: 'seller', text: 'Honestly I\u2019d say ' + condition + ' by most grading standards. The wear is minimal \u2014 happy to send a close-up.', time: '6m ago' },
+      { from: 'seller', text: 'Hey! Just to let you know — this one has very slight edge wear on the bottom-left. Reflected in the price though.', time: '12m ago' },
+      { from: 'buyer', text: 'Appreciate the heads up. Would you say it’s closer to ' + condition + ' or one grade below?', time: '9m ago' },
+      { from: 'seller', text: 'Honestly I’d say ' + condition + ' by most grading standards. The wear is minimal — happy to send a close-up.', time: '6m ago' },
       { from: 'buyer', text: 'Yes please, that would be brilliant. Thanks!', time: '3m ago' },
     ],
   ];
@@ -68,7 +68,7 @@ function ChatBubble({ msg }) {
         {msg.time}
         {isBuyer && (
           <span style={{ color: 'var(--accent)', fontSize: 11, fontWeight: 600 }}>
-            {'\u2713\u2713'}
+            {'✓✓'}
           </span>
         )}
       </div>
@@ -186,7 +186,7 @@ function ChatScreen({ app, params = {} }) {
               {item.name}
             </div>
             <div style={{ fontFamily: TCH.sans, fontSize: 11, color: TCH.muted }}>
-              {item.condition} \u00b7 {moneyCH(item.price)}
+              {item.condition} · {moneyCH(item.price)}
             </div>
           </div>
           <div style={{ fontFamily: TCH.sans, fontSize: 11, color: TCH.accent, fontWeight: 600, flexShrink: 0 }}>
@@ -241,7 +241,7 @@ function ChatScreen({ app, params = {} }) {
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder={'Message ' + seller + '\u2026'}
+          placeholder={'Message ' + seller + '…'}
           style={{
             flex: 1,
             padding: '10px 14px',
@@ -272,7 +272,7 @@ function ChatScreen({ app, params = {} }) {
           }}
         >
           {/* send arrow using text */}
-          <span style={{ lineHeight: 1, marginTop: -1 }}>{'\u2191'}</span>
+          <span style={{ lineHeight: 1, marginTop: -1 }}>{'↑'}</span>
         </button>
       </div>
     </div>

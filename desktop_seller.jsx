@@ -38,7 +38,7 @@ function DSellerProfile({ app, params }) {
     ['Rating', seller.rating + '%'],
     ['Sales', seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : String(seller.sales)],
     ['Ships', seller.ships],
-    ['Free over', '\u00a3' + seller.freeShipMin],
+    ['Free over', '£' + seller.freeShipMin],
   ];
 
   var tabItems = [
@@ -53,7 +53,7 @@ function DSellerProfile({ app, params }) {
       React.createElement('div', { className: 'wrap' },
         React.createElement('div', { style: { width: 72, height: 72, borderRadius: 999, background: '#fff', color: 'var(--fill)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 30, margin: '0 auto 12px' } }, seller.name.charAt(0)),
         React.createElement('h1', { style: { fontWeight: 800, fontSize: 28, letterSpacing: -0.8, margin: '0 0 4px' } }, seller.name),
-        React.createElement('div', { style: { fontSize: 13.5, opacity: 0.65 } }, seller.loc + ' \u00b7 Since ' + seller.since),
+        React.createElement('div', { style: { fontSize: 13.5, opacity: 0.65 } }, seller.loc + ' · Since ' + seller.since),
         (isTrusted || isFastShipper) && React.createElement('div', { style: { display: 'flex', justifyContent: 'center', gap: 8, marginTop: 12 } },
           isTrusted && React.createElement('span', { style: { background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: 6, fontWeight: 700, fontSize: 11 } }, 'Trusted'),
           isFastShipper && React.createElement('span', { style: { background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: 6, fontWeight: 700, fontSize: 11 } }, 'Fast Shipper')
@@ -115,7 +115,7 @@ function DSellerProfile({ app, params }) {
           React.createElement('div', { style: { fontWeight: 800, fontSize: 32, letterSpacing: -0.5 } }, seller.rating + '%'),
           React.createElement('div', null,
             React.createElement('div', { style: { display: 'flex', gap: 2 } },
-              Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: '#f59e0b', fontSize: 16 } }, '\u2605'); })
+              Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: '#f59e0b', fontSize: 16 } }, '★'); })
             ),
             React.createElement('div', { style: { fontSize: 13, color: 'var(--muted)', marginTop: 2 } }, 'Based on ' + seller.sales.toLocaleString() + ' transactions')
           )
@@ -129,7 +129,7 @@ function DSellerProfile({ app, params }) {
                 React.createElement('div', { style: { fontSize: 12, color: 'var(--muted)' } }, r.time)
               ),
               React.createElement('div', { style: { display: 'flex', gap: 2 } },
-                Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: s < r.stars ? '#f59e0b' : '#e5e7eb', fontSize: 13 } }, '\u2605'); })
+                Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: s < r.stars ? '#f59e0b' : '#e5e7eb', fontSize: 13 } }, '★'); })
               )
             ),
             React.createElement('div', { style: { fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.5 } }, r.text)

@@ -171,7 +171,7 @@ function ProductScreen({ app, params }) {
         <div style={{ padding: '16px 16px 0' }}>
           <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>{product.name}</div>
           <div style={{ fontFamily: TP.sans, fontSize: 13, color: TP.muted, marginTop: 4 }}>
-            {product.subtitle}{s ? ' \u00B7 ' + s.name : ''}{product.number ? ' \u00B7 ' + product.number : ''}
+            {product.subtitle}{s ? ' · ' + s.name : ''}{product.number ? ' · ' + product.number : ''}
           </div>
         </div>
 
@@ -381,7 +381,7 @@ function ProductScreen({ app, params }) {
           justifyContent: 'center', border: 'none', cursor: 'pointer', zIndex: 40,
           opacity: showTop ? 1 : 0, pointerEvents: showTop ? 'auto' : 'none',
           transition: 'opacity 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.18)' }}
-        aria-label="Back to top">{'\u2191'}</button>
+        aria-label="Back to top">{'↑'}</button>
 
       <SheetP open={!!offerSheet} onClose={() => setOfferSheet(null)} title={offerSheet ? 'Offer to ' + offerSheet.seller : ''}>
         {offerSheet && (

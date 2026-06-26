@@ -2,7 +2,7 @@
 // Fee comparison page
 // ─────────────────────────────────────────────────────────────
 const { T: TFE, money: moneyFE, SliderInput: SliderInputFE } = window;
-const FEE_ICONS = { back: '\u2190', shield: '\u26E8', bolt: '\u26A1', check: '\u2713' };
+const FEE_ICONS = { back: '←', shield: '⛨', bolt: '⚡', check: '✓' };
 
 function FeesScreen({ app }) {
   const [salePrice, setSalePrice] = React.useState(25);
@@ -27,7 +27,7 @@ function FeesScreen({ app }) {
       accent: '#7c4dd1',
       sellerPct: 0.05,
       buyerPct: 0.025,
-      buyerFixed: 0.25, // ~\u20AC0.30 in GBP
+      buyerFixed: 0.25, // ~€0.30 in GBP
       paymentPct: 0,
       paymentFixed: 0,
       trusteePct: 0,
@@ -171,9 +171,9 @@ function FeesScreen({ app }) {
           <tbody>
             {[
               ['Seller fee', '4%', '5%', '5%', '12.8%'],
-              ['Buyer fee', '2% + 30p', '2.5% + 25p', '\u2014', '\u2014'],
+              ['Buyer fee', '2% + 30p', '2.5% + 25p', '—', '—'],
               ['Payment', 'Included', 'Included', '5% + 30p', 'Included'],
-              ['Trustee', 'Included', 'Included', '1%', '\u2014'],
+              ['Trustee', 'Included', 'Included', '1%', '—'],
               ['Total', '6% + 30p', '~7.5% + 25p', '~11% + 30p', '~12.8% + 30p'],
             ].map(([label, ...vals], i) => (
               <tr key={i} style={{ borderBottom: '1px solid ' + TFE.line }}>
@@ -188,10 +188,10 @@ function FeesScreen({ app }) {
         </table>
       </div>
 
-      {/* ── What\u2019s included ── */}
+      {/* ── What’s included ── */}
       <div style={{ margin: '0 14px 20px' }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: TFE.ink, marginBottom: 10 }}>
-          What\u2019s included
+          What’s included
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {[
@@ -203,7 +203,7 @@ function FeesScreen({ app }) {
               borderRadius: 12, background: TFE.surface }}>
               <div style={{ width: 36, height: 36, borderRadius: 10, background: TFE.accentWash,
                 display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <span style={{ fontSize: 16 }}>{FEE_ICONS[icon] || '\u2022'}</span>
+                <span style={{ fontSize: 16 }}>{FEE_ICONS[icon] || '•'}</span>
               </div>
               <div>
                 <div style={{ fontSize: 14, fontWeight: 600, color: TFE.ink }}>{title}</div>

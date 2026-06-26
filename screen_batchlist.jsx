@@ -9,8 +9,8 @@ const CONDITIONS_BL = ['Near Mint', 'Lightly Played', 'Moderately Played', 'Heav
 
 const STRATEGIES_BL = [
   { id: 'market', label: 'At market', pct: 1.00, desc: 'List at 100% market price' },
-  { id: 'undercut', label: 'Undercut', pct: 0.95, desc: '95% \u2014 competitive pricing' },
-  { id: 'quick', label: 'Quick sale', pct: 0.90, desc: '90% \u2014 sell faster' },
+  { id: 'undercut', label: 'Undercut', pct: 0.95, desc: '95% — competitive pricing' },
+  { id: 'quick', label: 'Quick sale', pct: 0.90, desc: '90% — sell faster' },
 ];
 
 function BatchListScreen({ app, params }) {
@@ -99,7 +99,7 @@ function BatchListScreen({ app, params }) {
           {cards.length} card{cards.length !== 1 ? 's are' : ' is'} now live!
         </h2>
         <p style={{ fontFamily: TBL.sans, fontSize: 14.5, color: TBL.muted, lineHeight: 1.5, marginTop: 10, maxWidth: 280 }}>
-          {"We\u2019ll notify you when they sell or receive offers."}
+          {"We’ll notify you when they sell or receive offers."}
         </p>
         <p style={{ fontFamily: TBL.sans, fontSize: 13, color: TBL.muted, marginTop: 6 }}>
           Total listing value: {moneyBL(total)}
@@ -159,7 +159,7 @@ function BatchListScreen({ app, params }) {
               {IconBL.search({ width: 16, height: 16, style: { color: TBL.faint, flexShrink: 0 } })}
               <input value={searchQ} onChange={e => setSearchQ(e.target.value)} placeholder="Search cards to add..."
                 autoFocus style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TBL.sans, fontSize: 14, color: TBL.ink }} />
-              {searchQ && <button onClick={() => setSearchQ('')} style={{ color: TBL.faint, fontSize: 18, lineHeight: 1 }}>{'\u00D7'}</button>}
+              {searchQ && <button onClick={() => setSearchQ('')} style={{ color: TBL.faint, fontSize: 18, lineHeight: 1 }}>{'×'}</button>}
             </div>
             {searchResults.length > 0 && (
               <div style={{ background: TBL.surface, borderRadius: 12, border: '1px solid var(--line)', overflow: 'hidden' }}>
@@ -194,7 +194,7 @@ function BatchListScreen({ app, params }) {
             return (
               <div key={c.id} style={{ background: 'var(--surface)', borderRadius: 14, padding: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)', position: 'relative' }}>
                 <button onClick={() => removeCard(idx)} style={{ position: 'absolute', top: 6, right: 6, width: 22, height: 22, borderRadius: 999,
-                  background: 'var(--surface-2)', color: TBL.faint, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 1 }}>{'\u00D7'}</button>
+                  background: 'var(--surface-2)', color: TBL.faint, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, lineHeight: 1 }}>{'×'}</button>
                 <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
                   <div style={{ background: TBL.surface2, borderRadius: 9, padding: 5 }}>
                     <CardArtBL item={c.item} w={44} radius={6} />
@@ -207,7 +207,7 @@ function BatchListScreen({ app, params }) {
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
                     {/* price input */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                      <span style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 16, color: TBL.ink }}>{'\u00A3'}</span>
+                      <span style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 16, color: TBL.ink }}>{'£'}</span>
                       <input
                         type="number"
                         step="0.01"

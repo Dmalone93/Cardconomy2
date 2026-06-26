@@ -32,13 +32,13 @@ function DisputeScreen({ app }) {
         </div>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 24px', textAlign: 'center' }}>
           <div style={{ width: 72, height: 72, borderRadius: 999, background: '#dcfce7', color: '#22c55e',
-            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 34, marginBottom: 18 }}>{'\u2713'}</div>
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 34, marginBottom: 18 }}>{'✓'}</div>
           <h2 style={{ margin: '0 0 8px', fontFamily: TD.sans, fontWeight: 800, fontSize: 22 }}>Claim submitted</h2>
           <p style={{ fontFamily: TD.sans, fontSize: 14, color: TD.muted, lineHeight: 1.5, margin: '0 0 6px' }}>
             Reference: <strong>{claimRef}</strong>
           </p>
           <p style={{ fontFamily: TD.sans, fontSize: 14, color: TD.muted, lineHeight: 1.5, margin: '0 0 24px' }}>
-            {"We\u2019ll review within 48 hours and keep you updated via notifications."}
+            {"We’ll review within 48 hours and keep you updated via notifications."}
           </p>
           <button onClick={() => app.nav.pop()} style={{
             background: 'var(--ink)', color: '#fff', borderRadius: 13, padding: '13px 32px',
@@ -84,7 +84,7 @@ function DisputeScreen({ app }) {
                     background: selected ? 'var(--accent)' : 'transparent',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     color: '#fff', fontSize: 11, fontWeight: 800,
-                  }}>{selected ? '\u2713' : ''}</span>
+                  }}>{selected ? '✓' : ''}</span>
                   <span style={{ fontFamily: TD.sans, fontWeight: 600, fontSize: 14 }}>{type}</span>
                 </button>
               );
@@ -140,7 +140,7 @@ function DisputeScreen({ app }) {
                     border: selected ? 'none' : '2px solid var(--faint)',
                     background: selected ? 'var(--accent)' : 'transparent',
                     color: '#fff', fontSize: 11, fontWeight: 800, lineHeight: '18px',
-                  }}>{selected ? '\u2713' : ''}</span>
+                  }}>{selected ? '✓' : ''}</span>
                   <span style={{ fontFamily: TD.sans, fontWeight: 600, fontSize: 13.5 }}>{opt}</span>
                 </button>
               );

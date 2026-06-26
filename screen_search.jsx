@@ -121,7 +121,7 @@ function SearchScreen({ app, params = {} }) {
               flex: 1, border: 'none', outline: 'none', background: 'transparent',
               fontFamily: TS.sans, fontSize: 15, color: TS.ink, minWidth: 0,
             }} />
-            {q && <button onClick={() => setQ('')} style={{ color: TS.faint, fontSize: 18, lineHeight: 1 }}>{'\u00d7'}</button>}
+            {q && <button onClick={() => setQ('')} style={{ color: TS.faint, fontSize: 18, lineHeight: 1 }}>{'×'}</button>}
             <button onClick={() => app.nav.push('scan', { from: 'search' })} style={{ padding: 4, display: 'flex', color: TS.faint, flexShrink: 0 }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/></svg>
             </button>
@@ -250,7 +250,7 @@ function SearchScreen({ app, params = {} }) {
               </div>
             )}
             <button onClick={() => setFocused(false)} style={{ width: '100%', padding: '12px 16px', fontFamily: TS.sans, fontWeight: 700, fontSize: 13, color: TS.accent, textAlign: 'center' }}>
-              See all {totalResults} result{totalResults !== 1 ? 's' : ''} for {'\u201c'}{q}{'\u201d'}
+              See all {totalResults} result{totalResults !== 1 ? 's' : ''} for {'“'}{q}{'”'}
             </button>
           </div>
         ) : null;
@@ -390,7 +390,7 @@ function SearchScreen({ app, params = {} }) {
           justifyContent: 'center', border: 'none', cursor: 'pointer', zIndex: 40,
           opacity: showTopS ? 1 : 0, pointerEvents: showTopS ? 'auto' : 'none',
           transition: 'opacity 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.18)' }}
-        aria-label="Back to top">{'\u2191'}</button>
+        aria-label="Back to top">{'↑'}</button>
 
       {/* FILTERS sheet */}
       <SheetS open={sheet==='filters'} onClose={() => setSheet(null)} title="Filters">
