@@ -99,16 +99,16 @@ function Slab({ item, w = 150 }) {
   var BGS_SLABS = { 10: 'ads/bgs-slab-10.png', 9.5: 'ads/bgs-slab-10.png', 9: 'ads/bgs-slab-9.png', 8.5: 'ads/bgs-slab-8.5.png', 8: 'ads/bgs-slab-8.png', 7: 'ads/bgs-slab-7.png', 6: 'ads/bgs-slab-6.png', 5: 'ads/bgs-slab-5.png', 4: 'ads/bgs-slab-4.png', 3: 'ads/bgs-slab-3.png', 2: 'ads/bgs-slab-2.png', 1: 'ads/bgs-slab-1.png' };
 
   if (isBGS) {
-    // BGS slab — square aspect (1001x1001)
-    var bgsW = w, bgsH = w; // 1:1 aspect
+    // BGS slab — cropped aspect 440x920 = 1:2.09
+    var bgsW = w, bgsH = Math.round(w * 2.09);
     var bgsSrc = BGS_SLABS[grd.grade] || BGS_SLABS[8];
     return (
       <div style={{ width: bgsW, height: bgsH, position: 'relative', filter: 'drop-shadow(0 12px 26px rgba(0,0,0,0.22))' }}>
-        {/* card sits in the BGS window — measured from template: left 13%, top 24%, width 74%, height 68% */}
-        <div style={{ position: 'absolute', left: '13%', top: '24%', width: '74%', height: '68%',
+        {/* card window — measured from cropped template: left 10%, top 25%, width 80%, height 67% */}
+        <div style={{ position: 'absolute', left: '10%', top: '25%', width: '80%', height: '67%',
           display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
           <div style={{ position: 'relative' }}>
-            <CardArt item={item} w={bgsW * 0.72} radius={4} showFoil={true} />
+            <CardArt item={item} w={bgsW * 0.78} radius={4} showFoil={true} />
             <div style={{ position: 'absolute', inset: 0, borderRadius: 4, pointerEvents: 'none',
               background: 'linear-gradient(118deg, rgba(255,255,255,0.18) 0%, transparent 30%, transparent 70%, rgba(255,255,255,0.1) 100%)' }} />
           </div>
