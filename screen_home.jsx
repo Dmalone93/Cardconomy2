@@ -432,6 +432,24 @@ function HomeScreen({ app }) {
 
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: T.bg, paddingBottom: 96 }}>
+      {/* announcement marquee */}
+      <div style={{ overflow: 'hidden', background: 'var(--fill)', padding: '7px 0' }}>
+        <style dangerouslySetInnerHTML={{ __html: '@keyframes ccMarquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}' }} />
+        <div style={{ display: 'flex', animation: 'ccMarquee 22s linear infinite', whiteSpace: 'nowrap', willChange: 'transform' }}>
+          {[0, 1].map(dup => (
+            <div key={dup} style={{ display: 'flex', gap: 28, paddingRight: 28, flexShrink: 0 }}>
+              {['Buyer Protection on every order', '6% + 30p total fees', '5 games supported',
+                'Verified sellers', 'Live market pricing', 'UK-based marketplace'].map((msg, i) => (
+                <span key={i} style={{ fontFamily: T.sans, fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.7)',
+                  display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                  <span style={{ width: 3, height: 3, borderRadius: 999, background: 'rgba(255,255,255,0.35)', flexShrink: 0 }} />
+                  {msg}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
       {/* top bar */}
       <div style={{ padding: '14px 16px 10px', background: T.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 13, position: 'relative' }}>
@@ -514,25 +532,6 @@ function HomeScreen({ app }) {
         </div>
       </div>
 
-      {/* ── Scrolling trust marquee ── */}
-      <div style={{ margin: '24px 0', overflow: 'hidden', background: 'var(--fill)', padding: '10px 0' }}>
-        <style dangerouslySetInnerHTML={{ __html: '@keyframes ccMarquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}' }} />
-        <div style={{ display: 'flex', animation: 'ccMarquee 20s linear infinite', whiteSpace: 'nowrap', willChange: 'transform' }}>
-          {[0, 1].map(dup => (
-            <div key={dup} style={{ display: 'flex', gap: 32, paddingRight: 32, flexShrink: 0 }}>
-              {['Buyer Protection on every order', '6% + 30p total fees', '5 games supported',
-                'Verified sellers', 'Live market pricing', 'UK-based marketplace',
-                'Sell to local shops', 'Trade card-for-card'].map((msg, i) => (
-                <span key={i} style={{ fontFamily: T.sans, fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.7)',
-                  display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ width: 4, height: 4, borderRadius: 999, background: 'rgba(255,255,255,0.35)', flexShrink: 0 }} />
-                  {msg}
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* ── Compare fees CTA ── */}
       <div style={{ margin: '0 14px 24px' }}>
