@@ -3190,6 +3190,10 @@ const HOT_DEALS = [
   { id: 'l07', discount: 8 },
   { id: 'l14', discount: 15 },
   { id: 'l03', discount: 11 },
+  { id: 'l10', discount: 14 },
+  { id: 'l04', discount: 9 },
+  { id: 'l12', discount: 20 },
+  { id: 'l06', discount: 16 },
 ];
 
 // ── Price Movers: biggest 24h changes ──

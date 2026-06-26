@@ -195,7 +195,7 @@ function DWhatsHot({ app, trending }) {
       </div>
       <div className="wrap">
         {tab === 'trending' ? (
-          <div style={grid(210)}>{trending.slice(0, 12).map(l => <DCard key={l.id} item={l} app={app} />)}</div>
+          <div style={grid(210)}>{trending.slice(0, 10).map(l => <DCard key={l.id} item={l} app={app} />)}</div>
         ) : (
           <div style={grid(170)}>
             {dealItems.map(item => (
@@ -312,14 +312,14 @@ function DHome({ app }) {
       {/* ── Just listed ── */}
       <Row title="Just listed" action="See all" onAction={() => app.go('search')}>
         <div style={grid(210)}>
-          {trending.slice(12, 24).map(l => <DCard key={l.id} item={l} app={app} />)}
+          {trending.slice(10, 20).map(l => <DCard key={l.id} item={l} app={app} />)}
         </div>
       </Row>
 
       {/* ── Under £100 ── */}
       <Row title={"Under £100"} action="Shop budget" onAction={() => app.go('search')}>
         <div style={grid(210)}>
-          {LISTH.filter(l => l.type === 'buynow' && l.price < 100).slice(0, 12).map(l => <DCard key={l.id} item={l} app={app} />)}
+          {LISTH.filter(l => l.type === 'buynow' && l.price < 100).slice(0, 10).map(l => <DCard key={l.id} item={l} app={app} />)}
         </div>
       </Row>
 
