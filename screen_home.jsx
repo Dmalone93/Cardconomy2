@@ -105,7 +105,9 @@ function ListCard({ item, app, w }) {
       border: '1px solid var(--line)',
     }}>
       <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', alignItems: 'center', background: '#ffffff' }}>
-        {item.grade && item.grade.company !== 'raw' ? <Slab item={item} w={Math.round(140 * 1.4 / 1.698)} /> : <CardArt item={item} w={140} />}
+        {item.grade && item.grade.company !== 'raw'
+          ? <Slab item={item} w={item.grade.company === 'bgs' ? Math.round(140 * 1.4) : Math.round(140 * 1.4 / 1.698)} />
+          : <CardArt item={item} w={140} />}
         <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(item.id); }} style={{
           position: 'absolute', top: 10, right: 10, width: 32, height: 32, borderRadius: 999,
           background: 'var(--glass)', backdropFilter: 'blur(6px)',
