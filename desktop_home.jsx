@@ -101,8 +101,8 @@ function DCard({ item, app }) {
     <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       onClick={() => app.go('listing', { id: item.id })} style={{ background: 'var(--surface)', borderRadius: 14, overflow: 'hidden', cursor: 'pointer',
       boxShadow: hover ? '0 8px 26px rgba(20,24,40,0.13)' : '0 1px 3px rgba(20,24,40,0.06)', transform: hover ? 'translateY(-3px)' : 'none', transition: 'all 0.18s ease' }}>
-      <div style={{ position: 'relative', background: 'var(--surface-2)', padding: '18px 18px 12px', display: 'flex', justifyContent: 'center', alignItems: 'center', height: 270 }}>
-        {item.grade && item.grade.company !== 'raw' ? <SlabH item={item} w={130} /> : <CardArtH item={item} w={180} />}
+      <div style={{ position: 'relative', background: 'var(--surface-2)', padding: '18px 18px 12px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        {item.grade && item.grade.company !== 'raw' ? <SlabH item={item} w={Math.round(180 * 1.4 / 1.698)} /> : <CardArtH item={item} w={180} />}
         <button onClick={(e) => { e.stopPropagation(); app.toggleWatch(item.id); }} style={{ position: 'absolute', top: 12, right: 12, width: 34, height: 34, borderRadius: 999,
           background: 'rgba(255,255,255,0.92)', color: watched ? 'var(--down)' : 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.12)' }}>
           {window.DIcon.heart({ width: 18, height: 18 }, watched)}
