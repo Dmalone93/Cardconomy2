@@ -5,91 +5,95 @@ const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon,
 const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText, GAME_LOGOS } = window;
 const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 
-// ── CardFan hero — fanned stack of 3 cards with parallax ────
-const FAN_CARDS = ['l01', 'l05', 'l03']; // Charizard, Umbreon, Pikachu (visually striking)
-const FAN_LAYOUT = [
-  { rotate: -14, x: -38, y: 18, z: 1, parallax: 0.3 },  // left
-  { rotate: 0,   x: 0,   y: -8, z: 3, parallax: 0.6 },  // centre (fastest)
-  { rotate: 15,  x: 38,  y: 18, z: 2, parallax: 0.35 },  // right
+// ── Hero — full bleed with upward-scrolling card grid ────────
+// 3 offset columns of cards scrolling upward continuously
+const HERO_CARDS = [
+  // col 0
+  ['l01', 'l06', 'l09', 'l08', 'l03'],
+  // col 1 (offset)
+  ['l05', 'l02', 'l04', 'l07', 'l11'],
+  // col 2
+  ['l03', 'l10', 'l01', 'l06', 'l09'],
 ];
 
 function CardFan({ app }) {
-  const [scrollY, setScrollY] = React.useState(0);
-  const reduceMotion = React.useRef(false);
-  React.useEffect(() => {
-    reduceMotion.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }, []);
-  React.useEffect(() => {
-    const scroller = document.querySelector('.noscroll');
-    if (!scroller) return;
-    const onScroll = () => {
-      if (!reduceMotion.current) setScrollY(scroller.scrollTop);
-    };
-    scroller.addEventListener('scroll', onScroll, { passive: true });
-    return () => scroller.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const cards = FAN_CARDS.map(id => byId(id)).filter(Boolean);
-  if (cards.length === 0) return null;
+  const gridCards = HERO_CARDS.map(col => col.map(id => byId(id)).filter(Boolean));
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--fill)', padding: '24px 16px 20px' }}>
-      {/* text */}
-      <div style={{ position: 'relative', zIndex: 2 }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, color: '#fff',
+    <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--fill)', height: 280 }}>
+      {/* CSS animation for upward scroll */}
+      <style dangerouslySetInnerHTML={{ __html: '@keyframes heroScrollUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}' }} />
+
+      {/* left: text content */}
+      <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '55%', zIndex: 3,
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 20px' }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 24, color: '#fff',
           letterSpacing: -0.5, lineHeight: 1.15 }}>
           The UK home for<br/>trading cards
         </div>
-        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginTop: 8, maxWidth: 200 }}>
+        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.5, marginTop: 8, maxWidth: 190 }}>
           Buy, sell, and trade across every game. Lower fees than anyone.
         </div>
-        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-          <button onClick={() => app.nav.setTab('search')} style={{ padding: '9px 16px', borderRadius: 8,
+        <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
+          <button onClick={() => app.nav.setTab('search')} style={{ padding: '10px 18px', borderRadius: 8,
             background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
             Start browsing
           </button>
-          <button onClick={() => app.nav.push('pitch_seller')} style={{ padding: '9px 16px', borderRadius: 8,
+          <button onClick={() => app.nav.push('pitch_seller')} style={{ padding: '10px 18px', borderRadius: 8,
             background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.8)', fontWeight: 700, fontSize: 13,
             border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>
             Start selling
           </button>
         </div>
-        <div style={{ display: 'flex', gap: 14, marginTop: 14 }}>
-          {[[Icon.shield, 'Protected'], [Icon.tag, '6%+30p']].map(([ic, label], i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: 600 }}>
-              {ic({ width: 11, height: 11 })}
+        <div style={{ display: 'flex', gap: 14, marginTop: 12 }}>
+          {[[Icon.shield, 'Buyer Protection'], [Icon.tag, '6% + 30p fees'], [Icon.bolt, '5 games']].map(([ic, label], i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(255,255,255,0.4)', fontSize: 10, fontWeight: 600 }}>
+              {ic({ width: 10, height: 10 })}
               <span>{label}</span>
             </div>
           ))}
         </div>
       </div>
-      {/* fanned cards — right side, zoomed, overlapping edge */}
-      <div style={{ position: 'absolute', right: -20, top: 0, bottom: 0, width: 240 }}>
-        {cards.slice(0, 3).map((card, i) => {
-          const layouts = [
-            { rotate: -10, x: 10, y: 30 },
-            { rotate: 3, x: 70, y: 10 },
-            { rotate: 16, x: 130, y: 40 },
-          ];
-          const layout = layouts[i] || layouts[0];
-          const drift = reduceMotion.current ? 0 : scrollY * FAN_LAYOUT[i].parallax * -0.25;
-          return (
-            <div key={card.id} onClick={() => app.nav.push('listing', { id: card.id })}
-              style={{
-                position: 'absolute', width: 110, height: 154, borderRadius: 4, cursor: 'pointer',
-                left: layout.x, top: layout.y + drift,
-                transform: `rotate(${layout.rotate}deg)`,
-                zIndex: i === 1 ? 3 : i + 1,
-                boxShadow: '0 10px 28px rgba(0,0,0,0.3), 0 4px 8px rgba(0,0,0,0.15)',
-                border: '1px solid rgba(255,255,255,0.08)',
-                overflow: 'hidden',
-              }}>
-              <CardArt item={card} w={110} radius={4} />
-              <div style={{ position: 'absolute', inset: 0, borderRadius: 4, zIndex: 5, pointerEvents: 'none',
-                background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 42%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 58%, transparent 75%)' }} />
-            </div>
-          );
-        })}
+
+      {/* right: scrolling card grid — 3 offset columns */}
+      <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '50%', overflow: 'hidden' }}>
+        {/* fade overlay on top and bottom */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 60, zIndex: 2,
+          background: 'linear-gradient(to bottom, var(--fill) 0%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, zIndex: 2,
+          background: 'linear-gradient(to top, var(--fill) 0%, transparent 100%)' }} />
+        {/* gradient fade on left edge */}
+        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 50, zIndex: 2,
+          background: 'linear-gradient(to right, var(--fill) 0%, transparent 100%)' }} />
+
+        <div style={{ display: 'flex', gap: 6, height: '100%', paddingRight: 8 }}>
+          {gridCards.map((col, ci) => {
+            var speed = [18, 24, 20][ci];
+            var offset = [0, -40, -20][ci];
+            return (
+              <div key={ci} style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+                <div style={{
+                  display: 'flex', flexDirection: 'column', gap: 6,
+                  animation: 'heroScrollUp ' + speed + 's linear infinite',
+                  marginTop: offset,
+                }}>
+                  {/* duplicate cards for seamless loop */}
+                  {[0, 1].map(dup => (
+                    <React.Fragment key={dup}>
+                      {col.map((card, ri) => (
+                        <div key={card.id + '-' + dup + '-' + ri} onClick={() => app.nav.push('listing', { id: card.id })}
+                          style={{ borderRadius: 6, overflow: 'hidden', cursor: 'pointer', flexShrink: 0,
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                          <CardArt item={card} w={200} radius={6} />
+                        </div>
+                      ))}
+                    </React.Fragment>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
