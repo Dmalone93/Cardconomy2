@@ -61,7 +61,7 @@ function CardFan({ app }) {
 
         <div style={{ display: 'flex', gap: 6, height: '100%', paddingRight: 6 }}>
           {gridCards.map((col, ci) => {
-            var speed = [40, 50][ci];
+            var speed = [80, 100][ci];
             var offset = [0, -50][ci];
             return (
               <div key={ci} style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>

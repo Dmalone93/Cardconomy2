@@ -325,7 +325,7 @@ function DHome({ app }) {
             [byIdH('l05'), byIdH('l02'), byIdH('l04'), byIdH('l07'), byIdH('l11'), byIdH('l10')].filter(Boolean),
             [byIdH('l03'), byIdH('l10'), byIdH('l01'), byIdH('l06'), byIdH('l09'), byIdH('l08')].filter(Boolean),
           ];
-          var speeds = [40, 52, 44];
+          var speeds = [80, 104, 88];
           var offsets = [0, -60, -30];
           return (
             <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '45%', overflow: 'hidden', zIndex: 1 }}>
