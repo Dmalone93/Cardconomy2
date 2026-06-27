@@ -283,82 +283,89 @@ function DHome({ app }) {
 
   return (
     <div style={{ paddingBottom: 30 }}>
-      {/* ── Hero Banner ── */}
-      <div className="wrap" style={{ marginTop: 28 }}>
-        <div style={{ display: 'flex', alignItems: 'center', background: 'var(--fill)', borderRadius: 20,
-          overflow: 'hidden', height: 380, position: 'relative' }}>
-          {/* left: text */}
-          <div style={{ flex: 1, padding: '0 48px', position: 'relative', zIndex: 2 }}>
-            <h1 style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 38, color: '#fff',
-              letterSpacing: -1.2, lineHeight: 1.08, margin: '0 0 14px' }}>
+      {/* ── Hero Banner — full bleed with scrolling card grid ── */}
+      <style dangerouslySetInnerHTML={{ __html: '@keyframes dHeroUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}' }} />
+      <div style={{ background: 'var(--fill)', overflow: 'hidden', height: 440, position: 'relative' }}>
+        {/* left: text */}
+        <div className="wrap" style={{ position: 'relative', zIndex: 3, height: '100%', display: 'flex', alignItems: 'center' }}>
+          <div style={{ maxWidth: 480 }}>
+            <h1 style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 42, color: '#fff',
+              letterSpacing: -1.2, lineHeight: 1.08, margin: '0 0 16px' }}>
               The UK home for<br/>trading cards
             </h1>
-            <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.65)', lineHeight: 1.6, margin: '0 0 22px', maxWidth: 380 }}>
+            <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6, margin: '0 0 24px', maxWidth: 400 }}>
               Buy, sell, and trade across every game. Lower fees than anyone else, with real buyer protection and local game shop support.
             </p>
             <div style={{ display: 'flex', gap: 10, marginBottom: 24 }}>
-              <button onClick={() => app.go('search')} style={{ padding: '13px 24px', borderRadius: 10,
-                background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer' }}>
+              <button onClick={() => app.go('search')} style={{ padding: '14px 28px', borderRadius: 10,
+                background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer' }}>
                 Start browsing
               </button>
-              <button onClick={() => app.go('pitch_seller')} style={{ padding: '13px 24px', borderRadius: 10,
-                background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)', fontWeight: 700, fontSize: 14,
+              <button onClick={() => app.go('pitch_seller')} style={{ padding: '14px 28px', borderRadius: 10,
+                background: 'rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.8)', fontWeight: 700, fontSize: 15,
                 border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>
                 Start selling
               </button>
             </div>
-            {/* trust strip */}
-            <div style={{ display: 'flex', gap: 20 }}>
-              {[
-                [IconH.shield, 'Buyer Protection'],
-                [IconH.tag, '6% + 30p fees'],
-                [IconH.bolt, '5 games supported'],
-              ].map(([ic, label], i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.5)', fontSize: 12.5, fontWeight: 600 }}>
+            <div style={{ display: 'flex', gap: 22 }}>
+              {[[IconH.shield, 'Buyer Protection'], [IconH.tag, '6% + 30p fees'], [IconH.bolt, '5 games supported']].map(([ic, label], i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.45)', fontSize: 13, fontWeight: 600 }}>
                   {ic({ width: 14, height: 14 })}
                   <span>{label}</span>
                 </div>
               ))}
             </div>
           </div>
-          {/* right: tight card fan with 5 cards */}
-          <div style={{ width: 460, height: '100%', position: 'relative', flexShrink: 0 }}>
-            {(() => {
-              const fanCards = [byIdH('l01'), byIdH('l05'), byIdH('l03'), byIdH('l02'), byIdH('l09')].filter(Boolean);
-              const layouts = [
-                { rotate: -16, x: 20,  y: 80, z: 1 },
-                { rotate: -6,  x: 100, y: 40, z: 2 },
-                { rotate: 3,   x: 180, y: 20, z: 5 },
-                { rotate: 12,  x: 260, y: 45, z: 3 },
-                { rotate: 20,  x: 330, y: 85, z: 1 },
-              ];
-              return fanCards.slice(0, 5).map((card, i) => {
-                const l = layouts[i];
-                const isFront = l.z === 5;
-                return (
-                  <div key={card.id} onClick={() => app.go('listing', { id: card.id })} style={{
-                    position: 'absolute', width: isFront ? 180 : 155, height: isFront ? 252 : 217, borderRadius: 8, cursor: 'pointer',
-                    left: l.x, top: l.y,
-                    transform: `rotate(${l.rotate}deg)`,
-                    zIndex: l.z,
-                    boxShadow: isFront ? '0 16px 48px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.25)' : '0 8px 24px rgba(0,0,0,0.3)',
-                    border: '1px solid rgba(255,255,255,0.08)', overflow: 'hidden',
-                    transition: 'transform 0.3s ease',
-                    filter: isFront ? 'none' : 'brightness(0.85)',
-                  }}
-                    onMouseEnter={e => { e.currentTarget.style.transform = `rotate(${l.rotate}deg) scale(1.06) translateY(-8px)`; e.currentTarget.style.filter = 'none'; }}
-                    onMouseLeave={e => { e.currentTarget.style.transform = `rotate(${l.rotate}deg)`; e.currentTarget.style.filter = isFront ? 'none' : 'brightness(0.85)'; }}
-                  >
-                    <CardArtH item={card} w={isFront ? 180 : 155} radius={8} />
-                    <div style={{ position: 'absolute', inset: 0, borderRadius: 8, zIndex: 5, pointerEvents: 'none',
-                      background: 'linear-gradient(125deg, transparent 25%, rgba(255,255,255,0.12) 42%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.06) 58%, transparent 75%)' }} />
-                  </div>
-                );
-              });
-            })()}
-            <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 55% 45%, rgba(255,255,255,0.06) 0%, transparent 55%)', pointerEvents: 'none' }} />
-          </div>
         </div>
+
+        {/* right: 3-column scrolling card grid */}
+        {(() => {
+          var cols = [
+            [byIdH('l01'), byIdH('l06'), byIdH('l09'), byIdH('l08'), byIdH('l03'), byIdH('l02')].filter(Boolean),
+            [byIdH('l05'), byIdH('l02'), byIdH('l04'), byIdH('l07'), byIdH('l11'), byIdH('l10')].filter(Boolean),
+            [byIdH('l03'), byIdH('l10'), byIdH('l01'), byIdH('l06'), byIdH('l09'), byIdH('l08')].filter(Boolean),
+          ];
+          var speeds = [20, 26, 22];
+          var offsets = [0, -60, -30];
+          return (
+            <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '45%', overflow: 'hidden', zIndex: 1 }}>
+              {/* fades */}
+              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 80, zIndex: 2, background: 'linear-gradient(to bottom, var(--fill), transparent)' }} />
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 80, zIndex: 2, background: 'linear-gradient(to top, var(--fill), transparent)' }} />
+              <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 80, zIndex: 2, background: 'linear-gradient(to right, var(--fill), transparent)' }} />
+
+              <div style={{ display: 'flex', gap: 10, height: '100%', paddingRight: 16 }}>
+                {cols.map(function(col, ci) {
+                  return (
+                    <div key={ci} style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
+                      <div style={{
+                        display: 'flex', flexDirection: 'column', gap: 10,
+                        animation: 'dHeroUp ' + speeds[ci] + 's linear infinite',
+                        marginTop: offsets[ci],
+                      }}>
+                        {[0, 1].map(function(dup) {
+                          return (
+                            <React.Fragment key={dup}>
+                              {col.map(function(card, ri) {
+                                return (
+                                  <div key={card.id + '-' + dup + '-' + ri} onClick={function() { app.go('listing', { id: card.id }); }}
+                                    style={{ borderRadius: 8, overflow: 'hidden', cursor: 'pointer', flexShrink: 0,
+                                      boxShadow: '0 4px 16px rgba(0,0,0,0.35)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                                    <CardArtH item={card} w={300} radius={8} />
+                                  </div>
+                                );
+                              })}
+                            </React.Fragment>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       {/* ── How it works link ── */}
