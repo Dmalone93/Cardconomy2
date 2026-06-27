@@ -6,70 +6,63 @@ const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText, GAM
 const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 
 // ── Hero — full bleed with upward-scrolling card grid ────────
-// 3 offset columns of cards scrolling upward continuously
-const HERO_CARDS = [
-  // col 0
+const HERO_COLS = [
   ['l01', 'l06', 'l09', 'l08', 'l03'],
-  // col 1 (offset)
   ['l05', 'l02', 'l04', 'l07', 'l11'],
-  // col 2
-  ['l03', 'l10', 'l01', 'l06', 'l09'],
 ];
 
 function CardFan({ app }) {
-  const gridCards = HERO_CARDS.map(col => col.map(id => byId(id)).filter(Boolean));
+  const gridCards = HERO_COLS.map(col => col.map(id => byId(id)).filter(Boolean));
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--fill)', height: 280 }}>
-      {/* CSS animation for upward scroll */}
+    <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--fill)', height: 320 }}>
       <style dangerouslySetInnerHTML={{ __html: '@keyframes heroScrollUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}' }} />
 
-      {/* left: text content */}
-      <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '55%', zIndex: 3,
+      {/* text content — full width, layered over the grid */}
+      <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, right: 0, zIndex: 3,
         display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 20px' }}>
-        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 24, color: '#fff',
-          letterSpacing: -0.5, lineHeight: 1.15 }}>
+        <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 26, color: '#fff',
+          letterSpacing: -0.5, lineHeight: 1.12 }}>
           The UK home for<br/>trading cards
         </div>
-        <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.55)', lineHeight: 1.5, marginTop: 8, maxWidth: 190 }}>
+        <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginTop: 10, maxWidth: 220 }}>
           Buy, sell, and trade across every game. Lower fees than anyone.
         </div>
-        <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
-          <button onClick={() => app.nav.setTab('search')} style={{ padding: '10px 18px', borderRadius: 8,
-            background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
+        <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
+          <button onClick={() => app.nav.setTab('search')} style={{ padding: '11px 20px', borderRadius: 10,
+            background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer' }}>
             Start browsing
           </button>
-          <button onClick={() => app.nav.push('pitch_seller')} style={{ padding: '10px 18px', borderRadius: 8,
-            background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.8)', fontWeight: 700, fontSize: 13,
-            border: '1px solid rgba(255,255,255,0.15)', cursor: 'pointer' }}>
+          <button onClick={() => app.nav.push('pitch_seller')} style={{ padding: '11px 20px', borderRadius: 10,
+            background: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.85)', fontWeight: 700, fontSize: 14,
+            border: '1px solid rgba(255,255,255,0.2)', cursor: 'pointer' }}>
             Start selling
           </button>
         </div>
-        <div style={{ display: 'flex', gap: 14, marginTop: 12 }}>
-          {[[Icon.shield, 'Buyer Protection'], [Icon.tag, '6% + 30p fees'], [Icon.bolt, '5 games']].map(([ic, label], i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(255,255,255,0.4)', fontSize: 10, fontWeight: 600 }}>
-              {ic({ width: 10, height: 10 })}
+        <div style={{ display: 'flex', gap: 16, marginTop: 14 }}>
+          {[[Icon.shield, 'Protected'], [Icon.tag, '6%+30p'], [Icon.bolt, '5 games']].map(([ic, label], i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'rgba(255,255,255,0.45)', fontSize: 10.5, fontWeight: 600 }}>
+              {ic({ width: 11, height: 11 })}
               <span>{label}</span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* right: scrolling card grid — 3 offset columns */}
-      <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '50%', overflow: 'hidden' }}>
-        {/* fade overlay on top and bottom */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 60, zIndex: 2,
-          background: 'linear-gradient(to bottom, var(--fill) 0%, transparent 100%)' }} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 60, zIndex: 2,
-          background: 'linear-gradient(to top, var(--fill) 0%, transparent 100%)' }} />
-        {/* gradient fade on left edge */}
-        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 50, zIndex: 2,
-          background: 'linear-gradient(to right, var(--fill) 0%, transparent 100%)' }} />
+      {/* right: 2 scrolling columns behind a gradient scrim */}
+      <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '48%', overflow: 'hidden', zIndex: 1 }}>
+        {/* fades */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 70, zIndex: 2,
+          background: 'linear-gradient(to bottom, var(--fill), transparent)' }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 70, zIndex: 2,
+          background: 'linear-gradient(to top, var(--fill), transparent)' }} />
+        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 60, zIndex: 2,
+          background: 'linear-gradient(to right, var(--fill), transparent)' }} />
 
-        <div style={{ display: 'flex', gap: 6, height: '100%', paddingRight: 8 }}>
+        <div style={{ display: 'flex', gap: 6, height: '100%', paddingRight: 6 }}>
           {gridCards.map((col, ci) => {
-            var speed = [18, 24, 20][ci];
-            var offset = [0, -40, -20][ci];
+            var speed = [40, 50][ci];
+            var offset = [0, -50][ci];
             return (
               <div key={ci} style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
                 <div style={{
@@ -77,12 +70,11 @@ function CardFan({ app }) {
                   animation: 'heroScrollUp ' + speed + 's linear infinite',
                   marginTop: offset,
                 }}>
-                  {/* duplicate cards for seamless loop */}
                   {[0, 1].map(dup => (
                     <React.Fragment key={dup}>
                       {col.map((card, ri) => (
-                        <div key={card.id + '-' + dup + '-' + ri} onClick={() => app.nav.push('listing', { id: card.id })}
-                          style={{ borderRadius: 6, overflow: 'hidden', cursor: 'pointer', flexShrink: 0,
+                        <div key={card.id + '-' + dup + '-' + ri}
+                          style={{ borderRadius: 6, overflow: 'hidden', flexShrink: 0,
                             boxShadow: '0 2px 8px rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)' }}>
                           <CardArt item={card} w={200} radius={6} />
                         </div>
