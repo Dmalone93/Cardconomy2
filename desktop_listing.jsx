@@ -128,14 +128,6 @@ function DListing({ app, params }) {
         </div>
       </div>
 
-      {/* similar */}
-      <section style={{ marginTop: 50 }}>
-        <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.6, margin: '0 0 18px' }}>Similar listings</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 }}>
-          {similar.map(l => <DCardLi key={l.id} item={l} app={app} />)}
-        </div>
-      </section>
-
       {/* trade offers */}
       {(() => {
         const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
@@ -177,6 +169,62 @@ function DListing({ app, params }) {
           </section>
         );
       })()}
+
+      {/* other sellers for this product */}
+      {(() => {
+        const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
+        if (!product || product.offers.length <= 1) return null;
+        const otherOffers = product.offers.filter(o => o.listingId !== item.id);
+        if (otherOffers.length === 0) return null;
+        const showOffers = otherOffers.slice(0, 5);
+        const remaining = otherOffers.length - showOffers.length;
+        return (
+          <section style={{ marginTop: 40 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
+              <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.6, margin: 0 }}>Other sellers</h2>
+              <span style={{ background: 'var(--surface)', color: 'var(--muted)', padding: '4px 10px', borderRadius: 7, fontWeight: 700, fontSize: 11 }}>{otherOffers.length} offer{otherOffers.length !== 1 ? 's' : ''}</span>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {showOffers.map((o, idx) => (
+                <div key={o.id} onClick={() => { if (o.listingId) app.go('listing', { id: o.listingId }); }}
+                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 0',
+                    borderBottom: idx < showOffers.length - 1 ? '1px solid var(--line-2)' : 'none', cursor: 'pointer' }}
+                  onMouseEnter={function(e){ e.currentTarget.style.background = 'var(--surface)'; }}
+                  onMouseLeave={function(e){ e.currentTarget.style.background = 'none'; }}>
+                  <span style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 15, flexShrink: 0 }}>{o.seller.charAt(0)}</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      <span style={{ fontWeight: 700, fontSize: 14 }}>{o.seller}</span>
+                      {o.rating >= 99 && window.TrustBadge && <window.TrustBadge tier={2} />}
+                    </div>
+                    <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{o.rating}% · {o.sales.toLocaleString()} sales · {o.condition}</div>
+                  </div>
+                  <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                    <div style={{ fontFamily: TLi.mono, fontWeight: 700, fontSize: 16 }}>{mLi(o.price)}</div>
+                    <div style={{ fontSize: 11.5, color: 'var(--muted)' }}>{o.shipping === 0 ? 'Free shipping' : mLi(o.shipping) + ' shipping'}</div>
+                  </div>
+                  <button onClick={function(e) { e.stopPropagation(); if (o.listingId) app.addToCart(o.listingId); else app.toast('Added'); }}
+                    style={{ padding: '9px 14px', borderRadius: 10, background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>Add to cart</button>
+                </div>
+              ))}
+            </div>
+            {remaining > 0 && (
+              <button onClick={() => app.go('search', { game: item.game })}
+                style={{ marginTop: 14, width: '100%', padding: '12px', borderRadius: 11, background: 'var(--surface)', fontWeight: 700, fontSize: 14, color: 'var(--ink)', border: '1.5px solid var(--line)' }}>
+                View all {otherOffers.length} sellers
+              </button>
+            )}
+          </section>
+        );
+      })()}
+
+      {/* similar */}
+      <section style={{ marginTop: 50 }}>
+        <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.6, margin: '0 0 18px' }}>Similar listings</h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 }}>
+          {similar.map(l => <DCardLi key={l.id} item={l} app={app} />)}
+        </div>
+      </section>
 
       <style>{`@media (max-width: 1040px){ .lst-grid{ grid-template-columns: 1fr 1fr !important; } .lst-buybox{ grid-column: 1 / -1; position: static !important; } }
         @media (max-width: 720px){ .lst-grid{ grid-template-columns: 1fr !important; } .lst-gallery{ position: static !important; } }`}</style>
