@@ -274,7 +274,7 @@ function GameBrowseTile({ game, app }) {
   const logo = GAME_LOGOS && GAME_LOGOS[game.id];
   const hero = GAME_HEROES[game.id];
   return (
-    <div onClick={() => app.nav.push('search', { game: game.id })} role="button" style={{
+    <div onClick={() => app.nav.push('game', { id: game.id })} role="button" style={{
       flexShrink: 0, width: 140, height: 200, cursor: 'pointer', borderRadius: 14,
       overflow: 'hidden', position: 'relative',
       background: game.tint,

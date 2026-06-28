@@ -57,6 +57,7 @@ const SCREENS = {
   batchlist: BatchListScreen,
   pitch_seller: SellerPitchScreen,
   pitch_lgs: LGSPitchScreen,
+  game: GameScreen,
 };
 
 function loadWatch() {
