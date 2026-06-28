@@ -6,7 +6,11 @@ const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText, GAM
 const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 
 // ── Hero — stacked: text on top, horizontal card marquee below ──
-const HERO_CARDS = ['l01', 'l06', 'l09', 'l05', 'l02', 'l04'];
+const HERO_CARDS = [
+  'l01', 'l05', 'l07', 'l10', 'l19', 'l23',
+  'l06', 'l04', 'l08', 'l11', 'l20', 'l26',
+  'l09', 'l02', 'l33', 'l24', 'l28', 'l13',
+];
 
 function CardFan({ app }) {
   const cards = HERO_CARDS.map(id => byId(id)).filter(Boolean);
@@ -481,21 +485,8 @@ function HomeScreen({ app }) {
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: T.bg, paddingBottom: 96 }}>
       {/* announcement bar — one statement at a time */}
       <AnnouncementRotator />
-      {/* top bar */}
-      <div style={{ padding: '14px 16px 10px', background: T.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 13, position: 'relative' }}>
-          <button onClick={() => app.openMenu()} style={{ color: T.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{Icon.menu({})}</button>
-          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', lineHeight: 1 }}>
-            <Logo size={32} color={T.ink} />
-          </div>
-          <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: T.surface2, color: T.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            {Icon.cart({ width: 20, height: 20 })}
-            {app.cartCount > 0 && (
-              <span style={{ position: 'absolute', top: -2, right: -2, minWidth: 17, height: 17, borderRadius: 999, background: T.accent, color: '#fff',
-                fontFamily: T.sans, fontWeight: 700, fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px', boxShadow: '0 0 0 2px var(--surface)' }}>{app.cartCount}</span>
-            )}
-          </button>
-        </div>
+      {/* search bar */}
+      <div style={{ padding: '10px 16px', background: T.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
         <button onClick={() => app.nav.setTab('search')} style={{
           width: '100%', display: 'flex', alignItems: 'center', gap: 9, textAlign: 'left',
           background: T.surface2, borderRadius: 4, padding: '11px 14px', color: T.muted,
