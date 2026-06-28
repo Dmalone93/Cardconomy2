@@ -128,7 +128,9 @@ function Header({ app, openMega, megaOpen }) {
             ☰ Shop by game {DIcon.chevron({ style: { transform: megaOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' } })}
           </button>
           {GAMES.slice(0, 4).map(g => (
-            <NavBtn key={g.id} onClick={() => app.go('search', { game: g.id })}>{g.short}</NavBtn>
+            <NavBtn key={g.id} onClick={() => app.go('search', { game: g.id })}>
+              <span style={{ width: 7, height: 7, borderRadius: 999, background: g.tint, display: 'inline-block', marginRight: 5, verticalAlign: 'middle' }} />{g.short}
+            </NavBtn>
           ))}
           <span style={{ width: 1, height: 20, background: 'var(--line)', margin: '0 8px' }} />
           <NavBtn onClick={() => app.go('search', { cond: 'Graded only' })}>Graded</NavBtn>
@@ -156,24 +158,29 @@ function HeaderBtn({ icon, label, onClick, count, accent }) {
 }
 
 // ── mega menu item with hover ────────────────────────────────
-function MegaGameBtn({ onClick, tint, name }) {
+function MegaGameBtn({ onClick, tint, name, count }) {
   var ref = React.useState(false), hover = ref[0], setHover = ref[1];
   return (
     <button onClick={onClick} onMouseEnter={function() { setHover(true); }} onMouseLeave={function() { setHover(false); }}
-      style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, padding: '6px 8px', borderRadius: 8,
-        background: hover ? 'var(--bg)' : 'transparent', transition: 'background 0.15s' }}>
-      <span style={{ width: 11, height: 11, borderRadius: 999, background: tint }} />
-      <span style={{ fontWeight: 800, fontSize: 15.5, color: hover ? 'var(--ink)' : 'var(--ink)' }}>{name}</span>
+      style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 12, padding: '8px 10px', borderRadius: 10,
+        background: hover ? tint + '12' : 'transparent', borderLeft: '3px solid ' + (hover ? tint : 'transparent'),
+        transition: 'all 0.15s' }}>
+      <span style={{ width: 12, height: 12, borderRadius: 999, background: tint, boxShadow: hover ? '0 0 8px ' + tint + '60' : 'none' }} />
+      <span style={{ fontWeight: 800, fontSize: 15.5, color: 'var(--ink)' }}>{name}</span>
+      {count && <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--muted)', marginLeft: 2 }}>{count}</span>}
     </button>
   );
 }
-function MegaSetBtn({ onClick, name }) {
+function MegaSetBtn({ onClick, name, cards }) {
   var ref = React.useState(false), hover = ref[0], setHover = ref[1];
   return (
     <button onClick={onClick} onMouseEnter={function() { setHover(true); }} onMouseLeave={function() { setHover(false); }}
-      style={{ textAlign: 'left', fontSize: 13.5, padding: '5px 8px', borderRadius: 6,
+      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', textAlign: 'left', fontSize: 13.5, padding: '6px 8px', borderRadius: 7,
         color: hover ? 'var(--ink)' : 'var(--muted)', background: hover ? 'var(--bg)' : 'transparent',
-        transition: 'color 0.15s, background 0.15s' }}>{name}</button>
+        transition: 'color 0.15s, background 0.15s' }}>
+      <span>{name}</span>
+      {cards && <span style={{ fontSize: 11, color: 'var(--faint)', fontWeight: 600 }}>{cards}</span>}
+    </button>
   );
 }
 
@@ -188,10 +195,10 @@ function MegaMenu({ app, open, close }) {
           const sets = SETS.filter(s => s.game === g.id);
           return (
             <div key={g.id}>
-              <MegaGameBtn onClick={() => { app.go('search', { game: g.id }); close(); }} tint={g.tint} name={g.name} />
+              <MegaGameBtn onClick={() => { app.go('search', { game: g.id }); close(); }} tint={g.tint} name={g.name} count={sets.length ? sets.length + ' sets' : null} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {sets.length ? sets.map(s => (
-                  <MegaSetBtn key={s.id} onClick={() => { app.go('search', { game: g.id, set: s.id }); close(); }} name={s.name} />
+                  <MegaSetBtn key={s.id} onClick={() => { app.go('search', { game: g.id, set: s.id }); close(); }} name={s.name} cards={s.cards ? s.cards + ' cards' : null} />
                 )) : <span style={{ fontSize: 13, color: 'var(--faint)', padding: '5px 8px' }}>Browse all →</span>}
               </div>
             </div>

@@ -274,18 +274,31 @@ function BottomNav({ tab, setTab, watchCount }) {
         const on = tab === t.id;
         return (
           <button key={t.id} onClick={() => setTab(t.id)} style={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2,
             flex: 1, paddingTop: 2, position: 'relative',
             color: on ? T.ink : T.faint,
+            transition: 'color 0.2s',
           }}>
+            {on && !t.primary && <span style={{
+              position: 'absolute', top: -8, width: 20, height: 3, borderRadius: 2,
+              background: 'var(--ink)',
+            }} />}
             {t.primary ? (
               <div style={{
-                width: 46, height: 30, marginTop: -2, borderRadius: 11,
+                width: 48, height: 32, marginTop: -4, borderRadius: 12,
                 background: 'var(--ink)', color: '#fff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+                boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
+                transform: on ? 'scale(1.08)' : 'scale(1)',
+                transition: 'transform 0.2s',
               }}>{t.icon({ width: 22, height: 22 })}</div>
-            ) : t.icon({})}
+            ) : (
+              <div style={{
+                padding: '3px 10px', borderRadius: 8,
+                background: on ? 'var(--surface)' : 'transparent',
+                transition: 'background 0.2s',
+              }}>{t.icon({})}</div>
+            )}
             {t.badge ? (
               <span style={{
                 position: 'absolute', top: -2, right: '50%', marginRight: -22,
@@ -294,7 +307,7 @@ function BottomNav({ tab, setTab, watchCount }) {
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>{t.badge}</span>
             ) : null}
-            <span style={{ fontFamily: T.sans, fontSize: 10.5, fontWeight: on ? 700 : 500 }}>{t.label}</span>
+            <span style={{ fontFamily: T.sans, fontSize: 10.5, fontWeight: on ? 700 : 500, transition: 'font-weight 0.2s' }}>{t.label}</span>
           </button>
         );
       })}

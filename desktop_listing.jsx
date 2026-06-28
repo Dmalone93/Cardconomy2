@@ -165,7 +165,7 @@ function DListing({ app, params }) {
                       <div style={{ fontFamily: TLi.mono, fontWeight: 700, fontSize: 16 }}>{mLi(o.price)}</div>
                       <div style={{ fontSize: 11.5, color: 'var(--muted)' }}>{o.shipping === 0 ? 'Free shipping' : mLi(o.shipping) + ' shipping'}</div>
                     </div>
-                    <button onClick={function(e) { e.stopPropagation(); if (o.listingId) app.addToCart(o.listingId); else app.toast('Added'); }}
+                    <button onClick={function(e) { e.stopPropagation(); if (o.listingId) app.addToCart(o.listingId); else { app.addToCart(item.id); app.toast('Added from ' + o.seller); } }}
                       style={{ padding: '9px 14px', borderRadius: 10, background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>Add to cart</button>
                   </div>
                 ))}
@@ -185,17 +185,18 @@ function DListing({ app, params }) {
           const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
           if (!product || !product.tradeOffers || product.tradeOffers.length === 0) return null;
           return (
-            <section style={{ background: '#faf5ff', borderRadius: 18, padding: '22px 24px', marginBottom: 28, border: '1px solid #ede9fe' }}>
+            <section style={{ background: 'var(--surface)', borderRadius: 18, padding: '22px 24px', marginBottom: 28, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                <span style={{ fontSize: 18 }}>{'\u21C4'}</span>
                 <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.5, margin: 0 }}>Available to trade</h2>
-                <span style={{ background: '#ede9fe', color: '#7c3aed', padding: '3px 9px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
+                <span style={{ background: 'var(--bg)', color: 'var(--muted)', padding: '3px 9px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
               </div>
               <p style={{ fontSize: 13.5, color: 'var(--muted)', margin: '0 0 16px' }}>These collectors have this card and want to swap — no cash needed.</p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 14 }}>
                 {product.tradeOffers.map((t, idx) => (
-                  <div key={t.id} style={{ background: '#fff', borderRadius: 14, padding: 16, boxShadow: idx === 0 ? 'inset 0 0 0 2px #7c3aed' : '0 1px 3px rgba(20,24,40,0.06)', border: idx !== 0 ? '1px solid #ede9fe' : 'none' }}>
+                  <div key={t.id} style={{ background: 'var(--bg)', borderRadius: 14, padding: 16, border: idx === 0 ? '2px solid var(--ink)' : '1px solid var(--line)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 11, marginBottom: 12 }}>
-                      <div style={{ width: 36, height: 36, borderRadius: 999, background: '#7c3aed', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{t.trader.charAt(0)}</div>
+                      <div style={{ width: 36, height: 36, borderRadius: 999, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{t.trader.charAt(0)}</div>
                       <div style={{ flex: 1 }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                           <span style={{ fontWeight: 700, fontSize: 13.5 }}>{t.trader}</span>
@@ -204,8 +205,8 @@ function DListing({ app, params }) {
                         <div style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 1 }}>{t.traderRating}% · {t.traderTrades.toLocaleString()} trades · {t.traderLoc}</div>
                       </div>
                     </div>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: '#7c3aed', letterSpacing: 0.4, marginBottom: 6, textTransform: 'uppercase' }}>Wants in return</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#f5f3ff', borderRadius: 9, padding: 10, marginBottom: 10 }}>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--muted)', letterSpacing: 0.4, marginBottom: 6, textTransform: 'uppercase' }}>Wants in return</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--surface)', borderRadius: 9, padding: 10, marginBottom: 10 }}>
                       <div style={{ flexShrink: 0 }}><CardArtLi item={t.wantCard} w={36} radius={5} /></div>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontWeight: 700, fontSize: 13 }}>{t.wantCard.name}</div>
@@ -214,7 +215,7 @@ function DListing({ app, params }) {
                       </div>
                     </div>
                     {t.note && <div style={{ fontSize: 12.5, color: 'var(--ink-2)', fontStyle: 'italic', lineHeight: 1.4, marginBottom: 10 }}>"{t.note}"</div>}
-                    <button onClick={() => app.go('trade')} style={{ width: '100%', background: 'none', border: '1.5px solid #7c3aed', color: '#7c3aed', padding: 10, borderRadius: 10, fontWeight: 700, fontSize: 13.5 }}>Propose trade</button>
+                    <button onClick={() => app.go('trade')} style={{ width: '100%', background: 'var(--ink)', color: '#fff', border: 'none', padding: 10, borderRadius: 10, fontWeight: 700, fontSize: 13.5 }}>Propose trade</button>
                   </div>
                 ))}
               </div>
