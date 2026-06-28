@@ -30,8 +30,8 @@ function CardFan({ app }) {
             <React.Fragment key={dup}>
               {cards.map((card, i) => (
                 <div key={card.id + '-' + dup + '-' + i}
-                  style={{ width: 160, flexShrink: 0, borderRadius: 8, overflow: 'hidden' }}>
-                  <CardArt item={card} w={160} radius={8} />
+                  style={{ width: 200, flexShrink: 0, borderRadius: 8, overflow: 'hidden' }}>
+                  <CardArt item={card} w={200} radius={8} />
                 </div>
               ))}
             </React.Fragment>
