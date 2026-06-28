@@ -151,12 +151,6 @@ function ProductScreen({ app, params }) {
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', animation: 'ccPushIn 0.26s ease' }}>
-      {/* header */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '14px 12px 10px', gap: 8 }}>
-        <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--surface)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.1)' }}>{IconP.back({})}</button>
-        <button onClick={() => app.openMenu()} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--surface)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.1)' }}>{IconP.menu({})}</button>
-        <div style={{ flex: 1 }} />
-      </div>
 
       <div ref={scrollRefP} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
         {/* ── 1. Card image ── */}

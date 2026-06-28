@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Cardconomy Mobile — TCG Game Landing Screen
 // ─────────────────────────────────────────────────────────────
-const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM, BottomNav: BottomNavGM } = window;
+const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM } = window;
 const { GAMES: GAMESGM, SETS: SETSGM, LISTINGS: LISTSGM, gameById: gameByIdGM, GAME_LOGOS: GAME_LOGOS_GM } = window;
 
 const GAME_HEROES_GM = {
@@ -43,29 +43,6 @@ function GameScreen({ app, params }) {
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: TGM.bg, paddingBottom: 96 }}>
 
-      {/* ── Top bar: back chevron + game name + cart (matches listing page pattern) ── */}
-      <div style={{ padding: '14px 12px 10px', background: TGM.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
-            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            {IconGM.back({})}
-          </button>
-          <button onClick={() => app.openMenu()} style={{ width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
-            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            {IconGM.menu({})}
-          </button>
-        </div>
-        <span style={{ fontFamily: TGM.sans || 'var(--sans)', fontWeight: 700, fontSize: 16, color: TGM.ink, letterSpacing: -0.3 }}>{game.name}</span>
-        <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
-          boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          {IconGM.cart ? IconGM.cart({}) : <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11.2a1.5 1.5 0 001.5 1.2h8.1a1.5 1.5 0 001.5-1.2L21 7H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20" r="1.4" fill="currentColor"/></svg>}
-          {app.cart && app.cart.length > 0 && (
-            <span style={{ position: 'absolute', top: 2, right: 2, width: 16, height: 16, borderRadius: 999, background: TGM.down || 'var(--down)', color: '#fff',
-              fontSize: 10, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{app.cart.length}</span>
-          )}
-        </button>
-      </div>
 
       {/* ── Hero ── */}
       <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: game.tint }}>
@@ -207,8 +184,6 @@ function GameScreen({ app, params }) {
         )}
       </div>
 
-      {/* ── Bottom nav ── */}
-      <BottomNavGM tab={app.nav.tab} setTab={app.nav.setTab} watchCount={(app.watch || []).length} />
     </div>
   );
 }

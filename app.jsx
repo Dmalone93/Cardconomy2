@@ -2,7 +2,7 @@
 // Cardonomy — app shell, navigation, state
 // ─────────────────────────────────────────────────────────────
 const { IOSDevice } = window;
-const { T: TA, BottomNav, Toast, SideMenu } = window;
+const { T: TA, BottomNav, Toast, SideMenu, Icon: IconA, Logo: LogoA } = window;
 const { HomeScreen, SearchScreen, ListingScreen, SellScreen, CheckoutScreen, WatchScreen, DashboardScreen, SettingsScreen, SellHubScreen, SellMarketScreen, SellBulkScreen, SellShopScreen, ShopScreen } = window;
 const { BuylistScreen, PurchasesScreen, SellingScreen, OffersScreen, PaymentsScreen, NotificationsScreen } = window;
 const { CollectionDetailScreen } = window;
@@ -226,11 +226,30 @@ function App() {
   const cartTotal = cart.map(byIdA).filter(Boolean).reduce((s, x) => s + x.price, 0);
 
   return (
-    <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: TA.bg, isolation: 'isolate' }}>
-      <div key={viewKey} style={{ position: 'absolute', inset: 0 }}>
-        <Comp app={app} params={params} />
+    <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: TA.bg, isolation: 'isolate', display: 'flex', flexDirection: 'column' }}>
+      {/* ── Persistent top bar: hamburger | logo | cart ── */}
+      <div style={{ flexShrink: 0, padding: '14px 16px 10px', background: TA.surface, borderBottom: '1px solid var(--line)', zIndex: 50,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
+        <button onClick={() => setMenuOpen(true)} style={{ color: TA.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{IconA.menu({})}</button>
+        <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', lineHeight: 1 }}>
+          <LogoA size={32} color={TA.ink} />
+        </div>
+        <button onClick={() => nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: TA.surface2, color: TA.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          {IconA.cart({ width: 20, height: 20 })}
+          {cart.length > 0 && (
+            <span style={{ position: 'absolute', top: -2, right: -2, minWidth: 17, height: 17, borderRadius: 999, background: TA.accent, color: '#fff',
+              fontFamily: TA.sans, fontWeight: 700, fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px', boxShadow: '0 0 0 2px var(--surface)' }}>{cart.length}</span>
+          )}
+        </button>
       </div>
-      {showNav && cart.length > 0 && (
+
+      {/* ── Screen content ── */}
+      <div key={viewKey} style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', inset: 0 }}>
+          <Comp app={app} params={params} />
+        </div>
+      </div>
+      {cart.length > 0 && (
         <button
           onClick={() => nav.push('cart')}
           style={{
@@ -249,7 +268,7 @@ function App() {
           {'\uD83D\uDED2'} {cart.length} · {'£'}{cartTotal.toFixed(2)}
         </button>
       )}
-      {showNav && <BottomNav tab={tab} setTab={nav.setTab} watchCount={watch.length} />}
+      <BottomNav tab={tab} setTab={nav.setTab} watchCount={watch.length} />
       <SideMenu app={app} open={menuOpen} onClose={() => setMenuOpen(false)} />
       {!onboarded && Onboarding && <Onboarding app={app} games={window.GAMES || []} />}
       <Toast msg={toast} />
