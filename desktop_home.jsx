@@ -17,7 +17,7 @@ function DGameTile({ game, app }) {
   const hero = GAME_HEROES_H[game.id];
   const [hover, setHover] = React.useState(false);
   return (
-    <div onClick={() => app.go('search', { game: game.id })}
+    <div onClick={() => app.go('game', { id: game.id })}
       onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}
       role="button" style={{
       cursor: 'pointer', borderRadius: 8, overflow: 'hidden', position: 'relative',

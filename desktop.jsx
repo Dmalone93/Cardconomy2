@@ -2,7 +2,7 @@
 // Cardonomy Desktop — shell, nav, routing, state
 // ─────────────────────────────────────────────────────────────
 const { T, money, CardArt, Icon, Logo } = window;
-const { GAMES, SETS, LISTINGS, gameById } = window;
+const { GAMES, SETS, LISTINGS, gameById, GAME_LOGOS } = window;
 const { DHome, DSearch, DListing } = window;
 const { DSell, DSellSingle, DSellBulk } = window;
 const { DTrade, DStorefront, DShopDash } = window;
@@ -128,7 +128,7 @@ function Header({ app, openMega, megaOpen }) {
             ☰ Shop by game {DIcon.chevron({ style: { transform: megaOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' } })}
           </button>
           {GAMES.slice(0, 4).map(g => (
-            <NavBtn key={g.id} onClick={() => app.go('search', { game: g.id })}>
+            <NavBtn key={g.id} onClick={() => app.go('game', { id: g.id })}>
               <span style={{ width: 7, height: 7, borderRadius: 999, background: g.tint, display: 'inline-block', marginRight: 5, verticalAlign: 'middle' }} />{g.short}
             </NavBtn>
           ))}
@@ -158,29 +158,26 @@ function HeaderBtn({ icon, label, onClick, count, accent }) {
 }
 
 // ── mega menu item with hover ────────────────────────────────
-function MegaGameBtn({ onClick, tint, name, count }) {
+function MegaGameBtn({ onClick, tint, name, logo }) {
   var ref = React.useState(false), hover = ref[0], setHover = ref[1];
   return (
     <button onClick={onClick} onMouseEnter={function() { setHover(true); }} onMouseLeave={function() { setHover(false); }}
-      style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 12, padding: '8px 10px', borderRadius: 10,
-        background: hover ? tint + '12' : 'transparent', borderLeft: '3px solid ' + (hover ? tint : 'transparent'),
+      style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10, padding: '8px 10px', borderRadius: 10,
+        background: hover ? tint + '10' : 'transparent', borderLeft: '3px solid ' + (hover ? tint : 'transparent'),
         transition: 'all 0.15s' }}>
-      <span style={{ width: 12, height: 12, borderRadius: 999, background: tint, boxShadow: hover ? '0 0 8px ' + tint + '60' : 'none' }} />
+      {logo ? <img src={logo} alt="" style={{ height: 20, width: 'auto', maxWidth: 28, objectFit: 'contain', opacity: 0.85 }} /> :
+        <span style={{ width: 10, height: 10, borderRadius: 999, background: tint }} />}
       <span style={{ fontWeight: 800, fontSize: 15.5, color: 'var(--ink)' }}>{name}</span>
-      {count && <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--muted)', marginLeft: 2 }}>{count}</span>}
     </button>
   );
 }
-function MegaSetBtn({ onClick, name, cards }) {
+function MegaSetBtn({ onClick, name }) {
   var ref = React.useState(false), hover = ref[0], setHover = ref[1];
   return (
     <button onClick={onClick} onMouseEnter={function() { setHover(true); }} onMouseLeave={function() { setHover(false); }}
-      style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', textAlign: 'left', fontSize: 13.5, padding: '6px 8px', borderRadius: 7,
+      style={{ textAlign: 'left', fontSize: 13.5, padding: '5px 8px', borderRadius: 6,
         color: hover ? 'var(--ink)' : 'var(--muted)', background: hover ? 'var(--bg)' : 'transparent',
-        transition: 'color 0.15s, background 0.15s' }}>
-      <span>{name}</span>
-      {cards && <span style={{ fontSize: 11, color: 'var(--faint)', fontWeight: 600 }}>{cards}</span>}
-    </button>
+        transition: 'color 0.15s, background 0.15s' }}>{name}</button>
   );
 }
 
@@ -195,10 +192,10 @@ function MegaMenu({ app, open, close }) {
           const sets = SETS.filter(s => s.game === g.id);
           return (
             <div key={g.id}>
-              <MegaGameBtn onClick={() => { app.go('search', { game: g.id }); close(); }} tint={g.tint} name={g.name} count={sets.length ? sets.length + ' sets' : null} />
+              <MegaGameBtn onClick={() => { app.go('game', { id: g.id }); close(); }} tint={g.tint} name={g.name} logo={GAME_LOGOS[g.id]} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                 {sets.length ? sets.map(s => (
-                  <MegaSetBtn key={s.id} onClick={() => { app.go('search', { game: g.id, set: s.id }); close(); }} name={s.name} cards={s.cards ? s.cards + ' cards' : null} />
+                  <MegaSetBtn key={s.id} onClick={() => { app.go('game', { id: g.id, set: s.id }); close(); }} name={s.name} />
                 )) : <span style={{ fontSize: 13, color: 'var(--faint)', padding: '5px 8px' }}>Browse all →</span>}
               </div>
             </div>
@@ -323,6 +320,7 @@ function App() {
   else if (route.name === 'seller') Screen = window.DSellerProfile;
   else if (route.name === 'fees') Screen = DFees;
   else if (route.name === 'howitworks') Screen = DHowItWorks;
+  else if (route.name === 'game') Screen = window.DGameLanding;
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
