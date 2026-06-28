@@ -46,10 +46,16 @@ function GameScreen({ app, params }) {
       {/* ── Top bar: back chevron + game name + cart (matches listing page pattern) ── */}
       <div style={{ padding: '14px 12px 10px', background: TGM.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
-          boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          {IconGM.back({})}
-        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            {IconGM.back({})}
+          </button>
+          <button onClick={() => app.openMenu()} style={{ width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
+            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            {IconGM.menu({})}
+          </button>
+        </div>
         <span style={{ fontFamily: TGM.sans || 'var(--sans)', fontWeight: 700, fontSize: 16, color: TGM.ink, letterSpacing: -0.3 }}>{game.name}</span>
         <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
           boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>

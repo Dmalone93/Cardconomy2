@@ -65,8 +65,12 @@ function ListingScreen({ app, params }) {
       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, padding: '14px 12px 10px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         background: 'linear-gradient(180deg, rgba(238,240,243,0.96), rgba(238,240,243,0))' }}>
-        <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
-          boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.back({})}</button>
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
+            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.back({})}</button>
+          <button onClick={() => app.openMenu()} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
+            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.menu({})}</button>
+        </div>
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={() => { window.shareCard ? window.shareCard(item) : null; app.toast('Shared'); }} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
             boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.share({})}</button>
