@@ -321,9 +321,9 @@ function DHome({ app }) {
         {/* right: 3-column scrolling card grid */}
         {(() => {
           var cols = [
-            [byIdH('l01'), byIdH('l06'), byIdH('l09'), byIdH('l08'), byIdH('l03'), byIdH('l02')].filter(Boolean),
-            [byIdH('l05'), byIdH('l02'), byIdH('l04'), byIdH('l07'), byIdH('l11'), byIdH('l10')].filter(Boolean),
-            [byIdH('l03'), byIdH('l10'), byIdH('l01'), byIdH('l06'), byIdH('l09'), byIdH('l08')].filter(Boolean),
+            [byIdH('l01'), byIdH('l06'), byIdH('l09'), byIdH('l08')].filter(Boolean),
+            [byIdH('l05'), byIdH('l02'), byIdH('l04'), byIdH('l07')].filter(Boolean),
+            [byIdH('l03'), byIdH('l10'), byIdH('l01'), byIdH('l06')].filter(Boolean),
           ];
           var speeds = [80, 104, 88];
           var offsets = [0, -60, -30];
@@ -379,15 +379,6 @@ function DHome({ app }) {
 
       {/* ── Trending ── */}
       <CardCarousel title="Trending" action="See all" onAction={() => app.go('search')} items={trending.slice(0, 15)} app={app} />
-
-      {/* ── Hot deals ── */}
-      {(() => {
-        var dealItems = HOT_DEALS_H.map(d => { var item = byIdH(d.id); return item && RELIABLE_GAMES_H.has(item.game) ? Object.assign({}, item, { _discount: d.discount }) : null; }).filter(Boolean);
-        return dealItems.length > 0 ? <CardCarousel title="Hot Deals" action="See all" onAction={() => app.go('search')} items={dealItems} app={app} badge={dealItems.length + ' deals'} /> : null;
-      })()}
-
-      {/* ── Just listed ── */}
-      <CardCarousel title="Just Listed" action="See all" onAction={() => app.go('search')} items={trending.slice(15, 30)} app={app} badge="New" />
 
       {/* ── Under £100 ── */}
       <CardCarousel title={"Under \u00A3100"} action="Shop budget" onAction={() => app.go('search')} items={under100.slice(0, 15)} app={app} />

@@ -7,8 +7,8 @@ const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 
 // ── Hero — full bleed with upward-scrolling card grid ────────
 const HERO_COLS = [
-  ['l01', 'l06', 'l09', 'l08', 'l03'],
-  ['l05', 'l02', 'l04', 'l07', 'l11'],
+  ['l01', 'l06', 'l09'],
+  ['l05', 'l02', 'l04'],
 ];
 
 function CardFan({ app }) {
@@ -557,25 +557,16 @@ function HomeScreen({ app }) {
         </div>
       </div>
 
-      {/* ── What's hot (trending + deals merged) ── */}
-      <WhatsHot app={app} trendingProducts={trendingProducts} />
-
-      {/* ── Just listed ── */}
-      {trendingProducts.length > 8 && (
-        <div style={{ paddingTop: 20 }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 14px', marginBottom: 10 }}>
-            <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Just listed</div>
-            <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>See all</div>
-          </div>
-          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px', WebkitOverflowScrolling: 'touch' }}>
-            {trendingProducts.slice(8, 18).map(p => (
-              <div key={p.id} style={{ flexShrink: 0, width: 140 }}>
-                <ProductCard product={p} app={app} />
-              </div>
-            ))}
-          </div>
+      {/* ── Trending ── */}
+      <div style={{ paddingTop: 20 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 14px', marginBottom: 10 }}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Trending</div>
+          <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>See all</div>
         </div>
-      )}
+        <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
+          {trendingProducts.slice(0, 8).map(p => <ProductCard key={p.id} product={p} app={app} />)}
+        </div>
+      </div>
 
       {/* ── Sell your cards ── */}
       <div style={{ padding: '24px 14px 0' }}>
