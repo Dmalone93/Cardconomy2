@@ -50,6 +50,15 @@ function DGameLanding({ app, params }) {
 
   return React.createElement('div', null,
 
+    // ── Breadcrumb ──
+    React.createElement('div', { className: 'wrap', style: { padding: '18px 24px 0' }},
+      React.createElement('div', { style: { fontSize: 13, color: 'var(--muted)' }},
+        React.createElement('button', { onClick: function() { app.go('home'); }, style: { color: 'var(--muted)' } }, 'Home'),
+        ' / ',
+        React.createElement('span', { style: { color: 'var(--ink-2)', fontWeight: 600 } }, game.name)
+      )
+    ),
+
     // ── Hero banner ──
     React.createElement('div', { style: {
       position: 'relative', height: 320, overflow: 'hidden', background: game.tint,
@@ -66,13 +75,6 @@ function DGameLanding({ app, params }) {
         position: 'relative', zIndex: 2, height: '100%',
         display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', paddingBottom: 32,
       }},
-        // breadcrumb
-        React.createElement('div', { style: { marginBottom: 16 }},
-          React.createElement('button', { onClick: function() { app.go('home'); },
-            style: { fontSize: 13, color: 'rgba(255,255,255,0.6)' }}, 'Home'),
-          React.createElement('span', { style: { color: 'rgba(255,255,255,0.4)', margin: '0 8px' }}, '/'),
-          React.createElement('span', { style: { fontSize: 13, color: 'rgba(255,255,255,0.9)', fontWeight: 600 }}, game.name)
-        ),
         // logo or name
         logo
           ? React.createElement('img', { src: logo, alt: game.name, style: {

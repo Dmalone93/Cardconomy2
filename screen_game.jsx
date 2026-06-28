@@ -60,6 +60,16 @@ function GameScreen({ app, params }) {
         </div>
       </div>
 
+      {/* ── Breadcrumb / back row ── */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 14px', background: TGM.bg }}>
+        <button onClick={() => app.nav.pop()} style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--muted)', fontSize: 13, fontWeight: 600 }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          Home
+        </button>
+        <span style={{ color: 'var(--faint)', fontSize: 12 }}>/</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: TGM.ink }}>{game.name}</span>
+      </div>
+
       {/* ── Hero ── */}
       <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: game.tint }}>
         {hero && <img src={hero} alt="" style={{

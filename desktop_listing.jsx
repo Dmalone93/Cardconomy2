@@ -21,7 +21,7 @@ function DListing({ app, params }) {
   return (
     <div className="wrap" style={{ padding: '24px 24px 20px' }}>
       <div style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 18 }}>
-        <button onClick={() => app.go('home')} style={{ color: 'var(--muted)' }}>Home</button> / <button onClick={() => app.go('search', { game: item.game })} style={{ color: 'var(--muted)' }}>{g.short}</button> / <span style={{ color: 'var(--ink-2)' }}>{item.name}</span>
+        <button onClick={() => app.go('home')} style={{ color: 'var(--muted)' }}>Home</button> / <button onClick={() => app.go('game', { id: item.game })} style={{ color: 'var(--muted)' }}>{g.short}</button> / <span style={{ color: 'var(--ink-2)' }}>{item.name}</span>
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.05fr 320px', gap: 30, alignItems: 'start' }} className="lst-grid">
