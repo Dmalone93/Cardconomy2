@@ -5,27 +5,23 @@ const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon,
 const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText, GAME_LOGOS } = window;
 const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 
-// ── Hero — full bleed with upward-scrolling card grid ────────
-const HERO_COLS = [
-  ['l01', 'l06', 'l09'],
-  ['l05', 'l02', 'l04'],
-];
+// ── Hero — stacked: text on top, horizontal card marquee below ──
+const HERO_CARDS = ['l01', 'l06', 'l09', 'l05', 'l02', 'l04'];
 
 function CardFan({ app }) {
-  const gridCards = HERO_COLS.map(col => col.map(id => byId(id)).filter(Boolean));
+  const cards = HERO_CARDS.map(id => byId(id)).filter(Boolean);
 
   return (
-    <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--fill)', height: 320 }}>
-      <style dangerouslySetInnerHTML={{ __html: '@keyframes heroScrollUp{0%{transform:translateY(0)}100%{transform:translateY(-50%)}}' }} />
+    <div style={{ background: 'var(--fill)' }}>
+      <style dangerouslySetInnerHTML={{ __html: '@keyframes heroScrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}' }} />
 
-      {/* text content — full width, layered over the grid */}
-      <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, right: 0, zIndex: 3,
-        display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 20px' }}>
+      {/* text content — full width, no competing visuals */}
+      <div style={{ padding: '32px 20px 20px', display: 'flex', flexDirection: 'column' }}>
         <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 26, color: '#fff',
           letterSpacing: -0.5, lineHeight: 1.12 }}>
           The UK home for<br/>trading cards
         </div>
-        <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginTop: 10, maxWidth: 220 }}>
+        <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginTop: 10, maxWidth: 280 }}>
           Buy, sell, and trade across every game. Lower fees than anyone.
         </div>
         <div style={{ display: 'flex', gap: 8, marginTop: 16 }}>
@@ -49,42 +45,29 @@ function CardFan({ app }) {
         </div>
       </div>
 
-      {/* right: 2 scrolling columns behind a gradient scrim */}
-      <div style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '48%', overflow: 'hidden', zIndex: 1 }}>
-        {/* fades */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 70, zIndex: 2,
-          background: 'linear-gradient(to bottom, var(--fill), transparent)' }} />
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 70, zIndex: 2,
-          background: 'linear-gradient(to top, var(--fill), transparent)' }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 60, zIndex: 2,
+      {/* horizontal card marquee */}
+      <div style={{ position: 'relative', overflow: 'hidden', padding: '8px 0 20px' }}>
+        {/* left/right gradient scrims */}
+        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 50, zIndex: 2,
           background: 'linear-gradient(to right, var(--fill), transparent)' }} />
+        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 50, zIndex: 2,
+          background: 'linear-gradient(to left, var(--fill), transparent)' }} />
 
-        <div style={{ display: 'flex', gap: 6, height: '100%', paddingRight: 6 }}>
-          {gridCards.map((col, ci) => {
-            var speed = [80, 100][ci];
-            var offset = [0, -50][ci];
-            return (
-              <div key={ci} style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
-                <div style={{
-                  display: 'flex', flexDirection: 'column', gap: 6,
-                  animation: 'heroScrollUp ' + speed + 's linear infinite',
-                  marginTop: offset,
-                }}>
-                  {[0, 1].map(dup => (
-                    <React.Fragment key={dup}>
-                      {col.map((card, ri) => (
-                        <div key={card.id + '-' + dup + '-' + ri}
-                          style={{ borderRadius: 6, overflow: 'hidden', flexShrink: 0,
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                          <CardArt item={card} w={200} radius={6} />
-                        </div>
-                      ))}
-                    </React.Fragment>
-                  ))}
+        <div style={{
+          display: 'flex', gap: 6, width: 'max-content',
+          animation: 'heroScrollLeft 80s linear infinite',
+        }}>
+          {[0, 1].map(dup => (
+            <React.Fragment key={dup}>
+              {cards.map((card, i) => (
+                <div key={card.id + '-' + dup + '-' + i}
+                  style={{ width: 140, flexShrink: 0, borderRadius: 6, overflow: 'hidden',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <CardArt item={card} w={140} radius={6} />
                 </div>
-              </div>
-            );
-          })}
+              ))}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </div>
