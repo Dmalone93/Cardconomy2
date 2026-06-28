@@ -24,7 +24,7 @@ function CardFan({ app }) {
         display: 'flex', alignItems: 'center', opacity: 0.15 }}>
         <div style={{
           display: 'flex', gap: 8, width: 'max-content',
-          animation: 'heroScrollLeft 80s linear infinite',
+          animation: 'heroScrollLeft 160s linear infinite',
         }}>
           {[0, 1].map(dup => (
             <React.Fragment key={dup}>
