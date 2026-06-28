@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Cardconomy Mobile — TCG Game Landing Screen
 // ─────────────────────────────────────────────────────────────
-const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM, BottomNav: BottomNavGM } = window;
+const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM, Logo: LogoGM, BottomNav: BottomNavGM } = window;
 const { GAMES: GAMESGM, SETS: SETSGM, LISTINGS: LISTSGM, gameById: gameByIdGM, GAME_LOGOS: GAME_LOGOS_GM } = window;
 
 const GAME_HEROES_GM = {
@@ -41,33 +41,27 @@ function GameScreen({ app, params }) {
   };
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      {/* ── Sticky top bar ── */}
-      <div style={{
-        position: 'sticky', top: 0, zIndex: 20, background: game.tint,
-        display: 'flex', alignItems: 'center', gap: 10,
-        padding: '48px 14px 10px', minHeight: 44,
-      }}>
-        <button onClick={() => app.nav.pop()} style={{
-          width: 34, height: 34, borderRadius: 999, background: 'rgba(0,0,0,0.2)',
-          color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-        }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-        </button>
-        <span style={{ fontFamily: TGM.sans || 'var(--sans)', fontWeight: 700, fontSize: 17, color: '#fff', letterSpacing: -0.3 }}>{game.name}</span>
-        <button onClick={() => app.nav.setTab('search')} style={{
-          marginLeft: 'auto', width: 34, height: 34, borderRadius: 999, background: 'rgba(0,0,0,0.2)',
-          color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-        }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
-        </button>
+    <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: TGM.bg, paddingBottom: 96 }}>
+
+      {/* ── Standard top bar (hamburger + logo + cart) ── */}
+      <div style={{ padding: '14px 16px 10px', background: TGM.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
+          <button onClick={() => app.openMenu()} style={{ color: TGM.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{IconGM.menu({})}</button>
+          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', lineHeight: 1 }}>
+            <LogoGM size={32} color={TGM.ink} />
+          </div>
+          <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            {IconGM.cart ? IconGM.cart({}) : <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11.2a1.5 1.5 0 001.5 1.2h8.1a1.5 1.5 0 001.5-1.2L21 7H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20" r="1.4" fill="currentColor"/></svg>}
+            {app.cart && app.cart.length > 0 && (
+              <span style={{ position: 'absolute', top: 2, right: 2, width: 16, height: 16, borderRadius: 999, background: TGM.down || 'var(--down)', color: '#fff',
+                fontSize: 10, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{app.cart.length}</span>
+            )}
+          </button>
+        </div>
       </div>
 
-      {/* ── Scrollable content ── */}
-      <div style={{ flex: 1, overflowY: 'auto', paddingBottom: 90 }}>
-
       {/* ── Hero ── */}
-      <div style={{ position: 'relative', height: 180, overflow: 'hidden', background: game.tint }}>
+      <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: game.tint }}>
         {hero && <img src={hero} alt="" style={{
           position: 'absolute', inset: 0, width: '100%', height: '100%',
           objectFit: 'cover', objectPosition: 'center top', opacity: 0.5,
@@ -205,8 +199,6 @@ function GameScreen({ app, params }) {
           </button>
         )}
       </div>
-
-      </div>{/* end scrollable content */}
 
       {/* ── Bottom nav ── */}
       <BottomNavGM tab={app.nav.tab} setTab={app.nav.setTab} watchCount={(app.watch || []).length} />
