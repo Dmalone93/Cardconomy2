@@ -230,10 +230,10 @@ function App() {
   return (
     <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: TA.bg, isolation: 'isolate', display: 'flex', flexDirection: 'column' }}>
       {/* ── Persistent top bar: hamburger | logo | cart ── */}
-      <div style={{ flexShrink: 0, padding: '14px 16px 10px', background: TA.surface, borderBottom: '1px solid var(--line)', zIndex: 50,
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
+      <div style={{ flexShrink: 0, padding: '12px 16px', background: TA.surface, borderBottom: '1px solid var(--line)', zIndex: 50,
+        display: 'flex', alignItems: 'center' }}>
         <button onClick={() => setMenuOpen(true)} style={{ color: TA.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{IconA.menu({})}</button>
-        <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', lineHeight: 1 }}>
+        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <LogoA size={32} color={TA.ink} />
         </div>
         <button onClick={() => nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: TA.surface2, color: TA.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
