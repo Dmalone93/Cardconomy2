@@ -195,9 +195,9 @@ function DListing({ app, params }) {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
                       <span style={{ fontWeight: 700, fontSize: 14 }}>{o.seller}</span>
-                      {o.rating >= 99 && window.TrustBadge && <window.TrustBadge tier={2} />}
+                      {o.sellerRating >= 99 && window.TrustBadge && <window.TrustBadge tier={2} />}
                     </div>
-                    <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{o.rating}% · {o.sales.toLocaleString()} sales · {o.condition}</div>
+                    <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{o.sellerRating}% · {o.sellerSales.toLocaleString()} sales · {o.condition}</div>
                   </div>
                   <div style={{ textAlign: 'right', flexShrink: 0 }}>
                     <div style={{ fontFamily: TLi.mono, fontWeight: 700, fontSize: 16 }}>{mLi(o.price)}</div>
