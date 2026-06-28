@@ -537,11 +537,6 @@ function HomeScreen({ app }) {
         ))}
       </div>
 
-      {/* ── How it works link ── */}
-      <div style={{ textAlign: 'center', padding: '10px 14px 4px' }}>
-        <span onClick={() => app.nav.push('howitworks')} style={{ fontSize: 13, fontWeight: 600,
-          color: 'var(--ink)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
-      </div>
 
       {/* ── Browse by Game ── */}
       <div style={{ marginTop: 20 }}>

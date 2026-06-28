@@ -368,12 +368,6 @@ function DHome({ app }) {
         })()}
       </div>
 
-      {/* ── How it works link ── */}
-      <div className="wrap" style={{ textAlign: 'center', marginTop: 28, marginBottom: 8 }}>
-        <span onClick={() => app.go('howitworks')} style={{ fontSize: 13, fontWeight: 600,
-          color: 'var(--ink)', cursor: 'pointer' }}>How it works — buyers, sellers & game shops →</span>
-      </div>
-
       {/* ── Browse by Game (carousel) ── */}
       <GameCarousel app={app} />
 
