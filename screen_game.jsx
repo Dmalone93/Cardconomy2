@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Cardconomy Mobile — TCG Game Landing Screen
 // ─────────────────────────────────────────────────────────────
-const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM, Logo: LogoGM, BottomNav: BottomNavGM } = window;
+const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM, BottomNav: BottomNavGM } = window;
 const { GAMES: GAMESGM, SETS: SETSGM, LISTINGS: LISTSGM, gameById: gameByIdGM, GAME_LOGOS: GAME_LOGOS_GM } = window;
 
 const GAME_HEROES_GM = {
@@ -43,31 +43,22 @@ function GameScreen({ app, params }) {
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: TGM.bg, paddingBottom: 96 }}>
 
-      {/* ── Standard top bar (hamburger + logo + cart) ── */}
-      <div style={{ padding: '14px 16px 10px', background: TGM.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative' }}>
-          <button onClick={() => app.openMenu()} style={{ color: TGM.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{IconGM.menu({})}</button>
-          <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', lineHeight: 1 }}>
-            <LogoGM size={32} color={TGM.ink} />
-          </div>
-          <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-            {IconGM.cart ? IconGM.cart({}) : <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11.2a1.5 1.5 0 001.5 1.2h8.1a1.5 1.5 0 001.5-1.2L21 7H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20" r="1.4" fill="currentColor"/></svg>}
-            {app.cart && app.cart.length > 0 && (
-              <span style={{ position: 'absolute', top: 2, right: 2, width: 16, height: 16, borderRadius: 999, background: TGM.down || 'var(--down)', color: '#fff',
-                fontSize: 10, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{app.cart.length}</span>
-            )}
-          </button>
-        </div>
-      </div>
-
-      {/* ── Breadcrumb / back row ── */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '10px 14px', background: TGM.bg }}>
-        <button onClick={() => app.nav.pop()} style={{ display: 'flex', alignItems: 'center', gap: 4, color: 'var(--muted)', fontSize: 13, fontWeight: 600 }}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-          Home
+      {/* ── Top bar: back chevron + game name + cart (matches listing page pattern) ── */}
+      <div style={{ padding: '14px 12px 10px', background: TGM.surface, borderBottom: '1px solid var(--line)', position: 'sticky', top: 0, zIndex: 20,
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          {IconGM.back({})}
         </button>
-        <span style={{ color: 'var(--faint)', fontSize: 12 }}>/</span>
-        <span style={{ fontSize: 13, fontWeight: 700, color: TGM.ink }}>{game.name}</span>
+        <span style={{ fontFamily: TGM.sans || 'var(--sans)', fontWeight: 700, fontSize: 16, color: TGM.ink, letterSpacing: -0.3 }}>{game.name}</span>
+        <button onClick={() => app.nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: TGM.surface2 || 'var(--surface-2)',
+          boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+          {IconGM.cart ? IconGM.cart({}) : <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M3 4h2l2.2 11.2a1.5 1.5 0 001.5 1.2h8.1a1.5 1.5 0 001.5-1.2L21 7H6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><circle cx="9.5" cy="20" r="1.4" fill="currentColor"/><circle cx="17.5" cy="20" r="1.4" fill="currentColor"/></svg>}
+          {app.cart && app.cart.length > 0 && (
+            <span style={{ position: 'absolute', top: 2, right: 2, width: 16, height: 16, borderRadius: 999, background: TGM.down || 'var(--down)', color: '#fff',
+              fontSize: 10, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{app.cart.length}</span>
+          )}
+        </button>
       </div>
 
       {/* ── Hero ── */}
