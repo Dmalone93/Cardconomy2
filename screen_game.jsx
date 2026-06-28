@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Cardconomy Mobile — TCG Game Landing Screen
 // ─────────────────────────────────────────────────────────────
-const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM } = window;
+const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM, BottomNav: BottomNavGM } = window;
 const { GAMES: GAMESGM, SETS: SETSGM, LISTINGS: LISTSGM, gameById: gameByIdGM, GAME_LOGOS: GAME_LOGOS_GM } = window;
 
 const GAME_HEROES_GM = {
@@ -40,13 +40,34 @@ function GameScreen({ app, params }) {
     graded: LISTSGM.filter(l => l.game === game.id && l.grade && l.grade.company !== 'raw').length,
   };
 
-  const ProductCard = window.ProductCard;
-
   return (
-    <div style={{ paddingBottom: 100 }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {/* ── Sticky top bar ── */}
+      <div style={{
+        position: 'sticky', top: 0, zIndex: 20, background: game.tint,
+        display: 'flex', alignItems: 'center', gap: 10,
+        padding: '48px 14px 10px', minHeight: 44,
+      }}>
+        <button onClick={() => app.nav.pop()} style={{
+          width: 34, height: 34, borderRadius: 999, background: 'rgba(0,0,0,0.2)',
+          color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+        </button>
+        <span style={{ fontFamily: TGM.sans || 'var(--sans)', fontWeight: 700, fontSize: 17, color: '#fff', letterSpacing: -0.3 }}>{game.name}</span>
+        <button onClick={() => app.nav.setTab('search')} style={{
+          marginLeft: 'auto', width: 34, height: 34, borderRadius: 999, background: 'rgba(0,0,0,0.2)',
+          color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>
+        </button>
+      </div>
+
+      {/* ── Scrollable content ── */}
+      <div style={{ flex: 1, overflowY: 'auto', paddingBottom: 90 }}>
 
       {/* ── Hero ── */}
-      <div style={{ position: 'relative', height: 220, overflow: 'hidden', background: game.tint }}>
+      <div style={{ position: 'relative', height: 180, overflow: 'hidden', background: game.tint }}>
         {hero && <img src={hero} alt="" style={{
           position: 'absolute', inset: 0, width: '100%', height: '100%',
           objectFit: 'cover', objectPosition: 'center top', opacity: 0.5,
@@ -54,14 +75,6 @@ function GameScreen({ app, params }) {
         <div style={{ position: 'absolute', inset: 0,
           background: `linear-gradient(to bottom, ${game.tint}50 0%, ${game.tint}cc 60%, ${game.tint} 100%)`,
         }} />
-        {/* back button */}
-        <button onClick={() => app.nav.pop()} style={{
-          position: 'absolute', top: 50, left: 14, zIndex: 3,
-          width: 34, height: 34, borderRadius: 999, background: 'rgba(0,0,0,0.3)',
-          color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-        </button>
         <div style={{ position: 'relative', zIndex: 2, height: '100%',
           display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '0 16px 18px',
         }}>
@@ -153,22 +166,28 @@ function GameScreen({ app, params }) {
         {listings.length > 0 ? (
           <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             {listings.slice(0, 20).map(p => (
-              ProductCard
-                ? <ProductCard key={p.id} product={p} app={app} />
-                : <div key={p.id} onClick={() => app.nav.push('listing', { id: p.id })} style={{
-                    borderRadius: 12, overflow: 'hidden', background: 'var(--surface)',
-                    boxShadow: '0 1px 3px rgba(20,24,40,0.06)', cursor: 'pointer',
-                  }}>
-                    <div style={{ padding: 10, background: 'var(--surface-2)', display: 'flex', justifyContent: 'center' }}>
-                      <CardArtGM item={p} w={100} radius={6} />
-                    </div>
-                    <div style={{ padding: '8px 10px' }}>
-                      <div style={{ fontWeight: 700, fontSize: 13, color: 'var(--ink)', lineHeight: 1.2,
-                        whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</div>
-                      <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 2 }}>{p.subtitle || p.condition}</div>
-                      <div style={{ fontFamily: TGM.mono || 'var(--mono)', fontWeight: 700, fontSize: 15, marginTop: 4 }}>{mGM(p.price)}</div>
-                    </div>
-                  </div>
+              <div key={p.id} onClick={() => app.nav.push('listing', { id: p.id })} style={{
+                borderRadius: 12, overflow: 'hidden', background: '#fff',
+                border: '1px solid var(--line)', cursor: 'pointer',
+              }}>
+                <div style={{ position: 'relative', padding: '10px 10px 6px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
+                  <CardArtGM item={p} w={120} radius={6} />
+                  {p.grade && p.grade.company !== 'raw' && (
+                    <span style={{ position: 'absolute', top: 8, left: 8, background: 'rgba(0,0,0,0.65)', color: '#fff',
+                      fontWeight: 700, fontSize: 10, padding: '2px 7px', borderRadius: 999 }}>
+                      {p.grade.company.toUpperCase()} {p.grade.grade}
+                    </span>
+                  )}
+                </div>
+                <div style={{ padding: '8px 12px 12px' }}>
+                  <div style={{ fontFamily: TGM.sans || 'var(--sans)', fontWeight: 700, fontSize: 14, lineHeight: 1.15,
+                    whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</div>
+                  <div style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 1,
+                    whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.subtitle || p.condition}</div>
+                  <div style={{ fontFamily: TGM.mono || 'var(--mono)', fontWeight: 700, fontSize: 16, marginTop: 6 }}>{mGM(p.price)}</div>
+                  {p.seller && <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 2 }}>{p.seller}</div>}
+                </div>
+              </div>
             ))}
           </div>
         ) : (
@@ -186,6 +205,11 @@ function GameScreen({ app, params }) {
           </button>
         )}
       </div>
+
+      </div>{/* end scrollable content */}
+
+      {/* ── Bottom nav ── */}
+      <BottomNavGM tab={app.nav.tab} setTab={app.nav.setTab} watchCount={(app.watch || []).length} />
     </div>
   );
 }
