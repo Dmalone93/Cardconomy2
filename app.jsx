@@ -15,6 +15,7 @@ const { ScanScreen } = window;
 const { VerifyScreen } = window;
 const { AuthCardScreen } = window;
 const { Onboarding } = window;
+const { PackRip } = window;
 const { FeesScreen, HowItWorksScreen } = window;
 const { ChatScreen } = window;
 const { TrackingScreen } = window;
@@ -95,6 +96,7 @@ function App() {
   const [onboarded, setOnboarded] = React.useState(() => loadJSON('cc_onboarded', false));
   const [collections, setCollections] = React.useState(() => loadJSON('cc_collections', DEFAULT_COLLECTIONS));
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const [packRipped, setPackRipped] = React.useState(() => { try { return sessionStorage.getItem('cc_pack_ripped') === '1'; } catch (e) { return true; } });
   const [toast, setToastState] = React.useState(null);
   const toastTimer = React.useRef(null);
 
@@ -271,6 +273,7 @@ function App() {
       <BottomNav tab={tab} setTab={nav.setTab} watchCount={watch.length} />
       <SideMenu app={app} open={menuOpen} onClose={() => setMenuOpen(false)} />
       {!onboarded && Onboarding && <Onboarding app={app} games={window.GAMES || []} />}
+      {!packRipped && PackRip && <PackRip onComplete={() => { setPackRipped(true); try { sessionStorage.setItem('cc_pack_ripped', '1'); } catch(e) {} }} />}
       <Toast msg={toast} />
     </div>
   );
