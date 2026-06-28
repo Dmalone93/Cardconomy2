@@ -128,103 +128,108 @@ function DListing({ app, params }) {
         </div>
       </div>
 
-      {/* trade offers */}
-      {(() => {
-        const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
-        if (!product || !product.tradeOffers || product.tradeOffers.length === 0) return null;
-        return (
-          <section style={{ marginTop: 40 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-              <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.6, margin: 0 }}>Available to trade</h2>
-              <span style={{ background: '#f5f3ff', color: '#7c3aed', padding: '4px 10px', borderRadius: 7, fontWeight: 700, fontSize: 11 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
-            </div>
-            <p style={{ fontSize: 14, color: 'var(--muted)', margin: '0 0 18px' }}>These collectors have this card and want to swap — no cash needed.</p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 16 }}>
-              {product.tradeOffers.map((t, idx) => (
-                <div key={t.id} style={{ background: 'var(--surface)', borderRadius: 16, padding: 18, boxShadow: idx === 0 ? 'inset 0 0 0 2px #7c3aed, 0 1px 3px rgba(20,24,40,0.06)' : '0 1px 3px rgba(20,24,40,0.06)' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 11, marginBottom: 14 }}>
-                    <div style={{ width: 38, height: 38, borderRadius: 999, background: '#7c3aed', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 15, flexShrink: 0 }}>{t.trader.charAt(0)}</div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span style={{ fontWeight: 700, fontSize: 14 }}>{t.trader}</span>
-                        {t.verified && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '2px 7px', borderRadius: 5, fontWeight: 700, fontSize: 10 }}>Verified</span>}
-                      </div>
-                      <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{t.traderRating}% · {t.traderTrades.toLocaleString()} trades · {t.traderLoc}</div>
-                    </div>
-                  </div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--muted)', letterSpacing: 0.3, marginBottom: 8, textTransform: 'uppercase' }}>Wants in return</div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: '#faf5ff', borderRadius: 10, padding: 12, marginBottom: 10 }}>
-                    <div style={{ flexShrink: 0 }}><CardArtLi item={t.wantCard} w={40} radius={5} /></div>
+      {/* ── Secondary sections with visual separation ── */}
+      <div style={{ borderTop: '1px solid var(--line)', marginTop: 40, paddingTop: 32 }}>
+
+        {/* other sellers for this product */}
+        {(() => {
+          const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
+          if (!product || product.offers.length <= 1) return null;
+          const otherOffers = product.offers.filter(o => o.listingId !== item.id);
+          if (otherOffers.length === 0) return null;
+          const showOffers = otherOffers.slice(0, 5);
+          const remaining = otherOffers.length - showOffers.length;
+          return (
+            <section style={{ background: 'var(--surface)', borderRadius: 18, padding: '22px 24px', marginBottom: 28, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
+                <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.5, margin: 0 }}>Other sellers</h2>
+                <span style={{ background: 'var(--bg)', color: 'var(--muted)', padding: '3px 9px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>{otherOffers.length} offer{otherOffers.length !== 1 ? 's' : ''}</span>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                {showOffers.map((o, idx) => (
+                  <div key={o.id} onClick={() => { if (o.listingId) app.go('listing', { id: o.listingId }); }}
+                    style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 4px',
+                      borderBottom: idx < showOffers.length - 1 ? '1px solid var(--line-2)' : 'none', cursor: 'pointer',
+                      borderRadius: 10, transition: 'background 0.15s' }}
+                    onMouseEnter={function(e){ e.currentTarget.style.background = 'var(--bg)'; }}
+                    onMouseLeave={function(e){ e.currentTarget.style.background = 'transparent'; }}>
+                    <span style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{o.seller.charAt(0)}</span>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontWeight: 700, fontSize: 13.5 }}>{t.wantCard.name}</div>
-                      <div style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 1 }}>{t.wantCard.subtitle}</div>
-                      <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 1 }}>Condition: {t.wantCard.condition === 'Near Mint' ? 'NM+' : t.wantCard.condition} · {t.wantCard.gradePref}</div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <span style={{ fontWeight: 700, fontSize: 14 }}>{o.seller}</span>
+                        {o.sellerRating >= 99 && window.TrustBadge && <window.TrustBadge tier={2} />}
+                      </div>
+                      <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{o.sellerRating}% · {o.sellerSales.toLocaleString()} sales · {o.condition}</div>
                     </div>
-                  </div>
-                  {t.note && <div style={{ fontSize: 13, color: 'var(--ink-2)', fontStyle: 'italic', lineHeight: 1.4, marginBottom: 10 }}>"{t.note}"</div>}
-                  <button onClick={() => app.go('trade')} style={{ width: '100%', background: 'none', border: '1.5px solid #7c3aed', color: '#7c3aed', padding: 11, borderRadius: 11, fontWeight: 700, fontSize: 14 }}>Propose trade</button>
-                </div>
-              ))}
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* other sellers for this product */}
-      {(() => {
-        const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
-        if (!product || product.offers.length <= 1) return null;
-        const otherOffers = product.offers.filter(o => o.listingId !== item.id);
-        if (otherOffers.length === 0) return null;
-        const showOffers = otherOffers.slice(0, 5);
-        const remaining = otherOffers.length - showOffers.length;
-        return (
-          <section style={{ marginTop: 40 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-              <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.6, margin: 0 }}>Other sellers</h2>
-              <span style={{ background: 'var(--surface)', color: 'var(--muted)', padding: '4px 10px', borderRadius: 7, fontWeight: 700, fontSize: 11 }}>{otherOffers.length} offer{otherOffers.length !== 1 ? 's' : ''}</span>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-              {showOffers.map((o, idx) => (
-                <div key={o.id} onClick={() => { if (o.listingId) app.go('listing', { id: o.listingId }); }}
-                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 0',
-                    borderBottom: idx < showOffers.length - 1 ? '1px solid var(--line-2)' : 'none', cursor: 'pointer' }}
-                  onMouseEnter={function(e){ e.currentTarget.style.background = 'var(--surface)'; }}
-                  onMouseLeave={function(e){ e.currentTarget.style.background = 'none'; }}>
-                  <span style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 15, flexShrink: 0 }}>{o.seller.charAt(0)}</span>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      <span style={{ fontWeight: 700, fontSize: 14 }}>{o.seller}</span>
-                      {o.sellerRating >= 99 && window.TrustBadge && <window.TrustBadge tier={2} />}
+                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                      <div style={{ fontFamily: TLi.mono, fontWeight: 700, fontSize: 16 }}>{mLi(o.price)}</div>
+                      <div style={{ fontSize: 11.5, color: 'var(--muted)' }}>{o.shipping === 0 ? 'Free shipping' : mLi(o.shipping) + ' shipping'}</div>
                     </div>
-                    <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{o.sellerRating}% · {o.sellerSales.toLocaleString()} sales · {o.condition}</div>
+                    <button onClick={function(e) { e.stopPropagation(); if (o.listingId) app.addToCart(o.listingId); else app.toast('Added'); }}
+                      style={{ padding: '9px 14px', borderRadius: 10, background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>Add to cart</button>
                   </div>
-                  <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                    <div style={{ fontFamily: TLi.mono, fontWeight: 700, fontSize: 16 }}>{mLi(o.price)}</div>
-                    <div style={{ fontSize: 11.5, color: 'var(--muted)' }}>{o.shipping === 0 ? 'Free shipping' : mLi(o.shipping) + ' shipping'}</div>
-                  </div>
-                  <button onClick={function(e) { e.stopPropagation(); if (o.listingId) app.addToCart(o.listingId); else app.toast('Added'); }}
-                    style={{ padding: '9px 14px', borderRadius: 10, background: 'var(--ink)', color: '#fff', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>Add to cart</button>
-                </div>
-              ))}
-            </div>
-            {remaining > 0 && (
-              <button onClick={() => app.go('search', { game: item.game })}
-                style={{ marginTop: 14, width: '100%', padding: '12px', borderRadius: 11, background: 'var(--surface)', fontWeight: 700, fontSize: 14, color: 'var(--ink)', border: '1.5px solid var(--line)' }}>
-                View all {otherOffers.length} sellers
-              </button>
-            )}
-          </section>
-        );
-      })()}
+                ))}
+              </div>
+              {remaining > 0 && (
+                <button onClick={() => app.go('search', { game: item.game })}
+                  style={{ marginTop: 10, width: '100%', padding: '11px', borderRadius: 10, background: 'var(--bg)', fontWeight: 700, fontSize: 13.5, color: 'var(--ink)' }}>
+                  View all {otherOffers.length} sellers
+                </button>
+              )}
+            </section>
+          );
+        })()}
 
-      {/* similar */}
-      <section style={{ marginTop: 50 }}>
-        <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.6, margin: '0 0 18px' }}>Similar listings</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 }}>
-          {similar.map(l => <DCardLi key={l.id} item={l} app={app} />)}
-        </div>
-      </section>
+        {/* trade offers */}
+        {(() => {
+          const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
+          if (!product || !product.tradeOffers || product.tradeOffers.length === 0) return null;
+          return (
+            <section style={{ background: '#faf5ff', borderRadius: 18, padding: '22px 24px', marginBottom: 28, border: '1px solid #ede9fe' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
+                <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.5, margin: 0 }}>Available to trade</h2>
+                <span style={{ background: '#ede9fe', color: '#7c3aed', padding: '3px 9px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
+              </div>
+              <p style={{ fontSize: 13.5, color: 'var(--muted)', margin: '0 0 16px' }}>These collectors have this card and want to swap — no cash needed.</p>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 14 }}>
+                {product.tradeOffers.map((t, idx) => (
+                  <div key={t.id} style={{ background: '#fff', borderRadius: 14, padding: 16, boxShadow: idx === 0 ? 'inset 0 0 0 2px #7c3aed' : '0 1px 3px rgba(20,24,40,0.06)', border: idx !== 0 ? '1px solid #ede9fe' : 'none' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 11, marginBottom: 12 }}>
+                      <div style={{ width: 36, height: 36, borderRadius: 999, background: '#7c3aed', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{t.trader.charAt(0)}</div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                          <span style={{ fontWeight: 700, fontSize: 13.5 }}>{t.trader}</span>
+                          {t.verified && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '2px 7px', borderRadius: 5, fontWeight: 700, fontSize: 10 }}>Verified</span>}
+                        </div>
+                        <div style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 1 }}>{t.traderRating}% · {t.traderTrades.toLocaleString()} trades · {t.traderLoc}</div>
+                      </div>
+                    </div>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: '#7c3aed', letterSpacing: 0.4, marginBottom: 6, textTransform: 'uppercase' }}>Wants in return</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#f5f3ff', borderRadius: 9, padding: 10, marginBottom: 10 }}>
+                      <div style={{ flexShrink: 0 }}><CardArtLi item={t.wantCard} w={36} radius={5} /></div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontWeight: 700, fontSize: 13 }}>{t.wantCard.name}</div>
+                        <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 1 }}>{t.wantCard.subtitle}</div>
+                        <div style={{ fontSize: 10.5, color: 'var(--muted)', marginTop: 1 }}>Condition: {t.wantCard.condition === 'Near Mint' ? 'NM+' : t.wantCard.condition} · {t.wantCard.gradePref}</div>
+                      </div>
+                    </div>
+                    {t.note && <div style={{ fontSize: 12.5, color: 'var(--ink-2)', fontStyle: 'italic', lineHeight: 1.4, marginBottom: 10 }}>"{t.note}"</div>}
+                    <button onClick={() => app.go('trade')} style={{ width: '100%', background: 'none', border: '1.5px solid #7c3aed', color: '#7c3aed', padding: 10, borderRadius: 10, fontWeight: 700, fontSize: 13.5 }}>Propose trade</button>
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        })()}
+
+        {/* similar */}
+        <section style={{ marginTop: 8 }}>
+          <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.5, margin: '0 0 16px' }}>Similar listings</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 }}>
+            {similar.map(l => <DCardLi key={l.id} item={l} app={app} />)}
+          </div>
+        </section>
+      </div>
 
       <style>{`@media (max-width: 1040px){ .lst-grid{ grid-template-columns: 1fr 1fr !important; } .lst-buybox{ grid-column: 1 / -1; position: static !important; } }
         @media (max-width: 720px){ .lst-grid{ grid-template-columns: 1fr !important; } .lst-gallery{ position: static !important; } }`}</style>

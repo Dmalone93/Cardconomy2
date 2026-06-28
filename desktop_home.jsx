@@ -80,7 +80,7 @@ function GameCarousel({ app }) {
         <button onClick={function() { scrollBy(-1); }} style={Object.assign({}, arrowStyle(canLeft), { left: -22 })}>←</button>
         <button onClick={function() { scrollBy(1); }} style={Object.assign({}, arrowStyle(canRight), { right: -22 })}>→</button>
         <div ref={scrollRef} onScroll={updateArrows} className="game-carousel" style={{
-          display: 'flex', gap: 18, overflowX: 'auto', scrollSnapType: 'x mandatory',
+          display: 'flex', gap: 18, overflowX: 'auto', overflowY: 'hidden', scrollSnapType: 'x mandatory',
           scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch', padding: '4px 0',
         }}>
           <style dangerouslySetInnerHTML={{ __html: '.game-carousel::-webkit-scrollbar{display:none}' }} />
