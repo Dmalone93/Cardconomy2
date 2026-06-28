@@ -10,6 +10,7 @@ const { TradeScreen, StorefrontScreen, EnrollShopScreen, ShopFinderScreen } = wi
 const { CartScreen } = window;
 const { ProductScreen } = window;
 const { SellerScreen } = window;
+const { GameScreen } = window;
 const { ScanScreen } = window;
 const { VerifyScreen } = window;
 const { AuthCardScreen } = window;
