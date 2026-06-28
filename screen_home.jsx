@@ -12,11 +12,36 @@ function CardFan({ app }) {
   const cards = HERO_CARDS.map(id => byId(id)).filter(Boolean);
 
   return (
-    <div style={{ background: 'var(--fill)' }}>
+    <div style={{ position: 'relative', overflow: 'hidden', background: 'var(--fill)', height: 320 }}>
       <style dangerouslySetInnerHTML={{ __html: '@keyframes heroScrollLeft{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}' }} />
 
-      {/* text content — full width, no competing visuals */}
-      <div style={{ padding: '32px 20px 20px', display: 'flex', flexDirection: 'column' }}>
+      {/* background: dimmed horizontal card marquee */}
+      <div style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, zIndex: 1,
+        display: 'flex', alignItems: 'center', opacity: 0.15 }}>
+        <div style={{
+          display: 'flex', gap: 8, width: 'max-content',
+          animation: 'heroScrollLeft 80s linear infinite',
+        }}>
+          {[0, 1].map(dup => (
+            <React.Fragment key={dup}>
+              {cards.map((card, i) => (
+                <div key={card.id + '-' + dup + '-' + i}
+                  style={{ width: 160, flexShrink: 0, borderRadius: 8, overflow: 'hidden' }}>
+                  <CardArt item={card} w={160} radius={8} />
+                </div>
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
+      </div>
+
+      {/* overlay scrim for text readability */}
+      <div style={{ position: 'absolute', left: 0, top: 0, right: 0, bottom: 0, zIndex: 2,
+        background: 'linear-gradient(135deg, rgba(15,23,42,0.7) 40%, transparent 100%)' }} />
+
+      {/* text content — full width, layered on top */}
+      <div style={{ position: 'relative', zIndex: 3,
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%', padding: '0 20px' }}>
         <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 26, color: '#fff',
           letterSpacing: -0.5, lineHeight: 1.12 }}>
           The UK home for<br/>trading cards
@@ -41,32 +66,6 @@ function CardFan({ app }) {
               {ic({ width: 11, height: 11 })}
               <span>{label}</span>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* horizontal card marquee */}
-      <div style={{ position: 'relative', overflow: 'hidden', padding: '8px 0 20px' }}>
-        {/* left/right gradient scrims */}
-        <div style={{ position: 'absolute', top: 0, left: 0, bottom: 0, width: 50, zIndex: 2,
-          background: 'linear-gradient(to right, var(--fill), transparent)' }} />
-        <div style={{ position: 'absolute', top: 0, right: 0, bottom: 0, width: 50, zIndex: 2,
-          background: 'linear-gradient(to left, var(--fill), transparent)' }} />
-
-        <div style={{
-          display: 'flex', gap: 6, width: 'max-content',
-          animation: 'heroScrollLeft 80s linear infinite',
-        }}>
-          {[0, 1].map(dup => (
-            <React.Fragment key={dup}>
-              {cards.map((card, i) => (
-                <div key={card.id + '-' + dup + '-' + i}
-                  style={{ width: 140, flexShrink: 0, borderRadius: 6, overflow: 'hidden',
-                    boxShadow: '0 2px 8px rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                  <CardArt item={card} w={140} radius={6} />
-                </div>
-              ))}
-            </React.Fragment>
           ))}
         </div>
       </div>
