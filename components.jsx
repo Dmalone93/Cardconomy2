@@ -418,7 +418,7 @@ function SideMenu({ app, open, onClose }) {
         <div style={{ padding: '10px 0 6px' }}>
           <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 11.5, letterSpacing: 0.6, color: T.faint, padding: '8px 20px 6px' }}>SHOP BY GAME</div>
           {games.map(g => (
-            <button key={g.id} onClick={() => go(() => app.nav.push('search', { game: g.id }))} style={{
+            <button key={g.id} onClick={() => go(() => app.nav.push('game', { id: g.id }))} style={{
               width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '13px 20px', textAlign: 'left', background: 'transparent' }}>
               <span style={{ width: 10, height: 10, borderRadius: 999, background: g.tint, flexShrink: 0 }} />
               <span style={{ flex: 1, fontFamily: T.sans, fontWeight: 600, fontSize: 16 }}>{g.name}</span>
