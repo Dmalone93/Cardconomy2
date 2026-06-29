@@ -154,8 +154,8 @@ function ProductScreen({ app, params }) {
 
       <div ref={scrollRefP} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
         {/* ── 1. Card image ── */}
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0 20px', background: 'var(--surface)', borderRadius: '0 0 18px 18px', boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-          <CardArtP item={product} w={200} radius={12} />
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0 20px', background: 'var(--surface)' }}>
+          <CardArtP item={product} w={200} radius={0} />
         </div>
 
         {/* ── 2. Name + subtitle ── */}
@@ -188,20 +188,6 @@ function ProductScreen({ app, params }) {
           </div>
         </div>
 
-        {/* ── 5. Trust strip ── */}
-        <div style={{ display: 'flex', justifyContent: 'space-around', padding: '12px 16px', borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)' }}>
-          {[
-            [IconP.shield({ width: 20, height: 20 }), 'Protected'],
-            [IconP.check({ width: 20, height: 20 }), 'Verified'],
-            [<svg key="lock" width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="2"/><path d="M8 11V7a4 4 0 118 0v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg>, 'Secure'],
-            [IconP.truck({ width: 20, height: 20 }), 'Tracked'],
-          ].map(([icon, label]) => (
-            <div key={label} style={{ textAlign: 'center', color: 'var(--muted)' }}>
-              <div style={{ display: 'flex', justifyContent: 'center' }}>{icon}</div>
-              <div style={{ fontFamily: TP.sans, fontSize: 10, fontWeight: 600, color: 'var(--muted)', marginTop: 2 }}>{label}</div>
-            </div>
-          ))}
-        </div>
 
         {/* ── 6. Seller offers ── */}
         <div style={{ padding: '16px 16px 0' }}>
