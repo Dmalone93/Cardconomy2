@@ -175,9 +175,9 @@ function ProductScreen({ app, params }) {
           {['All', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'BGS'].map(c => (
             <div key={c} style={{
               padding: '7px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer', flexShrink: 0,
-              background: c === 'All' ? 'var(--ink)' : 'var(--surface)',
-              color: c === 'All' ? '#fff' : 'var(--ink)',
-              border: c === 'All' ? 'none' : '1px solid var(--line)',
+              background: c === 'All' ? '#fff' : 'var(--surface)',
+              color: c === 'All' ? 'var(--ink)' : 'var(--ink)',
+              border: c === 'All' ? '2px solid var(--ink)' : '1px solid var(--line)',
             }}>{c}</div>
           ))}
         </div>
