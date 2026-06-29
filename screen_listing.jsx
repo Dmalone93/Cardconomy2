@@ -61,22 +61,21 @@ function ListingScreen({ app, params }) {
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TL.bg, animation: 'ccPushIn 0.26s ease' }}>
-      {/* nav — share + watch buttons */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, padding: '10px 12px',
-        display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
-        background: 'linear-gradient(180deg, rgba(238,240,243,0.96), rgba(238,240,243,0))' }}>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={() => { window.shareCard ? window.shareCard(item) : null; app.toast('Shared'); }} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
-            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.share({})}</button>
-          <button onClick={() => app.toggleWatch(item.id)} style={{ width: 38, height: 38, borderRadius: 999, background: TL.surface,
-            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: watched?TL.down:TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.heart({width:20,height:20}, watched)}</button>
-        </div>
-      </div>
-
       <div ref={scrollRefL} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 110 }}>
         {/* hero */}
-        <div style={{ background: 'radial-gradient(120% 90% at 50% 0%, ' + (item.art) + '22, ' + TL.surface + ' 70%)',
-          paddingTop: 96, paddingBottom: 24, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ position: 'relative', background: 'var(--surface)',
+          paddingTop: 16, paddingBottom: 24, display: 'flex', justifyContent: 'center' }}>
+          {/* back + share + watch */}
+          <div style={{ position: 'absolute', top: 10, left: 12, right: 12, zIndex: 10, display: 'flex', justifyContent: 'space-between' }}>
+            <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
+              boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>{IconL.back({})}</button>
+            <div style={{ display: 'flex', gap: 8 }}>
+              <button onClick={() => { window.shareCard ? window.shareCard(item) : null; app.toast('Shared'); }} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.share({})}</button>
+              <button onClick={() => app.toggleWatch(item.id)} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: watched?TL.down:TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.heart({width:20,height:20}, watched)}</button>
+            </div>
+          </div>
           {isLot ? (
             <div style={{ width: 200, height: 200, borderRadius: 18, background: item.art, color: '#fff', position: 'relative',
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
@@ -93,7 +92,7 @@ function ListingScreen({ app, params }) {
         </div>
 
         {/* body */}
-        <div style={{ background: TL.surface, borderRadius: '22px 22px 0 0', marginTop: -12, padding: '20px 18px 8px', position: 'relative' }}>
+        <div style={{ padding: '18px 16px 8px' }}>
           {/* title block */}
           <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8, flexWrap: 'wrap' }}>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: TL.sans, fontWeight: 700, fontSize: 12,
@@ -168,14 +167,6 @@ function ListingScreen({ app, params }) {
             </div>
           )}
 
-          {/* buyer protection banner */}
-          <div style={{ marginTop: 12, padding: '12px 14px', background: TL.surface2, borderRadius: 4, display: 'flex', gap: 10, alignItems: 'flex-start' }}>
-            <span style={{ flexShrink: 0, color: TL.muted }}>{IconL.shield({ width: 18, height: 18 })}</span>
-            <div>
-              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Buyer Protection</div>
-              <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, lineHeight: 1.4, marginTop: 2 }}>Every purchase is covered. If the card doesn\'t match the listing, get a full refund.</div>
-            </div>
-          </div>
 
           {/* seller\'s real photos */}
           {!isLot && (
@@ -242,7 +233,7 @@ function ListingScreen({ app, params }) {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
                   <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>{item.seller}</span>
                   {window.TrustBadge ? <window.TrustBadge tier={item.sellerRating >= 99 ? 2 : 1} /> : (
-                    item.sellerRating >= 99 && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 4, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>
+                    item.sellerRating >= 99 && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 6, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>
                   )}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
@@ -316,7 +307,7 @@ function ListingScreen({ app, params }) {
             <div style={{ padding: '0 0px', marginTop: 16 }}>
               <button onClick={() => app.nav.push('authcard', { id: item.id })} style={{
                 width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px',
-                background: TL.surface, borderRadius: 4, textAlign: 'left',
+                background: TL.surface, borderRadius: 12, textAlign: 'left',
                 boxShadow: 'inset 0 0 0 1px var(--line)',
               }}>
                 <svg width="20" height="20" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: 'var(--ink)' }}><path d="M208,40H48A16,16,0,0,0,32,56V200a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Zm80,32H48V56H208V200ZM64,96V80A16,16,0,0,1,80,64H96a8,8,0,0,1,0,16H80V96a8,8,0,0,1-16,0Zm144,64v16a16,16,0,0,1-16,16H176a8,8,0,0,1,0-16h16V160a8,8,0,0,1,16,0Z" fill="currentColor"/></svg>
@@ -348,17 +339,17 @@ function ListingScreen({ app, params }) {
             <div style={{ marginTop: 26 }}>
               <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, marginBottom: 12 }}>Your offer</div>
               {/* buyer message */}
-              <div style={{ background: TL.surface2, borderRadius: 4, padding: 14, marginBottom: 10 }}>
+              <div style={{ background: TL.surface2, borderRadius: 12, padding: 14, marginBottom: 10 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
                   <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>You offered {moneyL(offerSent.amount)}</span>
-                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11, color: '#b45309', background: '#fef3c7', borderRadius: 4, padding: '2px 8px' }}>Pending</span>
+                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11, color: '#b45309', background: '#fef3c7', borderRadius: 6, padding: '2px 8px' }}>Pending</span>
                 </div>
                 <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>Sent just now</div>
               </div>
               {/* seller reply */}
-              <div style={{ background: TL.surface, borderRadius: 4, padding: 14, marginBottom: 10, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+              <div style={{ background: TL.surface, borderRadius: 12, padding: 14, marginBottom: 10, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: 4, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{offerSent.seller[0]}</div>
+                  <div style={{ width: 28, height: 28, borderRadius: 8, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{offerSent.seller[0]}</div>
                   <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{offerSent.seller}</span>
                   <span style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginLeft: 'auto' }}>Just now</span>
                 </div>
@@ -368,8 +359,8 @@ function ListingScreen({ app, params }) {
               </div>
               {/* reply input (mock) */}
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <input readOnly placeholder="Reply..." style={{ flex: 1, padding: '12px 14px', borderRadius: 4, border: 'none', background: TL.surface2, boxShadow: 'inset 0 0 0 1px var(--line)', fontFamily: TL.sans, fontSize: 14, color: TL.ink, outline: 'none' }} />
-                <button style={{ padding: '12px 16px', borderRadius: 4, background: 'var(--ink)', color: '#fff', fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Send</button>
+                <input readOnly placeholder="Reply..." style={{ flex: 1, padding: '12px 14px', borderRadius: 12, border: 'none', background: TL.surface2, boxShadow: 'inset 0 0 0 1px var(--line)', fontFamily: TL.sans, fontSize: 14, color: TL.ink, outline: 'none' }} />
+                <button style={{ padding: '12px 16px', borderRadius: 12, background: 'var(--ink)', color: '#fff', fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Send</button>
               </div>
             </div>
           )}
@@ -377,17 +368,16 @@ function ListingScreen({ app, params }) {
       </div>
 
       {/* sticky action bar */}
-      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 30, padding: '12px 16px 30px',
-        background: 'var(--glass)', backdropFilter: 'blur(18px)', borderTop: '1px solid var(--line)',
-        display: 'flex', gap: 10, alignItems: 'center' }}>
+      <div style={{ flexShrink: 0, background: 'var(--surface)', borderTop: '1px solid var(--line)', padding: '10px 16px',
+        display: 'flex', gap: 10, alignItems: 'center', boxShadow: '0 -2px 10px rgba(20,24,40,0.06)' }}>
         {item.accepts_offers && (
-          <button onClick={() => setSheet('offer')} style={{ flex: 1, background: TL.surface, color: TL.ink, borderRadius: 4,
-            padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 15, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Make offer</button>
+          <button onClick={() => setSheet('offer')} style={{ flex: 1, background: 'none', color: 'var(--ink)', borderRadius: 12,
+            padding: '14px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 14, border: '1.5px solid var(--line)' }}>Make offer</button>
         )}
-        <button onClick={() => app.addToCart(item.id)} style={{ flex: 1.3, background: 'var(--fill)', color: '#fff', borderRadius: 4,
-          padding: '15px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
+        <button onClick={() => app.addToCart(item.id)} style={{ flex: 1.3, background: 'var(--ink)', color: '#fff', borderRadius: 12,
+          padding: '14px 8px', fontFamily: TL.sans, fontWeight: 700, fontSize: 15, border: 'none',
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-          {IconL.cart({ width: 18, height: 18 })} {app.cart.includes(item.id) ? 'In cart' : 'Add to cart · ' + moneyL(displayPrice)}
+          {app.cart.includes(item.id) ? 'In cart' : 'Add to cart \u00B7 ' + moneyL(displayPrice)}
         </button>
       </div>
 
