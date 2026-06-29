@@ -532,11 +532,23 @@ function HomeScreen({ app }) {
           <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Trending</div>
           <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>See all</div>
         </div>
-        <div style={{ display: 'flex', gap: 12, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
+        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
           WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
           {trendingProducts.slice(0, 12).map(p => (
-            <div key={p.id} style={{ flexShrink: 0, width: 'calc(40vw - 10px)', maxWidth: 160, scrollSnapAlign: 'start' }}>
-              <ProductCard product={p} app={app} />
+            <div key={p.id} onClick={() => app.nav.push('product', { id: p.id })} style={{
+              flexShrink: 0, width: 152, scrollSnapAlign: 'start', cursor: 'pointer',
+              borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
+            }}>
+              <div style={{ padding: '8px 8px 4px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
+                <CardArt item={p} w={120} radius={6} />
+              </div>
+              <div style={{ padding: '6px 10px 10px' }}>
+                <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 12.5, lineHeight: 1.15,
+                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.name}</div>
+                <div style={{ fontFamily: T.sans, fontSize: 10.5, color: T.muted, marginTop: 1 }}>{p.subtitle}</div>
+                <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 14, marginTop: 4 }}>{money(p.market)}</div>
+                {p.offerCount > 1 && <div style={{ fontFamily: T.sans, fontSize: 10, color: T.muted, marginTop: 2 }}>from {money(p.low)} · {p.offerCount} sellers</div>}
+              </div>
             </div>
           ))}
         </div>
@@ -549,15 +561,15 @@ function HomeScreen({ app }) {
             <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Under {'\u00A3'}100</div>
             <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>Shop budget</div>
           </div>
-          <div style={{ display: 'flex', gap: 12, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
+          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
             WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
             {under100.slice(0, 12).map(l => (
               <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{
-                flexShrink: 0, width: 'calc(40vw - 10px)', maxWidth: 160, scrollSnapAlign: 'start', cursor: 'pointer',
+                flexShrink: 0, width: 152, scrollSnapAlign: 'start', cursor: 'pointer',
                 borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
               }}>
                 <div style={{ padding: '8px 8px 4px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
-                  <CardArt item={l} w={100} radius={6} />
+                  <CardArt item={l} w={120} radius={6} />
                 </div>
                 <div style={{ padding: '6px 10px 10px' }}>
                   <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 12.5, lineHeight: 1.15,
