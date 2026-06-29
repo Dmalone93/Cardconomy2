@@ -480,6 +480,7 @@ function HomeScreen({ app }) {
   const sets = filt(SETS).filter(s => s.img);
   const graded = filt(LISTINGS.filter(l => l.grade.company !== 'raw'));
   const lots = filt(LOTS);
+  const under100 = filt(LISTINGS.filter(l => l.type === 'buynow' && l.price < 100));
 
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: T.bg, paddingBottom: 96 }}>
@@ -525,16 +526,79 @@ function HomeScreen({ app }) {
         </div>
       </div>
 
-      {/* ── Trending ── */}
+      {/* ── Trending carousel ── */}
       <div style={{ paddingTop: 20 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 14px', marginBottom: 10 }}>
           <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Trending</div>
           <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>See all</div>
         </div>
-        <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, padding: '0 16px' }}>
-          {trendingProducts.slice(0, 8).map(p => <ProductCard key={p.id} product={p} app={app} />)}
+        <div style={{ display: 'flex', gap: 12, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
+          WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+          {trendingProducts.slice(0, 12).map(p => (
+            <div key={p.id} style={{ flexShrink: 0, width: 150, scrollSnapAlign: 'start' }}>
+              <ProductCard product={p} app={app} />
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* ── Under £100 carousel ── */}
+      {under100.length > 0 && (
+        <div style={{ paddingTop: 20 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 14px', marginBottom: 10 }}>
+            <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Under {'\u00A3'}100</div>
+            <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>Shop budget</div>
+          </div>
+          <div style={{ display: 'flex', gap: 12, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
+            WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+            {under100.slice(0, 12).map(l => (
+              <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{
+                flexShrink: 0, width: 140, scrollSnapAlign: 'start', cursor: 'pointer',
+                borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
+              }}>
+                <div style={{ padding: '8px 8px 4px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
+                  <CardArt item={l} w={110} radius={6} />
+                </div>
+                <div style={{ padding: '6px 10px 10px' }}>
+                  <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 12.5, lineHeight: 1.15,
+                    whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
+                  <div style={{ fontFamily: T.sans, fontSize: 10.5, color: T.muted, marginTop: 1 }}>{l.condition}</div>
+                  <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 14, marginTop: 4 }}>{money(l.price)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Graded slabs carousel ── */}
+      {graded.length > 0 && (
+        <div style={{ paddingTop: 20 }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 14px', marginBottom: 10 }}>
+            <div style={{ fontSize: 16, fontWeight: 700, color: T.ink }}>Graded slabs</div>
+            <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>Browse graded</div>
+          </div>
+          <div style={{ display: 'flex', gap: 12, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
+            WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+            {graded.slice(0, 10).map(l => (
+              <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{
+                flexShrink: 0, width: 140, scrollSnapAlign: 'start', cursor: 'pointer',
+                borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
+              }}>
+                <div style={{ padding: '8px 8px 4px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
+                  <Slab item={l} w={90} />
+                </div>
+                <div style={{ padding: '6px 10px 10px' }}>
+                  <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 12.5, lineHeight: 1.15,
+                    whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
+                  <div style={{ fontFamily: T.sans, fontSize: 10.5, color: T.muted, marginTop: 1 }}>{gradeText(l.grade)}</div>
+                  <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 14, marginTop: 4 }}>{money(l.price)}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* ── Sell your cards ── */}
       <div style={{ padding: '24px 14px 0' }}>
