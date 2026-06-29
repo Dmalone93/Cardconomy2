@@ -154,12 +154,12 @@ function ProductScreen({ app, params }) {
 
       <div ref={scrollRefP} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
         {/* ── 1. Card image ── */}
-        <div style={{ position: 'relative' }}>
+        <div style={{ position: 'relative', background: 'var(--surface)' }}>
           <button onClick={() => app.nav.pop()} style={{ position: 'absolute', top: 10, left: 12, zIndex: 10, width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
             boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>{IconP.back({})}</button>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0 20px', background: 'var(--surface)' }}>
-          <CardArtP item={product} w={200} radius={0} />
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0 20px' }}>
+            <CardArtP item={product} w={200} radius={0} />
+          </div>
         </div>
 
         {/* ── 2. Name + subtitle ── */}
