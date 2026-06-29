@@ -41,7 +41,7 @@ function TrackingScreen({ app }) {
         display: 'flex', alignItems: 'center', gap: 10, position: 'sticky', top: 0, zIndex: 10,
       }}>
         <button onClick={function() { app.nav.pop(); }} style={{ color: TK.ink, display: 'flex' }}>{IconTK.back({})}</button>
-        <span style={{ fontFamily: TK.sans, fontWeight: 800, fontSize: 18 }}>Order Tracking</span>
+        <span style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 18 }}>Order Tracking</span>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
@@ -51,7 +51,7 @@ function TrackingScreen({ app }) {
           background: TK.surface, borderRadius: 16, padding: 16, marginBottom: 14,
           boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
         }}>
-          <div style={{ fontFamily: TK.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TK.muted, textTransform: 'uppercase', marginBottom: 8 }}>Order Summary</div>
+          <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TK.muted, textTransform: 'uppercase', marginBottom: 8 }}>Order Summary</div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 15 }}>{order.orderNumber}</div>
@@ -71,7 +71,7 @@ function TrackingScreen({ app }) {
           background: TK.surface, borderRadius: 16, padding: '18px 16px', marginBottom: 14,
           boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
         }}>
-          <div style={{ fontFamily: TK.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TK.muted, textTransform: 'uppercase', marginBottom: 14 }}>Status</div>
+          <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TK.muted, textTransform: 'uppercase', marginBottom: 14 }}>Status</div>
           {steps.map(function(step, i) {
             var isLast = i === steps.length - 1;
             var dotColor = step.done
@@ -139,7 +139,7 @@ function TrackingScreen({ app }) {
           background: TK.surface, borderRadius: 16, padding: 16, marginBottom: 14,
           boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
         }}>
-          <div style={{ fontFamily: TK.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TK.muted, textTransform: 'uppercase', marginBottom: 10 }}>Shipping Details</div>
+          <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TK.muted, textTransform: 'uppercase', marginBottom: 10 }}>Shipping Details</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <span style={{ fontFamily: TK.sans, fontSize: 13, color: TK.muted }}>Carrier</span>
@@ -161,7 +161,7 @@ function TrackingScreen({ app }) {
           background: TK.surface, borderRadius: 16, padding: 16, marginBottom: 14,
           boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
         }}>
-          <div style={{ fontFamily: TK.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TK.muted, textTransform: 'uppercase', marginBottom: 10 }}>Item</div>
+          <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TK.muted, textTransform: 'uppercase', marginBottom: 10 }}>Item</div>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
             <div style={{
               width: 56, height: 56, borderRadius: 12, background: TK.surface2 || 'var(--surface-2)',
@@ -177,7 +177,7 @@ function TrackingScreen({ app }) {
                 Sold by {order.item.seller}
               </div>
             </div>
-            <div style={{ fontFamily: TK.sans, fontWeight: 800, fontSize: 16, flexShrink: 0 }}>
+            <div style={{ fontFamily: TK.sans, fontWeight: 700, fontSize: 16, flexShrink: 0 }}>
               {moneyTK(order.item.price)}
             </div>
           </div>

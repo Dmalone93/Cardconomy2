@@ -7,7 +7,7 @@ const { SUBMISSION: SUB_D, SUB_CARDS: SUBC_D, BULK_RATES: BULK_D, subStats: subS
 
 const m0Tr = (n) => mTr(n, { cents: false });
 function AvatarD({ who, size = 44 }) {
-  return <span style={{ width: size, height: size, borderRadius: size * 0.3, flexShrink: 0, background: who.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: size * 0.42 }}>{who.initial}</span>;
+  return <span style={{ width: size, height: size, borderRadius: size * 0.3, flexShrink: 0, background: who.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: size * 0.42 }}>{who.initial}</span>;
 }
 function MiniFaceD({ id }) { const it = byIdTr(id); return it ? <div style={{ width: 40, height: 56, borderRadius: 6, overflow: 'hidden', flexShrink: 0 }}><CardArtTr item={it} w={40} radius={6} /></div> : null; }
 
@@ -16,7 +16,7 @@ function DTrade({ app }) {
   const [tab, setTab] = React.useState('board');
   return (
     <div className="wrap" style={{ padding: '32px 24px 30px' }}>
-      <h1 style={{ fontFamily: TTr.sans, fontWeight: 800, fontSize: 34, letterSpacing: -1, margin: '0 0 6px' }}>Trade with collectors</h1>
+      <h1 style={{ fontFamily: TTr.sans, fontWeight: 700, fontSize: 34, letterSpacing: -1, margin: '0 0 6px' }}>Trade with collectors</h1>
       <p style={{ color: 'var(--muted)', fontSize: 16, margin: '0 0 22px', maxWidth: 640, lineHeight: 1.5 }}>Swap cards directly — no cash needed. Browse open trades or your 2-way matches, then meet at a local shop to settle in person.</p>
 
       <div style={{ display: 'flex', gap: 4, borderBottom: '1px solid var(--line)', marginBottom: 24 }}>
@@ -85,7 +85,7 @@ function DTrade({ app }) {
 
       {tab === 'post' && (
         <div style={{ maxWidth: 560, background: 'var(--surface)', borderRadius: 16, padding: 24, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-          <div style={{ fontWeight: 800, fontSize: 18, marginBottom: 6 }}>Post a card, stay open to offers</div>
+          <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 6 }}>Post a card, stay open to offers</div>
           <p style={{ color: 'var(--muted)', fontSize: 14, margin: '0 0 18px', lineHeight: 1.5 }}>List a card you'll part with and set the criteria you\'d accept. Collectors propose; you decide.</p>
           <div style={{ fontWeight: 700, fontSize: 13.5, marginBottom: 10 }}>Pick a card to offer</div>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 18 }}>
@@ -109,9 +109,9 @@ function DStorefront({ app, params = {} }) {
       </div>
       <div className="wrap" style={{ padding: '0 24px' }}>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 20, marginTop: -44, position: 'relative', marginBottom: 24 }}>
-          <span style={{ width: 96, height: 96, borderRadius: 24, background: shop.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 42, border: '4px solid var(--bg)', flexShrink: 0 }}>{shop.initial}</span>
+          <span style={{ width: 96, height: 96, borderRadius: 24, background: shop.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 42, border: '4px solid var(--bg)', flexShrink: 0 }}>{shop.initial}</span>
           <div style={{ flex: 1, paddingBottom: 6 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><h1 style={{ fontFamily: TTr.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.8, margin: 0 }}>{shop.name}</h1>{IconTr.shield({ width: 18, height: 18, style: { color: shop.tint } })}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}><h1 style={{ fontFamily: TTr.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.8, margin: 0 }}>{shop.name}</h1>{IconTr.shield({ width: 18, height: 18, style: { color: shop.tint } })}</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4, fontSize: 13.5, color: 'var(--muted)' }}><StarsTr rating={shop.rating * 20} /> {shop.rating} · {shop.reviews.toLocaleString()} reviews · {shop.loc} · {shop.dist} mi</div>
           </div>
           <button onClick={() => app.toast('Following ' + shop.name)} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 11, padding: '12px 24px', fontWeight: 700, fontSize: 14.5 }}>+ Follow shop</button>
@@ -127,7 +127,7 @@ function DStorefront({ app, params = {} }) {
 
         {inv.length > 0 && (
           <div style={{ marginBottom: 40 }}>
-            <h2 style={{ fontFamily: TTr.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.6, margin: '0 0 18px' }}>In stock now</h2>
+            <h2 style={{ fontFamily: TTr.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.6, margin: '0 0 18px' }}>In stock now</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 }}>{inv.map(l => <window.DCard key={l.id} item={l} app={app} />)}</div>
           </div>
         )}
@@ -149,15 +149,15 @@ function DShopDash({ app }) {
     return (
       <div className="wrap" style={{ padding: '32px 24px 30px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 6 }}>
-          <h1 style={{ fontFamily: TTr.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.9, margin: 0 }}>Buylist inbox</h1>
+          <h1 style={{ fontFamily: TTr.sans, fontWeight: 700, fontSize: 30, letterSpacing: -0.9, margin: 0 }}>Buylist inbox</h1>
           <span style={{ fontWeight: 700, fontSize: 11, color: '#2f8f5b', background: 'var(--up-wash)', borderRadius: 7, padding: '4px 9px' }}>SHOP VIEW · Gnome Games</span>
         </div>
         <p style={{ color: 'var(--muted)', fontSize: 15, margin: '0 0 24px' }}>Collection submissions from walk-in sellers, queued for review.</p>
         <button onClick={() => setOpen(true)} style={{ width: '100%', textAlign: 'left', background: 'var(--accent-wash)', borderRadius: 16, padding: 22, boxShadow: 'inset 0 0 0 2px var(--accent)', marginBottom: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
             <AvatarD who={{ initial: SUB_D.seller.initial, tint: '#2f8f5b' }} size={48} />
-            <div style={{ flex: 1 }}><div style={{ fontWeight: 800, fontSize: 18 }}>{SUB_D.seller.name} · {SUB_D.total.toLocaleString()} cards</div><div style={{ fontSize: 13, color: 'var(--muted)' }}>{SUB_D.submittedAgo} · ticket #{SUB_D.ticket}</div></div>
-            <span style={{ fontWeight: 800, fontSize: 10.5, color: '#fff', background: 'var(--down)', borderRadius: 999, padding: '4px 10px' }}>NEW</span>
+            <div style={{ flex: 1 }}><div style={{ fontWeight: 700, fontSize: 18 }}>{SUB_D.seller.name} · {SUB_D.total.toLocaleString()} cards</div><div style={{ fontSize: 13, color: 'var(--muted)' }}>{SUB_D.submittedAgo} · ticket #{SUB_D.ticket}</div></div>
+            <span style={{ fontWeight: 700, fontSize: 10.5, color: '#fff', background: 'var(--down)', borderRadius: 999, padding: '4px 10px' }}>NEW</span>
           </div>
           <div style={{ display: 'flex', gap: 12, marginTop: 16 }}>
             {[[stats.buylistCount, '★ buylist hits', 'var(--accent)'], [m0Tr(buylistPayout), 'est. payout', 'var(--ink)'], [m0Tr(stats.estMarket), 'market value', 'var(--ink)']].map(([v, k, c], i) => (
@@ -181,7 +181,7 @@ function DShopDash({ app }) {
     <div className="wrap" style={{ padding: '28px 24px 30px' }}>
       <button onClick={() => setOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--muted)', fontSize: 14, fontWeight: 600, marginBottom: 16 }}>‹ Back to inbox</button>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 22 }}>
-        <div><h1 style={{ fontFamily: TTr.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.8, margin: 0 }}>{SUB_D.seller.name} · #{SUB_D.id}</h1><div style={{ fontSize: 13.5, color: 'var(--muted)', marginTop: 2 }}>{SUB_D.total.toLocaleString()} cards · ticket #{SUB_D.ticket}</div></div>
+        <div><h1 style={{ fontFamily: TTr.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.8, margin: 0 }}>{SUB_D.seller.name} · #{SUB_D.id}</h1><div style={{ fontSize: 13.5, color: 'var(--muted)', marginTop: 2 }}>{SUB_D.total.toLocaleString()} cards · ticket #{SUB_D.ticket}</div></div>
         <button onClick={() => app.toast('Offer sent to ' + SUB_D.seller.name + ' for review')} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 11, padding: '13px 26px', fontWeight: 700, fontSize: 15 }}>Build offer →</button>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 24 }}>

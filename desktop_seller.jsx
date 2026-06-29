@@ -51,8 +51,8 @@ function DSellerProfile({ app, params }) {
     // branded header
     React.createElement('div', { style: { background: 'var(--fill)', color: '#fff', padding: '40px 0 36px', textAlign: 'center' } },
       React.createElement('div', { className: 'wrap' },
-        React.createElement('div', { style: { width: 72, height: 72, borderRadius: 999, background: '#fff', color: 'var(--fill)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 30, margin: '0 auto 12px' } }, seller.name.charAt(0)),
-        React.createElement('h1', { style: { fontWeight: 800, fontSize: 28, letterSpacing: -0.8, margin: '0 0 4px' } }, seller.name),
+        React.createElement('div', { style: { width: 72, height: 72, borderRadius: 999, background: '#fff', color: 'var(--fill)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 30, margin: '0 auto 12px' } }, seller.name.charAt(0)),
+        React.createElement('h1', { style: { fontWeight: 700, fontSize: 28, letterSpacing: -0.8, margin: '0 0 4px' } }, seller.name),
         React.createElement('div', { style: { fontSize: 13.5, opacity: 0.65 } }, seller.loc + ' · Since ' + seller.since),
         (isTrusted || isFastShipper) && React.createElement('div', { style: { display: 'flex', justifyContent: 'center', gap: 8, marginTop: 12 } },
           isTrusted && React.createElement('span', { style: { background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: 6, fontWeight: 700, fontSize: 11 } }, 'Trusted'),
@@ -112,7 +112,7 @@ function DSellerProfile({ app, params }) {
       // reviews tab
       tab === 'reviews' && React.createElement('div', null,
         React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 } },
-          React.createElement('div', { style: { fontWeight: 800, fontSize: 32, letterSpacing: -0.5 } }, seller.rating + '%'),
+          React.createElement('div', { style: { fontWeight: 700, fontSize: 32, letterSpacing: -0.5 } }, seller.rating + '%'),
           React.createElement('div', null,
             React.createElement('div', { style: { display: 'flex', gap: 2 } },
               Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: '#f59e0b', fontSize: 16 } }, '★'); })

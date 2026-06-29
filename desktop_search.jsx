@@ -66,13 +66,13 @@ function DSearch({ app, params = {} }) {
       <div style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 6 }}>
         <button onClick={() => app.go('home')} style={{ color: 'var(--muted)' }}>Home</button> / <span style={{ color: 'var(--ink-2)' }}>Search</span>
       </div>
-      <h1 style={{ fontFamily: TSe.sans, fontWeight: 800, fontSize: 28, letterSpacing: -0.8, margin: '0 0 22px' }}>{title} <span style={{ fontSize: 16, fontWeight: 500, color: 'var(--muted)' }}>· {res.length} results</span></h1>
+      <h1 style={{ fontFamily: TSe.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.8, margin: '0 0 22px' }}>{title} <span style={{ fontSize: 16, fontWeight: 500, color: 'var(--muted)' }}>· {res.length} results</span></h1>
 
       <div style={{ display: 'grid', gridTemplateColumns: '248px 1fr', gap: 30, alignItems: 'start' }} className="srch-grid">
         {/* filter rail */}
         <aside style={{ position: 'sticky', top: 130 }} className="srch-rail">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-            <span style={{ fontWeight: 800, fontSize: 16 }}>Filters</span>
+            <span style={{ fontWeight: 700, fontSize: 16 }}>Filters</span>
             <button onClick={reset} style={{ fontSize: 13, color: 'var(--ink)', fontWeight: 600 }}>Reset</button>
           </div>
           <FilterGroup title="Game">

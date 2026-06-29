@@ -93,7 +93,7 @@ function HowItWorksScreen({ app }) {
       <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
       {/* ── Hero ── */}
       <div style={{ padding: '20px 14px 28px', textAlign: 'center' }}>
-        <div style={{ fontSize: 24, fontWeight: 800, color: THW.ink, lineHeight: 1.2, letterSpacing: -0.5 }}>
+        <div style={{ fontSize: 24, fontWeight: 700, color: THW.ink, lineHeight: 1.2, letterSpacing: -0.5 }}>
           One marketplace, three communities
         </div>
         <div style={{ fontSize: 14, color: THW.muted, marginTop: 10, lineHeight: 1.6, maxWidth: 340, margin: '10px auto 0' }}>
@@ -126,7 +126,7 @@ function HowItWorksScreen({ app }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
             <span style={{ width: 22, height: 22, borderRadius: 999, background: p.color, display: 'inline-block', flexShrink: 0 }} />
             <div>
-              <div style={{ fontSize: 17, fontWeight: 800, color: THW.ink }}>{p.label}</div>
+              <div style={{ fontSize: 17, fontWeight: 700, color: THW.ink }}>{p.label}</div>
               <div style={{ fontSize: 13, color: THW.muted }}>{p.tagline}</div>
             </div>
           </div>
@@ -136,7 +136,7 @@ function HowItWorksScreen({ app }) {
                 borderRadius: 12, padding: '14px 14px', boxShadow: '0 1px 3px rgba(20,24,40,0.04)' }}>
                 <div style={{ width: 32, height: 32, borderRadius: 10, background: p.color,
                   color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 800, fontSize: 15, flexShrink: 0 }}>{s.num}</div>
+                  fontWeight: 700, fontSize: 15, flexShrink: 0 }}>{s.num}</div>
                 <div>
                   <div style={{ fontSize: 14, fontWeight: 700, color: THW.ink }}>{s.title}</div>
                   <div style={{ fontSize: 13, color: THW.muted, marginTop: 3, lineHeight: 1.5 }}>{s.desc}</div>
@@ -170,7 +170,7 @@ function HowItWorksScreen({ app }) {
       {/* ── The Bridge section ── */}
       <div style={{ margin: '0 14px 24px', padding: '20px 16px', borderRadius: 14,
         background: 'var(--ink)', color: '#fff' }}>
-        <div style={{ fontSize: 18, fontWeight: 800, marginBottom: 8 }}>
+        <div style={{ fontSize: 18, fontWeight: 700, marginBottom: 8 }}>
           Why this matters
         </div>
         <div style={{ fontSize: 13, lineHeight: 1.7, opacity: 0.9 }}>
@@ -186,7 +186,7 @@ function HowItWorksScreen({ app }) {
 
       {/* ── FAQ ── */}
       <div style={{ padding: '0 14px 30px' }}>
-        <div style={{ fontSize: 20, fontWeight: 800, color: THW.ink, marginBottom: 14 }}>
+        <div style={{ fontSize: 20, fontWeight: 700, color: THW.ink, marginBottom: 14 }}>
           Frequently asked questions
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>

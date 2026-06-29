@@ -121,7 +121,7 @@ function PackRip({ onComplete }) {
       } },
         LogoRip ? React.createElement(LogoRip, { size: 52, color: '#fff' }) : null,
         React.createElement('div', { style: {
-          fontFamily: 'var(--wordmark)', fontWeight: 800, fontSize: 20, letterSpacing: 2.5, color: '#fff',
+          fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 20, letterSpacing: 2.5, color: '#fff',
         } }, 'CARDCONOMY')
       ),
 
@@ -136,7 +136,7 @@ function PackRip({ onComplete }) {
       } },
         LogoRip ? React.createElement(LogoRip, { size: 52, color: '#fff' }) : null,
         React.createElement('div', { style: {
-          fontFamily: 'var(--wordmark)', fontWeight: 800, fontSize: 20, letterSpacing: 2.5, color: '#fff',
+          fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 20, letterSpacing: 2.5, color: '#fff',
         } }, 'CARDCONOMY')
       )
     ),

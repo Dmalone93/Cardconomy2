@@ -1,0 +1,33 @@
+<h2>Free Shipping Upsell: When should it appear?</h2>
+<p class="subtitle">After a user adds a card to cart from a seller with multiple listings, how do we nudge them?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Toast / Snackbar</h3>
+      <p>A small banner slides up from the bottom right after "Added to cart" — e.g. <em>"Add £12 more from VaultCards for free shipping"</em>. Tapping it goes to the seller's profile. Auto-dismisses after a few seconds. Lightweight, non-blocking.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Bottom Sheet</h3>
+      <p>A slide-up sheet appears showing: the item you just added, the free shipping threshold, and 2-3 suggested cards from the same seller. User can add more or dismiss. More prominent, higher conversion but more interruptive.</p>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Inline on Product Page</h3>
+      <p>After adding to cart, the "Add to cart" button area transforms to show the upsell message inline — <em>"✓ Added · £12 more from this seller = free shipping"</em> with a link to the seller profile. No popup, stays in context.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:20px;padding:16px;background:#f0f7ff;border-radius:8px;border-left:3px solid #2563eb">
+  <strong style="font-size:13px">My recommendation: B (Bottom Sheet)</strong>
+  <p style="font-size:13px;margin-top:6px;color:#444">It gives enough room to show the threshold AND suggest specific cards from the seller — which directly drives the bundling behavior you want. The existing app already has a Sheet component we can reuse.</p>
+</div>

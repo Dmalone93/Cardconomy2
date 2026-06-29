@@ -340,7 +340,7 @@ function ProductScreen({ app, params }) {
         display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 -2px 10px rgba(20,24,40,0.06)' }}>
         <div>
           <div style={{ fontFamily: TP.sans, fontSize: 10, fontWeight: 600, color: 'var(--muted)', textTransform: 'uppercase' }}>FROM</div>
-          <div style={{ fontFamily: 'var(--mono)', fontWeight: 800, fontSize: 20, color: 'var(--ink)' }}>{moneyP(product.low)}</div>
+          <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 20, color: 'var(--ink)' }}>{moneyP(product.low)}</div>
         </div>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: 6 }}>
           <button onClick={() => {

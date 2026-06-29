@@ -30,7 +30,7 @@ function AuthCardScreen({ app, params = {} }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TAU.bg }}>
       <div style={{ padding: '14px 14px 12px', background: TAU.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => phase === 'intro' || phase === 'submitted' ? app.nav.pop() : setPhase('intro')} style={{ color: TAU.ink }}>{IconAU.back({})}</button>
-        <span style={{ fontFamily: TAU.sans, fontWeight: 800, fontSize: 17 }}>Authenticate card</span>
+        <span style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 17 }}>Authenticate card</span>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '18px 16px 30px' }}>
@@ -49,7 +49,7 @@ function AuthCardScreen({ app, params = {} }) {
           <div>
             <div style={{ textAlign: 'center', padding: '4px 0 16px' }}>
               <div style={{ width: 64, height: 64, margin: '0 auto 12px', borderRadius: 18, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconAU.shield({ width: 30, height: 30 })}</div>
-              <h1 style={{ margin: 0, fontFamily: TAU.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.5 }}>Get it Cardonomy Verified</h1>
+              <h1 style={{ margin: 0, fontFamily: TAU.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.5 }}>Get it Cardonomy Verified</h1>
               <p style={{ fontFamily: TAU.sans, fontSize: 13.5, color: TAU.muted, lineHeight: 1.5, margin: '8px auto 0', maxWidth: 300 }}>
                 Raw cards over £100 can be authenticated by our team. Verified cards get a tamper-evident seal and sell for more, with buyer trust built in.
               </p>
@@ -74,7 +74,7 @@ function AuthCardScreen({ app, params = {} }) {
 
         {phase === 'method' && (
           <div>
-            <h2 style={{ fontFamily: TAU.sans, fontWeight: 800, fontSize: 19, letterSpacing: -0.4, margin: '0 0 4px' }}>How do you want to verify?</h2>
+            <h2 style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 19, letterSpacing: -0.4, margin: '0 0 4px' }}>How do you want to verify?</h2>
             <p style={{ fontFamily: TAU.sans, fontSize: 13, color: TAU.muted, margin: '0 0 16px' }}>Both end in the same Cardonomy Verified seal.</p>
             {[['shop', IconAU.shield({ width: 22, height: 22 }), 'Verify at a local shop', 'Drop it at an enrolled LGS — examined on-site, often same day. No shipping.', 'Fastest · in person'],
               ['mail', IconAU.truck({ width: 22, height: 22 }), 'Mail-in to Cardonomy', 'Ship with a prepaid, insured label. Examined and sealed at our facility, then returned or vaulted.', '5–7 days']].map(([id, e, t, d, tag]) => {
@@ -99,14 +99,14 @@ function AuthCardScreen({ app, params = {} }) {
           <div>
             <div style={{ textAlign: 'center', padding: '8px 0 18px' }}>
               <div style={{ width: 76, height: 76, margin: '0 auto 12px', borderRadius: 999, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconAU.check({ width: 40, height: 40 })}</div>
-              <h1 style={{ margin: 0, fontFamily: TAU.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.5 }}>Submitted for authentication</h1>
+              <h1 style={{ margin: 0, fontFamily: TAU.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.5 }}>Submitted for authentication</h1>
               <p style={{ fontFamily: TAU.sans, fontSize: 13.5, color: TAU.muted, lineHeight: 1.5, margin: '8px auto 0', maxWidth: 300 }}>
                 {method === 'shop' ? 'Take the card to Gnome Games (ticket #AC-2231). We will text when it is sealed.' : 'Your prepaid label is in Notifications. Pack the card and drop it off — tracking starts automatically.'}
               </p>
             </div>
             {/* status tracker */}
             <div style={{ background: TAU.surface, borderRadius: 16, padding: 18, boxShadow: 'var(--shadow-1)' }}>
-              <div style={{ fontFamily: TAU.sans, fontWeight: 800, fontSize: 14, marginBottom: 14 }}>Authentication status</div>
+              <div style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 14, marginBottom: 14 }}>Authentication status</div>
               {AUTH_STEPS.map((s, i) => {
                 const done = i < stage, active = i === stage;
                 return (
@@ -128,7 +128,7 @@ function AuthCardScreen({ app, params = {} }) {
             ) : (
               <div style={{ marginTop: 16, textAlign: 'center', background: 'var(--up-wash)', borderRadius: 14, padding: 18 }}>
                 <div style={{ marginBottom: 8 }}><AuthSeal size="lg" /></div>
-                <div style={{ fontFamily: TAU.sans, fontWeight: 800, fontSize: 16, color: 'var(--up)' }}>Card verified &amp; sealed</div>
+                <div style={{ fontFamily: TAU.sans, fontWeight: 700, fontSize: 16, color: 'var(--up)' }}>Card verified &amp; sealed</div>
                 <p style={{ fontFamily: TAU.sans, fontSize: 12.5, color: TAU.ink2, lineHeight: 1.45, margin: '6px auto 14px', maxWidth: 280 }}>Your listing now shows the Cardonomy Verified seal. Serial #AC-2231-CHZ.</p>
                 <button onClick={() => app.nav.pop()} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '12px 26px', fontFamily: TAU.sans, fontWeight: 700, fontSize: 15 }}>Done</button>
               </div>

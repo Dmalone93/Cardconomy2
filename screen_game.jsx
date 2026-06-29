@@ -61,7 +61,7 @@ function GameScreen({ app, params }) {
                 maxWidth: 160, maxHeight: 44, objectFit: 'contain',
                 filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.5))', marginBottom: 8,
               }} />
-            : <div style={{ fontFamily: 'var(--heading)', fontWeight: 800, fontSize: 26, color: '#fff',
+            : <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 26, color: '#fff',
                 letterSpacing: -0.5, marginBottom: 8 }}>{game.name}</div>
           }
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>

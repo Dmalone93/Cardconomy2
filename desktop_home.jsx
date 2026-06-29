@@ -39,7 +39,7 @@ function DGameTile({ game, app }) {
           <img src={logo} alt={game.short} style={{ maxWidth: 200, maxHeight: 70,
             objectFit: 'contain', filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.6))' }} />
         ) : (
-          <span style={{ fontSize: 24, fontWeight: 800, color: '#fff',
+          <span style={{ fontSize: 24, fontWeight: 700, color: '#fff',
             textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>{game.short}</span>
         )}
         <span style={{ fontSize: 14, color: 'rgba(255,255,255,0.7)', marginTop: 10, fontWeight: 600 }}>Browse {game.name}</span>

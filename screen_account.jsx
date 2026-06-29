@@ -24,7 +24,7 @@ function AccHeader({ app, title, sub, right }) {
     <div style={{ padding: '14px 14px 14px', background: TAC.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
       <button onClick={() => app.nav.pop()} style={{ color: TAC.ink, flexShrink: 0 }}>{IconAC.back({})}</button>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ fontFamily: TAC.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>{title}</div>
+        <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 18, letterSpacing: -0.3 }}>{title}</div>
         {sub && <div style={{ fontFamily: TAC.sans, fontSize: 12, color: TAC.muted }}>{sub}</div>}
       </div>
       {right}
@@ -71,7 +71,7 @@ function emptyBlock(icon, title, body) {
   return (
     <div style={{ textAlign: 'center', padding: '60px 24px', color: TAC.muted }}>
       <div style={{ width: 64, height: 64, margin: '0 auto 14px', borderRadius: 999, background: TAC.surface, color: TAC.faint, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>{icon}</div>
-      <div style={{ fontFamily: TAC.sans, fontWeight: 800, fontSize: 17, color: TAC.ink }}>{title}</div>
+      <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 17, color: TAC.ink }}>{title}</div>
       <div style={{ fontFamily: TAC.sans, fontSize: 13.5, marginTop: 4, lineHeight: 1.45 }}>{body}</div>
     </div>
   );
@@ -221,7 +221,7 @@ function BuylistEdit({ entry, onSave, onRemove }) {
       <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 16 }}>
         <ListThumb item={entry.card} w={54} />
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontFamily: TAC.sans, fontWeight: 800, fontSize: 16 }}>{entry.card.name}</div>
+          <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 16 }}>{entry.card.name}</div>
           <div style={{ fontFamily: TAC.sans, fontSize: 12, color: TAC.muted }}>{setByIdAC(entry.card.set)?.name} · market {money0AC(entry.card.market)}</div>
         </div>
       </div>
@@ -472,7 +472,7 @@ function PaymentsScreen({ app }) {
         </div>
 
         {/* payout destination */}
-        <div style={{ fontFamily: TAC.sans, fontWeight: 800, fontSize: 14, color: TAC.ink2, margin: '20px 0 9px' }}>Payout method</div>
+        <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, color: TAC.ink2, margin: '20px 0 9px' }}>Payout method</div>
         <button onClick={() => app.toast('Bank account editor would open here')} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TAC.surface, borderRadius: 13, padding: '13px 14px', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <span style={{ width: 38, height: 38, borderRadius: 10, background: TAC.surface2, color: TAC.ink2, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{AIcon.bank({ width: 20, height: 20 })}</span>
           <div style={{ flex: 1, textAlign: 'left' }}>
@@ -483,7 +483,7 @@ function PaymentsScreen({ app }) {
         </button>
 
         {/* payment methods */}
-        <div style={{ fontFamily: TAC.sans, fontWeight: 800, fontSize: 14, color: TAC.ink2, margin: '20px 0 9px' }}>Payment methods</div>
+        <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, color: TAC.ink2, margin: '20px 0 9px' }}>Payment methods</div>
         <div style={{ background: TAC.surface, borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           {[['Apple Pay', 'Default', true], ['Visa ••••4242', 'Expires 08/27', false]].map(([t, s, def], i) => (
             <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '13px 14px', borderBottom: i === 0 ? '1px solid var(--line-2)' : 'none' }}>
@@ -501,7 +501,7 @@ function PaymentsScreen({ app }) {
         </div>
 
         {/* transactions */}
-        <div style={{ fontFamily: TAC.sans, fontWeight: 800, fontSize: 14, color: TAC.ink2, margin: '20px 0 9px' }}>Recent activity</div>
+        <div style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 14, color: TAC.ink2, margin: '20px 0 9px' }}>Recent activity</div>
         <div style={{ background: TAC.surface, borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           {TXNS.map((t, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 14px', borderBottom: i < TXNS.length - 1 ? '1px solid var(--line-2)' : 'none' }}>

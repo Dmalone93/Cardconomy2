@@ -80,7 +80,7 @@ function VerifyScreen({ app }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TV.bg }}>
       <div style={{ padding: '14px 14px 12px', background: TV.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TV.ink }}>{IconV.back({})}</button>
-        <span style={{ fontFamily: TV.sans, fontWeight: 800, fontSize: 17 }}>Verification</span>
+        <span style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 17 }}>Verification</span>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '18px 16px 30px' }}>
@@ -90,7 +90,7 @@ function VerifyScreen({ app }) {
             <div style={{ fontFamily: TV.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Your trust level</div>
             <TrustBadge tier={allDone ? Math.max(tier, 1) : 0} size="lg" />
           </div>
-          <div style={{ fontFamily: TV.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4, marginTop: 4 }}>{tierByN(allDone ? Math.max(tier, 1) : 0).label}</div>
+          <div style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4, marginTop: 4 }}>{tierByN(allDone ? Math.max(tier, 1) : 0).label}</div>
           <div style={{ fontFamily: TV.sans, fontSize: 12.5, opacity: 0.8, marginTop: 2 }}>{tierByN(allDone ? Math.max(tier, 1) : 0).desc}</div>
         </div>
 
@@ -136,7 +136,7 @@ function VerifyScreen({ app }) {
 
         {allDone && (
           <div style={{ marginTop: 16, textAlign: 'center' }}>
-            <div style={{ fontFamily: TV.sans, fontWeight: 800, fontSize: 17, color: 'var(--up)' }}>✓ You're verified!</div>
+            <div style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 17, color: 'var(--up)' }}>✓ You're verified!</div>
             <p style={{ fontFamily: TV.sans, fontSize: 13.5, color: TV.muted, lineHeight: 1.5, margin: '6px auto 16px', maxWidth: 290 }}>
               You can now sell, bid, and trade. Build a track record to reach <b>Trusted Seller</b> and unlock higher limits.
             </p>
@@ -148,7 +148,7 @@ function VerifyScreen({ app }) {
         {tier >= 1 && (
           <div style={{ marginTop: 22, background: TV.surface, borderRadius: 16, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-              <span style={{ fontFamily: TV.sans, fontWeight: 800, fontSize: 15 }}>Progress to Trusted Seller</span>
+              <span style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 15 }}>Progress to Trusted Seller</span>
               <TrustBadge tier={2} size="sm" />
             </div>
             <p style={{ fontFamily: TV.sans, fontSize: 12.5, color: TV.muted, margin: '0 0 14px', lineHeight: 1.45 }}>
@@ -178,7 +178,7 @@ function VerifyScreen({ app }) {
         )}
 
         {/* the ladder */}
-        <div style={{ fontFamily: TV.sans, fontWeight: 800, fontSize: 14, color: TV.ink2, margin: '24px 2px 10px' }}>How trust works on Cardonomy</div>
+        <div style={{ fontFamily: TV.sans, fontWeight: 700, fontSize: 14, color: TV.ink2, margin: '24px 2px 10px' }}>How trust works on Cardonomy</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {TIERS.map(t => (
             <div key={t.key} style={{ display: 'flex', alignItems: 'center', gap: 12, background: TV.surface, borderRadius: 12, padding: '11px 14px',

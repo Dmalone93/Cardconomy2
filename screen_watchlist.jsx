@@ -45,7 +45,7 @@ function WatchScreen({ app }) {
       <div style={{ padding: '14px 16px 0', background: TW.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '0 0 4px' }}>
           <button onClick={() => app.openMenu()} style={{ color: TW.ink, padding: '2px 2px 2px 0', display: 'flex' }}>{IconW.menu({})}</button>
-          <h1 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 800, fontSize: 26, letterSpacing: -0.6, flex: 1 }}>Your cards</h1>
+          <h1 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 700, fontSize: 26, letterSpacing: -0.6, flex: 1 }}>Your cards</h1>
           {tab === 'watch' && watched.length > 0 && (
             <button onClick={() => selectMode ? exitSelect() : setSelectMode(true)} style={{
               fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: selectMode ? 'var(--down)' : 'var(--ink)', padding: '4px 8px',
@@ -133,7 +133,7 @@ function WatchScreen({ app }) {
 
             {/* collection folders */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '4px 2px 10px' }}>
-              <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15 }}>Your collections</span>
+              <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>Your collections</span>
               <button onClick={() => { const n = (window.prompt && window.prompt('Name your collection', '')) || ''; if (n !== null && n.trim()) { const id = app.addCollection(n.trim()); app.nav.push('collection', { cid: id }); } }}
                 style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)' }}>
                 {IconW.plus ? IconW.plus({ width: 15, height: 15 }) : '+'} New
@@ -147,7 +147,7 @@ function WatchScreen({ app }) {
                     background: TW.surface, borderRadius: 16, padding: 14, display: 'flex', gap: 13, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                     <span style={{ width: 46, height: 46, borderRadius: 13, background: TW.surface2, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: TW.muted }}>{col.icon || IconW.tag({ width: 22, height: 22 })}</span>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 15.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{col.name}</div>
+                      <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 15.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{col.name}</div>
                       <div style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>{col.cards.length} card{col.cards.length!==1?'s':''}</div>
                     </div>
                     <div style={{ width: 54, opacity: 0.9 }}>{v.series.length>1 && <SparkW data={v.series} w={54} h={24} up={v.now>=v.then} fill={false} />}</div>
@@ -298,7 +298,7 @@ function EmptyState({ icon, title, body, cta, onCta }) {
     <div style={{ textAlign: 'center', padding: '70px 24px' }}>
       <div style={{ width: 80, height: 80, margin: '0 auto 18px', borderRadius: 999, background: TW.surface, color: TW.faint,
         display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>{icon}</div>
-      <h3 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 800, fontSize: 19 }}>{title}</h3>
+      <h3 style={{ margin: 0, fontFamily: TW.sans, fontWeight: 700, fontSize: 19 }}>{title}</h3>
       <p style={{ fontFamily: TW.sans, fontSize: 14, color: TW.muted, lineHeight: 1.5, margin: '8px auto 18px', maxWidth: 270 }}>{body}</p>
       <button onClick={onCta} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '12px 24px', fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>{cta}</button>
     </div>
@@ -334,7 +334,7 @@ function SellerDash({ app, header }) {
         {/* balance card */}
         <button onClick={() => app.nav.push('payments')} style={{ width: '100%', textAlign: 'left', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', borderRadius: 20, padding: 20, color: '#fff', marginBottom: 14 }}>
           <div style={{ fontFamily: TW.sans, fontSize: 12, opacity: 0.65, fontWeight: 600 }}>Available balance</div>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 34, letterSpacing: -1, marginTop: 4 }}>{moneyW(248.47)}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 34, letterSpacing: -1, marginTop: 4 }}>{moneyW(248.47)}</div>
           <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: '#7fe7a4', marginTop: 4 }}>&#9650; {moneyW(84)} this week</div>
           <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
             <span style={{ flex: 1, textAlign: 'center', background: 'rgba(255,255,255,0.12)', borderRadius: 10, padding: '9px 0', fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>Withdraw</span>
@@ -345,17 +345,17 @@ function SellerDash({ app, header }) {
         {/* status tiles */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
           <button onClick={() => app.nav.push('selling')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>2</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 24 }}>2</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Active listings</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: 'var(--ink)', marginTop: 4 }}>24 views today</div>
           </button>
           <button onClick={() => app.nav.push('offers')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 24 }}>1</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Pending offers</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#f59e0b', marginTop: 4 }}>{'Respond →'}</div>
           </button>
           <button onClick={() => app.nav.push('shipping')} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 24 }}>1</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>To ship</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#22c55e', marginTop: 4 }}>{'Print label →'}</div>
           </button>
@@ -363,7 +363,7 @@ function SellerDash({ app, header }) {
 
         {/* activity feed */}
         <div className="stagger" style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Activity</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Activity</div>
           {ACTIVITY.map(([dot, text, time], i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
               <span style={{ width: 8, height: 8, borderRadius: 999, background: dot, flexShrink: 0 }} />
@@ -435,8 +435,8 @@ function BuyerDash({ app, header }) {
 
         {/* 1. Portfolio hero card */}
         <button onClick={() => app.nav.setTab('watch')} style={{ width: '100%', textAlign: 'left', background: TW.surface, borderRadius: 20, padding: 20, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase' }}>Portfolio Value</div>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 32, letterSpacing: -1, marginTop: 4 }}>{moneyW(port.now)}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase' }}>Portfolio Value</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 32, letterSpacing: -1, marginTop: 4 }}>{moneyW(port.now)}</div>
           <span style={{ display: 'inline-block', marginTop: 6, background: '#dcfce7', color: '#16a34a', borderRadius: 999, padding: '3px 10px', fontFamily: TW.sans, fontWeight: 700, fontSize: 12 }}>+12% this month</span>
           <div style={{ marginTop: 12 }}>
             <MiniSpark data={sparkData} color="#22c55e" h={34} />
@@ -448,7 +448,7 @@ function BuyerDash({ app, header }) {
 
         {/* 2. Needs attention */}
         <div style={{ marginBottom: 14 }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 8 }}>Needs Attention</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 8 }}>Needs Attention</div>
           <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {ATTENTION.map(function(a, i) {
               return (
@@ -464,7 +464,7 @@ function BuyerDash({ app, header }) {
 
         {/* 3. Watchlist price movements */}
         <div className="stagger" style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>{'Watching ' + watched.length}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>{'Watching ' + watched.length}</div>
           {watched.length === 0 && <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, padding: '8px 0' }}>No watched cards yet.</div>}
           {watched.map(function(item, i) {
             var price = item.market || item.price;
@@ -483,7 +483,7 @@ function BuyerDash({ app, header }) {
         {/* 4. Buylist matches */}
         <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-            <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase' }}>Buylist</span>
+            <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase' }}>Buylist</span>
             <span style={{ background: 'var(--ink)', color: '#fff', borderRadius: 999, padding: '1px 7px', fontFamily: TW.sans, fontWeight: 700, fontSize: 11 }}>{BUYLIST_MATCHES.length}</span>
           </div>
           {BUYLIST_MATCHES.map(function(m, i) {
@@ -501,7 +501,7 @@ function BuyerDash({ app, header }) {
 
         {/* 5. Recent purchases */}
         <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Orders</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Orders</div>
           {ORDERS.map(function(o, i) {
             return (
               <button key={i} onClick={function() { app.nav.push('tracking'); }} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
@@ -560,7 +560,7 @@ function StoreDash({ app, header }) {
 
         {/* 1. Needs attention */}
         <div style={{ marginBottom: 14 }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 8 }}>Needs Attention</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 8 }}>Needs Attention</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {ATTENTION.map(function(a, i) {
               return (
@@ -576,8 +576,8 @@ function StoreDash({ app, header }) {
 
         {/* 2. Revenue card */}
         <div style={{ background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', borderRadius: 20, padding: 20, color: '#fff', marginBottom: 14 }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, opacity: 0.65, textTransform: 'uppercase' }}>{"Today's Revenue"}</div>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 34, letterSpacing: -1, marginTop: 4 }}>{moneyW(1247)}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, opacity: 0.65, textTransform: 'uppercase' }}>{"Today's Revenue"}</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 34, letterSpacing: -1, marginTop: 4 }}>{moneyW(1247)}</div>
           <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: '#7fe7a4', marginTop: 4 }}>&#9650; up 23% vs last week</div>
           {/* date range pills */}
           <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
@@ -604,17 +604,17 @@ function StoreDash({ app, header }) {
         {/* 3. Queue stats tiles */}
         <div style={{ display: 'flex', gap: 10, marginBottom: 14 }}>
           <button onClick={function() { app.nav.push('shop'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>4</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 24 }}>4</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Submissions</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: '#f59e0b', marginTop: 4 }}>2 new today</div>
           </button>
           <button onClick={function() { app.nav.push('shop'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>1</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 24 }}>1</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Bulk lots</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: TW.muted, marginTop: 4 }}>1,420 cards</div>
           </button>
           <button onClick={function() { app.nav.push('buylist'); }} style={{ flex: 1, background: TW.surface, borderRadius: 14, padding: 14, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 24 }}>12</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 24 }}>12</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 12, color: TW.ink, marginTop: 2 }}>Buylist hits</div>
             <div style={{ fontFamily: TW.sans, fontWeight: 600, fontSize: 11, color: 'var(--ink)', marginTop: 4 }}>today</div>
           </button>
@@ -622,11 +622,11 @@ function StoreDash({ app, header }) {
 
         {/* 4. Submission queue */}
         <div className="stagger" style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Submission Queue</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Submission Queue</div>
           {QUEUE.map(function(q, i) {
             return (
               <button key={i} onClick={function() { app.nav.push('shop'); }} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 0', borderTop: i > 0 ? '1px solid var(--line-2)' : 'none' }}>
-                <div style={{ width: 28, height: 28, borderRadius: 999, background: q.color + '22', color: q.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{q.init}</div>
+                <div style={{ width: 28, height: 28, borderRadius: 999, background: q.color + '22', color: q.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{q.init}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13 }}>{q.name}</div>
                   <div style={{ fontFamily: TW.sans, fontSize: 11, color: TW.muted }}>{q.cards + ' · ' + q.time}</div>
@@ -639,14 +639,14 @@ function StoreDash({ app, header }) {
 
         {/* 5. Buylist performance */}
         <div style={{ background: TW.surface, borderRadius: 16, padding: 15, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Buylist Performance</div>
+          <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TW.muted, textTransform: 'uppercase', marginBottom: 10 }}>Buylist Performance</div>
           <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
             <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 26, color: 'var(--ink)' }}>12</div>
+              <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 26, color: 'var(--ink)' }}>12</div>
               <div style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>matched today</div>
             </div>
             <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 26 }}>68%</div>
+              <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 26 }}>68%</div>
               <div style={{ fontFamily: TW.sans, fontSize: 12, color: TW.muted }}>avg buy rate</div>
             </div>
           </div>
@@ -670,8 +670,8 @@ function DashboardScreen({ app }) {
   var header = (
     <div style={{ padding: '14px 16px 12px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div style={{ width: 30, height: 30, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 14 }}>A</div>
-        <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 17 }}>Alex</span>
+        <div style={{ width: 30, height: 30, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>A</div>
+        <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 17 }}>Alex</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
         <button onClick={function() { app.nav.push('notifications'); }} style={{ position: 'relative', color: TW.ink, padding: 4, display: 'flex' }}>
@@ -705,15 +705,15 @@ function SettingsScreen({ app }) {
       {/* back header */}
       <div style={{ padding: '14px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TW.ink }}>{IconW.back({})}</button>
-        <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 18 }}>Settings</span>
+        <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 18 }}>Settings</span>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
         {/* identity card */}
         <div style={{ background: TW.surface, borderRadius: 16, padding: 16, marginBottom: 14, display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ width: 52, height: 52, borderRadius: 15, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 800, fontSize: 24, flexShrink: 0 }}>A</div>
+          <div style={{ width: 52, height: 52, borderRadius: 15, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 700, fontSize: 24, flexShrink: 0 }}>A</div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>Alex Rivera</div>
+            <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 18, letterSpacing: -0.3 }}>Alex Rivera</div>
             <div style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, marginTop: 2 }}>{ACCT_EMOJI[app.acct] || '\uD83C\uDCCF'} {ACCT_LABEL[app.acct] || 'Collector'}</div>
           </div>
           {window.TrustBadge && app.tier >= 1 && <window.TrustBadge tier={app.tier >= 2 ? 2 : 1} />}
@@ -782,7 +782,7 @@ function CollectionDetailScreen({ app, params }) {
       {/* header (back chevron -- pushed screen) */}
       <div style={{ padding: '14px 14px 12px', background: TW.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => selectMode ? exitSelect() : app.nav.pop()} style={{ color: TW.ink }}>{IconW.back({})}</button>
-        <span style={{ fontFamily: TW.sans, fontWeight: 800, fontSize: 16, flex: 1, display: 'flex', alignItems: 'center', gap: 7 }}>
+        <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 16, flex: 1, display: 'flex', alignItems: 'center', gap: 7 }}>
           {selectMode ? 'Select cards' : <React.Fragment><span style={{ color: TW.muted }}>{col.icon || IconW.tag({ width: 18, height: 18 })}</span>{col.name}</React.Fragment>}
         </span>
         {col.cards.length > 0 && (

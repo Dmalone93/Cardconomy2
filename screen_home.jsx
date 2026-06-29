@@ -282,7 +282,7 @@ function GameBrowseTile({ game, app }) {
           <img src={logo} alt={game.short} style={{ maxWidth: 105, maxHeight: 48,
             objectFit: 'contain', filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.6))' }} />
         ) : (
-          <span style={{ fontSize: 15, fontWeight: 800, color: '#fff',
+          <span style={{ fontSize: 15, fontWeight: 700, color: '#fff',
             textShadow: '0 2px 6px rgba(0,0,0,0.6)' }}>
             {game.short}
           </span>
@@ -327,7 +327,7 @@ function AdCarousel({ app }) {
             <div style={{ position: 'absolute', top: 10, left: 12, fontFamily: T.sans, fontWeight: 700, fontSize: 9.5, letterSpacing: 0.4,
               color: 'rgba(255,255,255,0.85)', background: 'rgba(0,0,0,0.35)', backdropFilter: 'blur(4px)', borderRadius: 6, padding: '3px 8px' }}>SPONSORED</div>
             <div style={{ position: 'absolute', left: 14, bottom: 13, right: 14 }}>
-              <div style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 17, color: '#fff', letterSpacing: -0.3, textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>{ad.tag}</div>
+              <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 17, color: '#fff', letterSpacing: -0.3, textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>{ad.tag}</div>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 5, marginTop: 6, fontFamily: T.sans, fontWeight: 700, fontSize: 12,
                 color: '#fff', background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(6px)', borderRadius: 999, padding: '5px 11px', boxShadow: 'inset 0 0 0 1px rgba(255,255,255,0.25)' }}>
                 {ad.cta} <span style={{ fontSize: 13 }}>→</span>
@@ -350,7 +350,7 @@ function AdCarousel({ app }) {
 function SectionHeader({ title, action, onAction }) {
   return (
     <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, padding: '0 16px 12px' }}>
-      <h2 style={{ margin: 0, fontFamily: T.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3, whiteSpace: 'nowrap' }}>{title}</h2>
+      <h2 style={{ margin: 0, fontFamily: T.sans, fontWeight: 700, fontSize: 18, letterSpacing: -0.3, whiteSpace: 'nowrap' }}>{title}</h2>
       {action && <button onClick={onAction} style={{ fontFamily: T.sans, fontSize: 13.5, fontWeight: 600, color: 'var(--ink)', whiteSpace: 'nowrap', flexShrink: 0 }}>{action}</button>}
     </div>
   );
@@ -373,7 +373,7 @@ function SetTile({ set, onClick }) {
           </React.Fragment>
         : <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 8px, transparent 8px 16px)' }} />}
       <div style={{ position: 'absolute', top: 11, left: 13, fontFamily: T.sans, fontWeight: 700, fontSize: 10.5, opacity: 0.9, letterSpacing: 0.3, textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{g.short.toUpperCase()}</div>
-      <div style={{ position: 'relative', fontFamily: T.sans, fontWeight: 800, fontSize: 15, lineHeight: 1.1, letterSpacing: -0.3, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{set.name.replace(/\s*\(.*\)/, '')}</div>
+      <div style={{ position: 'relative', fontFamily: T.sans, fontWeight: 700, fontSize: 15, lineHeight: 1.1, letterSpacing: -0.3, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{set.name.replace(/\s*\(.*\)/, '')}</div>
       <div style={{ position: 'relative', fontFamily: T.sans, fontSize: 10.5, opacity: 0.9, marginTop: 2, textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>{set.cards} cards · {set.year}</div>
     </button>
   );
@@ -504,7 +504,7 @@ function HomeScreen({ app }) {
       <div style={{ display: 'flex', justifyContent: 'center', gap: 24, padding: '14px 14px 0' }}>
         {[['2,400+', 'cards listed'], ['180+', 'verified sellers'], ['12', 'local shops']].map(([num, label]) => (
           <div key={label} style={{ textAlign: 'center' }}>
-            <div style={{ fontFamily: 'var(--heading)', fontWeight: 800, fontSize: 16, color: T.ink }}>{num}</div>
+            <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 16, color: T.ink }}>{num}</div>
             <div style={{ fontSize: 10.5, color: T.faint, fontFamily: T.sans }}>{label}</div>
           </div>
         ))}
@@ -611,12 +611,12 @@ function FeaturedRail({ app, game, onPick }) {
               boxShadow: '0 1px 3px rgba(20,24,40,0.05), 0 6px 16px rgba(20,24,40,0.06)' }}>
               <img src={c.src} alt={c.title} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: c.pos || 'center', display: 'block' }} />
               <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.04) 0%, transparent 30%, rgba(0,0,0,0.4) 64%, rgba(0,0,0,0.86) 100%)' }} />
-              <span style={{ position: 'absolute', top: 11, left: 11, display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: T.sans, fontWeight: 800, fontSize: 9.5, letterSpacing: 0.4,
+              <span style={{ position: 'absolute', top: 11, left: 11, display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: T.sans, fontWeight: 700, fontSize: 9.5, letterSpacing: 0.4,
                 color: '#fff', background: (tint[c.game] || '#000') + 'e6', backdropFilter: 'blur(4px)', borderRadius: 6, padding: '4px 8px' }}>
                 {g ? g.short.toUpperCase() : 'TCG'}
               </span>
               <div style={{ position: 'absolute', left: 13, bottom: 13, right: 13 }}>
-                <div style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 16.5, color: '#fff', letterSpacing: -0.3, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{c.title}</div>
+                <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 16.5, color: '#fff', letterSpacing: -0.3, textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>{c.title}</div>
                 <div style={{ fontFamily: T.sans, fontSize: 12, color: 'rgba(255,255,255,0.9)', lineHeight: 1.4, marginTop: 3, textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>{c.sub}</div>
               </div>
             </button>

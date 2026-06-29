@@ -36,9 +36,9 @@ function SellerScreen({ app, params = {} }) {
           <div style={{
             width: 56, height: 56, borderRadius: 999, background: '#fff', color: 'var(--fill)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: TS.sans, fontWeight: 800, fontSize: 22, margin: '0 auto 10px',
+            fontFamily: TS.sans, fontWeight: 700, fontSize: 22, margin: '0 auto 10px',
           }}>{seller.name.charAt(0)}</div>
-          <div style={{ fontFamily: TS.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.3 }}>{seller.name}</div>
+          <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 20, letterSpacing: -0.3 }}>{seller.name}</div>
           <div style={{ fontFamily: TS.sans, fontSize: 12, opacity: 0.6, marginTop: 3 }}>{seller.loc} · Since {seller.since}</div>
           {(isTrusted || isFastShipper) && (
             <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 10 }}>

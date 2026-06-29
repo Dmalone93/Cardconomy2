@@ -147,7 +147,7 @@ function ChatScreen({ app, params = {} }) {
           width: 38, height: 38, borderRadius: 999,
           background: 'var(--fill)', color: '#fff',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: TCH.sans, fontWeight: 800, fontSize: 16, flexShrink: 0,
+          fontFamily: TCH.sans, fontWeight: 700, fontSize: 16, flexShrink: 0,
         }}>
           {initial}
         </div>

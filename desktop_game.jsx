@@ -82,7 +82,7 @@ function DGameLanding({ app, params }) {
               filter: 'drop-shadow(0 2px 10px rgba(0,0,0,0.5))', marginBottom: 12,
             }})
           : React.createElement('h1', { style: {
-              fontFamily: 'var(--heading)', fontWeight: 800, fontSize: 38, color: '#fff',
+              fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 38, color: '#fff',
               letterSpacing: -1, margin: '0 0 12px',
             }}, game.name),
         // description
@@ -104,7 +104,7 @@ function DGameLanding({ app, params }) {
     // ── Sets grid ──
     React.createElement('div', { className: 'wrap', style: { padding: '32px 24px 0' }},
       React.createElement('h2', { style: {
-        fontFamily: TG.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5, margin: '0 0 18px',
+        fontFamily: TG.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5, margin: '0 0 18px',
       }}, 'Browse by set'),
       React.createElement('div', { style: {
         display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 14,

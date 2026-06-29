@@ -75,7 +75,7 @@ function ShopDashboard({ app, onCounter }) {
   const sectionStyle = { background: TSH.surface, borderRadius: 4, padding: 14, marginBottom: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' };
   const labelStyle = { fontFamily: TSH.sans, fontSize: 11, color: TSH.muted, fontWeight: 600 };
   const bigNumStyle = { fontFamily: TSH.sans, fontWeight: 700, fontSize: 22 };
-  const sectionTitle = { fontFamily: TSH.sans, fontWeight: 800, fontSize: 14, marginBottom: 10 };
+  const sectionTitle = { fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, marginBottom: 10 };
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TSH.bg }}>
@@ -86,9 +86,9 @@ function ShopDashboard({ app, onCounter }) {
           <span style={{ fontFamily: TSH.sans, fontSize: 10.5, fontWeight: 700, color: SHOP_SH.tint, background: 'var(--up-wash)', borderRadius: 7, padding: '4px 8px' }}>SHOP VIEW</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 12 }}>
-          <span style={{ width: 38, height: 38, borderRadius: 11, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 800, fontSize: 18 }}>{SHOP_SH.initial}</span>
+          <span style={{ width: 38, height: 38, borderRadius: 11, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 700, fontSize: 18 }}>{SHOP_SH.initial}</span>
           <div>
-            <h1 style={{ margin: 0, fontFamily: TSH.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>{SHOP_SH.name}</h1>
+            <h1 style={{ margin: 0, fontFamily: TSH.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.4 }}>{SHOP_SH.name}</h1>
             <div style={{ fontFamily: TSH.sans, fontSize: 12.5, color: TSH.muted }}>Shop dashboard</div>
           </div>
         </div>
@@ -302,7 +302,7 @@ function ShopDashboard({ app, onCounter }) {
             return (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '7px 0', borderBottom: i < DASH_ACTIVITY.length - 1 ? '1px solid var(--line-2)' : 'none', background: isNew ? 'var(--accent-wash)' : 'transparent', margin: isNew ? '0 -14px' : 0, padding: isNew ? '7px 14px' : '7px 0', borderRadius: isNew ? 4 : 0 }}>
                 <span style={{ width: 30, height: 30, borderRadius: 999, background: ico.bg, color: ico.color, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: TSH.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{ico.symbol}</span>
+                  fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{ico.symbol}</span>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontFamily: TSH.sans, fontSize: 12.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.text}</div>
                 </div>
@@ -362,8 +362,8 @@ function ShopScreen({ app }) {
           <button onClick={() => setView('inbox')} style={{ color: TSH.ink }}>{IconSH.back({})}</button>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-              <span style={{ width: 26, height: 26, borderRadius: 999, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{SUB_SH.seller.initial}</span>
-              <span style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 17, whiteSpace: 'nowrap' }}>{SUB_SH.seller.name}</span>
+              <span style={{ width: 26, height: 26, borderRadius: 999, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{SUB_SH.seller.initial}</span>
+              <span style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 17, whiteSpace: 'nowrap' }}>{SUB_SH.seller.name}</span>
             </div>
             <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.muted, marginTop: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>#{SUB_SH.id} · {SUB_SH.total.toLocaleString()} cards · ticket #{SUB_SH.ticket}</div>
           </div>
@@ -488,7 +488,7 @@ function ShopCardRow({ c, price, onClick, app }) {
           <div style={{ textAlign: 'right', flexShrink: 0 }}>
             {matched ? (
               <React.Fragment>
-                <div style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 11, color: 'var(--ink)', whiteSpace: 'nowrap' }}>★ WANT {c.buylist.want}</div>
+                <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 11, color: 'var(--ink)', whiteSpace: 'nowrap' }}>★ WANT {c.buylist.want}</div>
                 <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap' }}>{money0(c.buylist.buy)}<span style={{ fontFamily: TSH.sans, fontSize: 10, color: TSH.muted }}>/ea</span></div>
               </React.Fragment>
             ) : c.flag ? (
@@ -542,7 +542,7 @@ function PriceGuide({ card, onClose, onSet }) {
           <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
             <div style={{ background: TSH.surface2, borderRadius: 9, padding: 6 }}><CardArtSH item={card} w={50} radius={6} /></div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 16 }}>{card.name}</div>
+              <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 16 }}>{card.name}</div>
               <div style={{ fontFamily: TSH.sans, fontSize: 12, color: TSH.muted }}>{setByIdSH(card.set) ? setByIdSH(card.set).name : ''} · {card.number} · ×{card.qty}</div>
             </div>
             <button onClick={onClose} style={{ color: TSH.faint, fontSize: 22, lineHeight: 1 }}>×</button>
@@ -623,7 +623,7 @@ function OfferComposer({ offer, cashTotal, onClose, onSend }) {
         maxHeight: '92%', display: 'flex', flexDirection: 'column', animation: 'ccSlideUp 0.28s cubic-bezier(0.2,0.9,0.3,1)' }}>
         <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 10 }}><div style={{ width: 38, height: 5, borderRadius: 999, background: 'var(--line)' }} /></div>
         <div className="noscroll" style={{ overflow: 'auto', padding: '10px 18px 26px' }}>
-          <div style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 19, letterSpacing: -0.3 }}>Build offer for {SUB_SH.seller.name}</div>
+          <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 19, letterSpacing: -0.3 }}>Build offer for {SUB_SH.seller.name}</div>
 
           {/* cash / credit split */}
           <div style={{ marginTop: 14, display: 'flex', gap: 9 }}>
@@ -680,9 +680,9 @@ function ShopInbox({ app, onOpen, onDashboard }) {
           <span style={{ fontFamily: TSH.sans, fontSize: 10.5, fontWeight: 700, color: SHOP_SH.tint, background: 'var(--up-wash)', borderRadius: 7, padding: '4px 8px' }}>SHOP VIEW</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 12 }}>
-          <span style={{ width: 38, height: 38, borderRadius: 11, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 800, fontSize: 18 }}>{SHOP_SH.initial}</span>
+          <span style={{ width: 38, height: 38, borderRadius: 11, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 700, fontSize: 18 }}>{SHOP_SH.initial}</span>
           <div>
-            <h1 style={{ margin: 0, fontFamily: TSH.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Buylist inbox</h1>
+            <h1 style={{ margin: 0, fontFamily: TSH.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.4 }}>Buylist inbox</h1>
             <div style={{ fontFamily: TSH.sans, fontSize: 12.5, color: TSH.muted }}>{SHOP_SH.name} · counter</div>
           </div>
         </div>
@@ -699,12 +699,12 @@ function ShopInbox({ app, onOpen, onDashboard }) {
         <button onClick={onOpen} style={{ width: '100%', textAlign: 'left', background: 'var(--accent-wash)', borderRadius: 16, padding: 15,
           boxShadow: 'inset 0 0 0 2px var(--accent)', marginBottom: 14 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
-            <span style={{ width: 42, height: 42, borderRadius: 12, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 800, fontSize: 19 }}>{SUB_SH.seller.initial}</span>
+            <span style={{ width: 42, height: 42, borderRadius: 12, background: SHOP_SH.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 700, fontSize: 19 }}>{SUB_SH.seller.initial}</span>
             <div style={{ flex: 1 }}>
-              <div style={{ fontFamily: TSH.sans, fontWeight: 800, fontSize: 16 }}>{SUB_SH.seller.name} · {SUB_SH.total.toLocaleString()} cards</div>
+              <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 16 }}>{SUB_SH.seller.name} · {SUB_SH.total.toLocaleString()} cards</div>
               <div style={{ fontFamily: TSH.sans, fontSize: 12, color: TSH.muted }}>{SUB_SH.submittedAgo} · ticket #{SUB_SH.ticket}</div>
             </div>
-            <span style={{ fontFamily: TSH.sans, fontSize: 10, fontWeight: 800, color: '#fff', background: 'var(--down)', borderRadius: 999, padding: '3px 8px' }}>NEW</span>
+            <span style={{ fontFamily: TSH.sans, fontSize: 10, fontWeight: 700, color: '#fff', background: 'var(--down)', borderRadius: 999, padding: '3px 8px' }}>NEW</span>
           </div>
           {/* seller trust section */}
           {SUB_SH.seller.verified ? (
@@ -753,7 +753,7 @@ function QueueRow({ initial, name, cards, meta, tag, tagColor, onClick }) {
   return (
     <button onClick={onClick} style={{ width: '100%', textAlign: 'left', display: 'flex', alignItems: 'center', gap: 11,
       background: TSH.surface, borderRadius: 13, padding: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-      <span style={{ width: 36, height: 36, borderRadius: 10, background: TSH.surface2, color: TSH.ink2, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 800, fontSize: 15 }}>{initial}</span>
+      <span style={{ width: 36, height: 36, borderRadius: 10, background: TSH.surface2, color: TSH.ink2, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSH.sans, fontWeight: 700, fontSize: 15 }}>{initial}</span>
       <div style={{ flex: 1 }}>
         <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 14 }}>{name} · {cards}</div>
         <div style={{ fontFamily: TSH.sans, fontSize: 11.5, color: TSH.muted }}>{meta}</div>
@@ -770,7 +770,7 @@ function ShopSent({ app, offer, onInbox }) {
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '80px 24px 24px', textAlign: 'center' }}>
         <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconSH.check({ width: 44, height: 44 })}</div>
-        <h1 style={{ margin: '20px 0 4px', fontFamily: TSH.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.5 }}>Offer sent to {SUB_SH.seller.name}</h1>
+        <h1 style={{ margin: '20px 0 4px', fontFamily: TSH.sans, fontWeight: 700, fontSize: 24, letterSpacing: -0.5 }}>Offer sent to {SUB_SH.seller.name}</h1>
         <p style={{ fontFamily: TSH.sans, fontSize: 14, color: TSH.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 270 }}>
           They've been texted. When they come in with ticket #{SUB_SH.ticket}, check the stack against the list and pay out.
         </p>

@@ -1,0 +1,183 @@
+<h2>Dashboard layout: information hierarchy</h2>
+<p class="subtitle">What should the seller see first when they open their profile tab?</p>
+
+<div class="cards">
+
+  <!-- Option A: Money-first -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:16px;background:#f0f1f4;min-height:480px">
+
+      <!-- Tiny header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding:0 2px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#6366f1,#818cf8);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff">A</div>
+          <span style="font-size:13px;font-weight:700;color:#16181d">Alex</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div style="width:28px;height:28px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,0.06)">&#128276;</div>
+          <div style="width:28px;height:28px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,0.06)">&#9881;</div>
+        </div>
+      </div>
+
+      <!-- Balance hero -->
+      <div style="background:linear-gradient(135deg,#16181d,#2a2d3a);border-radius:14px;padding:18px;margin-bottom:12px">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:rgba(255,255,255,0.45);font-weight:600;margin-bottom:4px">Available balance</div>
+        <div style="font-size:28px;font-weight:800;color:#fff;letter-spacing:-1px">&pound;248.47</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+          <span style="font-size:11px;color:#4ade80;font-weight:600">&#9650; &pound;84.00 this week</span>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px">
+          <div style="flex:1;padding:8px;border-radius:8px;background:rgba(255,255,255,0.1);text-align:center;font-size:11.5px;font-weight:600;color:#fff">Withdraw</div>
+          <div style="flex:1;padding:8px;border-radius:8px;background:rgba(99,102,241,0.8);text-align:center;font-size:11.5px;font-weight:600;color:#fff">Store credit</div>
+        </div>
+      </div>
+
+      <!-- Live status row -->
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <div style="flex:1;background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,0.05)">
+          <div style="font-size:20px;font-weight:800;color:#16181d">2</div>
+          <div style="font-size:10px;color:#71757e;margin-top:1px">Active listings</div>
+          <div style="font-size:10px;color:#6366f1;font-weight:600;margin-top:4px">24 views today</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,0.05)">
+          <div style="font-size:20px;font-weight:800;color:#f59e0b">1</div>
+          <div style="font-size:10px;color:#71757e;margin-top:1px">Pending offers</div>
+          <div style="font-size:10px;color:#f59e0b;font-weight:600;margin-top:4px">Respond &rarr;</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:10px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,0.05)">
+          <div style="font-size:20px;font-weight:800;color:#16a34a">1</div>
+          <div style="font-size:10px;color:#71757e;margin-top:1px">To ship</div>
+          <div style="font-size:10px;color:#16a34a;font-weight:600;margin-top:4px">Print label &rarr;</div>
+        </div>
+      </div>
+
+      <!-- Activity feed -->
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 1px 2px rgba(0,0,0,0.05)">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#a4a8b0;font-weight:700;margin-bottom:10px">Activity</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0"></div>
+            <div style="flex:1;font-size:12px;color:#3a3d44">Sold Charizard EX &middot; <span style="color:#16a34a;font-weight:600">+&pound;84</span></div>
+            <div style="font-size:10px;color:#a4a8b0">2h</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:6px;height:6px;border-radius:50%;background:#6366f1;flex-shrink:0"></div>
+            <div style="flex:1;font-size:12px;color:#3a3d44">New offer on Dark Magician</div>
+            <div style="font-size:10px;color:#a4a8b0">5h</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:6px;height:6px;border-radius:50%;background:#a4a8b0;flex-shrink:0"></div>
+            <div style="flex:1;font-size:12px;color:#3a3d44">Order #1847 delivered</div>
+            <div style="font-size:10px;color:#a4a8b0">1d</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <h3>A: Money-first</h3>
+      <p>Balance hero dominates. Live action items (listings, offers, shipments) with inline CTAs. Activity feed below. Everything answers: "what needs my attention and how am I doing?"</p>
+    </div>
+  </div>
+
+  <!-- Option B: Status board -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:16px;background:#f0f1f4;min-height:480px">
+
+      <!-- Tiny header -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding:0 2px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#6366f1,#818cf8);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff">A</div>
+          <span style="font-size:13px;font-weight:700;color:#16181d">Dashboard</span>
+        </div>
+        <div style="display:flex;gap:8px">
+          <div style="width:28px;height:28px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,0.06)">&#128276;</div>
+          <div style="width:28px;height:28px;border-radius:7px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;box-shadow:0 1px 2px rgba(0,0,0,0.06)">&#9881;</div>
+        </div>
+      </div>
+
+      <!-- Needs attention banner -->
+      <div style="background:#fef3c7;border:1px solid #fde68a;border-radius:10px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:8px">
+        <span style="font-size:14px">&#9888;&#65039;</span>
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:700;color:#92400e">1 offer waiting for your response</div>
+          <div style="font-size:11px;color:#a16207">Dark Magician &middot; &pound;42 &middot; expires in 18h</div>
+        </div>
+        <div style="font-size:13px;color:#92400e">&#10095;</div>
+      </div>
+
+      <!-- Three key numbers -->
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <div style="flex:1;background:#fff;border-radius:10px;padding:14px 12px;box-shadow:0 1px 2px rgba(0,0,0,0.05);text-align:center">
+          <div style="font-size:22px;font-weight:800;color:#16181d">&pound;248</div>
+          <div style="font-size:10px;color:#71757e;margin-top:2px">Balance</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:10px;padding:14px 12px;box-shadow:0 1px 2px rgba(0,0,0,0.05);text-align:center">
+          <div style="font-size:22px;font-weight:800;color:#16181d">&pound;2.4k</div>
+          <div style="font-size:10px;color:#71757e;margin-top:2px">Portfolio</div>
+        </div>
+        <div style="flex:1;background:#fff;border-radius:10px;padding:14px 12px;box-shadow:0 1px 2px rgba(0,0,0,0.05);text-align:center">
+          <div style="font-size:22px;font-weight:800;color:#16a34a">&pound;847</div>
+          <div style="font-size:10px;color:#71757e;margin-top:2px">Total sold</div>
+        </div>
+      </div>
+
+      <!-- Status lanes -->
+      <div style="background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 2px rgba(0,0,0,0.05);margin-bottom:8px">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:#a4a8b0;font-weight:700;margin-bottom:10px">Open items</div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0f1f4">
+          <div style="width:32px;height:32px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:14px">&#128230;</div>
+          <div style="flex:1">
+            <div style="font-size:12.5px;font-weight:600;color:#16181d">2 active listings</div>
+            <div style="font-size:11px;color:#71757e">24 views &middot; 3 watchers</div>
+          </div>
+          <div style="font-size:13px;color:#a4a8b0">&#10095;</div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0f1f4">
+          <div style="width:32px;height:32px;border-radius:8px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:14px">&#9889;</div>
+          <div style="flex:1">
+            <div style="font-size:12.5px;font-weight:600;color:#16181d">1 pending offer</div>
+            <div style="font-size:11px;color:#f59e0b;font-weight:600">Needs response</div>
+          </div>
+          <div style="font-size:13px;color:#a4a8b0">&#10095;</div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f0f1f4">
+          <div style="width:32px;height:32px;border-radius:8px;background:#f0fdf4;display:flex;align-items:center;justify-content:center;font-size:14px">&#128666;</div>
+          <div style="flex:1">
+            <div style="font-size:12.5px;font-weight:600;color:#16181d">1 ready to ship</div>
+            <div style="font-size:11px;color:#16a34a;font-weight:600">Print label</div>
+          </div>
+          <div style="font-size:13px;color:#a4a8b0">&#10095;</div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:8px 0">
+          <div style="width:32px;height:32px;border-radius:8px;background:#faf5ff;display:flex;align-items:center;justify-content:center;font-size:14px">&#128722;</div>
+          <div style="flex:1">
+            <div style="font-size:12.5px;font-weight:600;color:#16181d">3 purchases</div>
+            <div style="font-size:11px;color:#71757e">1 in transit</div>
+          </div>
+          <div style="font-size:13px;color:#a4a8b0">&#10095;</div>
+        </div>
+      </div>
+
+      <!-- Buylist mini -->
+      <div style="background:#fff;border-radius:10px;padding:12px 14px;box-shadow:0 1px 2px rgba(0,0,0,0.05);display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:8px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:14px">&#11088;</div>
+        <div style="flex:1">
+          <div style="font-size:12.5px;font-weight:600;color:#16181d">Buylist &middot; 2 matches</div>
+          <div style="font-size:11px;color:#6366f1;font-weight:600">Cards available at your price</div>
+        </div>
+        <div style="font-size:13px;color:#a4a8b0">&#10095;</div>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <h3>B: Status Board</h3>
+      <p>Urgent items surface as banners. Clean "open items" list with icon lanes replaces the scattered menu. Numbers at top, actionable status below. Feels like a mission control, not a settings page.</p>
+    </div>
+  </div>
+
+</div>

@@ -72,7 +72,7 @@ function CheckoutScreen({ app, params }) {
         <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '90px 24px 24px', textAlign: 'center' }}>
           <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconC.check({ width: 44, height: 44 })}</div>
-          <h2 style={{ margin: '20px 0 4px', fontFamily: TC.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>Order confirmed</h2>
+          <h2 style={{ margin: '20px 0 4px', fontFamily: TC.sans, fontWeight: 700, fontSize: 25, letterSpacing: -0.5 }}>Order confirmed</h2>
           <div style={{ fontFamily: TC.sans, fontSize: 13, color: TC.muted }}>{orderNo}</div>
           <div style={{ background: TC.surface, borderRadius: 4, padding: 16, marginTop: 22, textAlign: 'left', display: 'flex', gap: 14, alignItems: 'center' }}>
             <div style={{ background: TC.surface2, borderRadius: 10, padding: 8 }}><CardArtC item={item} w={56} /></div>
@@ -99,7 +99,7 @@ function CheckoutScreen({ app, params }) {
       {/* header */}
       <div style={{ padding: '14px 16px 12px', background: TC.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TC.ink }}>{IconC.back({})}</button>
-        <span style={{ fontFamily: TC.sans, fontWeight: 800, fontSize: 18 }}>Checkout</span>
+        <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 18 }}>Checkout</span>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 16px' }}>
@@ -115,9 +115,9 @@ function CheckoutScreen({ app, params }) {
         </div>
 
         {/* address */}
-        <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 800, fontSize: 14, color: TC.ink2 }}>Ship to</div>
+        <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 700, fontSize: 14, color: TC.ink2 }}>Ship to</div>
         <button onClick={() => setShowAddrBook(true)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, background: TC.surface, borderRadius: 4, padding: '13px 14px', textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TC.sans, fontWeight: 800, flexShrink: 0 }}>{addr.name[0]}</div>
+          <div style={{ width: 38, height: 38, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TC.sans, fontWeight: 700, flexShrink: 0 }}>{addr.name[0]}</div>
           <div style={{ flex: 1 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14.5 }}>{addr.name}</span>
@@ -129,7 +129,7 @@ function CheckoutScreen({ app, params }) {
         </button>
 
         {/* delivery */}
-        <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 800, fontSize: 14, color: TC.ink2 }}>Delivery</div>
+        <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 700, fontSize: 14, color: TC.ink2 }}>Delivery</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
           <SelectRow on={ship==='standard'} onClick={() => setShip('standard')} title="Royal Mail Tracked (2–3 days)"
             sub="Arrives Mon, Jun 16" trailing={<span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 14, color: shipCost===0?TC.up:TC.ink }}>{shipCost===0?'Free':moneyC(shipCost)}</span>} />
@@ -138,7 +138,7 @@ function CheckoutScreen({ app, params }) {
         </div>
 
         {/* payment */}
-        <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 800, fontSize: 14, color: TC.ink2 }}>Payment</div>
+        <div style={{ marginTop: 20, marginBottom: 9, fontFamily: TC.sans, fontWeight: 700, fontSize: 14, color: TC.ink2 }}>Payment</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
           <SelectRow on={pay==='applepay'} onClick={() => setPay('applepay')} title=" Pay" sub="Default · Face ID" />
           <SelectRow on={pay==='card'} onClick={() => setPay('card')} title="Card ending •••• 4242" sub="Expires 08/27" />
@@ -166,7 +166,7 @@ function CheckoutScreen({ app, params }) {
           ))}
           <div style={{ height: 1, background: 'var(--line-2)', margin: '8px 0' }} />
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-            <span style={{ fontFamily: TC.sans, fontWeight: 800, fontSize: 16 }}>Total</span>
+            <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 16 }}>Total</span>
             <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 22 }}>{moneyC(total)}</span>
           </div>
         </div>

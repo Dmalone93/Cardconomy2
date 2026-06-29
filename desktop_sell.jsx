@@ -17,7 +17,7 @@ function DSell({ app }) {
   ];
   return (
     <div className="wrap" style={{ padding: '36px 24px 30px' }}>
-      <h1 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 34, letterSpacing: -1, margin: '0 0 8px' }}>Sell your cards</h1>
+      <h1 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 34, letterSpacing: -1, margin: '0 0 8px' }}>Sell your cards</h1>
       <p style={{ color: 'var(--muted)', fontSize: 16, margin: '0 0 28px', maxWidth: 620, lineHeight: 1.5 }}>List to buyers worldwide with Buyer Protection, or move a whole collection at once. Pick how you want to sell.</p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20 }}>
         {opts.map(o => (
@@ -25,7 +25,7 @@ function DSell({ app }) {
             onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 10px 30px rgba(20,24,40,0.12)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
             onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 1px 3px rgba(20,24,40,0.06)'; e.currentTarget.style.transform = 'none'; }}>
             <span style={{ width: 52, height: 52, borderRadius: 14, background: o.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>{o.icon({ width: 26, height: 26 })}</span>
-            <div style={{ fontWeight: 800, fontSize: 19, letterSpacing: -0.3 }}>{o.title}</div>
+            <div style={{ fontWeight: 700, fontSize: 19, letterSpacing: -0.3 }}>{o.title}</div>
             <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 2, marginBottom: 10 }}>{o.meta}</div>
             <p style={{ fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.5, margin: 0 }}>{o.desc}</p>
           </button>
@@ -60,7 +60,7 @@ function DSellSingle({ app }) {
   if (done) return (
     <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
       <div style={{ width: 88, height: 88, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'dPop 0.4s ease' }}>{IconSl.check({ width: 46, height: 46 })}</div>
-      <h1 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 30, margin: '20px 0 6px' }}>Your card is live!</h1>
+      <h1 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 30, margin: '20px 0 6px' }}>Your card is live!</h1>
       <p style={{ color: 'var(--muted)', fontSize: 16, maxWidth: 400, margin: '0 auto 8px' }}>{card.name} is listed for {mSl(+price)}. We'll notify you on every offer and sale.</p>
       <div style={{ margin: '20px auto', display: 'inline-block', background: 'var(--surface)', borderRadius: 14, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}><CardArtSl item={{ ...card, grade: gradeObj }} w={120} /></div>
       <div><button onClick={() => app.go('home')} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Back to browse</button></div>
@@ -84,7 +84,7 @@ function DSellSingle({ app }) {
         <div>
           {step === 0 && (
             <div>
-              <h2 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 24, margin: '0 0 4px' }}>What are you selling?</h2>
+              <h2 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 24, margin: '0 0 4px' }}>What are you selling?</h2>
               <p style={{ color: 'var(--muted)', fontSize: 14.5, margin: '0 0 18px' }}>Search our catalog to auto-fill the details.</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--surface)', borderRadius: 12, padding: '12px 16px', boxShadow: 'inset 0 0 0 1px var(--line)', marginBottom: 16 }}>
                 {IconSl.search({ width: 19, height: 19, style: { color: 'var(--faint)' } })}
@@ -107,7 +107,7 @@ function DSellSingle({ app }) {
 
           {step === 1 && (
             <div>
-              <h2 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 24, margin: '0 0 18px' }}>Condition &amp; grading</h2>
+              <h2 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 24, margin: '0 0 18px' }}>Condition &amp; grading</h2>
               <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--surface)', borderRadius: 14, padding: '16px 18px', marginBottom: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 <div><div style={{ fontWeight: 700, fontSize: 15.5 }}>Professionally graded</div><div style={{ fontSize: 13, color: 'var(--muted)' }}>In a PSA / BGS / CGC slab</div></div>
                 <Toggle on={graded} onClick={() => setGraded(!graded)} />
@@ -127,7 +127,7 @@ function DSellSingle({ app }) {
 
           {step === 2 && (
             <div>
-              <h2 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 24, margin: '0 0 4px' }}>Add photos</h2>
+              <h2 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 24, margin: '0 0 4px' }}>Add photos</h2>
               <p style={{ color: 'var(--muted)', fontSize: 14.5, margin: '0 0 18px' }}>Front, back, and any flaws. Clear photos sell faster.</p>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14 }}>
                 {photos.map((on, i) => (
@@ -144,7 +144,7 @@ function DSellSingle({ app }) {
 
           {step === 3 && (
             <div>
-              <h2 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 24, margin: '0 0 18px' }}>Set your price</h2>
+              <h2 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 24, margin: '0 0 18px' }}>Set your price</h2>
               <Label>Your price</Label>
               <div style={{ display: 'flex', alignItems: 'center', background: 'var(--surface)', borderRadius: 14, padding: '14px 18px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
                 <span style={{ fontFamily: TSl.mono, fontWeight: 700, fontSize: 28, color: 'var(--muted)', marginRight: 6 }}>£</span>
@@ -160,7 +160,7 @@ function DSellSingle({ app }) {
 
           {step === 4 && (
             <div>
-              <h2 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 24, margin: '0 0 18px' }}>Review listing</h2>
+              <h2 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 24, margin: '0 0 18px' }}>Review listing</h2>
               <div style={{ background: 'var(--surface)', borderRadius: 16, padding: 20, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 {[['Format', 'Buy It Now'], ['Condition', graded ? grader.toUpperCase() + ' ' + grade : cond], ['Photos', photoCount + ' added'], ['List price', mSl(+price || suggested)], ['Seller fee', mSl((+price || suggested) * 0.06 + 0.30) + ' (6% + 30p)']].map(([k, v], i) => (
                   <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--line-2)', fontSize: 14.5 }}><span style={{ color: 'var(--muted)' }}>{k}</span><span style={{ fontWeight: 600 }}>{v}</span></div>
@@ -212,7 +212,7 @@ function DSellBulk({ app }) {
   if (phase === 'done') return (
     <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
       <div style={{ width: 88, height: 88, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'dPop 0.4s ease' }}>{IconSl.check({ width: 46, height: 46 })}</div>
-      <h1 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 30, margin: '20px 0 6px' }}>{included.length} cards listed!</h1>
+      <h1 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 30, margin: '20px 0 6px' }}>{included.length} cards listed!</h1>
       <p style={{ color: 'var(--muted)', fontSize: 16, maxWidth: 420, margin: '0 auto' }}>Your cards are live on the marketplace. You'll be notified on every sale and offer.</p>
       <button onClick={() => app.go('home')} style={{ marginTop: 24, background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Back to browse</button>
     </div>
@@ -221,7 +221,7 @@ function DSellBulk({ app }) {
   return (
     <div className="wrap" style={{ padding: '28px 24px 30px', maxWidth: 1040 }}>
       <button onClick={() => phase === 'upload' ? app.go('sell') : setPhase('upload')} style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--muted)', fontSize: 14, fontWeight: 600, marginBottom: 18 }}>‹ {phase === 'upload' ? 'All sell options' : 'Back'}</button>
-      <h1 style={{ fontFamily: TSl.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, margin: '0 0 6px' }}>Bulk list to the marketplace</h1>
+      <h1 style={{ fontFamily: TSl.sans, fontWeight: 700, fontSize: 30, letterSpacing: -0.8, margin: '0 0 6px' }}>Bulk list to the marketplace</h1>
 
       {phase === 'upload' && (
         <div>

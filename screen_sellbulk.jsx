@@ -64,7 +64,7 @@ function SellBulkScreen({ app }) {
       {phase !== 'done' && (
         <div style={{ padding: '14px 14px 12px', background: TB.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={goBack} style={{ color: TB.ink }}>{IconB.back({})}</button>
-          <span style={{ fontFamily: TB.sans, fontWeight: 800, fontSize: 16, flex: 1 }}>Bulk list to marketplace</span>
+          <span style={{ fontFamily: TB.sans, fontWeight: 700, fontSize: 16, flex: 1 }}>Bulk list to marketplace</span>
           {phase === 'price' && <span style={{ fontFamily: TB.sans, fontSize: 13, color: TB.muted }}>{listed} cards</span>}
         </div>
       )}
@@ -73,7 +73,7 @@ function SellBulkScreen({ app }) {
         {/* ── METHOD ── */}
         {phase === 'method' && (
           <div style={{ padding: '18px 16px 30px' }}>
-            <h1 style={{ margin: '0 0 2px', fontFamily: TB.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Add cards to list</h1>
+            <h1 style={{ margin: '0 0 2px', fontFamily: TB.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5 }}>Add cards to list</h1>
             <p style={{ fontFamily: TB.sans, fontSize: 13.5, color: TB.muted, margin: '0 0 16px' }}>Scan your pile — each card becomes its own listing, auto-priced at market.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <MethodRowB hero icon={IconB.camera({ width: 22, height: 22 })} title="Live Sweep Scan" sub="Flip the stack — we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
@@ -94,7 +94,7 @@ function SellBulkScreen({ app }) {
         {phase === 'price' && (
           <div style={{ padding: '16px 16px 16px' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-              <h1 style={{ margin: 0, fontFamily: TB.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Price &amp; publish</h1>
+              <h1 style={{ margin: 0, fontFamily: TB.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5 }}>Price &amp; publish</h1>
               <span style={{ fontFamily: TB.sans, fontSize: 13, color: TB.muted }}>{scanned}+ scanned</span>
             </div>
             <p style={{ fontFamily: TB.sans, fontSize: 13, color: TB.muted, margin: '4px 0 16px' }}>
@@ -153,7 +153,7 @@ function SellBulkScreen({ app }) {
           <div style={{ padding: '70px 24px 30px', textAlign: 'center' }}>
             <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)',
               display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconB.check({ width: 44, height: 44 })}</div>
-            <h1 style={{ margin: '20px 0 4px', fontFamily: TB.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>{listed} cards listed!</h1>
+            <h1 style={{ margin: '20px 0 4px', fontFamily: TB.sans, fontWeight: 700, fontSize: 25, letterSpacing: -0.5 }}>{listed} cards listed!</h1>
             <p style={{ fontFamily: TB.sans, fontSize: 14, color: TB.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 290 }}>
               Your cards are live on the marketplace. We'll notify you on every sale and offer.
             </p>

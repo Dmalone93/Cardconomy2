@@ -65,7 +65,7 @@ function Onboarding({ app, games }) {
       {/* brand header */}
       <div style={{ padding: '14px 24px 8px', display: 'flex', alignItems: 'center', gap: 10 }}>
         <LogoOB size={32} color={TOB.ink} />
-        <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 800, fontSize: 22, letterSpacing: 1.5, lineHeight: 0, display: 'flex', alignItems: 'center', height: 32 }}>CARDCONOMY</span>
+        <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 22, letterSpacing: 1.5, lineHeight: 0, display: 'flex', alignItems: 'center', height: 32 }}>CARDCONOMY</span>
       </div>
       {/* progress */}
       <div style={{ display: 'flex', gap: 6, padding: '10px 24px 0' }}>
@@ -75,7 +75,7 @@ function Onboarding({ app, games }) {
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '22px 24px 12px' }}>
         {step === 0 ? (
           <div>
-            <h1 style={{ fontFamily: TOB.sans, fontWeight: 800, fontSize: 27, letterSpacing: -0.7, margin: '0 0 6px' }}>Welcome</h1>
+            <h1 style={{ fontFamily: TOB.sans, fontWeight: 700, fontSize: 27, letterSpacing: -0.7, margin: '0 0 6px' }}>Welcome</h1>
             <p style={{ fontFamily: TOB.sans, fontSize: 15, color: TOB.muted, margin: '0 0 22px', lineHeight: 1.5 }}>How do you want to use Cardonomy? You can always change this later.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {ACCT_TYPES.map(t => {
@@ -90,7 +90,7 @@ function Onboarding({ app, games }) {
                       {t.id === 'store' && IconOB.shield({ width: 22, height: 22 })}
                     </span>
                     <span style={{ flex: 1 }}>
-                      <span style={{ display: 'block', fontFamily: TOB.sans, fontWeight: 800, fontSize: 16 }}>{t.title}</span>
+                      <span style={{ display: 'block', fontFamily: TOB.sans, fontWeight: 700, fontSize: 16 }}>{t.title}</span>
                       <span style={{ display: 'block', fontFamily: TOB.sans, fontSize: 12.5, color: TOB.muted, marginTop: 2, lineHeight: 1.4 }}>{t.sub}</span>
                     </span>
                     <span style={{ width: 22, height: 22, borderRadius: 999, flexShrink: 0,
@@ -103,7 +103,7 @@ function Onboarding({ app, games }) {
           </div>
         ) : (
           <div>
-            <h1 style={{ fontFamily: TOB.sans, fontWeight: 800, fontSize: 27, letterSpacing: -0.7, margin: '0 0 6px' }}>Pick your games</h1>
+            <h1 style={{ fontFamily: TOB.sans, fontWeight: 700, fontSize: 27, letterSpacing: -0.7, margin: '0 0 6px' }}>Pick your games</h1>
             <p style={{ fontFamily: TOB.sans, fontSize: 15, color: TOB.muted, margin: '0 0 18px', lineHeight: 1.5 }}>
               Your feed, search and price alerts will focus on what you choose. Most collectors pick one or two.
             </p>

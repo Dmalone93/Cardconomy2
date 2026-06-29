@@ -35,10 +35,10 @@ function StorefrontScreen({ app, params = {} }) {
         <div style={{ padding: '0 16px', marginTop: -36, position: 'relative' }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: 13, marginBottom: 12 }}>
             <span style={{ width: 76, height: 76, borderRadius: 20, background: shop.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontFamily: TF.sans, fontWeight: 800, fontSize: 34, border: '3px solid ' + TF.surface, boxShadow: '0 4px 14px rgba(0,0,0,0.15)', flexShrink: 0 }}>{shop.initial}</span>
+              fontFamily: TF.sans, fontWeight: 700, fontSize: 34, border: '3px solid ' + TF.surface, boxShadow: '0 4px 14px rgba(0,0,0,0.15)', flexShrink: 0 }}>{shop.initial}</span>
             <div style={{ flex: 1, paddingBottom: 4 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <h1 style={{ margin: 0, fontFamily: TF.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.5 }}>{shop.name}</h1>
+                <h1 style={{ margin: 0, fontFamily: TF.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.5 }}>{shop.name}</h1>
                 {IconF.shield({ width: 16, height: 16, style: { color: shop.tint } })}
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2, fontFamily: TF.sans, fontSize: 12.5, color: TF.muted }}>
@@ -61,7 +61,7 @@ function StorefrontScreen({ app, params = {} }) {
           </div>
 
           {/* services */}
-          <div style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 16, marginBottom: 10 }}>What this shop offers</div>
+          <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 16, marginBottom: 10 }}>What this shop offers</div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 22 }}>
             {services.map(([title, sub, icon, onClick], i) => (
               <button key={i} onClick={onClick} style={{ textAlign: 'left', background: TF.surface, borderRadius: 14, padding: 13, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -76,7 +76,7 @@ function StorefrontScreen({ app, params = {} }) {
           {inv.length > 0 && (
             <React.Fragment>
               <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 10 }}>
-                <span style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 16 }}>In stock now</span>
+                <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 16 }}>In stock now</span>
                 <button onClick={() => app.nav.push('search')} style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: 'var(--ink)' }}>See all</button>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 11, marginBottom: 8 }}>
@@ -95,7 +95,7 @@ function StorefrontScreen({ app, params = {} }) {
 
           {/* reviews */}
           <div style={{ marginTop: 22 }}>
-            <div style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 16, marginBottom: 10 }}>Reviews</div>
+            <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 16, marginBottom: 10 }}>Reviews</div>
             {[
               { stars: 5, text: 'Great shop, fair prices on graded cards', author: 'Marcus T.', time: '2 weeks ago' },
               { stars: 4, text: 'Quick trade, friendly staff', author: 'Priya K.', time: '1 month ago' },
@@ -114,7 +114,7 @@ function StorefrontScreen({ app, params = {} }) {
           {/* currently buying */}
           {inv.length > 0 && (
             <div style={{ marginTop: 22 }}>
-              <div style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 16, marginBottom: 10 }}>Currently buying</div>
+              <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 16, marginBottom: 10 }}>Currently buying</div>
               <div className="noscroll" style={{ display: 'flex', gap: 11, overflowX: 'auto', margin: '0 -16px', padding: '0 16px 4px' }}>
                 {inv.slice(0, 4).map((l, i) => {
                   const buyPrice = Math.round(l.price * (0.55 + i * 0.05));
@@ -185,7 +185,7 @@ function Step1({ form, set }) {
   };
   return (
     <div>
-      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Your shop</h2>
+      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>Your shop</h2>
       <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>Basic details so collectors can find you.</p>
       <WizardField label="Shop name" value={form.shopName} onChange={v => set('shopName', v)} placeholder="e.g. Gnome Games" />
       <WizardField label="Address line 1" value={form.address} onChange={v => set('address', v)} placeholder="12 High Street" />
@@ -226,7 +226,7 @@ function Step1({ form, set }) {
 function Step2({ form, set }) {
   return (
     <div>
-      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Verify your business</h2>
+      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>Verify your business</h2>
       <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>We verify within 2 business days. Your shop won't appear publicly until verified.</p>
       <WizardField label="Owner full name" value={form.ownerName} onChange={v => set('ownerName', v)} placeholder="Sara Johnson" />
       <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink2, marginBottom: 10 }}>Your role</div>
@@ -267,7 +267,7 @@ function Step3({ form, set }) {
   };
   return (
     <div>
-      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Games you buy</h2>
+      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>Games you buy</h2>
       <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>Select the TCGs your shop deals in. You can change this later.</p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
         {GAME_LIST.map(g => {
@@ -281,7 +281,7 @@ function Step3({ form, set }) {
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 10,
               position: 'relative',
             }}>
-              {on && <span style={{ position: 'absolute', top: 8, right: 8, width: 20, height: 20, borderRadius: 999, background: g.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 800 }}>✓</span>}
+              {on && <span style={{ position: 'absolute', top: 8, right: 8, width: 20, height: 20, borderRadius: 999, background: g.tint, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700 }}>✓</span>}
               {logo
                 ? <img src={logo} alt={g.name} style={{ height: 28, width: 'auto', maxWidth: 100, objectFit: 'contain', filter: on ? 'none' : 'saturate(0.5) opacity(0.6)' }} />
                 : <span style={{ width: 32, height: 32, borderRadius: 999, background: g.tint, display: 'flex', alignItems: 'center', justifyContent: 'center' }} />
@@ -430,7 +430,7 @@ function BuylistWizard({ open, cards, onDone, onClose }) {
                     </div>
                   </div>
                   {added && (
-                    <span style={{ width: 24, height: 24, borderRadius: 999, background: '#16a34a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 800, flexShrink: 0 }}>✓</span>
+                    <span style={{ width: 24, height: 24, borderRadius: 999, background: '#16a34a', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 700, flexShrink: 0 }}>✓</span>
                   )}
                 </button>
                 {expanded && (
@@ -581,7 +581,7 @@ function Step4({ form, set }) {
 
   return (
     <div>
-      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Buylist setup</h2>
+      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>Buylist setup</h2>
       <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>Set your standing bulk buy rates and wanted singles. Sellers see these when submitting.</p>
 
       <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink2, marginBottom: 10 }}>Bulk rates (per 1,000 cards)</div>
@@ -648,7 +648,7 @@ function Step4({ form, set }) {
 function Step5({ form, set }) {
   return (
     <div>
-      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Payout details</h2>
+      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>Payout details</h2>
       <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>How you receive funds from sales on Cardconomy. You can update this anytime in settings.</p>
       <div style={{ fontFamily: TF.sans, fontWeight: 600, fontSize: 13, color: TF.ink2, marginBottom: 10 }}>Payout method</div>
       <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
@@ -679,7 +679,7 @@ function Step6({ form, set }) {
   const GAME_LIST = window.GAMES || [];
   return (
     <div>
-      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Branding</h2>
+      <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>Branding</h2>
       <p style={{ fontFamily: TF.sans, fontSize: 14, color: TF.muted, margin: '0 0 20px', lineHeight: 1.4 }}>Make your storefront stand out in the directory.</p>
 
       {/* logo upload */}
@@ -691,7 +691,7 @@ function Step6({ form, set }) {
         color: form.logo ? '#fff' : TF.muted, marginBottom: 20,
       }}>
         {form.logo
-          ? <span style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 28 }}>{(form.shopName || 'S').charAt(0).toUpperCase()}</span>
+          ? <span style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 28 }}>{(form.shopName || 'S').charAt(0).toUpperCase()}</span>
           : IconF.camera({ width: 24, height: 24 })
         }
       </button>
@@ -724,7 +724,7 @@ function Step6({ form, set }) {
         <div style={{
           width: 44, height: 44, borderRadius: 4, background: form.accentColor, color: '#fff',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          fontFamily: TF.sans, fontWeight: 800, fontSize: 20, flexShrink: 0,
+          fontFamily: TF.sans, fontWeight: 700, fontSize: 20, flexShrink: 0,
         }}>{(form.shopName || 'S').charAt(0).toUpperCase()}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 15 }}>{form.shopName || 'Your Shop'}</div>
@@ -784,7 +784,7 @@ function EnrollShopScreen({ app }) {
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.7) 75%, rgba(0,0,0,0.9) 100%)' }} />
             <div style={{ position: 'relative' }}>
               <div style={{ display: 'inline-block', fontFamily: TF.sans, fontWeight: 700, fontSize: 12, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(6px)', borderRadius: 4, padding: '5px 11px', marginBottom: 14 }}>FOR LOCAL GAME SHOPS</div>
-              <h1 style={{ margin: 0, fontFamily: TF.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, lineHeight: 1.05, textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>Turn your shop into the local card hub</h1>
+              <h1 style={{ margin: 0, fontFamily: TF.sans, fontWeight: 700, fontSize: 30, letterSpacing: -0.8, lineHeight: 1.05, textShadow: '0 2px 8px rgba(0,0,0,0.5)' }}>Turn your shop into the local card hub</h1>
               <p style={{ fontFamily: TF.sans, fontSize: 15, opacity: 0.92, lineHeight: 1.5, margin: '12px 0 0', textShadow: '0 1px 4px rgba(0,0,0,0.5)' }}>Join the Cardonomy network — free deal flow, a storefront, and tools that bring collectors through your door.</p>
             </div>
           </div>
@@ -805,7 +805,7 @@ function EnrollShopScreen({ app }) {
               <div key={i} style={{ display: 'flex', gap: 13, background: TF.surface, borderRadius: 14, padding: 15, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
                 <span style={{ width: 42, height: 42, borderRadius: 12, flexShrink: 0, background: 'var(--accent-wash)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon({ width: 20, height: 20 })}</span>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: TF.sans, fontWeight: 800, fontSize: 15, letterSpacing: -0.2 }}>{title}</div>
+                  <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 15, letterSpacing: -0.2 }}>{title}</div>
                   <div style={{ fontFamily: TF.sans, fontSize: 13, color: TF.ink2, lineHeight: 1.45, marginTop: 2 }}>{body}</div>
                 </div>
               </div>
@@ -816,7 +816,7 @@ function EnrollShopScreen({ app }) {
           <div style={{ margin: '16px 16px 0', background: 'var(--fill)', borderRadius: 16, padding: 18, color: '#fff' }}>
             <div style={{ fontFamily: TF.sans, fontSize: 15, lineHeight: 1.5, fontWeight: 500 }}>"The QR intake alone saved us hours every weekend. Sellers submit on their phone, we make offers when we get a sec — and they keep shopping while they wait."</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 14 }}>
-              <span style={{ width: 34, height: 34, borderRadius: 10, background: '#2f8f5b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TF.sans, fontWeight: 800, fontSize: 15 }}>G</span>
+              <span style={{ width: 34, height: 34, borderRadius: 10, background: '#2f8f5b', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TF.sans, fontWeight: 700, fontSize: 15 }}>G</span>
               <div>
                 <div style={{ fontFamily: TF.sans, fontWeight: 700, fontSize: 13 }}>Sara — Gnome Games</div>
                 <div style={{ fontFamily: TF.sans, fontSize: 11.5, opacity: 0.7 }}>Manchester · enrolled 2024</div>
@@ -839,13 +839,13 @@ function EnrollShopScreen({ app }) {
     return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TF.bg, alignItems: 'center', justifyContent: 'center', padding: 32, textAlign: 'center' }}>
         <div style={{ width: 84, height: 84, borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconF.check({ width: 44, height: 44 })}</div>
-        <h1 style={{ margin: '20px 0 6px', fontFamily: TF.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.5 }}>Your application is in review</h1>
+        <h1 style={{ margin: '20px 0 6px', fontFamily: TF.sans, fontWeight: 700, fontSize: 24, letterSpacing: -0.5 }}>Your application is in review</h1>
         <p style={{ fontFamily: TF.sans, fontSize: 14.5, color: TF.muted, lineHeight: 1.5, maxWidth: 290 }}>We'll verify your shop within 2 business days and send your QR intake kit.</p>
 
         {/* summary card */}
         <div style={{ background: TF.surface, borderRadius: 4, padding: 16, marginTop: 20, width: '100%', maxWidth: 300, textAlign: 'left', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ display: 'flex', gap: 12, alignItems: 'center', marginBottom: 12 }}>
-            <div style={{ width: 40, height: 40, borderRadius: 4, background: form.accentColor, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TF.sans, fontWeight: 800, fontSize: 18, flexShrink: 0 }}>
+            <div style={{ width: 40, height: 40, borderRadius: 4, background: form.accentColor, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TF.sans, fontWeight: 700, fontSize: 18, flexShrink: 0 }}>
               {(form.shopName || 'S').charAt(0).toUpperCase()}
             </div>
             <div>
@@ -900,7 +900,7 @@ function EnrollShopScreen({ app }) {
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 120px' }}>
         {step === 1 && (
           <div>
-            <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>Tell us about your shop</h2>
+            <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>Tell us about your shop</h2>
             <p style={{ fontFamily: TF.sans, fontSize: 13.5, color: TF.muted, lineHeight: 1.5, margin: '0 0 20px' }}>
               Just the basics. You can add hours, photos, and branding later.
             </p>
@@ -926,7 +926,7 @@ function EnrollShopScreen({ app }) {
 
         {step === 2 && (
           <div>
-            <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.4 }}>What do you buy?</h2>
+            <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>What do you buy?</h2>
             <p style={{ fontFamily: TF.sans, fontSize: 13.5, color: TF.muted, lineHeight: 1.5, margin: '0 0 20px' }}>
               Select the games you accept from walk-in sellers. You can change this anytime.
             </p>

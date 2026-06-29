@@ -1,0 +1,155 @@
+<h2>Profile screen: design direction</h2>
+<p class="subtitle">Which personality feels right for a trading card marketplace?</p>
+
+<div class="cards">
+
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:20px;background:linear-gradient(135deg,#1a1d25 0%,#2a2d3a 100%);min-height:420px">
+
+      <!-- Hero header with gradient -->
+      <div style="position:relative;border-radius:16px;overflow:hidden;background:linear-gradient(135deg,oklch(0.35 0.18 264),oklch(0.28 0.12 280));padding:24px 20px 20px;margin-bottom:16px">
+        <div style="position:absolute;top:-20px;right:-10px;font-size:80px;opacity:0.08;transform:rotate(12deg)">&#127183;</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">
+          <div style="width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:#fff;border:2px solid rgba(255,255,255,0.2)">A</div>
+          <div>
+            <div style="font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.3px">Alex Rivera</div>
+            <div style="font-size:11.5px;color:rgba(255,255,255,0.6);margin-top:2px">Collector since 2023 &middot; 214 deals</div>
+          </div>
+        </div>
+        <!-- Inline stats -->
+        <div style="display:flex;gap:1px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden">
+          <div style="flex:1;padding:10px 0;text-align:center;background:rgba(255,255,255,0.04)">
+            <div style="font-size:16px;font-weight:800;color:#fff">&pound;2,480</div>
+            <div style="font-size:9.5px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">Portfolio</div>
+          </div>
+          <div style="flex:1;padding:10px 0;text-align:center;background:rgba(255,255,255,0.04)">
+            <div style="font-size:16px;font-weight:800;color:#4ade80">98.5%</div>
+            <div style="font-size:9.5px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">Trust</div>
+          </div>
+          <div style="flex:1;padding:10px 0;text-align:center;background:rgba(255,255,255,0.04)">
+            <div style="font-size:16px;font-weight:800;color:#fff">&#9733; 4.9</div>
+            <div style="font-size:9.5px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.5px;margin-top:2px">Rating</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick action pills -->
+      <div style="display:flex;gap:8px;margin-bottom:14px">
+        <div style="flex:1;padding:10px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);text-align:center">
+          <div style="font-size:15px;margin-bottom:2px">&#128722;</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5)">Purchases</div>
+        </div>
+        <div style="flex:1;padding:10px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);text-align:center">
+          <div style="font-size:15px;margin-bottom:2px">&#128176;</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5)">Selling</div>
+        </div>
+        <div style="flex:1;padding:10px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);text-align:center">
+          <div style="font-size:15px;margin-bottom:2px">&#9889;</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5)">Offers</div>
+        </div>
+        <div style="flex:1;padding:10px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);text-align:center">
+          <div style="font-size:15px;margin-bottom:2px">&#128176;</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5)">Payouts</div>
+        </div>
+      </div>
+
+      <!-- Recent activity compact -->
+      <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:12px 14px;border:1px solid rgba(255,255,255,0.06)">
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.8px;color:rgba(255,255,255,0.4);margin-bottom:8px;font-weight:700">Recent</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;color:rgba(255,255,255,0.7)">&#128994; Sold Charizard EX</span>
+            <span style="font-size:11px;color:#4ade80;font-weight:600">+&pound;84</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;color:rgba(255,255,255,0.7)">&#129309; Trade with Jamie</span>
+            <span style="font-size:11px;color:rgba(255,255,255,0.4)">2h ago</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <h3>A: Dark Showcase</h3>
+      <p>Rich gradient hero with inline stats. Profile feels like a collector's trophy case. Dark palette, compact quick-actions grid, activity feed below. Premium, immersive.</p>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:20px;background:#f0f1f4;min-height:420px">
+
+      <!-- Clean light header -->
+      <div style="border-radius:16px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.06);padding:20px;margin-bottom:12px">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+          <div style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#818cf8);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff">A</div>
+          <div style="flex:1">
+            <div style="font-size:17px;font-weight:800;color:#16181d;letter-spacing:-0.3px">Alex Rivera</div>
+            <div style="display:flex;align-items:center;gap:6px;margin-top:3px">
+              <span style="font-size:11px;color:#71757e">&#9733; 4.9</span>
+              <span style="font-size:11px;color:#a4a8b0">&middot;</span>
+              <span style="font-size:11px;color:#71757e">214 deals</span>
+              <span style="background:linear-gradient(135deg,#4ade80,#22c55e);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px">TRUSTED</span>
+            </div>
+          </div>
+          <div style="width:32px;height:32px;border-radius:8px;background:#f6f7f9;display:flex;align-items:center;justify-content:center;font-size:14px">&#9881;</div>
+        </div>
+
+        <!-- Stats bar -->
+        <div style="display:flex;gap:8px">
+          <div style="flex:1;background:#f6f7f9;border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:15px;font-weight:800;color:#16181d">&pound;2.4k</div>
+            <div style="font-size:9.5px;color:#a4a8b0;text-transform:uppercase;letter-spacing:0.5px;margin-top:1px">Portfolio</div>
+          </div>
+          <div style="flex:1;background:#f0fdf4;border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:15px;font-weight:800;color:#16a34a">98.5%</div>
+            <div style="font-size:9.5px;color:#a4a8b0;text-transform:uppercase;letter-spacing:0.5px;margin-top:1px">Trust</div>
+          </div>
+          <div style="flex:1;background:#f6f7f9;border-radius:8px;padding:10px;text-align:center">
+            <div style="font-size:15px;font-weight:800;color:#16181d">&pound;847</div>
+            <div style="font-size:9.5px;color:#a4a8b0;text-transform:uppercase;letter-spacing:0.5px;margin-top:1px">Sold</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal scrolling action row -->
+      <div style="display:flex;gap:8px;margin-bottom:12px;overflow-x:auto;padding-bottom:4px">
+        <div style="flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.06);font-size:12px;font-weight:600;color:#16181d">&#128722; Purchases <span style="color:#a4a8b0">3</span></div>
+        <div style="flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.06);font-size:12px;font-weight:600;color:#16181d">&#128176; Selling <span style="color:#6366f1;font-weight:700">2</span></div>
+        <div style="flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,0.06);font-size:12px;font-weight:600;color:#16181d">&#9889; Offers <span style="color:#f59e0b;font-weight:700">1</span></div>
+        <div style="flex-shrink:0;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#6366f1;box-shadow:0 1px 2px rgba(0,0,0,0.1);font-size:12px;font-weight:600;color:#fff">&#128178; &pound;248</div>
+      </div>
+
+      <!-- Collection highlight card -->
+      <div style="border-radius:12px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.06);padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:8px">
+        <div style="display:flex;gap:-4px">
+          <div style="width:36px;height:50px;border-radius:4px;background:linear-gradient(135deg,#fbbf24,#f59e0b);border:2px solid #fff"></div>
+          <div style="width:36px;height:50px;border-radius:4px;background:linear-gradient(135deg,#60a5fa,#3b82f6);border:2px solid #fff;margin-left:-8px"></div>
+          <div style="width:36px;height:50px;border-radius:4px;background:linear-gradient(135deg,#f472b6,#ec4899);border:2px solid #fff;margin-left:-8px"></div>
+        </div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:#16181d">My Collection</div>
+          <div style="font-size:11.5px;color:#71757e">42 cards &middot; <span style="color:#16a34a">+12% this month</span></div>
+        </div>
+        <div style="font-size:13px;color:#a4a8b0">&#10095;</div>
+      </div>
+
+      <!-- Buylist mini -->
+      <div style="border-radius:12px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.06);padding:14px;display:flex;align-items:center;gap:12px">
+        <div style="width:36px;height:36px;border-radius:8px;background:#fef3c7;display:flex;align-items:center;justify-content:center;font-size:16px">&#11088;</div>
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:700;color:#16181d">My Buylist</div>
+          <div style="font-size:11.5px;color:#71757e">3 active &middot; <span style="color:#6366f1">2 matches</span></div>
+        </div>
+        <div style="font-size:13px;color:#a4a8b0">&#10095;</div>
+      </div>
+
+    </div>
+    <div class="card-body">
+      <h3>B: Clean & Airy</h3>
+      <p>Light card-based layout. Scrollable pill nav for account actions. Collection preview with stacked card thumbnails. Spacious, modern, easy to scan. Fits the existing app aesthetic.</p>
+    </div>
+  </div>
+
+</div>

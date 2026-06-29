@@ -16,7 +16,7 @@ function BigChoice({ icon, tint, title, desc, meta, onClick, badge }) {
           display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{icon}</div>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>{title}</span>
+            <span style={{ fontFamily: TH.sans, fontWeight: 700, fontSize: 18, letterSpacing: -0.3 }}>{title}</span>
             {badge && <Badge tone="accent">{badge}</Badge>}
           </div>
           {meta && <div style={{ fontFamily: TH.sans, fontSize: 12.5, color: TH.muted, marginTop: 2 }}>{meta}</div>}
@@ -34,7 +34,7 @@ function SellHubScreen({ app }) {
       <div style={{ padding: '14px 16px 18px', background: TH.surface, borderBottom: '1px solid var(--line)' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
           <button onClick={() => app.openMenu()} style={{ color: TH.ink, padding: '2px 2px 2px 0', display: 'flex' }}>{IconH.menu({})}</button>
-          <h1 style={{ margin: 0, fontFamily: TH.sans, fontWeight: 800, fontSize: 26, letterSpacing: -0.6 }}>Sell your cards</h1>
+          <h1 style={{ margin: 0, fontFamily: TH.sans, fontWeight: 700, fontSize: 26, letterSpacing: -0.6 }}>Sell your cards</h1>
         </div>
         <p style={{ fontFamily: TH.sans, fontSize: 14.5, color: TH.muted, margin: 0, lineHeight: 1.45 }}>
           List individually to buyers worldwide, or sell a whole stack to a local shop in one go.
@@ -94,7 +94,7 @@ function SellHubScreen({ app }) {
         <button onClick={() => app.nav.push('shop')} style={{ marginTop: 4, display: 'flex', alignItems: 'center', gap: 10,
           background: 'transparent', border: '1.5px dashed var(--line)', borderRadius: 13, padding: '12px 14px', textAlign: 'left' }}>
           <span style={{ width: 30, height: 30, borderRadius: 9, background: SHOP_H.tint, color: '#fff', display: 'flex',
-            alignItems: 'center', justifyContent: 'center', fontFamily: TH.sans, fontWeight: 800, fontSize: 14, flexShrink: 0 }}>{SHOP_H.initial}</span>
+            alignItems: 'center', justifyContent: 'center', fontFamily: TH.sans, fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{SHOP_H.initial}</span>
           <span style={{ flex: 1, fontFamily: TH.sans, fontSize: 12.5, color: TH.muted }}>
             <b style={{ color: TH.ink2 }}>Shop counter</b> See how shops process your cards
           </span>
@@ -137,7 +137,7 @@ function SellMarketScreen({ app }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TH.bg }}>
       <div style={{ padding: '14px 14px 14px', background: TH.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TH.ink }}>{IconH.back({})}</button>
-        <span style={{ fontFamily: TH.sans, fontWeight: 800, fontSize: 17 }}>Sell on the marketplace</span>
+        <span style={{ fontFamily: TH.sans, fontWeight: 700, fontSize: 17 }}>Sell on the marketplace</span>
       </div>
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '18px 16px 30px' }}>
         <p style={{ fontFamily: TH.sans, fontSize: 14, color: TH.muted, margin: '0 0 16px', lineHeight: 1.45 }}>

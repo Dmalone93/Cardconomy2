@@ -95,7 +95,7 @@ function BatchListScreen({ app, params }) {
           alignItems: 'center', justifyContent: 'center', marginBottom: 20, animation: 'ccPop 0.4s ease' }}>
           {IconBL.check({ width: 44, height: 44 })}
         </div>
-        <h2 style={{ margin: 0, fontFamily: TBL.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.5 }}>
+        <h2 style={{ margin: 0, fontFamily: TBL.sans, fontWeight: 700, fontSize: 24, letterSpacing: -0.5 }}>
           {cards.length} card{cards.length !== 1 ? 's are' : ' is'} now live!
         </h2>
         <p style={{ fontFamily: TBL.sans, fontSize: 14.5, color: TBL.muted, lineHeight: 1.5, marginTop: 10, maxWidth: 280 }}>
@@ -116,7 +116,7 @@ function BatchListScreen({ app, params }) {
       {/* header */}
       <div style={{ padding: '14px 14px 12px', background: TBL.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TBL.ink }}>{IconBL.back({})}</button>
-        <span style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 18, flex: 1 }}>List {cards.length} card{cards.length !== 1 ? 's' : ''}</span>
+        <span style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 18, flex: 1 }}>List {cards.length} card{cards.length !== 1 ? 's' : ''}</span>
         <button onClick={() => setShowSearch(!showSearch)} style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)',
           background: TBL.surface2, borderRadius: 8, padding: '6px 12px' }}>+ Add</button>
       </div>
@@ -125,7 +125,7 @@ function BatchListScreen({ app, params }) {
 
         {/* pricing strategy */}
         <div style={{ marginBottom: 18 }}>
-          <div style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TBL.muted, textTransform: 'uppercase', marginBottom: 8 }}>Pricing strategy</div>
+          <div style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TBL.muted, textTransform: 'uppercase', marginBottom: 8 }}>Pricing strategy</div>
           <div style={{ display: 'flex', gap: 8 }}>
             {STRATEGIES_BL.map(s => {
               const active = strategy === s.id;
@@ -147,7 +147,7 @@ function BatchListScreen({ app, params }) {
 
         {/* card list header + add card */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-          <div style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TBL.muted, textTransform: 'uppercase' }}>Cards ({cards.length})</div>
+          <div style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TBL.muted, textTransform: 'uppercase' }}>Cards ({cards.length})</div>
           <button onClick={() => setShowSearch(!showSearch)} style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 13, color: 'var(--ink)', display: 'flex', alignItems: 'center', gap: 5 }}>
             {showSearch ? 'Close' : '+ Add card'}
           </button>
@@ -241,7 +241,7 @@ function BatchListScreen({ app, params }) {
         </div>
 
         {/* batch controls */}
-        <div style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TBL.muted, textTransform: 'uppercase', marginBottom: 8 }}>Batch settings</div>
+        <div style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TBL.muted, textTransform: 'uppercase', marginBottom: 8 }}>Batch settings</div>
         <div style={{ background: TBL.surface, borderRadius: 16, overflow: 'hidden', marginBottom: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <button onClick={() => setCondSheetOpen(true)} style={{
             width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -297,7 +297,7 @@ function BatchListScreen({ app, params }) {
             position: 'absolute', bottom: 0, left: 0, right: 0, background: TBL.surface,
             borderRadius: '20px 20px 0 0', padding: '20px 16px 36px', animation: 'ccSlideUp 0.25s ease',
           }}>
-            <div style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 16, marginBottom: 14 }}>Condition</div>
+            <div style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 16, marginBottom: 14 }}>Condition</div>
             {CONDITIONS_BL.map(cond => (
               <button key={cond} onClick={() => { updateCardCondition(cardCondIdx, cond); setCardCondIdx(null); }}
                 style={{
@@ -322,7 +322,7 @@ function BatchListScreen({ app, params }) {
             position: 'absolute', bottom: 0, left: 0, right: 0, background: TBL.surface,
             borderRadius: '20px 20px 0 0', padding: '20px 16px 36px', animation: 'ccSlideUp 0.25s ease',
           }}>
-            <div style={{ fontFamily: TBL.sans, fontWeight: 800, fontSize: 16, marginBottom: 14 }}>Set condition for all cards</div>
+            <div style={{ fontFamily: TBL.sans, fontWeight: 700, fontSize: 16, marginBottom: 14 }}>Set condition for all cards</div>
             {CONDITIONS_BL.map(cond => (
               <button key={cond} onClick={() => setAllCondition(cond)}
                 style={{

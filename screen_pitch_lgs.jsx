@@ -132,7 +132,7 @@ function LGSPitchScreen({ app }) {
                 color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>{v.icon}</div>
               <div>
-                <div style={{ fontFamily: TPL.sans, fontWeight: 800, fontSize: 17, color: TPL.ink, marginBottom: 4 }}>{v.title}</div>
+                <div style={{ fontFamily: TPL.sans, fontWeight: 700, fontSize: 17, color: TPL.ink, marginBottom: 4 }}>{v.title}</div>
                 <div style={{ fontFamily: TPL.sans, fontSize: 14, color: TPL.muted, lineHeight: 1.55 }}>{v.desc}</div>
               </div>
             </div>
@@ -141,7 +141,7 @@ function LGSPitchScreen({ app }) {
 
         {/* ═══════════════ HOW IT WORKS ═══════════════ */}
         <div style={{ padding: '0 16px 28px' }}>
-          <h2 style={{ margin: '0 0 16px', fontFamily: TPL.heading, fontWeight: 800, fontSize: 18, color: TPL.ink, letterSpacing: -0.3 }}>
+          <h2 style={{ margin: '0 0 16px', fontFamily: TPL.heading, fontWeight: 700, fontSize: 18, color: TPL.ink, letterSpacing: -0.3 }}>
             How it works for shops
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
@@ -200,7 +200,7 @@ function LGSPitchScreen({ app }) {
               <div style={{
                 width: 36, height: 36, borderRadius: 10, background: 'var(--gold)', color: '#fff',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontFamily: TPL.sans, fontWeight: 800, fontSize: 15,
+                fontFamily: TPL.sans, fontWeight: 700, fontSize: 15,
               }}>G</div>
               <div>
                 <div style={{ fontFamily: TPL.sans, fontWeight: 700, fontSize: 13, color: TPL.ink }}>{"The Gnome's Grotto"}</div>
@@ -212,7 +212,7 @@ function LGSPitchScreen({ app }) {
 
         {/* ═══════════════ BOTTOM CTA ═══════════════ */}
         <div style={{ padding: '8px 20px 40px', textAlign: 'center' }}>
-          <h2 style={{ margin: '0 0 8px', fontFamily: TPL.heading, fontWeight: 800, fontSize: 22, color: TPL.ink, letterSpacing: -0.4 }}>
+          <h2 style={{ margin: '0 0 8px', fontFamily: TPL.heading, fontWeight: 700, fontSize: 22, color: TPL.ink, letterSpacing: -0.4 }}>
             Join during early access
           </h2>
           <p style={{ margin: '0 0 20px', fontFamily: TPL.sans, fontSize: 14, color: TPL.muted }}>

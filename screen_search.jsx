@@ -260,7 +260,7 @@ function SearchScreen({ app, params = {} }) {
                 {setInfo.img && <img src={setInfo.img} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} />}
                 <div style={{ position: 'relative' }}>
                   {gameInfo && <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 10, opacity: 0.8, letterSpacing: 0.4, marginBottom: 4 }}>{gameInfo.short.toUpperCase()}</div>}
-                  <div style={{ fontFamily: TS.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>{setInfo.name.replace(/\s*\(.*\)/, '')}</div>
+                  <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 18, letterSpacing: -0.3 }}>{setInfo.name.replace(/\s*\(.*\)/, '')}</div>
                   <div style={{ display: 'flex', gap: 12, marginTop: 6, fontFamily: TS.sans, fontSize: 12, opacity: 0.85 }}>
                     <span>{setInfo.cards} cards</span>
                     <span>Released {setInfo.year}</span>

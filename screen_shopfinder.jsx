@@ -14,7 +14,7 @@ function ShopFinderScreen({ app }) {
       {/* header — matches the Trade-with-collectors header exactly */}
       <div style={{ padding: '14px 14px 12px', background: TSF.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TSF.ink }}>{IconSF.back({})}</button>
-        <span style={{ fontFamily: TSF.sans, fontWeight: 800, fontSize: 16, flex: 1 }}>Find a local shop</span>
+        <span style={{ fontFamily: TSF.sans, fontWeight: 700, fontSize: 16, flex: 1 }}>Find a local shop</span>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto' }}>
@@ -42,10 +42,10 @@ function ShopFinderScreen({ app }) {
             background: TSF.surface, borderRadius: 16, padding: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 13 }}>
               <span style={{ width: 52, height: 52, borderRadius: 14, background: s.tint, color: '#fff', flexShrink: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSF.sans, fontWeight: 800, fontSize: 22 }}>{s.initial}</span>
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSF.sans, fontWeight: 700, fontSize: 22 }}>{s.initial}</span>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                  <span style={{ fontFamily: TSF.sans, fontWeight: 800, fontSize: 16, letterSpacing: -0.3 }}>{s.name}</span>
+                  <span style={{ fontFamily: TSF.sans, fontWeight: 700, fontSize: 16, letterSpacing: -0.3 }}>{s.name}</span>
                   {IconSF.shield({ width: 14, height: 14, style: { color: s.tint } })}
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>

@@ -101,7 +101,7 @@ function ListingScreen({ app, params }) {
             {!isLot && <GradeChipL grade={item.grade} size="lg" />}
             {item.foil && <span style={{ fontFamily: TL.sans, fontSize: 12, fontWeight: 600, color: TL.muted }}>✦ Foil / Holo</span>}
           </div>
-          <h1 style={{ margin: 0, fontFamily: TL.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.6, lineHeight: 1.1 }}>{item.name}</h1>
+          <h1 style={{ margin: 0, fontFamily: TL.sans, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, lineHeight: 1.1 }}>{item.name}</h1>
           <div style={{ fontFamily: TL.sans, fontSize: 14, color: TL.muted, marginTop: 4 }}>
             {set ? set.name : ''}{item.number ? ' · ' + item.number : ''}{isLot ? '' : ' · ' + item.condition}
           </div>
@@ -181,7 +181,7 @@ function ListingScreen({ app, params }) {
           {!isLot && (
             <div style={{ marginTop: 22 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                <span style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17 }}>Seller's photos</span>
+                <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17 }}>Seller's photos</span>
                 <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 10, color: 'var(--up)', background: 'var(--up-wash)', borderRadius: 6, padding: '2px 7px', letterSpacing: 0.3 }}>ACTUAL CARD</span>
               </div>
               <div style={{ fontFamily: TL.sans, fontSize: 12.5, color: TL.muted, marginBottom: 11, lineHeight: 1.4 }}>
@@ -234,10 +234,10 @@ function ListingScreen({ app, params }) {
 
           {/* seller */}
           <div style={{ marginTop: 22 }}>
-            <div style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17, marginBottom: 10 }}>Seller</div>
+            <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, marginBottom: 10 }}>Seller</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: TL.surface2, borderRadius: 14, padding: 14 }}>
               <div style={{ width: 46, height: 46, borderRadius: 12, background: 'var(--ink)', color: '#fff', display: 'flex',
-                alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 800, fontSize: 20, flexShrink: 0 }}>{item.seller[0]}</div>
+                alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 700, fontSize: 20, flexShrink: 0 }}>{item.seller[0]}</div>
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
                   <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>{item.seller}</span>
@@ -331,7 +331,7 @@ function ListingScreen({ app, params }) {
 
           {/* similar */}
           <div style={{ marginTop: 26 }}>
-            <div style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17, marginBottom: 12 }}>Similar listings</div>
+            <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, marginBottom: 12 }}>Similar listings</div>
             <div className="noscroll" style={{ display: 'flex', gap: 12, overflowX: 'auto', margin: '0 -18px', padding: '0 18px' }}>
               {LISTINGS_L.filter(l => l.id !== item.id && l.game === item.game).slice(0,5).map(l => (
                 <button key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{ flexShrink: 0, width: 110, textAlign: 'left' }}>
@@ -346,7 +346,7 @@ function ListingScreen({ app, params }) {
           {/* mock message thread after offer */}
           {offerSent && (
             <div style={{ marginTop: 26 }}>
-              <div style={{ fontFamily: TL.sans, fontWeight: 800, fontSize: 17, marginBottom: 12 }}>Your offer</div>
+              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, marginBottom: 12 }}>Your offer</div>
               {/* buyer message */}
               <div style={{ background: TL.surface2, borderRadius: 4, padding: 14, marginBottom: 10 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
@@ -358,7 +358,7 @@ function ListingScreen({ app, params }) {
               {/* seller reply */}
               <div style={{ background: TL.surface, borderRadius: 4, padding: 14, marginBottom: 10, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: 4, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 800, fontSize: 13, flexShrink: 0 }}>{offerSent.seller[0]}</div>
+                  <div style={{ width: 28, height: 28, borderRadius: 4, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{offerSent.seller[0]}</div>
                   <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{offerSent.seller}</span>
                   <span style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginLeft: 'auto' }}>Just now</span>
                 </div>

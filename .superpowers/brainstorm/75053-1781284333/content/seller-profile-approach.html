@@ -1,0 +1,105 @@
+<h2>Seller Profile: What should it show?</h2>
+<p class="subtitle">When a user taps a seller name on the product page, what do they see?</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:24px;background:#f8f9fa">
+      <!-- Minimal listing view mockup -->
+      <div style="font-family:system-ui;max-width:320px;margin:0 auto">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+          <div style="width:40px;height:40px;border-radius:50%;background:#16181d;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">V</div>
+          <div>
+            <div style="font-weight:700;font-size:15px">VaultCards</div>
+            <div style="font-size:12px;color:#71757e">99.4% · 12,840 sales · Manchester</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:6px;margin-bottom:14px">
+          <span style="background:#f0fdf4;color:#16a34a;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700">Trusted</span>
+          <span style="background:#eff6ff;color:#2563eb;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700">Fast Shipper</span>
+        </div>
+        <div style="font-weight:700;font-size:13px;margin-bottom:8px">12 listings</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#fff;border:1px solid #e7e8ec;border-radius:4px">
+            <div style="width:36px;height:48px;background:#c2410c;border-radius:2px"></div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600">Charizard ex</div><div style="font-size:10px;color:#71757e">NM · Foil</div></div>
+            <div style="font-weight:700;font-size:13px">£432</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#fff;border:1px solid #e7e8ec;border-radius:4px">
+            <div style="width:36px;height:48px;background:#7c3aed;border-radius:2px"></div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600">Umbreon VMAX</div><div style="font-size:10px;color:#71757e">NM · Alt Art</div></div>
+            <div style="font-weight:700;font-size:13px">£280</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px;background:#fff;border:1px solid #e7e8ec;border-radius:4px">
+            <div style="width:36px;height:48px;background:#2563eb;border-radius:2px"></div>
+            <div style="flex:1"><div style="font-size:12px;font-weight:600">Lugia V Alt</div><div style="font-size:10px;color:#71757e">LP</div></div>
+            <div style="font-weight:700;font-size:13px">£95</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Minimal Listing View</h3>
+      <p>Seller stats at top, then a clean list of all their available cards. Focused on "what else can I buy?" — perfect for bundling purchases.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:24px;background:#f8f9fa">
+      <!-- Full storefront mockup -->
+      <div style="font-family:system-ui;max-width:320px;margin:0 auto">
+        <div style="background:#16181d;color:#fff;padding:16px;border-radius:8px 8px 0 0;text-align:center">
+          <div style="width:48px;height:48px;border-radius:50%;background:#fff;color:#16181d;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;margin:0 auto 8px">V</div>
+          <div style="font-weight:700;font-size:16px">VaultCards</div>
+          <div style="font-size:11px;opacity:0.7;margin-top:2px">Manchester · Since 2019</div>
+        </div>
+        <div style="background:#fff;padding:12px;border:1px solid #e7e8ec;border-top:none">
+          <div style="font-size:11px;color:#71757e;line-height:1.5;margin-bottom:10px">"Specializing in high-end singles. All cards double-sleeved and shipped in toploaders."</div>
+          <div style="display:flex;gap:12px;margin-bottom:12px">
+            <div style="flex:1;text-align:center;padding:8px;background:#f8f9fa;border-radius:4px">
+              <div style="font-weight:700;font-size:14px">99.4%</div>
+              <div style="font-size:10px;color:#71757e">Rating</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:8px;background:#f8f9fa;border-radius:4px">
+              <div style="font-weight:700;font-size:14px">12.8k</div>
+              <div style="font-size:10px;color:#71757e">Sales</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:8px;background:#f8f9fa;border-radius:4px">
+              <div style="font-weight:700;font-size:14px">1-2d</div>
+              <div style="font-size:10px;color:#71757e">Ships</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:6px;margin-bottom:10px;border-bottom:1px solid #e7e8ec;padding-bottom:10px">
+            <span style="font-size:11px;font-weight:700;border-bottom:2px solid #16181d;padding-bottom:4px">Listings</span>
+            <span style="font-size:11px;color:#71757e;padding-bottom:4px;margin-left:12px">Reviews</span>
+            <span style="font-size:11px;color:#71757e;padding-bottom:4px;margin-left:12px">Policies</span>
+          </div>
+          <div style="font-size:11px;color:#71757e;text-align:center;padding:8px">listings grid here...</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Full Storefront</h3>
+      <p>Branded header, bio, stats dashboard, tabs for listings/reviews/policies. Richer but requires more seller data that doesn't exist yet in the data model.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pros-cons" style="margin-top:20px">
+  <div class="pros">
+    <h4>Recommendation: Option A</h4>
+    <ul>
+      <li>Works with existing seller data (name, rating, sales)</li>
+      <li>Directly supports the bundling/free-shipping goal</li>
+      <li>Faster to build, no new data model needed</li>
+      <li>Users on the product page want to browse, not read bios</li>
+    </ul>
+  </div>
+  <div class="cons">
+    <h4>Option B trade-offs</h4>
+    <ul>
+      <li>Sellers have no bio, branding, or policies in current data</li>
+      <li>Would need significant data model expansion</li>
+      <li>Overkill for the "bundle more items" use case</li>
+    </ul>
+  </div>
+</div>

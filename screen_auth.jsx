@@ -16,7 +16,7 @@ const authLogo = {
 };
 
 const authWordmark = {
-  fontFamily: 'var(--wordmark)', fontSize: 22, fontWeight: 800,
+  fontFamily: 'var(--wordmark)', fontSize: 22, fontWeight: 700,
   letterSpacing: 2, color: TA2.ink, lineHeight: 0, display: 'flex', alignItems: 'center', height: 32,
 };
 
@@ -249,7 +249,7 @@ function ForgotPasswordScreen({ app }) {
           }}>
             &#10003;
           </div>
-          <div style={{ fontFamily: TA2.sans, fontWeight: 800, fontSize: 20, color: TA2.ink }}>
+          <div style={{ fontFamily: TA2.sans, fontWeight: 700, fontSize: 20, color: TA2.ink }}>
             Check your email
           </div>
           <p style={{ fontFamily: TA2.sans, fontSize: 14, color: TA2.muted, lineHeight: 1.5, maxWidth: 260 }}>
@@ -270,7 +270,7 @@ function ForgotPasswordScreen({ app }) {
         <button onClick={() => app.nav.pop()} style={{ color: TA2.ink, flexShrink: 0, background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
           {IconA2.back({})}
         </button>
-        <span style={{ fontFamily: TA2.sans, fontWeight: 800, fontSize: 18, color: TA2.ink }}>
+        <span style={{ fontFamily: TA2.sans, fontWeight: 700, fontSize: 18, color: TA2.ink }}>
           Reset password
         </span>
       </div>

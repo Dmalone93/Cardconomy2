@@ -1,0 +1,140 @@
+<h2>Design Summary</h2>
+<p class="subtitle">Two features: seller storefront + free shipping upsell toast</p>
+
+<div class="section">
+  <h3>1. Seller Profile (Full Storefront)</h3>
+  <div class="mockup">
+    <div class="mockup-header">Seller Storefront Screen</div>
+    <div class="mockup-body" style="padding:0;overflow:hidden">
+      <div style="font-family:system-ui;max-width:380px;margin:0 auto;background:#fff">
+        <!-- Header bar -->
+        <div style="display:flex;align-items:center;padding:12px;gap:10px">
+          <div style="width:32px;height:32px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;font-size:14px">←</div>
+          <span style="font-weight:700;font-size:15px">Back</span>
+        </div>
+        <!-- Branded header -->
+        <div style="background:#16181d;color:#fff;padding:24px 16px;text-align:center">
+          <div style="width:52px;height:52px;border-radius:50%;background:#fff;color:#16181d;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;margin:0 auto 10px">V</div>
+          <div style="font-weight:700;font-size:18px">VaultCards</div>
+          <div style="font-size:12px;opacity:0.6;margin-top:3px">Manchester · Since 2019</div>
+          <div style="display:flex;justify-content:center;gap:6px;margin-top:10px">
+            <span style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600">Trusted</span>
+            <span style="background:rgba(255,255,255,0.15);padding:2px 8px;border-radius:4px;font-size:10px;font-weight:600">Fast Shipper</span>
+          </div>
+        </div>
+        <!-- Stats row -->
+        <div style="display:flex;gap:1px;background:#e7e8ec">
+          <div style="flex:1;text-align:center;padding:12px 8px;background:#fff">
+            <div style="font-weight:700;font-size:16px">99.4%</div>
+            <div style="font-size:10px;color:#71757e">Rating</div>
+          </div>
+          <div style="flex:1;text-align:center;padding:12px 8px;background:#fff">
+            <div style="font-weight:700;font-size:16px">12.8k</div>
+            <div style="font-size:10px;color:#71757e">Sales</div>
+          </div>
+          <div style="flex:1;text-align:center;padding:12px 8px;background:#fff">
+            <div style="font-weight:700;font-size:16px">1–2d</div>
+            <div style="font-size:10px;color:#71757e">Ships</div>
+          </div>
+          <div style="flex:1;text-align:center;padding:12px 8px;background:#fff">
+            <div style="font-weight:700;font-size:16px">£0</div>
+            <div style="font-size:10px;color:#71757e">Free over £50</div>
+          </div>
+        </div>
+        <!-- Bio -->
+        <div style="padding:14px 16px;font-size:12px;color:#555;line-height:1.5;border-bottom:1px solid #e7e8ec">
+          "Specializing in high-end singles. All cards double-sleeved and shipped in toploaders."
+        </div>
+        <!-- Tabs -->
+        <div style="display:flex;border-bottom:1px solid #e7e8ec">
+          <div style="flex:1;text-align:center;padding:10px;font-size:12px;font-weight:700;border-bottom:2px solid #16181d">Listings (12)</div>
+          <div style="flex:1;text-align:center;padding:10px;font-size:12px;color:#71757e">Reviews</div>
+          <div style="flex:1;text-align:center;padding:10px;font-size:12px;color:#71757e">Policies</div>
+        </div>
+        <!-- Listings grid -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px">
+          <div style="border:1px solid #e7e8ec;border-radius:4px;overflow:hidden">
+            <div style="height:80px;background:#c2410c"></div>
+            <div style="padding:8px"><div style="font-size:11px;font-weight:600">Charizard ex</div><div style="font-size:10px;color:#71757e">NM · Foil</div><div style="font-weight:700;font-size:13px;margin-top:4px">£432</div></div>
+          </div>
+          <div style="border:1px solid #e7e8ec;border-radius:4px;overflow:hidden">
+            <div style="height:80px;background:#7c3aed"></div>
+            <div style="padding:8px"><div style="font-size:11px;font-weight:600">Umbreon VMAX</div><div style="font-size:10px;color:#71757e">NM · Alt Art</div><div style="font-weight:700;font-size:13px;margin-top:4px">£280</div></div>
+          </div>
+          <div style="border:1px solid #e7e8ec;border-radius:4px;overflow:hidden">
+            <div style="height:80px;background:#2563eb"></div>
+            <div style="padding:8px"><div style="font-size:11px;font-weight:600">Lugia V Alt</div><div style="font-size:10px;color:#71757e">LP</div><div style="font-weight:700;font-size:13px;margin-top:4px">£95</div></div>
+          </div>
+          <div style="border:1px solid #e7e8ec;border-radius:4px;overflow:hidden">
+            <div style="height:80px;background:#059669"></div>
+            <div style="padding:8px"><div style="font-size:11px;font-weight:600">Ragavan</div><div style="font-size:10px;color:#71757e">NM · Foil</div><div style="font-weight:700;font-size:13px;margin-top:4px">£58</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>2. Tappable Seller Name on Product Page</h3>
+  <div class="mockup">
+    <div class="mockup-header">Offer Card — seller name becomes a link</div>
+    <div class="mockup-body" style="padding:20px">
+      <div style="font-family:system-ui;max-width:360px;margin:0 auto;border:1.5px solid #16181d;border-radius:4px;padding:14px;position:relative">
+        <span style="position:absolute;top:-9px;left:12px;background:#16181d;color:#fff;font-weight:700;font-size:10px;padding:2px 8px;border-radius:4px">Best price</span>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+          <div style="display:flex;align-items:baseline;gap:8px">
+            <span style="font-weight:700;font-size:18px">£432.00</span>
+            <span style="background:#f0fdf4;color:#16a34a;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700">NM</span>
+          </div>
+          <button style="background:#16181d;color:#fff;padding:8px 14px;border-radius:4px;font-weight:700;font-size:12px;border:none">Add to cart</button>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:12px;color:#71757e">
+          <div style="width:28px;height:28px;border-radius:50%;background:#16181d;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px">V</div>
+          <div>
+            <span style="font-weight:600;color:#2563eb;text-decoration:underline;cursor:pointer">VaultCards</span>
+            <span style="margin-left:5px;background:#f0fdf4;color:#16a34a;padding:1px 6px;border-radius:4px;font-weight:700;font-size:10px">Trusted</span>
+            <span style="margin-left:6px">99.4% · 12,840 sales</span>
+          </div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:8px;font-size:12px;color:#71757e">
+          <span>✓ Free shipping</span>
+          <span>Ships 1–2 days</span>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:#2563eb;cursor:pointer">View all 12 listings from this seller →</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>3. Free Shipping Upsell Toast</h3>
+  <div class="mockup">
+    <div class="mockup-header">Toast appears after adding to cart</div>
+    <div class="mockup-body" style="padding:20px;position:relative;min-height:160px;background:#f8f9fa">
+      <div style="font-family:system-ui;max-width:360px;margin:0 auto">
+        <!-- Faded product page behind -->
+        <div style="opacity:0.3;font-size:12px;color:#71757e;text-align:center;padding:30px 0">[ product page content ]</div>
+        <!-- Toast -->
+        <div style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:calc(100% - 48px);max-width:340px;background:#16181d;color:#fff;border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 20px rgba(0,0,0,0.2)">
+          <div style="flex:1">
+            <div style="font-weight:700;font-size:13px">Added to cart ✓</div>
+            <div style="font-size:11px;opacity:0.8;margin-top:2px">Add <strong>£12 more</strong> from VaultCards for <strong>free shipping</strong></div>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:#60a5fa;white-space:nowrap;cursor:pointer">Browse →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top:20px;padding:16px;background:#f0f7ff;border-radius:8px;border-left:3px solid #2563eb">
+  <strong style="font-size:14px">Design decisions</strong>
+  <ul style="font-size:13px;margin-top:8px;color:#333;line-height:1.8">
+    <li><strong>Seller name</strong> on offer cards becomes a tappable blue link → opens their storefront</li>
+    <li><strong>"View all X listings"</strong> link added below each offer card for discoverability</li>
+    <li><strong>Storefront screen</strong> — branded header, stats, bio, tabs (Listings/Reviews/Policies). Stubbed data with sensible defaults until real seller data exists</li>
+    <li><strong>Upsell toast</strong> — only shows when: seller has other listings AND user hasn't hit free shipping threshold. Tapping "Browse →" navigates to seller storefront. Auto-dismisses after 4s</li>
+    <li><strong>Free shipping threshold</strong> — added to seller data model (default £50, configurable per seller)</li>
+  </ul>
+</div>

@@ -170,8 +170,8 @@ function SellShopScreen({ app }) {
           <button onClick={goBack} style={{ color: TSS.ink }}>{IconSS.back({})}</button>
           <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ width: 26, height: 26, borderRadius: 8, background: SHOP_SS.tint, color: '#fff', display: 'flex',
-              alignItems: 'center', justifyContent: 'center', fontFamily: TSS.sans, fontWeight: 800, fontSize: 14 }}>{SHOP_SS.initial}</span>
-            <span style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 16 }}>{SHOP_SS.name}</span>
+              alignItems: 'center', justifyContent: 'center', fontFamily: TSS.sans, fontWeight: 700, fontSize: 14 }}>{SHOP_SS.initial}</span>
+            <span style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 16 }}>{SHOP_SS.name}</span>
           </div>
           {IconSS.shield({ width: 17, height: 17, style: { color: SHOP_SS.tint } })}
         </div>
@@ -183,9 +183,9 @@ function SellShopScreen({ app }) {
           <div style={{ padding: '20px 18px 30px' }}>
             <div style={{ textAlign: 'center', padding: '8px 0 18px' }}>
               <div style={{ width: 76, height: 76, margin: '0 auto 12px', borderRadius: 4, background: SHOP_SS.tint, color: '#fff',
-                display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSS.sans, fontWeight: 800, fontSize: 36,
+                display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSS.sans, fontWeight: 700, fontSize: 36,
                 boxShadow: '0 8px 22px rgba(47,143,91,0.4)' }}>{SHOP_SS.initial}</div>
-              <h1 style={{ margin: 0, fontFamily: TSS.sans, fontWeight: 800, fontSize: 23, letterSpacing: -0.5 }}>{SHOP_SS.name}</h1>
+              <h1 style={{ margin: 0, fontFamily: TSS.sans, fontWeight: 700, fontSize: 23, letterSpacing: -0.5 }}>{SHOP_SS.name}</h1>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, marginTop: 4, fontFamily: TSS.sans, fontSize: 13, color: TSS.muted }}>
                 <span style={{ color: 'var(--gold)' }}>★★★★☆</span> {SHOP_SS.rating} · {SHOP_SS.loc}
               </div>
@@ -195,7 +195,7 @@ function SellShopScreen({ app }) {
               {IconSS.check({ width: 14, height: 14 })} Scanned in-store · ticket reserved
             </div>
             <div style={{ background: TSS.surface, borderRadius: 4, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-              <div style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 18, letterSpacing: -0.3 }}>Sell your cards here</div>
+              <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 18, letterSpacing: -0.3 }}>Sell your cards here</div>
               <p style={{ fontFamily: TSS.sans, fontSize: 13.5, color: TSS.ink2, lineHeight: 1.5, margin: '6px 0 0' }}>{SHOP_SS.blurb}</p>
               <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                 {[[IconSS.bolt, 'Scan in minutes'], [IconSS.tag, 'Live price guide'], [IconSS.shield, 'In-person & safe']].map(([ic, l], i) => (
@@ -217,7 +217,7 @@ function SellShopScreen({ app }) {
         {/* ── IDENTITY ── */}
         {phase === 'identity' && (
           <div style={{ padding: '22px 18px 30px' }}>
-            <h1 style={{ margin: 0, fontFamily: TSS.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>How do we reach you?</h1>
+            <h1 style={{ margin: 0, fontFamily: TSS.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5 }}>How do we reach you?</h1>
             <p style={{ fontFamily: TSS.sans, fontSize: 13.5, color: TSS.muted, margin: '6px 0 18px' }}>The shop texts your offer here. No password, no app.</p>
             <Field label="Mobile number" value="07700 900142" />
             <Field label="Your name (for the counter)" value="Jordan M." />
@@ -229,7 +229,7 @@ function SellShopScreen({ app }) {
               <div style={{ marginTop: 18, background: '#f0fdf4', borderRadius: 4, padding: 14, boxShadow: 'inset 0 0 0 1.5px #16a34a' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
                   <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 22, height: 22, borderRadius: 4, background: '#16a34a', color: '#fff', fontSize: 12 }}>✓</span>
-                  <span style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 14, color: '#16a34a' }}>Verified · Tier {app.tier}</span>
+                  <span style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, color: '#16a34a' }}>Verified · Tier {app.tier}</span>
                 </div>
                 <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 15, marginBottom: 4 }}>Your seller profile</div>
                 <div style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.ink2, lineHeight: 1.5 }}>
@@ -241,7 +241,7 @@ function SellShopScreen({ app }) {
             ) : (
               <div style={{ marginTop: 18, background: '#fef2f2', borderRadius: 4, padding: 14, boxShadow: 'inset 0 0 0 1.5px #dc2626' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                  <span style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 14, color: '#dc2626' }}>⚠ Unverified account</span>
+                  <span style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, color: '#dc2626' }}>⚠ Unverified account</span>
                 </div>
                 <div style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.ink2, lineHeight: 1.5 }}>
                   Shops may require ID verification for high-value submissions.
@@ -260,7 +260,7 @@ function SellShopScreen({ app }) {
         {/* ── METHOD ── */}
         {phase === 'method' && (
           <div style={{ padding: '18px 16px 30px' }}>
-            <h1 style={{ margin: '0 0 2px', fontFamily: TSS.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Add your cards</h1>
+            <h1 style={{ margin: '0 0 2px', fontFamily: TSS.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5 }}>Add your cards</h1>
             <p style={{ fontFamily: TSS.sans, fontSize: 13.5, color: TSS.muted, margin: '0 0 16px' }}>Big stack? Start with Live Sweep. You can mix methods.</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <MethodRow hero icon={IconSS.camera({ width: 22, height: 22 })} title="Live Sweep Scan" sub="Flip the stack — we auto-detect each card" time="fastest" onClick={() => setPhase('scan')} />
@@ -323,7 +323,7 @@ function ReviewBody({ scanned, stats, cond, setCond, bulkChoice, setBulkChoice, 
   return (
     <div style={{ padding: '18px 16px 16px' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-        <h1 style={{ margin: 0, fontFamily: TSS.sans, fontWeight: 800, fontSize: 22, letterSpacing: -0.5 }}>Review</h1>
+        <h1 style={{ margin: 0, fontFamily: TSS.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5 }}>Review</h1>
         <span style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.muted, whiteSpace: 'nowrap' }}>{SUB_SS.total.toLocaleString()} cards</span>
       </div>
       <p style={{ fontFamily: TSS.sans, fontSize: 13, color: TSS.muted, margin: '4px 0 16px' }}>
@@ -357,9 +357,9 @@ function ReviewBody({ scanned, stats, cond, setCond, bulkChoice, setBulkChoice, 
             <div style={{ position: 'relative', background: TSS.surface2, borderRadius: 11, padding: 8, display: 'flex', justifyContent: 'center' }}>
               <CardArtSS item={c} w={70} />
               {c.buylist && <span style={{ position: 'absolute', top: 5, left: 5, background: 'var(--gold)', color: '#3a2a00',
-                fontFamily: TSS.sans, fontWeight: 800, fontSize: 9, borderRadius: 5, padding: '1px 5px' }}>★ WANT</span>}
+                fontFamily: TSS.sans, fontWeight: 700, fontSize: 9, borderRadius: 5, padding: '1px 5px' }}>★ WANT</span>}
               {c.flag && <span style={{ position: 'absolute', top: 5, left: 5, background: 'var(--down)', color: '#fff',
-                fontFamily: TSS.sans, fontWeight: 800, fontSize: 9, borderRadius: 5, padding: '1px 5px' }}>⚠</span>}
+                fontFamily: TSS.sans, fontWeight: 700, fontSize: 9, borderRadius: 5, padding: '1px 5px' }}>⚠</span>}
             </div>
             <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 11.5, marginTop: 5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
             <div style={{ fontFamily: TSS.sans, fontSize: 11, color: TSS.muted }}>{moneySS(c.market, { cents: false })}</div>
@@ -414,7 +414,7 @@ function Confirmation({ onThread, onHome, onShop }) {
     <div style={{ padding: '70px 24px 30px', textAlign: 'center' }}>
       <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)',
         display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconSS.check({ width: 44, height: 44 })}</div>
-      <h1 style={{ margin: '20px 0 4px', fontFamily: TSS.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>Sent to {SHOP_SS.name}!</h1>
+      <h1 style={{ margin: '20px 0 4px', fontFamily: TSS.sans, fontWeight: 700, fontSize: 25, letterSpacing: -0.5 }}>Sent to {SHOP_SS.name}!</h1>
       <p style={{ fontFamily: TSS.sans, fontSize: 14, color: TSS.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 280 }}>
         They've been alerted and will text an offer to {SUB_SS.seller.phone}. Keep shopping — your cards stay with you.
       </p>
@@ -451,9 +451,9 @@ function SellerThread({ app, onShop }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '14px 14px 12px', background: SHOP_SS.tint, color: '#fff', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.setTab('home')} style={{ color: '#fff' }}>{IconSS.back({})}</button>
-        <span style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSS.sans, fontWeight: 800 }}>{SHOP_SS.initial}</span>
+        <span style={{ width: 34, height: 34, borderRadius: 10, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TSS.sans, fontWeight: 700 }}>{SHOP_SS.initial}</span>
         <div style={{ flex: 1 }}>
-          <div style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 16 }}>{SHOP_SS.name}</div>
+          <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 16 }}>{SHOP_SS.name}</div>
           <div style={{ fontFamily: TSS.sans, fontSize: 11.5, opacity: 0.85 }}>Submission #{SUB_SS.id} · 1,000 cards</div>
         </div>
       </div>
@@ -462,7 +462,7 @@ function SellerThread({ app, onShop }) {
         <Bubble who="shop">Hey Jordan! Went through your submission — thanks for the detail</Bubble>
         {/* offer card */}
         <div style={{ alignSelf: 'flex-start', maxWidth: '92%', background: TSS.surface, borderRadius: '4px 16px 16px 16px', padding: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.08)' }}>
-          <div style={{ fontFamily: TSS.sans, fontWeight: 800, fontSize: 14, marginBottom: 9 }}>Your offer</div>
+          <div style={{ fontFamily: TSS.sans, fontWeight: 700, fontSize: 14, marginBottom: 9 }}>Your offer</div>
           {[['142 buylist matches', moneySS(stats.buylistPayout, { cents: false })], ['34 singles (priced)', moneySS(430, { cents: false })], ['824 bulk', moneySS(8, { cents: false })]].map(([k, v]) => (
             <div key={k} style={{ display: 'flex', justifyContent: 'space-between', gap: 10, padding: '4px 0', fontFamily: TSS.sans, fontSize: 13, color: TSS.ink2 }}>
               <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{k}</span><span style={{ fontFamily: TSS.sans, fontWeight: 600, flexShrink: 0 }}>{v}</span>

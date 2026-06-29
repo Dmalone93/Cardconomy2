@@ -128,7 +128,7 @@ function GradeChip({ grade, size = 'sm' }) {
   }
   return (
     <span style={{
-      fontFamily: T.sans, fontWeight: 800, fontSize: small ? 10.5 : 12,
+      fontFamily: T.sans, fontWeight: 700, fontSize: small ? 10.5 : 12,
       color: meta.fg, background: meta.bg, borderRadius: 5,
       padding: small ? '1px 6px' : '3px 9px', letterSpacing: 0.3,
       display: 'inline-flex', gap: 4, alignItems: 'center',
@@ -408,7 +408,7 @@ function SideMenu({ app, open, onClose }) {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '54px 18px 16px', borderBottom: '1px solid var(--line)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
             <Logo size={30} color={T.ink} />
-            <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 800, fontSize: 19, letterSpacing: 1.5, color: T.ink, lineHeight: 0, display: 'flex', alignItems: 'center', height: 30 }}>CARDCONOMY</span>
+            <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 19, letterSpacing: 1.5, color: T.ink, lineHeight: 0, display: 'flex', alignItems: 'center', height: 30 }}>CARDCONOMY</span>
           </div>
           <button onClick={onClose} style={{ width: 34, height: 34, borderRadius: 999, background: T.surface2, color: T.ink2,
             display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 20, lineHeight: 1 }}>×</button>

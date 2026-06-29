@@ -54,7 +54,7 @@ function SellScreen({ app }) {
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', background: TSE.bg, padding: 32, textAlign: 'center' }}>
         <div style={{ width: 84, height: 84, borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex',
           alignItems: 'center', justifyContent: 'center', marginBottom: 20, animation: 'ccPop 0.4s ease' }}>{IconSE.check({ width: 44, height: 44 })}</div>
-        <h2 style={{ margin: 0, fontFamily: TSE.sans, fontWeight: 800, fontSize: 24, letterSpacing: -0.5 }}>Your card is live!</h2>
+        <h2 style={{ margin: 0, fontFamily: TSE.sans, fontWeight: 700, fontSize: 24, letterSpacing: -0.5 }}>Your card is live!</h2>
         <p style={{ fontFamily: TSE.sans, fontSize: 14.5, color: TSE.muted, lineHeight: 1.5, marginTop: 10, maxWidth: 280 }}>
           {card.name} is now listed for {moneySE(+price)}. We'll notify you when it sells or gets an offer.
         </p>
@@ -73,7 +73,7 @@ function SellScreen({ app }) {
           <button onClick={() => step === 0 ? app.nav.pop() : setStep(step-1)} style={{ color: TSE.ink, fontFamily: TSE.sans, fontWeight: 600, fontSize: 15, display: 'flex', alignItems: 'center', gap: 4 }}>
             {IconSE.back({ width: 18, height: 18 })} {step===0 ? 'Cancel' : 'Back'}
           </button>
-          <span style={{ fontFamily: TSE.sans, fontWeight: 800, fontSize: 16 }}>List a card</span>
+          <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 16 }}>List a card</span>
           <span style={{ fontFamily: TSE.sans, fontSize: 13, color: TSE.muted, width: 40, textAlign: 'right' }}>{step+1}/5</span>
         </div>
         <Stepper step={step} />
@@ -83,7 +83,7 @@ function SellScreen({ app }) {
         {/* STEP 0 — pick card */}
         {step === 0 && (
           <div>
-            <h2 style={{ margin: '0 0 4px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>What are you selling?</h2>
+            <h2 style={{ margin: '0 0 4px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.4 }}>What are you selling?</h2>
             <p style={{ fontFamily: TSE.sans, fontSize: 13.5, color: TSE.muted, margin: '0 0 14px' }}>Search our catalog to auto-fill the card details.</p>
             <button onClick={() => app.nav.push('scan', { from: 'sell' })} style={{
               width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -123,7 +123,7 @@ function SellScreen({ app }) {
         {/* STEP 1 — condition */}
         {step === 1 && (
           <div>
-            <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Condition & grading</h2>
+            <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.4 }}>Condition & grading</h2>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: TSE.surface, borderRadius: 4, padding: '15px 16px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div>
                 <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 15 }}>Professionally graded</div>
@@ -162,7 +162,7 @@ function SellScreen({ app }) {
         {/* STEP 2 — photos */}
         {step === 2 && (
           <div>
-            <h2 style={{ margin: '0 0 4px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Add photos</h2>
+            <h2 style={{ margin: '0 0 4px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.4 }}>Add photos</h2>
             <p style={{ fontFamily: TSE.sans, fontSize: 13.5, color: TSE.muted, margin: '0 0 16px' }}>Front, back, and any flaws. Clear photos sell faster.</p>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
               {photos.map((on, i) => (
@@ -195,7 +195,7 @@ function SellScreen({ app }) {
         {/* STEP 3 — price */}
         {step === 3 && (
           <div>
-            <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Set your price</h2>
+            <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.4 }}>Set your price</h2>
             <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 13.5, marginBottom: 8 }}>Your price</div>
             <div style={{ display: 'flex', alignItems: 'center', background: TSE.surface, borderRadius: 4, padding: '14px 16px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
               <span style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 28, color: TSE.muted, marginRight: 4 }}>£</span>
@@ -219,13 +219,13 @@ function SellScreen({ app }) {
         {/* STEP 4 — review */}
         {step === 4 && (
           <div>
-            <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 800, fontSize: 21, letterSpacing: -0.4 }}>Review listing</h2>
+            <h2 style={{ margin: '0 0 14px', fontFamily: TSE.sans, fontWeight: 700, fontSize: 21, letterSpacing: -0.4 }}>Review listing</h2>
             <div style={{ background: TSE.surface, borderRadius: 4, padding: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
               <div style={{ display: 'flex', gap: 14 }}>
                 <div style={{ background: TSE.surface2, borderRadius: 10, padding: 8 }}><CardArtSE item={{...card, grade: gradeObj}} w={70} /></div>
                 <div style={{ flex: 1 }}>
                   <div style={{ marginBottom: 6 }}><GradeChipSE grade={gradeObj} size="lg" /></div>
-                  <div style={{ fontFamily: TSE.sans, fontWeight: 800, fontSize: 17 }}>{card.name}</div>
+                  <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 17 }}>{card.name}</div>
                   <div style={{ fontFamily: TSE.sans, fontSize: 12.5, color: TSE.muted }}>{setByIdSE(card.set)?.name} · {card.number}</div>
                   <div style={{ fontFamily: TSE.sans, fontWeight: 700, fontSize: 22, marginTop: 8 }}>{moneySE(+price)}</div>
                 </div>

@@ -81,7 +81,7 @@ function FeesScreen({ app }) {
       <div style={{ flex: 1, overflow: 'auto', WebkitOverflowScrolling: 'touch' }}>
       {/* ── Hero ── */}
       <div style={{ padding: '20px 14px 24px', textAlign: 'center' }}>
-        <div style={{ fontSize: 22, fontWeight: 800, color: TFE.ink, lineHeight: 1.2 }}>
+        <div style={{ fontSize: 22, fontWeight: 700, color: TFE.ink, lineHeight: 1.2 }}>
           See what you actually pay
         </div>
         <div style={{ fontSize: 14, color: TFE.muted, marginTop: 8, lineHeight: 1.5 }}>
@@ -92,7 +92,7 @@ function FeesScreen({ app }) {
       {/* ── Big number ── */}
       <div style={{ margin: '0 14px', padding: '20px', borderRadius: 14,
         background: TFE.accentWash, border: '2px solid ' + TFE.accent, textAlign: 'center' }}>
-        <div style={{ fontSize: 36, fontWeight: 800, color: 'var(--ink)' }}>6% + 30p</div>
+        <div style={{ fontSize: 36, fontWeight: 700, color: 'var(--ink)' }}>6% + 30p</div>
         <div style={{ fontSize: 13, color: TFE.ink, marginTop: 6 }}>
           4% seller fee + 2% buyer fee + 30p per transaction
         </div>
@@ -127,7 +127,7 @@ function FeesScreen({ app }) {
                   <div style={{ fontSize: 14, fontWeight: 700, color: p.highlight ? TFE.accent : TFE.ink }}>
                     {p.name}
                   </div>
-                  <div style={{ fontSize: 16, fontWeight: 800, color: p.highlight ? TFE.accent : TFE.ink }}>
+                  <div style={{ fontSize: 16, fontWeight: 700, color: p.highlight ? TFE.accent : TFE.ink }}>
                     {moneyFE(fees.total)}
                   </div>
                 </div>

@@ -167,7 +167,7 @@ function MegaGameBtn({ onClick, tint, name, logo }) {
         transition: 'all 0.15s' }}>
       {logo ? <img src={logo} alt="" style={{ height: 20, width: 'auto', maxWidth: 28, objectFit: 'contain', opacity: 0.85 }} /> :
         <span style={{ width: 10, height: 10, borderRadius: 999, background: tint }} />}
-      <span style={{ fontWeight: 800, fontSize: 15.5, color: 'var(--ink)' }}>{name}</span>
+      <span style={{ fontWeight: 700, fontSize: 15.5, color: 'var(--ink)' }}>{name}</span>
     </button>
   );
 }
@@ -370,7 +370,7 @@ function DWatch({ app }) {
   const items = app.watch.map(window.byId).filter(Boolean);
   return (
     <div className="wrap" style={{ padding: '32px 24px 20px' }}>
-      <h1 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, margin: '0 0 6px' }}>Watching</h1>
+      <h1 style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 30, letterSpacing: -0.8, margin: '0 0 6px' }}>Watching</h1>
       <p style={{ color: 'var(--muted)', fontSize: 15, margin: '0 0 24px' }}>{items.length} cards you're tracking.</p>
       {items.length === 0 ? <Empty label="Nothing saved yet" sub="Tap the heart on any card to track it here." app={app} /> : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: 18 }}>
@@ -505,7 +505,7 @@ function DAccountSeller({ app }) {
           }}>
             <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, opacity: 0.45, marginBottom: 6 }}>Available Balance</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
-              <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(248.47)}</span>
+              <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 32 }}>{money(248.47)}</span>
               <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'▲'} {money(84)} this week</span>
             </div>
             <div style={{ display: 'flex', gap: 6, margin: '12px 0 4px' }} onClick={function(e) { e.stopPropagation(); }}>
@@ -614,7 +614,7 @@ function DAccountSeller({ app }) {
               <button onClick={function() { app.go('watch'); }} style={{ fontSize: 11, color: 'var(--ink)', fontWeight: 600, border: 'none', background: 'none', cursor: 'pointer' }}>View all {'→'}</button>
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
-              <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 26 }}>{money(2480)}</span>
+              <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 26 }}>{money(2480)}</span>
               <span style={{ background: 'rgba(34,197,94,0.12)', color: '#22c55e', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>+12% this month</span>
             </div>
             <div style={{ margin: '8px 0 14px' }}>
@@ -704,7 +704,7 @@ function DAccountBuyer({ app }) {
           <div style={cardStyle}>
             <div style={sectionLabel}>Portfolio Value</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 6 }}>
-              <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(2480)}</span>
+              <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 32 }}>{money(2480)}</span>
               <span style={{ background: 'rgba(34,197,94,0.12)', color: '#22c55e', padding: '2px 8px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>+12% this month</span>
             </div>
             <div style={{ margin: '10px 0 14px' }}>
@@ -933,7 +933,7 @@ function DAccountStore({ app }) {
           }}>
             <div style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.8, opacity: 0.45, marginBottom: 6 }}>{"Today's Revenue"}</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 14 }}>
-              <span style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 32 }}>{money(1247)}</span>
+              <span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 32 }}>{money(1247)}</span>
               <span style={{ color: '#4ade80', fontWeight: 600, fontSize: 13 }}>{'▲'} 23% vs last week</span>
             </div>
             <div style={{ display: 'flex', gap: 6, margin: '12px 0 4px' }} onClick={function(e) { e.stopPropagation(); }}>
@@ -1023,12 +1023,12 @@ function DAccountStore({ app }) {
             <div style={sectionLabel}>Buylist Performance</div>
             <div style={{ display: 'flex', gap: 16, marginBottom: 14 }}>
               <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 28, color: 'var(--ink)' }}>12</div>
+                <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 28, color: 'var(--ink)' }}>12</div>
                 <div style={{ fontSize: 11, color: 'var(--muted)' }}>matched today</div>
               </div>
               <div style={{ width: 1, background: 'var(--line-2)' }} />
               <div style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontFamily: T.mono, fontWeight: 800, fontSize: 28 }}>68%</div>
+                <div style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 28 }}>68%</div>
                 <div style={{ fontSize: 11, color: 'var(--muted)' }}>avg buy rate</div>
               </div>
             </div>
@@ -1093,14 +1093,14 @@ function DCart({ app }) {
   if (done) return (
     <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
       <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)', display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'dPop 0.4s ease' }}>{Icon.check({ width: 44, height: 44 })}</div>
-      <h1 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 28, margin: '20px 0 6px' }}>Order confirmed</h1>
+      <h1 style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 28, margin: '20px 0 6px' }}>Order confirmed</h1>
       <p style={{ color: 'var(--muted)', fontSize: 15 }}>{items.length} card(s) on the way · {money(total)}</p>
       <button onClick={() => { app.clearCart(); app.go('home'); }} style={{ marginTop: 22, background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '13px 28px', fontWeight: 700, fontSize: 15 }}>Keep browsing</button>
     </div>
   );
   return (
     <div className="wrap" style={{ padding: '32px 24px 20px' }}>
-      <h1 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 30, letterSpacing: -0.8, margin: '0 0 24px' }}>Your cart</h1>
+      <h1 style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 30, letterSpacing: -0.8, margin: '0 0 24px' }}>Your cart</h1>
       {items.length === 0 ? <Empty label="Your cart is empty" sub="Add cards from any Buy It Now listing." app={app} /> : (
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: 28, alignItems: 'start' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -1121,7 +1121,7 @@ function DCart({ app }) {
               <div key={k} style={{ display: 'flex', justifyContent: 'space-between', padding: '7px 0', fontSize: 14, color: 'var(--ink-2)' }}><span style={{ color: 'var(--muted)' }}>{k}</span><span style={{ fontFamily: T.mono, fontWeight: 600 }}>{v}</span></div>
             ))}
             <div style={{ height: 1, background: 'var(--line-2)', margin: '10px 0' }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 16 }}><span style={{ fontWeight: 800, fontSize: 17 }}>Total</span><span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 24 }}>{money(total)}</span></div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 16 }}><span style={{ fontWeight: 700, fontSize: 17 }}>Total</span><span style={{ fontFamily: T.mono, fontWeight: 700, fontSize: 24 }}>{money(total)}</span></div>
             <button onClick={() => setDone(true)} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: 15, fontWeight: 700, fontSize: 16 }}>Checkout</button>
           </div>
         </div>
@@ -1135,7 +1135,7 @@ function DEnroll({ app }) {
     <div>
       <div style={{ background: 'linear-gradient(135deg, #2f8f5b, #1f6e44)', color: '#fff' }}>
         <div className="wrap" style={{ padding: '64px 24px', textAlign: 'center' }}>
-          <h1 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 40, letterSpacing: -1.2, margin: '0 0 14px', maxWidth: 720, marginInline: 'auto', lineHeight: 1.05 }}>Turn your shop into the local card hub</h1>
+          <h1 style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 40, letterSpacing: -1.2, margin: '0 0 14px', maxWidth: 720, marginInline: 'auto', lineHeight: 1.05 }}>Turn your shop into the local card hub</h1>
           <p style={{ fontSize: 17, opacity: 0.92, maxWidth: 560, margin: '0 auto 26px', lineHeight: 1.5 }}>Free deal flow, a storefront, and tools that bring collectors through your door.</p>
           <button onClick={() => app.toast('Shop enrollment opens in the mobile app')} style={{ background: '#fff', color: '#1f6e44', borderRadius: 12, padding: '15px 32px', fontWeight: 700, fontSize: 16 }}>Enroll your shop — free</button>
         </div>
@@ -1145,7 +1145,7 @@ function DEnroll({ app }) {
           ['Be the local vault', 'Members store graded cards at your shop and trade them without shipping.'],
           ['Neutral trade hub', 'Collectors meet at your shop to settle trades safely — more foot traffic.']].map(([h, b]) => (
           <div key={h} style={{ background: 'var(--surface)', borderRadius: 16, padding: 24, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-            <div style={{ fontWeight: 800, fontSize: 18, marginBottom: 8 }}>{h}</div>
+            <div style={{ fontWeight: 700, fontSize: 18, marginBottom: 8 }}>{h}</div>
             <p style={{ color: 'var(--ink-2)', fontSize: 14.5, lineHeight: 1.5, margin: 0 }}>{b}</p>
           </div>
         ))}
@@ -1157,7 +1157,7 @@ function DEnroll({ app }) {
 function Empty({ label, sub, app }) {
   return (
     <div style={{ textAlign: 'center', padding: '70px 20px', background: 'var(--surface)', borderRadius: 18 }}>
-      <h3 style={{ fontFamily: T.sans, fontWeight: 800, fontSize: 20, margin: 0 }}>{label}</h3>
+      <h3 style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 20, margin: 0 }}>{label}</h3>
       <p style={{ color: 'var(--muted)', fontSize: 14.5, margin: '8px 0 18px' }}>{sub}</p>
       <button onClick={() => app.go('home')} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: '12px 26px', fontWeight: 700, fontSize: 15 }}>Browse cards</button>
     </div>

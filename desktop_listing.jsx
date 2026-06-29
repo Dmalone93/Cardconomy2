@@ -50,14 +50,14 @@ function DListing({ app, params }) {
             <GradeChipLi grade={item.grade} size="lg" />
             {item.foil && <span style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--muted)' }}>✦ Foil / Holo</span>}
           </div>
-          <h1 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 30, letterSpacing: -1, lineHeight: 1.08, margin: 0 }}>{item.name}</h1>
+          <h1 style={{ fontFamily: TLi.sans, fontWeight: 700, fontSize: 30, letterSpacing: -1, lineHeight: 1.08, margin: 0 }}>{item.name}</h1>
           <div style={{ color: 'var(--muted)', fontSize: 14.5, marginTop: 6 }}>{set ? set.name : ''}{item.number ? ' · ' + item.number : ''} · {item.condition}</div>
 
           {/* price history */}
           {item.history && (
             <div style={{ marginTop: 24, background: 'var(--surface)', borderRadius: 16, padding: 20, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
-                <span style={{ fontWeight: 800, fontSize: 16 }}>Price history</span>
+                <span style={{ fontWeight: 700, fontSize: 16 }}>Price history</span>
                 <span style={{ display: 'flex', gap: 4 }}>{['30D', '90D', '1Y'].map(t => <button key={t} onClick={() => setTf(t)} style={{ fontWeight: 700, fontSize: 12, padding: '5px 11px', borderRadius: 8, color: tf === t ? '#fff' : 'var(--muted)', background: tf === t ? 'var(--fill)' : 'transparent' }}>{t}</button>)}</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
@@ -79,7 +79,7 @@ function DListing({ app, params }) {
 
           {/* seller */}
           <div style={{ marginTop: 20, background: 'var(--surface)', borderRadius: 16, padding: 18, display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-            <span style={{ width: 48, height: 48, borderRadius: 13, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: 20 }}>{item.seller[0]}</span>
+            <span style={{ width: 48, height: 48, borderRadius: 13, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 20 }}>{item.seller[0]}</span>
             <div style={{ flex: 1 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}><span style={{ fontWeight: 700, fontSize: 15.5 }}>{item.seller}</span>{window.TrustBadge && <window.TrustBadge tier={item.sellerRating >= 99 ? 2 : 1} />}</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 2 }}><StarsLi rating={item.sellerRating} /><span style={{ fontFamily: TLi.mono, fontSize: 12.5, color: 'var(--muted)' }}>{item.sellerRating}% · {item.sellerSales.toLocaleString()} sales</span></div>
@@ -142,7 +142,7 @@ function DListing({ app, params }) {
           return (
             <section style={{ background: 'var(--surface)', borderRadius: 18, padding: '22px 24px', marginBottom: 28, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.5, margin: 0 }}>Other sellers</h2>
+                <h2 style={{ fontFamily: TLi.sans, fontWeight: 700, fontSize: 20, letterSpacing: -0.5, margin: 0 }}>Other sellers</h2>
                 <span style={{ background: 'var(--bg)', color: 'var(--muted)', padding: '3px 9px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>{otherOffers.length} offer{otherOffers.length !== 1 ? 's' : ''}</span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
@@ -188,7 +188,7 @@ function DListing({ app, params }) {
             <section style={{ background: 'var(--surface)', borderRadius: 18, padding: '22px 24px', marginBottom: 28, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
                 <span style={{ fontSize: 18 }}>{'\u21C4'}</span>
-                <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.5, margin: 0 }}>Available to trade</h2>
+                <h2 style={{ fontFamily: TLi.sans, fontWeight: 700, fontSize: 20, letterSpacing: -0.5, margin: 0 }}>Available to trade</h2>
                 <span style={{ background: 'var(--bg)', color: 'var(--muted)', padding: '3px 9px', borderRadius: 6, fontWeight: 700, fontSize: 11 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
               </div>
               <p style={{ fontSize: 13.5, color: 'var(--muted)', margin: '0 0 16px' }}>These collectors have this card and want to swap — no cash needed.</p>
@@ -225,7 +225,7 @@ function DListing({ app, params }) {
 
         {/* similar */}
         <section style={{ marginTop: 8 }}>
-          <h2 style={{ fontFamily: TLi.sans, fontWeight: 800, fontSize: 20, letterSpacing: -0.5, margin: '0 0 16px' }}>Similar listings</h2>
+          <h2 style={{ fontFamily: TLi.sans, fontWeight: 700, fontSize: 20, letterSpacing: -0.5, margin: '0 0 16px' }}>Similar listings</h2>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 }}>
             {similar.map(l => <DCardLi key={l.id} item={l} app={app} />)}
           </div>

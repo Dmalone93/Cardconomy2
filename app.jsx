@@ -93,7 +93,7 @@ function App() {
   const [tier, setTier] = React.useState(() => { try { return JSON.parse(localStorage.getItem('cc_tier') || '0'); } catch (e) { return 0; } });
   const [acct, setAcct] = React.useState(() => loadJSON('cc_acct', 'buyer')); // buyer | seller | store
   const [prefs, setPrefs] = React.useState(() => loadJSON('cc_prefs', ALL_GAME_IDS));
-  const [onboarded, setOnboarded] = React.useState(() => loadJSON('cc_onboarded', false));
+  const [onboarded, setOnboarded] = React.useState(true);
   const [collections, setCollections] = React.useState(() => loadJSON('cc_collections', DEFAULT_COLLECTIONS));
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [packRipped, setPackRipped] = React.useState(() => { try { return sessionStorage.getItem('cc_pack_ripped') === '1'; } catch (e) { return true; } });

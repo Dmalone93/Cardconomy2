@@ -19,7 +19,7 @@ function CartScreen({ app }) {
         <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '90px 24px 24px', textAlign: 'center' }}>
           <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconCart.check({ width: 44, height: 44 })}</div>
-          <h2 style={{ margin: '20px 0 4px', fontFamily: TCart.sans, fontWeight: 800, fontSize: 25, letterSpacing: -0.5 }}>Order confirmed</h2>
+          <h2 style={{ margin: '20px 0 4px', fontFamily: TCart.sans, fontWeight: 700, fontSize: 25, letterSpacing: -0.5 }}>Order confirmed</h2>
           <p style={{ fontFamily: TCart.sans, fontSize: 14, color: TCart.muted, lineHeight: 1.5, margin: '0 auto', maxWidth: 280 }}>
             {items.length} card{items.length !== 1 ? 's' : ''} from {sellers.length} seller{sellers.length !== 1 ? 's' : ''} on the way. We'll text tracking as each ships.
           </p>
@@ -36,14 +36,14 @@ function CartScreen({ app }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TCart.bg }}>
       <div style={{ padding: '14px 16px 12px', background: TCart.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={() => app.nav.pop()} style={{ color: TCart.ink }}>{IconCart.back({})}</button>
-        <span style={{ fontFamily: TCart.sans, fontWeight: 800, fontSize: 18, flex: 1 }}>Your cart</span>
+        <span style={{ fontFamily: TCart.sans, fontWeight: 700, fontSize: 18, flex: 1 }}>Your cart</span>
         <span style={{ fontFamily: TCart.sans, fontSize: 13, color: TCart.muted }}>{items.length} item{items.length !== 1 ? 's' : ''}</span>
       </div>
 
       {items.length === 0 ? (
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30, textAlign: 'center' }}>
           <div style={{ width: 76, height: 76, borderRadius: 999, background: TCart.surface, color: TCart.faint, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(0,0,0,0.06)' }}>{IconCart.cart({ width: 34, height: 34 })}</div>
-          <h3 style={{ margin: '16px 0 4px', fontFamily: TCart.sans, fontWeight: 800, fontSize: 19 }}>Your cart is empty</h3>
+          <h3 style={{ margin: '16px 0 4px', fontFamily: TCart.sans, fontWeight: 700, fontSize: 19 }}>Your cart is empty</h3>
           <p style={{ fontFamily: TCart.sans, fontSize: 14, color: TCart.muted, lineHeight: 1.5, maxWidth: 260, margin: '0 0 18px' }}>Add cards from any Buy It Now listing — combine multiple into one order.</p>
           <button onClick={() => app.nav.setTab('home')} style={{ background: TCart.accent, color: '#fff', borderRadius: 4, padding: '12px 24px', fontFamily: TCart.sans, fontWeight: 700, fontSize: 15 }}>Browse cards</button>
         </div>
@@ -82,7 +82,7 @@ function CartScreen({ app }) {
               ))}
               <div style={{ height: 1, background: 'var(--line-2)', margin: '8px 0' }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                <span style={{ fontFamily: TCart.sans, fontWeight: 800, fontSize: 16 }}>Total</span>
+                <span style={{ fontFamily: TCart.sans, fontWeight: 700, fontSize: 16 }}>Total</span>
                 <span style={{ fontFamily: TCart.sans, fontWeight: 700, fontSize: 22 }}>{moneyCart(total)}</span>
               </div>
             </div>

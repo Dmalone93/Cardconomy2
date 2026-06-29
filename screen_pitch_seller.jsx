@@ -122,7 +122,7 @@ function SellerPitchScreen({ app }) {
         <div style={{ padding: '28px 16px' }}>
           <div style={{ background: TPS.surface, borderRadius: 16, padding: '22px 18px',
             boxShadow: '0 1px 4px rgba(20,24,40,0.06)' }}>
-            <h2 style={{ margin: '0 0 6px', fontFamily: TPS.heading, fontWeight: 800, fontSize: 18, color: TPS.ink, letterSpacing: -0.3 }}>
+            <h2 style={{ margin: '0 0 6px', fontFamily: TPS.heading, fontWeight: 700, fontSize: 18, color: TPS.ink, letterSpacing: -0.3 }}>
               Compare the fees
             </h2>
             <p style={{ margin: '0 0 18px', fontFamily: TPS.sans, fontSize: 13, color: TPS.muted, lineHeight: 1.5 }}>
@@ -192,7 +192,7 @@ function SellerPitchScreen({ app }) {
 
         {/* ═══════════════ HOW IT WORKS ═══════════════ */}
         <div style={{ padding: '0 16px 28px' }}>
-          <h2 style={{ margin: '0 0 16px', fontFamily: TPS.heading, fontWeight: 800, fontSize: 18, color: TPS.ink, letterSpacing: -0.3 }}>
+          <h2 style={{ margin: '0 0 16px', fontFamily: TPS.heading, fontWeight: 700, fontSize: 18, color: TPS.ink, letterSpacing: -0.3 }}>
             How it works
           </h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 0, position: 'relative' }}>
@@ -233,7 +233,7 @@ function SellerPitchScreen({ app }) {
 
         {/* ═══════════════ BOTTOM CTA ═══════════════ */}
         <div style={{ padding: '32px 20px 40px', textAlign: 'center' }}>
-          <h2 style={{ margin: '0 0 8px', fontFamily: TPS.heading, fontWeight: 800, fontSize: 22, color: TPS.ink, letterSpacing: -0.4 }}>
+          <h2 style={{ margin: '0 0 8px', fontFamily: TPS.heading, fontWeight: 700, fontSize: 22, color: TPS.ink, letterSpacing: -0.4 }}>
             Ready to sell?
           </h2>
           <p style={{ margin: '0 0 20px', fontFamily: TPS.sans, fontSize: 14, color: TPS.muted }}>

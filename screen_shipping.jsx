@@ -41,14 +41,14 @@ function ShippingScreen({ app }) {
         {/* header */}
         <div style={{ padding: '14px 14px 12px', background: TSP.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
           <button onClick={function() { app.nav.pop(); }} style={{ color: TSP.ink, display: 'flex' }}>{IconSP.back({})}</button>
-          <span style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 18 }}>Label Ready</span>
+          <span style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 18 }}>Label Ready</span>
         </div>
 
         <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '20px 16px 100px' }}>
           {/* success banner */}
           <div style={{ textAlign: 'center', marginBottom: 20 }}>
             <div style={{ width: 64, height: 64, borderRadius: 999, background: '#dcfce7', color: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px', fontSize: 32 }}>{'✓'}</div>
-            <h2 style={{ margin: 0, fontFamily: TSP.sans, fontWeight: 800, fontSize: 20 }}>Label generated</h2>
+            <h2 style={{ margin: 0, fontFamily: TSP.sans, fontWeight: 700, fontSize: 20 }}>Label generated</h2>
             <p style={{ fontFamily: TSP.sans, fontSize: 13, color: TSP.muted, margin: '6px 0 0' }}>{selectedCount} item{selectedCount !== 1 ? 's' : ''} ready to ship</p>
           </div>
 
@@ -56,20 +56,20 @@ function ShippingScreen({ app }) {
           <div style={{ background: TSP.surface, borderRadius: 16, padding: 20, marginBottom: 20, border: '2px dashed var(--line)', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
             {/* Royal Mail header */}
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
-              <span style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 16, color: '#e11d48' }}>ROYAL MAIL</span>
+              <span style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 16, color: '#e11d48' }}>ROYAL MAIL</span>
               <span style={{ fontFamily: TSP.mono, fontSize: 11, color: TSP.muted }}>TRACKED 24</span>
             </div>
 
             {/* from / to */}
             <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 10, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 4 }}>From</div>
+                <div style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 10, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 4 }}>From</div>
                 <div style={{ fontFamily: TSP.sans, fontSize: 12, lineHeight: 1.5, color: TSP.ink }}>
                   Alex Rivera<br />14 Merchant Lane<br />London SE1 7AB
                 </div>
               </div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 10, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 4 }}>To</div>
+                <div style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 10, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 4 }}>To</div>
                 <div style={{ fontFamily: TSP.sans, fontSize: 12, lineHeight: 1.5, color: TSP.ink }}>
                   {selectedItems[0] ? selectedItems[0].buyer : 'Buyer'}<br />27 Oak Street<br />Manchester M1 3FW
                 </div>
@@ -114,13 +114,13 @@ function ShippingScreen({ app }) {
       {/* header */}
       <div style={{ padding: '14px 14px 12px', background: TSP.surface, borderBottom: '1px solid var(--line)', display: 'flex', alignItems: 'center', gap: 10 }}>
         <button onClick={function() { app.nav.pop(); }} style={{ color: TSP.ink, display: 'flex' }}>{IconSP.back({})}</button>
-        <span style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 18 }}>Ship Your Items</span>
+        <span style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 18 }}>Ship Your Items</span>
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
 
         {/* items to ship */}
-        <div style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 8 }}>Items to ship</div>
+        <div style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 8 }}>Items to ship</div>
         <div style={{ background: TSP.surface, borderRadius: 16, overflow: 'hidden', marginBottom: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           {items.map(function(item, i) {
             return (
@@ -147,7 +147,7 @@ function ShippingScreen({ app }) {
         </div>
 
         {/* shipping method */}
-        <div style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 8 }}>Shipping method</div>
+        <div style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 8 }}>Shipping method</div>
         <div style={{ background: TSP.surface, borderRadius: 16, overflow: 'hidden', marginBottom: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           {SHIPPING_METHODS.map(function(m, i) {
             var active = method === m.id;
@@ -174,7 +174,7 @@ function ShippingScreen({ app }) {
         </div>
 
         {/* package size */}
-        <div style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 8 }}>Package size</div>
+        <div style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 8 }}>Package size</div>
         <div style={{ display: 'flex', gap: 8, marginBottom: 18 }}>
           {PACKAGE_SIZES.map(function(sz) {
             var active = pkgSize === sz;
@@ -191,7 +191,7 @@ function ShippingScreen({ app }) {
 
         {/* summary */}
         <div style={{ background: TSP.surface, borderRadius: 16, padding: 16, marginBottom: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-          <div style={{ fontFamily: TSP.sans, fontWeight: 800, fontSize: 11, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 10 }}>Summary</div>
+          <div style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 11, letterSpacing: 0.8, color: TSP.muted, textTransform: 'uppercase', marginBottom: 10 }}>Summary</div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
             <span style={{ fontFamily: TSP.sans, fontSize: 14, color: TSP.ink }}>{selectedCount} item{selectedCount !== 1 ? 's' : ''} selected</span>
             <span style={{ fontFamily: TSP.sans, fontWeight: 700, fontSize: 14 }}>{moneySP(orderTotal)}</span>

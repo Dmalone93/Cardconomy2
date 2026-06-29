@@ -67,7 +67,7 @@ function AccentSwatches({ value, onChange }) {
             width: 40, height: 40, borderRadius: 12, background: ACCENTS[name].swatch, cursor: 'pointer',
             border: 'none', boxShadow: on ? '0 0 0 2px var(--surface), 0 0 0 4px ' + ACCENTS[name].swatch : 'inset 0 0 0 1px rgba(0,0,0,0.1)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'box-shadow 0.15s',
-          }}>{on && <span style={{ color: '#fff', fontSize: 18, fontWeight: 800 }}>✓</span>}</button>
+          }}>{on && <span style={{ color: '#fff', fontSize: 18, fontWeight: 700 }}>✓</span>}</button>
         );
       })}
     </div>
