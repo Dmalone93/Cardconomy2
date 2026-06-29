@@ -536,7 +536,7 @@ function HomeScreen({ app }) {
           WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
           {trendingProducts.slice(0, 12).map(p => (
             <div key={p.id} onClick={() => app.nav.push('product', { id: p.id })} style={{
-              flexShrink: 0, width: 152, scrollSnapAlign: 'start', cursor: 'pointer',
+              flexShrink: 0, width: 170, scrollSnapAlign: 'start', cursor: 'pointer',
               borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
             }}>
               <div style={{ padding: '8px 8px 4px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
@@ -565,7 +565,7 @@ function HomeScreen({ app }) {
             WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
             {under100.slice(0, 12).map(l => (
               <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{
-                flexShrink: 0, width: 152, scrollSnapAlign: 'start', cursor: 'pointer',
+                flexShrink: 0, width: 170, scrollSnapAlign: 'start', cursor: 'pointer',
                 borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
               }}>
                 <div style={{ padding: '8px 8px 4px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
