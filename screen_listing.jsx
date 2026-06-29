@@ -1,32 +1,32 @@
 // ─────────────────────────────────────────────────────────────
-// Listing detail
+// Listing detail — TCGplayer-inspired architecture
+// Card identity → price context → seller table → trade → similar
 // ─────────────────────────────────────────────────────────────
 const { T: TL, money: moneyL, Slab: SlabL, CardArt: CardArtL, GradeChip: GradeChipL,
   Sparkline: SparkL, Delta: DeltaL, Stars: StarsL, Chip: ChipL, Icon: IconL, Sheet: SheetL,
   CurrencyInput: CurrencyInputL } = window;
 const { byId: byIdL, setById: setByIdL, gameById: gameByIdL, gradeText: gradeTextL, LISTINGS: LISTINGS_L } = window;
-const { demandForProduct: demandL, variantForProduct: variantL } = window;
-// PRINTINGS accessed via window.PRINTINGS at render time
+const { demandForProduct: demandL } = window;
 
 function StatBox({ label, value, sub, color }) {
   return (
-    <div style={{ flex: 1, background: TL.surface2, borderRadius: 12, padding: '11px 12px' }}>
+    <div style={{ flex: 1, background: 'var(--surface-2)', borderRadius: 12, padding: '11px 12px' }}>
       <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, fontWeight: 600, marginBottom: 3 }}>{label}</div>
-      <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, color: color || TL.ink }}>{value}</div>
+      <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 16, color: color || 'var(--ink)' }}>{value}</div>
       {sub && <div style={{ fontFamily: TL.sans, fontSize: 10.5, color: TL.muted, marginTop: 1 }}>{sub}</div>}
     </div>
   );
 }
 
-function InfoRow({ icon, title, value, sub }) {
+function InfoRow({ icon, title, sub, value }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0', borderBottom: '1px solid var(--line-2)' }}>
-      <div style={{ color: TL.muted }}>{icon}</div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0', borderBottom: '1px solid var(--line-2)' }}>
+      <div style={{ color: TL.muted, flexShrink: 0 }}>{typeof icon === 'string' ? <span style={{ fontSize: 16 }}>{icon}</span> : icon}</div>
       <div style={{ flex: 1 }}>
-        <div style={{ fontFamily: TL.sans, fontSize: 14, fontWeight: 600 }}>{title}</div>
-        {sub && <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, marginTop: 1 }}>{sub}</div>}
+        <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13.5 }}>{title}</div>
+        {sub && <div style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.muted, marginTop: 1 }}>{sub}</div>}
       </div>
-      {value && <div style={{ fontFamily: TL.sans, fontSize: 14, fontWeight: 700, color: TL.ink }}>{value}</div>}
+      {value && <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: TL.ink, flexShrink: 0 }}>{value}</div>}
     </div>
   );
 }
@@ -60,105 +60,162 @@ function ListingScreen({ app, params }) {
   const histSlice = hist.slice(-sliceLen);
   const up = item.price >= hist[0];
 
+  // Product data for multi-seller + trade
+  const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
+  const otherOffers = product ? product.offers.filter(o => o.listingId !== item.id).slice(0, 5) : [];
+  const demand = product && demandL ? demandL(product) : null;
+
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TL.bg, animation: 'ccPushIn 0.26s ease' }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', animation: 'ccPushIn 0.26s ease' }}>
       <div ref={scrollRefL} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 110 }}>
-        {/* hero */}
-        <div style={{ position: 'relative', background: 'var(--surface)',
-          paddingTop: 16, paddingBottom: 24, display: 'flex', justifyContent: 'center' }}>
+
+        {/* ═══ 1. CARD IDENTITY — image + name + price ═══ */}
+        <div style={{ position: 'relative', background: 'var(--surface)', padding: '16px 16px 20px' }}>
           {/* back + share + watch */}
-          <div style={{ position: 'absolute', top: 10, left: 12, right: 12, zIndex: 10, display: 'flex', justifyContent: 'space-between' }}>
-            <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
-              boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>{IconL.back({})}</button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
+            <button onClick={() => app.nav.pop()} style={{ width: 34, height: 34, borderRadius: 999, background: 'var(--surface-2)',
+              color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>{IconL.back({})}</button>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button onClick={() => { window.shareCard ? window.shareCard(item) : null; app.toast('Shared'); }} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.share({})}</button>
-              <button onClick={() => app.toggleWatch(item.id)} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
-                boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: watched?TL.down:TL.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.heart({width:20,height:20}, watched)}</button>
+              <button onClick={() => { window.shareCard ? window.shareCard(item) : null; app.toast('Shared'); }} style={{ width: 34, height: 34, borderRadius: 999, background: 'var(--surface-2)',
+                color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.share({})}</button>
+              <button onClick={() => app.toggleWatch(item.id)} style={{ width: 34, height: 34, borderRadius: 999, background: 'var(--surface-2)',
+                color: watched ? TL.down : 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.heart({width:18,height:18}, watched)}</button>
             </div>
           </div>
-          {isLot ? (
-            <div style={{ width: 200, height: 200, borderRadius: 18, background: item.art, color: '#fff', position: 'relative',
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden',
-              boxShadow: '0 12px 30px rgba(0,0,0,0.18)' }}>
-              <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.1) 0 10px, transparent 10px 20px)' }} />
-              <div style={{ position: 'relative', fontFamily: TL.sans, fontWeight: 700, fontSize: 52, lineHeight: 1 }}>{item.count}</div>
-              <div style={{ position: 'relative', fontFamily: TL.sans, fontWeight: 700, fontSize: 14, letterSpacing: 1, opacity: 0.9 }}>CARD LOT</div>
+
+          {/* card image — compact */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
+            {isLot ? (
+              <div style={{ width: 140, height: 140, borderRadius: 14, background: item.art, color: '#fff', position: 'relative',
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 40, lineHeight: 1 }}>{item.count}</div>
+                <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 12, letterSpacing: 1, opacity: 0.9 }}>CARD LOT</div>
+              </div>
+            ) : item.grade.company !== 'raw' ? (
+              <SlabL item={item} w={140} />
+            ) : (
+              <CardArtL item={item} w={160} radius={0} />
+            )}
+          </div>
+
+          {/* badges */}
+          <div style={{ display: 'flex', gap: 6, alignItems: 'center', marginBottom: 6, flexWrap: 'wrap' }}>
+            <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11, color: '#fff', background: g.tint, borderRadius: 6, padding: '2px 8px' }}>{g.short}</span>
+            {!isLot && <GradeChipL grade={item.grade} />}
+            {item.foil && <span style={{ fontFamily: TL.sans, fontSize: 11, fontWeight: 600, color: TL.muted }}>✦ Foil</span>}
+          </div>
+
+          {/* name + set */}
+          <h1 style={{ margin: 0, fontFamily: TL.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5, lineHeight: 1.1 }}>{item.name}</h1>
+          <div style={{ fontFamily: TL.sans, fontSize: 13, color: TL.muted, marginTop: 4 }}>
+            {set ? set.name : ''}{item.number ? ' \u00B7 ' + item.number : ''}{isLot ? '' : ' \u00B7 ' + item.condition}
+          </div>
+
+          {/* price */}
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 12 }}>
+            <span style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 28, color: 'var(--ink)' }}>{moneyL(displayPrice)}</span>
+            {item.market && <span style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>market {moneyL(item.market)}</span>}
+          </div>
+
+          {/* shipping line */}
+          <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, marginTop: 6 }}>
+            {item.shipping === 0 ? 'Free shipping' : moneyL(item.shipping) + ' shipping'} \u00B7 {item.ships} \u00B7 {item.loc}
+          </div>
+
+          {/* demand badge */}
+          {demand && (
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 8, padding: '5px 10px',
+              background: demand.hot ? 'var(--gold)' : 'var(--surface-2)', borderRadius: 8 }}>
+              <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 12, color: demand.hot ? '#fff' : 'var(--ink)' }}>
+                {demand.wants} buyers want this
+              </span>
             </div>
-          ) : item.grade.company !== 'raw' ? (
-            <Slab item={item} w={176} />
-          ) : (
-            <div style={{ filter: 'drop-shadow(0 14px 30px rgba(0,0,0,0.2))' }}><CardArtL item={item} w={176} radius={14} /></div>
           )}
         </div>
 
-        {/* body */}
-        <div style={{ padding: '18px 16px 8px' }}>
-          {/* title block */}
-          <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8, flexWrap: 'wrap' }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: TL.sans, fontWeight: 700, fontSize: 12,
-              color: '#fff', background: g.tint, borderRadius: 6, padding: '3px 9px' }}>{g.short}</span>
-            {!isLot && <GradeChipL grade={item.grade} size="lg" />}
-            {item.foil && <span style={{ fontFamily: TL.sans, fontSize: 12, fontWeight: 600, color: TL.muted }}>✦ Foil / Holo</span>}
+        {/* ═══ 2. PRICE CONTEXT — history + stat boxes ═══ */}
+        {item.history && (
+          <div style={{ padding: '16px 16px 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
+              <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>Price history</span>
+              <span style={{ display: 'flex', gap: 4 }}>
+                {['7D','30D','90D','1Y'].map(t => (
+                  <button key={t} onClick={() => setTf(t)} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11,
+                    padding: '4px 9px', borderRadius: 7, color: tf===t?'#fff':TL.muted, background: tf===t?'var(--ink)':'transparent' }}>{t}</button>
+                ))}
+              </span>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginBottom: 6 }}>
+              <span style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 16 }}>{moneyL(item.price)}</span>
+              <DeltaL from={hist[0]} to={item.price} />
+            </div>
+            <SparkL data={histSlice} w={358} h={100} up={up} fill dots />
+            <div style={{ display: 'flex', gap: 8, marginTop: 10, marginBottom: 16 }}>
+              <StatBox label="Last sold" value={moneyL(hist[hist.length-2])} sub="2 days ago" />
+              <StatBox label="Low" value={moneyL(Math.min(...hist))} />
+              <StatBox label="High" value={moneyL(Math.max(...hist))} />
+            </div>
           </div>
-          <h1 style={{ margin: 0, fontFamily: TL.sans, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, lineHeight: 1.1 }}>{item.name}</h1>
-          <div style={{ fontFamily: TL.sans, fontSize: 14, color: TL.muted, marginTop: 4 }}>
-            {set ? set.name : ''}{item.number ? ' · ' + item.number : ''}{isLot ? '' : ' · ' + item.condition}
-          </div>
-          {/* listing age */}
-          <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.faint, marginTop: 4 }}>
-            Listed {['2 hours', '5 hours', '1 day', '2 days', '3 days', '5 days', '1 week'][Math.abs(item.id.charCodeAt(2)) % 7]} ago
+        )}
+
+        {/* ═══ 3. SELLER LISTINGS — table rows ═══ */}
+        <div style={{ borderTop: '1px solid var(--line)', padding: '14px 16px 0' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>{otherOffers.length + 1} Listing{otherOffers.length > 0 ? 's' : ''}</span>
+            <span style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>
+              {otherOffers.length > 0 ? 'As low as ' + moneyL(Math.min(displayPrice, ...otherOffers.map(o => o.price))) : ''}
+            </span>
           </div>
 
-          {/* ── Finish tabs ── */}
-          <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-            {finishes.map(f => (
-              <div key={f.key} onClick={() => setFinish(f.key)} style={{
-                flex: 1, padding: '8px 0', borderRadius: 10, textAlign: 'center', cursor: 'pointer',
-                background: finish === f.key ? TL.accentWash : TL.surface2,
-                border: finish === f.key ? '2px solid ' + TL.accent : '2px solid transparent',
-              }}>
-                <div style={{ fontSize: 12, fontWeight: 600, color: finish === f.key ? TL.accent : TL.muted }}>
-                  {f.label}
-                </div>
-                <div style={{ fontSize: 15, fontWeight: 700, color: TL.ink, marginTop: 2 }}>
-                  {moneyL(f.price)}
-                </div>
+          {/* Current seller — highlighted row */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 0', borderBottom: '1px solid var(--line-2)' }}>
+            <span style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{item.seller[0]}</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{item.seller}</span>
+                {item.sellerRating >= 99 && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '1px 5px', borderRadius: 4, fontWeight: 700, fontSize: 9 }}>Trusted</span>}
               </div>
-            ))}
+              <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted }}>{item.sellerRating}% \u00B7 {item.sellerSales.toLocaleString()} sales \u00B7 {item.condition}</div>
+            </div>
+            <div style={{ textAlign: 'right', flexShrink: 0 }}>
+              <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 15 }}>{moneyL(displayPrice)}</div>
+              <div style={{ fontFamily: TL.sans, fontSize: 10, color: TL.muted }}>{item.shipping === 0 ? 'Free' : moneyL(item.shipping)}</div>
+            </div>
+            <button onClick={() => app.addToCart(item.id)} style={{
+              padding: '8px 12px', borderRadius: 10, background: 'var(--ink)', color: '#fff',
+              fontFamily: TL.sans, fontWeight: 700, fontSize: 12, flexShrink: 0, border: 'none',
+            }}>{app.cart.includes(item.id) ? '\u2713' : 'Add'}</button>
           </div>
 
-          {/* See all printings */}
-          {window.PRINTINGS && window.PRINTINGS[item.name] && window.PRINTINGS[item.name].length > 1 && (
-            <div onClick={() => setShowPrintings(true)} style={{
-              marginTop: 8, padding: '6px 12px', borderRadius: 8, background: TL.surface2,
-              fontSize: 13, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer',
-              display: 'inline-flex', alignItems: 'center', gap: 4,
-            }}>
-              ⊞ See all printings ({window.PRINTINGS[item.name].length})
+          {/* Other seller rows */}
+          {otherOffers.map((o, idx) => (
+            <div key={o.id} onClick={() => { if (o.listingId) app.nav.push('listing', { id: o.listingId }); }}
+              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '12px 0', cursor: 'pointer',
+                borderBottom: idx < otherOffers.length - 1 ? '1px solid var(--line-2)' : 'none' }}>
+              <span style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--surface-2)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{o.seller.charAt(0)}</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13 }}>{o.seller}</div>
+                <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted }}>{o.sellerRating}% \u00B7 {o.sellerSales.toLocaleString()} \u00B7 {o.condition}</div>
+              </div>
+              <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 15 }}>{moneyL(o.price)}</div>
+                <div style={{ fontFamily: TL.sans, fontSize: 10, color: TL.muted }}>{o.shipping === 0 ? 'Free' : moneyL(o.shipping)}</div>
+              </div>
+              <button onClick={function(e) { e.stopPropagation(); if (o.listingId) app.addToCart(o.listingId); else app.toast('Added from ' + o.seller); }}
+                style={{ padding: '8px 12px', borderRadius: 10, background: 'var(--surface-2)', color: 'var(--ink)',
+                  fontFamily: TL.sans, fontWeight: 700, fontSize: 12, flexShrink: 0, border: 'none' }}>Add</button>
             </div>
-          )}
+          ))}
+        </div>
 
-          {/* price */}
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 16 }}>
-            <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 32, letterSpacing: -1, color: TL.ink, animation: 'ccCountUp 0.4s ease 0.15s both' }}>{moneyL(displayPrice)}</span>
-            {item.market && <span style={{ fontFamily: TL.sans, fontSize: 13, color: TL.muted, paddingBottom: 6 }}>
-              market <b style={{ color: TL.ink2, fontFamily: TL.sans }}>{moneyL(item.market)}</b>
-            </span>}
-          </div>
-          {isLot && (
-            <div style={{ marginTop: 12, background: TL.surface2, borderRadius: 12, padding: '12px 14px', fontFamily: TL.sans, fontSize: 13.5, color: TL.ink2 }}>
-              <b>What's inside:</b> {item.note}. Condition {item.condition}.
-            </div>
-          )}
-
-          {/* seller description */}
+        {/* ═══ 4. SELLER DETAIL — notes, photos, message ═══ */}
+        <div style={{ borderTop: '1px solid var(--line)', marginTop: 8, padding: '14px 16px 0' }}>
+          {/* seller notes */}
           {!isLot && (
-            <div style={{ marginTop: 18, padding: '14px 16px', background: TL.surface2, borderRadius: 12 }}>
-              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14, marginBottom: 6 }}>Seller notes</div>
+            <div style={{ marginBottom: 14 }}>
+              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13, marginBottom: 4 }}>Seller notes</div>
               <div style={{ fontFamily: TL.sans, fontSize: 13, color: TL.ink2, lineHeight: 1.6 }}>
-                {[
-                  'Pulled from a sealed booster and sleeved immediately. Never played, stored in a top loader in a smoke-free home.',
+                {['Pulled from a sealed booster and sleeved immediately. Never played, stored in a top loader in a smoke-free home.',
                   'Beautiful card in excellent condition. Centering is near perfect. Happy to send additional close-up photos on request.',
                   'Part of my personal collection. Selling to fund a different chase card. No trades on this one, firm on price.',
                   'Pack-fresh condition. Will ship double-sleeved in a top loader with tracking. Same-day dispatch if ordered before 2pm.',
@@ -168,301 +225,58 @@ function ListingScreen({ app, params }) {
             </div>
           )}
 
-
-          {/* seller\'s real photos */}
-          {!isLot && (
-            <div style={{ marginTop: 22 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-                <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17 }}>Seller's photos</span>
-                <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 10, color: 'var(--up)', background: 'var(--up-wash)', borderRadius: 6, padding: '2px 7px', letterSpacing: 0.3 }}>ACTUAL CARD</span>
-              </div>
-              <div style={{ fontFamily: TL.sans, fontSize: 12.5, color: TL.muted, marginBottom: 11, lineHeight: 1.4 }}>
-                Real photos {item.seller} took of this exact card — tap a frame to add one.
-              </div>
-              <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', margin: '0 -18px', padding: '0 18px 4px' }}>
-                {[['front', 'Front'], ['back', 'Back'], ['angle', 'Detail / flaws'], ['cert', 'Certificate']].map(([k, label], i) => (
-                  <div key={k} style={{ flexShrink: 0, width: i === 0 ? 168 : 132 }}>
-                    <image-slot
-                      id={'cardphoto-' + item.id + '-' + k}
-                      shape="rounded" radius="12" fit="cover"
-                      placeholder={'＋ ' + label + ' photo'}
-                      style={{ display: 'block', width: '100%', height: (i === 0 ? 168 : 132) * 1.4 + 'px', background: TL.surface2, boxShadow: 'inset 0 0 0 1.5px var(--line)', borderRadius: 12 }}>
-                    </image-slot>
-                    <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 11.5, color: TL.muted, marginTop: 6, textAlign: 'center' }}>{label}</div>
-                  </div>
-                ))}
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 8, fontFamily: TL.sans, fontSize: 11.5, color: TL.muted }}>
-                {IconL.shield({ width: 14, height: 14 })} Photos are the seller's own. Graded slabs are authenticity-verified.
-              </div>
+          {/* compact seller row + message */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0' }}>
+            <span style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 15, flexShrink: 0 }}>{item.seller[0]}</span>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>{item.seller}</span>
+              <div style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.muted }}><StarsL rating={item.sellerRating} /> {item.sellerRating}% \u00B7 {item.sellerSales.toLocaleString()} sales</div>
             </div>
-          )}
-
-          {/* price history */}
-          {item.history && (
-            <div style={{ marginTop: 22, background: TL.surface2, borderRadius: 16, padding: 16 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>Price history</span>
-                <span style={{ display: 'flex', gap: 4 }}>
-                  {['7D','30D','90D','1Y'].map(t => (
-                    <button key={t} onClick={() => setTf(t)} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11.5,
-                      padding: '4px 9px', borderRadius: 7, color: tf===t?'#fff':TL.muted, background: tf===t?'var(--fill)':'transparent' }}>{t}</button>
-                  ))}
-                </span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
-                <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 18 }}>{moneyL(item.price)}</span>
-                <DeltaL from={hist[0]} to={item.price} />
-                <span style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.muted }}>vs {tf} ago</span>
-              </div>
-              <SparkL data={histSlice} w={320} h={140} up={up} fill dots />
-              <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-                <StatBox label="Last sold" value={moneyL(hist[hist.length-2])} sub="2 days ago" />
-                <StatBox label="90-day low" value={moneyL(Math.min(...hist))} />
-                <StatBox label="90-day high" value={moneyL(Math.max(...hist))} />
-              </div>
-            </div>
-          )}
-
-          {/* seller */}
-          <div style={{ marginTop: 22 }}>
-            <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, marginBottom: 10 }}>Seller</div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: TL.surface2, borderRadius: 14, padding: 14 }}>
-              <div style={{ width: 46, height: 46, borderRadius: 12, background: 'var(--ink)', color: '#fff', display: 'flex',
-                alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 700, fontSize: 20, flexShrink: 0 }}>{item.seller[0]}</div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
-                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>{item.seller}</span>
-                  {window.TrustBadge ? <window.TrustBadge tier={item.sellerRating >= 99 ? 2 : 1} /> : (
-                    item.sellerRating >= 99 && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 6, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>
-                  )}
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-                  <StarsL rating={item.sellerRating} />
-                  <span style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>{item.sellerRating}% · {item.sellerSales.toLocaleString()} sales</span>
-                </div>
-              </div>
-              <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13,
-                color: 'var(--ink)', padding: '8px 12px', borderRadius: 10, boxShadow: 'inset 0 0 0 1px var(--accent)' }}>Store</button>
-            </div>
-
-            {/* message seller */}
-            <button onClick={() => app.nav.push('chat', { seller: item.seller, about: item.id })}
-              style={{ width: '100%', marginTop: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                padding: '11px 14px', borderRadius: 10, background: TL.surface, border: '1px solid var(--line)',
-                fontFamily: TL.sans, fontWeight: 600, fontSize: 13.5, color: TL.ink, cursor: 'pointer' }}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/></svg> Message seller
-            </button>
-
-            {/* seller\'s other listings */}
-            {(() => {
-              const others = (window.listingsBySeller ? window.listingsBySeller(item.seller) : []).filter(l => l.id !== item.id).slice(0, 4);
-              if (others.length === 0) return null;
-              return (
-                <div style={{ marginTop: 12 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                    <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: TL.ink }}>More from {item.seller}</div>
-                    <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 12, color: 'var(--ink)' }}>View all →</button>
-                  </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
-                    {others.map(l => (
-                      <button key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{ textAlign: 'center' }}>
-                        <div style={{ borderRadius: 8, overflow: 'hidden' }}><CardArtL item={l} w={70} radius={8} /></div>
-                        <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11, marginTop: 4 }}>{moneyL(l.price)}</div>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              );
-            })()}
+            <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 12, color: 'var(--ink)', padding: '7px 10px', borderRadius: 8, border: '1px solid var(--line)' }}>Store</button>
+            <button onClick={() => app.nav.push('chat', { seller: item.seller, about: item.id })} style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 12, color: 'var(--ink)', padding: '7px 10px', borderRadius: 8, border: '1px solid var(--line)' }}>Message</button>
           </div>
+        </div>
 
-          {/* shipping / protection */}
-          <div style={{ marginTop: 18 }}>
-            <InfoRow icon={IconL.truck({ width: 16, height: 16 })} title={item.shipping === 0 ? 'Free shipping' : moneyL(item.shipping) + ' shipping'} sub={'Ships from ' + item.loc} value={item.ships} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 0', borderBottom: '1px solid var(--line-2)' }}>
-              <div style={{ color: TL.muted }}>{IconL.truck({ width: 16, height: 16 })}</div>
-              <div style={{ fontFamily: TL.sans, fontSize: 13, fontWeight: 600, color: TL.ink2 }}>
-                Estimated delivery: <span style={{ fontWeight: 700, color: TL.ink }}>{item.ships || '3–5 business days'}</span>
-              </div>
+        {/* ═══ 5. TRADE OFFERS ═══ */}
+        {product && product.tradeOffers && product.tradeOffers.length > 0 && (
+          <div style={{ borderTop: '1px solid var(--line)', marginTop: 8, padding: '14px 16px 0' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
+              <span style={{ fontSize: 15 }}>{'\u21C4'}</span>
+              <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>Available to trade</span>
+              <span style={{ background: 'var(--surface-2)', color: TL.muted, padding: '2px 7px', borderRadius: 6, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>{product.tradeCount}</span>
             </div>
-            <InfoRow icon={IconL.shield({ width: 16, height: 16 })} title="Cardonomy Buyer Protection" sub="Full refund if item not as described" />
-            <InfoRow icon="✓" title="Authenticity guarantee" sub={item.grade && item.grade.company!=='raw' ? gradeTextL(item.grade)+' verified slab' : 'Verified by seller'} />
-          </div>
-
-          {/* card authentication — raw cards only */}
-          {item.grade && item.grade.company === 'raw' && (
-            <button onClick={() => app.nav.push('authcard', { id: item.id })} style={{ width: '100%', marginTop: 16, display: 'flex', alignItems: 'center', gap: 11, textAlign: 'left',
-              background: 'var(--up-wash)', borderRadius: 13, padding: '13px 14px', boxShadow: 'inset 0 0 0 1.5px var(--up)' }}>
-              <span style={{ width: 34, height: 34, borderRadius: 10, flexShrink: 0, background: 'var(--up)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconL.shield({ width: 18, height: 18 })}</span>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13.5, color: 'var(--up)' }}>Get it Cardonomy Verified</div>
-                <div style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.ink2 }}>Authenticate this raw card — sells faster, for more.</div>
-              </div>
-              <span style={{ color: 'var(--up)', fontSize: 16 }}>→</span>
-            </button>
-          )}
-
-          {/* authenticate card */}
-          {item.grade && item.grade.company !== 'raw' && (
-            <div style={{ padding: '0 0px', marginTop: 16 }}>
-              <button onClick={() => app.nav.push('authcard', { id: item.id })} style={{
-                width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '12px 14px',
-                background: TL.surface, borderRadius: 12, textAlign: 'left',
-                boxShadow: 'inset 0 0 0 1px var(--line)',
-              }}>
-                <svg width="20" height="20" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: 'var(--ink)' }}><path d="M208,40H48A16,16,0,0,0,32,56V200a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Zm80,32H48V56H208V200ZM64,96V80A16,16,0,0,1,80,64H96a8,8,0,0,1,0,16H80V96a8,8,0,0,1-16,0Zm144,64v16a16,16,0,0,1-16,16H176a8,8,0,0,1,0-16h16V160a8,8,0,0,1,16,0Z" fill="currentColor"/></svg>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: TL.ink }}>Authenticate this card</div>
-                  <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginTop: 1 }}>Get an official verification seal</div>
+            {product.tradeOffers.map((t, idx) => (
+              <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 0',
+                borderBottom: idx < product.tradeOffers.length - 1 ? '1px solid var(--line-2)' : 'none' }}>
+                <span style={{ width: 32, height: 32, borderRadius: 999, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 12, flexShrink: 0 }}>{t.trader.charAt(0)}</span>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13 }}>{t.trader} <span style={{ fontSize: 11, color: TL.muted }}>{t.traderRating}%</span></div>
+                  <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted }}>Wants: {t.wantCard.name}</div>
                 </div>
-                <svg width="16" height="16" viewBox="0 0 256 256" fill="none" style={{ flexShrink: 0, color: TL.faint }}><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z" fill="currentColor"/></svg>
+                <button onClick={() => app.nav.push('trade')} style={{
+                  padding: '7px 12px', borderRadius: 8, background: 'var(--ink)', color: '#fff',
+                  fontFamily: TL.sans, fontWeight: 700, fontSize: 12, border: 'none', flexShrink: 0 }}>Trade</button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* ═══ 6. SIMILAR LISTINGS ═══ */}
+        <div style={{ borderTop: '1px solid var(--line)', marginTop: 8, padding: '14px 16px 16px' }}>
+          <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15, marginBottom: 12 }}>Similar listings</div>
+          <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', margin: '0 -16px', padding: '0 16px' }}>
+            {LISTINGS_L.filter(l => l.id !== item.id && l.game === item.game).slice(0,6).map(l => (
+              <button key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{ flexShrink: 0, width: 110, textAlign: 'left' }}>
+                <div style={{ background: 'var(--surface)', borderRadius: 10, padding: 8, display: 'flex', justifyContent: 'center' }}><CardArtL item={l} w={84} /></div>
+                <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 12, marginTop: 6, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
+                <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 13 }}>{moneyL(l.price)}</div>
               </button>
-            </div>
-          )}
-
-          {/* ── Other sellers (from product data) ── */}
-          {(() => {
-            const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
-            if (!product || product.offers.length <= 1) return null;
-            const otherOffers = product.offers.filter(o => o.listingId !== item.id).slice(0, 5);
-            if (otherOffers.length === 0) return null;
-            return (
-              <div style={{ marginTop: 22 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17 }}>Other sellers</span>
-                  <span style={{ background: 'var(--surface-2)', color: TL.muted, padding: '2px 8px', borderRadius: 6, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>{otherOffers.length}</span>
-                </div>
-                {otherOffers.map((o, idx) => (
-                  <div key={o.id} onClick={() => { if (o.listingId) app.nav.push('listing', { id: o.listingId }); }}
-                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0',
-                      borderBottom: idx < otherOffers.length - 1 ? '1px solid var(--line-2)' : 'none', cursor: 'pointer' }}>
-                    <span style={{ width: 34, height: 34, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{o.seller.charAt(0)}</span>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13.5 }}>{o.seller}</div>
-                      <div style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.muted, marginTop: 1 }}>{o.sellerRating}% · {o.sellerSales.toLocaleString()} sales · {o.condition}</div>
-                    </div>
-                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                      <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>{moneyL(o.price)}</div>
-                      <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted }}>{o.shipping === 0 ? 'Free' : moneyL(o.shipping)}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            );
-          })()}
-
-          {/* ── Trade offers (from product data) ── */}
-          {(() => {
-            const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
-            if (!product || !product.tradeOffers || product.tradeOffers.length === 0) return null;
-            return (
-              <div style={{ marginTop: 22 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                  <span style={{ fontSize: 16 }}>{'\u21C4'}</span>
-                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17 }}>Available to trade</span>
-                  <span style={{ background: 'var(--surface-2)', color: TL.muted, padding: '2px 8px', borderRadius: 6, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>{product.tradeCount}</span>
-                </div>
-                <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, marginBottom: 12, lineHeight: 1.4 }}>
-                  These collectors have this card and want to swap — no cash needed.
-                </div>
-                {product.tradeOffers.map((t, idx) => (
-                  <div key={t.id} style={{ border: idx === 0 ? '2px solid var(--ink)' : '1px solid var(--line)', borderRadius: 14, padding: 16, marginBottom: 12, background: 'var(--surface)', boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-                      <div style={{ width: 34, height: 34, borderRadius: 999, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{t.trader.charAt(0)}</div>
-                      <div style={{ flex: 1 }}>
-                        <span style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13 }}>{t.trader}</span>
-                        {t.verified && <span style={{ marginLeft: 5, background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 5, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>Verified</span>}
-                        <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginTop: 1 }}>{t.traderRating}% · {t.traderTrades.toLocaleString()} trades · {t.traderLoc}</div>
-                      </div>
-                    </div>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: TL.muted, textTransform: 'uppercase', letterSpacing: 0.4, marginBottom: 6 }}>Wants in return</div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg)', borderRadius: 10, padding: 10 }}>
-                      <div style={{ flexShrink: 0 }}><CardArtL item={t.wantCard} w={36} radius={5} /></div>
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{t.wantCard.name}</div>
-                        <div style={{ fontFamily: TL.sans, fontSize: 10, color: TL.muted, marginTop: 1 }}>{t.wantCard.subtitle}</div>
-                      </div>
-                    </div>
-                    {t.note && <div style={{ marginTop: 10, fontFamily: TL.sans, fontSize: 12.5, color: TL.ink2, fontStyle: 'italic', lineHeight: 1.4 }}>"{t.note}"</div>}
-                    <button onClick={() => app.nav.push('trade')} style={{ width: '100%', marginTop: 12, background: 'var(--ink)', color: '#fff', border: 'none', padding: 11, borderRadius: 10, fontFamily: TL.sans, fontWeight: 700, fontSize: 13.5 }}>Propose trade</button>
-                  </div>
-                ))}
-              </div>
-            );
-          })()}
-
-          {/* ── Demand indicator (from product data) ── */}
-          {(() => {
-            const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
-            if (!product) return null;
-            const demand = demandL ? demandL(product) : null;
-            if (!demand) return null;
-            return (
-              <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 10,
-                padding: '12px 14px', background: 'var(--surface)', borderRadius: 14,
-                border: '1px solid ' + (demand.hot ? 'var(--gold)' : 'var(--line)'), boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>
-                    {demand.wants} buyers want this
-                    {demand.hot && <span style={{ marginLeft: 6, background: 'var(--gold)', color: '#fff', padding: '2px 7px', borderRadius: 6, fontSize: 10, fontWeight: 700 }}>HOT</span>}
-                  </div>
-                  <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginTop: 2 }}>
-                    {demand.localWants} near {demand.loc} · {demand.listed} listed
-                  </div>
-                </div>
-              </div>
-            );
-          })()}
-
-          {/* similar */}
-          <div style={{ marginTop: 26 }}>
-            <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, marginBottom: 12 }}>Similar listings</div>
-            <div className="noscroll" style={{ display: 'flex', gap: 12, overflowX: 'auto', margin: '0 -18px', padding: '0 18px' }}>
-              {LISTINGS_L.filter(l => l.id !== item.id && l.game === item.game).slice(0,5).map(l => (
-                <button key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{ flexShrink: 0, width: 110, textAlign: 'left' }}>
-                  <div style={{ background: TL.surface2, borderRadius: 12, padding: 10, display: 'flex', justifyContent: 'center' }}><CardArtL item={l} w={84} /></div>
-                  <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 12.5, marginTop: 6, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
-                  <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{moneyL(l.price)}</div>
-                </button>
-              ))}
-            </div>
+            ))}
           </div>
-
-          {/* mock message thread after offer */}
-          {offerSent && (
-            <div style={{ marginTop: 26 }}>
-              <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17, marginBottom: 12 }}>Your offer</div>
-              {/* buyer message */}
-              <div style={{ background: TL.surface2, borderRadius: 12, padding: 14, marginBottom: 10 }}>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
-                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>You offered {moneyL(offerSent.amount)}</span>
-                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 11, color: '#b45309', background: '#fef3c7', borderRadius: 6, padding: '2px 8px' }}>Pending</span>
-                </div>
-                <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>Sent just now</div>
-              </div>
-              {/* seller reply */}
-              <div style={{ background: TL.surface, borderRadius: 12, padding: 14, marginBottom: 10, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: 8, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TL.sans, fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{offerSent.seller[0]}</div>
-                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{offerSent.seller}</span>
-                  <span style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginLeft: 'auto' }}>Just now</span>
-                </div>
-                <div style={{ fontFamily: TL.sans, fontSize: 13.5, color: TL.ink2, lineHeight: 1.45 }}>
-                  Thanks for the offer! I can do {moneyL(Math.round(offerSent.amount * 1.05))} if you can cover postage?
-                </div>
-              </div>
-              {/* reply input (mock) */}
-              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-                <input readOnly placeholder="Reply..." style={{ flex: 1, padding: '12px 14px', borderRadius: 12, border: 'none', background: TL.surface2, boxShadow: 'inset 0 0 0 1px var(--line)', fontFamily: TL.sans, fontSize: 14, color: TL.ink, outline: 'none' }} />
-                <button style={{ padding: '12px 16px', borderRadius: 12, background: 'var(--ink)', color: '#fff', fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>Send</button>
-              </div>
-            </div>
-          )}
         </div>
       </div>
 
-      {/* sticky action bar */}
+      {/* ═══ STICKY BOTTOM BAR ═══ */}
       <div style={{ flexShrink: 0, background: 'var(--surface)', borderTop: '1px solid var(--line)', padding: '10px 16px',
         display: 'flex', gap: 10, alignItems: 'center', boxShadow: '0 -2px 10px rgba(20,24,40,0.06)' }}>
         {item.accepts_offers && (
@@ -483,7 +297,26 @@ function ListingScreen({ app, params }) {
           justifyContent: 'center', border: 'none', cursor: 'pointer', zIndex: 40,
           opacity: showTopL ? 1 : 0, pointerEvents: showTopL ? 'auto' : 'none',
           transition: 'opacity 0.25s ease', boxShadow: '0 2px 8px rgba(0,0,0,0.18)' }}
-        aria-label="Back to top">{'↑'}</button>
+        aria-label="Back to top">{'\u2191'}</button>
+
+      {/* offer sheet */}
+      {sheet === 'offer' && (
+        <SheetL title={'Offer to ' + item.seller} onClose={() => setSheet(null)}>
+          <div style={{ padding: '8px 0 20px' }}>
+            <div style={{ fontFamily: TL.sans, fontSize: 13, color: TL.muted, marginBottom: 12 }}>
+              Listed at {moneyL(displayPrice)} \u00B7 {item.condition}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--surface-2)', borderRadius: 12, padding: '12px 14px' }}>
+              <span style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 22, color: TL.muted }}>{'\u00A3'}</span>
+              <input value={offer} onChange={e => setOffer(e.target.value)} placeholder="0.00" type="number"
+                style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 22, color: 'var(--ink)', minWidth: 0 }} />
+            </div>
+            <button onClick={() => { setOfferSent({ seller: item.seller, amount: parseFloat(offer) || 0 }); setSheet(null); app.toast('Offer sent to ' + item.seller); }}
+              style={{ width: '100%', marginTop: 16, background: 'var(--ink)', color: '#fff', borderRadius: 12, padding: 14,
+                fontFamily: TL.sans, fontWeight: 700, fontSize: 15, border: 'none', opacity: offer ? 1 : 0.5 }} disabled={!offer}>Send offer</button>
+          </div>
+        </SheetL>
+      )}
 
       {/* printings sheet */}
       {showPrintings && (
@@ -492,49 +325,24 @@ function ListingScreen({ app, params }) {
             {(window.PRINTINGS[item.name] || []).map((p, i) => {
               const s = setByIdL(p.set);
               return (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between',
-                  alignItems: 'center', padding: '12px 0',
-                  borderBottom: '1px solid ' + TL.line }}>
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 600, color: TL.ink }}>{s ? s.name : p.set}</div>
-                    <div style={{ fontSize: 12, color: TL.muted }}>{p.number}</div>
+                <button key={i} onClick={() => { setShowPrintings(false); if (p.listingId) app.nav.push('listing', { id: p.listingId }); }}
+                  style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0', borderBottom: '1px solid var(--line-2)', textAlign: 'left' }}>
+                  <div style={{ width: 44, height: 60, borderRadius: 4, overflow: 'hidden', flexShrink: 0, background: p.art || 'var(--surface-2)' }}>
+                    {p.art && <div style={{ width: '100%', height: '100%', background: p.art }} />}
                   </div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: TL.ink }}>{moneyL(p.price)}</div>
-                </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>{p.variant || item.name}</div>
+                    <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted }}>{s ? s.name : p.set} \u00B7 {p.number || ''}</div>
+                  </div>
+                  <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 15 }}>{moneyL(p.price)}</div>
+                </button>
               );
             })}
           </div>
         </SheetL>
       )}
-
-      {/* offer sheet */}
-      <SheetL open={sheet==='offer'} onClose={() => setSheet(null)} title="Make an offer">
-        <div style={{ fontFamily: TL.sans, fontSize: 13.5, color: TL.muted, marginBottom: 14 }}>Listed at {moneyL(item.price)} · market {moneyL(item.market)}. Sellers usually respond within a day.</div>
-        <CurrencyInputL value={+offer || 0} onChange={v => setOffer(String(v))}
-          marketPrice={item.price}
-          presets={[{ pct: 0.85 }, { pct: 0.9 }, { pct: 0.95 }]} />
-        <div style={{ display: 'none' }}>
-          {[0.85, 0.9, 0.95].map(m => (
-            <ChipL key={m} onClick={() => setOffer(String(Math.round(item.price*m)))}>{moneyL(item.price*m,{cents:false})}</ChipL>
-          ))}
-        </div>
-        <button onClick={() => { const amt = parseFloat(offer); setOfferSent({ amount: amt, seller: item.seller }); setSheet(null); setOffer(''); app.toast('Offer sent to ' + item.seller); }} style={{
-          width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 14, padding: 15, fontFamily: TL.sans, fontWeight: 700, fontSize: 16,
-          opacity: offer ? 1 : 0.5 }} disabled={!offer}>Send offer</button>
-      </SheetL>
-
     </div>
   );
 }
 
-function OfferInput({ value, setValue, placeholder }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'center', background: TL.surface2, borderRadius: 14, padding: '14px 16px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-      <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 26, color: TL.muted, marginRight: 4 }}>£</span>
-      <input autoFocus type="number" value={value} onChange={e => setValue(e.target.value)} placeholder={placeholder.replace('£','')}
-        style={{ flex: 1, border: 'none', outline: 'none', background: 'transparent', fontFamily: TL.sans, fontWeight: 700, fontSize: 26, color: TL.ink, minWidth: 0 }} />
-    </div>
-  );
-}
-
-Object.assign(window, { ListingScreen, OfferInput, StatBox, InfoRow });
+Object.assign(window, { ListingScreen });
