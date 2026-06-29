@@ -5,6 +5,7 @@ const { T: TL, money: moneyL, Slab: SlabL, CardArt: CardArtL, GradeChip: GradeCh
   Sparkline: SparkL, Delta: DeltaL, Stars: StarsL, Chip: ChipL, Icon: IconL, Sheet: SheetL,
   CurrencyInput: CurrencyInputL } = window;
 const { byId: byIdL, setById: setByIdL, gameById: gameByIdL, gradeText: gradeTextL, LISTINGS: LISTINGS_L } = window;
+const { demandForProduct: demandL, variantForProduct: variantL } = window;
 // PRINTINGS accessed via window.PRINTINGS at render time
 
 function StatBox({ label, value, sub, color }) {
@@ -319,6 +320,100 @@ function ListingScreen({ app, params }) {
               </button>
             </div>
           )}
+
+          {/* ── Other sellers (from product data) ── */}
+          {(() => {
+            const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
+            if (!product || product.offers.length <= 1) return null;
+            const otherOffers = product.offers.filter(o => o.listingId !== item.id).slice(0, 5);
+            if (otherOffers.length === 0) return null;
+            return (
+              <div style={{ marginTop: 22 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17 }}>Other sellers</span>
+                  <span style={{ background: 'var(--surface-2)', color: TL.muted, padding: '2px 8px', borderRadius: 6, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>{otherOffers.length}</span>
+                </div>
+                {otherOffers.map((o, idx) => (
+                  <div key={o.id} onClick={() => { if (o.listingId) app.nav.push('listing', { id: o.listingId }); }}
+                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 0',
+                      borderBottom: idx < otherOffers.length - 1 ? '1px solid var(--line-2)' : 'none', cursor: 'pointer' }}>
+                    <span style={{ width: 34, height: 34, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{o.seller.charAt(0)}</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13.5 }}>{o.seller}</div>
+                      <div style={{ fontFamily: TL.sans, fontSize: 11.5, color: TL.muted, marginTop: 1 }}>{o.sellerRating}% · {o.sellerSales.toLocaleString()} sales · {o.condition}</div>
+                    </div>
+                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                      <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 15 }}>{moneyL(o.price)}</div>
+                      <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted }}>{o.shipping === 0 ? 'Free' : moneyL(o.shipping)}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+
+          {/* ── Trade offers (from product data) ── */}
+          {(() => {
+            const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
+            if (!product || !product.tradeOffers || product.tradeOffers.length === 0) return null;
+            return (
+              <div style={{ marginTop: 22 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                  <span style={{ fontSize: 16 }}>{'\u21C4'}</span>
+                  <span style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 17 }}>Available to trade</span>
+                  <span style={{ background: 'var(--surface-2)', color: TL.muted, padding: '2px 8px', borderRadius: 6, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>{product.tradeCount}</span>
+                </div>
+                <div style={{ fontFamily: TL.sans, fontSize: 12, color: TL.muted, marginBottom: 12, lineHeight: 1.4 }}>
+                  These collectors have this card and want to swap — no cash needed.
+                </div>
+                {product.tradeOffers.map((t, idx) => (
+                  <div key={t.id} style={{ border: idx === 0 ? '2px solid var(--ink)' : '1px solid var(--line)', borderRadius: 14, padding: 16, marginBottom: 12, background: 'var(--surface)', boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+                      <div style={{ width: 34, height: 34, borderRadius: 999, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 13, flexShrink: 0 }}>{t.trader.charAt(0)}</div>
+                      <div style={{ flex: 1 }}>
+                        <span style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13 }}>{t.trader}</span>
+                        {t.verified && <span style={{ marginLeft: 5, background: '#f0fdf4', color: '#16a34a', padding: '1px 6px', borderRadius: 5, fontFamily: TL.sans, fontWeight: 700, fontSize: 10 }}>Verified</span>}
+                        <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginTop: 1 }}>{t.traderRating}% · {t.traderTrades.toLocaleString()} trades · {t.traderLoc}</div>
+                      </div>
+                    </div>
+                    <div style={{ fontSize: 10, fontWeight: 700, color: TL.muted, textTransform: 'uppercase', letterSpacing: 0.4, marginBottom: 6 }}>Wants in return</div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, background: 'var(--bg)', borderRadius: 10, padding: 10 }}>
+                      <div style={{ flexShrink: 0 }}><CardArtL item={t.wantCard} w={36} radius={5} /></div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 13 }}>{t.wantCard.name}</div>
+                        <div style={{ fontFamily: TL.sans, fontSize: 10, color: TL.muted, marginTop: 1 }}>{t.wantCard.subtitle}</div>
+                      </div>
+                    </div>
+                    {t.note && <div style={{ marginTop: 10, fontFamily: TL.sans, fontSize: 12.5, color: TL.ink2, fontStyle: 'italic', lineHeight: 1.4 }}>"{t.note}"</div>}
+                    <button onClick={() => app.nav.push('trade')} style={{ width: '100%', marginTop: 12, background: 'var(--ink)', color: '#fff', border: 'none', padding: 11, borderRadius: 10, fontFamily: TL.sans, fontWeight: 700, fontSize: 13.5 }}>Propose trade</button>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+
+          {/* ── Demand indicator (from product data) ── */}
+          {(() => {
+            const product = window.PRODUCTS && window.PRODUCTS.find(p => p.offers.some(o => o.listingId === item.id));
+            if (!product) return null;
+            const demand = demandL ? demandL(product) : null;
+            if (!demand) return null;
+            return (
+              <div style={{ marginTop: 16, display: 'flex', alignItems: 'center', gap: 10,
+                padding: '12px 14px', background: 'var(--surface)', borderRadius: 14,
+                border: '1px solid ' + (demand.hot ? 'var(--gold)' : 'var(--line)'), boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: TL.sans, fontWeight: 700, fontSize: 14 }}>
+                    {demand.wants} buyers want this
+                    {demand.hot && <span style={{ marginLeft: 6, background: 'var(--gold)', color: '#fff', padding: '2px 7px', borderRadius: 6, fontSize: 10, fontWeight: 700 }}>HOT</span>}
+                  </div>
+                  <div style={{ fontFamily: TL.sans, fontSize: 11, color: TL.muted, marginTop: 2 }}>
+                    {demand.localWants} near {demand.loc} · {demand.listed} listed
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* similar */}
           <div style={{ marginTop: 26 }}>
