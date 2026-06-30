@@ -14,6 +14,7 @@ const { ProductScreen } = window;
 const { SellerScreen } = window;
 const { GameScreen } = window;
 const { ScanScreen } = window;
+const { AddCardScreen } = window;
 const { VerifyScreen } = window;
 const { AuthCardScreen } = window;
 const { Onboarding } = window;
@@ -62,6 +63,7 @@ const SCREENS = {
   pitch_seller: SellerPitchScreen,
   pitch_lgs: LGSPitchScreen,
   game: GameScreen,
+  add_card: AddCardScreen,
 };
 
 function loadWatch() {
