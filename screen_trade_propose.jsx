@@ -32,15 +32,18 @@ function TradePropose({ app, params = {} }) {
     );
   }
 
-  const ownedIds = app.ownedIds();
-  const tradeableFirst = [...ownedIds].sort((a, b) => {
-    const aT = app.isOpenToTrade(a) ? 0 : 1;
-    const bT = app.isOpenToTrade(b) ? 0 : 1;
+  const ownedCards = app.owned;
+  const tradeableFirst = [...ownedCards].sort((a, b) => {
+    const aT = app.isOpenToTrade(a.id) ? 0 : 1;
+    const bT = app.isOpenToTrade(b.id) ? 0 : 1;
     return aT - bT;
   });
 
   const selIds = Object.keys(selected).filter(k => selected[k]);
-  const giveVal = selIds.reduce((s, id) => { const c = byIdP(id); return s + (c ? c.market || c.price : 0); }, 0);
+  const giveVal = selIds.reduce((s, ocId) => {
+    const oc = app.getOwnedCard(ocId);
+    return s + (oc ? (window.marketValue ? window.marketValue(oc) : 0) : 0);
+  }, 0);
   const getVal = card.market || card.price;
   const diff = getVal - giveVal - cash;
   const totalOffer = giveVal + cash;
@@ -87,13 +90,16 @@ function TradePropose({ app, params = {} }) {
               <div style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted }}>Tap cards to select</div>
             </div>
             <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 4, WebkitOverflowScrolling: 'touch' }}>
-              {tradeableFirst.map(id => {
-                const c = byIdP(id);
+              {tradeableFirst.map(oc => {
+                const c = byIdP(oc.cardId);
                 if (!c) return null;
-                const isSel = !!selected[id];
-                const isTradeable = app.isOpenToTrade(id);
+                const isSel = !!selected[oc.id];
+                const isTradeable = app.isOpenToTrade(oc.id);
+                const condLabel = oc.condition === 'graded'
+                  ? (oc.gradedCompany || '').toUpperCase() + ' ' + oc.gradedScore
+                  : 'Raw ' + (oc.rawGrade || 'NM');
                 return (
-                  <button key={id} onClick={() => toggleCard(id)} style={{ flexShrink: 0, width: 90, textAlign: 'left', position: 'relative' }}>
+                  <button key={oc.id} onClick={() => toggleCard(oc.id)} style={{ flexShrink: 0, width: 90, textAlign: 'left', position: 'relative' }}>
                     <div style={{ background: isSel ? 'var(--accent-wash)' : TP.surface2, borderRadius: 10, padding: 6, display: 'flex', justifyContent: 'center', position: 'relative',
                       border: isSel ? '2px solid var(--accent)' : '2px solid var(--line)' }}>
                       <CardArtP item={c} w={68} radius={6} />
@@ -107,7 +113,8 @@ function TradePropose({ app, params = {} }) {
                       )}
                     </div>
                     <div style={{ fontFamily: TP.sans, fontWeight: 600, fontSize: 11, marginTop: 4, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{c.name}</div>
-                    <div style={{ fontFamily: TP.sans, fontSize: 10.5, color: TP.muted }}>{moneyP(c.market || c.price)}</div>
+                    <div style={{ fontFamily: TP.sans, fontSize: 9, color: TP.muted }}>{condLabel}</div>
+                    <div style={{ fontFamily: TP.sans, fontSize: 10.5, color: TP.muted }}>{moneyP(window.marketValue ? window.marketValue(oc) : c.market || c.price)}</div>
                   </button>
                 );
               })}
@@ -122,9 +129,10 @@ function TradePropose({ app, params = {} }) {
                   {selIds.length} card{selIds.length !== 1 ? 's' : ''} selected \u00b7 {moneyP(giveVal)}
                 </div>
                 <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                  {selIds.map(id => {
-                    const c = byIdP(id);
-                    return c ? <div key={id} style={{ borderRadius: 6, overflow: 'hidden' }}><CardArtP item={c} w={40} radius={4} /></div> : null;
+                  {selIds.map(ocId => {
+                    const oc = app.getOwnedCard(ocId);
+                    const c = oc ? byIdP(oc.cardId) : null;
+                    return c ? <div key={ocId} style={{ borderRadius: 6, overflow: 'hidden' }}><CardArtP item={c} w={40} radius={4} /></div> : null;
                   })}
                 </div>
               </div>
@@ -226,7 +234,7 @@ function TradePropose({ app, params = {} }) {
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: TP.sans, fontSize: 10.5, fontWeight: 700, color: 'var(--ink)', marginBottom: 6, letterSpacing: 0.3 }}>YOU GIVE</div>
                 <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                  {selIds.map(id => { const c = byIdP(id); return c ? <div key={id} style={{ borderRadius: 6, overflow: 'hidden' }}><CardArtP item={c} w={44} radius={4} /></div> : null; })}
+                  {selIds.map(ocId => { const oc = app.getOwnedCard(ocId); const c = oc ? byIdP(oc.cardId) : null; return c ? <div key={ocId} style={{ borderRadius: 6, overflow: 'hidden' }}><CardArtP item={c} w={44} radius={4} /></div> : null; })}
                 </div>
                 {cash > 0 && <div style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted, marginTop: 4 }}>+ \u00a3{cash} cash</div>}
               </div>
@@ -372,7 +380,7 @@ function TradePropose({ app, params = {} }) {
               <div style={{ flex: 1 }}>
                 <div style={{ fontFamily: TP.sans, fontSize: 10.5, fontWeight: 700, color: 'var(--ink)', marginBottom: 6 }}>YOU GIVE</div>
                 <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-                  {selIds.map(id => { const c = byIdP(id); return c ? <div key={id} style={{ borderRadius: 6, overflow: 'hidden' }}><CardArtP item={c} w={44} radius={4} /></div> : null; })}
+                  {selIds.map(ocId => { const oc = app.getOwnedCard(ocId); const c = oc ? byIdP(oc.cardId) : null; return c ? <div key={ocId} style={{ borderRadius: 6, overflow: 'hidden' }}><CardArtP item={c} w={44} radius={4} /></div> : null; })}
                 </div>
                 {cash > 0 && <div style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted, marginTop: 4 }}>+ \u00a3{cash} cash</div>}
               </div>
