@@ -156,14 +156,23 @@ function TradePropose({ app, params = {} }) {
           {selIds.length > 0 && (
             <div style={{ padding: '0 16px 16px' }}>
               <div style={{ background: TP.surface, borderRadius: 12, padding: 12, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <div style={{ fontFamily: TP.sans, fontSize: 12, fontWeight: 600, color: TP.muted, marginBottom: 8 }}>Trade balance</div>
-                <div style={{ height: 6, borderRadius: 3, background: TP.surface2, overflow: 'hidden', marginBottom: 8 }}>
-                  <div style={{ height: '100%', borderRadius: 3, width: Math.min(100, fairPct) + '%',
-                    background: fairPct > 40 && fairPct < 60 ? 'var(--up)' : 'var(--accent)' }} />
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8 }}>
+                  <span style={{ fontFamily: TP.sans, fontSize: 12, fontWeight: 600, color: TP.muted }}>Trade balance</span>
+                  {fairPct > 40 && fairPct < 60 ? (
+                    <span style={{ fontFamily: TP.sans, fontSize: 11, fontWeight: 700, color: 'var(--up)', background: 'var(--up-wash)', borderRadius: 6, padding: '2px 8px' }}>Even trade</span>
+                  ) : totalOffer > getVal ? (
+                    <span style={{ fontFamily: TP.sans, fontSize: 11, fontWeight: 600, color: 'var(--down)' }}>You\u2019re overpaying by {moneyP(totalOffer - getVal)}</span>
+                  ) : (
+                    <span style={{ fontFamily: TP.sans, fontSize: 11, fontWeight: 600, color: 'var(--accent)' }}>Add {moneyP(getVal - totalOffer)} to even out</span>
+                  )}
+                </div>
+                <div style={{ display: 'flex', height: 6, borderRadius: 3, overflow: 'hidden', gap: 2, marginBottom: 8 }}>
+                  <div style={{ height: '100%', borderRadius: 3, flex: totalOffer || 1, background: 'var(--ink)' }} />
+                  <div style={{ height: '100%', borderRadius: 3, flex: getVal || 1, background: 'var(--up)' }} />
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: TP.sans, fontSize: 12 }}>
                   <span>Your offer: <b>{moneyP(totalOffer)}</b></span>
-                  <span>Their card: <b>{moneyP(getVal)}</b></span>
+                  <span style={{ color: 'var(--up)' }}>Their card: <b>{moneyP(getVal)}</b></span>
                 </div>
               </div>
             </div>

@@ -229,7 +229,7 @@ function ProductScreen({ app, params }) {
             </div>
             {product.tradeOffers.map((t, idx) => (
               <TradeOfferCard key={t.id} trade={t} isFirst={idx === 0}
-                onPropose={() => app.nav.push('trade')}
+                onPropose={() => { var lid = product.offers && product.offers[0] && product.offers[0].listingId; app.nav.push('trade_propose', { cardId: lid || product.id, traderId: 't1' }); }}
               />
             ))}
           </div>
