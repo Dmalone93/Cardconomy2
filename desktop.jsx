@@ -1078,26 +1078,38 @@ function DAccountStore({ app }) {
 
 // ── Account screen — delegates by account type ──────────────
 function DAccount({ app }) {
-  var types = [
-    { id: 'buyer', label: 'Buyer' },
-    { id: 'seller', label: 'Seller' },
-    { id: 'store', label: 'Store' },
-  ];
+  var ACCT_LABEL = { buyer: 'Collector', seller: 'Individual Seller', store: 'Game Shop' };
+  var ACCT_EMOJI = { buyer: '\uD83C\uDCCF', seller: '\uD83D\uDCB8', store: '\uD83C\uDFEA' };
+  var nextAcct = app.acct === 'buyer' ? 'seller' : app.acct === 'seller' ? 'store' : 'buyer';
   return (
     <div>
-      <div style={{ display: 'flex', gap: 0, background: 'var(--surface)', borderRadius: 12, padding: 4, marginBottom: 24, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-        {types.map(function(t) {
-          var active = app.acct === t.id;
-          return (
-            <button key={t.id} onClick={function() { app.setAcct(t.id); }} style={{
-              flex: 1, padding: '10px 0', borderRadius: 9, fontWeight: 700, fontSize: 14,
-              background: active ? 'var(--ink)' : 'transparent',
-              color: active ? '#fff' : 'var(--muted)',
-              transition: 'background 150ms ease-out, color 150ms ease-out',
-            }}>{t.label}</button>
-          );
-        })}
+      {/* identity card */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 16, background: 'var(--surface)', borderRadius: 16, padding: '18px 20px', marginBottom: 16, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+        <div style={{ width: 52, height: 52, borderRadius: 15, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 24, flexShrink: 0 }}>A</div>
+        <div style={{ flex: 1 }}>
+          <div style={{ fontWeight: 700, fontSize: 18, letterSpacing: -0.3 }}>Alex Rivera</div>
+          <div style={{ fontSize: 13, color: 'var(--muted)', marginTop: 2 }}>{ACCT_EMOJI[app.acct]} {ACCT_LABEL[app.acct] || 'Collector'}</div>
+        </div>
+        <button onClick={function() { app.setAcct(nextAcct); }} style={{
+          padding: '8px 16px', borderRadius: 10, fontWeight: 700, fontSize: 13,
+          background: 'var(--surface-2)', color: 'var(--ink)', border: '1px solid var(--line)',
+        }}>Switch to {ACCT_LABEL[nextAcct]}</button>
       </div>
+
+      {/* upgrade CTAs */}
+      {app.acct === 'buyer' && (
+        <button onClick={function() { app.setAcct('seller'); app.toast && app.toast('You can now sell!'); }} style={{
+          width: '100%', marginBottom: 16, background: 'var(--ink)', color: '#fff',
+          borderRadius: 13, padding: '13px 20px', fontWeight: 700, fontSize: 15, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+        }}>\uD83D\uDCB8 Become a seller</button>
+      )}
+      {app.acct === 'seller' && (
+        <button onClick={function() { app.setAcct('store'); app.toast && app.toast('Store dashboard unlocked!'); }} style={{
+          width: '100%', marginBottom: 16, background: 'var(--surface)', color: 'var(--ink)',
+          borderRadius: 13, padding: '13px 20px', fontWeight: 700, fontSize: 14, border: '1.5px solid var(--line)',
+        }}>Enroll as Local Game Store</button>
+      )}
+
       {app.acct === 'store' ? <DAccountStore app={app} /> : app.acct === 'seller' ? <DAccountSeller app={app} /> : <DAccountBuyer app={app} />}
     </div>
   );
