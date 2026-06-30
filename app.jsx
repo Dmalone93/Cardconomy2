@@ -75,9 +75,38 @@ function loadJSON(key, fallback) {
 }
 // seed collections (named buckets of owned cards)
 const DEFAULT_COLLECTIONS = [
-  { id: 'c1', name: 'Main Binder', icon: null, cards: ['l03', 'l09', 'l02', 'l12'] },
-  { id: 'c2', name: 'Graded Vault', icon: null, cards: ['l07', 'l04'] },
+  { id: 'c1', name: 'Main Binder', icon: null, cards: [] },
+  { id: 'c2', name: 'Graded Vault', icon: null, cards: [] },
 ];
+
+function migrateCollections(collections, existingOwned) {
+  if (existingOwned && existingOwned.length > 0) return { collections: collections, owned: existingOwned };
+  var owned = [];
+  var needsMigration = false;
+  var newCollections = collections.map(function(col) {
+    var newCards = col.cards.map(function(cardId) {
+      if (cardId && cardId.startsWith('oc_')) return cardId;
+      needsMigration = true;
+      var ocId = 'oc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+      owned.push({ id: ocId, cardId: cardId, condition: 'raw', rawGrade: 'NM', gradedCompany: null, gradedScore: null, paidPrice: null, dateAdded: Date.now() });
+      return ocId;
+    });
+    return { id: col.id, name: col.name, icon: col.icon, cards: newCards };
+  });
+  if (!needsMigration) return { collections: collections, owned: [] };
+  return { collections: newCollections, owned: owned };
+}
+
+// Run migration once at startup — converts old bare listing IDs to oc_ objects
+(function runMigrationAtStartup() {
+  var existingOwned = loadJSON('cc_owned', null);
+  var cols = loadJSON('cc_collections', DEFAULT_COLLECTIONS);
+  var result = migrateCollections(cols, existingOwned);
+  if (result.owned.length > 0 && !existingOwned) {
+    localStorage.setItem('cc_owned', JSON.stringify(result.owned));
+    localStorage.setItem('cc_collections', JSON.stringify(result.collections));
+  }
+})();
 
 function parseHash() {
   const h = (location.hash || '').replace(/^#/, '');
@@ -97,6 +126,7 @@ function App() {
   const [prefs, setPrefs] = React.useState(() => loadJSON('cc_prefs', ALL_GAME_IDS));
   const [onboarded, setOnboarded] = React.useState(true);
   const [collections, setCollections] = React.useState(() => loadJSON('cc_collections', DEFAULT_COLLECTIONS));
+  const [owned, setOwned] = React.useState(() => loadJSON('cc_owned', []));
   const [tradeable, setTradeable] = React.useState(() => loadJSON('cc_tradeable', []));
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [packRipped, setPackRipped] = React.useState(() => { try { return sessionStorage.getItem('cc_pack_ripped') === '1'; } catch (e) { return true; } });
@@ -146,6 +176,7 @@ function App() {
   React.useEffect(() => { localStorage.setItem('cc_prefs', JSON.stringify(prefs)); }, [prefs]);
   React.useEffect(() => { localStorage.setItem('cc_onboarded', JSON.stringify(onboarded)); }, [onboarded]);
   React.useEffect(() => { localStorage.setItem('cc_collections', JSON.stringify(collections)); }, [collections]);
+  React.useEffect(() => { localStorage.setItem('cc_owned', JSON.stringify(owned)); }, [owned]);
   React.useEffect(() => { localStorage.setItem('cc_tradeable', JSON.stringify(tradeable)); }, [tradeable]);
 
   function showToast(msg) {
@@ -216,8 +247,36 @@ function App() {
     inPrefs: (gameId) => !prefs.length || prefs.includes(gameId),
     // collections (named buckets)
     collections,
-    ownedIds: () => [...new Set(collections.flatMap(c => c.cards))],
-    addCollection: (name) => { const id = 'c' + Date.now(); setCollections(cs => [...cs, { id, name: name || 'New collection', icon: '🃏', cards: [] }]); showToast('Collection created'); return id; },
+    ownedIds: () => [...new Set(owned.map(oc => oc.cardId))],
+    owned,
+    getOwnedCard: (ocId) => owned.find(oc => oc.id === ocId),
+    ownedByCard: (cardId) => owned.filter(oc => oc.cardId === cardId),
+    addOwnedCard: (cardId, condition, rawGrade, gradedCompany, gradedScore, paidPrice, collectionId) => {
+      var ocId = 'oc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
+      var entry = { id: ocId, cardId: cardId, condition: condition || 'raw', rawGrade: rawGrade || 'NM', gradedCompany: gradedCompany || null, gradedScore: gradedScore != null ? gradedScore : null, paidPrice: paidPrice != null ? paidPrice : null, dateAdded: Date.now() };
+      setOwned(o => [...o, entry]);
+      if (collectionId) {
+        setCollections(cs => cs.map(c => c.id === collectionId ? { ...c, cards: [...c.cards, ocId] } : c));
+      }
+      var card = byIdA(cardId);
+      var label = card ? card.name : 'Card';
+      if (condition === 'graded' && gradedCompany) label += ' (' + gradedCompany.toUpperCase() + ' ' + gradedScore + ')';
+      else if (rawGrade) label += ' (Raw ' + rawGrade + ')';
+      showToast('Added ' + label);
+      return ocId;
+    },
+    removeOwnedCard: (ocId) => {
+      setOwned(o => o.filter(oc => oc.id !== ocId));
+      setCollections(cs => cs.map(c => ({ ...c, cards: c.cards.filter(id => id !== ocId) })));
+      showToast('Card removed');
+    },
+    marketValue: window.marketValue,
+    portfolioValue: () => {
+      var total = owned.reduce((s, oc) => s + (window.marketValue ? window.marketValue(oc) : 0), 0);
+      var costBasis = owned.filter(oc => oc.paidPrice != null).reduce((s, oc) => s + oc.paidPrice, 0);
+      return { total: total, costBasis: costBasis, pnl: total - costBasis };
+    },
+    addCollection: (name) => { const id = 'c' + Date.now(); setCollections(cs => [...cs, { id, name: name || 'New collection', icon: '\uD83C\uDCCF', cards: [] }]); showToast('Collection created'); return id; },
     renameCollection: (id, name) => setCollections(cs => cs.map(c => c.id === id ? { ...c, name } : c)),
     deleteCollection: (id) => { setCollections(cs => cs.filter(c => c.id !== id)); showToast('Collection deleted'); },
     addCardToCollection: (cid, card) => setCollections(cs => cs.map(c => c.id === cid ? (c.cards.includes(card) ? c : { ...c, cards: [...c.cards, card] }) : c)),
