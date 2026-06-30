@@ -104,8 +104,11 @@ function App() {
   const toastTimer = React.useRef(null);
 
   // ── hash-based deep linking ──
+  const suppressHashChange = React.useRef(false);
+
   // Update URL hash when navigation changes
   React.useEffect(() => {
+    suppressHashChange.current = true;
     if (stack.length > 0) {
       const top = stack[stack.length - 1];
       const id = top.params && (top.params.id || top.params.name);
@@ -118,6 +121,7 @@ function App() {
   // Listen for hash changes (back/forward, external links)
   React.useEffect(() => {
     function onHashChange() {
+      if (suppressHashChange.current) { suppressHashChange.current = false; return; }
       var parsed = parseHash();
       if (!parsed) { setStack([]); setTab('home'); return; }
       // If it's a tab root, switch tab
