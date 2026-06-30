@@ -3004,6 +3004,28 @@ const TRADE_POSTS = [
 ];
 const postById = (id) => TRADE_POSTS.find(p => p.id === id);
 
+const CONDITION_MULTIPLIERS = {
+  'raw_DMG': 0.3, 'raw_HP': 0.5, 'raw_MP': 0.7, 'raw_LP': 0.85, 'raw_NM': 1.0,
+  'cgc_8': 1.3, 'cgc_9': 1.6, 'cgc_9.5': 2.0,
+  'bgs_9': 1.7, 'bgs_9.5': 2.2, 'bgs_10': 4.0,
+  'psa_8': 1.4, 'psa_9': 1.8, 'psa_10': 3.0,
+};
+
+function marketValue(oc) {
+  var card = byId(oc.cardId || oc.id);
+  if (!card) return 0;
+  var base = card.market || card.price || 0;
+  if (oc.condition === 'graded' && oc.gradedCompany && oc.gradedScore != null) {
+    var key = oc.gradedCompany + '_' + oc.gradedScore;
+    return Math.round(base * (CONDITION_MULTIPLIERS[key] || 1) * 100) / 100;
+  }
+  if (oc.condition === 'raw' && oc.rawGrade) {
+    var key2 = 'raw_' + oc.rawGrade;
+    return Math.round(base * (CONDITION_MULTIPLIERS[key2] || 1) * 100) / 100;
+  }
+  return base;
+}
+
 const TRADE_LISTINGS = [
   { id: 'tl01', cardId: 'l01', trader: 't1', dist: 1.9 },
   { id: 'tl02', cardId: 'l06', trader: 't1', dist: 1.9 },
@@ -3299,4 +3321,5 @@ Object.assign(window, {
   TRADE_POSTS, postById, TRADE_LISTINGS, GAME_LOGOS,
   PRODUCTS, productById, offersForProduct, SELLERS, COND_SHORT, sellerByName, listingsBySeller,
   HOT_DEALS, PRICE_MOVERS, PRINTINGS, VARIANTS, demandForProduct, variantForProduct,
+  CONDITION_MULTIPLIERS, marketValue,
 });
