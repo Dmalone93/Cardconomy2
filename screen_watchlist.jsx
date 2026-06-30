@@ -809,6 +809,9 @@ function CollectionDetailScreen({ app, params }) {
             </div>
             {v.series.length > 1 && <div style={{ marginTop: 12, marginLeft: -4 }}><SparkW data={v.series} w={320} h={50} up={v.now>=v.then} dots /></div>}
             <div style={{ marginTop: 8, fontFamily: TW.sans, fontSize: 11.5, opacity: 0.7 }}>{col.cards.length} card{col.cards.length!==1?'s':''}</div>
+            {(() => { const tradeCount = col.cards.filter(id => app.isOpenToTrade(id)).length; return tradeCount > 0 ? (
+              <div style={{ fontFamily: TW.sans, fontSize: 11.5, opacity: 0.7, marginTop: 2 }}>{tradeCount} open to trade</div>
+            ) : null; })()}
           </div>
         )}
 
@@ -873,6 +876,13 @@ function CollectionDetailScreen({ app, params }) {
                       {gainUp ? '+' : ''}{moneyW(Math.abs(gainAbs))} ({gainUp ? '+' : ''}{gainPct}%)
                     </div>}
                   </div>
+                </button>
+                <button onClick={(e) => { e.stopPropagation(); app.toggleTradeable(item.id); }}
+                  style={{ padding: '5px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, fontFamily: TW.sans, flexShrink: 0,
+                    background: app.isOpenToTrade(item.id) ? 'var(--accent-wash)' : TW.surface2,
+                    color: app.isOpenToTrade(item.id) ? 'var(--accent)' : TW.muted,
+                    border: app.isOpenToTrade(item.id) ? '1px solid var(--accent)' : '1px solid var(--line)' }}>
+                  {app.isOpenToTrade(item.id) ? '\u2713 Trading' : 'Trade'}
                 </button>
                 <button onClick={() => app.removeCardFromCollection(col.id, item.id)} style={{ color: TW.faint, padding: 4, flexShrink: 0 }}>{IconW.trash({ width: 18, height: 18 })}</button>
               </div>
