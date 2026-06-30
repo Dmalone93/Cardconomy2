@@ -1078,9 +1078,29 @@ function DAccountStore({ app }) {
 
 // ── Account screen — delegates by account type ──────────────
 function DAccount({ app }) {
-  if (app.acct === 'store') return <DAccountStore app={app} />;
-  if (app.acct === 'seller') return <DAccountSeller app={app} />;
-  return <DAccountBuyer app={app} />;
+  var types = [
+    { id: 'buyer', label: 'Buyer' },
+    { id: 'seller', label: 'Seller' },
+    { id: 'store', label: 'Store' },
+  ];
+  return (
+    <div>
+      <div style={{ display: 'flex', gap: 0, background: 'var(--surface)', borderRadius: 12, padding: 4, marginBottom: 24, boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+        {types.map(function(t) {
+          var active = app.acct === t.id;
+          return (
+            <button key={t.id} onClick={function() { app.setAcct(t.id); }} style={{
+              flex: 1, padding: '10px 0', borderRadius: 9, fontWeight: 700, fontSize: 14,
+              background: active ? 'var(--ink)' : 'transparent',
+              color: active ? '#fff' : 'var(--muted)',
+              transition: 'background 150ms ease-out, color 150ms ease-out',
+            }}>{t.label}</button>
+          );
+        })}
+      </div>
+      {app.acct === 'store' ? <DAccountStore app={app} /> : app.acct === 'seller' ? <DAccountSeller app={app} /> : <DAccountBuyer app={app} />}
+    </div>
+  );
 }
 
 function DCart({ app }) {
