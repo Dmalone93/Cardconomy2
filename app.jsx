@@ -95,6 +95,7 @@ function App() {
   const [prefs, setPrefs] = React.useState(() => loadJSON('cc_prefs', ALL_GAME_IDS));
   const [onboarded, setOnboarded] = React.useState(true);
   const [collections, setCollections] = React.useState(() => loadJSON('cc_collections', DEFAULT_COLLECTIONS));
+  const [tradeable, setTradeable] = React.useState(() => loadJSON('cc_tradeable', []));
   const [menuOpen, setMenuOpen] = React.useState(false);
   const [packRipped, setPackRipped] = React.useState(() => { try { return sessionStorage.getItem('cc_pack_ripped') === '1'; } catch (e) { return true; } });
   const [toast, setToastState] = React.useState(null);
@@ -139,6 +140,7 @@ function App() {
   React.useEffect(() => { localStorage.setItem('cc_prefs', JSON.stringify(prefs)); }, [prefs]);
   React.useEffect(() => { localStorage.setItem('cc_onboarded', JSON.stringify(onboarded)); }, [onboarded]);
   React.useEffect(() => { localStorage.setItem('cc_collections', JSON.stringify(collections)); }, [collections]);
+  React.useEffect(() => { localStorage.setItem('cc_tradeable', JSON.stringify(tradeable)); }, [tradeable]);
 
   function showToast(msg) {
     setToastState(msg);
@@ -215,6 +217,13 @@ function App() {
     addCardToCollection: (cid, card) => setCollections(cs => cs.map(c => c.id === cid ? (c.cards.includes(card) ? c : { ...c, cards: [...c.cards, card] }) : c)),
     removeCardFromCollection: (cid, card) => setCollections(cs => cs.map(c => c.id === cid ? { ...c, cards: c.cards.filter(x => x !== card) } : c)),
     finishOnboarding: ({ acct, prefs }) => { if (acct) setAcct(acct); if (prefs && prefs.length) setPrefs(prefs); setOnboarded(true); },
+    // tradeable cards
+    tradeable,
+    isOpenToTrade: (cardId) => tradeable.includes(cardId),
+    toggleTradeable: (cardId) => setTradeable(t => {
+      if (t.includes(cardId)) { showToast('Removed from trade'); return t.filter(x => x !== cardId); }
+      showToast('Open to trade'); return [...t, cardId];
+    }),
   };
 
   // current view

@@ -3004,6 +3004,25 @@ const TRADE_POSTS = [
 ];
 const postById = (id) => TRADE_POSTS.find(p => p.id === id);
 
+const TRADE_LISTINGS = [
+  { id: 'tl01', cardId: 'l01', trader: 't1', dist: 1.9 },
+  { id: 'tl02', cardId: 'l06', trader: 't1', dist: 1.9 },
+  { id: 'tl03', cardId: 'l19', trader: 't1', dist: 1.9 },
+  { id: 'tl04', cardId: 'l12', trader: 't2', dist: 5.6 },
+  { id: 'tl05', cardId: 'l11', trader: 't2', dist: 5.6 },
+  { id: 'tl06', cardId: 'l04', trader: 't2', dist: 5.6 },
+  { id: 'tl07', cardId: 'l08', trader: 't3', dist: 1.0 },
+  { id: 'tl08', cardId: 'l10', trader: 't3', dist: 1.0 },
+  { id: 'tl09', cardId: 'l23', trader: 't3', dist: 1.0 },
+  { id: 'tl10', cardId: 'l05', trader: 't1', dist: 1.9 },
+  { id: 'tl11', cardId: 'l07', trader: 't2', dist: 5.6 },
+  { id: 'tl12', cardId: 'l24', trader: 't3', dist: 1.0 },
+  { id: 'tl13', cardId: 'l26', trader: 't1', dist: 1.9 },
+  { id: 'tl14', cardId: 'l33', trader: 't2', dist: 5.6 },
+  { id: 'tl15', cardId: 'l09', trader: 't3', dist: 1.0 },
+  { id: 'tl16', cardId: 'l28', trader: 't1', dist: 1.9 },
+];
+
 // ─────────────────────────────────────────────────────────────
 // PRODUCTS & OFFERS — product-based marketplace view
 // ─────────────────────────────────────────────────────────────
@@ -3277,7 +3296,7 @@ Object.assign(window, {
   GAMES, SETS, ART, GRADERS, gradeText, LISTINGS, LOTS, byId, setById, gameById,
   SHOP, SUBMISSION, SUB_CARDS, BULK_RATES, subStats, SCAN_POOL,
   SHOPS, TRADERS, OWNED_REFS, traderById, shopById,
-  TRADE_POSTS, postById, GAME_LOGOS,
+  TRADE_POSTS, postById, TRADE_LISTINGS, GAME_LOGOS,
   PRODUCTS, productById, offersForProduct, SELLERS, COND_SHORT, sellerByName, listingsBySeller,
   HOT_DEALS, PRICE_MOVERS, PRINTINGS, VARIANTS, demandForProduct, variantForProduct,
 });
