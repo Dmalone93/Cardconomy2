@@ -51,13 +51,10 @@ function ScanScreen({ app, params = {} }) {
     app.toast("Card ready to list");
   }
   function doAddToCollection() {
-    if (app.collections && app.collections.length > 0 && card) {
-      app.addCardToCollection(app.collections[0].id, card.id);
-      app.toast("Added to " + app.collections[0].name);
-    } else {
-      app.toast("No collection found");
+    if (card) {
+      app.nav.pop();
+      app.nav.push('add_card', { cardId: card.id });
     }
-    app.nav.pop();
   }
   function doPriceCheck() {
     app.nav.pop();

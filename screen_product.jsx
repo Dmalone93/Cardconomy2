@@ -354,6 +354,9 @@ function ProductScreen({ app, params }) {
             fontFamily: TP.sans, fontWeight: 700, fontSize: 14, color: 'var(--ink)',
             textAlign: 'center',
           }}>Add to want list</button>
+          <button onClick={() => app.nav.push('add_card', { cardId: product.offers[0].listingId || product.id })} style={{
+            width: '100%', padding: 12, borderRadius: 12, fontFamily: TP.sans, fontWeight: 700, fontSize: 14,
+            background: 'transparent', color: 'var(--ink)', border: '1.5px solid var(--line)', marginTop: 8 }}>I own this</button>
         </div>
       </div>
 

@@ -264,6 +264,9 @@ function ListingScreen({ app, params }) {
       {/* ═══ STICKY BOTTOM BAR — the only loud CTA ═══ */}
       <div style={{ flexShrink: 0, background: 'var(--surface)', borderTop: '1px solid var(--line-2)', padding: '10px 16px',
         display: 'flex', gap: 10, alignItems: 'center' }}>
+        <button onClick={() => app.nav.push('add_card', { cardId: item.id })} style={{
+          padding: '6px 12px', borderRadius: 8, background: 'transparent', color: 'var(--ink)',
+          fontFamily: TL.sans, fontWeight: 600, fontSize: 12, border: '1px solid var(--line)', flexShrink: 0 }}>I own this</button>
         {item.accepts_offers && (
           <button onClick={() => setSheet('offer')} style={{ flex: 1, background: 'transparent', color: 'var(--ink)', borderRadius: 12,
             padding: '13px 8px', fontFamily: TL.sans, fontWeight: 600, fontSize: 14, border: '1px solid var(--line)' }}>Make offer</button>
