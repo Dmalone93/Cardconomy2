@@ -390,7 +390,7 @@ function SideMenu({ app, open, onClose }) {
   const go = (fn) => { onClose(); setTimeout(fn, 60); };
   const quick = [
     ['Sell your cards', Icon.sell, () => go(() => app.nav.setTab('sell'))],
-    ['Trade with collectors', Icon.gavel, () => go(() => app.nav.push('trade'))],
+    ['Trade with collectors', Icon.gavel, () => go(() => app.nav.push('trade_browse'))],
     ['My buylist', Icon.tag, () => go(() => app.nav.push('buylist'))],
     ['Watching', Icon.heart, () => go(() => app.nav.setTab('watch'))],
     ['Find a local shop', Icon.shield, () => go(() => app.nav.push('shopfinder'))],

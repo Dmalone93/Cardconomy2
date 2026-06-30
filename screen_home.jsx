@@ -590,7 +590,7 @@ function HomeScreen({ app }) {
           {[
             { title: 'List from collection', desc: 'Multi-select, auto-price, list in seconds', bg: 'linear-gradient(135deg, #1a1a2e, #0f3460)', action: () => app.nav.setTab('watch') },
             { title: 'Sell to a local shop', desc: 'Walk cards in, walk out with cash', bg: 'linear-gradient(135deg, #1a2e1a, #2d5a3f)', action: () => app.nav.push('sellshop') },
-            { title: 'Trade card-for-card', desc: 'Swap with collectors near you', bg: 'linear-gradient(135deg, #1b2838, #3a5a8c)', action: () => app.nav.push('trade') },
+            { title: 'Trade card-for-card', desc: 'Swap with collectors near you', bg: 'linear-gradient(135deg, #1b2838, #3a5a8c)', action: () => app.nav.push('trade_browse') },
           ].map(c => (
             <button key={c.title} onClick={c.action} style={{ display: 'flex', alignItems: 'center', gap: 14,
               background: c.bg, borderRadius: 12, padding: '14px 16px', textAlign: 'left', border: 'none', cursor: 'pointer' }}>

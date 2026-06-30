@@ -238,7 +238,7 @@ function ListingScreen({ app, params }) {
                   <div style={{ fontFamily: TL.sans, fontWeight: 500, fontSize: 13, color: 'var(--ink)' }}>{t.trader} <span style={{ fontSize: 11, color: 'var(--faint)' }}>{t.traderRating}%</span></div>
                   <div style={{ fontFamily: TL.sans, fontSize: 11, color: 'var(--faint)' }}>Wants: {t.wantCard.name}</div>
                 </div>
-                <button onClick={() => app.nav.push('trade')} style={{
+                <button onClick={() => app.nav.push('trade_propose', { cardId: item.id, traderId: t.id || 't1' })} style={{
                   padding: '6px 12px', borderRadius: 8, background: 'transparent', color: 'var(--ink)',
                   fontFamily: TL.sans, fontWeight: 600, fontSize: 12, border: '1px solid var(--line)', flexShrink: 0 }}>Trade</button>
               </div>
