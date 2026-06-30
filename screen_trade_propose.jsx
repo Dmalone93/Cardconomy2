@@ -82,7 +82,10 @@ function TradePropose({ app, params = {} }) {
 
           {/* your offer */}
           <div style={{ padding: '4px 16px 12px' }}>
-            <div style={{ fontFamily: TP.sans, fontSize: 11, fontWeight: 700, color: 'var(--ink)', letterSpacing: 0.5, marginBottom: 10 }}>YOUR OFFER</div>
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 10 }}>
+              <div style={{ fontFamily: TP.sans, fontSize: 11, fontWeight: 700, color: 'var(--ink)', letterSpacing: 0.5 }}>YOUR OFFER</div>
+              <div style={{ fontFamily: TP.sans, fontSize: 11, color: TP.muted }}>Tap cards to select</div>
+            </div>
             <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 4, WebkitOverflowScrolling: 'touch' }}>
               {tradeableFirst.map(id => {
                 const c = byIdP(id);
@@ -91,13 +94,13 @@ function TradePropose({ app, params = {} }) {
                 const isTradeable = app.isOpenToTrade(id);
                 return (
                   <button key={id} onClick={() => toggleCard(id)} style={{ flexShrink: 0, width: 90, textAlign: 'left', position: 'relative' }}>
-                    <div style={{ background: TP.surface2, borderRadius: 10, padding: 6, display: 'flex', justifyContent: 'center', position: 'relative',
-                      border: isSel ? '2px solid var(--accent)' : '2px solid transparent' }}>
+                    <div style={{ background: isSel ? 'var(--accent-wash)' : TP.surface2, borderRadius: 10, padding: 6, display: 'flex', justifyContent: 'center', position: 'relative',
+                      border: isSel ? '2px solid var(--accent)' : '2px solid var(--line)' }}>
                       <CardArtP item={c} w={68} radius={6} />
-                      {isSel && (
-                        <span style={{ position: 'absolute', top: 4, right: 4, width: 20, height: 20, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center',
-                          background: 'var(--accent)', color: '#fff', fontSize: 13, fontWeight: 700, boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }}>{'\u2713'}</span>
-                      )}
+                      <span style={{ position: 'absolute', top: 4, right: 4, width: 20, height: 20, borderRadius: 999, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        background: isSel ? 'var(--accent)' : 'rgba(255,255,255,0.9)', color: isSel ? '#fff' : TP.muted,
+                        fontSize: 13, fontWeight: 700, boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                        border: isSel ? 'none' : '1.5px solid var(--line)' }}>{isSel ? '\u2713' : '+'}</span>
                       {isTradeable && !isSel && (
                         <span style={{ position: 'absolute', top: 4, left: 4, fontSize: 9, fontWeight: 700, fontFamily: TP.sans,
                           background: 'var(--accent-wash)', color: 'var(--accent)', padding: '1px 5px', borderRadius: 4 }}>Trade</span>
