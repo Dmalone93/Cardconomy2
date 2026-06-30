@@ -10,15 +10,25 @@ const IconD = {
   gear: (p = {}) => <svg width={p.w || 20} height={p.w || 20} viewBox="0 0 24 24" fill="none" {...p}><circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" stroke="currentColor" strokeWidth="2"/></svg>,
 };
 
-// value helpers for a set of card ids
-function valueOf(ids) {
-  const cards = ids.map(id => byIdW(id)).filter(Boolean);
-  const now = cards.reduce((s, c) => s + (c.market || c.price || 0), 0);
-  const then = cards.reduce((s, c) => s + (c.history ? c.history[0] : (c.market || c.price || 0)), 0);
-  const series = cards[0] && cards[0].history
-    ? cards[0].history.map((_, i) => cards.reduce((s, c) => s + (c.history ? c.history[i] : (c.market || c.price || 0)), 0))
+// value helpers for a set of card ids (supports both old listing IDs and new oc_ owned card IDs)
+function valueOf(ocIds, appRef) {
+  var entries = ocIds.map(function(ocId) {
+    var oc = appRef ? appRef.getOwnedCard(ocId) : null;
+    if (!oc) {
+      var card = byIdW(ocId);
+      return card ? { market: card.market || card.price || 0, history: card.history } : null;
+    }
+    var card = byIdW(oc.cardId);
+    var mv = window.marketValue ? window.marketValue(oc) : (card ? card.market || card.price || 0 : 0);
+    return { market: mv, history: card ? card.history : null, oc: oc, card: card };
+  }).filter(Boolean);
+  var now = entries.reduce(function(s, e) { return s + e.market; }, 0);
+  var then = entries.reduce(function(s, e) { return s + (e.history ? e.history[0] * (e.market / (e.card ? e.card.market || e.card.price || 1 : 1)) : e.market); }, 0);
+  var series = entries[0] && entries[0].history
+    ? entries[0].history.map(function(_, i) { return entries.reduce(function(s, e) { return s + (e.history ? e.history[i] * (e.market / (e.card ? e.card.market || e.card.price || 1 : 1)) : e.market); }, 0); })
     : [];
-  return { cards, now, then, series };
+  var cards = entries.map(function(e) { return e.card || e; }).filter(Boolean);
+  return { cards: cards, entries: entries, now: now, then: then, series: series };
 }
 
 function WatchScreen({ app }) {
@@ -28,7 +38,8 @@ function WatchScreen({ app }) {
   const [selected, setSelected] = React.useState([]);
 
   // overall portfolio = union of all collection cards
-  const port = valueOf(app.ownedIds());
+  const port = valueOf(app.ownedIds(), app);
+  const pv = app.portfolioValue ? app.portfolioValue() : { total: port.now, costBasis: 0, pnl: 0 };
 
   function toggleSel(id) {
     setSelected(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
@@ -117,17 +128,19 @@ function WatchScreen({ app }) {
             <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff', marginBottom: 16 }}>
               <div style={{ fontFamily: TW.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Total portfolio value</div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginTop: 4 }}>
-                <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 30, letterSpacing: -0.5 }}>{moneyW(port.now)}</span>
-                <DeltaW from={port.then} to={port.now} style={{ fontSize: 13, color: port.now>=port.then?'#7fe7a4':'#ff9b8a' }} />
+                <span style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 30, letterSpacing: -0.5 }}>{moneyW(pv.total || port.now)}</span>
+                <DeltaW from={port.then} to={pv.total || port.now} style={{ fontSize: 13, color: (pv.total || port.now)>=port.then?'#7fe7a4':'#ff9b8a' }} />
               </div>
+              {pv.costBasis > 0 && (
+                <div style={{ fontFamily: TW.sans, fontSize: 11.5, opacity: 0.7, marginTop: 2 }}>
+                  {'Cost basis: ' + moneyW(pv.costBasis) + ' \u00b7 P&L: ' + (pv.pnl >= 0 ? '+' : '') + moneyW(pv.pnl)}
+                </div>
+              )}
               <div style={{ marginTop: 12, marginLeft: -4 }}>
-                <SparkW data={port.series} w={320} h={56} up={port.now>=port.then} dots />
-              </div>
-              <div style={{ marginTop: 6, fontFamily: TW.sans, fontWeight: 700, fontSize: 13, color: port.now >= port.then ? '#7fe7a4' : '#ff9b8a' }}>
-                +12.4% this month
+                <SparkW data={port.series} w={320} h={56} up={(pv.total || port.now)>=port.then} dots />
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8, fontFamily: TW.sans, fontSize: 11.5, opacity: 0.7 }}>
-                <span>{app.ownedIds().length} cards · {app.collections.length} collections</span><span>Updated just now</span>
+                <span>{app.ownedIds().length} cards \u00b7 {app.collections.length} collections</span><span>Updated just now</span>
               </div>
             </div>
 
@@ -141,7 +154,7 @@ function WatchScreen({ app }) {
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {app.collections.map(col => {
-                const v = valueOf(col.cards);
+                const v = valueOf(col.cards, app);
                 return (
                   <button key={col.id} onClick={() => app.nav.push('collection', { cid: col.id })} style={{ width: '100%', textAlign: 'left',
                     background: TW.surface, borderRadius: 16, padding: 14, display: 'flex', gap: 13, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -319,7 +332,7 @@ function MiniSpark({ data, color, w, h }) {
 
 // ── Seller Dashboard (existing content, extracted) ───────────
 function SellerDash({ app, header }) {
-  const port = valueOf(app.ownedIds());
+  const port = valueOf(app.ownedIds(), app);
   const ACTIVITY = [
     ['#22c55e', 'Sold Charizard ex for £38.50', '2h ago'],
     ['#3b82f6', 'New offer on Ragavan', '4h ago'],
@@ -406,7 +419,7 @@ function SellerDash({ app, header }) {
 
 // ── Buyer / Collector Dashboard ──────────────────────────────
 function BuyerDash({ app, header }) {
-  const port = valueOf(app.ownedIds());
+  const port = valueOf(app.ownedIds(), app);
   const sparkData = port.series.length > 2 ? port.series : [1800, 1950, 2100, 2200, 2150, 2350, 2480];
   const watched = app.watch.map(function(id) { return byIdW(id); }).filter(Boolean).slice(0, 4);
 
@@ -776,7 +789,7 @@ function CollectionDetailScreen({ app, params }) {
   }
   function exitSelect() { setSelectMode(false); setSelected([]); }
 
-  const v = valueOf(col.cards);
+  const v = valueOf(col.cards, app);
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
       {/* header (back chevron -- pushed screen) */}
@@ -828,15 +841,20 @@ function CollectionDetailScreen({ app, params }) {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {v.cards.map(item => {
-              const currentVal = item.market || item.price;
-              const purchaseVal = item.history ? item.history[0] : currentVal;
-              const gainAbs = currentVal - purchaseVal;
-              const gainPct = purchaseVal > 0 ? ((gainAbs / purchaseVal) * 100).toFixed(0) : 0;
-              const gainUp = gainAbs >= 0;
-              const isSel = selected.includes(item.id);
+            {col.cards.map(function(ocId) {
+              var oc = app.getOwnedCard ? app.getOwnedCard(ocId) : null;
+              var item = oc ? byIdW(oc.cardId) : byIdW(ocId);
+              if (!item) return null;
+              var currentVal = oc && window.marketValue ? window.marketValue(oc) : (item.market || item.price);
+              var purchaseVal = oc && oc.paidPrice != null ? oc.paidPrice : currentVal;
+              var gainAbs = currentVal - purchaseVal;
+              var gainPct = purchaseVal > 0 ? ((gainAbs / purchaseVal) * 100).toFixed(0) : 0;
+              var gainUp = gainAbs >= 0;
+              var condLabel = oc ? (oc.condition === 'graded' ? (oc.gradedCompany || '').toUpperCase() + ' ' + oc.gradedScore : 'Raw ' + (oc.rawGrade || 'NM')) : '';
+              var isSel = selected.includes(ocId);
+              var itemKey = ocId || item.id;
               return selectMode ? (
-                <button key={item.id} onClick={() => toggleSel(item.id)} style={{
+                <button key={itemKey} onClick={function() { toggleSel(ocId); }} style={{
                   width: '100%', textAlign: 'left', position: 'relative',
                   background: TW.surface, borderRadius: 14, padding: 10, display: 'flex', gap: 12, alignItems: 'center',
                   boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
@@ -855,19 +873,25 @@ function CollectionDetailScreen({ app, params }) {
                   <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={44} radius={6} /></div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} {'·'} <GradeInline grade={item.grade} /></div>
+                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>
+                      {setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')}
+                      {condLabel ? ' \u00b7 ' + condLabel : ''}
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', minWidth: 58 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(currentVal)}</div>
                   </div>
                 </button>
               ) : (
-              <div key={item.id} style={{ background: TW.surface, borderRadius: 14, padding: 10, display: 'flex', gap: 12, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <button onClick={() => app.nav.push('listing', { id: item.id })} style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, minWidth: 0, textAlign: 'left' }}>
+              <div key={itemKey} style={{ background: TW.surface, borderRadius: 14, padding: 10, display: 'flex', gap: 12, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                <button onClick={function() { app.nav.push('listing', { id: item.id }); }} style={{ display: 'flex', gap: 12, alignItems: 'center', flex: 1, minWidth: 0, textAlign: 'left' }}>
                   <div style={{ background: TW.surface2, borderRadius: 9, padding: 6 }}><CardArtW item={item} w={44} radius={6} /></div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>{setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')} {'·'} <GradeInline grade={item.grade} /></div>
+                    <div style={{ fontFamily: TW.sans, fontSize: 11.5, color: TW.muted }}>
+                      {setByIdW(item.set)?.name?.replace(/\s*\(.*\)/,'')}
+                      {condLabel ? ' \u00b7 ' + condLabel : ''}
+                    </div>
                   </div>
                   <div style={{ textAlign: 'right', minWidth: 58 }}>
                     <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>{moneyW(currentVal)}</div>
@@ -877,14 +901,14 @@ function CollectionDetailScreen({ app, params }) {
                     </div>}
                   </div>
                 </button>
-                <button onClick={(e) => { e.stopPropagation(); app.toggleTradeable(item.id); }}
+                <button onClick={function(e) { e.stopPropagation(); app.toggleTradeable(ocId); }}
                   style={{ padding: '5px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, fontFamily: TW.sans, flexShrink: 0,
-                    background: app.isOpenToTrade(item.id) ? 'var(--accent-wash)' : TW.surface2,
-                    color: app.isOpenToTrade(item.id) ? 'var(--accent)' : TW.muted,
-                    border: app.isOpenToTrade(item.id) ? '1px solid var(--accent)' : '1px solid var(--line)' }}>
-                  {app.isOpenToTrade(item.id) ? '\u2713 Trading' : 'Trade'}
+                    background: app.isOpenToTrade(ocId) ? 'var(--accent-wash)' : TW.surface2,
+                    color: app.isOpenToTrade(ocId) ? 'var(--accent)' : TW.muted,
+                    border: app.isOpenToTrade(ocId) ? '1px solid var(--accent)' : '1px solid var(--line)' }}>
+                  {app.isOpenToTrade(ocId) ? '\u2713 Trading' : 'Trade'}
                 </button>
-                <button onClick={() => app.removeCardFromCollection(col.id, item.id)} style={{ color: TW.faint, padding: 4, flexShrink: 0 }}>{IconW.trash({ width: 18, height: 18 })}</button>
+                <button onClick={function() { app.removeOwnedCard ? app.removeOwnedCard(ocId) : app.removeCardFromCollection(col.id, ocId); }} style={{ color: TW.faint, padding: 4, flexShrink: 0 }}>{IconW.trash({ width: 18, height: 18 })}</button>
               </div>
               );
             })}
@@ -930,36 +954,11 @@ function CollectionDetailScreen({ app, params }) {
 
 // ── sheet: add cards to a collection ─────────────────────────
 function AddCardsSheet({ app, col, onClose }) {
-  if (!window.Sheet) return null;
-  // candidates: everything except what's already in this collection
-  const candidates = LISTINGS_W.filter(l => !col.cards.includes(l.id));
-  return (
-    <window.Sheet open={true} onClose={onClose} title={'Add to ' + col.name}>
-      <button onClick={() => { onClose(); app.nav.push('scan', { from: 'collection' }); }} style={{
-        width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-        padding: '12px 14px', background: 'var(--fill)', color: '#fff', borderRadius: 10,
-        fontFamily: TW.sans, fontWeight: 700, fontSize: 14, marginBottom: 12,
-      }}>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/></svg>
-        Scan a card
-      </button>
-      <p style={{ fontFamily: TW.sans, fontSize: 13, color: TW.muted, margin: '0 0 12px' }}>Or tap a card you own to add it to this collection.</p>
-      <div className="noscroll" style={{ maxHeight: 360, overflow: 'auto', display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {candidates.map(item => (
-          <button key={item.id} onClick={() => { app.addCardToCollection(col.id, item.id); app.toast('Added to ' + col.name); }}
-            style={{ width: '100%', textAlign: 'left', background: TW.surface2, borderRadius: 12, padding: 9, display: 'flex', gap: 11, alignItems: 'center' }}>
-            <div style={{ background: TW.surface, borderRadius: 8, padding: 5 }}><CardArtW item={item} w={38} radius={5} /></div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontFamily: TW.sans, fontWeight: 700, fontSize: 13.5, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.name}</div>
-              <div style={{ fontFamily: TW.sans, fontSize: 11, color: TW.muted }}>{moneyW(item.market || item.price)} · <GradeInline grade={item.grade} /></div>
-            </div>
-            <span style={{ color: 'var(--ink)', flexShrink: 0 }}>{IconW.plus({ width: 19, height: 19 })}</span>
-          </button>
-        ))}
-      </div>
-      <button onClick={onClose} style={{ width: '100%', marginTop: 14, background: TW.ink, color: '#fff', borderRadius: 13, padding: 14, fontFamily: TW.sans, fontWeight: 700, fontSize: 15 }}>Done</button>
-    </window.Sheet>
-  );
+  React.useEffect(function() {
+    onClose();
+    app.nav.push('add_card', { collectionId: col.id });
+  }, []);
+  return null;
 }
 
 Object.assign(window, { WatchScreen, DashboardScreen, SettingsScreen, EmptyState, CollectionDetailScreen });
