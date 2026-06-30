@@ -7,6 +7,7 @@ const { HomeScreen, SearchScreen, ListingScreen, SellScreen, CheckoutScreen, Wat
 const { BuylistScreen, PurchasesScreen, SellingScreen, OffersScreen, PaymentsScreen, NotificationsScreen } = window;
 const { CollectionDetailScreen } = window;
 const { TradeScreen, StorefrontScreen, EnrollShopScreen, ShopFinderScreen } = window;
+const { TradeBrowseScreen } = window;
 const { CartScreen } = window;
 const { ProductScreen } = window;
 const { SellerScreen } = window;
@@ -37,7 +38,7 @@ const SCREENS = {
   sellshop: SellShopScreen, shop: ShopScreen,
   buylist: BuylistScreen, purchases: PurchasesScreen, selling: SellingScreen,
   offers: OffersScreen, payments: PaymentsScreen, notifications: NotificationsScreen,
-  trade: TradeScreen, storefront: StorefrontScreen, enroll_shop: EnrollShopScreen, shopfinder: ShopFinderScreen,
+  trade: TradeScreen, trade_browse: TradeBrowseScreen, storefront: StorefrontScreen, enroll_shop: EnrollShopScreen, shopfinder: ShopFinderScreen,
   cart: CartScreen,
   verify: VerifyScreen,
   authcard: AuthCardScreen,
