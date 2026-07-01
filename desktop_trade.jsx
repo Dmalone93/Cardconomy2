@@ -119,7 +119,7 @@ function DStorefront({ app, params = {} }) {
         </div>
         <p style={{ fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.5, maxWidth: 640, margin: '0 0 24px' }}>{shop.blurb}</p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 36 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 14, marginBottom: 36 }}>
           {[shop.enrolled && ['Buylist intake', 'Sell your stack here'], shop.tradeHub && ['Trade hub', 'Swap on neutral ground'], shop.vault && ['Local vault', 'Store & trade graded cards'], shop.events && ['Events', 'Tournaments & trade nights']].filter(Boolean).map(([t, s], i) => (
             <div key={i} style={{ background: 'var(--surface)', borderRadius: 14, padding: 18, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}><div style={{ fontWeight: 700, fontSize: 15 }}>{t}</div><div style={{ fontSize: 12.5, color: 'var(--muted)', marginTop: 3 }}>{s}</div></div>
           ))}
@@ -184,7 +184,7 @@ function DShopDash({ app }) {
         <div><h1 style={{ fontFamily: TTr.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.8, margin: 0 }}>{SUB_D.seller.name} · #{SUB_D.id}</h1><div style={{ fontSize: 13.5, color: 'var(--muted)', marginTop: 2 }}>{SUB_D.total.toLocaleString()} cards · ticket #{SUB_D.ticket}</div></div>
         <button onClick={() => app.toast('Offer sent to ' + SUB_D.seller.name + ' for review')} style={{ background: 'var(--ink)', color: '#fff', borderRadius: 11, padding: '13px 26px', fontWeight: 700, fontSize: 15 }}>Build offer →</button>
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 24 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 14, marginBottom: 24 }}>
         {[['Total cards', SUB_D.total.toLocaleString(), false], ['Est. market', m0Tr(stats.estMarket), false], ['On your buylist', stats.buylistCount, 'gold'], ['Buylist payout', m0Tr(buylistPayout), 'accent']].map(([k, v, hl], i) => (
           <div key={i} style={{ background: hl === 'gold' ? 'var(--accent-wash)' : 'var(--surface)', borderRadius: 14, padding: '16px 18px', boxShadow: hl === 'gold' ? 'inset 0 0 0 1.5px var(--gold)' : hl === 'accent' ? 'inset 0 0 0 1.5px var(--accent)' : '0 1px 3px rgba(20,24,40,0.05)' }}>
             <div style={{ fontSize: 12, color: 'var(--muted)', fontWeight: 600 }}>{k}</div><div style={{ fontFamily: TTr.mono, fontWeight: 700, fontSize: 24, color: hl === 'accent' ? 'var(--accent)' : 'var(--ink)' }}>{v}</div>

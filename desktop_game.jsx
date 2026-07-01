@@ -13,6 +13,12 @@ const SET_BANNERS_G = {
     { img: 'sets/pkmn/ascended-heroes-ptcg-thumb.webp',  set: 'cpa',  label: 'Ascended Heroes' },
     { img: 'sets/pkmn/scarlet-violet.jpeg',              set: 'base', label: 'Scarlet & Violet' },
   ],
+  mtg: [
+    { img: 'sets/mtg/ECL_sma_key_1920x1080_en.jpg',          set: 'mh3', label: 'Lorwyn Eclipsed' },
+    { img: 'sets/mtg/HOB-1710_JDBCVHKLWUE_VarA_1080x1080.jpg', set: 'mh3', label: 'The Hobbit' },
+    { img: 'sets/mtg/TMT_sma_key_1000x1000.jpg',              set: 'mh3', label: 'The Moonlit Trail' },
+    { img: 'sets/mtg/FRA-1313-EN-1080x1080.png',              set: 'mh3', label: 'Foundations Remastered' },
+  ],
   lor: [
     { img: 'sets/op/aceluffy.webp',                      set: 'op07', label: 'Romance Dawn' },
     { img: 'sets/op/two-legends.webp',                   set: 'op08', label: 'Two Legends' },
@@ -268,7 +274,8 @@ function DProductGrid({ listings, app, viewMode }) {
     );
   }
   return React.createElement('div', { style: {
-    display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12,
+    display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 12,
+    maxWidth: '100%', overflow: 'hidden',
   }},
     listings.map(function(l) {
       return React.createElement(DProductCard, { key: l.id, item: l, app: app });

@@ -232,7 +232,7 @@ function DSearch({ app, params = {} }) {
               return React.createElement(DProductCardS, { key: l.id, item: l, app: app });
             })
           )
-        : React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 } },
+        : React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, minmax(0, 1fr))', gap: 12, maxWidth: '100%', overflow: 'hidden' } },
             res.map(function(l) {
               return React.createElement(DProductCardS, { key: l.id, item: l, app: app });
             })
