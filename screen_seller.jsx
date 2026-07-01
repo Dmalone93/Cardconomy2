@@ -3,10 +3,13 @@
 // ─────────────────────────────────────────────────────────────
 const { T: TS, money: moneyS, CardArt: CardArtS, Icon: IconS } = window;
 const { sellerByName: sellerByNameS, listingsBySeller: listingsBySellerS, gameById: gameByIdS, setById: setByIdS } = window;
+const { GAMES: GAMES_S } = window;
 
 function SellerScreen({ app, params = {} }) {
   const seller = sellerByNameS(params.name);
   const [tab, setTab] = React.useState('listings');
+  const [gameFilter, setGameFilter] = React.useState('all');
+  const [sortBy, setSortBy] = React.useState('popular');
 
   if (!seller) return (
     <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 32 }}>
@@ -44,6 +47,11 @@ function SellerScreen({ app, params = {} }) {
             <div style={{ display: 'flex', justifyContent: 'center', gap: 6, marginTop: 10 }}>
               {isTrusted && <span style={{ background: 'rgba(255,255,255,0.15)', padding: '3px 10px', borderRadius: 4, fontFamily: TS.sans, fontWeight: 700, fontSize: 10 }}>Trusted</span>}
               {isFastShipper && <span style={{ background: 'rgba(255,255,255,0.15)', padding: '3px 10px', borderRadius: 4, fontFamily: TS.sans, fontWeight: 700, fontSize: 10 }}>Fast Shipper</span>}
+            </div>
+          )}
+          {seller.freeShipMin && (
+            <div style={{ marginTop: 8, fontSize: 12, color: 'rgba(255,255,255,0.8)' }}>
+              Free shipping over {'\u00A3'}{seller.freeShipMin}
             </div>
           )}
         </div>
@@ -104,25 +112,81 @@ function SellerScreen({ app, params = {} }) {
 
         {/* tab content */}
         {tab === 'listings' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 11, padding: 16 }}>
-            {listings.map(l => (
-              <button key={l.id} onClick={() => { const prod = window.PRODUCTS.find(p => p.offers.some(o => o.listingId === l.id)); app.nav.push(prod ? 'product' : 'listing', { id: prod ? prod.id : l.id }); }}
-                style={{ textAlign: 'left', background: TS.surface, borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
-                <div style={{ padding: '12px 12px 6px', display: 'flex', justifyContent: 'center' }}>
-                  <CardArtS item={l} w={86} />
+          <div style={{ padding: 16 }}>
+            {/* Game filter tabs */}
+            {(() => {
+              const gameCounts = {};
+              listings.forEach(l => {
+                if (l.game) gameCounts[l.game] = (gameCounts[l.game] || 0) + 1;
+              });
+              const gameIds = Object.keys(gameCounts);
+              if (gameIds.length <= 1) return null;
+              return (
+                <div style={{ display: 'flex', gap: 6, overflowX: 'auto', marginBottom: 14, paddingBottom: 2 }}>
+                  <button onClick={() => setGameFilter('all')} style={{
+                    padding: '6px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, flexShrink: 0,
+                    background: gameFilter === 'all' ? 'var(--ink)' : 'var(--surface)',
+                    color: gameFilter === 'all' ? '#fff' : 'var(--ink)',
+                    border: gameFilter === 'all' ? 'none' : '1px solid var(--line)',
+                  }}>All ({listings.length})</button>
+                  {gameIds.map(gid => {
+                    const gm = gameByIdS(gid);
+                    const active = gameFilter === gid;
+                    return (
+                      <button key={gid} onClick={() => setGameFilter(active ? 'all' : gid)} style={{
+                        padding: '6px 12px', borderRadius: 8, fontSize: 12, fontWeight: 600, flexShrink: 0,
+                        background: active ? 'var(--ink)' : 'var(--surface)',
+                        color: active ? '#fff' : 'var(--ink)',
+                        border: active ? 'none' : '1px solid var(--line)',
+                      }}>{gm ? gm.short : gid} ({gameCounts[gid]})</button>
+                    );
+                  })}
                 </div>
-                <div style={{ padding: '8px 11px 11px' }}>
-                  <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
-                  <div style={{ fontFamily: TS.sans, fontSize: 10, color: TS.muted, marginTop: 1 }}>{l.condition}{l.foil ? ' · Foil' : ''}</div>
-                  <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 14, marginTop: 3 }}>{moneyS(l.price)}</div>
+              );
+            })()}
+
+            {/* Sort */}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: 12 }}>
+              <select value={sortBy} onChange={e => setSortBy(e.target.value)} style={{
+                padding: '6px 10px', borderRadius: 8, fontSize: 12, fontWeight: 600,
+                background: 'var(--surface)', color: 'var(--ink)', border: '1px solid var(--line)',
+                fontFamily: TS.sans,
+              }}>
+                <option value="popular">Popular</option>
+                <option value="price_asc">Price: low \u2192 high</option>
+                <option value="price_desc">Price: high \u2192 low</option>
+              </select>
+            </div>
+
+            {/* Grid */}
+            {(() => {
+              let filtered = gameFilter === 'all' ? listings : listings.filter(l => l.game === gameFilter);
+              if (sortBy === 'popular') filtered = [...filtered].sort((a, b) => (b.watchers || 0) - (a.watchers || 0));
+              else if (sortBy === 'price_asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
+              else if (sortBy === 'price_desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
+              return (
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 11 }}>
+                  {filtered.map(l => (
+                    <button key={l.id} onClick={() => { const prod = window.PRODUCTS.find(p => p.offers.some(o => o.listingId === l.id)); app.nav.push(prod ? 'product' : 'listing', { id: prod ? prod.id : l.id }); }}
+                      style={{ textAlign: 'left', background: TS.surface, borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
+                      <div style={{ padding: '12px 12px 6px', display: 'flex', justifyContent: 'center' }}>
+                        <CardArtS item={l} w={86} />
+                      </div>
+                      <div style={{ padding: '8px 11px 11px' }}>
+                        <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
+                        <div style={{ fontFamily: TS.sans, fontSize: 10, color: TS.muted, marginTop: 1 }}>{l.condition}{l.foil ? ' \u00B7 Foil' : ''}</div>
+                        <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 14, marginTop: 3 }}>{moneyS(l.price)}</div>
+                      </div>
+                    </button>
+                  ))}
+                  {filtered.length === 0 && (
+                    <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: 40, color: TS.faint, fontFamily: TS.sans, fontSize: 13 }}>
+                      No listings in this category
+                    </div>
+                  )}
                 </div>
-              </button>
-            ))}
-            {listings.length === 0 && (
-              <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: 40, color: TS.faint, fontFamily: TS.sans, fontSize: 13 }}>
-                No listings available right now
-              </div>
-            )}
+              );
+            })()}
           </div>
         )}
 
