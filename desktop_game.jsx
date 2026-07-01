@@ -22,6 +22,14 @@ const SET_BANNERS_G = {
     { img: 'sets/mtg/TLA_sma_key_1000x1000_EN_2.jpg',             set: 'mh3', label: 'Avatar: The Last Airbender' },
     { img: 'sets/mtg/MTGSOS_sma_key_1080x1080_en.jpg',            set: 'mh3', label: 'Secrets of Strixhaven' },
   ],
+  ygo: [
+    { img: 'sets/ygo/TCG_MZMU_FEATURE-BANNER.webp',           set: 'ann25', label: 'Maze of Millennia' },
+    { img: 'sets/ygo/NEWS_TITLE-SECTION_V2.webp',             set: 'ann25', label: 'Yu-Gi-Oh! Classics' },
+    { img: 'sets/ygo/036-768x768.jpg',                        set: 'ann25', label: 'Red Dragon Archfiend' },
+    { img: 'sets/ygo/USY_22976_1-768x768.webp',               set: 'ann25', label: 'Dark Magician Girl' },
+    { img: 'sets/ygo/Y_22209_1-768x768.webp',                 set: 'ann25', label: 'Dark Magician' },
+    { img: 'sets/ygo/DL-9th_Anni_News_Banner.webp',           set: 'ann25', label: 'Duel Links 9th Anniversary' },
+  ],
   lor: [
     { img: 'sets/op/aceluffy.webp',                      set: 'op07', label: 'Romance Dawn' },
     { img: 'sets/op/two-legends.webp',                   set: 'op08', label: 'Two Legends' },
