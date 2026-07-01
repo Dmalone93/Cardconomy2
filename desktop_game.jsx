@@ -115,62 +115,97 @@ function DHeroCarousel({ banners, app }) {
   );
 }
 
-// ── Horizontal filter bar ─────────────────────────────────────
-function DFilterBar({ sets, setFilter, condFilter, onSetChange, onCondChange, onClear }) {
-  var hasActive = setFilter !== 'all' || condFilter !== 'all';
-  return React.createElement('div', { style: { display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8 } },
+// ── TCGplayer-style filter bar ────────────────────────────────
+// Shared select style
+var filterSelectStyle = function(active) {
+  return {
+    padding: '8px 14px', borderRadius: 999, fontSize: 13, fontWeight: 600,
+    background: '#fff', color: 'var(--ink)',
+    border: '1px solid var(--line)', cursor: 'pointer',
+    appearance: 'none', WebkitAppearance: 'none',
+    paddingRight: 28,
+    backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'10\' height=\'6\' viewBox=\'0 0 10 6\' fill=\'none\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M1 1l4 4 4-4\' stroke=\'%2371757e\' stroke-width=\'1.5\' stroke-linecap=\'round\' stroke-linejoin=\'round\'/%3E%3C/svg%3E")',
+    backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center',
+  };
+};
+var filterPillStyle = {
+  display: 'inline-flex', alignItems: 'center', gap: 6,
+  background: '#fff', color: 'var(--accent)',
+  borderRadius: 999, padding: '8px 14px', fontSize: 13, fontWeight: 600,
+  border: '2px solid var(--accent)',
+};
+
+function DFilterBar({ sets, setFilter, condFilter, gameName, onSetChange, onCondChange, onClear }) {
+  var activeCount = (setFilter !== 'all' ? 1 : 0) + (condFilter !== 'all' ? 1 : 0);
+  return React.createElement('div', { style: {
+    display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap',
+    padding: '12px 0', borderBottom: '1px solid var(--line)',
+  }},
+    // All Filters button with count badge
+    React.createElement('button', { style: {
+      display: 'inline-flex', alignItems: 'center', gap: 6,
+      padding: '8px 14px', borderRadius: 999, fontSize: 13, fontWeight: 700,
+      background: activeCount > 0 ? 'var(--ink)' : '#fff',
+      color: activeCount > 0 ? '#fff' : 'var(--ink)',
+      border: '1px solid var(--line)', cursor: 'pointer',
+    }},
+      'All Filters',
+      activeCount > 0 && React.createElement('span', { style: {
+        background: '#fff', color: 'var(--ink)', borderRadius: 999,
+        minWidth: 18, height: 18, display: 'inline-flex', alignItems: 'center',
+        justifyContent: 'center', fontSize: 11, fontWeight: 700,
+      }}, activeCount)
+    ),
     // Condition dropdown
     React.createElement('select', {
       value: condFilter,
       onChange: function(e) { onCondChange(e.target.value); },
-      style: {
-        padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
-        background: condFilter !== 'all' ? 'var(--ink)' : 'var(--surface)',
-        color: condFilter !== 'all' ? '#fff' : 'var(--ink)',
-        border: '1px solid var(--line)', cursor: 'pointer',
-      },
+      style: filterSelectStyle(condFilter !== 'all'),
     },
-      React.createElement('option', { value: 'all' }, 'Condition \u25be'),
+      React.createElement('option', { value: 'all' }, 'Condition'),
       React.createElement('option', { value: 'raw' }, 'Raw / Ungraded'),
-      React.createElement('option', { value: 'graded' }, 'Graded only')
+      React.createElement('option', { value: 'graded' }, 'Graded only'),
+      React.createElement('option', { value: 'psa10' }, 'PSA 10')
+    ),
+    // Active game pill (always shown if on a game page)
+    gameName && React.createElement('span', { style: filterPillStyle },
+      gameName,
+      React.createElement('button', {
+        onClick: function() { onClear(); },
+        style: { color: 'var(--accent)', fontSize: 16, lineHeight: 1, fontWeight: 700, marginLeft: 2 },
+      }, '\u00D7')
     ),
     // Set dropdown
     sets && sets.length > 0 && React.createElement('select', {
       value: setFilter,
       onChange: function(e) { onSetChange(e.target.value); },
-      style: {
-        padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
-        background: setFilter !== 'all' ? 'var(--ink)' : 'var(--surface)',
-        color: setFilter !== 'all' ? '#fff' : 'var(--ink)',
-        border: '1px solid var(--line)', cursor: 'pointer',
-      },
+      style: filterSelectStyle(setFilter !== 'all'),
     },
-      React.createElement('option', { value: 'all' }, 'Set \u25be'),
+      React.createElement('option', { value: 'all' }, 'Set'),
       sets.map(function(s) {
         return React.createElement('option', { key: s.id, value: s.id }, s.name.replace(/\s*\(.*\)/, ''));
       })
     ),
-    // active filter pills
-    setFilter !== 'all' && React.createElement('span', { style: {
-      display: 'inline-flex', alignItems: 'center', gap: 5,
-      background: 'var(--accent-wash)', color: 'var(--ink)',
-      borderRadius: 999, padding: '5px 10px', fontSize: 12, fontWeight: 600,
-    }},
+    // Set pill if active
+    setFilter !== 'all' && React.createElement('span', { style: filterPillStyle },
       (setByIdG(setFilter) ? setByIdG(setFilter).name.replace(/\s*\(.*\)/, '') : setFilter),
-      React.createElement('button', { onClick: function() { onSetChange('all'); }, style: { color: 'var(--ink)', fontSize: 14, lineHeight: 1, opacity: 0.7 } }, '\u00D7')
+      React.createElement('button', {
+        onClick: function() { onSetChange('all'); },
+        style: { color: 'var(--accent)', fontSize: 16, lineHeight: 1, fontWeight: 700, marginLeft: 2 },
+      }, '\u00D7')
     ),
-    condFilter !== 'all' && React.createElement('span', { style: {
-      display: 'inline-flex', alignItems: 'center', gap: 5,
-      background: 'var(--accent-wash)', color: 'var(--ink)',
-      borderRadius: 999, padding: '5px 10px', fontSize: 12, fontWeight: 600,
-    }},
-      condFilter === 'raw' ? 'Raw / Ungraded' : 'Graded only',
-      React.createElement('button', { onClick: function() { onCondChange('all'); }, style: { color: 'var(--ink)', fontSize: 14, lineHeight: 1, opacity: 0.7 } }, '\u00D7')
+    // Condition pill if active
+    condFilter !== 'all' && React.createElement('span', { style: filterPillStyle },
+      condFilter === 'raw' ? 'Raw / Ungraded' : condFilter === 'psa10' ? 'PSA 10' : 'Graded only',
+      React.createElement('button', {
+        onClick: function() { onCondChange('all'); },
+        style: { color: 'var(--accent)', fontSize: 16, lineHeight: 1, fontWeight: 700, marginLeft: 2 },
+      }, '\u00D7')
     ),
-    // clear all
-    hasActive && React.createElement('button', {
+    // Clear Filters
+    activeCount > 0 && React.createElement('button', {
       onClick: onClear,
-      style: { fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'underline' },
+      style: { fontSize: 13, fontWeight: 600, color: 'var(--ink)', marginLeft: 4, cursor: 'pointer', background: 'none', border: 'none' },
     }, 'Clear Filters')
   );
 }
@@ -308,6 +343,7 @@ function DGameLanding({ app, params }) {
         sets: sets,
         setFilter: setFilter,
         condFilter: condFilter,
+        gameName: game.name,
         onSetChange: setSetFilter,
         onCondChange: setCondFilter,
         onClear: clearFilters,
@@ -423,6 +459,7 @@ function DSetLanding({ app, params }) {
         sets: null,
         setFilter: 'all',
         condFilter: condFilter,
+        gameName: null,
         onSetChange: function() {},
         onCondChange: setCondFilter,
         onClear: clearFilters,
