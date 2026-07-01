@@ -215,25 +215,24 @@ function App() {
     addToCart: (id) => setCart(c => {
       if (c.includes(id)) { showToast('Already in cart'); return c; }
       const newCart = [...c, id];
-      // upsell check
       const item = byIdA(id);
       const seller = item && sellerByNameA(item.seller);
+      let subtitle = item ? item.name : '';
+      // Check for free shipping upsell
       if (seller && seller.freeShipMin) {
         const sellerItems = newCart.map(byIdA).filter(Boolean).filter(x => x.seller === seller.name);
         const sellerTotal = sellerItems.reduce((s, x) => s + x.price, 0);
         const remaining = seller.freeShipMin - sellerTotal;
-        const otherListings = listingsBySellerA(seller.name).filter(l => !newCart.includes(l.id));
-        if (remaining > 0 && otherListings.length > 0) {
-          showToast({
-            title: 'Added to cart ✓',
-            subtitle: 'Add £' + remaining.toFixed(2) + ' more from ' + seller.name + ' for free shipping',
-            action: 'Browse →',
-            onAction: () => nav.push('seller', { name: seller.name }),
-          });
-          return newCart;
+        if (remaining > 0) {
+          subtitle = 'Add \u00A3' + remaining.toFixed(2) + ' more from ' + seller.name + ' for free shipping';
         }
       }
-      showToast('Added to cart');
+      showToast({
+        title: 'Added to cart \u2713',
+        subtitle: subtitle,
+        action: 'View cart',
+        onAction: () => nav.push('cart'),
+      });
       return newCart;
     }),
     removeFromCart: (id) => setCart(c => c.filter(x => x !== id)),
