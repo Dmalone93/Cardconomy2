@@ -123,6 +123,13 @@ function ListCard({ item, app, w }) {
             {item.shipping === 0 ? 'Free shipping' : money(item.shipping) + ' ship'}
           </span>
         </div>
+        {item.seller && (
+          <div onClick={e => { e.stopPropagation(); app.nav.push('seller', { name: item.seller }); }}
+            style={{ fontFamily: T.sans, fontSize: 10.5, color: T.muted, marginTop: 3, cursor: 'pointer',
+              whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {item.seller}
+          </div>
+        )}
       </div>
     </div>
   );
