@@ -14,10 +14,13 @@ const SET_BANNERS_G = {
     { img: 'sets/pkmn/scarlet-violet.jpeg',              set: 'base', label: 'Scarlet & Violet' },
   ],
   mtg: [
-    { img: 'sets/mtg/ECL_sma_key_1920x1080_en.jpg',          set: 'mh3', label: 'Lorwyn Eclipsed' },
-    { img: 'sets/mtg/HOB-1710_JDBCVHKLWUE_VarA_1080x1080.jpg', set: 'mh3', label: 'The Hobbit' },
-    { img: 'sets/mtg/TMT_sma_key_1000x1000.jpg',              set: 'mh3', label: 'The Moonlit Trail' },
-    { img: 'sets/mtg/FRA-1313-EN-1080x1080.png',              set: 'mh3', label: 'Foundations Remastered' },
+    { img: 'sets/mtg/ECL_sma_key_1920x1080_en.jpg',               set: 'mh3', label: 'Lorwyn Eclipsed' },
+    { img: 'sets/mtg/HOB-1710_JDBCVHKLWUE_VarA_1080x1080.jpg',    set: 'mh3', label: 'The Hobbit' },
+    { img: 'sets/mtg/TMT_sma_key_1000x1000.jpg',                  set: 'mh3', label: 'The Moonlit Trail' },
+    { img: 'sets/mtg/FRA-1313-EN-1080x1080.png',                  set: 'mh3', label: 'Foundations Remastered' },
+    { img: 'sets/mtg/TLA_sma_key_1000x1000_EN_1.jpg',             set: 'mh3', label: 'Avatar: The Last Airbender' },
+    { img: 'sets/mtg/TLA_sma_key_1000x1000_EN_2.jpg',             set: 'mh3', label: 'Avatar: The Last Airbender' },
+    { img: 'sets/mtg/MTGSOS_sma_key_1080x1080_en.jpg',            set: 'mh3', label: 'Secrets of Strixhaven' },
   ],
   lor: [
     { img: 'sets/op/aceluffy.webp',                      set: 'op07', label: 'Romance Dawn' },
