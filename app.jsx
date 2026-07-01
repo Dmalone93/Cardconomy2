@@ -1,7 +1,6 @@
 // ─────────────────────────────────────────────────────────────
 // Cardonomy — app shell, navigation, state
 // ─────────────────────────────────────────────────────────────
-const { IOSDevice } = window;
 const { T: TA, BottomNav, Toast, SideMenu, Icon: IconA, Logo: LogoA } = window;
 const { HomeScreen, SearchScreen, ListingScreen, SellScreen, CheckoutScreen, WatchScreen, DashboardScreen, SettingsScreen, SellHubScreen, SellMarketScreen, SellBulkScreen, SellShopScreen, ShopScreen } = window;
 const { BuylistScreen, PurchasesScreen, SellingScreen, OffersScreen, PaymentsScreen, NotificationsScreen } = window;
@@ -136,6 +135,14 @@ function App() {
   const [packRipped, setPackRipped] = React.useState(() => { try { return sessionStorage.getItem('cc_pack_ripped') === '1'; } catch (e) { return true; } });
   const [toast, setToastState] = React.useState(null);
   const toastTimer = React.useRef(null);
+  const [vw, setVw] = React.useState(window.innerWidth);
+  React.useEffect(() => {
+    const onResize = () => setVw(window.innerWidth);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+  const isDesktop = vw >= 760;
+  const isWide = vw >= 1080;
 
   // ── hash-based deep linking ──
   const suppressHashChange = React.useRef(false);
@@ -292,6 +299,8 @@ function App() {
       if (t.includes(cardId)) { showToast('Removed from trade'); return t.filter(x => x !== cardId); }
       showToast('Open to trade'); return [...t, cardId];
     }),
+    isDesktop,
+    isWide,
   };
 
   // current view
@@ -306,20 +315,79 @@ function App() {
 
   return (
     <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: TA.bg, isolation: 'isolate', display: 'flex', flexDirection: 'column' }}>
-      {/* ── Persistent top bar: hamburger | logo | cart ── */}
-      <div style={{ flexShrink: 0, padding: '12px 16px', background: TA.surface, borderBottom: '1px solid var(--line)', zIndex: 50,
-        display: 'flex', alignItems: 'center' }}>
-        <button onClick={() => setMenuOpen(true)} style={{ color: TA.ink, width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>{IconA.menu({})}</button>
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <LogoA size={32} color={TA.ink} />
-        </div>
-        <button onClick={() => nav.push('cart')} style={{ position: 'relative', width: 38, height: 38, borderRadius: 999, background: TA.surface2, color: TA.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-          {IconA.cart({ width: 20, height: 20 })}
-          {cart.length > 0 && (
-            <span style={{ position: 'absolute', top: -2, right: -2, minWidth: 17, height: 17, borderRadius: 999, background: TA.accent, color: '#fff',
-              fontFamily: TA.sans, fontWeight: 700, fontSize: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px', boxShadow: '0 0 0 2px var(--surface)' }}>{cart.length}</span>
+      {/* ── Responsive header ── */}
+      <div style={{ flexShrink: 0, background: 'var(--surface)', borderBottom: '1px solid var(--line)', zIndex: 50 }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 16px', display: 'flex', alignItems: 'center', height: isDesktop ? 64 : 52 }}>
+          {/* Left: hamburger (mobile) or logo (desktop) */}
+          {!isDesktop && (
+            <button onClick={() => setMenuOpen(true)} style={{ color: 'var(--ink)', width: 38, height: 38, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+              {IconA.menu({})}
+            </button>
           )}
-        </button>
+          <div onClick={() => nav.setTab('home')} style={{ display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', flexShrink: 0 }}>
+            <LogoA size={isDesktop ? 36 : 30} color="var(--ink)" />
+            {isDesktop && <span style={{ fontFamily: 'var(--wordmark)', fontWeight: 700, fontSize: 18, letterSpacing: 1.5, color: 'var(--ink)' }}>CARDCONOMY</span>}
+          </div>
+
+          {/* Center: search (desktop only) */}
+          {isDesktop && (
+            <div onClick={() => nav.setTab('search')} style={{
+              flex: 1, maxWidth: 480, margin: '0 32px', padding: '9px 16px', borderRadius: 10,
+              background: 'var(--bg)', border: '1px solid var(--line)', cursor: 'pointer',
+              fontFamily: 'var(--sans)', fontSize: 14, color: 'var(--muted)',
+              display: 'flex', alignItems: 'center', gap: 8,
+            }}>
+              {IconA.search({ width: 16, height: 16 })}
+              <span>Search cards, sets, sellers\u2026</span>
+            </div>
+          )}
+
+          {/* Right: nav links (desktop) or cart icon (mobile) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: isDesktop ? 6 : 0, marginLeft: 'auto' }}>
+            {isDesktop && (
+              <React.Fragment>
+                {[
+                  ['Browse', () => nav.setTab('search')],
+                  ['Sell', () => nav.setTab('sell')],
+                  ['Trade', () => nav.push('trade_browse')],
+                ].map(([label, action]) => (
+                  <button key={label} onClick={action} style={{
+                    padding: '8px 14px', fontFamily: 'var(--sans)', fontWeight: 600, fontSize: 13,
+                    color: 'var(--ink)', background: 'none', border: 'none', cursor: 'pointer',
+                    borderRadius: 8,
+                  }}>{label}</button>
+                ))}
+                <button onClick={() => nav.setTab('watch')} style={{
+                  position: 'relative', padding: '8px 14px', fontFamily: 'var(--sans)', fontWeight: 600, fontSize: 13,
+                  color: 'var(--ink)', background: 'none', border: 'none', cursor: 'pointer', borderRadius: 8,
+                }}>
+                  Watching
+                  {watch.length > 0 && <span style={{ position: 'absolute', top: 2, right: 2, minWidth: 15, height: 15, borderRadius: 999,
+                    background: 'var(--accent)', color: '#fff', fontSize: 9, fontWeight: 700, display: 'flex', alignItems: 'center',
+                    justifyContent: 'center', padding: '0 3px' }}>{watch.length}</span>}
+                </button>
+                <button onClick={() => nav.setTab('profile')} style={{
+                  padding: '8px 14px', fontFamily: 'var(--sans)', fontWeight: 600, fontSize: 13,
+                  color: 'var(--ink)', background: 'none', border: 'none', cursor: 'pointer', borderRadius: 8,
+                }}>Account</button>
+              </React.Fragment>
+            )}
+            <button onClick={() => nav.push('cart')} style={{
+              position: 'relative', width: 38, height: 38, borderRadius: 999,
+              background: isDesktop ? 'none' : 'var(--surface-2)', color: 'var(--ink)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+              border: 'none', cursor: 'pointer',
+            }}>
+              {IconA.cart({ width: 20, height: 20 })}
+              {cart.length > 0 && (
+                <span style={{ position: 'absolute', top: -2, right: -2, minWidth: 17, height: 17, borderRadius: 999,
+                  background: 'var(--accent)', color: '#fff', fontFamily: 'var(--sans)', fontWeight: 700, fontSize: 10,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 4px',
+                  boxShadow: '0 0 0 2px var(--surface)' }}>{cart.length}</span>
+              )}
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* ── Screen content ── */}
@@ -332,7 +400,7 @@ function App() {
         <button
           onClick={() => nav.push('cart')}
           style={{
-            position: 'fixed', bottom: 66, left: '50%', transform: 'translateX(-50%)',
+            position: 'fixed', bottom: 24, left: '50%', transform: 'translateX(-50%)',
             display: 'flex', alignItems: 'center', gap: 6,
             background: 'var(--ink)', color: '#fff',
             border: 'none', borderRadius: 999,
@@ -347,7 +415,6 @@ function App() {
           {'\uD83D\uDED2'} {cart.length} · {'£'}{cartTotal.toFixed(2)}
         </button>
       )}
-      <BottomNav tab={tab} setTab={nav.setTab} watchCount={watch.length} />
       <SideMenu app={app} open={menuOpen} onClose={() => setMenuOpen(false)} />
       {!onboarded && Onboarding && <Onboarding app={app} games={window.GAMES || []} />}
       {!packRipped && PackRip && <PackRip onComplete={() => { setPackRipped(true); try { sessionStorage.setItem('cc_pack_ripped', '1'); } catch(e) {} }} />}

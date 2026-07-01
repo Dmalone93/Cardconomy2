@@ -559,6 +559,19 @@ function shareCard(item) {
   }
 }
 
+function Container({ children, width, style }) {
+  return (
+    <div style={{
+      maxWidth: width || 1280,
+      margin: '0 auto',
+      padding: '0 16px',
+      width: '100%',
+      boxSizing: 'border-box',
+      ...style,
+    }}>{children}</div>
+  );
+}
+
 Object.assign(window, {
-  T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Badge, Icon, BottomNav, Sheet, Toast, Logo, SideMenu, shareCard, QtyInput, CurrencyInput, SliderInput,
+  T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Badge, Icon, BottomNav, Sheet, Toast, Logo, SideMenu, shareCard, QtyInput, CurrencyInput, SliderInput, Container,
 });
