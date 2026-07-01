@@ -135,73 +135,7 @@ function GameScreen({ app, params }) {
         </div>
       )}
 
-      {/* ── Sets — horizontal scroll ── */}
-      <div style={{ padding: '16px 0 0' }}>
-        <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, padding: '0 14px', marginBottom: 10 }}>Browse by set</div>
-        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
-          WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
-          <button style={{
-            flexShrink: 0, width: 140, height: 80, borderRadius: 12, overflow: 'hidden',
-            position: 'relative', scrollSnapAlign: 'start',
-            background: 'var(--surface)', border: '1px solid var(--line)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <div style={{ fontWeight: 700, fontSize: 13, color: TGM.ink }}>All sets</div>
-          </button>
-          {sets.map(s => {
-            return (
-              <button key={s.id} onClick={() => app.nav.push('set', { id: s.id })} style={{
-                flexShrink: 0, width: 140, height: 80, borderRadius: 12, overflow: 'hidden',
-                position: 'relative', scrollSnapAlign: 'start',
-                border: '1px solid transparent',
-                background: s.hue || 'var(--surface)',
-              }}>
-                {s.img && <img src={s.img} alt="" style={{
-                  position: 'absolute', inset: 0, width: '100%', height: '100%',
-                  objectFit: 'cover', opacity: 0.5,
-                }} />}
-                <div style={{ position: 'absolute', inset: 0,
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 100%)',
-                }} />
-                <div style={{ position: 'relative', zIndex: 1, height: '100%', padding: '8px 10px',
-                  display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', textAlign: 'left' }}>
-                  <div style={{ fontWeight: 700, fontSize: 12, color: '#fff', lineHeight: 1.2,
-                    textShadow: '0 1px 3px rgba(0,0,0,0.5)' }}>{s.name.replace(/\s*\(.*\)/, '')}</div>
-                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.65)', marginTop: 2 }}>{s.year}</div>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* ── New Release Spotlight ── */}
-      {(() => {
-        const newest = sets.reduce((a, b) => (b.year || 0) > (a.year || 0) ? b : a, sets[0]);
-        if (!newest) return null;
-        return (
-          <div style={{ padding: '16px 14px 0' }}>
-            <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, marginBottom: 10 }}>New release</div>
-            <button onClick={() => app.nav.push('set', { id: newest.id })} style={{
-              width: '100%', position: 'relative', height: 120, borderRadius: 14, overflow: 'hidden',
-              background: newest.hue || 'var(--surface)', textAlign: 'left',
-            }}>
-              {newest.img && <img src={newest.img} alt="" style={{
-                position: 'absolute', inset: 0, width: '100%', height: '100%',
-                objectFit: 'cover', opacity: 0.4,
-              }} />}
-              <div style={{ position: 'absolute', inset: 0,
-                background: 'linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%)',
-              }} />
-              <div style={{ position: 'relative', zIndex: 2, height: '100%', padding: '16px 18px',
-                display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
-                <div style={{ fontWeight: 700, fontSize: 16, color: '#fff', textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>{newest.name}</div>
-                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', marginTop: 3 }}>{newest.year} \u00B7 {newest.cards} cards \u00B7 Explore set \u2192</div>
-              </div>
-            </button>
-          </div>
-        );
-      })()}
+      {/* (Browse by set and New Release removed — hero banners serve this purpose) */}
 
       {/* ── Most Watched ── */}
       {(() => {
@@ -255,7 +189,7 @@ function GameScreen({ app, params }) {
         return (
           <div style={{ padding: '20px 14px 0' }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, marginBottom: 10 }}>Top sellers</div>
-            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px',
+            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
               WebkitOverflowScrolling: 'touch' }}>
               {topSellers.map(s => (
                 <button key={s.name} onClick={() => app.nav.push('seller', { name: s.name })} style={{
