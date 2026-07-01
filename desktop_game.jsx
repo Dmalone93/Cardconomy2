@@ -69,97 +69,49 @@ function DProductCard({ item, app }) {
   );
 }
 
-// ── Hero carousel for game landing ───────────────────────────
+// ── Hero banner carousel — shows 2-3 banners side-by-side, scrollable ──
 function DHeroCarousel({ banners, app }) {
-  var _i = React.useState(0);
-  var idx = _i[0], setIdx = _i[1];
-  var _hov = React.useState(false);
-  var hovering = _hov[0], setHovering = _hov[1];
-
-  React.useEffect(function() {
-    if (hovering) return;
-    var t = setInterval(function() { setIdx(function(n) { return (n + 1) % banners.length; }); }, 5000);
-    return function() { clearInterval(t); };
-  }, [hovering, banners.length]);
-
   if (!banners || banners.length === 0) return null;
 
   return React.createElement('div', {
-    onMouseEnter: function() { setHovering(true); },
-    onMouseLeave: function() { setHovering(false); },
-    style: { position: 'relative', height: 280, borderRadius: 14, overflow: 'hidden', background: 'var(--fill)' },
+    className: 'noscroll',
+    style: {
+      display: 'flex', gap: 16, overflowX: 'auto', overflowY: 'hidden',
+      padding: '0 0 8px', scrollSnapType: 'x mandatory',
+      WebkitOverflowScrolling: 'touch',
+    },
   },
-    // slides
-    banners.map(function(b, n) {
+    banners.map(function(b) {
       return React.createElement('div', {
         key: b.img,
+        onClick: function() { app.go('set', { id: b.set }); },
         style: {
-          position: 'absolute', inset: 0,
-          opacity: n === idx ? 1 : 0, transition: 'opacity 0.7s ease',
-          pointerEvents: n === idx ? 'auto' : 'none',
+          flexShrink: 0, width: 'calc(50% - 8px)', minWidth: 340,
+          height: 220, borderRadius: 14, overflow: 'hidden',
+          position: 'relative', cursor: 'pointer', scrollSnapAlign: 'start',
         },
       },
         React.createElement('img', { src: b.img, alt: b.label, style: {
-          position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top',
+          position: 'absolute', inset: 0, width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center center',
         }}),
         React.createElement('div', { style: {
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.2) 55%, rgba(0,0,0,0.0) 100%)',
+          background: 'linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 55%, rgba(0,0,0,0.0) 100%)',
         }}),
         React.createElement('div', { style: {
-          position: 'absolute', bottom: 36, left: 28, zIndex: 2,
+          position: 'absolute', bottom: 20, left: 22, zIndex: 2,
         }},
-          React.createElement('div', { style: { fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 26, color: '#fff', letterSpacing: -0.5, textShadow: '0 2px 10px rgba(0,0,0,0.5)' } }, b.label),
-          React.createElement('button', {
-            onClick: function() { app.go('set', { id: b.set }); },
-            style: {
-              marginTop: 10, display: 'inline-flex', alignItems: 'center', gap: 6,
-              background: '#fff', color: 'var(--ink)', fontWeight: 700, fontSize: 13,
-              borderRadius: 8, padding: '8px 16px',
-            },
-          }, 'Shop now \u2192')
+          React.createElement('div', { style: {
+            fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 20, color: '#fff',
+            letterSpacing: -0.3, textShadow: '0 2px 8px rgba(0,0,0,0.5)',
+          } }, b.label),
+          React.createElement('div', { style: {
+            marginTop: 6, fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.8)',
+          } }, 'Shop now \u2192')
         )
       );
-    }),
-    // left arrow
-    React.createElement('button', {
-      onClick: function() { setIdx(function(n) { return (n - 1 + banners.length) % banners.length; }); },
-      style: {
-        position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)', zIndex: 4,
-        width: 36, height: 36, borderRadius: 999, background: 'rgba(255,255,255,0.85)',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.18)', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', fontSize: 17, color: 'var(--ink)',
-        opacity: hovering ? 1 : 0, transition: 'opacity 0.2s',
-      },
-    }, '\u2190'),
-    // right arrow
-    React.createElement('button', {
-      onClick: function() { setIdx(function(n) { return (n + 1) % banners.length; }); },
-      style: {
-        position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', zIndex: 4,
-        width: 36, height: 36, borderRadius: 999, background: 'rgba(255,255,255,0.85)',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.18)', display: 'flex', alignItems: 'center',
-        justifyContent: 'center', fontSize: 17, color: 'var(--ink)',
-        opacity: hovering ? 1 : 0, transition: 'opacity 0.2s',
-      },
-    }, '\u2192'),
-    // dots
-    React.createElement('div', { style: {
-      position: 'absolute', bottom: 12, left: '50%', transform: 'translateX(-50%)',
-      display: 'flex', gap: 6, zIndex: 4,
-    }},
-      banners.map(function(_, n) {
-        return React.createElement('button', {
-          key: n,
-          onClick: function() { setIdx(n); },
-          style: {
-            width: n === idx ? 22 : 8, height: 8, borderRadius: 999,
-            background: n === idx ? '#fff' : 'rgba(255,255,255,0.5)',
-            transition: 'all 0.3s',
-          },
-        });
-      })
-    )
+    })
   );
 }
 
