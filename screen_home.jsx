@@ -4,6 +4,7 @@
 const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon, Logo } = window;
 const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText, GAME_LOGOS } = window;
 const { HOT_DEALS, PRICE_MOVERS, byId } = window;
+const { SELLERS: SELLERS_H } = window;
 
 // ── Hero — stacked: text on top, horizontal card marquee below ──
 const HERO_CARDS = [
@@ -548,6 +549,12 @@ function HomeScreen({ app }) {
                 <div style={{ fontFamily: T.sans, fontSize: 10.5, color: T.muted, marginTop: 1 }}>{p.subtitle}</div>
                 <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 14, marginTop: 4 }}>{money(p.market)}</div>
                 {p.offerCount > 1 && <div style={{ fontFamily: T.sans, fontSize: 10, color: T.muted, marginTop: 2 }}>from {money(p.low)} · {p.offerCount} sellers</div>}
+                {p.offers && p.offers[0] && p.offers[0].seller && (
+                  <div onClick={e => { e.stopPropagation(); app.nav.push('seller', { name: p.offers[0].seller }); }}
+                    style={{ fontFamily: T.sans, fontSize: 10, color: T.muted, marginTop: 2, cursor: 'pointer' }}>
+                    {p.offers[0].seller}
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -578,6 +585,29 @@ function HomeScreen({ app }) {
                   <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 14, marginTop: 4 }}>{money(l.price)}</div>
                 </div>
               </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Featured Sellers ── */}
+      {SELLERS_H && SELLERS_H.length > 0 && (
+        <div style={{ padding: '24px 14px 0' }}>
+          <div style={{ fontSize: 16, fontWeight: 700, color: T.ink, marginBottom: 12 }}>Featured sellers</div>
+          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px',
+            WebkitOverflowScrolling: 'touch' }}>
+            {SELLERS_H.slice(0, 4).map(s => (
+              <button key={s.name} onClick={() => app.nav.push('seller', { name: s.name })} style={{
+                flexShrink: 0, width: 160, background: '#fff', borderRadius: 12,
+                padding: '16px 14px', textAlign: 'center', border: '1px solid var(--line)',
+              }}>
+                <div style={{ width: 44, height: 44, borderRadius: 999, background: 'var(--fill)', color: '#fff',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontWeight: 700, fontSize: 18, margin: '0 auto 10px' }}>{s.name.charAt(0)}</div>
+                <div style={{ fontFamily: T.sans, fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</div>
+                <div style={{ fontFamily: T.sans, fontSize: 11, color: T.muted, marginTop: 3 }}>{s.rating}% \u00B7 {s.loc}</div>
+                <div style={{ fontFamily: T.sans, fontSize: 10, color: T.muted, marginTop: 1 }}>{s.sales.toLocaleString()} sales</div>
+              </button>
             ))}
           </div>
         </div>
