@@ -8,16 +8,16 @@ const { DCard: DCardG } = window;
 // ── Set banner images per game ────────────────────────────────
 const SET_BANNERS_G = {
   pkmn: [
-    { img: 'sets/pkmn/sv10-banner.png',                           set: 'ssp',  label: 'Surging Sparks' },
-    { img: 'sets/pkmn/thumb-56.webp',                             set: 's151', label: 'Scarlet & Violet 151' },
-    { img: 'sets/pkmn/ascended-heroes-ptcg-thumb.webp',           set: 'cpa',  label: 'Ascended Heroes' },
-    { img: 'sets/pkmn/images (2).jpeg',                           set: 'base', label: 'Base Set 1999' },
+    { img: 'sets/pkmn/sv10-banner.png',                  set: 'ssp',  label: 'Surging Sparks' },
+    { img: 'sets/pkmn/thumb-56.webp',                    set: 's151', label: 'Twilight Masquerade' },
+    { img: 'sets/pkmn/ascended-heroes-ptcg-thumb.webp',  set: 'cpa',  label: 'Ascended Heroes' },
+    { img: 'sets/pkmn/scarlet-violet.jpeg',              set: 'base', label: 'Scarlet & Violet' },
   ],
   lor: [
-    { img: 'sets/op/aceluffy.webp',                               set: 'op07', label: 'Romance Dawn' },
-    { img: 'sets/op/ONE_PIECE_TCG_-_IMAGE_FOR_BANNER_-_2.webp',   set: 'op08', label: 'Two Legends' },
-    { img: 'sets/op/One-Piece-Awakening-of-the-New-Era-Jokers-Lair-Blog.webp', set: 'op05', label: 'Awakening of the New Era' },
-    { img: 'sets/op/images.jpeg',                                 set: 'op10', label: 'Royal Blood' },
+    { img: 'sets/op/aceluffy.webp',                      set: 'op07', label: 'Romance Dawn' },
+    { img: 'sets/op/two-legends.webp',                   set: 'op08', label: 'Two Legends' },
+    { img: 'sets/op/awakening-new-era.webp',             set: 'op05', label: 'Awakening of the New Era' },
+    { img: 'sets/op/pillars-of-strength.jpeg',           set: 'op10', label: 'Pillars of Strength' },
   ],
 };
 
@@ -86,7 +86,7 @@ function DHeroCarousel({ banners, app }) {
         key: b.img,
         onClick: function() { app.go('set', { id: b.set }); },
         style: {
-          flexShrink: 0, width: 'calc(50% - 8px)', minWidth: 340,
+          flexShrink: 0, width: 'calc(40% - 8px)', minWidth: 320,
           height: 220, borderRadius: 14, overflow: 'hidden',
           position: 'relative', cursor: 'pointer', scrollSnapAlign: 'start',
         },
@@ -283,7 +283,7 @@ function DGameLanding({ app, params }) {
 
     // ── Hero carousel ──
     banners.length > 0
-      ? React.createElement('div', { className: 'wrap', style: { padding: '18px 24px 0' } },
+      ? React.createElement('div', { className: 'wrap', style: { padding: '24px 24px 20px' } },
           React.createElement(DHeroCarousel, { banners: banners, app: app })
         )
       : React.createElement('div', { style: {
