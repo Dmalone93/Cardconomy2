@@ -302,66 +302,6 @@ function DGameLanding({ app, params }) {
           )
         ),
 
-    // ── Sets browse grid ──
-    React.createElement('div', { className: 'wrap', style: { padding: '28px 24px 0' } },
-      React.createElement('h2', { style: {
-        fontFamily: TG.sans, fontWeight: 700, fontSize: 20, letterSpacing: -0.5, margin: '0 0 14px',
-      }}, 'Browse by set'),
-      React.createElement('div', { style: {
-        display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12,
-      }},
-        React.createElement('button', {
-          key: 'all',
-          onClick: function() { setSetFilter('all'); },
-          style: {
-            height: 100, borderRadius: 10, overflow: 'hidden',
-            background: setFilter === 'all' ? 'var(--ink)' : 'var(--surface)',
-            border: setFilter === 'all' ? 'none' : '1px solid var(--line)',
-            cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            transition: 'all 0.2s',
-          },
-        },
-          React.createElement('span', { style: {
-            fontWeight: 700, fontSize: 14, color: setFilter === 'all' ? '#fff' : 'var(--ink)',
-          }}, 'All sets')
-        ),
-        sets.map(function(s) {
-          var active = setFilter === s.id;
-          return React.createElement('button', {
-            key: s.id,
-            onClick: function() { app.go('set', { id: s.id }); },
-            style: {
-              position: 'relative', height: 100, borderRadius: 10, overflow: 'hidden',
-              background: s.hue || 'var(--surface)', cursor: 'pointer',
-              border: active ? '3px solid var(--ink)' : '1px solid transparent',
-              transition: 'all 0.2s', textAlign: 'left',
-            },
-          },
-            s.img && React.createElement('img', { src: s.img, alt: '', style: {
-              position: 'absolute', inset: 0, width: '100%', height: '100%',
-              objectFit: 'cover', opacity: 0.5,
-            }}),
-            React.createElement('div', { style: {
-              position: 'absolute', inset: 0,
-              background: 'linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 100%)',
-            }}),
-            React.createElement('div', { style: {
-              position: 'relative', zIndex: 1, height: '100%', padding: '10px 12px',
-              display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
-            }},
-              React.createElement('div', { style: {
-                fontWeight: 700, fontSize: 13, color: '#fff', lineHeight: 1.2,
-                textShadow: '0 1px 4px rgba(0,0,0,0.5)',
-              }}, s.name.replace(/\s*\(.*\)/, '')),
-              React.createElement('div', { style: {
-                fontSize: 11, color: 'rgba(255,255,255,0.7)', marginTop: 2,
-              }}, s.year + ' \u00B7 ' + (s.cards || '') + ' cards')
-            )
-          );
-        })
-      )
-    ),
-
     // ── Filter bar ──
     React.createElement('div', { className: 'wrap', style: { padding: '24px 24px 0' } },
       React.createElement(DFilterBar, {
