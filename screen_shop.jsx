@@ -2,7 +2,7 @@
 // Shop side · counter view (mobile/tablet staff app)
 // inbox → submission dashboard → price guide → offer → sent
 // ─────────────────────────────────────────────────────────────
-const { T: TSH, money: moneySH, Icon: IconSH, CardArt: CardArtSH, GradeChip: GradeChipSH, Sparkline: SparkSH, Delta: DeltaSH } = window;
+const { T: TSH, money: moneySH, Icon: IconSH, CardArt: CardArtSH, GradeChip: GradeChipSH, Sparkline: SparkSH, Delta: DeltaSH, Container: ContainerSH } = window;
 const { SHOP: SHOP_SH, SUBMISSION: SUB_SH, SUB_CARDS: SC_SH, BULK_RATES: BR_SH, subStats: subStatsSH, setById: setByIdSH, byId: byIdSH } = window;
 
 function money0(n) { return moneySH(n, { cents: false }); }
@@ -115,6 +115,7 @@ function ShopDashboard({ app, onCounter }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 14px 30px' }}>
+        <ContainerSH width={1280} style={{ padding: 0 }}>
 
         {/* Section 1: Revenue Summary */}
         <div style={{ ...sectionTitle }}>Revenue</div>
@@ -314,6 +315,7 @@ function ShopDashboard({ app, onCounter }) {
             );
           })}
         </div>
+        </ContainerSH>
 
       </div>
     </div>
@@ -372,6 +374,7 @@ function ShopScreen({ app }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 14px 120px' }}>
+        <ContainerSH width={1280} style={{ padding: 0 }}>
         {/* seller trust banner */}
         {SUB_SH.seller.verified ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: '#f0fdf4', borderRadius: 4, padding: '10px 13px', marginBottom: 12, boxShadow: 'inset 0 0 0 1px #16a34a' }}>
@@ -419,6 +422,7 @@ function ShopScreen({ app }) {
             </div>
           ))}
         </div>
+        </ContainerSH>
       </div>
 
       {/* sticky offer bar */}
@@ -694,6 +698,7 @@ function ShopInbox({ app, onOpen, onDashboard }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
+        <ContainerSH width={1280} style={{ padding: 0 }}>
         <div style={{ fontFamily: TSH.sans, fontWeight: 700, fontSize: 12.5, color: TSH.muted, marginBottom: 9, letterSpacing: 0.2 }}>NEW · NEEDS REVIEW</div>
         {/* hero submission */}
         <button onClick={onOpen} style={{ width: '100%', textAlign: 'left', background: 'var(--accent-wash)', borderRadius: 16, padding: 15,
@@ -744,6 +749,7 @@ function ShopInbox({ app, onOpen, onDashboard }) {
           <QueueRow initial="D" name="Dana P." cards="310 cards" meta="1 hr ago · offer sent" tag="replied" tagColor="var(--up)" onClick={() => app.toast('Tap Jordan\'s submission to review')} />
           <QueueRow initial="M" name="Miguel A." cards="1,420 cards" meta="3 hr ago · completed" tag="paid" tagColor={TSH.muted} onClick={() => app.toast('Tap Jordan\'s submission to review')} />
         </div>
+        </ContainerSH>
       </div>
     </div>
   );
@@ -768,6 +774,7 @@ function ShopSent({ app, offer, onInbox }) {
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TSH.bg }}>
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '80px 24px 24px', textAlign: 'center' }}>
+        <ContainerSH width={1280} style={{ padding: 0 }}>
         <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)',
           display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconSH.check({ width: 44, height: 44 })}</div>
         <h1 style={{ margin: '20px 0 4px', fontFamily: TSH.sans, fontWeight: 700, fontSize: 24, letterSpacing: -0.5 }}>Offer sent to {SUB_SH.seller.name}</h1>
@@ -786,6 +793,7 @@ function ShopSent({ app, offer, onInbox }) {
           {IconSH.shield({})}
           <span style={{ fontFamily: TSH.sans, fontSize: 13, fontWeight: 600 }}>Submission moves to "Awaiting pickup" in your queue.</span>
         </div>
+        </ContainerSH>
       </div>
       <div style={{ padding: '12px 16px 30px', borderTop: '1px solid var(--line)', background: TSH.surface, display: 'flex', gap: 10 }}>
         <button onClick={onInbox} style={{ flex: 1, background: TSH.surface2, color: TSH.ink, borderRadius: 14, padding: 15, fontFamily: TSH.sans, fontWeight: 700, fontSize: 15, boxShadow: 'inset 0 0 0 1.5px var(--line)' }}>Back to inbox</button>

@@ -4,7 +4,7 @@
 // Gates the money-out / high-risk actions (sell, bid, trade, payout).
 // TrustBadge is shown across profiles, listings, and trades.
 // ─────────────────────────────────────────────────────────────
-const { T: TV, money: moneyV, Icon: IconV, Stars: StarsV } = window;
+const { T: TV, money: moneyV, Icon: IconV, Stars: StarsV, Container: ContainerV } = window;
 
 // ── trust tiers ──────────────────────────────────────────────
 // tier 0 registered · 1 ID-verified · 2 trusted (history) · 3 pro/LGS
@@ -84,6 +84,7 @@ function VerifyScreen({ app }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '18px 16px 30px' }}>
+        <ContainerV width={720} style={{ padding: 0 }}>
         {/* current status */}
         <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff', marginBottom: 18 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -195,6 +196,7 @@ function VerifyScreen({ app }) {
         <div style={{ fontFamily: TV.sans, fontSize: 11.5, color: TV.faint, lineHeight: 1.5, marginTop: 12, textAlign: 'center' }}>
           In-person trades require <b>both</b> traders verified. Shops are checked for a business license. Powered by a KYC partner — your raw documents are never stored on Cardonomy.
         </div>
+        </ContainerV>
       </div>
     </div>
   );

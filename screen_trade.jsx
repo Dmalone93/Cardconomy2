@@ -2,7 +2,7 @@
 // Card-for-card TRADING — community pillar.
 // matches → build proposal (fairness + cash) → pick LGS hub → sent
 // ─────────────────────────────────────────────────────────────
-const { T: TT, money: moneyT, Icon: IconT, CardArt: CardArtT, GradeChip: GradeChipT } = window;
+const { T: TT, money: moneyT, Icon: IconT, CardArt: CardArtT, GradeChip: GradeChipT, Container: ContainerT } = window;
 const { SHOPS: SHOPS_T, TRADERS: TRADERS_T, OWNED_REFS: OWNED_T, byId: byIdT, traderById: traderByIdT, setById: setByIdT } = window;
 const { GAMES: GAMES_T, TRADE_POSTS: TRADE_POSTS_T, postById: postByIdT, gameById: gameByIdT } = window;
 const COND_OPTS = ['Any', 'LP+', 'NM+', 'NM', 'Gem'];
@@ -92,6 +92,7 @@ function TradeScreen({ app, params = {} }) {
       )}
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto' }}>
+        <ContainerT width={1080} style={{ padding: 0 }}>
         {/* ── MATCHES ── */}
         {phase === 'matches' && (
           <div style={{ padding: '18px 16px 30px' }}>
@@ -446,6 +447,7 @@ function TradeScreen({ app, params = {} }) {
         {phase === 'sent' && trader && (
           <TradeSent app={app} trader={trader} giveSel={giveSel} getSel={getSel} cash={cash} cashWho={cashWho} place={place} setPhase={setPhase} setPlace={setPlace} />
         )}
+        </ContainerT>
       </div>
     </div>
   );

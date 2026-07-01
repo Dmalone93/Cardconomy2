@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Onboarding overlay + shared game-preferences picker
 // ─────────────────────────────────────────────────────────────
-const { T: TOB, Icon: IconOB, Logo: LogoOB } = window;
+const { T: TOB, Icon: IconOB, Logo: LogoOB, Container: ContainerOB } = window;
 
 const ACCT_TYPES = [
   { id: 'buyer',  title: "I\'m a collector",  sub: 'Buy, bid, track & trade cards for my collection', tint: 'var(--up)' },
@@ -73,6 +73,7 @@ function Onboarding({ app, games }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '22px 24px 12px' }}>
+        <ContainerOB width={720} style={{ padding: 0 }}>
         {step === 0 ? (
           <div>
             <h1 style={{ fontFamily: TOB.sans, fontWeight: 700, fontSize: 27, letterSpacing: -0.7, margin: '0 0 6px' }}>Welcome</h1>
@@ -115,6 +116,7 @@ function Onboarding({ app, games }) {
             </button>
           </div>
         )}
+        </ContainerOB>
       </div>
 
       {/* footer CTA */}

@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Sell hub — chooser: marketplace listing vs. sell to a local shop
 // ─────────────────────────────────────────────────────────────
-const { T: TH, Icon: IconH, money: moneyH, Badge } = window;
+const { T: TH, Icon: IconH, money: moneyH, Badge, Container: ContainerH } = window;
 const { SHOP: SHOP_H } = window;
 
 function BigChoice({ icon, tint, title, desc, meta, onClick, badge }) {
@@ -41,6 +41,7 @@ function SellHubScreen({ app }) {
         </p>
       </div>
 
+      <ContainerH width={720}>
       <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 14 }}>
         {window.VerifyGate && <window.VerifyGate app={app} need={1} action="sell or trade" />}
         <BigChoice
@@ -127,6 +128,7 @@ function SellHubScreen({ app }) {
           {IconH.chevron({ style: { color: 'rgba(255,255,255,0.5)' } })}
         </button>
       </div>
+      </ContainerH>
     </div>
   );
 }
@@ -140,6 +142,7 @@ function SellMarketScreen({ app }) {
         <span style={{ fontFamily: TH.sans, fontWeight: 700, fontSize: 17 }}>Sell on the marketplace</span>
       </div>
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '18px 16px 30px' }}>
+        <ContainerH width={720} style={{ padding: 0 }}>
         <p style={{ fontFamily: TH.sans, fontSize: 14, color: TH.muted, margin: '0 0 16px', lineHeight: 1.45 }}>
           How many cards are you listing? Both ways reach buyers worldwide with Buyer Protection.
         </p>
@@ -168,6 +171,7 @@ function SellMarketScreen({ app }) {
             Bulk uses the <b>same Live Sweep scan</b> as selling to a shop — the difference is each card becomes its own marketplace listing instead of one offer.
           </span>
         </div>
+        </ContainerH>
       </div>
     </div>
   );

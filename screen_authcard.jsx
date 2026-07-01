@@ -3,7 +3,7 @@
 // For raw high-value cards: mail-in OR verify at a local shop →
 // examined → a tamper-evident "Cardonomy Verified" seal on the listing.
 // ─────────────────────────────────────────────────────────────
-const { T: TAU, money: moneyAU, Icon: IconAU, CardArt: CardArtAU, byId: byIdAU, setById: setByIdAU } = window;
+const { T: TAU, money: moneyAU, Icon: IconAU, CardArt: CardArtAU, byId: byIdAU, setById: setByIdAU, Container: ContainerAU } = window;
 
 // reusable verified seal (shown on authenticated listings)
 function AuthSeal({ size = 'sm' }) {
@@ -34,6 +34,7 @@ function AuthCardScreen({ app, params = {} }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '18px 16px 30px' }}>
+        <ContainerAU width={720} style={{ padding: 0 }}>
         {/* card header */}
         {item && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, background: TAU.surface, borderRadius: 14, padding: 12, marginBottom: 16, boxShadow: 'var(--shadow-1)' }}>
@@ -135,6 +136,7 @@ function AuthCardScreen({ app, params = {} }) {
             )}
           </div>
         )}
+        </ContainerAU>
       </div>
     </div>
   );

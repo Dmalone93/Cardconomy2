@@ -2,7 +2,7 @@
 // Seller · sell-to-shop bulk flow
 // phases: land → identity → method → scan → review → done → thread
 // ─────────────────────────────────────────────────────────────
-const { T: TSS, money: moneySS, Icon: IconSS, CardArt: CardArtSS, GradeChip: GradeChipSS } = window;
+const { T: TSS, money: moneySS, Icon: IconSS, CardArt: CardArtSS, GradeChip: GradeChipSS, Container: ContainerSS } = window;
 const { SHOP: SHOP_SS, SUBMISSION: SUB_SS, SUB_CARDS: SC_SS, subStats: subStatsSS, SCAN_POOL: POOL_SS, gameById: gameByIdSS } = window;
 
 // mini scanned-card thumbnail
@@ -178,6 +178,7 @@ function SellShopScreen({ app }) {
       )}
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto' }}>
+        <ContainerSS width={720} style={{ padding: 0 }}>
         {/* ── LAND ── */}
         {phase === 'land' && (
           <div style={{ padding: '20px 18px 30px' }}>
@@ -292,6 +293,7 @@ function SellShopScreen({ app }) {
         {phase === 'thread' && (
           <SellerThread app={app} onShop={() => app.nav.push('shop')} />
         )}
+        </ContainerSS>
       </div>
 
       {/* footers */}
