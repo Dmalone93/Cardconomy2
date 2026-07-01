@@ -5,7 +5,7 @@
 const { T: TL, money: moneyL, Slab: SlabL, CardArt: CardArtL, GradeChip: GradeChipL,
   Sparkline: SparkL, Delta: DeltaL, Stars: StarsL, Chip: ChipL, Icon: IconL, Sheet: SheetL,
   CurrencyInput: CurrencyInputL } = window;
-const { byId: byIdL, setById: setByIdL, gameById: gameByIdL, gradeText: gradeTextL, LISTINGS: LISTINGS_L } = window;
+const { byId: byIdL, setById: setByIdL, gameById: gameByIdL, gradeText: gradeTextL, LISTINGS: LISTINGS_L, PRINTINGS: PRINTINGS_L } = window;
 const { demandForProduct: demandL } = window;
 
 function StatBox({ label, value, sub, color }) {
@@ -69,6 +69,16 @@ function ListingScreen({ app, params }) {
             </div>
           </div>
 
+          {/* ── Breadcrumb ── */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '0 0 8px',
+            fontSize: 12, fontFamily: TL.sans, color: 'var(--muted)', overflow: 'hidden' }}>
+            <span onClick={() => app.nav.setTab('home')} style={{ cursor: 'pointer', fontWeight: 600 }}>Home</span>
+            <span>{'\u203A'}</span>
+            {g && <span onClick={() => app.nav.push('game', { id: g.id })} style={{ cursor: 'pointer', fontWeight: 600 }}>{g.short}</span>}
+            {g && <span>{'\u203A'}</span>}
+            {set && <span onClick={() => app.nav.push('set', { id: set.id })} style={{ cursor: 'pointer', fontWeight: 600 }}>{set.name.replace(/\s*\(.*\)/, '')}</span>}
+          </div>
+
           {/* card image */}
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
             {isLot ? (
@@ -94,7 +104,7 @@ function ListingScreen({ app, params }) {
           {/* name — the one bold thing */}
           <h1 style={{ margin: 0, fontFamily: TL.sans, fontWeight: 600, fontSize: 21, letterSpacing: -0.4, lineHeight: 1.15, color: 'var(--ink)' }}>{item.name}</h1>
           <div style={{ fontFamily: TL.sans, fontSize: 13, color: 'var(--muted)', marginTop: 3 }}>
-            {set ? set.name : ''}{item.number ? ' \u00B7 ' + item.number : ''}{isLot ? '' : ' \u00B7 ' + item.condition}
+            {set && <span onClick={() => app.nav.push('set', { id: set.id })} style={{ cursor: 'pointer', textDecoration: 'underline', textDecorationColor: 'var(--line-2)' }}>{set.name}</span>}{item.number ? ' \u00B7 ' + item.number : ''}{isLot ? '' : ' \u00B7 ' + item.condition}
           </div>
 
           {/* price — THE star */}
@@ -158,7 +168,8 @@ function ListingScreen({ app, params }) {
             <span style={{ width: 30, height: 30, borderRadius: 8, background: 'var(--surface-2)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 12, flexShrink: 0 }}>{item.seller[0]}</span>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                <span style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: 'var(--ink)' }}>{item.seller}</span>
+                <span onClick={e => { e.stopPropagation(); app.nav.push('seller', { name: item.seller }); }}
+                  style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13, color: 'var(--ink)', cursor: 'pointer' }}>{item.seller}</span>
                 {item.sellerRating >= 99 && <span style={{ background: '#f0fdf4', color: '#16a34a', padding: '1px 5px', borderRadius: 4, fontWeight: 600, fontSize: 9 }}>Trusted</span>}
               </div>
               <div style={{ fontFamily: TL.sans, fontSize: 11, color: 'var(--faint)' }}>{item.sellerRating}% \u00B7 {item.sellerSales.toLocaleString()} \u00B7 {item.condition}</div>
@@ -180,7 +191,8 @@ function ListingScreen({ app, params }) {
                 borderBottom: idx < otherOffers.length - 1 ? '1px solid var(--line-2)' : 'none' }}>
               <span style={{ width: 30, height: 30, borderRadius: 8, background: 'var(--surface-2)', color: 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 12, flexShrink: 0 }}>{o.seller.charAt(0)}</span>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: TL.sans, fontWeight: 500, fontSize: 13, color: 'var(--ink)' }}>{o.seller}</div>
+                <span onClick={e => { e.stopPropagation(); app.nav.push('seller', { name: o.seller }); }}
+                  style={{ fontFamily: TL.sans, fontWeight: 500, fontSize: 13, color: 'var(--ink)', cursor: 'pointer' }}>{o.seller}</span>
                 <div style={{ fontFamily: TL.sans, fontSize: 11, color: 'var(--faint)' }}>{o.sellerRating}% \u00B7 {o.sellerSales.toLocaleString()} \u00B7 {o.condition}</div>
               </div>
               <div style={{ textAlign: 'right', flexShrink: 0 }}>
@@ -214,7 +226,8 @@ function ListingScreen({ app, params }) {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0' }}>
             <span style={{ width: 34, height: 34, borderRadius: 10, background: 'var(--surface-2)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 600, fontSize: 14, flexShrink: 0 }}>{item.seller[0]}</span>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <span style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13.5, color: 'var(--ink)' }}>{item.seller}</span>
+              <span onClick={() => app.nav.push('seller', { name: item.seller })}
+                style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 13.5, color: 'var(--ink)', cursor: 'pointer' }}>{item.seller}</span>
               <div style={{ fontFamily: TL.sans, fontSize: 11, color: 'var(--faint)' }}><StarsL rating={item.sellerRating} /> {item.sellerRating}% \u00B7 {item.sellerSales.toLocaleString()}</div>
             </div>
             <button onClick={() => app.nav.push('seller', { name: item.seller })} style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 12, color: 'var(--muted)', padding: '6px 10px', borderRadius: 8, border: '1px solid var(--line-2)', background: 'transparent' }}>Store</button>
@@ -243,6 +256,36 @@ function ListingScreen({ app, params }) {
                   fontFamily: TL.sans, fontWeight: 600, fontSize: 12, border: '1px solid var(--line)', flexShrink: 0 }}>Trade</button>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* ═══ 5b. OTHER PRINTINGS ═══ */}
+        {PRINTINGS_L && PRINTINGS_L[item.name] && PRINTINGS_L[item.name].length > 1 && (
+          <div style={{ borderTop: '1px solid var(--line-2)', marginTop: 6, padding: '12px 16px 0' }}>
+            <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 14, color: 'var(--ink)', marginBottom: 10 }}>Other printings</div>
+            <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', margin: '0 -16px', padding: '0 16px' }}>
+              {PRINTINGS_L[item.name].filter(p => p.set !== item.set || p.number !== item.number).map((p, idx) => {
+                const pSet = window.setById(p.set);
+                const pListing = LISTINGS_L.find(l => l.name === item.name && l.set === p.set);
+                return (
+                  <button key={idx} onClick={() => {
+                    if (pListing) app.nav.push('listing', { id: pListing.id });
+                    else if (pSet) app.nav.push('set', { id: pSet.id });
+                  }} style={{ flexShrink: 0, width: 120, textAlign: 'left' }}>
+                    <div style={{ background: pSet ? (pSet.hue || 'var(--surface)') : 'var(--surface)', borderRadius: 10, padding: '10px 8px',
+                      display: 'flex', flexDirection: 'column', alignItems: 'center', minHeight: 60, justifyContent: 'center' }}>
+                      {pListing
+                        ? <CardArtL item={pListing} w={70} />
+                        : <div style={{ fontFamily: TL.sans, fontSize: 11, color: 'var(--muted)', textAlign: 'center' }}>No listing</div>
+                      }
+                    </div>
+                    <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 11, color: 'var(--ink)', marginTop: 6,
+                      whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{pSet ? pSet.name : p.set}</div>
+                    <div style={{ fontFamily: 'var(--mono)', fontWeight: 600, fontSize: 12, color: 'var(--ink)', marginTop: 1 }}>{moneyL(p.price)}</div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
         )}
 
