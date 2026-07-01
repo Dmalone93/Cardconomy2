@@ -1,161 +1,242 @@
 // ─────────────────────────────────────────────────────────────
-// Cardonomy Desktop — Search results (filter rail + grid)
+// Cardonomy Desktop — Search results (TCGplayer-style filter bar + grid)
 // ─────────────────────────────────────────────────────────────
 const { T: TSe, money: mSe } = window;
 const { GAMES: GAMESS, SETS: SETSS, LISTINGS: LISTSS, setById: setByIdSS } = window;
-const { DCard: DCardS } = window;
+const { DProductCard: DProductCardS } = window;
 
 const SORTS_D = ['Best match', 'Price: low to high', 'Price: high to low', 'Biggest discount'];
 
-function FilterGroup({ title, children, open = true }) {
-  const [o, setO] = React.useState(open);
-  return (
-    <div style={{ borderBottom: '1px solid var(--line)', padding: '16px 0' }}>
-      <button onClick={() => setO(!o)} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: o ? 12 : 0 }}>
-        <span style={{ fontWeight: 700, fontSize: 14 }}>{title}</span>
-        <span style={{ color: 'var(--faint)', transform: o ? 'none' : 'rotate(-90deg)', transition: 'transform 0.2s' }}>{window.DIcon.chevron({ width: 16, height: 16 })}</span>
-      </button>
-      {o && children}
-    </div>
-  );
-}
-
-function Check({ on, onClick, label, count }) {
-  return (
-    <button onClick={onClick} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '5px 0', textAlign: 'left' }}>
-      <span style={{ width: 18, height: 18, borderRadius: 5, flexShrink: 0, background: on ? 'var(--accent)' : 'var(--surface)', boxShadow: on ? 'none' : 'inset 0 0 0 1.5px var(--line)',
-        display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>{on && <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>}</span>
-      <span style={{ flex: 1, fontSize: 13.5, color: on ? 'var(--ink)' : 'var(--ink-2)', fontWeight: on ? 600 : 400 }}>{label}</span>
-      {count != null && <span style={{ fontSize: 12, color: 'var(--faint)', fontFamily: TSe.mono }}>{count}</span>}
-    </button>
-  );
-}
-
 function DSearch({ app, params = {} }) {
-  const [game, setGame] = React.useState(params.game || 'all');
-  const [setF, setSetF] = React.useState(params.set || 'all');
-  const [cond, setCond] = React.useState(params.cond || 'Any grade');
-  const [type, setType] = React.useState(params.type || 'all');
-  const [freeShip, setFreeShip] = React.useState(false);
-  const [maxPrice, setMaxPrice] = React.useState(35000);
-  const [sort, setSort] = React.useState('Best match');
-  const q = params.q || '';
+  var _g = React.useState(params.game || 'all');
+  var game = _g[0], setGame = _g[1];
+  var _sf = React.useState(params.set || 'all');
+  var setF = _sf[0], setSetF = _sf[1];
+  var _cd = React.useState(params.cond || 'all');
+  var cond = _cd[0], setCond = _cd[1];
+  var _ty = React.useState(params.type || 'all');
+  var type = _ty[0], setType = _ty[1];
+  var _so = React.useState('Best match');
+  var sort = _so[0], setSort = _so[1];
+  var _vm = React.useState('grid');
+  var viewMode = _vm[0], setViewMode = _vm[1];
+  var q = params.q || '';
 
-  let res = LISTSS.filter(l => {
+  var res = LISTSS.filter(function(l) {
     if (game !== 'all' && l.game !== game) return false;
     if (setF !== 'all' && l.set !== setF) return false;
-    if (q.trim()) { const hay = (l.name + ' ' + (l.subtitle || '') + ' ' + (setByIdSS(l.set)?.name || '')).toLowerCase(); if (!hay.includes(q.trim().toLowerCase())) return false; }
-    if (cond === 'Graded only' && l.grade.company === 'raw') return false;
-    if (cond === 'PSA 10' && !(l.grade.company === 'psa' && l.grade.grade === 10)) return false;
-    if (cond === 'Raw / Ungraded' && l.grade.company !== 'raw') return false;
+    if (q.trim()) {
+      var hay = (l.name + ' ' + (l.subtitle || '') + ' ' + (setByIdSS(l.set) ? setByIdSS(l.set).name : '')).toLowerCase();
+      if (!hay.includes(q.trim().toLowerCase())) return false;
+    }
+    if (cond === 'graded' && l.grade && l.grade.company === 'raw') return false;
+    if (cond === 'raw' && l.grade && l.grade.company !== 'raw') return false;
     if (type !== 'all' && l.type !== type) return false;
-    if (freeShip && l.shipping !== 0) return false;
-    if (l.price > maxPrice) return false;
     return true;
   });
-  if (sort === 'Price: low to high') res = [...res].sort((a, b) => a.price - b.price);
-  if (sort === 'Price: high to low') res = [...res].sort((a, b) => b.price - a.price);
-  if (sort === 'Biggest discount') res = [...res].sort((a, b) => (a.price / a.market) - (b.price / b.market));
 
-  const title = q ? '"' + q + '"' : setF !== 'all' ? setByIdSS(setF).name : game !== 'all' ? (GAMESS.find(g => g.id === game)?.name || 'All cards') : 'All cards';
-  const reset = () => { setGame('all'); setSetF('all'); setCond('Any grade'); setType('all'); setFreeShip(false); setMaxPrice(35000); };
+  if (sort === 'Price: low to high') res = res.slice().sort(function(a, b) { return a.price - b.price; });
+  if (sort === 'Price: high to low') res = res.slice().sort(function(a, b) { return b.price - a.price; });
+  if (sort === 'Biggest discount') res = res.slice().sort(function(a, b) { return (a.price / (a.market || a.price)) - (b.price / (b.market || b.price)); });
 
-  return (
-    <div className="wrap" style={{ padding: '26px 24px 20px' }}>
-      {/* breadcrumb + heading */}
-      <div style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 6 }}>
-        <button onClick={() => app.go('home')} style={{ color: 'var(--muted)' }}>Home</button> / <span style={{ color: 'var(--ink-2)' }}>Search</span>
-      </div>
-      <h1 style={{ fontFamily: TSe.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.8, margin: '0 0 22px' }}>{title} <span style={{ fontSize: 16, fontWeight: 500, color: 'var(--muted)' }}>· {res.length} results</span></h1>
+  var title = q ? '\u201C' + q + '\u201D'
+    : setF !== 'all' ? (setByIdSS(setF) ? setByIdSS(setF).name : setF)
+    : game !== 'all' ? ((GAMESS.find(function(g) { return g.id === game; }) || {}).name || 'All cards')
+    : 'All cards';
 
-      <div style={{ display: 'grid', gridTemplateColumns: '248px 1fr', gap: 30, alignItems: 'start' }} className="srch-grid">
-        {/* filter rail */}
-        <aside style={{ position: 'sticky', top: 130 }} className="srch-rail">
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-            <span style={{ fontWeight: 700, fontSize: 16 }}>Filters</span>
-            <button onClick={reset} style={{ fontSize: 13, color: 'var(--ink)', fontWeight: 600 }}>Reset</button>
-          </div>
-          <FilterGroup title="Game">
-            <Check on={game === 'all'} onClick={() => setGame('all')} label="All games" count={LISTSS.length} />
-            {GAMESS.map(g => <Check key={g.id} on={game === g.id} onClick={() => { setGame(g.id); setSetF('all'); }} label={g.short} count={LISTSS.filter(l => l.game === g.id).length} />)}
-          </FilterGroup>
-          {game !== 'all' && SETSS.filter(s => s.game === game).length > 0 && (
-            <FilterGroup title="Set">
-              <Check on={setF === 'all'} onClick={() => setSetF('all')} label="All sets" />
-              {SETSS.filter(s => s.game === game).map(s => <Check key={s.id} on={setF === s.id} onClick={() => setSetF(s.id)} label={s.name.replace(/\s*\(.*\)/, '')} />)}
-            </FilterGroup>
-          )}
-          <FilterGroup title="Condition">
-            {['Any grade', 'Graded only', 'PSA 10', 'Raw / Ungraded'].map(c => <Check key={c} on={cond === c} onClick={() => setCond(c)} label={c} />)}
-          </FilterGroup>
-          <FilterGroup title="Listing type">
-            {[['all', 'All listings'], ['buynow', 'Buy It Now']].map(([v, l]) => <Check key={v} on={type === v} onClick={() => setType(v)} label={l} />)}
-          </FilterGroup>
-          <FilterGroup title="Max price">
-            <input type="range" min="10" max="35000" step="10" value={maxPrice} onChange={e => setMaxPrice(+e.target.value)} style={{ width: '100%', accentColor: 'var(--accent)' }} />
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: TSe.mono, fontSize: 12, color: 'var(--muted)', marginTop: 4 }}><span>$10</span><span>{mSe(maxPrice, { cents: false })}</span></div>
-          </FilterGroup>
-          <FilterGroup title="Shipping">
-            <Check on={freeShip} onClick={() => setFreeShip(!freeShip)} label="Free shipping" />
-          </FilterGroup>
-        </aside>
+  function reset() { setGame('all'); setSetF('all'); setCond('all'); setType('all'); }
 
-        {/* results */}
-        <div>
-          {setF !== 'all' && (() => {
-            const setInfo = setByIdSS(setF);
-            if (!setInfo) return null;
-            const setCards = LISTSS.filter(l => l.set === setF).length;
-            return (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 14, background: 'linear-gradient(135deg, var(--accent-wash), var(--surface))', borderRadius: 14, padding: '14px 18px', marginBottom: 18, boxShadow: 'inset 0 0 0 1px var(--accent)' }}>
-                <div style={{ width: 10, height: 10, borderRadius: 999, background: 'var(--accent)', flexShrink: 0 }} />
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 700, fontSize: 15 }}>{setInfo.name}</div>
-                  <div style={{ fontSize: 12.5, color: 'var(--muted)', marginTop: 2 }}>{setCards} card{setCards !== 1 ? 's' : ''}{setInfo.year ? ' · Released ' + setInfo.year : ''}</div>
-                </div>
-                <button onClick={() => setSetF('all')} style={{ color: 'var(--ink)', fontWeight: 700, fontSize: 13, padding: '6px 12px', borderRadius: 8, background: 'var(--surface)', boxShadow: 'inset 0 0 0 1px var(--line)' }}>Clear set</button>
-              </div>
-            );
-          })()}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-              {game !== 'all' && <Pill label={GAMESS.find(g => g.id === game)?.short} onX={() => { setGame('all'); setSetF('all'); }} />}
-              {setF !== 'all' && <Pill label={setByIdSS(setF).name.replace(/\s*\(.*\)/, '')} onX={() => setSetF('all')} />}
-              {cond !== 'Any grade' && <Pill label={cond} onX={() => setCond('Any grade')} />}
-              {type !== 'all' && <Pill label="Buy It Now" onX={() => setType('all')} />}
-              {freeShip && <Pill label="Free shipping" onX={() => setFreeShip(false)} />}
-            </div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-              <span style={{ fontSize: 13.5, color: 'var(--muted)' }}>Sort</span>
-              <select value={sort} onChange={e => setSort(e.target.value)} style={{ fontFamily: TSe.sans, fontSize: 13.5, fontWeight: 600, border: '1.5px solid var(--line)', borderRadius: 9, padding: '8px 10px', background: 'var(--surface)', color: 'var(--ink)' }}>
-                {SORTS_D.map(s => <option key={s}>{s}</option>)}
-              </select>
-            </label>
-          </div>
-          {res.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '80px 20px', background: 'var(--surface)', borderRadius: 16 }}>
-              <div style={{ marginBottom: 8, color: 'var(--muted)' }}><svg width="40" height="40" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/><path d="M20 20l-3.5-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/></svg></div>
-              <div style={{ fontWeight: 700, fontSize: 18 }}>No cards match</div>
-              <div style={{ color: 'var(--muted)', fontSize: 14, marginTop: 4 }}>Try removing a filter or widening your price.</div>
-            </div>
-          ) : (
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 }}>
-              {res.map(l => <DCardS key={l.id} item={l} app={app} />)}
-            </div>
-          )}
-        </div>
-      </div>
+  var setsForGame = game !== 'all' ? SETSS.filter(function(s) { return s.game === game; }) : SETSS;
+  var hasActive = game !== 'all' || setF !== 'all' || cond !== 'all' || type !== 'all';
 
-      <style>{`@media (max-width: 860px){ .srch-grid{ grid-template-columns: 1fr !important; } .srch-rail{ position: static !important; } }`}</style>
-    </div>
-  );
-}
+  return React.createElement('div', { className: 'wrap', style: { padding: '26px 24px 40px' } },
 
-function Pill({ label, onX }) {
-  return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'var(--accent-wash)', color: 'var(--ink)', borderRadius: 999, padding: '6px 12px', fontSize: 13, fontWeight: 600 }}>
-      {label}<button onClick={onX} style={{ color: 'var(--ink)', fontSize: 15, lineHeight: 1, opacity: 0.7 }}>×</button>
-    </span>
+    // breadcrumb
+    React.createElement('div', { style: { fontSize: 13, color: 'var(--muted)', marginBottom: 8 } },
+      React.createElement('button', { onClick: function() { app.go('home'); }, style: { color: 'var(--muted)' } }, 'Home'),
+      ' / ',
+      React.createElement('span', { style: { color: 'var(--ink-2)' } }, 'Search')
+    ),
+
+    // heading
+    React.createElement('h1', { style: {
+      fontFamily: TSe.sans, fontWeight: 700, fontSize: 26, letterSpacing: -0.8, margin: '0 0 18px',
+    }},
+      title,
+      React.createElement('span', { style: { fontSize: 15, fontWeight: 500, color: 'var(--muted)', marginLeft: 10 } },
+        '\u00B7 ' + res.length + ' result' + (res.length !== 1 ? 's' : ''))
+    ),
+
+    // ── Filter bar ──
+    React.createElement('div', { style: {
+      display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8,
+      borderBottom: '1px solid var(--line)', paddingBottom: 14, marginBottom: 16,
+    }},
+      // Game dropdown
+      React.createElement('select', {
+        value: game,
+        onChange: function(e) { setGame(e.target.value); setSetF('all'); },
+        style: {
+          padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+          background: game !== 'all' ? 'var(--ink)' : 'var(--surface)',
+          color: game !== 'all' ? '#fff' : 'var(--ink)',
+          border: '1px solid var(--line)', cursor: 'pointer',
+        },
+      },
+        React.createElement('option', { value: 'all' }, 'Game \u25be'),
+        GAMESS.map(function(g) {
+          return React.createElement('option', { key: g.id, value: g.id }, g.short);
+        })
+      ),
+      // Set dropdown (only if game selected)
+      game !== 'all' && React.createElement('select', {
+        value: setF,
+        onChange: function(e) { setSetF(e.target.value); },
+        style: {
+          padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+          background: setF !== 'all' ? 'var(--ink)' : 'var(--surface)',
+          color: setF !== 'all' ? '#fff' : 'var(--ink)',
+          border: '1px solid var(--line)', cursor: 'pointer',
+        },
+      },
+        React.createElement('option', { value: 'all' }, 'Set \u25be'),
+        setsForGame.map(function(s) {
+          return React.createElement('option', { key: s.id, value: s.id }, s.name.replace(/\s*\(.*\)/, ''));
+        })
+      ),
+      // Condition dropdown
+      React.createElement('select', {
+        value: cond,
+        onChange: function(e) { setCond(e.target.value); },
+        style: {
+          padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+          background: cond !== 'all' ? 'var(--ink)' : 'var(--surface)',
+          color: cond !== 'all' ? '#fff' : 'var(--ink)',
+          border: '1px solid var(--line)', cursor: 'pointer',
+        },
+      },
+        React.createElement('option', { value: 'all' }, 'Condition \u25be'),
+        React.createElement('option', { value: 'raw' }, 'Raw / Ungraded'),
+        React.createElement('option', { value: 'graded' }, 'Graded only')
+      ),
+      // Listing type
+      React.createElement('select', {
+        value: type,
+        onChange: function(e) { setType(e.target.value); },
+        style: {
+          padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+          background: type !== 'all' ? 'var(--ink)' : 'var(--surface)',
+          color: type !== 'all' ? '#fff' : 'var(--ink)',
+          border: '1px solid var(--line)', cursor: 'pointer',
+        },
+      },
+        React.createElement('option', { value: 'all' }, 'Listing type \u25be'),
+        React.createElement('option', { value: 'buynow' }, 'Buy It Now')
+      ),
+      // active pills
+      game !== 'all' && React.createElement('span', { style: {
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        background: 'var(--accent-wash)', color: 'var(--ink)',
+        borderRadius: 999, padding: '5px 10px', fontSize: 12, fontWeight: 600,
+      }},
+        (GAMESS.find(function(g) { return g.id === game; }) || {}).short || game,
+        React.createElement('button', { onClick: function() { setGame('all'); setSetF('all'); }, style: { color: 'var(--ink)', fontSize: 14, lineHeight: 1, opacity: 0.7 } }, '\u00D7')
+      ),
+      setF !== 'all' && React.createElement('span', { style: {
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        background: 'var(--accent-wash)', color: 'var(--ink)',
+        borderRadius: 999, padding: '5px 10px', fontSize: 12, fontWeight: 600,
+      }},
+        (setByIdSS(setF) ? setByIdSS(setF).name.replace(/\s*\(.*\)/, '') : setF),
+        React.createElement('button', { onClick: function() { setSetF('all'); }, style: { color: 'var(--ink)', fontSize: 14, lineHeight: 1, opacity: 0.7 } }, '\u00D7')
+      ),
+      cond !== 'all' && React.createElement('span', { style: {
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        background: 'var(--accent-wash)', color: 'var(--ink)',
+        borderRadius: 999, padding: '5px 10px', fontSize: 12, fontWeight: 600,
+      }},
+        cond === 'raw' ? 'Raw / Ungraded' : 'Graded only',
+        React.createElement('button', { onClick: function() { setCond('all'); }, style: { color: 'var(--ink)', fontSize: 14, lineHeight: 1, opacity: 0.7 } }, '\u00D7')
+      ),
+      type !== 'all' && React.createElement('span', { style: {
+        display: 'inline-flex', alignItems: 'center', gap: 5,
+        background: 'var(--accent-wash)', color: 'var(--ink)',
+        borderRadius: 999, padding: '5px 10px', fontSize: 12, fontWeight: 600,
+      }},
+        'Buy It Now',
+        React.createElement('button', { onClick: function() { setType('all'); }, style: { color: 'var(--ink)', fontSize: 14, lineHeight: 1, opacity: 0.7 } }, '\u00D7')
+      ),
+      hasActive && React.createElement('button', {
+        onClick: reset,
+        style: { fontSize: 13, fontWeight: 600, color: 'var(--ink)', textDecoration: 'underline' },
+      }, 'Clear Filters')
+    ),
+
+    // ── Results header ──
+    React.createElement('div', { style: {
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16, flexWrap: 'wrap', gap: 10,
+    }},
+      React.createElement('div', { style: { fontSize: 14, fontWeight: 600, color: 'var(--ink-2)' } },
+        res.length + ' result' + (res.length !== 1 ? 's' : '') + (title !== 'All cards' ? ' for ' + title : '')
+      ),
+      React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 10 } },
+        React.createElement('label', { style: { display: 'flex', alignItems: 'center', gap: 7, fontSize: 13, color: 'var(--muted)' } },
+          'Sort',
+          React.createElement('select', {
+            value: sort, onChange: function(e) { setSort(e.target.value); },
+            style: {
+              padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+              background: 'var(--surface)', color: 'var(--ink)', border: '1px solid var(--line)',
+            },
+          },
+            SORTS_D.map(function(s) { return React.createElement('option', { key: s }, s); })
+          )
+        ),
+        // view toggle
+        React.createElement('div', { style: { display: 'flex', border: '1px solid var(--line)', borderRadius: 8, overflow: 'hidden' } },
+          React.createElement('button', {
+            onClick: function() { setViewMode('grid'); },
+            style: {
+              padding: '7px 10px', fontSize: 14,
+              background: viewMode === 'grid' ? 'var(--ink)' : 'var(--surface)',
+              color: viewMode === 'grid' ? '#fff' : 'var(--ink)',
+            },
+          }, '\u229e'),
+          React.createElement('button', {
+            onClick: function() { setViewMode('list'); },
+            style: {
+              padding: '7px 10px', fontSize: 14,
+              background: viewMode === 'list' ? 'var(--ink)' : 'var(--surface)',
+              color: viewMode === 'list' ? '#fff' : 'var(--ink)',
+            },
+          }, '\u2630')
+        )
+      )
+    ),
+
+    // ── Results grid / list ──
+    res.length === 0
+      ? React.createElement('div', { style: { textAlign: 'center', padding: '80px 20px', background: 'var(--surface)', borderRadius: 16 } },
+          React.createElement('div', { style: { marginBottom: 8, color: 'var(--muted)' } },
+            React.createElement('svg', { width: 40, height: 40, viewBox: '0 0 24 24', fill: 'none' },
+              React.createElement('circle', { cx: 11, cy: 11, r: 7, stroke: 'currentColor', strokeWidth: 2 }),
+              React.createElement('path', { d: 'M20 20l-3.5-3.5', stroke: 'currentColor', strokeWidth: 2, strokeLinecap: 'round' })
+            )
+          ),
+          React.createElement('div', { style: { fontWeight: 700, fontSize: 18 } }, 'No cards match'),
+          React.createElement('div', { style: { color: 'var(--muted)', fontSize: 14, marginTop: 4 } }, 'Try removing a filter or widening your search.')
+        )
+      : viewMode === 'list'
+        ? React.createElement('div', { style: { display: 'flex', flexDirection: 'column', gap: 10 } },
+            res.map(function(l) {
+              return React.createElement(DProductCardS, { key: l.id, item: l, app: app });
+            })
+          )
+        : React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 } },
+            res.map(function(l) {
+              return React.createElement(DProductCardS, { key: l.id, item: l, app: app });
+            })
+          )
   );
 }
 
