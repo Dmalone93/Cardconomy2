@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Home / browse / discovery  (+ shared ListCard / ListRow)
 // ─────────────────────────────────────────────────────────────
-const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon, Logo } = window;
+const { T, money, CardArt, Slab, GradeChip, Sparkline, Delta, Stars, Chip, Icon, Logo, Container } = window;
 const { GAMES, SETS, LISTINGS, LOTS, PRODUCTS, gameById, setById, gradeText, GAME_LOGOS } = window;
 const { HOT_DEALS, PRICE_MOVERS, byId } = window;
 const { SELLERS: SELLERS_H } = window;
@@ -269,7 +269,7 @@ function GameBrowseTile({ game, app }) {
   const hero = GAME_HEROES[game.id];
   return (
     <div onClick={() => app.nav.push('game', { id: game.id })} role="button" style={{
-      flexShrink: 0, width: 140, height: 200, cursor: 'pointer', borderRadius: 14,
+      flexShrink: 0, width: app.isDesktop ? '100%' : 140, height: 200, cursor: 'pointer', borderRadius: 14,
       overflow: 'hidden', position: 'relative',
       background: game.tint,
       boxShadow: '0 4px 20px rgba(0,0,0,0.25)',
@@ -509,6 +509,8 @@ function HomeScreen({ app }) {
       {/* ── Card Fan hero ── */}
       <CardFan app={app} />
 
+      <Container style={{ padding: 0 }}>
+
       {/* ── Social proof strip ── */}
       <div style={{ display: 'flex', justifyContent: 'center', gap: 24, padding: '14px 14px 0' }}>
         {[['2,400+', 'cards listed'], ['180+', 'verified sellers'], ['12', 'local shops']].map(([num, label]) => (
@@ -528,8 +530,9 @@ function HomeScreen({ app }) {
           <div onClick={() => app.nav.setTab('search')} style={{ fontSize: 13, fontWeight: 600,
             color: 'var(--ink)', cursor: 'pointer' }}>Browse all</div>
         </div>
-        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', padding: '0 14px 4px',
-          WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+        <div style={app.isDesktop
+          ? { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 12, padding: '0 14px 4px' }
+          : { display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px', WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
           {GAMES.filter(g => g && g.id).map(g => <GameBrowseTile key={g.id} game={g} app={app} />)}
         </div>
       </div>
@@ -601,11 +604,12 @@ function HomeScreen({ app }) {
       {SELLERS_H && SELLERS_H.length > 0 && (
         <div style={{ padding: '24px 14px 0' }}>
           <div style={{ fontSize: 16, fontWeight: 700, color: T.ink, marginBottom: 12 }}>Featured sellers</div>
-          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px',
-            WebkitOverflowScrolling: 'touch' }}>
+          <div style={app.isDesktop
+            ? { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(180px, 1fr))', gap: 12 }
+            : { display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px', WebkitOverflowScrolling: 'touch' }}>
             {SELLERS_H.slice(0, 4).map(s => (
               <button key={s.name} onClick={() => app.nav.push('seller', { name: s.name })} style={{
-                flexShrink: 0, width: 160, background: 'var(--surface)', borderRadius: 12,
+                flexShrink: 0, width: app.isDesktop ? '100%' : 160, background: 'var(--surface)', borderRadius: 12,
                 padding: '16px 14px', textAlign: 'center', border: '1px solid var(--line)',
               }}>
                 <div style={{ width: 44, height: 44, borderRadius: 999, background: 'var(--fill)', color: '#fff',
@@ -653,6 +657,8 @@ function HomeScreen({ app }) {
           <span style={{ color: T.faint, fontSize: 18 }}>→</span>
         </button>
       </div>
+
+      </Container>
     </div>
   );
 }
