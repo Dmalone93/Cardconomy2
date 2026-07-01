@@ -20,7 +20,7 @@ function CondBadge({ condition }) {
   );
 }
 
-function OfferCard({ offer, onBuy, isLowest, onViewListing }) {
+function OfferCard({ offer, onBuy, isLowest, onViewListing, app }) {
   return (
     <div style={{ border: isLowest ? '2px solid var(--ink)' : '1px solid var(--line)', borderRadius: 14, padding: 16, marginBottom: 12, background: 'var(--surface)', position: 'relative', boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
       {isLowest && (
@@ -43,7 +43,8 @@ function OfferCard({ offer, onBuy, isLowest, onViewListing }) {
           fontFamily: TP.sans, fontWeight: 700, fontSize: 12, flexShrink: 0,
         }}>{offer.seller.charAt(0)}</div>
         <div style={{ flex: 1 }}>
-          <span style={{ fontFamily: TP.sans, fontWeight: 600, color: 'var(--ink)' }}>{offer.seller}</span>
+          <span onClick={e => { e.stopPropagation(); app && app.nav.push('seller', { name: offer.seller }); }}
+            style={{ fontFamily: TP.sans, fontWeight: 600, color: 'var(--ink)', cursor: 'pointer' }}>{offer.seller}</span>
           {offer.sellerRating >= 99 && window.TrustBadge && <span style={{ marginLeft: 5 }}><window.TrustBadge tier={2} /></span>}
           <span style={{ marginLeft: 6 }}>{offer.sellerRating}% · {offer.sellerSales.toLocaleString()} sales</span>
         </div>
@@ -146,6 +147,7 @@ function ProductScreen({ app, params }) {
   const up = hist.length >= 2 ? hist[hist.length - 1] >= hist[0] : true;
   const [ptf, setPtf] = React.useState('30D');
   const [chartOpen, setChartOpen] = React.useState(true);
+  const [condFilter, setCondFilter] = React.useState('All');
   const vInfo = variantP ? variantP(product) : null;
   const demand = demandP ? demandP(product) : null;
 
@@ -162,24 +164,41 @@ function ProductScreen({ app, params }) {
           </div>
         </div>
 
+        {/* ── Breadcrumb ── */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '0 16px 8px',
+          fontSize: 12, fontFamily: TP.sans, color: 'var(--muted)' }}>
+          <span onClick={() => app.nav.setTab('home')} style={{ cursor: 'pointer', fontWeight: 600 }}>Home</span>
+          <span>{'\u203A'}</span>
+          {g && <span onClick={() => app.nav.push('game', { id: g.id })} style={{ cursor: 'pointer', fontWeight: 600 }}>{g.short}</span>}
+          {g && <span>{'\u203A'}</span>}
+          {s && <span onClick={() => app.nav.push('set', { id: s.id })} style={{ cursor: 'pointer', fontWeight: 600 }}>{s.name.replace(/\s*\(.*\)/, '')}</span>}
+          {s && <span>{'\u203A'}</span>}
+          <span style={{ color: 'var(--ink)', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.name}</span>
+        </div>
+
         {/* ── 2. Name + subtitle ── */}
         <div style={{ padding: '18px 16px 0' }}>
           <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>{product.name}</div>
           <div style={{ fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>
-            {product.subtitle}{s ? ' \u00B7 ' + s.name : ''}{product.number ? ' \u00B7 ' + product.number : ''}
+            {product.subtitle}
+            {s && <span>{' \u00B7 '}<span onClick={() => app.nav.push('set', { id: s.id })} style={{ cursor: 'pointer', textDecoration: 'underline', textDecorationColor: 'var(--line)' }}>{s.name}</span></span>}
+            {product.number ? ' \u00B7 ' + product.number : ''}
           </div>
         </div>
 
         {/* ── 3. Condition filter pills ── */}
         <div style={{ display: 'flex', gap: 6, padding: '12px 16px', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-          {['All', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'BGS'].map(c => (
-            <div key={c} style={{
-              padding: '7px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer', flexShrink: 0,
-              background: c === 'All' ? '#fff' : 'var(--surface)',
-              color: c === 'All' ? 'var(--ink)' : 'var(--ink)',
-              border: c === 'All' ? '2px solid var(--ink)' : '1px solid var(--line)',
-            }}>{c}</div>
-          ))}
+          {['All', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'BGS'].map(c => {
+            const active = condFilter === c;
+            return (
+              <button key={c} onClick={() => setCondFilter(c)} style={{
+                padding: '7px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer', flexShrink: 0,
+                background: active ? 'var(--ink)' : 'var(--surface)',
+                color: active ? '#fff' : 'var(--ink)',
+                border: active ? 'none' : '1px solid var(--line)',
+              }}>{c}</button>
+            );
+          })}
         </div>
 
         {/* ── 4. Price ── */}
@@ -198,8 +217,19 @@ function ProductScreen({ app, params }) {
           <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16, marginBottom: 12 }}>
             Listed items
           </div>
-          {product.offers.map((o, idx) => (
-            <OfferCard key={o.id} offer={o} isLowest={idx === 0}
+          {(() => {
+            const filteredOffers = condFilter === 'All' ? product.offers : product.offers.filter(o => {
+              if (condFilter === 'NM') return o.condition === 'Near Mint' || o.condition === 'Mint' || o.condition === 'Gem Mint';
+              if (condFilter === 'LP') return o.condition === 'Lightly Played';
+              if (condFilter === 'MP') return o.condition === 'Moderately Played';
+              if (condFilter === 'HP') return o.condition === 'Heavily Played';
+              if (condFilter === 'PSA 10') return o.grade && o.grade.company === 'psa' && o.grade.grade === 10;
+              if (condFilter === 'PSA 9') return o.grade && o.grade.company === 'psa' && o.grade.grade === 9;
+              if (condFilter === 'BGS') return o.grade && o.grade.company === 'bgs';
+              return true;
+            });
+            return filteredOffers.length > 0 ? filteredOffers.map((o, idx) => (
+            <OfferCard key={o.id} offer={o} isLowest={idx === 0} app={app}
               onViewListing={() => {
                 const lid = o.listingId || (product.offers.find(x => x.listingId) || {}).listingId;
                 if (lid) app.nav.push('listing', { id: lid });
@@ -213,7 +243,12 @@ function ProductScreen({ app, params }) {
                 }
               }}
             />
-          ))}
+          )) : (
+            <div style={{ padding: '20px 0', textAlign: 'center', fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)' }}>
+              No listings match this condition.
+            </div>
+          );
+          })()}
         </div>
 
         {/* trade offers */}
