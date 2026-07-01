@@ -129,7 +129,7 @@ function DGameLanding({ app, params }) {
           var active = setFilter === s.id;
           return React.createElement('button', {
             key: s.id,
-            onClick: function() { setSetFilter(active ? 'all' : s.id); },
+            onClick: function() { app.go('set', { id: s.id }); },
             style: {
               position: 'relative', height: 120, borderRadius: 14, overflow: 'hidden',
               background: s.hue || 'var(--surface)', cursor: 'pointer',

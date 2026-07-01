@@ -4,6 +4,7 @@
 const { T: TLi, money: mLi, CardArt: CardArtLi, Slab: SlabLi, GradeChip: GradeChipLi, Sparkline: SparkLi, Delta: DeltaLi, Stars: StarsLi, Icon: IconLi, gradeText: gradeTextLi } = window;
 const { byId: byIdLi, setById: setByIdLi, gameById: gameByIdLi, LISTINGS: LISTLi } = window;
 const { DCard: DCardLi } = window;
+const { PRINTINGS: PRINTINGS_LI } = window;
 
 function DListing({ app, params }) {
   const item = byIdLi(params.id);
@@ -156,7 +157,7 @@ function DListing({ app, params }) {
                     <span style={{ width: 36, height: 36, borderRadius: 10, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 14, flexShrink: 0 }}>{o.seller.charAt(0)}</span>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <span style={{ fontWeight: 700, fontSize: 14 }}>{o.seller}</span>
+                        <span onClick={function(e) { e.stopPropagation(); app.go('seller', { name: o.seller }); }} style={{ fontWeight: 700, fontSize: 14, cursor: 'pointer', textDecoration: 'underline', textDecorationColor: 'var(--line)' }}>{o.seller}</span>
                         {o.sellerRating >= 99 && window.TrustBadge && <window.TrustBadge tier={2} />}
                       </div>
                       <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 1 }}>{o.sellerRating}% · {o.sellerSales.toLocaleString()} sales · {o.condition}</div>
@@ -218,6 +219,40 @@ function DListing({ app, params }) {
                     <button onClick={() => app.go('trade')} style={{ width: '100%', background: 'var(--ink)', color: '#fff', border: 'none', padding: 10, borderRadius: 10, fontWeight: 700, fontSize: 13.5 }}>Propose trade</button>
                   </div>
                 ))}
+              </div>
+            </section>
+          );
+        })()}
+
+        {/* other printings */}
+        {(() => {
+          var printings = PRINTINGS_LI && PRINTINGS_LI[item.name];
+          if (!printings || printings.length <= 1) return null;
+          return (
+            <section style={{ background: 'var(--surface)', borderRadius: 18, padding: '22px 24px', marginBottom: 28, boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
+              <h2 style={{ fontFamily: TLi.sans, fontWeight: 700, fontSize: 20, letterSpacing: -0.5, margin: '0 0 6px' }}>Other printings</h2>
+              <p style={{ fontSize: 13.5, color: 'var(--muted)', margin: '0 0 16px' }}>This card has appeared in multiple sets.</p>
+              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+                {printings.map(function(pr, idx) {
+                  var prSet = window.setById ? window.setById(pr.set) : null;
+                  var prListing = LISTLi.find(function(l) { return l.set === pr.set && l.name === item.name; });
+                  var isCurrent = pr.set === item.set;
+                  return React.createElement('button', {
+                    key: idx,
+                    onClick: function() { if (prListing && !isCurrent) app.go('listing', { id: prListing.id }); },
+                    disabled: isCurrent,
+                    style: {
+                      padding: '12px 16px', borderRadius: 12, textAlign: 'left', cursor: isCurrent ? 'default' : 'pointer',
+                      background: isCurrent ? 'var(--ink)' : 'var(--bg)',
+                      border: isCurrent ? 'none' : '1px solid var(--line)',
+                      color: isCurrent ? '#fff' : 'var(--ink)',
+                      minWidth: 140,
+                    }},
+                    React.createElement('div', { style: { fontWeight: 700, fontSize: 13 } }, prSet ? prSet.name.replace(/\s*\(.*\)/, '') : pr.set),
+                    React.createElement('div', { style: { fontSize: 12, opacity: isCurrent ? 0.7 : 1, color: isCurrent ? 'rgba(255,255,255,0.7)' : 'var(--muted)', marginTop: 3 } }, pr.number),
+                    React.createElement('div', { style: { fontFamily: TLi.mono, fontWeight: 700, fontSize: 15, marginTop: 6 } }, mLi(pr.price))
+                  );
+                })}
               </div>
             </section>
           );

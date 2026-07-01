@@ -2,12 +2,17 @@
 // CARDONOMY Desktop — Online Seller Profile
 // ─────────────────────────────────────────────────────────────
 const { T: TSd, money: mSd, Icon: IconSd } = window;
+const { GAMES: GAMES_DS, gameById: gameByIdSd } = window;
 
 function DSellerProfile({ app, params }) {
   params = params || {};
   var seller = window.sellerByName(params.name);
   var _tab = React.useState('listings');
   var tab = _tab[0], setTab = _tab[1];
+  var _gf = React.useState('all');
+  var gameFilter = _gf[0], setGameFilter = _gf[1];
+  var _sb = React.useState('popular');
+  var sortBy = _sb[0], setSortBy = _sb[1];
 
   if (!seller) return (
     <div className="wrap" style={{ padding: '70px 24px', textAlign: 'center' }}>
@@ -100,13 +105,59 @@ function DSellerProfile({ app, params }) {
 
       // listings tab
       tab === 'listings' && React.createElement('div', null,
-        listings.length > 0
-          ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 } },
-              listings.map(function(l) { return React.createElement(window.DCard, { key: l.id, item: l, app: app }); })
-            )
-          : React.createElement('div', { style: { textAlign: 'center', padding: '60px 20px', background: 'var(--surface)', borderRadius: 16 } },
-              React.createElement('div', { style: { fontWeight: 700, fontSize: 16, color: 'var(--muted)' } }, 'No listings available right now')
-            )
+        // game filter chips
+        (function() {
+          var gameCounts = {};
+          listings.forEach(function(l) { if (l.game) gameCounts[l.game] = (gameCounts[l.game] || 0) + 1; });
+          var gameIds = Object.keys(gameCounts);
+          if (gameIds.length <= 1) return null;
+          return React.createElement('div', { style: { display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 14 } },
+            React.createElement('button', {
+              onClick: function() { setGameFilter('all'); },
+              style: { padding: '7px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+                background: gameFilter === 'all' ? 'var(--ink)' : 'var(--surface)',
+                color: gameFilter === 'all' ? '#fff' : 'var(--ink)',
+                border: gameFilter === 'all' ? 'none' : '1px solid var(--line)' }
+            }, 'All (' + listings.length + ')'),
+            gameIds.map(function(gid) {
+              var gm = gameByIdSd ? gameByIdSd(gid) : null;
+              var active = gameFilter === gid;
+              return React.createElement('button', {
+                key: gid, onClick: function() { setGameFilter(active ? 'all' : gid); },
+                style: { padding: '7px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+                  background: active ? 'var(--ink)' : 'var(--surface)',
+                  color: active ? '#fff' : 'var(--ink)',
+                  border: active ? 'none' : '1px solid var(--line)' }
+              }, (gm ? gm.short : gid) + ' (' + gameCounts[gid] + ')');
+            })
+          );
+        })(),
+        // sort
+        React.createElement('div', { style: { display: 'flex', justifyContent: 'flex-end', marginBottom: 16 } },
+          React.createElement('select', {
+            value: sortBy, onChange: function(e) { setSortBy(e.target.value); },
+            style: { padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+              background: 'var(--surface)', color: 'var(--ink)', border: '1px solid var(--line)' }
+          },
+            React.createElement('option', { value: 'popular' }, 'Popular'),
+            React.createElement('option', { value: 'price_asc' }, 'Price: low \u2192 high'),
+            React.createElement('option', { value: 'price_desc' }, 'Price: high \u2192 low')
+          )
+        ),
+        // grid
+        (function() {
+          var filtered = gameFilter === 'all' ? listings : listings.filter(function(l) { return l.game === gameFilter; });
+          if (sortBy === 'popular') filtered = filtered.slice().sort(function(a, b) { return (b.watchers || 0) - (a.watchers || 0); });
+          else if (sortBy === 'price_asc') filtered = filtered.slice().sort(function(a, b) { return a.price - b.price; });
+          else if (sortBy === 'price_desc') filtered = filtered.slice().sort(function(a, b) { return b.price - a.price; });
+          return filtered.length > 0
+            ? React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18 } },
+                filtered.map(function(l) { return React.createElement(window.DCard, { key: l.id, item: l, app: app }); })
+              )
+            : React.createElement('div', { style: { textAlign: 'center', padding: '60px 20px', background: 'var(--surface)', borderRadius: 16 } },
+                React.createElement('div', { style: { fontWeight: 700, fontSize: 16, color: 'var(--muted)' } }, 'No listings in this category')
+              );
+        })()
       ),
 
       // reviews tab

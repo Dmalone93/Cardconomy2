@@ -4,6 +4,7 @@
 const { T, money, CardArt, Icon, Logo } = window;
 const { GAMES, SETS, LISTINGS, gameById, GAME_LOGOS } = window;
 const { DHome, DSearch, DListing } = window;
+const { SetScreen: DSetScreen } = window;
 const { DSell, DSellSingle, DSellBulk } = window;
 const { DTrade, DStorefront, DShopDash } = window;
 
@@ -295,7 +296,8 @@ function App() {
           return;
         }
       }
-      showToast('Added to cart');
+      const addedItem = window.byId(id);
+      showToast(addedItem ? addedItem.name + ' added to cart' : 'Added to cart');
     },
     removeFromCart: (id) => setCart(c => c.filter(x => x !== id)),
     clearCart: () => setCart([]),
@@ -321,6 +323,14 @@ function App() {
   else if (route.name === 'fees') Screen = DFees;
   else if (route.name === 'howitworks') Screen = DHowItWorks;
   else if (route.name === 'game') Screen = window.DGameLanding;
+  else if (route.name === 'set') {
+    const _setParams = route.params;
+    const _setApp = Object.assign({}, app, {
+      nav: { pop: () => app.go('home'), setTab: (t) => app.go(t), push: (s, p) => app.go(s, p) },
+      isDesktop: false, isWide: false,
+    });
+    Screen = function DSetAdapter() { return React.createElement(DSetScreen, { app: _setApp, params: _setParams }); };
+  }
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

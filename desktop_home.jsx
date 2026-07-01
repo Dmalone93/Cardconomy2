@@ -4,6 +4,7 @@
 const { T: TH, money: mH, CardArt: CardArtH, Slab: SlabH, GradeChip: GradeChipH, Delta: DeltaH, Icon: IconH } = window;
 const { GAMES: GAMESH, SETS: SETSH, LISTINGS: LISTH, LOTS: LOTSH, gameById: gameByIdH, setById: setByIdH, GAME_LOGOS: GAME_LOGOS_H } = window;
 const { HOT_DEALS: HOT_DEALS_H, PRICE_MOVERS: PRICE_MOVERS_H, byId: byIdH } = window;
+const { SELLERS: SELLERS_DH } = window;
 
 // ── game hero images + tile for desktop ──────────────────────
 const GAME_HEROES_H = {
@@ -524,6 +525,40 @@ function DHome({ app }) {
           </div>
         </div>
       </section>
+
+      {/* ── Featured sellers ── */}
+      {SELLERS_DH && SELLERS_DH.length > 0 && (
+        <section className="wrap" style={{ marginTop: 50 }}>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 18 }}>
+            <h2 style={{ fontFamily: TH.heading, fontWeight: 700, fontSize: 24, letterSpacing: -0.6, margin: 0 }}>Featured sellers</h2>
+            <button onClick={() => app.go('search')} style={{ fontSize: 14.5, fontWeight: 600, color: 'var(--ink)' }}>Browse all →</button>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
+            {SELLERS_DH.slice(0, 4).map(function(s) {
+              return (
+                <button key={s.name} onClick={() => app.go('seller', { name: s.name })}
+                  style={{ background: 'var(--surface)', borderRadius: 16, padding: '20px 16px', textAlign: 'center',
+                    border: '1px solid var(--line)', cursor: 'pointer', transition: 'box-shadow 0.18s, transform 0.18s' }}
+                  onMouseEnter={function(e) { e.currentTarget.style.boxShadow = '0 8px 24px rgba(20,24,40,0.12)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
+                  onMouseLeave={function(e) { e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.transform = 'none'; }}>
+                  <div style={{ width: 52, height: 52, borderRadius: 999, background: 'var(--fill)', color: '#fff',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontWeight: 700, fontSize: 22, margin: '0 auto 12px' }}>
+                    {s.name.charAt(0)}
+                  </div>
+                  <div style={{ fontWeight: 700, fontSize: 15, letterSpacing: -0.2, marginBottom: 3 }}>{s.name}</div>
+                  <div style={{ fontSize: 12, color: 'var(--muted)', marginBottom: 6 }}>{s.loc}</div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                    <span style={{ color: '#f59e0b', fontSize: 12 }}>★</span>
+                    <span style={{ fontSize: 12, fontWeight: 600 }}>{s.rating}%</span>
+                    <span style={{ fontSize: 11, color: 'var(--muted)' }}>· {s.sales >= 1000 ? (s.sales / 1000).toFixed(1) + 'k' : s.sales} sales</span>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </section>
+      )}
 
       {/* ── Local shops + UK community (side by side) ── */}
       <section className="wrap" style={{ marginTop: 50 }}>
