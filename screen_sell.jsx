@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Sell a card — multi-step listing flow
 // ─────────────────────────────────────────────────────────────
-const { T: TSE, money: moneySE, CardArt: CardArtSE, GradeChip: GradeChipSE, Chip: ChipSE, Icon: IconSE, Container: ContainerSE } = window;
+const { T: TSE, money: moneySE, CardArt: CardArtSE, GradeChip: GradeChipSE, Chip: ChipSE, Icon: IconSE } = window;
 const { LISTINGS: LISTINGS_SE, SETS: SETS_SE, GAMES: GAMES_SE, gameById: gameByIdSE, setById: setByIdSE } = window;
 const { ToggleSwitch: ToggleSwitchSE } = window;
 
@@ -80,7 +80,6 @@ function SellScreen({ app }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '18px 16px 16px' }}>
-        <ContainerSE width={720} style={{ padding: 0 }}>
         {/* STEP 0 — pick card */}
         {step === 0 && (
           <div>
@@ -249,7 +248,6 @@ function SellScreen({ app }) {
             </div>
           </div>
         )}
-        </ContainerSE>
       </div>
 
       {/* footer */}

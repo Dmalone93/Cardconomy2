@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // LGS storefront + shop enrollment pitch (community pillar)
 // ─────────────────────────────────────────────────────────────
-const { T: TF, money: moneyF, Icon: IconF, CardArt: CardArtF, GradeChip: GradeChipF, Stars: StarsF, Container: ContainerF } = window;
+const { T: TF, money: moneyF, Icon: IconF, CardArt: CardArtF, GradeChip: GradeChipF, Stars: StarsF } = window;
 const { SHOPS: SHOPS_F, byId: byIdF, setById: setByIdF, gameById: gameByIdF, shopById: shopByIdF } = window;
 
 const mf = (n) => moneyF(n, { cents: false });
@@ -26,7 +26,6 @@ function StorefrontScreen({ app, params = {} }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 30 }}>
-        <ContainerF width={1080} style={{ padding: 0 }}>
         {/* banner */}
         <div style={{ height: 150, background: 'linear-gradient(135deg, ' + shop.tint + ', ' + shop.tint + 'bb)', position: 'relative', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', inset: 0, backgroundImage: 'repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 14px, transparent 14px 28px)' }} />
@@ -133,7 +132,6 @@ function StorefrontScreen({ app, params = {} }) {
             </div>
           )}
         </div>
-        </ContainerF>
       </div>
     </div>
   );
@@ -399,7 +397,6 @@ function BuylistWizard({ open, cards, onDone, onClose }) {
 
         {/* results */}
         <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px', paddingBottom: items.length > 0 ? 80 : 16 }}>
-          <ContainerF width={1080} style={{ padding: 0 }}>
           {query.length < 2 && (
             <div style={{ padding: 40, textAlign: 'center', color: TF.faint, fontFamily: TF.sans, fontSize: 13 }}>
               Search for cards to add to your buylist
@@ -475,7 +472,6 @@ function BuylistWizard({ open, cards, onDone, onClose }) {
               </div>
             );
           })}
-          </ContainerF>
         </div>
 
         {/* floating bottom bar */}
@@ -542,7 +538,6 @@ function BuylistWizard({ open, cards, onDone, onClose }) {
 
       {/* card list */}
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px', paddingBottom: 90 }}>
-        <ContainerF width={1080} style={{ padding: 0 }}>
         {items.map((c, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, padding: '10px 12px', background: TF.surface, borderRadius: 4 }}>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -564,7 +559,6 @@ function BuylistWizard({ open, cards, onDone, onClose }) {
               style={{ color: TF.faint, fontWeight: 700, fontSize: 18, background: 'none', padding: '0 4px', flexShrink: 0 }}>×</button>
           </div>
         ))}
-        </ContainerF>
       </div>
 
       {/* done button */}
@@ -784,7 +778,6 @@ function EnrollShopScreen({ app }) {
           <button onClick={() => app.nav.pop()} style={{ width: 38, height: 38, borderRadius: 999, background: 'var(--glass)', backdropFilter: 'blur(6px)', boxShadow: '0 1px 4px rgba(0,0,0,0.12)', color: TF.ink, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{IconF.back({})}</button>
         </div>
         <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 110 }}>
-          <ContainerF width={1080} style={{ padding: 0 }}>
           {/* hero */}
           <div style={{ color: '#fff', padding: '92px 22px 30px', position: 'relative', overflow: 'hidden', minHeight: 280 }}>
             <img src="content/enroll-hero.webp" alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
@@ -830,7 +823,6 @@ function EnrollShopScreen({ app }) {
               </div>
             </div>
           </div>
-          </ContainerF>
         </div>
 
         {/* sticky CTA */}
@@ -906,7 +898,6 @@ function EnrollShopScreen({ app }) {
 
       {/* step content */}
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 120px' }}>
-        <ContainerF width={1080} style={{ padding: 0 }}>
         {step === 1 && (
           <div>
             <h2 style={{ margin: '0 0 4px', fontFamily: TF.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>Tell us about your shop</h2>
@@ -972,7 +963,6 @@ function EnrollShopScreen({ app }) {
             </div>
           </div>
         )}
-        </ContainerF>
       </div>
 
       {/* sticky continue */}

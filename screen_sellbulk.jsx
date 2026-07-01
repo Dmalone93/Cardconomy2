@@ -3,7 +3,7 @@
 // then auto-prices every scanned card at market for publishing.
 // phases: method → scan → price → done
 // ─────────────────────────────────────────────────────────────
-const { T: TB, money: moneyB, Icon: IconB, CardArt: CardArtB, GradeChip: GradeChipB, Container: ContainerB } = window;
+const { T: TB, money: moneyB, Icon: IconB, CardArt: CardArtB, GradeChip: GradeChipB } = window;
 const { SUB_CARDS: SC_B, setById: setByIdB } = window;
 const LiveSweepB = (props) => window.LiveSweep(props);
 
@@ -70,7 +70,6 @@ function SellBulkScreen({ app }) {
       )}
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto' }}>
-        <ContainerB width={720} style={{ padding: 0 }}>
         {/* ── METHOD ── */}
         {phase === 'method' && (
           <div style={{ padding: '18px 16px 30px' }}>
@@ -173,7 +172,6 @@ function SellBulkScreen({ app }) {
             <button onClick={() => app.nav.setTab('home')} style={{ marginTop: 10, color: TB.muted, fontFamily: TB.sans, fontWeight: 600, fontSize: 14 }}>Back to browse</button>
           </div>
         )}
-        </ContainerB>
       </div>
 
       {/* footer */}

@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Watchlist / Collection + Profile
 // ─────────────────────────────────────────────────────────────
-const { T: TW, money: moneyW, CardArt: CardArtW, GradeChip: GradeChipW, Sparkline: SparkW, Delta: DeltaW, Stars: StarsW, Icon: IconW, Container: ContainerW } = window;
+const { T: TW, money: moneyW, CardArt: CardArtW, GradeChip: GradeChipW, Sparkline: SparkW, Delta: DeltaW, Stars: StarsW, Icon: IconW } = window;
 const { byId: byIdW, LISTINGS: LISTINGS_W, setById: setByIdW } = window;
 const { Sparkline: SparkD } = window;
 
@@ -80,7 +80,6 @@ function WatchScreen({ app }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
-        <ContainerW width={1280} style={{ padding: 0 }}>
         {tab === 'watch' ? (
           watched.length === 0 ? (
             <EmptyState icon={IconW.heart({ width: 40, height: 40 }, false)} title="Nothing saved yet"
@@ -179,7 +178,6 @@ function WatchScreen({ app }) {
             </div>
           </div>
         )}
-        </ContainerW>
       </div>
 
       {/* floating selection bar */}
@@ -346,7 +344,6 @@ function SellerDash({ app, header }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
       {header}
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
-        <ContainerW width={1280} style={{ padding: 0 }}>
         {/* balance card */}
         <button onClick={() => app.nav.push('payments')} style={{ width: '100%', textAlign: 'left', background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)', borderRadius: 20, padding: 20, color: '#fff', marginBottom: 14 }}>
           <div style={{ fontFamily: TW.sans, fontSize: 12, opacity: 0.65, fontWeight: 600 }}>Available balance</div>
@@ -415,7 +412,6 @@ function SellerDash({ app, header }) {
           </div>
           {IconW.chevron({ style: { color: TW.faint } })}
         </button>
-        </ContainerW>
       </div>
     </div>
   );
@@ -449,7 +445,6 @@ function BuyerDash({ app, header }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
       {header}
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
-        <ContainerW width={1280} style={{ padding: 0 }}>
 
         {/* 1. Portfolio hero card */}
         <button onClick={() => app.nav.setTab('watch')} style={{ width: '100%', textAlign: 'left', background: TW.surface, borderRadius: 20, padding: 20, marginBottom: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -536,7 +531,6 @@ function BuyerDash({ app, header }) {
             <span style={{ fontSize: 15 }}>{'⚠️'}</span> Report an issue
           </button>
         </div>
-        </ContainerW>
 
       </div>
     </div>
@@ -576,7 +570,6 @@ function StoreDash({ app, header }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TW.bg }}>
       {header}
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
-        <ContainerW width={1280} style={{ padding: 0 }}>
 
         {/* 1. Needs attention */}
         <div style={{ marginBottom: 14 }}>
@@ -679,7 +672,6 @@ function StoreDash({ app, header }) {
             );
           })}
         </div>
-        </ContainerW>
 
       </div>
     </div>
@@ -730,7 +722,6 @@ function SettingsScreen({ app }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 100px' }}>
-        <ContainerW width={1280} style={{ padding: 0 }}>
         {/* identity card */}
         <div style={{ background: TW.surface, borderRadius: 16, padding: 16, marginBottom: 14, display: 'flex', alignItems: 'center', gap: 14, boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ width: 52, height: 52, borderRadius: 15, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TW.sans, fontWeight: 700, fontSize: 24, flexShrink: 0 }}>A</div>
@@ -767,7 +758,6 @@ function SettingsScreen({ app }) {
           <button onClick={() => app.nav.push('enroll_shop')} style={{ width: '100%', marginBottom: 12, background: TW.surface2, color: TW.ink,
             borderRadius: 13, padding: '13px 16px', fontFamily: TW.sans, fontWeight: 700, fontSize: 14 }}>Enroll as Local Game Store</button>
         )}
-        </ContainerW>
       </div>
       {window.GamePrefsSheet && <window.GamePrefsSheet app={app} open={prefsOpen} onClose={() => setPrefsOpen(false)} games={window.GAMES || []} />}
     </div>
@@ -822,7 +812,6 @@ function CollectionDetailScreen({ app, params }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: selectMode && selected.length > 0 ? '16px 16px 120px' : '16px 16px 30px' }}>
-        <ContainerW width={1280} style={{ padding: 0 }}>
         {/* per-collection value */}
         {!selectMode && (
           <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff', marginBottom: 16 }}>
@@ -930,7 +919,6 @@ function CollectionDetailScreen({ app, params }) {
           <button onClick={() => { if (!window.confirm || window.confirm('Delete this collection? Cards stay in your other collections.')) { app.deleteCollection(col.id); app.nav.pop(); } }}
             style={{ width: '100%', marginTop: 22, color: TW.down, fontFamily: TW.sans, fontWeight: 700, fontSize: 13.5, padding: 10 }}>Delete collection</button>
         )}
-        </ContainerW>
       </div>
 
       {/* floating selection bar */}

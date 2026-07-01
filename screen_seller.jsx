@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Online seller storefront — profile + listings
 // ─────────────────────────────────────────────────────────────
-const { T: TS, money: moneyS, CardArt: CardArtS, Icon: IconS, Container: ContainerSl } = window;
+const { T: TS, money: moneyS, CardArt: CardArtS, Icon: IconS } = window;
 const { sellerByName: sellerByNameS, listingsBySeller: listingsBySellerS, gameById: gameByIdS, setById: setByIdS } = window;
 const { GAMES: GAMES_S } = window;
 
@@ -36,7 +36,6 @@ function SellerScreen({ app, params = {} }) {
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 40 }}>
         {/* branded header */}
         <div style={{ background: 'var(--fill)', color: '#fff', padding: '24px 16px', textAlign: 'center' }}>
-
           <div style={{
             width: 56, height: 56, borderRadius: 999, background: '#fff', color: 'var(--fill)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -58,8 +57,7 @@ function SellerScreen({ app, params = {} }) {
         </div>
 
         {/* stats + bio + location card */}
-        <ContainerSl>
-        <div style={{ padding: '16px 0 0' }}>
+        <div style={{ padding: '16px 16px 0' }}>
           <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
             {[
               [<svg width="18" height="18" viewBox="0 0 256 256" fill="none"><path d="M234.29,114.85l-45,38.83L203,211.75a16.4,16.4,0,0,1-24.5,17.82L128,198.49,77.47,229.57A16.4,16.4,0,0,1,53,211.75l13.76-58.07-45-38.83A16.46,16.46,0,0,1,31.08,91l59.46-5.15,23.21-55.36a16.37,16.37,0,0,1,30.5,0l23.21,55.36L226.92,91a16.46,16.46,0,0,1,9.37,23.84Z" fill="currentColor"/></svg>, seller.rating + '%', 'Rating'],
@@ -94,31 +92,27 @@ function SellerScreen({ app, params = {} }) {
             </button>
           )}
         </div>
-        </ContainerSl>
 
         {/* tabs */}
-        <ContainerSl style={{ padding: 0 }}>
-          <div style={{ display: 'flex', borderBottom: '1px solid var(--line)' }}>
-            {[
-              ['listings', 'Listings (' + listings.length + ')'],
-              ['reviews', 'Reviews'],
-              ['policies', 'Policies'],
-            ].map(([key, label]) => (
-              <button key={key} onClick={() => setTab(key)} style={{
-                flex: 1, textAlign: 'center', padding: '11px 0',
-                fontFamily: TS.sans, fontWeight: 700, fontSize: 12,
-                color: tab === key ? TS.ink : TS.muted,
-                borderBottom: tab === key ? '2px solid var(--fill)' : '2px solid transparent',
-                background: 'none',
-              }}>{label}</button>
-            ))}
-          </div>
-        </ContainerSl>
+        <div style={{ display: 'flex', borderBottom: '1px solid var(--line)' }}>
+          {[
+            ['listings', 'Listings (' + listings.length + ')'],
+            ['reviews', 'Reviews'],
+            ['policies', 'Policies'],
+          ].map(([key, label]) => (
+            <button key={key} onClick={() => setTab(key)} style={{
+              flex: 1, textAlign: 'center', padding: '11px 0',
+              fontFamily: TS.sans, fontWeight: 700, fontSize: 12,
+              color: tab === key ? TS.ink : TS.muted,
+              borderBottom: tab === key ? '2px solid var(--fill)' : '2px solid transparent',
+              background: 'none',
+            }}>{label}</button>
+          ))}
+        </div>
 
         {/* tab content */}
         {tab === 'listings' && (
-          <ContainerSl>
-          <div style={{ padding: '16px 0' }}>
+          <div style={{ padding: 16 }}>
             {/* Game filter tabs */}
             {(() => {
               const gameCounts = {};
@@ -171,7 +165,7 @@ function SellerScreen({ app, params = {} }) {
               else if (sortBy === 'price_asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
               else if (sortBy === 'price_desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
               return (
-                <div style={{ display: 'grid', gridTemplateColumns: app.isWide ? 'repeat(4, 1fr)' : app.isDesktop ? 'repeat(3, 1fr)' : '1fr 1fr', gap: 11 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 11 }}>
                   {filtered.map(l => (
                     <button key={l.id} onClick={() => { const prod = window.PRODUCTS.find(p => p.offers.some(o => o.listingId === l.id)); app.nav.push(prod ? 'product' : 'listing', { id: prod ? prod.id : l.id }); }}
                       style={{ textAlign: 'left', background: TS.surface, borderRadius: 14, overflow: 'hidden', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
@@ -194,89 +188,69 @@ function SellerScreen({ app, params = {} }) {
               );
             })()}
           </div>
-          </ContainerSl>
         )}
 
-        {tab === 'reviews' && (() => {
-          const reviews = [
-            { stars: 5, text: 'Cards arrived double-sleeved in a toploader. Exactly as described, fast shipping.', author: 'Marcus T.', time: '1 week ago' },
-            { stars: 5, text: 'Great prices and the card was in perfect condition. Will buy again.', author: 'Priya K.', time: '2 weeks ago' },
-            { stars: 4, text: 'Good seller, card was NM as listed. Shipping took a little longer than expected.', author: 'Diego R.', time: '1 month ago' },
-            { stars: 5, text: 'Packaged really well, no damage at all. Highly recommend.', author: 'Sophie L.', time: '1 month ago' },
-            { stars: 4, text: 'Fair price, honest grading. Would trade with again.', author: 'James W.', time: '2 months ago' },
-          ];
-          const ReviewCard = ({ r, i }) => (
-            <div key={i} style={{ background: TS.surface, borderRadius: 14, padding: 14, marginBottom: app.isDesktop ? 0 : 8 }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
-                <div style={{ width: 30, height: 30, borderRadius: 999, background: 'var(--fill)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TS.sans, fontWeight: 700, fontSize: 12, flexShrink: 0 }}>{r.author.charAt(0)}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 13 }}>{r.author}</div>
-                  <div style={{ fontFamily: TS.sans, fontSize: 10, color: TS.muted }}>{r.time}</div>
-                </div>
-                <div style={{ display: 'flex', gap: 1 }}>
+        {tab === 'reviews' && (
+          <div style={{ padding: 16 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
+              <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.5 }}>{seller.rating}%</div>
+              <div>
+                <div style={{ display: 'flex', gap: 2 }}>
                   {Array.from({ length: 5 }, (_, s) => (
-                    <span key={s} style={{ color: s < r.stars ? '#f59e0b' : '#e5e7eb', fontSize: 11 }}>★</span>
+                    <span key={s} style={{ color: '#f59e0b', fontSize: 14 }}>★</span>
                   ))}
                 </div>
+                <div style={{ fontFamily: TS.sans, fontSize: 11, color: TS.muted, marginTop: 1 }}>Based on {seller.sales.toLocaleString()} transactions</div>
               </div>
-              <div style={{ fontFamily: TS.sans, fontSize: 13, color: TS.ink2, lineHeight: 1.45 }}>{r.text}</div>
             </div>
-          );
-          return (
-            <ContainerSl>
-              <div style={{ padding: '16px 0' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 14 }}>
-                  <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 28, letterSpacing: -0.5 }}>{seller.rating}%</div>
-                  <div>
-                    <div style={{ display: 'flex', gap: 2 }}>
-                      {Array.from({ length: 5 }, (_, s) => (
-                        <span key={s} style={{ color: '#f59e0b', fontSize: 14 }}>★</span>
-                      ))}
-                    </div>
-                    <div style={{ fontFamily: TS.sans, fontSize: 11, color: TS.muted, marginTop: 1 }}>Based on {seller.sales.toLocaleString()} transactions</div>
+            {[
+              { stars: 5, text: 'Cards arrived double-sleeved in a toploader. Exactly as described, fast shipping.', author: 'Marcus T.', time: '1 week ago' },
+              { stars: 5, text: 'Great prices and the card was in perfect condition. Will buy again.', author: 'Priya K.', time: '2 weeks ago' },
+              { stars: 4, text: 'Good seller, card was NM as listed. Shipping took a little longer than expected.', author: 'Diego R.', time: '1 month ago' },
+              { stars: 5, text: 'Packaged really well, no damage at all. Highly recommend.', author: 'Sophie L.', time: '1 month ago' },
+              { stars: 4, text: 'Fair price, honest grading. Would trade with again.', author: 'James W.', time: '2 months ago' },
+            ].map((r, i) => (
+              <div key={i} style={{ background: TS.surface, borderRadius: 14, padding: 14, marginBottom: 8 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                  <div style={{ width: 30, height: 30, borderRadius: 999, background: 'var(--fill)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TS.sans, fontWeight: 700, fontSize: 12, flexShrink: 0 }}>{r.author.charAt(0)}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 13 }}>{r.author}</div>
+                    <div style={{ fontFamily: TS.sans, fontSize: 10, color: TS.muted }}>{r.time}</div>
+                  </div>
+                  <div style={{ display: 'flex', gap: 1 }}>
+                    {Array.from({ length: 5 }, (_, s) => (
+                      <span key={s} style={{ color: s < r.stars ? '#f59e0b' : '#e5e7eb', fontSize: 11 }}>★</span>
+                    ))}
                   </div>
                 </div>
-                {app.isDesktop ? (
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                    {reviews.map((r, i) => <ReviewCard key={i} r={r} i={i} />)}
-                  </div>
-                ) : (
-                  reviews.map((r, i) => <ReviewCard key={i} r={r} i={i} />)
-                )}
+                <div style={{ fontFamily: TS.sans, fontSize: 13, color: TS.ink2, lineHeight: 1.45 }}>{r.text}</div>
               </div>
-            </ContainerSl>
-          );
-        })()}
+            ))}
+          </div>
+        )}
 
-        {tab === 'policies' && (() => {
-          const policies = [
-            { icon: <svg width="20" height="20" viewBox="0 0 256 256" fill="none"><path d="M255.43,117l-14-35A15.93,15.93,0,0,0,226.58,72H192V64a8,8,0,0,0-8-8H32A16,16,0,0,0,16,72V184a16,16,0,0,0,16,16H49a32,32,0,0,0,62,0h34a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.94,7.94,0,0,0,255.43,117ZM192,88h34.58l9.6,24H192ZM80,208a16,16,0,1,1,16-16A16,16,0,0,1,80,208Zm96,0a16,16,0,1,1,16-16A16,16,0,0,1,176,208Z" fill="currentColor"/></svg>,
-              title: 'Shipping', text: 'All orders shipped Royal Mail 1st Class Signed. Free shipping on orders over the threshold shown above. Cards are sent double-sleeved in toploaders with cardboard reinforcement.' },
-            { icon: <svg width="20" height="20" viewBox="0 0 256 256" fill="none"><path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31l83.67-83.66,3.48,13.9-36.8,36.79a8,8,0,0,0,11.31,11.32l40-40a8,8,0,0,0,2.11-7.6l-6.9-27.61L227.32,96A16,16,0,0,0,227.32,73.37ZM48,208V163.31l88-88L180.69,120l-88,88Z" fill="currentColor"/></svg>,
-              title: 'Returns', text: 'Returns accepted within 14 days of delivery if the card does not match the listing description. Buyer pays return shipping unless the item was misrepresented. Refunds processed within 2 business days of receiving the return.' },
-            { icon: <svg width="20" height="20" viewBox="0 0 256 256" fill="none"><path d="M208,40H48A16,16,0,0,0,32,56V200a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Zm80,32H48V56H208V200ZM64,96V80A16,16,0,0,1,80,64H96a8,8,0,0,1,0,16H80V96a8,8,0,0,1-16,0Zm144,64v16a16,16,0,0,1-16,16H176a8,8,0,0,1,0-16h16V160a8,8,0,0,1,16,0Z" fill="currentColor"/></svg>,
-              title: 'Grading Standards', text: 'We grade conservatively using TCGPlayer standards. NM means no visible wear under direct light. LP may have minor whitening on edges. All graded cards include close-up photos in the listing.' },
-          ];
-          return (
-            <ContainerSl>
-              <div style={{ padding: '16px 0' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: app.isDesktop ? '1fr 1fr' : '1fr', gap: 10 }}>
-                  {policies.map((p, i) => (
-                    <div key={i} style={{ background: TS.surface, borderRadius: 14, padding: 16, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
-                      <div style={{ width: 40, height: 40, borderRadius: 10, background: 'var(--accent-wash)', color: TS.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                        {p.icon}
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{p.title}</div>
-                        <div style={{ fontFamily: TS.sans, fontSize: 13, color: TS.ink2, lineHeight: 1.5 }}>{p.text}</div>
-                      </div>
-                    </div>
-                  ))}
+        {tab === 'policies' && (
+          <div style={{ padding: 16 }}>
+            {[
+              { icon: <svg width="20" height="20" viewBox="0 0 256 256" fill="none"><path d="M255.43,117l-14-35A15.93,15.93,0,0,0,226.58,72H192V64a8,8,0,0,0-8-8H32A16,16,0,0,0,16,72V184a16,16,0,0,0,16,16H49a32,32,0,0,0,62,0h34a32,32,0,0,0,62,0h17a16,16,0,0,0,16-16V120A7.94,7.94,0,0,0,255.43,117ZM192,88h34.58l9.6,24H192ZM80,208a16,16,0,1,1,16-16A16,16,0,0,1,80,208Zm96,0a16,16,0,1,1,16-16A16,16,0,0,1,176,208Z" fill="currentColor"/></svg>,
+                title: 'Shipping', text: 'All orders shipped Royal Mail 1st Class Signed. Free shipping on orders over the threshold shown above. Cards are sent double-sleeved in toploaders with cardboard reinforcement.' },
+              { icon: <svg width="20" height="20" viewBox="0 0 256 256" fill="none"><path d="M227.32,73.37,182.63,28.69a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31l83.67-83.66,3.48,13.9-36.8,36.79a8,8,0,0,0,11.31,11.32l40-40a8,8,0,0,0,2.11-7.6l-6.9-27.61L227.32,96A16,16,0,0,0,227.32,73.37ZM48,208V163.31l88-88L180.69,120l-88,88Z" fill="currentColor"/></svg>,
+                title: 'Returns', text: 'Returns accepted within 14 days of delivery if the card does not match the listing description. Buyer pays return shipping unless the item was misrepresented. Refunds processed within 2 business days of receiving the return.' },
+              { icon: <svg width="20" height="20" viewBox="0 0 256 256" fill="none"><path d="M208,40H48A16,16,0,0,0,32,56V200a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V56A16,16,0,0,0,208,40ZM128,168a40,40,0,1,1,40-40A40,40,0,0,1,128,168Zm80,32H48V56H208V200ZM64,96V80A16,16,0,0,1,80,64H96a8,8,0,0,1,0,16H80V96a8,8,0,0,1-16,0Zm144,64v16a16,16,0,0,1-16,16H176a8,8,0,0,1,0-16h16V160a8,8,0,0,1,16,0Z" fill="currentColor"/></svg>,
+                title: 'Grading Standards', text: 'We grade conservatively using TCGPlayer standards. NM means no visible wear under direct light. LP may have minor whitening on edges. All graded cards include close-up photos in the listing.' },
+            ].map((p, i) => (
+              <div key={i} style={{ background: TS.surface, borderRadius: 14, padding: 16, marginBottom: 10, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+                <div style={{ width: 40, height: 40, borderRadius: 10, background: 'var(--accent-wash)', color: TS.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {p.icon}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontFamily: TS.sans, fontWeight: 700, fontSize: 14, marginBottom: 4 }}>{p.title}</div>
+                  <div style={{ fontFamily: TS.sans, fontSize: 13, color: TS.ink2, lineHeight: 1.5 }}>{p.text}</div>
                 </div>
               </div>
-            </ContainerSl>
-          );
-        })()}
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

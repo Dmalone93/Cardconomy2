@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Checkout / Buy It Now
 // ─────────────────────────────────────────────────────────────
-const { T: TC, money: moneyC, CardArt: CardArtC, GradeChip: GradeChipC, Icon: IconC, Sheet: SheetC, Container: ContainerC } = window;
+const { T: TC, money: moneyC, CardArt: CardArtC, GradeChip: GradeChipC, Icon: IconC, Sheet: SheetC } = window;
 const { byId: byIdC, setById: setByIdC } = window;
 
 const SAVED_ADDRESSES = [
@@ -70,7 +70,6 @@ function CheckoutScreen({ app, params }) {
     return (
       <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TC.bg }}>
         <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '90px 24px 24px', textAlign: 'center' }}>
-          <ContainerC width={720} style={{ padding: 0 }}>
           <div style={{ width: 84, height: 84, margin: '0 auto', borderRadius: 999, background: 'var(--up-wash)', color: 'var(--up)',
             display: 'flex', alignItems: 'center', justifyContent: 'center', animation: 'ccPop 0.4s ease' }}>{IconC.check({ width: 44, height: 44 })}</div>
           <h2 style={{ margin: '20px 0 4px', fontFamily: TC.sans, fontWeight: 700, fontSize: 25, letterSpacing: -0.5 }}>Order confirmed</h2>
@@ -87,7 +86,6 @@ function CheckoutScreen({ app, params }) {
             {IconC.truck({})}
             <span style={{ fontFamily: TC.sans, fontSize: 13.5, fontWeight: 600 }}>Arriving {ship==='express'?'Wed, Jun 11':'Mon, Jun 16'} · tracked & insured</span>
           </div>
-          </ContainerC>
         </div>
         <div style={{ padding: '12px 16px 30px', borderTop: '1px solid var(--line)', background: TC.surface }}>
           <button onClick={() => { app.nav.setTab('home'); }} style={{ width: '100%', background: 'var(--ink)', color: '#fff', borderRadius: 4, padding: 16, fontFamily: TC.sans, fontWeight: 700, fontSize: 16 }}>Keep browsing</button>
@@ -105,7 +103,6 @@ function CheckoutScreen({ app, params }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '16px 16px 16px' }}>
-        <ContainerC width={720} style={{ padding: 0 }}>
         {/* item */}
         <div style={{ background: TC.surface, borderRadius: 4, padding: 14, display: 'flex', gap: 14, alignItems: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' }}>
           <div style={{ background: TC.surface2, borderRadius: 10, padding: 8 }}><CardArtC item={item} w={58} /></div>
@@ -173,7 +170,6 @@ function CheckoutScreen({ app, params }) {
             <span style={{ fontFamily: TC.sans, fontWeight: 700, fontSize: 22 }}>{moneyC(total)}</span>
           </div>
         </div>
-        </ContainerC>
       </div>
 
       {/* footer */}

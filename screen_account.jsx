@@ -3,7 +3,7 @@
 // payments & payouts, notifications. All pushed from Profile.
 // ─────────────────────────────────────────────────────────────
 const { T: TAC, money: moneyAC, Icon: IconAC, CardArt: CardArtAC, GradeChip: GradeChipAC, Stars: StarsAC, Sheet: SheetAC, Sparkline: SparkAC,
-  QtyInput: QtyInputAC, CurrencyInput: CurrencyInputAC, Container: ContainerAC } = window;
+  QtyInput: QtyInputAC, CurrencyInput: CurrencyInputAC } = window;
 const { LISTINGS: LST_AC, SUB_CARDS: SCAC, byId: byIdAC, setById: setByIdAC, gameById: gameByIdAC } = window;
 
 const money0AC = (n) => moneyAC(n, { cents: false });
@@ -122,7 +122,6 @@ function BuylistScreen({ app }) {
         right={<button onClick={() => { setAdding(true); setQ(''); }} style={{ width: 36, height: 36, borderRadius: 999, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{AIcon.plus({})}</button>} />
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
-        <ContainerAC width={1080} style={{ padding: 0 }}>
         {/* explainer */}
         <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 14px', marginBottom: 14 }}>
           <span style={{ color: 'var(--ink)', marginTop: 1 }}>{AIcon.star({ width: 18, height: 18 }, true)}</span>
@@ -177,7 +176,6 @@ function BuylistScreen({ app }) {
             View {matches.length} available match{matches.length !== 1 ? 'es' : ''} →
           </button>
         )}
-        </ContainerAC>
       </div>
 
       {/* edit sheet */}
@@ -257,7 +255,6 @@ function PurchasesScreen({ app }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TAC.bg }}>
       <AccHeader app={app} title="Purchases" sub={PURCHASES.length + ' orders'} />
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
-        <ContainerAC width={1080} style={{ padding: 0 }}>
         <Segmented tabs={[['all', 'All'], ['active', 'In transit'], ['done', 'Delivered']]} value={tab} onChange={setTab} />
         {rows.length === 0 ? emptyBlock(IconAC.truck({ width: 28, height: 28 }), 'Nothing here', 'Orders you place will show up with tracking.') : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -283,7 +280,6 @@ function PurchasesScreen({ app }) {
             ))}
           </div>
         )}
-        </ContainerAC>
       </div>
     </div>
   );
@@ -310,7 +306,6 @@ function SellingScreen({ app }) {
       <AccHeader app={app} title="Selling" sub={active.length + ' active · ' + sold.length + ' sold'}
         right={<button onClick={() => app.nav.setTab('sell')} style={{ width: 36, height: 36, borderRadius: 999, background: 'var(--ink)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{AIcon.plus({})}</button>} />
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
-        <ContainerAC width={1080} style={{ padding: 0 }}>
         <Segmented tabs={[['active', 'Active ' + active.length], ['sold', 'Sold ' + sold.length], ['drafts', 'Drafts']]} value={tab} onChange={setTab} />
 
         {tab === 'active' && (
@@ -365,7 +360,6 @@ function SellingScreen({ app }) {
         )}
 
         {tab === 'drafts' && emptyBlock(IconAC.tag({ width: 28, height: 28 }), 'No drafts', 'Start a listing and save it for later — it\'ll wait here.')}
-        </ContainerAC>
       </div>
     </div>
   );
@@ -391,7 +385,6 @@ function OffersScreen({ app }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TAC.bg }}>
       <AccHeader app={app} title="Offers" sub={sent.length + ' sent · ' + recv.length + ' received'} />
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
-        <ContainerAC width={1080} style={{ padding: 0 }}>
         <Segmented tabs={[['sent', 'Sent ' + sent.length], ['received', 'Received ' + recv.length]]} value={tab} onChange={setTab} />
 
         {tab === 'sent' && (
@@ -447,7 +440,6 @@ function OffersScreen({ app }) {
             </div>
           )
         )}
-        </ContainerAC>
       </div>
     </div>
   );
@@ -469,7 +461,6 @@ function PaymentsScreen({ app }) {
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TAC.bg }}>
       <AccHeader app={app} title="Payments & payouts" />
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
-        <ContainerAC width={1080} style={{ padding: 0 }}>
         {/* balance */}
         <div style={{ background: 'var(--fill)', borderRadius: 18, padding: 18, color: '#fff' }}>
           <div style={{ fontFamily: TAC.sans, fontSize: 12.5, opacity: 0.7, fontWeight: 600 }}>Available to withdraw</div>
@@ -522,7 +513,6 @@ function PaymentsScreen({ app }) {
             </div>
           ))}
         </div>
-        </ContainerAC>
       </div>
     </div>
   );
@@ -553,7 +543,6 @@ function NotificationsScreen({ app }) {
       <AccHeader app={app} title="Notifications"
         right={tab === 'activity' ? <button onClick={() => app.toast('All marked read')} style={{ fontFamily: TAC.sans, fontWeight: 700, fontSize: 12.5, color: 'var(--ink)' }}>Mark read</button> : null} />
       <div className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '14px 16px 30px' }}>
-        <ContainerAC width={1080} style={{ padding: 0 }}>
         <Segmented tabs={[['activity', 'Activity'], ['settings', 'Settings']]} value={tab} onChange={setTab} />
 
         {tab === 'activity' && (
@@ -589,7 +578,6 @@ function NotificationsScreen({ app }) {
             ))}
           </div>
         )}
-        </ContainerAC>
       </div>
     </div>
   );

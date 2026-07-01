@@ -41,6 +41,7 @@ for (const file of jsFiles) {
 // Map source → output names (lowercase for Vercel case-sensitivity)
 const htmlFiles = [
   { src: 'index.html', out: 'index.html' },
+  { src: 'Desktop.html', out: 'desktop.html' },
 ];
 for (const { src: srcName, out: outName } of htmlFiles) {
   const srcPath = path.join(__dirname, srcName);

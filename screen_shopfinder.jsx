@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Find a local shop — directory of nearby LGS (its own flow)
 // ─────────────────────────────────────────────────────────────
-const { T: TSF, Icon: IconSF, Stars: StarsSF, Badge: BadgeSF, Container: ContainerSF } = window;
+const { T: TSF, Icon: IconSF, Stars: StarsSF, Badge: BadgeSF } = window;
 const { SHOPS: SHOPS_SF } = window;
 
 function ShopFinderScreen({ app }) {
@@ -18,7 +18,6 @@ function ShopFinderScreen({ app }) {
       </div>
 
       <div className="noscroll" style={{ flex: 1, overflow: 'auto' }}>
-      <ContainerSF width={1080}>
       <div style={{ padding: '16px 16px 0' }}>
         <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', background: 'var(--accent-wash)', borderRadius: 13, padding: '12px 14px', marginBottom: 14 }}>
           <span style={{ color: TSF.accent, marginTop: 1 }}>{IconSF.shield({ width: 17, height: 17 })}</span>
@@ -69,7 +68,6 @@ function ShopFinderScreen({ app }) {
           <div style={{ textAlign: 'center', padding: '50px 20px', color: TSF.muted, fontFamily: TSF.sans, fontSize: 14 }}>No shops match that filter.</div>
         )}
       </div>
-      </ContainerSF>
       </div>
     </div>
   );

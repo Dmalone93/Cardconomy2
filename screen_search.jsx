@@ -6,7 +6,6 @@ const { ListRow: ListRowS, ListCard: ListCardS } = window;
 const { GAMES: GAMES_S, SETS: SETS_S, LISTINGS: LISTINGS_S, PRODUCTS: PRODUCTS_S, gameById: gameByIdS, setById: setByIdS, byId: byIdS } = window;
 const { ProductCard: ProductCardS } = window;
 const { HOT_DEALS: HOT_DEALS_S } = window;
-const { Container: ContainerSR } = window;
 
 const CONDITIONS = ['Any grade', 'Graded only', 'PSA 10', 'Raw / Ungraded'];
 const COND_LABELS = { 'Any grade': 'Any grade', 'Graded only': 'Graded only', 'PSA 10': 'PSA 10', 'Raw / Ungraded': 'Raw (ungraded)' };
@@ -106,159 +105,31 @@ function SearchScreen({ app, params = {} }) {
   const activeFilters = [game !== 'all', setF !== 'all', cond !== 'Any grade', freeShip, listType !== 'all', maxPrice < 35000].filter(Boolean).length;
   const popular = ['Charizard ex', 'Moonbreon', 'Black Lotus', 'Blue-Eyes', '151', 'PSA 10'];
 
-  const renderFilters = () => (
-    <div style={{ paddingTop: app.isDesktop ? 8 : 0 }}>
-      <FilterGroup label="Game">
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          <ChipS active={game==='all'} onClick={() => setGame('all')}>All</ChipS>
-          {GAMES_S.map(g => <ChipS key={g.id} active={game===g.id} onClick={() => setGame(g.id)}>{g.short}</ChipS>)}
-        </div>
-      </FilterGroup>
-      <FilterGroup label="Set">
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          <ChipS active={setF==='all'} onClick={() => setSetF('all')}>All sets</ChipS>
-          {SETS_S.filter(s => game==='all'||s.game===game).map(s => (
-            <ChipS key={s.id} active={setF===s.id} onClick={() => setSetF(s.id)}>{s.name.replace(/\s*\(.*\)/,'')}</ChipS>
-          ))}
-        </div>
-      </FilterGroup>
-      <FilterGroup label="Condition">
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-          {CONDITIONS.map(c => <ChipS key={c} active={cond===c} onClick={() => setCond(c)}>{c}</ChipS>)}
-        </div>
-        <div style={{ marginTop: 10, fontSize: 11, color: TS.faint, lineHeight: 1.6, fontFamily: TS.sans }}>
-          <b style={{ color: TS.muted }}>Condition guide:</b> NM = Near Mint (like new) \u00b7 LP = Lightly Played (minor edge wear) \u00b7 MP = Moderately Played (visible wear) \u00b7 HP = Heavily Played (heavy wear). Graded cards are professionally assessed by PSA, BGS, or CGC.
-        </div>
-      </FilterGroup>
-      <FilterGroup label={'Max price \u00b7 ' + moneyS(maxPrice, {cents:false})}>
-        <input type="range" min="10" max="35000" step="10" value={maxPrice} onChange={e => setMaxPrice(+e.target.value)}
-          style={{ width: '100%', accentColor: 'var(--accent)' }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: TS.sans, fontSize: 11, color: TS.faint }}>
-          <span>£10</span><span>£35,000+</span>
-        </div>
-      </FilterGroup>
-      <FilterGroup label="Listing type">
-        <div style={{ display: 'flex', gap: 8 }}>
-          {[['all','All'],['buynow','Buy Now']].map(([v,l]) => (
-            <ChipS key={v} active={listType===v} onClick={() => setListType(v)}>{l}</ChipS>
-          ))}
-        </div>
-      </FilterGroup>
-      <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0 4px' }}>
-        <span style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 15 }}>Free shipping only</span>
-        <ToggleSwitch on={freeShip} onClick={() => setFreeShip(!freeShip)} />
-      </label>
-      {!app.isDesktop && (
-        <button onClick={() => setSheet(null)} style={{
-          width: '100%', marginTop: 14, background: 'var(--ink)', color: '#fff', borderRadius: 14,
-          padding: 15, fontFamily: TS.sans, fontWeight: 700, fontSize: 16 }}>
-          Show {totalResults} result{totalResults!==1?'s':''}
-        </button>
-      )}
-      <button onClick={() => { setGame('all'); setSetF('all'); setCond('Any grade'); setMaxPrice(35000); setFreeShip(false); setListType('all'); }}
-        style={{ width: '100%', marginTop: 8, color: TS.muted, fontFamily: TS.sans, fontWeight: 600, fontSize: 14, padding: 8 }}>Reset all</button>
-    </div>
-  );
-
-  const renderResults = () => {
-    // Build merged array: products tagged with type 'product', listings as-is
-    const merged = [
-      ...productResults.map(p => ({ ...p, _type: 'product' })),
-      ...listingResults.map(l => ({ ...l, _type: 'listing' })),
-    ];
-    // Apply browse mode filter
-    const dealIds = new Set((HOT_DEALS_S || []).map(d => d.id));
-    let browsed = merged;
-    if (browseMode === 'new') {
-      browsed = [...merged].reverse();
-    } else if (browseMode === 'deals') {
-      browsed = merged.filter(x => dealIds.has(x.id));
-    }
-    const browseCount = browsed.length;
-    const gridCols = app.isWide ? '1fr 1fr 1fr' : app.isDesktop ? '1fr 1fr 1fr' : cols === 3 ? '1fr 1fr 1fr' : '1fr 1fr';
-    const gridGap = (app.isDesktop || cols === 3) ? 8 : 12;
-    return (
-      <div ref={scrollRefS} className="noscroll" style={{ flex: 1, overflow: 'auto', padding: app.isDesktop ? '0 0 100px' : '0 16px 100px' }}>
-        {browseCount === 0 ? (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            padding: '72px 32px', textAlign: 'center', fontFamily: TS.sans }}>
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ color: TS.faint, marginBottom: 16 }}>
-              <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.5"/>
-              <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              <path d="M8 11h6M11 8v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
-            <div style={{ fontWeight: 700, fontSize: 17, color: TS.ink, marginBottom: 6 }}>No cards match your filters</div>
-            <div style={{ fontSize: 14, color: TS.muted, lineHeight: 1.5, marginBottom: 24 }}>Try adjusting your filters or browse all cards</div>
-            <button onClick={() => {
-              setGame('all'); setSetF('all'); setCond('Any grade');
-              setMaxPrice(35000); setFreeShip(false); setListType('all'); setBrowseMode('buy');
-            }} style={{
-              background: 'var(--ink)', color: '#fff', borderRadius: 12,
-              padding: '11px 24px', fontFamily: TS.sans, fontWeight: 700, fontSize: 15,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
-            }}>Clear filters</button>
-          </div>
-        ) : view === 'grid' ? (
-          <div className="stagger" style={{ display: 'grid', gridTemplateColumns: gridCols, gap: gridGap }}>
-            {browsed.map(x => x._type === 'product'
-              ? <ProductCardS key={'p-'+x.id} product={x} app={app} />
-              : <ListCardS key={x.id} item={x} app={app} />
-            )}
-          </div>
-        ) : (
-          <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-            {browsed.map(x => x._type === 'product'
-              ? <ProductCardS key={'p-'+x.id} product={x} app={app} />
-              : <ListRowS key={x.id} item={x} app={app} />
-            )}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TS.bg }}>
-      {/* search header — mobile only */}
-      {!app.isDesktop && (
-        <div style={{ padding: '14px 12px 10px', background: TS.surface, borderBottom: '1px solid var(--line)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            {showBack ? (
-              <button onClick={() => app.nav.pop()} style={{ color: TS.ink, padding: 4 }}>{IconS.back({})}</button>
-            ) : (
-              <button onClick={() => app.openMenu()} style={{ color: TS.ink, padding: 4 }}>{IconS.menu({})}</button>
-            )}
-            <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: TS.surface2,
-              borderRadius: 11, padding: '9px 12px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
-              {IconS.search({ width: 18, height: 18, style: { color: TS.faint } })}
-              <input ref={el => { if (el && !params.game && !params.set) el.focus(); }} value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
-                placeholder={'Try "' + typed + '"'} style={{
-                flex: 1, border: 'none', outline: 'none', background: 'transparent',
-                fontFamily: TS.sans, fontSize: 15, color: TS.ink, minWidth: 0,
-              }} />
-              {q && <button onClick={() => setQ('')} style={{ color: TS.faint, fontSize: 18, lineHeight: 1 }}>{'×'}</button>}
-              <button onClick={() => app.nav.push('scan', { from: 'search' })} style={{ padding: 4, display: 'flex', color: TS.faint, flexShrink: 0 }}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-      {/* search input — desktop only */}
-      {app.isDesktop && (
-        <div style={{ padding: '16px 16px 12px', maxWidth: 1280, margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface)',
-            borderRadius: 11, padding: '10px 14px', border: '1px solid var(--line)', maxWidth: 600 }}>
+      {/* search header */}
+      <div style={{ padding: '14px 12px 10px', background: TS.surface, borderBottom: '1px solid var(--line)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          {showBack ? (
+            <button onClick={() => app.nav.pop()} style={{ color: TS.ink, padding: 4 }}>{IconS.back({})}</button>
+          ) : (
+            <button onClick={() => app.openMenu()} style={{ color: TS.ink, padding: 4 }}>{IconS.menu({})}</button>
+          )}
+          <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: TS.surface2,
+            borderRadius: 11, padding: '9px 12px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
             {IconS.search({ width: 18, height: 18, style: { color: TS.faint } })}
-            <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
+            <input ref={el => { if (el && !params.game && !params.set) el.focus(); }} value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
               placeholder={'Try "' + typed + '"'} style={{
               flex: 1, border: 'none', outline: 'none', background: 'transparent',
               fontFamily: TS.sans, fontSize: 15, color: TS.ink, minWidth: 0,
             }} />
             {q && <button onClick={() => setQ('')} style={{ color: TS.faint, fontSize: 18, lineHeight: 1 }}>{'×'}</button>}
+            <button onClick={() => app.nav.push('scan', { from: 'search' })} style={{ padding: 4, display: 'flex', color: TS.faint, flexShrink: 0 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/></svg>
+            </button>
           </div>
         </div>
-      )}
+      </div>
 
       {/* suggestions overlay when focused + empty */}
       {focused && !q && (
@@ -354,15 +225,13 @@ function SearchScreen({ app, params = {} }) {
         <React.Fragment>
           {/* filter bar */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '12px 16px 10px', background: TS.bg }}>
-            {!app.isDesktop && (
-              <button onClick={() => setSheet('filters')} style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', flexShrink: 0,
-                fontFamily: TS.sans, fontWeight: 700, fontSize: 13.5, padding: '8px 14px', borderRadius: 999,
-                background: activeFilters ? TS.ink : TS.surface, color: activeFilters ? '#fff' : TS.ink2,
-                boxShadow: activeFilters ? 'none' : 'inset 0 0 0 1px var(--line)' }}>
-                {IconS.filter({ width: 16, height: 16 })} Filters{activeFilters ? ' \u00b7 ' + activeFilters : ''}
-              </button>
-            )}
+            <button onClick={() => setSheet('filters')} style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6, whiteSpace: 'nowrap', flexShrink: 0,
+              fontFamily: TS.sans, fontWeight: 700, fontSize: 13.5, padding: '8px 14px', borderRadius: 999,
+              background: activeFilters ? TS.ink : TS.surface, color: activeFilters ? '#fff' : TS.ink2,
+              boxShadow: activeFilters ? 'none' : 'inset 0 0 0 1px var(--line)' }}>
+              {IconS.filter({ width: 16, height: 16 })} Filters{activeFilters ? ' · ' + activeFilters : ''}
+            </button>
             <div className="noscroll" style={{ display: 'flex', gap: 8, overflowX: 'auto', alignItems: 'center', padding: '2px 0' }}>
               <ChipS active={listType==='buynow'} onClick={() => setListType(listType==='buynow'?'all':'buynow')}>Buy Now</ChipS>
               <ChipS active={cond==='Graded only'} onClick={() => setCond(cond==='Graded only'?'Any grade':'Graded only')}>Graded</ChipS>
@@ -408,8 +277,8 @@ function SearchScreen({ app, params = {} }) {
               <b style={{ color: TS.ink }}>{totalResults}</b> result{totalResults!==1?'s':''}
             </span>
             <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
-              <button onClick={() => setSheet('sort')} style={{ fontFamily: TS.sans, fontSize: 13, fontWeight: 600, color: 'var(--ink)', padding: '4px 6px' }}>{sort} &#9662;</button>
-              {view === 'grid' && !app.isDesktop && (
+              <button onClick={() => setSheet('sort')} style={{ fontFamily: TS.sans, fontSize: 13, fontWeight: 600, color: 'var(--ink)', padding: '4px 6px' }}>{sort} ▾</button>
+              {view === 'grid' && (
                 <button onClick={() => setCols(cols === 2 ? 3 : 2)} style={{ color: TS.ink, padding: 4 }}>
                   {cols === 2 ? (
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="5" height="8" rx="1" fill="currentColor"/><rect x="10" y="3" width="5" height="8" rx="1" fill="currentColor"/><rect x="17" y="3" width="5" height="8" rx="1" fill="currentColor"/><rect x="3" y="13" width="5" height="8" rx="1" fill="currentColor"/><rect x="10" y="13" width="5" height="8" rx="1" fill="currentColor"/><rect x="17" y="13" width="5" height="8" rx="1" fill="currentColor"/></svg>
@@ -421,23 +290,61 @@ function SearchScreen({ app, params = {} }) {
             </div>
           </div>
 
-          {/* Desktop: sidebar + results. Mobile: results only (filters in sheet) */}
-          {app.isDesktop ? (
-            <div style={{ display: 'flex', gap: 24, maxWidth: 1280, margin: '0 auto', padding: '0 16px', flex: 1, minHeight: 0 }}>
-              {/* Sidebar filters — always visible on desktop */}
-              <div style={{ width: 240, flexShrink: 0, position: 'sticky', top: 16, alignSelf: 'flex-start', maxHeight: 'calc(100vh - 32px)', overflow: 'auto' }}>
-                {renderFilters()}
+          {/* results */}
+          {(() => {
+            // Build merged array: products tagged with type 'product', listings as-is
+            const merged = [
+              ...productResults.map(p => ({ ...p, _type: 'product' })),
+              ...listingResults.map(l => ({ ...l, _type: 'listing' })),
+            ];
+            // Apply browse mode filter
+            const dealIds = new Set((HOT_DEALS_S || []).map(d => d.id));
+            let browsed = merged;
+            if (browseMode === 'new') {
+              browsed = [...merged].reverse(); // newest first (reverse of default)
+            } else if (browseMode === 'deals') {
+              browsed = merged.filter(x => dealIds.has(x.id));
+            }
+            const browseCount = browsed.length;
+            return (
+              <div ref={scrollRefS} className="noscroll" style={{ flex: 1, overflow: 'auto', padding: '0 16px 100px' }}>
+                {browseCount === 0 ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                    padding: '72px 32px', textAlign: 'center', fontFamily: TS.sans }}>
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" style={{ color: TS.faint, marginBottom: 16 }}>
+                      <circle cx="11" cy="11" r="8" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M21 21l-4.35-4.35" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      <path d="M8 11h6M11 8v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                    <div style={{ fontWeight: 700, fontSize: 17, color: TS.ink, marginBottom: 6 }}>No cards match your filters</div>
+                    <div style={{ fontSize: 14, color: TS.muted, lineHeight: 1.5, marginBottom: 24 }}>Try adjusting your filters or browse all cards</div>
+                    <button onClick={() => {
+                      setGame('all'); setSetF('all'); setCond('Any grade');
+                      setMaxPrice(35000); setFreeShip(false); setListType('all'); setBrowseMode('buy');
+                    }} style={{
+                      background: 'var(--ink)', color: '#fff', borderRadius: 12,
+                      padding: '11px 24px', fontFamily: TS.sans, fontWeight: 700, fontSize: 15,
+                      boxShadow: '0 2px 8px rgba(0,0,0,0.12)',
+                    }}>Clear filters</button>
+                  </div>
+                ) : view === 'grid' ? (
+                  <div className="stagger" style={{ display: 'grid', gridTemplateColumns: cols === 3 ? '1fr 1fr 1fr' : '1fr 1fr', gap: cols === 3 ? 8 : 12 }}>
+                    {browsed.map(x => x._type === 'product'
+                      ? <ProductCardS key={'p-'+x.id} product={x} app={app} />
+                      : <ListCardS key={x.id} item={x} app={app} />
+                    )}
+                  </div>
+                ) : (
+                  <div className="stagger" style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+                    {browsed.map(x => x._type === 'product'
+                      ? <ProductCardS key={'p-'+x.id} product={x} app={app} />
+                      : <ListRowS key={x.id} item={x} app={app} />
+                    )}
+                  </div>
+                )}
               </div>
-              {/* Results */}
-              <div style={{ flex: 1, minWidth: 0 }}>
-                {renderResults()}
-              </div>
-            </div>
-          ) : (
-            <React.Fragment>
-              {renderResults()}
-            </React.Fragment>
-          )}
+            );
+          })()}
         </React.Fragment>
       )}
 
@@ -452,7 +359,53 @@ function SearchScreen({ app, params = {} }) {
 
       {/* FILTERS sheet */}
       <SheetS open={sheet==='filters'} onClose={() => setSheet(null)} title="Filters">
-        {renderFilters()}
+        <FilterGroup label="Game">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <ChipS active={game==='all'} onClick={() => setGame('all')}>All</ChipS>
+            {GAMES_S.map(g => <ChipS key={g.id} active={game===g.id} onClick={() => setGame(g.id)}>{g.short}</ChipS>)}
+          </div>
+        </FilterGroup>
+        <FilterGroup label="Set">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            <ChipS active={setF==='all'} onClick={() => setSetF('all')}>All sets</ChipS>
+            {SETS_S.filter(s => game==='all'||s.game===game).map(s => (
+              <ChipS key={s.id} active={setF===s.id} onClick={() => setSetF(s.id)}>{s.name.replace(/\s*\(.*\)/,'')}</ChipS>
+            ))}
+          </div>
+        </FilterGroup>
+        <FilterGroup label="Condition">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {CONDITIONS.map(c => <ChipS key={c} active={cond===c} onClick={() => setCond(c)}>{c}</ChipS>)}
+          </div>
+          <div style={{ marginTop: 10, fontSize: 11, color: TS.faint, lineHeight: 1.6, fontFamily: TS.sans }}>
+            <b style={{ color: TS.muted }}>Condition guide:</b> NM = Near Mint (like new) · LP = Lightly Played (minor edge wear) · MP = Moderately Played (visible wear) · HP = Heavily Played (heavy wear). Graded cards are professionally assessed by PSA, BGS, or CGC.
+          </div>
+        </FilterGroup>
+        <FilterGroup label={'Max price · ' + moneyS(maxPrice, {cents:false})}>
+          <input type="range" min="10" max="35000" step="10" value={maxPrice} onChange={e => setMaxPrice(+e.target.value)}
+            style={{ width: '100%', accentColor: 'var(--accent)' }} />
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: TS.sans, fontSize: 11, color: TS.faint }}>
+            <span>£10</span><span>£35,000+</span>
+          </div>
+        </FilterGroup>
+        <FilterGroup label="Listing type">
+          <div style={{ display: 'flex', gap: 8 }}>
+            {[['all','All'],['buynow','Buy Now']].map(([v,l]) => (
+              <ChipS key={v} active={listType===v} onClick={() => setListType(v)}>{l}</ChipS>
+            ))}
+          </div>
+        </FilterGroup>
+        <label style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 0 4px' }}>
+          <span style={{ fontFamily: TS.sans, fontWeight: 600, fontSize: 15 }}>Free shipping only</span>
+          <ToggleSwitch on={freeShip} onClick={() => setFreeShip(!freeShip)} />
+        </label>
+        <button onClick={() => setSheet(null)} style={{
+          width: '100%', marginTop: 14, background: 'var(--ink)', color: '#fff', borderRadius: 14,
+          padding: 15, fontFamily: TS.sans, fontWeight: 700, fontSize: 16 }}>
+          Show {totalResults} result{totalResults!==1?'s':''}
+        </button>
+        <button onClick={() => { setGame('all'); setSetF('all'); setCond('Any grade'); setMaxPrice(35000); setFreeShip(false); setListType('all'); }}
+          style={{ width: '100%', marginTop: 8, color: TS.muted, fontFamily: TS.sans, fontWeight: 600, fontSize: 14, padding: 8 }}>Reset all</button>
       </SheetS>
 
       {/* SORT sheet */}

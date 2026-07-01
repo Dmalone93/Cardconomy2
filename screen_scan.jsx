@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Scan card — camera mock, analyzing animation, result sheet
 // ─────────────────────────────────────────────────────────────
-const { T: TSC, money: moneySC, CardArt: CardArtSC, GradeChip: GradeChipSC, Delta: DeltaSC, Sheet: SheetSC, Icon: IconSC, Container: ContainerSC } = window;
+const { T: TSC, money: moneySC, CardArt: CardArtSC, GradeChip: GradeChipSC, Delta: DeltaSC, Sheet: SheetSC, Icon: IconSC } = window;
 const { LISTINGS: LISTINGS_SC, byId: byIdSC, setById: setByIdSC } = window;
 
 const GRADES_SC = ['raw', 'nm', 'lp', 'mp', 'hp'];
@@ -174,7 +174,6 @@ function ScanScreen({ app, params = {} }) {
         boxShadow: '0 -4px 24px rgba(0,0,0,0.4)',
         padding: '12px 20px 32px', animation: 'ccFade 0.3s ease'
       }}>
-        <ContainerSC width={720} style={{ padding: 0 }}>
         {/* drag handle */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 16 }}>
           <div style={{ width: 36, height: 4, borderRadius: 999, background: TSC.faint }} />
@@ -282,7 +281,6 @@ function ScanScreen({ app, params = {} }) {
             })}
           </div>
         )}
-        </ContainerSC>
       </div>
     </div>
   );

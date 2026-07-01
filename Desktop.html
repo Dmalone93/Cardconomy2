@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardonomy — Marketplace</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f2f2f2; --surface: #ffffff; --surface-2: #f6f7f9;
+    --ink: #16181d; --ink-2: #3a3d44; --muted: #71757e; --faint: #a4a8b0;
+    --line: #e7e8ec; --line-2: #eef0f3;
+    --fill: #0f172a; --glass: rgba(255,255,255,0.9);
+    --accent: #059669; --accent-press: #047857; --accent-wash: #ecfdf5;
+    --up: oklch(0.58 0.13 152); --up-wash: oklch(0.95 0.05 152); --down: oklch(0.6 0.19 24); --gold: #d97706;
+    --sans: 'Inter', -apple-system, system-ui, sans-serif;
+    --heading: 'Inter', -apple-system, system-ui, sans-serif;
+    --mono: 'Space Grotesk', -apple-system, system-ui, sans-serif;
+    --wordmark: 'Reglo', 'Space Grotesk', sans-serif;
+    --maxw: 1320px;
+    --radius-1: 5px; --radius-2: 8px; --radius-3: 11px; --radius-4: 14px; --radius-5: 18px;
+    --shadow-1: 0 1px 2px rgba(20,24,40,0.06), 0 1px 3px rgba(20,24,40,0.05);
+    --shadow-2: 0 2px 8px rgba(20,24,40,0.07), 0 4px 14px rgba(20,24,40,0.06);
+    --shadow-3: 0 8px 26px rgba(20,24,40,0.13);
+    --focus-ring: 0 0 0 3px color-mix(in oklch, var(--accent) 35%, transparent);
+  }
+  @font-face { font-family: 'Reglo'; src: url('brand/Reglo-Bold.otf') format('opentype'); font-weight: 1 999; font-style: normal; font-display: swap; }
+  :focus { outline: none; }
+  button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, [role="button"]:focus-visible {
+    outline: none; box-shadow: var(--focus-ring); border-radius: 8px;
+  }
+  button, [role="button"] { transition: transform 0.08s ease, filter 0.12s ease, box-shadow 0.12s ease; }
+  @media (hover: hover) { button:hover, [role="button"]:hover { filter: brightness(0.97); } }
+  button:active, [role="button"]:active { transform: scale(0.985); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  input { font-family: inherit; }
+  a { color: inherit; text-decoration: none; }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: rgba(20,24,40,0.18); border-radius: 8px; }
+  .nos::-webkit-scrollbar { width: 0; height: 0; }
+  @keyframes dFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes dScrim { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes dPop { 0% { transform: scale(0.8); opacity: 0; } 60% { transform: scale(1.06); } 100% { transform: scale(1); opacity: 1; } }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+  @media (max-width: 640px){ .wrap { padding: 0 16px; } }
+</style>
+</head>
+<body>
+<script>
+  // Mobile handoff: at phone widths, use the dedicated mobile app (index.html).
+  (function () {
+    var BP = 760;
+    function check() {
+      if (window.innerWidth < BP && !/forcedesktop/.test(location.search)) {
+        location.replace('index.html');
+      }
+    }
+    check();
+    var t;
+    window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(check, 250); });
+  })();
+</script>
+<div id="root"></div>
+<button onclick="window.location.href='index.html'" style="position:fixed;bottom:16px;right:16px;z-index:9999;display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#16181d;color:#fff;font-family:'Inter',sans-serif;font-weight:700;font-size:12px;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,0.2)">
+  <svg width="16" height="16" viewBox="0 0 256 256" fill="none"><path d="M176,16H80A24,24,0,0,0,56,40V216a24,24,0,0,0,24,24h96a24,24,0,0,0,24-24V40A24,24,0,0,0,176,16ZM72,64H184V192H72Zm8-32h96a8,8,0,0,1,8,8v8H72V40A8,8,0,0,1,80,32Zm96,192H80a8,8,0,0,1-8-8v-8H184v8A8,8,0,0,1,176,224Z" fill="currentColor"/></svg>
+  Mobile
+</button>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="data.jsx"></script>
+<script type="text/babel" src="card_images.jsx"></script>
+<script type="text/babel" src="components.jsx"></script>
+<script type="text/babel" src="desktop_home.jsx"></script>
+<script type="text/babel" src="desktop_search.jsx"></script>
+<script type="text/babel" src="desktop_sell.jsx"></script>
+<script type="text/babel" src="desktop_trade.jsx"></script>
+<script type="text/babel" src="desktop_seller.jsx"></script>
+<script type="text/babel" src="desktop_listing.jsx?v=2"></script>
+<script type="text/babel" src="desktop_game.jsx"></script>
+<script type="text/babel" src="screen_fees.jsx"></script>
+<script type="text/babel" src="screen_howitworks.jsx"></script>
+<script type="text/babel" src="desktop.jsx?v=2"></script>
+</body>
+</html>
