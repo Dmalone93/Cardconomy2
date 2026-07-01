@@ -84,12 +84,12 @@ function GameScreen({ app, params }) {
 
       {/* ── Hero banner carousel ── */}
       {SET_BANNERS_GM[game.id] && SET_BANNERS_GM[game.id].length > 0 ? (
+        <div style={{ padding: '8px 14px 12px' }}>
         <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden',
-          padding: '8px 0 12px', WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+          margin: '0 -14px', padding: '0 14px', WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
           {SET_BANNERS_GM[game.id].map((b, i) => (
             <div key={i} onClick={() => app.nav.push('set', { id: b.set })} style={{
               flexShrink: 0, width: '80%', maxWidth: 320, height: 170, borderRadius: 14,
-              marginLeft: i === 0 ? 14 : 0,
               overflow: 'hidden', position: 'relative', cursor: 'pointer', scrollSnapAlign: 'start',
             }}>
               <img src={b.img} alt={b.label} style={{
@@ -108,6 +108,7 @@ function GameScreen({ app, params }) {
               </div>
             </div>
           ))}
+        </div>
         </div>
       ) : (
         <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: game.tint }}>
@@ -146,7 +147,8 @@ function GameScreen({ app, params }) {
         return (
           <div style={{ paddingTop: 16 }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, padding: '0 14px', marginBottom: 10 }}>Most watched</div>
-            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px',
+            <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden',
+              margin: '0 -14px', padding: '0 14px 4px',
               WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
               {watched.map((l, idx) => (
                 <div key={l.id} onClick={() => {
@@ -154,7 +156,6 @@ function GameScreen({ app, params }) {
                   app.nav.push(prod ? 'product' : 'listing', { id: prod ? prod.id : l.id });
                 }} style={{
                   flexShrink: 0, width: 140, scrollSnapAlign: 'start', cursor: 'pointer',
-                  marginLeft: idx === 0 ? 14 : 0,
                   borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
                 }}>
                   <div style={{ padding: '8px 8px 4px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
@@ -191,12 +192,12 @@ function GameScreen({ app, params }) {
         return (
           <div style={{ padding: '20px 14px 0' }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, marginBottom: 10 }}>Top sellers</div>
-            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px',
+            <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden',
+              margin: '0 -14px', padding: '0 14px 4px',
               WebkitOverflowScrolling: 'touch' }}>
               {topSellers.map((s, idx) => (
                 <button key={s.name} onClick={() => app.nav.push('seller', { name: s.name })} style={{
                   flexShrink: 0, width: 150, background: 'var(--surface)', borderRadius: 12,
-                  marginLeft: idx === 0 ? 14 : 0,
                   padding: '14px 12px', textAlign: 'center', border: '1px solid var(--line)',
                 }}>
                   <div style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--fill)', color: '#fff',
