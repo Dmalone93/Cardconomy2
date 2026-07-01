@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 const { T: TSt, money: moneySt, CardArt: CardArtSt, Icon: IconSt, GradeChip: GradeChipSt } = window;
 const { LISTINGS: LISTINGS_ST, PRODUCTS: PRODUCTS_ST, setById: setByIdSt, gameById: gameByIdSt, SELLERS: SELLERS_ST, sellerByName: sellerByNameSt } = window;
+const { Container: ContainerSt } = window;
 
 function SetScreen({ app, params }) {
   const set = setByIdSt(params.id);
@@ -38,6 +39,7 @@ function SetScreen({ app, params }) {
 
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: TSt.bg, paddingBottom: 96, animation: 'ccPushIn 0.26s ease' }}>
+      <ContainerSt style={{ padding: 0 }}>
 
       {/* ── Breadcrumb ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '14px 14px 0' }}>
@@ -187,7 +189,7 @@ function SetScreen({ app, params }) {
       <div style={{ padding: '0 14px' }}>
         {listings.length > 0 ? (
           view === 'grid' ? (
-            <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            <div className="stagger" style={{ display: 'grid', gridTemplateColumns: app.isWide ? 'repeat(4, 1fr)' : app.isDesktop ? 'repeat(3, 1fr)' : '1fr 1fr', gap: 12 }}>
               {listings.map(l => (
                 <div key={l.id} onClick={() => {
                   const prod = PRODUCTS_ST.find(p => p.offers && p.offers.some(o => o.listingId === l.id));
@@ -255,6 +257,7 @@ function SetScreen({ app, params }) {
         )}
       </div>
 
+      </ContainerSt>
     </div>
   );
 }

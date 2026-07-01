@@ -4,6 +4,7 @@
 const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM } = window;
 const { GAMES: GAMESGM, SETS: SETSGM, LISTINGS: LISTSGM, gameById: gameByIdGM, GAME_LOGOS: GAME_LOGOS_GM } = window;
 const { SELLERS: SELLERS_GM, sellerByName: sellerByNameGM, listingsBySeller: listingsBySellerGM } = window;
+const { Container: ContainerGM } = window;
 
 const GAME_HEROES_GM = {
   pkmn: 'logos/heroes/pkmn.avif', mtg: 'logos/heroes/mtg.jpg',
@@ -36,6 +37,7 @@ function GameScreen({ app, params }) {
 
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: TGM.bg, paddingBottom: 96 }}>
+      <ContainerGM style={{ padding: 0 }}>
 
       {/* ── Breadcrumb ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '14px 14px 0' }}>
@@ -79,8 +81,9 @@ function GameScreen({ app, params }) {
       {/* ── Sets — horizontal scroll ── */}
       <div style={{ padding: '16px 0 0' }}>
         <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, padding: '0 14px', marginBottom: 10 }}>Browse by set</div>
-        <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
-          WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+        <div style={app.isDesktop
+          ? { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10, padding: '0 14px 4px' }
+          : { display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px', WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
           <button style={{
             flexShrink: 0, width: 140, height: 80, borderRadius: 12, overflow: 'hidden',
             position: 'relative', scrollSnapAlign: 'start',
@@ -196,8 +199,9 @@ function GameScreen({ app, params }) {
         return (
           <div style={{ padding: '20px 14px 0' }}>
             <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, marginBottom: 10 }}>Top sellers</div>
-            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px',
-              WebkitOverflowScrolling: 'touch' }}>
+            <div style={app.isDesktop
+              ? { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 10, padding: '0 0 4px' }
+              : { display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px', WebkitOverflowScrolling: 'touch' }}>
               {topSellers.map(s => (
                 <button key={s.name} onClick={() => app.nav.push('seller', { name: s.name })} style={{
                   flexShrink: 0, width: 150, background: 'var(--surface)', borderRadius: 12,
@@ -236,7 +240,7 @@ function GameScreen({ app, params }) {
       {/* ── Results grid ── */}
       <div style={{ padding: '12px 14px 0' }}>
         {listings.length > 0 ? (
-          <div className="stagger" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <div className="stagger" style={{ display: 'grid', gridTemplateColumns: app.isWide ? 'repeat(4, 1fr)' : app.isDesktop ? 'repeat(3, 1fr)' : '1fr 1fr', gap: 12 }}>
             {listings.slice(0, 20).map(p => (
               <div key={p.id} onClick={() => app.nav.push('listing', { id: p.id })} style={{
                 borderRadius: 12, overflow: 'hidden', background: '#fff',
@@ -281,6 +285,7 @@ function GameScreen({ app, params }) {
         )}
       </div>
 
+      </ContainerGM>
     </div>
   );
 }
