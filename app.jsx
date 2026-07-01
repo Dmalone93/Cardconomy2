@@ -13,6 +13,7 @@ const { CartScreen } = window;
 const { ProductScreen } = window;
 const { SellerScreen } = window;
 const { GameScreen } = window;
+const { SetScreen } = window;
 const { ScanScreen } = window;
 const { AddCardScreen } = window;
 const { VerifyScreen } = window;
@@ -63,6 +64,7 @@ const SCREENS = {
   pitch_seller: SellerPitchScreen,
   pitch_lgs: LGSPitchScreen,
   game: GameScreen,
+  set: SetScreen,
   add_card: AddCardScreen,
 };
 
