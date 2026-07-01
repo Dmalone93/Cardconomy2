@@ -11,6 +11,38 @@ const GAME_HEROES_GM = {
   digimon: 'logos/heroes/digimon.jpg',
 };
 
+const SET_BANNERS_GM = {
+  pkmn: [
+    { img: 'sets/pkmn/sv10-banner.png', set: 'ssp', label: 'Surging Sparks' },
+    { img: 'sets/pkmn/thumb-56.webp', set: 's151', label: 'Twilight Masquerade' },
+    { img: 'sets/pkmn/ascended-heroes-ptcg-thumb.webp', set: 'cpa', label: 'Ascended Heroes' },
+    { img: 'sets/pkmn/scarlet-violet.jpeg', set: 'base', label: 'Scarlet & Violet' },
+  ],
+  mtg: [
+    { img: 'sets/mtg/ECL_sma_key_1920x1080_en.jpg', set: 'mh3', label: 'Lorwyn Eclipsed' },
+    { img: 'sets/mtg/HOB-1710_JDBCVHKLWUE_VarA_1080x1080.jpg', set: 'mh3', label: 'The Hobbit' },
+    { img: 'sets/mtg/TMT_sma_key_1000x1000.jpg', set: 'mh3', label: 'The Moonlit Trail' },
+    { img: 'sets/mtg/FRA-1313-EN-1080x1080.png', set: 'mh3', label: 'Foundations Remastered' },
+    { img: 'sets/mtg/TLA_sma_key_1000x1000_EN_1.jpg', set: 'mh3', label: 'Avatar: The Last Airbender' },
+    { img: 'sets/mtg/TLA_sma_key_1000x1000_EN_2.jpg', set: 'mh3', label: 'Avatar: The Last Airbender' },
+    { img: 'sets/mtg/MTGSOS_sma_key_1080x1080_en.jpg', set: 'mh3', label: 'Secrets of Strixhaven' },
+  ],
+  ygo: [
+    { img: 'sets/ygo/TCG_MZMU_FEATURE-BANNER.webp', set: 'ann25', label: 'Maze of Millennia' },
+    { img: 'sets/ygo/NEWS_TITLE-SECTION_V2.webp', set: 'ann25', label: 'Yu-Gi-Oh! Classics' },
+    { img: 'sets/ygo/036-768x768.jpg', set: 'ann25', label: 'Red Dragon Archfiend' },
+    { img: 'sets/ygo/USY_22976_1-768x768.webp', set: 'ann25', label: 'Dark Magician Girl' },
+    { img: 'sets/ygo/Y_22209_1-768x768.webp', set: 'ann25', label: 'Dark Magician' },
+    { img: 'sets/ygo/DL-9th_Anni_News_Banner.webp', set: 'ann25', label: 'Duel Links Anniversary' },
+  ],
+  lor: [
+    { img: 'sets/op/aceluffy.webp', set: 'op07', label: 'Romance Dawn' },
+    { img: 'sets/op/two-legends.webp', set: 'op08', label: 'Two Legends' },
+    { img: 'sets/op/awakening-new-era.webp', set: 'op05', label: 'Awakening of the New Era' },
+    { img: 'sets/op/pillars-of-strength.jpeg', set: 'op10', label: 'Pillars of Strength' },
+  ],
+};
+
 const GAME_DESCS_GM = {
   pkmn: 'From Base Set to Scarlet & Violet \u2014 every era of Pok\u00e9mon cards.',
   mtg: '30 years of strategy, art, and collectible value.',
@@ -50,31 +82,58 @@ function GameScreen({ app, params }) {
         </div>
       </div>
 
-      {/* ── Hero ── */}
-      <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: game.tint }}>
-        {hero && <img src={hero} alt="" style={{
-          position: 'absolute', inset: 0, width: '100%', height: '100%',
-          objectFit: 'cover', objectPosition: 'center top', opacity: 0.5,
-        }} />}
-        <div style={{ position: 'absolute', inset: 0,
-          background: `linear-gradient(to bottom, ${game.tint}50 0%, ${game.tint}cc 60%, ${game.tint} 100%)`,
-        }} />
-        <div style={{ position: 'relative', zIndex: 2, height: '100%',
-          display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '0 16px 18px',
-        }}>
-          {logo
-            ? <img src={logo} alt={game.name} style={{
-                maxWidth: 160, maxHeight: 44, objectFit: 'contain',
-                filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.5))', marginBottom: 8,
+      {/* ── Hero banner carousel ── */}
+      {SET_BANNERS_GM[game.id] && SET_BANNERS_GM[game.id].length > 0 ? (
+        <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden',
+          padding: '8px 14px 12px', WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+          {SET_BANNERS_GM[game.id].map((b, i) => (
+            <div key={i} onClick={() => app.nav.push('set', { id: b.set })} style={{
+              flexShrink: 0, width: '80%', maxWidth: 320, height: 170, borderRadius: 14,
+              overflow: 'hidden', position: 'relative', cursor: 'pointer', scrollSnapAlign: 'start',
+            }}>
+              <img src={b.img} alt={b.label} style={{
+                position: 'absolute', inset: 0, width: '100%', height: '100%',
+                objectFit: 'cover', objectPosition: 'center center',
               }} />
-            : <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 26, color: '#fff',
-                letterSpacing: -0.5, marginBottom: 8 }}>{game.name}</div>
-          }
-          <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>
-            {GAME_DESCS_GM[game.id] || `Browse all ${game.name} cards.`}
+              <div style={{ position: 'absolute', inset: 0,
+                background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0) 100%)',
+              }} />
+              <div style={{ position: 'absolute', bottom: 14, left: 14, zIndex: 2 }}>
+                <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 16, color: '#fff',
+                  textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>{b.label}</div>
+                <div style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.75)', marginTop: 3 }}>
+                  Shop now {'\u2192'}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: game.tint }}>
+          {hero && <img src={hero} alt="" style={{
+            position: 'absolute', inset: 0, width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center top', opacity: 0.5,
+          }} />}
+          <div style={{ position: 'absolute', inset: 0,
+            background: `linear-gradient(to bottom, ${game.tint}50 0%, ${game.tint}cc 60%, ${game.tint} 100%)`,
+          }} />
+          <div style={{ position: 'relative', zIndex: 2, height: '100%',
+            display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '0 16px 18px',
+          }}>
+            {logo
+              ? <img src={logo} alt={game.name} style={{
+                  maxWidth: 160, maxHeight: 44, objectFit: 'contain',
+                  filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.5))', marginBottom: 8,
+                }} />
+              : <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 26, color: '#fff',
+                  letterSpacing: -0.5, marginBottom: 8 }}>{game.name}</div>
+            }
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>
+              {GAME_DESCS_GM[game.id] || `Browse all ${game.name} cards.`}
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* ── Sets — horizontal scroll ── */}
       <div style={{ padding: '16px 0 0' }}>
