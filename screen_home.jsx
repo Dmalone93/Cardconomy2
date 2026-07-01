@@ -605,7 +605,7 @@ function HomeScreen({ app }) {
             WebkitOverflowScrolling: 'touch' }}>
             {SELLERS_H.slice(0, 4).map(s => (
               <button key={s.name} onClick={() => app.nav.push('seller', { name: s.name })} style={{
-                flexShrink: 0, width: 160, background: '#fff', borderRadius: 12,
+                flexShrink: 0, width: 160, background: 'var(--surface)', borderRadius: 12,
                 padding: '16px 14px', textAlign: 'center', border: '1px solid var(--line)',
               }}>
                 <div style={{ width: 44, height: 44, borderRadius: 999, background: 'var(--fill)', color: '#fff',

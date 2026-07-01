@@ -25,13 +25,13 @@ function SetScreen({ app, params }) {
   if (condFilter === 'graded') listings = listings.filter(l => l.grade && l.grade.company !== 'raw');
   else if (condFilter === 'raw') listings = listings.filter(l => !l.grade || l.grade.company === 'raw');
 
-  // Sort
-  if (sortBy === 'popular') listings.sort((a, b) => (b.watchers || 0) - (a.watchers || 0));
-  else if (sortBy === 'price_asc') listings.sort((a, b) => a.price - b.price);
-  else if (sortBy === 'price_desc') listings.sort((a, b) => b.price - a.price);
+  // Sort (copy first to avoid mutating the filtered array)
+  if (sortBy === 'popular') listings = [...listings].sort((a, b) => (b.watchers || 0) - (a.watchers || 0));
+  else if (sortBy === 'price_asc') listings = [...listings].sort((a, b) => a.price - b.price);
+  else if (sortBy === 'price_desc') listings = [...listings].sort((a, b) => b.price - a.price);
 
   // Highlights
-  const mostWatched = LISTINGS_ST.filter(l => l.set === set.id && l.type === 'buynow')
+  const mostWatched = [...LISTINGS_ST.filter(l => l.set === set.id && l.type === 'buynow')]
     .sort((a, b) => (b.watchers || 0) - (a.watchers || 0)).slice(0, 6);
   const recentlyListed = LISTINGS_ST.filter(l => l.set === set.id && l.type === 'buynow')
     .slice(-6).reverse();

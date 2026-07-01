@@ -265,7 +265,7 @@ function ListingScreen({ app, params }) {
             <div style={{ fontFamily: TL.sans, fontWeight: 600, fontSize: 14, color: 'var(--ink)', marginBottom: 10 }}>Other printings</div>
             <div className="noscroll" style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', margin: '0 -16px', padding: '0 16px' }}>
               {PRINTINGS_L[item.name].filter(p => p.set !== item.set || p.number !== item.number).map((p, idx) => {
-                const pSet = window.setById(p.set);
+                const pSet = setByIdL(p.set);
                 const pListing = LISTINGS_L.find(l => l.name === item.name && l.set === p.set);
                 return (
                   <button key={idx} onClick={() => {

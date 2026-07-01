@@ -3,7 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM } = window;
 const { GAMES: GAMESGM, SETS: SETSGM, LISTINGS: LISTSGM, gameById: gameByIdGM, GAME_LOGOS: GAME_LOGOS_GM } = window;
-const { SELLERS: SELLERS_GM, sellerByName: sellerByNameGM, listingsBySeller: listingsBySellerGM, SHOPS: SHOPS_GM } = window;
+const { SELLERS: SELLERS_GM, sellerByName: sellerByNameGM, listingsBySeller: listingsBySellerGM } = window;
 
 const GAME_HEROES_GM = {
   pkmn: 'logos/heroes/pkmn.avif', mtg: 'logos/heroes/mtg.jpg',
@@ -81,6 +81,14 @@ function GameScreen({ app, params }) {
         <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, padding: '0 14px', marginBottom: 10 }}>Browse by set</div>
         <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
           WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+          <button style={{
+            flexShrink: 0, width: 140, height: 80, borderRadius: 12, overflow: 'hidden',
+            position: 'relative', scrollSnapAlign: 'start',
+            background: 'var(--surface)', border: '1px solid var(--line)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <div style={{ fontWeight: 700, fontSize: 13, color: TGM.ink }}>All sets</div>
+          </button>
           {sets.map(s => {
             return (
               <button key={s.id} onClick={() => app.nav.push('set', { id: s.id })} style={{
@@ -147,7 +155,10 @@ function GameScreen({ app, params }) {
             <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
               WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
               {watched.map(l => (
-                <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{
+                <div key={l.id} onClick={() => {
+                  const prod = window.PRODUCTS.find(p => p.offers && p.offers.some(o => o.listingId === l.id));
+                  app.nav.push(prod ? 'product' : 'listing', { id: prod ? prod.id : l.id });
+                }} style={{
                   flexShrink: 0, width: 140, scrollSnapAlign: 'start', cursor: 'pointer',
                   borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
                 }}>
@@ -246,7 +257,10 @@ function GameScreen({ app, params }) {
                   <div style={{ fontSize: 11.5, color: 'var(--muted)', marginTop: 1,
                     whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{p.subtitle || p.condition}</div>
                   <div style={{ fontFamily: TGM.mono || 'var(--mono)', fontWeight: 700, fontSize: 16, marginTop: 6 }}>{mGM(p.price)}</div>
-                  {p.seller && <div style={{ fontSize: 11, color: 'var(--muted)', marginTop: 2 }}>{p.seller}</div>}
+                  {p.seller && (
+                    <div onClick={e => { e.stopPropagation(); app.nav.push('seller', { name: p.seller }); }}
+                      style={{ fontSize: 11, color: 'var(--muted)', marginTop: 2, cursor: 'pointer' }}>{p.seller}</div>
+                  )}
                 </div>
               </div>
             ))}
