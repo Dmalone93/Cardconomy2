@@ -2,7 +2,7 @@
 // CARDONOMY Desktop — Online Seller Profile
 // ─────────────────────────────────────────────────────────────
 const { T: TSd, money: mSd, Icon: IconSd } = window;
-const { GAMES: GAMES_DS, gameById: gameByIdSd } = window;
+const { GAMES: GAMES_DS, gameById: gameByIdSd, LISTINGS: LISTINGS_SD } = window;
 
 function DSellerProfile({ app, params }) {
   params = params || {};
@@ -22,8 +22,21 @@ function DSellerProfile({ app, params }) {
   );
 
   var listings = window.listingsBySeller(seller.name);
+  var activeListingCount = listings.length;
   var isTrusted = seller.rating >= 99;
   var isFastShipper = seller.ships && seller.ships.indexOf('1') > -1;
+  var isEstablished = seller.since <= 2023;
+  var isHighVolume = seller.sales >= 5000;
+  var currentYear = 2026;
+  var yearsActive = currentYear - seller.since;
+
+  // Build trust badges
+  var badges = [];
+  if (isTrusted) badges.push({ label: 'Trusted Seller', bg: 'rgba(34,197,94,0.12)', color: '#16a34a', border: 'rgba(34,197,94,0.3)', icon: '\u2713' });
+  if (isFastShipper) badges.push({ label: 'Fast Shipper', bg: 'rgba(59,130,246,0.1)', color: '#2563eb', border: 'rgba(59,130,246,0.25)', icon: '\u26A1' });
+  if (isEstablished) badges.push({ label: yearsActive + '+ Years Active', bg: 'rgba(217,119,6,0.1)', color: '#b45309', border: 'rgba(217,119,6,0.25)', icon: '\u2605' });
+  if (isHighVolume) badges.push({ label: 'High Volume', bg: 'rgba(139,92,246,0.1)', color: '#7c3aed', border: 'rgba(139,92,246,0.25)', icon: '\u25B2' });
+  if (seller.freeShipMin) badges.push({ label: 'Free over \u00A3' + seller.freeShipMin, bg: 'rgba(20,184,166,0.1)', color: '#0f766e', border: 'rgba(20,184,166,0.25)', icon: '\uD83D\uDE9A' });
 
   var reviews = [
     { stars: 5, text: 'Cards arrived double-sleeved in a toploader. Exactly as described, fast shipping.', author: 'Marcus T.', time: '1 week ago' },
@@ -39,11 +52,38 @@ function DSellerProfile({ app, params }) {
     { title: 'Grading Standards', text: 'We grade conservatively using TCGPlayer standards. NM means no visible wear under direct light. LP may have minor whitening on edges. All graded cards include close-up photos in the listing.' },
   ];
 
-  var stats = [
-    ['Rating', seller.rating + '%'],
-    ['Sales', seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : String(seller.sales)],
-    ['Ships', seller.ships],
-    ['Free over', '£' + seller.freeShipMin],
+  var salesLabel = seller.sales >= 1000 ? (seller.sales / 1000).toFixed(1) + 'k' : String(seller.sales);
+
+  var statCards = [
+    {
+      value: seller.rating + '%',
+      label: 'Positive feedback',
+      subContent: React.createElement('div', { style: { display: 'flex', gap: 2, justifyContent: 'center', marginTop: 4 } },
+        Array.from({ length: 5 }, function(_, s) {
+          var filled = s < Math.round(seller.rating / 20);
+          return React.createElement('span', { key: s, style: { color: filled ? '#f59e0b' : 'var(--line)', fontSize: 14 } }, '\u2605');
+        })
+      ),
+      tint: 'rgba(245,158,11,0.08)',
+    },
+    {
+      value: salesLabel,
+      label: 'Total sales',
+      subContent: React.createElement('div', { style: { fontSize: 11, color: 'var(--muted)', marginTop: 4 } }, 'transactions'),
+      tint: 'rgba(99,102,241,0.07)',
+    },
+    {
+      value: seller.ships,
+      label: 'Ships in',
+      subContent: React.createElement('div', { style: { fontSize: 11, color: 'var(--muted)', marginTop: 4 } }, 'from order'),
+      tint: 'rgba(20,184,166,0.07)',
+    },
+    {
+      value: '\u00A3' + seller.freeShipMin,
+      label: 'Free shipping over',
+      subContent: React.createElement('div', { style: { fontSize: 11, color: 'var(--muted)', marginTop: 4 } }, 'per order'),
+      tint: 'rgba(34,197,94,0.07)',
+    },
   ];
 
   var tabItems = [
@@ -58,27 +98,50 @@ function DSellerProfile({ app, params }) {
       React.createElement('div', { className: 'wrap' },
         React.createElement('div', { style: { width: 72, height: 72, borderRadius: 999, background: '#fff', color: 'var(--fill)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: 30, margin: '0 auto 12px' } }, seller.name.charAt(0)),
         React.createElement('h1', { style: { fontWeight: 700, fontSize: 28, letterSpacing: -0.8, margin: '0 0 4px' } }, seller.name),
-        React.createElement('div', { style: { fontSize: 13.5, opacity: 0.65 } }, seller.loc + ' · Since ' + seller.since),
-        (isTrusted || isFastShipper) && React.createElement('div', { style: { display: 'flex', justifyContent: 'center', gap: 8, marginTop: 12 } },
-          isTrusted && React.createElement('span', { style: { background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: 6, fontWeight: 700, fontSize: 11 } }, 'Trusted'),
-          isFastShipper && React.createElement('span', { style: { background: 'rgba(255,255,255,0.15)', padding: '4px 12px', borderRadius: 6, fontWeight: 700, fontSize: 11 } }, 'Fast Shipper')
-        )
+        // member since · listings · location — prominent sub-line
+        React.createElement('div', { style: { fontSize: 14, opacity: 0.8, marginBottom: 6 } },
+          'Member since ' + seller.since + ' \u00B7 ' + activeListingCount + ' active listing' + (activeListingCount !== 1 ? 's' : '') + ' \u00B7 Ships from ' + seller.loc
+        ),
+        React.createElement('div', { style: { fontSize: 13, opacity: 0.55 } }, seller.loc + ' · Since ' + seller.since)
       )
     ),
 
     React.createElement('div', { className: 'wrap', style: { padding: '24px 24px 40px' } },
-      // stats
-      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 24 } },
-        stats.map(function(s, i) {
-          return React.createElement('div', { key: i, style: { background: 'var(--surface)', borderRadius: 14, padding: '16px 18px', textAlign: 'center', boxShadow: '0 1px 3px rgba(20,24,40,0.05)' } },
-            React.createElement('div', { style: { fontWeight: 700, fontSize: 20 } }, s[1]),
-            React.createElement('div', { style: { fontSize: 12, color: 'var(--muted)', marginTop: 3 } }, s[0])
+      // ── stats ──
+      React.createElement('div', { style: { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 14, marginBottom: 20 } },
+        statCards.map(function(s, i) {
+          return React.createElement('div', { key: i, style: {
+            background: s.tint,
+            borderRadius: 14, padding: '20px 18px', textAlign: 'center',
+            boxShadow: '0 1px 3px rgba(20,24,40,0.05)',
+            border: '1px solid var(--line)',
+          } },
+            React.createElement('div', { style: { fontWeight: 700, fontSize: 24, letterSpacing: -0.5 } }, s.value),
+            React.createElement('div', { style: { fontSize: 12, color: 'var(--muted)', marginTop: 3, fontWeight: 600 } }, s.label),
+            s.subContent
+          );
+        })
+      ),
+
+      // ── trust badges ──
+      badges.length > 0 && React.createElement('div', { style: { display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 20 } },
+        badges.map(function(b, i) {
+          return React.createElement('span', {
+            key: i,
+            style: {
+              display: 'inline-flex', alignItems: 'center', gap: 5,
+              padding: '6px 14px', borderRadius: 999,
+              background: b.bg, color: b.color,
+              border: '1px solid ' + b.border,
+              fontWeight: 700, fontSize: 12.5,
+            } },
+            b.icon + ' ' + b.label
           );
         })
       ),
 
       // bio
-      React.createElement('p', { style: { fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.5, maxWidth: 640, margin: '0 0 20px', fontStyle: 'italic' } }, '"' + seller.blurb + '"'),
+      React.createElement('p', { style: { fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.5, maxWidth: 640, margin: '0 0 20px', fontStyle: 'italic' } }, '\u201C' + seller.blurb + '\u201D'),
 
       // location
       (seller.address || seller.loc) && React.createElement('button', {
@@ -162,13 +225,27 @@ function DSellerProfile({ app, params }) {
 
       // reviews tab
       tab === 'reviews' && React.createElement('div', null,
-        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 } },
-          React.createElement('div', { style: { fontWeight: 700, fontSize: 32, letterSpacing: -0.5 } }, seller.rating + '%'),
-          React.createElement('div', null,
-            React.createElement('div', { style: { display: 'flex', gap: 2 } },
-              Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: '#f59e0b', fontSize: 16 } }, '★'); })
+        // rating header with progress bar
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 18, marginBottom: 24, padding: '20px 24px', background: 'var(--surface)', borderRadius: 16, border: '1px solid var(--line)' } },
+          React.createElement('div', { style: { textAlign: 'center', flexShrink: 0 } },
+            React.createElement('div', { style: { fontWeight: 700, fontSize: 40, letterSpacing: -1 } }, seller.rating + '%'),
+            React.createElement('div', { style: { display: 'flex', gap: 3, justifyContent: 'center', margin: '4px 0' } },
+              Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: '#f59e0b', fontSize: 18 } }, '\u2605'); })
             ),
-            React.createElement('div', { style: { fontSize: 13, color: 'var(--muted)', marginTop: 2 } }, 'Based on ' + seller.sales.toLocaleString() + ' transactions')
+            React.createElement('div', { style: { fontSize: 12, color: 'var(--muted)' } }, 'Positive feedback')
+          ),
+          React.createElement('div', { style: { flex: 1 } },
+            React.createElement('div', { style: { fontSize: 14, fontWeight: 600, marginBottom: 8 } }, seller.sales.toLocaleString() + ' transactions'),
+            React.createElement('div', { style: { background: 'var(--line)', borderRadius: 999, height: 10, overflow: 'hidden' } },
+              React.createElement('div', { style: {
+                width: seller.rating + '%', height: '100%',
+                background: 'linear-gradient(to right, #22c55e, #16a34a)',
+                borderRadius: 999, transition: 'width 0.5s ease',
+              } })
+            ),
+            React.createElement('div', { style: { fontSize: 12, color: 'var(--muted)', marginTop: 6 } },
+              seller.rating + '% of buyers left positive feedback'
+            )
           )
         ),
         reviews.map(function(r, i) {
@@ -180,7 +257,7 @@ function DSellerProfile({ app, params }) {
                 React.createElement('div', { style: { fontSize: 12, color: 'var(--muted)' } }, r.time)
               ),
               React.createElement('div', { style: { display: 'flex', gap: 2 } },
-                Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: s < r.stars ? '#f59e0b' : '#e5e7eb', fontSize: 13 } }, '★'); })
+                Array.from({ length: 5 }, function(_, s) { return React.createElement('span', { key: s, style: { color: s < r.stars ? '#f59e0b' : '#e5e7eb', fontSize: 13 } }, '\u2605'); })
               )
             ),
             React.createElement('div', { style: { fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.5 } }, r.text)

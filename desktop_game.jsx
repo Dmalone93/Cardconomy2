@@ -232,4 +232,167 @@ function DGameLanding({ app, params }) {
   );
 }
 
-Object.assign(window, { DGameLanding });
+function DSetLanding({ app, params }) {
+  var set = setByIdG(params.id);
+  if (!set) return React.createElement('div', { className: 'wrap', style: { padding: 60 } }, 'Set not found.');
+
+  var game = gameByIdG(set.game);
+  var _cond = React.useState('all');
+  var condFilter = _cond[0], setCondFilter = _cond[1];
+  var _sort = React.useState('popular');
+  var sort = _sort[0], setSort = _sort[1];
+
+  var allListings = LISTSG.filter(function(l) { return l.set === set.id && l.type === 'buynow'; });
+
+  var listings = allListings.slice();
+  if (condFilter === 'graded') listings = listings.filter(function(l) { return l.grade && l.grade.company !== 'raw'; });
+  else if (condFilter === 'raw') listings = listings.filter(function(l) { return !l.grade || l.grade.company === 'raw'; });
+
+  if (sort === 'price_low') listings.sort(function(a, b) { return a.price - b.price; });
+  else if (sort === 'price_high') listings.sort(function(a, b) { return b.price - a.price; });
+  else listings.sort(function(a, b) { return (b.watchers || 0) + (b.sold || 0) - (a.watchers || 0) - (a.sold || 0); });
+
+  var mostWatched = allListings.slice().sort(function(a, b) { return (b.watchers || 0) - (a.watchers || 0); }).slice(0, 6);
+  var recentlyListed = allListings.slice().sort(function(a, b) { return (b.id > a.id ? 1 : -1); }).slice(0, 6);
+
+  var heroColor = set.hue || (game ? game.tint : 'var(--fill)');
+
+  return React.createElement('div', null,
+
+    // ── Breadcrumb ──
+    React.createElement('div', { className: 'wrap', style: { padding: '18px 24px 0' } },
+      React.createElement('div', { style: { fontSize: 13, color: 'var(--muted)' } },
+        React.createElement('button', { onClick: function() { app.go('home'); }, style: { color: 'var(--muted)' } }, 'Home'),
+        ' / ',
+        game && React.createElement('button', { onClick: function() { app.go('game', { id: game.id }); }, style: { color: 'var(--muted)' } }, game.name),
+        game && ' / ',
+        React.createElement('span', { style: { color: 'var(--ink-2)', fontWeight: 600 } }, set.name)
+      )
+    ),
+
+    // ── Hero banner ──
+    React.createElement('div', { style: {
+      position: 'relative', height: 200, overflow: 'hidden', background: heroColor, marginTop: 12,
+    } },
+      set.img && React.createElement('img', { src: set.img, alt: '', style: {
+        position: 'absolute', inset: 0, width: '100%', height: '100%',
+        objectFit: 'cover', objectPosition: 'center', opacity: 0.55,
+      } }),
+      React.createElement('div', { style: {
+        position: 'absolute', inset: 0,
+        background: 'linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.1) 100%)',
+      } }),
+      React.createElement('div', { className: 'wrap', style: {
+        position: 'relative', zIndex: 2, height: '100%',
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 8, paddingBottom: 8,
+      } },
+        React.createElement('h1', { style: {
+          fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 32, color: '#fff',
+          letterSpacing: -0.8, margin: '0 0 8px',
+        } }, set.name),
+        React.createElement('div', { style: { display: 'flex', gap: 24 } },
+          [
+            [String(set.year), 'Released'],
+            [(set.cards || 0) + ' cards', 'Set size'],
+            [allListings.length + ' listing' + (allListings.length !== 1 ? 's' : ''), 'Available'],
+          ].map(function(s) {
+            return React.createElement('div', { key: s[1], style: { color: 'rgba(255,255,255,0.9)' } },
+              React.createElement('div', { style: { fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 18 } }, s[0]),
+              React.createElement('div', { style: { fontSize: 11, opacity: 0.65, fontWeight: 600 } }, s[1])
+            );
+          })
+        )
+      )
+    ),
+
+    // ── Most Watched ──
+    mostWatched.length > 0 && React.createElement('div', { className: 'wrap', style: { padding: '32px 24px 0' } },
+      React.createElement('h2', { style: {
+        fontFamily: TG.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5, margin: '0 0 18px',
+      } }, 'Most watched'),
+      React.createElement('div', { style: {
+        display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18,
+      } },
+        mostWatched.map(function(l) {
+          return React.createElement(DCardG, { key: l.id, item: l, app: app });
+        })
+      )
+    ),
+
+    // ── Recently Listed ──
+    recentlyListed.length > 0 && React.createElement('div', { className: 'wrap', style: { padding: '32px 24px 0' } },
+      React.createElement('h2', { style: {
+        fontFamily: TG.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5, margin: '0 0 18px',
+      } }, 'Recently listed'),
+      React.createElement('div', { style: {
+        display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18,
+      } },
+        recentlyListed.map(function(l) {
+          return React.createElement(DCardG, { key: l.id, item: l, app: app });
+        })
+      )
+    ),
+
+    // ── Filters + sort bar ──
+    React.createElement('div', { className: 'wrap', style: { padding: '32px 24px 0' } },
+      React.createElement('h2', { style: {
+        fontFamily: TG.sans, fontWeight: 700, fontSize: 22, letterSpacing: -0.5, margin: '0 0 14px',
+      } }, 'All listings'),
+      React.createElement('div', { style: {
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        borderBottom: '1px solid var(--line)', paddingBottom: 14, marginBottom: 20,
+      } },
+        React.createElement('div', { style: { display: 'flex', gap: 8, alignItems: 'center' } },
+          [['all', 'All'], ['raw', 'Raw'], ['graded', 'Graded']].map(function(f) {
+            var active = condFilter === f[0];
+            return React.createElement('button', {
+              key: f[0], onClick: function() { setCondFilter(f[0]); },
+              style: {
+                padding: '7px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+                background: active ? 'var(--ink)' : 'var(--surface)',
+                color: active ? '#fff' : 'var(--ink)',
+                border: active ? 'none' : '1px solid var(--line)',
+              } }, f[1]);
+          })
+        ),
+        React.createElement('div', { style: { display: 'flex', alignItems: 'center', gap: 12 } },
+          React.createElement('span', { style: { fontSize: 13, color: 'var(--muted)', fontWeight: 600 } },
+            'Showing ' + listings.length + ' of ' + allListings.length + ' listing' + (allListings.length !== 1 ? 's' : '')),
+          React.createElement('select', {
+            value: sort, onChange: function(e) { setSort(e.target.value); },
+            style: {
+              padding: '7px 12px', borderRadius: 8, fontSize: 13, fontWeight: 600,
+              background: 'var(--surface)', color: 'var(--ink)', border: '1px solid var(--line)',
+            } },
+            React.createElement('option', { value: 'popular' }, 'Popular'),
+            React.createElement('option', { value: 'price_low' }, 'Price: low to high'),
+            React.createElement('option', { value: 'price_high' }, 'Price: high to low')
+          )
+        )
+      )
+    ),
+
+    // ── All Listings grid ──
+    React.createElement('div', { className: 'wrap', style: { padding: '0 24px 40px' } },
+      listings.length > 0
+        ? React.createElement('div', { style: {
+            display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(208px, 1fr))', gap: 18,
+          } },
+            listings.map(function(l) {
+              return React.createElement(DCardG, { key: l.id, item: l, app: app });
+            })
+          )
+        : React.createElement('div', { style: {
+            textAlign: 'center', padding: '60px 0', color: 'var(--muted)',
+          } },
+            React.createElement('div', { style: { fontSize: 16, fontWeight: 600 } }, 'No cards found with these filters'),
+            React.createElement('button', {
+              onClick: function() { setCondFilter('all'); },
+              style: { marginTop: 12, fontSize: 14, fontWeight: 700, color: 'var(--ink)' },
+            }, 'Clear filters')
+          )
+    )
+  );
+}
+
+Object.assign(window, { DGameLanding, DSetLanding });
