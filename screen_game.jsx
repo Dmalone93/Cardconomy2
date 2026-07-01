@@ -3,6 +3,7 @@
 // ─────────────────────────────────────────────────────────────
 const { T: TGM, money: mGM, CardArt: CardArtGM, Icon: IconGM } = window;
 const { GAMES: GAMESGM, SETS: SETSGM, LISTINGS: LISTSGM, gameById: gameByIdGM, GAME_LOGOS: GAME_LOGOS_GM } = window;
+const { SELLERS: SELLERS_GM, sellerByName: sellerByNameGM, listingsBySeller: listingsBySellerGM, SHOPS: SHOPS_GM } = window;
 
 const GAME_HEROES_GM = {
   pkmn: 'logos/heroes/pkmn.avif', mtg: 'logos/heroes/mtg.jpg',
@@ -22,7 +23,6 @@ function GameScreen({ app, params }) {
   const game = gameByIdGM(params.id);
   if (!game) return <div style={{ padding: 40, textAlign: 'center' }}>Game not found.</div>;
 
-  const [setFilter, setSetFilter] = React.useState(params.set || 'all');
   const [condFilter, setCondFilter] = React.useState('all');
 
   const sets = SETSGM.filter(s => s.game === game.id);
@@ -30,19 +30,25 @@ function GameScreen({ app, params }) {
   const hero = GAME_HEROES_GM[game.id];
 
   let listings = LISTSGM.filter(l => l.game === game.id && l.type === 'buynow');
-  if (setFilter !== 'all') listings = listings.filter(l => l.set === setFilter);
   if (condFilter === 'graded') listings = listings.filter(l => l.grade && l.grade.company !== 'raw');
   else if (condFilter === 'raw') listings = listings.filter(l => !l.grade || l.grade.company === 'raw');
   listings.sort((a, b) => (b.watchers || 0) + (b.sold || 0) - (a.watchers || 0) - (a.sold || 0));
 
-  const stats = {
-    total: listings.length,
-    graded: LISTSGM.filter(l => l.game === game.id && l.grade && l.grade.company !== 'raw').length,
-  };
-
   return (
     <div className="noscroll" style={{ height: '100%', overflow: 'auto', background: TGM.bg, paddingBottom: 96 }}>
 
+      {/* ── Breadcrumb ── */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '14px 14px 0' }}>
+        <button onClick={() => app.nav.pop()} style={{ width: 34, height: 34, borderRadius: 999, background: 'var(--surface)',
+          color: TGM.ink, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-1)', flexShrink: 0 }}>
+          {IconGM.back({})}
+        </button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontFamily: TGM.sans || 'var(--sans)', color: TGM.muted || 'var(--muted)' }}>
+          <span onClick={() => app.nav.setTab('home')} style={{ cursor: 'pointer', fontWeight: 600 }}>Home</span>
+          <span>{'\u203A'}</span>
+          <span style={{ color: TGM.ink, fontWeight: 700 }}>{game.name}</span>
+        </div>
+      </div>
 
       {/* ── Hero ── */}
       <div style={{ position: 'relative', height: 200, overflow: 'hidden', background: game.tint }}>
@@ -67,14 +73,6 @@ function GameScreen({ app, params }) {
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>
             {GAME_DESCS_GM[game.id] || `Browse all ${game.name} cards.`}
           </div>
-          <div style={{ display: 'flex', gap: 16, marginTop: 12 }}>
-            {[['Listed', stats.total], ['Graded', stats.graded]].map(([k, v]) => (
-              <div key={k} style={{ color: 'rgba(255,255,255,0.9)' }}>
-                <span style={{ fontFamily: TGM.mono || 'var(--mono)', fontWeight: 700, fontSize: 17 }}>{v}</span>
-                <span style={{ fontSize: 11, opacity: 0.6, marginLeft: 4, fontWeight: 600 }}>{k}</span>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -83,23 +81,12 @@ function GameScreen({ app, params }) {
         <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, padding: '0 14px', marginBottom: 10 }}>Browse by set</div>
         <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
           WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
-          {/* All tile */}
-          <button onClick={() => setSetFilter('all')} style={{
-            flexShrink: 0, width: 110, height: 80, borderRadius: 12, scrollSnapAlign: 'start',
-            background: setFilter === 'all' ? 'var(--ink)' : 'var(--surface)',
-            border: setFilter === 'all' ? 'none' : '1px solid var(--line)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <span style={{ fontWeight: 700, fontSize: 13,
-              color: setFilter === 'all' ? '#fff' : 'var(--ink)' }}>All sets</span>
-          </button>
           {sets.map(s => {
-            const active = setFilter === s.id;
             return (
-              <button key={s.id} onClick={() => setSetFilter(active ? 'all' : s.id)} style={{
+              <button key={s.id} onClick={() => app.nav.push('set', { id: s.id })} style={{
                 flexShrink: 0, width: 140, height: 80, borderRadius: 12, overflow: 'hidden',
                 position: 'relative', scrollSnapAlign: 'start',
-                border: active ? '2.5px solid var(--ink)' : '1px solid transparent',
+                border: '1px solid transparent',
                 background: s.hue || 'var(--surface)',
               }}>
                 {s.img && <img src={s.img} alt="" style={{
@@ -120,6 +107,102 @@ function GameScreen({ app, params }) {
           })}
         </div>
       </div>
+
+      {/* ── New Release Spotlight ── */}
+      {(() => {
+        const newest = sets.reduce((a, b) => (b.year || 0) > (a.year || 0) ? b : a, sets[0]);
+        if (!newest) return null;
+        return (
+          <div style={{ padding: '16px 14px 0' }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, marginBottom: 10 }}>New release</div>
+            <button onClick={() => app.nav.push('set', { id: newest.id })} style={{
+              width: '100%', position: 'relative', height: 120, borderRadius: 14, overflow: 'hidden',
+              background: newest.hue || 'var(--surface)', textAlign: 'left',
+            }}>
+              {newest.img && <img src={newest.img} alt="" style={{
+                position: 'absolute', inset: 0, width: '100%', height: '100%',
+                objectFit: 'cover', opacity: 0.4,
+              }} />}
+              <div style={{ position: 'absolute', inset: 0,
+                background: 'linear-gradient(to right, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.2) 100%)',
+              }} />
+              <div style={{ position: 'relative', zIndex: 2, height: '100%', padding: '16px 18px',
+                display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+                <div style={{ fontWeight: 700, fontSize: 16, color: '#fff', textShadow: '0 1px 3px rgba(0,0,0,0.4)' }}>{newest.name}</div>
+                <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)', marginTop: 3 }}>{newest.year} \u00B7 {newest.cards} cards \u00B7 Explore set \u2192</div>
+              </div>
+            </button>
+          </div>
+        );
+      })()}
+
+      {/* ── Most Watched ── */}
+      {(() => {
+        const watched = LISTSGM.filter(l => l.game === game.id && l.type === 'buynow' && (l.watchers || 0) > 0)
+          .sort((a, b) => (b.watchers || 0) - (a.watchers || 0)).slice(0, 6);
+        if (watched.length === 0) return null;
+        return (
+          <div style={{ paddingTop: 16 }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, padding: '0 14px', marginBottom: 10 }}>Most watched</div>
+            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 14px 4px',
+              WebkitOverflowScrolling: 'touch', scrollSnapType: 'x mandatory' }}>
+              {watched.map(l => (
+                <div key={l.id} onClick={() => app.nav.push('listing', { id: l.id })} style={{
+                  flexShrink: 0, width: 140, scrollSnapAlign: 'start', cursor: 'pointer',
+                  borderRadius: 12, overflow: 'hidden', background: '#fff', border: '1px solid var(--line)',
+                }}>
+                  <div style={{ padding: '8px 8px 4px', display: 'flex', justifyContent: 'center', background: '#fff' }}>
+                    <CardArtGM item={l} w={100} radius={6} />
+                  </div>
+                  <div style={{ padding: '6px 10px 10px' }}>
+                    <div style={{ fontFamily: TGM.sans || 'var(--sans)', fontWeight: 700, fontSize: 12, lineHeight: 1.15,
+                      whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{l.name}</div>
+                    <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 13, marginTop: 4 }}>{mGM(l.price)}</div>
+                    {l.watchers > 0 && <div style={{ fontFamily: TGM.sans || 'var(--sans)', fontSize: 10, color: TGM.muted || 'var(--muted)', marginTop: 2 }}>{l.watchers} watching</div>}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* ── Community: Top Sellers ── */}
+      {(() => {
+        // Find sellers with most listings in this game
+        const sellerCounts = {};
+        LISTSGM.filter(l => l.game === game.id).forEach(l => {
+          if (l.seller) sellerCounts[l.seller] = (sellerCounts[l.seller] || 0) + 1;
+        });
+        const topSellers = Object.entries(sellerCounts)
+          .sort((a, b) => b[1] - a[1])
+          .slice(0, 4)
+          .map(([name, count]) => {
+            const s = sellerByNameGM(name);
+            return s ? { ...s, count } : { name, count, rating: 0, sales: 0, loc: '' };
+          });
+        if (topSellers.length === 0) return null;
+        return (
+          <div style={{ padding: '20px 14px 0' }}>
+            <div style={{ fontSize: 15, fontWeight: 700, color: TGM.ink, marginBottom: 10 }}>Top sellers</div>
+            <div style={{ display: 'flex', gap: 10, overflowX: 'auto', overflowY: 'hidden', padding: '0 0 4px',
+              WebkitOverflowScrolling: 'touch' }}>
+              {topSellers.map(s => (
+                <button key={s.name} onClick={() => app.nav.push('seller', { name: s.name })} style={{
+                  flexShrink: 0, width: 150, background: 'var(--surface)', borderRadius: 12,
+                  padding: '14px 12px', textAlign: 'center', border: '1px solid var(--line)',
+                }}>
+                  <div style={{ width: 40, height: 40, borderRadius: 999, background: 'var(--fill)', color: '#fff',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontWeight: 700, fontSize: 16, margin: '0 auto 8px' }}>{s.name.charAt(0)}</div>
+                  <div style={{ fontWeight: 700, fontSize: 13, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{s.name}</div>
+                  <div style={{ fontSize: 11, color: TGM.muted || 'var(--muted)', marginTop: 2 }}>{s.rating}% \u00B7 {s.count} listed</div>
+                </button>
+              ))}
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ── Condition filter ── */}
       <div style={{ display: 'flex', gap: 6, padding: '14px 14px 4px' }}>
@@ -171,7 +254,7 @@ function GameScreen({ app, params }) {
         ) : (
           <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--muted)' }}>
             <div style={{ fontSize: 14, fontWeight: 600 }}>No cards found</div>
-            <button onClick={() => { setSetFilter('all'); setCondFilter('all'); }}
+            <button onClick={() => setCondFilter('all')}
               style={{ marginTop: 8, fontSize: 13, fontWeight: 700, color: 'var(--ink)' }}>Clear filters</button>
           </div>
         )}
