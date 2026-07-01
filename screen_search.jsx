@@ -219,29 +219,46 @@ function SearchScreen({ app, params = {} }) {
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: TS.bg }}>
-      {/* search header */}
-      <div style={{ padding: '14px 12px 10px', background: TS.surface, borderBottom: '1px solid var(--line)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          {showBack ? (
-            <button onClick={() => app.nav.pop()} style={{ color: TS.ink, padding: 4 }}>{IconS.back({})}</button>
-          ) : (
-            <button onClick={() => app.openMenu()} style={{ color: TS.ink, padding: 4 }}>{IconS.menu({})}</button>
-          )}
-          <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: TS.surface2,
-            borderRadius: 11, padding: '9px 12px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+      {/* search header — mobile only */}
+      {!app.isDesktop && (
+        <div style={{ padding: '14px 12px 10px', background: TS.surface, borderBottom: '1px solid var(--line)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {showBack ? (
+              <button onClick={() => app.nav.pop()} style={{ color: TS.ink, padding: 4 }}>{IconS.back({})}</button>
+            ) : (
+              <button onClick={() => app.openMenu()} style={{ color: TS.ink, padding: 4 }}>{IconS.menu({})}</button>
+            )}
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 8, background: TS.surface2,
+              borderRadius: 11, padding: '9px 12px', boxShadow: 'inset 0 0 0 1px var(--line)' }}>
+              {IconS.search({ width: 18, height: 18, style: { color: TS.faint } })}
+              <input ref={el => { if (el && !params.game && !params.set) el.focus(); }} value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
+                placeholder={'Try "' + typed + '"'} style={{
+                flex: 1, border: 'none', outline: 'none', background: 'transparent',
+                fontFamily: TS.sans, fontSize: 15, color: TS.ink, minWidth: 0,
+              }} />
+              {q && <button onClick={() => setQ('')} style={{ color: TS.faint, fontSize: 18, lineHeight: 1 }}>{'×'}</button>}
+              <button onClick={() => app.nav.push('scan', { from: 'search' })} style={{ padding: 4, display: 'flex', color: TS.faint, flexShrink: 0 }}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* search input — desktop only */}
+      {app.isDesktop && (
+        <div style={{ padding: '16px 16px 12px', maxWidth: 1280, margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--surface)',
+            borderRadius: 11, padding: '10px 14px', border: '1px solid var(--line)', maxWidth: 600 }}>
             {IconS.search({ width: 18, height: 18, style: { color: TS.faint } })}
-            <input ref={el => { if (el && !params.game && !params.set) el.focus(); }} value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
+            <input value={q} onChange={e => setQ(e.target.value)} onFocus={() => setFocused(true)} onBlur={() => setTimeout(()=>setFocused(false), 150)}
               placeholder={'Try "' + typed + '"'} style={{
               flex: 1, border: 'none', outline: 'none', background: 'transparent',
               fontFamily: TS.sans, fontSize: 15, color: TS.ink, minWidth: 0,
             }} />
             {q && <button onClick={() => setQ('')} style={{ color: TS.faint, fontSize: 18, lineHeight: 1 }}>{'×'}</button>}
-            <button onClick={() => app.nav.push('scan', { from: 'search' })} style={{ padding: 4, display: 'flex', color: TS.faint, flexShrink: 0 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/><circle cx="12" cy="13" r="4" stroke="currentColor" strokeWidth="2"/></svg>
-            </button>
           </div>
         </div>
-      </div>
+      )}
 
       {/* suggestions overlay when focused + empty */}
       {focused && !q && (
@@ -408,7 +425,7 @@ function SearchScreen({ app, params = {} }) {
           {app.isDesktop ? (
             <div style={{ display: 'flex', gap: 24, maxWidth: 1280, margin: '0 auto', padding: '0 16px', flex: 1, minHeight: 0 }}>
               {/* Sidebar filters — always visible on desktop */}
-              <div style={{ width: 240, flexShrink: 0, position: 'sticky', top: 80, alignSelf: 'flex-start', maxHeight: 'calc(100vh - 100px)', overflow: 'auto' }}>
+              <div style={{ width: 240, flexShrink: 0, position: 'sticky', top: 16, alignSelf: 'flex-start', maxHeight: 'calc(100vh - 32px)', overflow: 'auto' }}>
                 {renderFilters()}
               </div>
               {/* Results */}

@@ -316,7 +316,7 @@ function App() {
   return (
     <div style={{ position: 'relative', height: '100%', overflow: 'hidden', background: TA.bg, isolation: 'isolate', display: 'flex', flexDirection: 'column' }}>
       {/* ── Responsive header ── */}
-      <div style={{ flexShrink: 0, background: 'var(--surface)', borderBottom: '1px solid var(--line)', zIndex: 50 }}>
+      <div style={{ flexShrink: 0, background: 'var(--surface)', borderBottom: '1px solid var(--line)', zIndex: 100, position: 'sticky', top: 0 }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 16px', display: 'flex', alignItems: 'center', height: isDesktop ? 64 : 52 }}>
           {/* Left: hamburger (mobile) or logo (desktop) */}
           {!isDesktop && (
@@ -388,6 +388,35 @@ function App() {
             </button>
           </div>
         </div>
+        {isDesktop && (
+          <div style={{ borderTop: '1px solid var(--line)', background: 'var(--surface)' }}>
+            <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 16px', display: 'flex', alignItems: 'center', gap: 4, height: 40 }}>
+              {(window.GAMES || []).map(g => (
+                <button key={g.id} onClick={() => nav.push('game', { id: g.id })} style={{
+                  padding: '6px 12px', fontFamily: 'var(--sans)', fontWeight: 600, fontSize: 12.5,
+                  color: 'var(--muted)', background: 'none', border: 'none', cursor: 'pointer',
+                  borderRadius: 6, display: 'flex', alignItems: 'center', gap: 5,
+                }}>
+                  <span style={{ width: 6, height: 6, borderRadius: 999, background: g.tint, flexShrink: 0 }}></span>
+                  {g.short}
+                </button>
+              ))}
+              <div style={{ width: 1, height: 20, background: 'var(--line)', margin: '0 4px' }}></div>
+              {[
+                ['Graded', () => nav.setTab('search')],
+                ['Bulk lots', () => nav.setTab('search')],
+                ['Trade', () => nav.push('trade_browse')],
+                ['Price Guide', () => nav.push('fees')],
+              ].map(([label, action]) => (
+                <button key={label} onClick={action} style={{
+                  padding: '6px 12px', fontFamily: 'var(--sans)', fontWeight: 600, fontSize: 12.5,
+                  color: 'var(--muted)', background: 'none', border: 'none', cursor: 'pointer',
+                  borderRadius: 6,
+                }}>{label}</button>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* ── Screen content ── */}
@@ -396,7 +425,7 @@ function App() {
           <Comp app={app} params={params} />
         </div>
       </div>
-      {cart.length > 0 && (
+      {cart.length > 0 && !isDesktop && (
         <button
           onClick={() => nav.push('cart')}
           style={{
