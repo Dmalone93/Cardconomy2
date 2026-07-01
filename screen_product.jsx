@@ -1,7 +1,7 @@
 // ─────────────────────────────────────────────────────────────
 // Product detail — multi-seller view for raw cards
 // ─────────────────────────────────────────────────────────────
-const { T: TP, money: moneyP, CardArt: CardArtP, Sparkline: SparkP, Icon: IconP, Sheet: SheetP, Badge: BadgeP } = window;
+const { T: TP, money: moneyP, CardArt: CardArtP, Sparkline: SparkP, Icon: IconP, Sheet: SheetP, Badge: BadgeP, Container: ContainerP } = window;
 const { productById: productByIdP, gameById: gameByIdP, setById: setByIdP, COND_SHORT: COND_SHORT_P, listingsBySeller: listingsBySellerP } = window;
 const { demandForProduct: demandP, variantForProduct: variantP } = window;
 
@@ -151,249 +151,358 @@ function ProductScreen({ app, params }) {
   const vInfo = variantP ? variantP(product) : null;
   const demand = demandP ? demandP(product) : null;
 
+  /* ── shared content blocks ── */
+
+  const cardImageBlock = (
+    <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0 20px' }}>
+      <CardArtP item={product} w={200} radius={0} />
+    </div>
+  );
+
+  const breadcrumbBlock = (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, fontFamily: TP.sans, color: 'var(--muted)', marginBottom: 8 }}>
+      <span onClick={() => app.nav.setTab('home')} style={{ cursor: 'pointer', fontWeight: 600 }}>Home</span>
+      <span>{'\u203A'}</span>
+      {g && <span onClick={() => app.nav.push('game', { id: g.id })} style={{ cursor: 'pointer', fontWeight: 600 }}>{g.short}</span>}
+      {g && <span>{'\u203A'}</span>}
+      {s && <span onClick={() => app.nav.push('set', { id: s.id })} style={{ cursor: 'pointer', fontWeight: 600 }}>{s.name.replace(/\s*\(.*\)/, '')}</span>}
+      {s && <span>{'\u203A'}</span>}
+      <span style={{ color: 'var(--ink)', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.name}</span>
+    </div>
+  );
+
+  const nameBlock = (
+    <div style={{ marginBottom: 12 }}>
+      <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>{product.name}</div>
+      <div style={{ fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>
+        {product.subtitle}
+        {s && <span>{' \u00B7 '}<span onClick={() => app.nav.push('set', { id: s.id })} style={{ cursor: 'pointer', textDecoration: 'underline', textDecorationColor: 'var(--line)' }}>{s.name}</span></span>}
+        {product.number ? ' \u00B7 ' + product.number : ''}
+      </div>
+    </div>
+  );
+
+  const conditionPillsBlock = (
+    <div style={{ display: 'flex', gap: 6, overflowX: 'auto', WebkitOverflowScrolling: 'touch', marginBottom: 12 }}>
+      {['All', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'BGS'].map(c => {
+        const active = condFilter === c;
+        return (
+          <button key={c} onClick={() => setCondFilter(c)} style={{
+            padding: '7px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer', flexShrink: 0,
+            background: active ? 'var(--ink)' : 'var(--surface)',
+            color: active ? '#fff' : 'var(--ink)',
+            border: active ? 'none' : '1px solid var(--line)',
+          }}>{c}</button>
+        );
+      })}
+    </div>
+  );
+
+  const priceBlock = (
+    <div style={{ marginBottom: 12 }}>
+      <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 28, color: 'var(--ink)' }}>{moneyP(product.low)}~</div>
+      <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
+        {g && <span style={{ background: g.tint + '1a', color: g.tint, padding: '2px 8px', borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{g.short}</span>}
+        {product.foil && <span style={{ background: 'var(--surface)', color: 'var(--ink)', padding: '2px 8px', borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 11, border: '1px solid var(--line)' }}>Foil</span>}
+        {vInfo && <span style={{ background: 'var(--surface)', color: 'var(--ink)', padding: '2px 8px', borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 11, border: '1px solid var(--line)' }}>{vInfo.current}</span>}
+      </div>
+    </div>
+  );
+
+  const filteredOffersBlock = (() => {
+    const filteredOffers = condFilter === 'All' ? product.offers : product.offers.filter(o => {
+      if (condFilter === 'NM') return o.condition === 'Near Mint' || o.condition === 'Mint' || o.condition === 'Gem Mint';
+      if (condFilter === 'LP') return o.condition === 'Lightly Played';
+      if (condFilter === 'MP') return o.condition === 'Moderately Played';
+      if (condFilter === 'HP') return o.condition === 'Heavily Played';
+      if (condFilter === 'PSA 10') return o.grade && o.grade.company === 'psa' && o.grade.grade === 10;
+      if (condFilter === 'PSA 9') return o.grade && o.grade.company === 'psa' && o.grade.grade === 9;
+      if (condFilter === 'BGS') return o.grade && o.grade.company === 'bgs';
+      return true;
+    });
+    return filteredOffers.length > 0 ? filteredOffers.map((o, idx) => (
+      <OfferCard key={o.id} offer={o} isLowest={idx === 0} app={app}
+        onViewListing={() => {
+          const lid = o.listingId || (product.offers.find(x => x.listingId) || {}).listingId;
+          if (lid) app.nav.push('listing', { id: lid });
+        }}
+        onBuy={(offer) => {
+          const lid = offer.listingId || (product.offers.find(o => o.listingId) || {}).listingId;
+          if (lid) {
+            app.addToCart(lid);
+          } else {
+            app.toast('This listing is not available for purchase yet');
+          }
+        }}
+      />
+    )) : (
+      <div style={{ padding: '20px 0', textAlign: 'center', fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)' }}>
+        No listings match this condition.
+      </div>
+    );
+  })();
+
+  const sellerOffersBlock = (
+    <div style={{ marginBottom: 16 }}>
+      <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16, marginBottom: 12 }}>
+        Listed items
+      </div>
+      {filteredOffersBlock}
+    </div>
+  );
+
+  const tradeOffersBlock = product.tradeOffers && product.tradeOffers.length > 0 ? (
+    <div style={{ marginBottom: 20 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+        <span style={{ fontSize: 16 }}>{'\u21C4'}</span>
+        <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16 }}>Available to trade</div>
+        <span style={{ background: 'var(--surface)', color: 'var(--muted)', padding: '2px 8px', borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 10 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
+      </div>
+      <div style={{ fontFamily: TP.sans, fontSize: 12, color: 'var(--muted)', marginBottom: 12, lineHeight: 1.4 }}>
+        These collectors have this card and want to swap \u2014 no cash needed.
+      </div>
+      {product.tradeOffers.map((t, idx) => (
+        <TradeOfferCard key={t.id} trade={t} isFirst={idx === 0}
+          onPropose={() => { var lid = product.offers && product.offers[0] && product.offers[0].listingId; app.nav.push('trade_propose', { cardId: lid || product.id, traderId: 't1' }); }}
+        />
+      ))}
+    </div>
+  ) : null;
+
+  const secondaryBlock = (
+    <div style={{ borderTop: '1px solid var(--line)', paddingTop: 16 }}>
+      {demand && (
+        <div style={{ marginBottom: 16, display: 'flex', alignItems: 'center', gap: 10,
+          padding: '12px 14px', background: 'var(--surface)', borderRadius: 14,
+          border: '1px solid ' + (demand.hot ? 'var(--gold)' : 'var(--line)'), boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 14 }}>
+              {demand.wants} buyers want this
+              {demand.hot && <span style={{ marginLeft: 6, background: 'var(--gold)', color: '#fff',
+                padding: '2px 7px', borderRadius: 6, fontSize: 10, fontWeight: 700 }}>HOT</span>}
+            </div>
+            <div style={{ fontFamily: TP.sans, fontSize: 11, color: 'var(--muted)', marginTop: 2 }}>
+              {demand.localWants} near {demand.loc} \u00B7 {demand.listed} listed
+            </div>
+          </div>
+        </div>
+      )}
+      {vInfo && vInfo.total > 1 && (
+        <div style={{ marginBottom: 16 }}>
+          <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 12, color: 'var(--ink)',
+            letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 4 }}>
+            Same Code \u00B7 {product.number}
+          </div>
+          <div style={{ fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)', marginBottom: 10, lineHeight: 1.5 }}>
+            {vInfo.total} printings share this number. Not the same card.
+          </div>
+          <div style={{ display: 'flex', gap: 10, overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: 4 }}>
+            {vInfo.all.map((v, i) => {
+              const isCurrent = v.variant === vInfo.current;
+              return (
+                <div key={i} style={{ flexShrink: 0, width: 110, cursor: 'pointer', borderRadius: 14, overflow: 'hidden',
+                  border: isCurrent ? '2px solid var(--ink)' : '1px solid var(--line)',
+                  boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
+                  <div style={{ height: 90, position: 'relative', overflow: 'hidden' }}>
+                    <CardArtP item={{ ...product, art: v.art }} w={110} radius={0} />
+                    {isCurrent && <div style={{ position: 'absolute', bottom: 4, left: 4, background: 'var(--ink)', color: '#fff', fontSize: 9, fontWeight: 700, borderRadius: 6, padding: '2px 6px' }}>Current</div>}
+                  </div>
+                  <div style={{ padding: '8px 10px' }}>
+                    <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--ink)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.variant}</div>
+                    <div style={{ fontFamily: 'var(--mono)', fontSize: 14, fontWeight: 700, color: 'var(--ink)', marginTop: 2 }}>{moneyP(v.price)}</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+      <div>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+          {[['Market', product.market, null], ['Low', product.low, 'var(--up)'], ['High', product.high, null]].map(([label, val, color]) => (
+            <div key={label} style={{ flex: 1, background: 'var(--surface)', borderRadius: 12, padding: '10px 12px', boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
+              <div style={{ fontFamily: TP.sans, fontSize: 11, color: 'var(--muted)', fontWeight: 600 }}>{label}</div>
+              <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 16, color: color || 'var(--ink)' }}>{moneyP(val)}</div>
+            </div>
+          ))}
+        </div>
+        {product.history && (
+          <div onClick={() => setChartOpen(!chartOpen)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', cursor: 'pointer' }}>
+            <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)' }}>Price History</div>
+            <span style={{ fontSize: 12, color: 'var(--muted)', fontWeight: 600 }}>{chartOpen ? 'Hide' : 'Show chart'}</span>
+          </div>
+        )}
+        {chartOpen && product.history && (() => {
+          const sliceLen = { '7D': 3, '30D': 6, '90D': 9, '1Y': 12 }[ptf] || 6;
+          const h2 = product.history.slice(-sliceLen);
+          const up2 = h2[h2.length - 1] >= h2[0];
+          return (
+            <div>
+              <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
+                {['7D', '30D', '90D', '1Y'].map(t => (
+                  <div key={t} onClick={() => setPtf(t)} style={{ padding: '4px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer',
+                    background: ptf === t ? 'var(--ink)' : 'var(--surface)', color: ptf === t ? '#fff' : 'var(--muted)' }}>{t}</div>
+                ))}
+              </div>
+              <SparkP data={h2} w={320} h={100} up={up2} fill dots />
+            </div>
+          );
+        })()}
+      </div>
+    </div>
+  );
+
+  const buyButtonsBlock = (
+    <div style={{ marginTop: 16 }}>
+      <div style={{ fontFamily: TP.sans, fontSize: 10, fontWeight: 600, color: 'var(--muted)', textTransform: 'uppercase', marginBottom: 4 }}>FROM</div>
+      <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 24, color: 'var(--ink)', marginBottom: 12 }}>{moneyP(product.low)}</div>
+      <button onClick={() => {
+        const cheapest = product.offers && product.offers[0];
+        const lid = cheapest && cheapest.listingId;
+        if (lid) {
+          app.addToCart(lid);
+          app.toast({ title: 'Added to cart', subtitle: product.name });
+        } else {
+          app.toast('No listings available right now');
+        }
+      }} style={{
+        width: '100%', padding: '13px 16px', borderRadius: 12, border: 'none',
+        background: 'var(--ink)', color: '#fff', fontFamily: TP.sans, fontWeight: 700,
+        fontSize: 15, cursor: 'pointer', marginBottom: 8,
+      }}>Buy now</button>
+      <button onClick={() => {
+        app.toast({ title: 'Added to want list', subtitle: product.name });
+      }} style={{
+        width: '100%', background: 'none', border: '1.5px solid var(--line)', borderRadius: 12, padding: '10px 16px', cursor: 'pointer',
+        fontFamily: TP.sans, fontWeight: 700, fontSize: 14, color: 'var(--ink)',
+        textAlign: 'center', marginBottom: 8,
+      }}>Add to want list</button>
+      <button onClick={() => app.nav.push('add_card', { cardId: product.offers[0].listingId || product.id })} style={{
+        width: '100%', padding: 12, borderRadius: 12, fontFamily: TP.sans, fontWeight: 700, fontSize: 14,
+        background: 'transparent', color: 'var(--ink)', border: '1.5px solid var(--line)', cursor: 'pointer',
+      }}>I own this</button>
+    </div>
+  );
+
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', animation: 'ccPushIn 0.26s ease' }}>
 
-      <div ref={scrollRefP} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
-        {/* ── 1. Card image ── */}
-        <div style={{ position: 'relative', background: 'var(--surface)' }}>
-          <button onClick={() => app.nav.pop()} style={{ position: 'absolute', top: 10, left: 12, zIndex: 10, width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
-            boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>{IconP.back({})}</button>
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 0 20px' }}>
-            <CardArtP item={product} w={200} radius={0} />
-          </div>
-        </div>
-
-        {/* ── Breadcrumb ── */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: '0 16px 8px',
-          fontSize: 12, fontFamily: TP.sans, color: 'var(--muted)' }}>
-          <span onClick={() => app.nav.setTab('home')} style={{ cursor: 'pointer', fontWeight: 600 }}>Home</span>
-          <span>{'\u203A'}</span>
-          {g && <span onClick={() => app.nav.push('game', { id: g.id })} style={{ cursor: 'pointer', fontWeight: 600 }}>{g.short}</span>}
-          {g && <span>{'\u203A'}</span>}
-          {s && <span onClick={() => app.nav.push('set', { id: s.id })} style={{ cursor: 'pointer', fontWeight: 600 }}>{s.name.replace(/\s*\(.*\)/, '')}</span>}
-          {s && <span>{'\u203A'}</span>}
-          <span style={{ color: 'var(--ink)', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{product.name}</span>
-        </div>
-
-        {/* ── 2. Name + subtitle ── */}
-        <div style={{ padding: '18px 16px 0' }}>
-          <div style={{ fontFamily: 'var(--heading)', fontWeight: 700, fontSize: 22, letterSpacing: -0.4 }}>{product.name}</div>
-          <div style={{ fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)', marginTop: 4 }}>
-            {product.subtitle}
-            {s && <span>{' \u00B7 '}<span onClick={() => app.nav.push('set', { id: s.id })} style={{ cursor: 'pointer', textDecoration: 'underline', textDecorationColor: 'var(--line)' }}>{s.name}</span></span>}
-            {product.number ? ' \u00B7 ' + product.number : ''}
-          </div>
-        </div>
-
-        {/* ── 3. Condition filter pills ── */}
-        <div style={{ display: 'flex', gap: 6, padding: '12px 16px', overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
-          {['All', 'NM', 'LP', 'MP', 'HP', 'PSA 10', 'PSA 9', 'BGS'].map(c => {
-            const active = condFilter === c;
-            return (
-              <button key={c} onClick={() => setCondFilter(c)} style={{
-                padding: '7px 14px', borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer', flexShrink: 0,
-                background: active ? 'var(--ink)' : 'var(--surface)',
-                color: active ? '#fff' : 'var(--ink)',
-                border: active ? 'none' : '1px solid var(--line)',
-              }}>{c}</button>
-            );
-          })}
-        </div>
-
-        {/* ── 4. Price ── */}
-        <div style={{ padding: '4px 16px 12px' }}>
-          <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 28, color: 'var(--ink)' }}>{moneyP(product.low)}~</div>
-          <div style={{ display: 'flex', gap: 6, marginTop: 4 }}>
-            {g && <span style={{ background: g.tint + '1a', color: g.tint, padding: '2px 8px', borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 11 }}>{g.short}</span>}
-            {product.foil && <span style={{ background: 'var(--surface)', color: 'var(--ink)', padding: '2px 8px', borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 11, border: '1px solid var(--line)' }}>Foil</span>}
-            {vInfo && <span style={{ background: 'var(--surface)', color: 'var(--ink)', padding: '2px 8px', borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 11, border: '1px solid var(--line)' }}>{vInfo.current}</span>}
-          </div>
-        </div>
-
-
-        {/* ── 6. Seller offers ── */}
-        <div style={{ padding: '16px 16px 0' }}>
-          <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16, marginBottom: 12 }}>
-            Listed items
-          </div>
-          {(() => {
-            const filteredOffers = condFilter === 'All' ? product.offers : product.offers.filter(o => {
-              if (condFilter === 'NM') return o.condition === 'Near Mint' || o.condition === 'Mint' || o.condition === 'Gem Mint';
-              if (condFilter === 'LP') return o.condition === 'Lightly Played';
-              if (condFilter === 'MP') return o.condition === 'Moderately Played';
-              if (condFilter === 'HP') return o.condition === 'Heavily Played';
-              if (condFilter === 'PSA 10') return o.grade && o.grade.company === 'psa' && o.grade.grade === 10;
-              if (condFilter === 'PSA 9') return o.grade && o.grade.company === 'psa' && o.grade.grade === 9;
-              if (condFilter === 'BGS') return o.grade && o.grade.company === 'bgs';
-              return true;
-            });
-            return filteredOffers.length > 0 ? filteredOffers.map((o, idx) => (
-            <OfferCard key={o.id} offer={o} isLowest={idx === 0} app={app}
-              onViewListing={() => {
-                const lid = o.listingId || (product.offers.find(x => x.listingId) || {}).listingId;
-                if (lid) app.nav.push('listing', { id: lid });
-              }}
-              onBuy={(offer) => {
-                const lid = offer.listingId || (product.offers.find(o => o.listingId) || {}).listingId;
-                if (lid) {
-                  app.addToCart(lid);
-                } else {
-                  app.toast('This listing is not available for purchase yet');
-                }
-              }}
-            />
-          )) : (
-            <div style={{ padding: '20px 0', textAlign: 'center', fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)' }}>
-              No listings match this condition.
+      {app.isWide ? (
+        /* ── DESKTOP: 2-column layout ── */
+        <div ref={scrollRefP} className="noscroll" style={{ flex: 1, overflow: 'auto' }}>
+          <ContainerP style={{ padding: 0 }}>
+            {/* top bar: back button */}
+            <div style={{ display: 'flex', alignItems: 'center', padding: '16px 16px 0' }}>
+              <button onClick={() => app.nav.pop()} style={{ width: 34, height: 34, borderRadius: 999, background: 'var(--surface)',
+                color: 'var(--muted)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--line)', cursor: 'pointer' }}>{IconP.back({})}</button>
             </div>
-          );
-          })()}
-        </div>
-
-        {/* trade offers */}
-        {product.tradeOffers && product.tradeOffers.length > 0 && (
-          <div style={{ padding: '0 16px', marginTop: 20 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-              <span style={{ fontSize: 16 }}>{'\u21C4'}</span>
-              <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 16 }}>Available to trade</div>
-              <span style={{ background: 'var(--surface)', color: 'var(--muted)', padding: '2px 8px', borderRadius: 6, fontFamily: TP.sans, fontWeight: 700, fontSize: 10 }}>{product.tradeCount} trader{product.tradeCount !== 1 ? 's' : ''}</span>
-            </div>
-            <div style={{ fontFamily: TP.sans, fontSize: 12, color: 'var(--muted)', marginBottom: 12, lineHeight: 1.4 }}>
-              These collectors have this card and want to swap — no cash needed.
-            </div>
-            {product.tradeOffers.map((t, idx) => (
-              <TradeOfferCard key={t.id} trade={t} isFirst={idx === 0}
-                onPropose={() => { var lid = product.offers && product.offers[0] && product.offers[0].listingId; app.nav.push('trade_propose', { cardId: lid || product.id, traderId: 't1' }); }}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* ── Secondary: demand, variants, price data ── */}
-        <div style={{ borderTop: '1px solid var(--line)', marginTop: 24, paddingTop: 16 }}>
-
-          {/* demand */}
-          {demand && (
-            <div style={{ margin: '0 16px 16px', display: 'flex', alignItems: 'center', gap: 10,
-              padding: '12px 14px', background: 'var(--surface)', borderRadius: 14,
-              border: '1px solid ' + (demand.hot ? 'var(--gold)' : 'var(--line)'), boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 14 }}>
-                  {demand.wants} buyers want this
-                  {demand.hot && <span style={{ marginLeft: 6, background: 'var(--gold)', color: '#fff',
-                    padding: '2px 7px', borderRadius: 6, fontSize: 10, fontWeight: 700 }}>HOT</span>}
-                </div>
-                <div style={{ fontFamily: TP.sans, fontSize: 11, color: 'var(--muted)', marginTop: 2 }}>
-                  {demand.localWants} near {demand.loc} · {demand.listed} listed
+            {/* 2-column grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr', gap: 32, padding: '24px 16px 40px', alignItems: 'start' }}>
+              {/* Left — sticky card image */}
+              <div style={{ position: 'sticky', top: 80, alignSelf: 'flex-start' }}>
+                <div style={{ background: 'var(--surface)', borderRadius: 16, padding: '20px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  {cardImageBlock}
                 </div>
               </div>
+              {/* Right — all details + buy buttons */}
+              <div>
+                {breadcrumbBlock}
+                {nameBlock}
+                {conditionPillsBlock}
+                {priceBlock}
+                {sellerOffersBlock}
+                {tradeOffersBlock}
+                {secondaryBlock}
+                {buyButtonsBlock}
+              </div>
             </div>
-          )}
+          </ContainerP>
+        </div>
+      ) : (
+        /* ── MOBILE: existing layout ── */
+        <React.Fragment>
+          <div ref={scrollRefP} className="noscroll" style={{ flex: 1, overflow: 'auto', paddingBottom: 80 }}>
+            {/* ── 1. Card image ── */}
+            <div style={{ position: 'relative', background: 'var(--surface)' }}>
+              <button onClick={() => app.nav.pop()} style={{ position: 'absolute', top: 10, left: 12, zIndex: 10, width: 38, height: 38, borderRadius: 999, background: 'var(--surface)',
+                boxShadow: '0 1px 4px rgba(0,0,0,0.1)', color: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer' }}>{IconP.back({})}</button>
+              {cardImageBlock}
+            </div>
 
-          {/* variants */}
-          {vInfo && vInfo.total > 1 && (
-            <div style={{ padding: '0 16px', marginBottom: 16 }}>
-              <div style={{ fontFamily: TP.sans, fontWeight: 700, fontSize: 12, color: 'var(--ink)',
-                letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 4 }}>
-                Same Code · {product.number}
-              </div>
-              <div style={{ fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)', marginBottom: 10, lineHeight: 1.5 }}>
-                {vInfo.total} printings share this number. Not the same card.
-              </div>
-              <div style={{ display: 'flex', gap: 10, overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: 4 }}>
-                {vInfo.all.map((v, i) => {
-                  const isCurrent = v.variant === vInfo.current;
-                  return (
-                    <div key={i} style={{ flexShrink: 0, width: 110, cursor: 'pointer', borderRadius: 14, overflow: 'hidden',
-                      background: isCurrent ? 'var(--surface)' : 'var(--surface)',
-                      border: isCurrent ? '2px solid var(--ink)' : '1px solid var(--line)',
-                      boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-                      <div style={{ height: 90, background: v.art || '#e5e7eb', position: 'relative', overflow: 'hidden' }}>
-                        <CardArtP item={{ ...product, art: v.art }} w={110} radius={0} />
-                        {isCurrent && <div style={{ position: 'absolute', bottom: 4, left: 4, background: 'var(--ink)', color: '#fff', fontSize: 9, fontWeight: 700, borderRadius: 6, padding: '2px 6px' }}>Current</div>}
-                      </div>
-                      <div style={{ padding: '8px 10px' }}>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: 'var(--ink)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.variant}</div>
-                        <div style={{ fontFamily: 'var(--mono)', fontSize: 14, fontWeight: 700, color: 'var(--ink)', marginTop: 2 }}>{moneyP(v.price)}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+            {/* ── Breadcrumb ── */}
+            <div style={{ padding: '0 16px 8px' }}>
+              {breadcrumbBlock}
             </div>
-          )}
 
-          {/* price stats + chart */}
-          <div style={{ padding: '0 16px 16px' }}>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-              {[['Market', product.market, null], ['Low', product.low, 'var(--up)'], ['High', product.high, null]].map(([label, val, color]) => (
-                <div key={label} style={{ flex: 1, background: 'var(--surface)', borderRadius: 12, padding: '10px 12px', boxShadow: '0 1px 3px rgba(20,24,40,0.06)' }}>
-                  <div style={{ fontFamily: TP.sans, fontSize: 11, color: 'var(--muted)', fontWeight: 600 }}>{label}</div>
-                  <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 16, color: color || 'var(--ink)' }}>{moneyP(val)}</div>
-                </div>
-              ))}
+            {/* ── 2. Name + subtitle ── */}
+            <div style={{ padding: '18px 16px 0' }}>
+              {nameBlock}
             </div>
-            {product.history && (
-              <div onClick={() => setChartOpen(!chartOpen)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '8px 0', cursor: 'pointer' }}>
-                <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--ink)' }}>Price History</div>
-                <span style={{ fontSize: 12, color: 'var(--muted)', fontWeight: 600 }}>{chartOpen ? 'Hide' : 'Show chart'}</span>
+
+            {/* ── 3. Condition filter pills ── */}
+            <div style={{ padding: '12px 16px' }}>
+              {conditionPillsBlock}
+            </div>
+
+            {/* ── 4. Price ── */}
+            <div style={{ padding: '4px 16px 12px' }}>
+              {priceBlock}
+            </div>
+
+            {/* ── 6. Seller offers ── */}
+            <div style={{ padding: '16px 16px 0' }}>
+              {sellerOffersBlock}
+            </div>
+
+            {/* trade offers */}
+            {tradeOffersBlock && (
+              <div style={{ padding: '0 16px' }}>
+                {tradeOffersBlock}
               </div>
             )}
-            {chartOpen && product.history && (() => {
-              const sliceLen = { '7D': 3, '30D': 6, '90D': 9, '1Y': 12 }[ptf] || 6;
-              const h2 = product.history.slice(-sliceLen);
-              const up2 = h2[h2.length - 1] >= h2[0];
-              return (
-                <div>
-                  <div style={{ display: 'flex', gap: 4, marginBottom: 8 }}>
-                    {['7D', '30D', '90D', '1Y'].map(t => (
-                      <div key={t} onClick={() => setPtf(t)} style={{ padding: '4px 10px', borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: 'pointer',
-                        background: ptf === t ? 'var(--ink)' : 'var(--surface)', color: ptf === t ? '#fff' : 'var(--muted)' }}>{t}</div>
-                    ))}
-                  </div>
-                  <SparkP data={h2} w={320} h={100} up={up2} fill dots />
-                </div>
-              );
-            })()}
-          </div>
-        </div>
-      </div>
 
-      {/* ── Sticky bottom bar ── */}
-      <div style={{ flexShrink: 0, background: 'var(--surface)', borderTop: '1px solid var(--line)', padding: '10px 16px',
-        display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 -2px 10px rgba(20,24,40,0.06)' }}>
-        <div>
-          <div style={{ fontFamily: TP.sans, fontSize: 10, fontWeight: 600, color: 'var(--muted)', textTransform: 'uppercase' }}>FROM</div>
-          <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 20, color: 'var(--ink)' }}>{moneyP(product.low)}</div>
-        </div>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: 6 }}>
-          <button onClick={() => {
-            const cheapest = product.offers && product.offers[0];
-            const lid = cheapest && cheapest.listingId;
-            if (lid) {
-              app.addToCart(lid);
-              app.toast({ title: 'Added to cart', subtitle: product.name });
-            } else {
-              app.toast('No listings available right now');
-            }
-          }} style={{
-            padding: '13px 16px', borderRadius: 12, border: 'none',
-            background: 'var(--ink)', color: '#fff', fontFamily: TP.sans, fontWeight: 700,
-            fontSize: 15, cursor: 'pointer',
-          }}>Buy now</button>
-          <button onClick={() => {
-            app.toast({ title: 'Added to want list', subtitle: product.name });
-          }} style={{
-            background: 'none', border: '1.5px solid var(--line)', borderRadius: 12, padding: '10px 16px', cursor: 'pointer',
-            fontFamily: TP.sans, fontWeight: 700, fontSize: 14, color: 'var(--ink)',
-            textAlign: 'center',
-          }}>Add to want list</button>
-          <button onClick={() => app.nav.push('add_card', { cardId: product.offers[0].listingId || product.id })} style={{
-            width: '100%', padding: 12, borderRadius: 12, fontFamily: TP.sans, fontWeight: 700, fontSize: 14,
-            background: 'transparent', color: 'var(--ink)', border: '1.5px solid var(--line)', marginTop: 8 }}>I own this</button>
-        </div>
-      </div>
+            {/* ── Secondary: demand, variants, price data ── */}
+            <div style={{ padding: '0 16px 16px' }}>
+              {secondaryBlock}
+            </div>
+          </div>
+
+          {/* ── Sticky bottom bar (mobile only) ── */}
+          <div style={{ flexShrink: 0, background: 'var(--surface)', borderTop: '1px solid var(--line)', padding: '10px 16px',
+            display: 'flex', alignItems: 'center', gap: 12, boxShadow: '0 -2px 10px rgba(20,24,40,0.06)' }}>
+            <div>
+              <div style={{ fontFamily: TP.sans, fontSize: 10, fontWeight: 600, color: 'var(--muted)', textTransform: 'uppercase' }}>FROM</div>
+              <div style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 20, color: 'var(--ink)' }}>{moneyP(product.low)}</div>
+            </div>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'stretch', gap: 6 }}>
+              <button onClick={() => {
+                const cheapest = product.offers && product.offers[0];
+                const lid = cheapest && cheapest.listingId;
+                if (lid) {
+                  app.addToCart(lid);
+                  app.toast({ title: 'Added to cart', subtitle: product.name });
+                } else {
+                  app.toast('No listings available right now');
+                }
+              }} style={{
+                padding: '13px 16px', borderRadius: 12, border: 'none',
+                background: 'var(--ink)', color: '#fff', fontFamily: TP.sans, fontWeight: 700,
+                fontSize: 15, cursor: 'pointer',
+              }}>Buy now</button>
+              <button onClick={() => {
+                app.toast({ title: 'Added to want list', subtitle: product.name });
+              }} style={{
+                background: 'none', border: '1.5px solid var(--line)', borderRadius: 12, padding: '10px 16px', cursor: 'pointer',
+                fontFamily: TP.sans, fontWeight: 700, fontSize: 14, color: 'var(--ink)',
+                textAlign: 'center',
+              }}>Add to want list</button>
+              <button onClick={() => app.nav.push('add_card', { cardId: product.offers[0].listingId || product.id })} style={{
+                width: '100%', padding: 12, borderRadius: 12, fontFamily: TP.sans, fontWeight: 700, fontSize: 14,
+                background: 'transparent', color: 'var(--ink)', border: '1.5px solid var(--line)', marginTop: 8 }}>I own this</button>
+            </div>
+          </div>
+        </React.Fragment>
+      )}
 
       {/* back to top */}
       <button onClick={() => scrollRefP.current && scrollRefP.current.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -408,7 +517,7 @@ function ProductScreen({ app, params }) {
         {offerSheet && (
           <div style={{ padding: '8px 0 20px' }}>
             <div style={{ fontFamily: TP.sans, fontSize: 13, color: 'var(--muted)', marginBottom: 12 }}>
-              Listed at {moneyP(offerSheet.price)} · {offerSheet.condition}
+              Listed at {moneyP(offerSheet.price)} \u00B7 {offerSheet.condition}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 4, background: 'var(--surface-2)', borderRadius: 10, padding: '12px 14px' }}>
               <span style={{ fontFamily: 'var(--mono)', fontWeight: 700, fontSize: 22, color: 'var(--muted)' }}>\u00A3</span>
